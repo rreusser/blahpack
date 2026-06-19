@@ -3,14 +3,15 @@
 Prioritized remaining d\*/z\* LAPACK routines, ordered by tier then by
 completion progress. Items near the top of each tier are closest to done.
 
-**Implemented: 891 modules (307 algorithms complete) | Remaining: 206 routines (92 algorithms)**
+**Implemented: 899 modules (312 algorithms complete) | Remaining: 198 routines (87 algorithms)**
 
 > To update this file after implementing a routine, run `/blahpack-status`
 > or check the box manually. Regenerate with `node bin/gen-queue.js > QUEUE.md`.
 
-## Core Solvers & Factorizations (42 routines)
+## Core Solvers & Factorizations (39 routines)
 
-- [ ] **dsytri2** (2/3 done) — Computes the inverse of a DOUBLE PRECISION symmetric indefinite matrix A using the factorization A = U*D*U**T or A = L*D
+- [ ] **zlaswlq** (1/2 done) — Computes a blocked Tall-Skinny LQ factorization of a real M-by-N matrix A for M <= N: A = ( L 0 ) * Q, where: Q is a n-b
+- [ ] **zlatrs3** (1/2 done) — Solves a triangular system of equations with the scale factors set to prevent overflow.
 - [ ] **dbdsvdx, dgesvdx, zgesvdx** — Computes the singular value decomposition (SVD) of a real N-by-N (upper or lower) bidiagonal matrix B, B = U * S * VT, w
 - [ ] **dgedmd, zgedmd** — Computes the Dynamic Mode Decomposition (DMD) for a pair of data snapshot matrices.
 - [ ] **dgedmdq, zgedmdq** — Computes the Dynamic Mode Decomposition (DMD) for a pair of data snapshot matrices.
@@ -28,8 +29,6 @@ completion progress. Items near the top of each tier are closest to done.
 - [ ] **dlaqp2rk, zlaqp2rk** — Computes truncated QR factorization with column pivoting of a real matrix block using Level 2 BLAS and overwrites a real
 - [ ] **dlaqz0, zlaqz0** — Computes the eigenvalues of a real matrix pair (H,T), where H is an upper Hessenberg matrix and T is upper triangular, u
 - [ ] **dlarrv, zlarrv** — Computes the eigenvectors of the tridiagonal matrix T = L D LT given L, D and the eigenvalues of L D LT.
-- [ ] **dlaswlq, zlaswlq** — Computes a blocked Tall-Skinny LQ factorization of a real M-by-N matrix A for M <= N: A = ( L 0 ) * Q, where: Q is a n-b
-- [ ] **dlatrs3, zlatrs3** — Solves a triangular system of equations with the scale factors set to prevent overflow.
 
 ## Divide-and-Conquer (eigen/SVD) (26 routines)
 
@@ -70,29 +69,25 @@ completion progress. Items near the top of each tier are closest to done.
 - [ ] **dsbgvd, dspgvd, dsygvd, zhbgvd, zhegvd, zhpgvd** — Computes all the eigenvalues, and optionally, the eigenvectors of a real generalized symmetric-definite banded eigenprob
 - [ ] **dsposv** — Computes the solution to system of linear equations A * X = B for PO matrices
 
-## Condition Numbers, Norms & Refinement (25 routines)
+## Condition Numbers, Norms & Refinement (22 routines)
 
 - [ ] **dgemlq, zgemlq** (2/4 done) — Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q * C C * Q TRANS = 'T': Q**T * C C 
 - [ ] **dgemqr, zgemqr** (2/4 done) — Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q * C C * Q TRANS = 'T': Q**T * C C 
 - [ ] **dla_gerfsx_extended** (1/2 done) — Improves the computed solution to a system of linear equations for general matrices by performing extra-precise iterativ
 - [ ] **dla_porfsx_extended** (1/2 done) — Improves the computed solution to a system of linear equations for symmetric or Hermitian positive-definite matrices by 
-- [ ] **zgsvj0** (1/2 done) — Pre-processor for the routine dgesvj.
-- [ ] **zgsvj1** (1/2 done) — Pre-processor for the routine dgesvj, applies Jacobi rotations targeting only particular pivots.
-- [ ] **zunbdb4** (1/2 done) — Simultaneously bidiagonalizes the blocks of a tall and skinny matrix X with orthonormal columns: [ B11 ] [ X11 ] [ P1 | 
 - [ ] **dgbrfsx, dgerfsx, dporfsx, dsyrfsx, zgbrfsx, zgerfsx, zherfsx, zporfsx, zsyrfsx** — Improves the computed solution to a system of linear equations and provides error bounds and backward error estimates fo
 - [ ] **dla_syrfsx_extended, zla_syrfsx_extended** — Improves the computed solution to a system of linear equations for symmetric indefinite matrices by performing extra-pre
 - [ ] **dormrz, zunmrz** — Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q * C C * Q TRANS = 'T': Q**T * C C 
 - [ ] **dsytrd_sy2sb** — Reduces a real symmetric matrix A to real symmetric band-diagonal form AB by a orthogonal similarity transformation: Q**
 - [ ] **dtrsyl3, ztrsyl3** — 
 
-## Auxiliary Routines (14 routines)
+## Auxiliary Routines (12 routines)
 
+- [ ] **zlamswlq** (1/2 done) — Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q * C C * Q TRANS = 'T': Q**T * C C 
 - [ ] **zlaqz2** (1/2 done) — Chases a 2x2 shift bulge in a matrix pencil down a single position
 - [ ] **dgelsd, dlalsd, zgelsd, zlalsd** — Computes the minimum-norm solution to a linear least squares problem for GE matrices
 - [ ] **dlalsa, zlalsa** — Computes the SVD of the coefficient matrix in compact form. Used by sgelsd.
-- [ ] **dlamswlq, zlamswlq** — Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q * C C * Q TRANS = 'T': Q**T * C C 
 - [ ] **dlaqz3, zlaqz3** — Performs AED
-- [ ] **dlaqz4** — Executes a single multishift QZ sweep
 - [ ] **dlarre** — Given the tridiagonal matrix T, sets small off-diagonal elements to zero and for each unreduced block Ti, finds base rep
 - [ ] **zlahef_aa** — DLAHEF_AA factorizes a panel of a complex hermitian matrix A using the Aasen's algorithm.
 
@@ -125,4 +120,4 @@ completion progress. Items near the top of each tier are closest to done.
 - [ ] **zcposv** — Computes the solution to system of linear equations A * X = B for PO matrices
 
 ---
-**Total remaining: 206 routines across 92 algorithms**
+**Total remaining: 198 routines across 87 algorithms**

@@ -1,0 +1,218 @@
+
+{{alias}}( order, N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, offsetPRMPTR, PERM, stridePERM, offsetPERM, GIVPTR, strideGIVPTR, offsetGIVPTR, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, LDGIVNUM, q, strideQ, QPTR, strideQPTR, offsetQPTR, z, strideZ, ZTEMP, strideZTEMP )
+    Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
+
+    Parameters
+    ----------
+        order: string
+            Row-major (C-style) or column-major (Fortran-style) order.
+
+        N: integer
+            number of columns.
+
+        tlvls: integer
+            tlvls.
+
+        curlvl: integer
+            curlvl.
+
+        curpbm: integer
+            curpbm.
+
+        PRMPTR: Int32Array
+            input array.
+
+        stridePRMPTR: integer
+            stride length for `PRMPTR`.
+
+        offsetPRMPTR: integer
+            starting index for `PRMPTR`.
+
+        PERM: Int32Array
+            input array.
+
+        stridePERM: integer
+            stride length for `PERM`.
+
+        offsetPERM: integer
+            starting index for `PERM`.
+
+        GIVPTR: Int32Array
+            input array.
+
+        strideGIVPTR: integer
+            stride length for `GIVPTR`.
+
+        offsetGIVPTR: integer
+            starting index for `GIVPTR`.
+
+        GIVCOL: Int32Array
+            input matrix.
+
+        strideGIVCOL1: integer
+            stride of the first dimension of `GIVCOL`.
+
+        strideGIVCOL2: integer
+            stride of the second dimension of `GIVCOL`.
+
+        offsetGIVCOL: integer
+            starting index for `GIVCOL`.
+
+        GIVNUM: Float64Array
+            input matrix.
+
+        LDGIVNUM: integer
+            leading dimension of `GIVNUM`.
+
+        q: Float64Array
+            input array.
+
+        strideQ: integer
+            stride length for `q`.
+
+        QPTR: Int32Array
+            input array.
+
+        strideQPTR: integer
+            stride length for `QPTR`.
+
+        offsetQPTR: integer
+            starting index for `QPTR`.
+
+        z: Float64Array
+            input array.
+
+        strideZ: integer
+            stride length for `z`.
+
+        ZTEMP: Float64Array
+            output array.
+
+        strideZTEMP: integer
+            stride length for `ZTEMP`.
+
+    Returns
+    -------
+    out: integer
+        Result.
+
+    Examples
+    --------
+    // TODO: Add examples
+
+
+{{alias}}.ndarray( N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, offsetPRMPTR, PERM, stridePERM, offsetPERM, GIVPTR, strideGIVPTR, offsetGIVPTR, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, strideGIVNUM1, strideGIVNUM2, offsetGIVNUM, q, strideQ, offsetQ, QPTR, strideQPTR, offsetQPTR, z, strideZ, offsetZ, ZTEMP, strideZTEMP, offsetZTEMP )
+    Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC., using alternative indexing semantics.
+
+    Parameters
+    ----------
+        N: integer
+            number of columns.
+
+        tlvls: integer
+            tlvls.
+
+        curlvl: integer
+            curlvl.
+
+        curpbm: integer
+            curpbm.
+
+        PRMPTR: Int32Array
+            input array.
+
+        stridePRMPTR: integer
+            stride length for `PRMPTR`.
+
+        offsetPRMPTR: integer
+            starting index for `PRMPTR`.
+
+        PERM: Int32Array
+            input array.
+
+        stridePERM: integer
+            stride length for `PERM`.
+
+        offsetPERM: integer
+            starting index for `PERM`.
+
+        GIVPTR: Int32Array
+            input array.
+
+        strideGIVPTR: integer
+            stride length for `GIVPTR`.
+
+        offsetGIVPTR: integer
+            starting index for `GIVPTR`.
+
+        GIVCOL: Int32Array
+            input matrix.
+
+        strideGIVCOL1: integer
+            stride of dimension 1 of `GIVCOL`.
+
+        strideGIVCOL2: integer
+            stride of dimension 2 of `GIVCOL`.
+
+        offsetGIVCOL: integer
+            starting index for `GIVCOL`.
+
+        GIVNUM: Float64Array
+            input matrix.
+
+        strideGIVNUM1: integer
+            stride of dimension 1 of `GIVNUM`.
+
+        strideGIVNUM2: integer
+            stride of dimension 2 of `GIVNUM`.
+
+        offsetGIVNUM: integer
+            starting index for `GIVNUM`.
+
+        q: Float64Array
+            input array.
+
+        strideQ: integer
+            stride length for `q`.
+
+        offsetQ: integer
+            starting index for `Q`.
+
+        QPTR: Int32Array
+            input array.
+
+        strideQPTR: integer
+            stride length for `QPTR`.
+
+        offsetQPTR: integer
+            starting index for `QPTR`.
+
+        z: Float64Array
+            input array.
+
+        strideZ: integer
+            stride length for `z`.
+
+        offsetZ: integer
+            starting index for `Z`.
+
+        ZTEMP: Float64Array
+            output array.
+
+        strideZTEMP: integer
+            stride length for `ZTEMP`.
+
+        offsetZTEMP: integer
+            starting index for `ZTEMP`.
+
+    Returns
+    -------
+    out: integer
+        Result.
+
+    Examples
+    --------
+    // TODO: Add examples
+
+    See Also
+    --------

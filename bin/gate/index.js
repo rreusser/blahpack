@@ -17,6 +17,7 @@ var checkJSDoc = require( './checks/jsdoc.js' );
 var checkConventions = require( './checks/conventions.js' );
 var checkScaffoldNoise = require( './checks/scaffold-noise.js' );
 var checkWorkspace = require( './checks/workspace.js' );
+var checkWorkAssert = require( './checks/work-assert.js' );
 
 var ALL_CHECKS = [
 	{ name: 'file-structure', fn: checkFileStructure },
@@ -29,6 +30,7 @@ var ALL_CHECKS = [
 	{ name: 'conventions', fn: checkConventions },
 	{ name: 'scaffold-noise', fn: checkScaffoldNoise },
 	{ name: 'workspace', fn: checkWorkspace },
+	{ name: 'work-assert', fn: checkWorkAssert },
 	{ name: 'lint', fn: checkLint }
 ];
 

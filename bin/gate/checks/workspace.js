@@ -215,6 +215,10 @@ function internalAllocs( content, file ) {
 		if ( !m ) {
 			continue;
 		}
+		// Skip block-reflector T-matrix allocations (T, T1, T2, etc.) — legitimately internal.
+		if ( /\bT\d*\s*=\s*new\s+/.test( line ) ) {
+			continue;
+		}
 		size = m[ 2 ].trim();
 		// Variable-sized (references an identifier) OR a large numeric
 		// literal => workspace. Small bare numbers => scalar temporary.

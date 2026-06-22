@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunmtr",
   "version": "0.0.0",
   "description": "Applies a complex unitary matrix from zhetrd to a matrix",

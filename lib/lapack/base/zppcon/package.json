@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zppcon",
   "version": "0.0.0",
   "description": "Estimates the reciprocal condition number of a complex Hermitian positive definite matrix in packed storage.",

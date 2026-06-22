@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dger",
   "version": "0.0.0",
   "description": "Perform the rank-1 update A := alpha*x*y**T + A.",

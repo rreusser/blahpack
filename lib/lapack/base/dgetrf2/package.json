@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgetrf2",
   "version": "0.0.0",
   "description": "Recursive LU factorization of a general M-by-N matrix using partial pivoting.",

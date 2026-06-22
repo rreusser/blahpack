@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dggbal",
   "version": "0.0.0",
   "description": "Balances a pair of general real matrices (A,B) for the generalized eigenvalue problem.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlapll",
   "version": "0.0.0",
   "description": "Measures the linear dependence of two vectors.",

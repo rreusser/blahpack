@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarrc",
   "version": "0.0.0",
   "description": "Count eigenvalues of a symmetric tridiagonal matrix in an interval",

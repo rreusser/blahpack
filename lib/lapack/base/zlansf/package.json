@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlansf",
   "version": "0.0.0",
   "description": "Returns the norm of a complex symmetric matrix in Rectangular Full Packed format.",

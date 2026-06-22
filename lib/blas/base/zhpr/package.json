@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/zhpr",
   "version": "0.0.0",
   "description": "Perform the Hermitian packed rank-1 update A := alpha*x*x**H + A.",

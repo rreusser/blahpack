@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarcm",
   "version": "0.0.0",
   "description": "real-by-complex matrix multiply C = A*B",

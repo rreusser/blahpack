@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsfrk",
   "version": "0.0.0",
   "description": "Performs a symmetric rank-k operation for a matrix in Rectangular Full Packed format.",

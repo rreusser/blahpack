@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtpsv",
   "version": "0.0.0",
   "description": "Solve a triangular packed system of equations",

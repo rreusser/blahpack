@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztbcon",
   "version": "0.0.0",
   "description": "Estimates the reciprocal condition number of a complex triangular band matrix.",

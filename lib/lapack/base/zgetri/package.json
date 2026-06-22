@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgetri",
   "version": "0.0.0",
   "description": "Computes the inverse of a matrix using the LU factorization from zgetrf (complex double-precision).",

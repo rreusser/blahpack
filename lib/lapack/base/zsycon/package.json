@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsycon",
   "version": "0.0.0",
   "description": "Estimate the reciprocal of the condition number of a complex symmetric indefinite matrix",

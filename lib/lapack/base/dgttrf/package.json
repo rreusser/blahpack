@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgttrf",
   "version": "0.0.0",
   "description": "Computes the LU factorization of a real tridiagonal matrix",

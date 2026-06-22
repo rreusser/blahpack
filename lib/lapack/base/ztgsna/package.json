@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztgsna",
   "version": "0.0.0",
   "description": "Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex generalized Schur form",

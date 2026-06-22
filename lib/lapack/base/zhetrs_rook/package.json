@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetrs_rook",
   "version": "0.0.0",
   "description": "Solve A*X=B with complex Hermitian A using factorization from zhetrf_rook",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarz",
   "version": "0.0.0",
   "description": "Applies a complex elementary reflector defined by RZ factorization",

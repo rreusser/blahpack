@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgesc2",
   "version": "0.0.0",
   "description": "Solves a system of linear equations using the LU factorization with complete pivoting computed by zgetc2.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgbtrs",
   "version": "0.0.0",
   "description": "Solve a banded system using the LU factorization from dgbtrf",

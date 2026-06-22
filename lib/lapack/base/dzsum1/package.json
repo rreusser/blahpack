@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dzsum1",
   "version": "0.0.0",
   "description": "Sum of absolute values of a complex vector",

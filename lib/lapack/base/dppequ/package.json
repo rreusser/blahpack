@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dppequ",
   "version": "0.0.0",
   "description": "Compute row and column scalings to equilibrate a symmetric positive definite matrix in packed storage",

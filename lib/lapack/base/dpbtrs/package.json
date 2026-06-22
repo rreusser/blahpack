@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpbtrs",
   "version": "0.0.0",
   "description": "Solve a banded symmetric positive definite system using Cholesky factorization",

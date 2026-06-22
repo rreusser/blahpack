@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dtpmlqt",
   "version": "0.0.0",
   "description": "applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpbtrf",
   "version": "0.0.0",
   "description": "Compute Cholesky factorization of a symmetric positive definite banded matrix (blocked)",

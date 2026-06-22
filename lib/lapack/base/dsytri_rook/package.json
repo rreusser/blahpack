@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsytri_rook",
   "version": "0.0.0",
   "description": "Compute inverse of real symmetric matrix using factorization from dsytrf_rook",

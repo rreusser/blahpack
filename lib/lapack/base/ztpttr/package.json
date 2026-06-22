@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztpttr",
   "version": "0.0.0",
   "description": "Copies a complex triangular matrix from packed storage to full storage",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/ddot",
   "version": "0.0.0",
   "description": "Compute the dot product of two double-precision floating-point vectors",

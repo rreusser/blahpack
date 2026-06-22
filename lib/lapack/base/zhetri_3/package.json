@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetri_3",
   "version": "0.0.0",
   "description": "computes the inverse of a complex Hermitian indefinite matrix using the factorization from zhetrf_rk",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsyconv",
   "version": "0.0.0",
   "description": "Converts a complex symmetric matrix factored by zsytrf to standard form",

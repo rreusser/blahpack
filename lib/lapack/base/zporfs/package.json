@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zporfs",
   "version": "0.0.0",
   "description": "Iterative refinement for Hermitian positive definite system",

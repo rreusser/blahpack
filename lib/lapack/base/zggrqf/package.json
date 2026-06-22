@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zggrqf",
   "version": "0.0.0",
   "description": "Computes a generalized RQ factorization of an M-by-N complex matrix A and a P-by-N complex matrix B.",

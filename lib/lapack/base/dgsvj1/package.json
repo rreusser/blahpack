@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgsvj1",
   "version": "0.0.0",
   "description": "Pre-processor for dgesvj applying Jacobi rotations to off-diagonal block pivots",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlansb",
   "version": "0.0.0",
   "description": "Returns the norm of a real symmetric band matrix.",

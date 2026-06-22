@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtpmv",
   "version": "0.0.0",
   "description": "Perform matrix-vector operation with a triangular packed matrix",

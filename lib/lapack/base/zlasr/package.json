@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlasr",
   "version": "0.0.0",
   "description": "Apply a sequence of plane rotations to a complex matrix",

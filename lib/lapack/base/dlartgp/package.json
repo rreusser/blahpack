@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlartgp",
   "version": "0.0.0",
   "description": "Generates a plane rotation with non-negative diagonal",

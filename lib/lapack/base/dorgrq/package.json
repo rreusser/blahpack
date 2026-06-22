@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorgrq",
   "version": "0.0.0",
   "description": "generates an M-by-N real matrix Q with orthonormal rows from elementary reflectors returned by DGERQF (blocked algorithm)",

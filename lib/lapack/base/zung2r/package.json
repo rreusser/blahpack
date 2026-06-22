@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zung2r",
   "version": "0.0.0",
   "description": "Generate unitary matrix Q from QR factorization (unblocked)",

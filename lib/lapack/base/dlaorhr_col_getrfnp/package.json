@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaorhr_col_getrfnp",
   "version": "0.0.0",
   "description": "Computes the modified LU factorization without pivoting of a general M-by-N matrix (blocked driver).",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/zaxpy",
   "version": "0.0.0",
   "description": "Scale a complex vector and add to another complex vector",

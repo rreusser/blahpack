@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlasd2",
   "version": "0.0.0",
   "description": "Merge two sets of singular values in bidiagonal SVD divide and conquer",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztrrfs",
   "version": "0.0.0",
   "description": "Provides error bounds for the solution to a system with a complex triangular matrix.",

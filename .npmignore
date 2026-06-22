@@ -1,0 +1,17 @@
+# Development-only directories — not shipped in the npm tarball
+data/
+test/
+bench/
+notebooks/
+codemods/
+archive/
+docs/
+bin/
+progress.html
+*.jsonl
+
+# Per-module subdirectories excluded via glob
+lib/**/test/
+lib/**/bench/
+lib/**/examples/
+lib/**/docs/

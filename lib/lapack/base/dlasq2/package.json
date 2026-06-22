@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlasq2",
   "version": "0.0.0",
   "description": "Compute all eigenvalues of a symmetric positive definite tridiagonal matrix via dqds",

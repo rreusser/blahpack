@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorghr",
   "version": "0.0.0",
   "description": "Generates the orthogonal matrix Q from Hessenberg reduction",

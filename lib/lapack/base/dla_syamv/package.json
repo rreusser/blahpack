@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dla_syamv",
   "version": "0.0.0",
   "description": "Computes a matrix-vector product using a symmetric indefinite matrix to calculate error bounds",

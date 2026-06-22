@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dormrq",
   "version": "0.0.0",
   "description": "Multiply a matrix by the orthogonal matrix Q from RQ factorization (blocked)",

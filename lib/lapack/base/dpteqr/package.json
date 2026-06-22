@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpteqr",
   "version": "0.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric positive definite tridiagonal matrix.",

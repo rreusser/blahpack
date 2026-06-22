@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgetsqrhrt",
   "version": "0.0.0",
   "description": "Computes a column-blocked QR factorization of a real M-by-N matrix using TSQR followed by Householder reconstruction.",

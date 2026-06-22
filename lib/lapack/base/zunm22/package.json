@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunm22",
   "version": "0.0.0",
   "description": "Multiplies a general matrix by a unitary matrix",

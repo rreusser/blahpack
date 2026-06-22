@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarra",
   "version": "0.0.0",
   "description": "Compute the splitting points with threshold based on the representation",

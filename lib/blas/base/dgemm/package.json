@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dgemm",
   "version": "0.0.0",
   "description": "Double-precision real matrix-matrix multiply.",

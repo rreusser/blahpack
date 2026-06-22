@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/ztpsv",
   "version": "0.0.0",
   "description": "Solve one of the triangular packed systems A*x = b or A**T*x = b or A**H*x = b.",

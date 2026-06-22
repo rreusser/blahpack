@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpbtrs",
   "version": "0.0.0",
   "description": "Solve a Hermitian positive definite banded system using Cholesky factorization",

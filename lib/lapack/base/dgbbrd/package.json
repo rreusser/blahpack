@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgbbrd",
   "version": "0.0.0",
   "description": "Reduces a real general band matrix to upper bidiagonal form",

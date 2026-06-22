@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dla_syrpvgrw",
   "version": "0.0.0",
   "description": "Compute the reciprocal pivot growth factor norm(A)/norm(U) for a symmetric indefinite matrix",

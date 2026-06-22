@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zherfs",
   "version": "0.0.0",
   "description": "Complex Hermitian iterative refinement",

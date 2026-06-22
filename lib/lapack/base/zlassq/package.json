@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlassq",
   "version": "0.0.0",
   "description": "Update a sum of squares represented in scaled form",

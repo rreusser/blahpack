@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlamrg",
   "version": "0.0.0",
   "description": "LAPACK dlamrg routine",

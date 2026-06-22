@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/zscal",
   "version": "0.0.0",
   "description": "Scale a complex double-precision vector by a complex constant",

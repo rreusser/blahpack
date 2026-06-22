@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarft",
   "version": "0.0.0",
   "description": "Form the triangular factor T of a block reflector",

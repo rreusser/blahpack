@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgbsv",
   "version": "0.0.0",
   "description": "Solves a complex banded system of linear equations A*X = B using LU factorization",

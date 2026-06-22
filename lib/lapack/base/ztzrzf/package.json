@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztzrzf",
   "version": "0.0.0",
   "description": "Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via unitary RZ factorization (blocked driver).",

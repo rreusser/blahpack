@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlatrz",
   "version": "0.0.0",
   "description": "Reduces a complex upper trapezoidal matrix to upper triangular form by means of unitary transformations.",

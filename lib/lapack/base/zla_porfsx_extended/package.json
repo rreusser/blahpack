@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zla_porfsx_extended",
   "version": "0.0.0",
   "description": "Improves the computed solution using extra-precise iterative refinement for Hermitian positive-definite matrices",

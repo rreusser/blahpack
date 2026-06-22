@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dsymm",
   "version": "0.0.0",
   "description": "Performs symmetric matrix-matrix multiplication",

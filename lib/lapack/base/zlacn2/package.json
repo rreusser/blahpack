@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlacn2",
   "version": "0.0.0",
   "description": "Estimate 1-norm of a square matrix using reverse communication",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/daxpy",
   "version": "0.0.0",
   "description": "Multiply a vector x by a constant and add the result to y.",

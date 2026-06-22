@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorbdb4",
   "version": "0.0.0",
   "description": "Simultaneously bidiagonalize the blocks of a tall and skinny matrix [X11; X21] with orthonormal columns (CSD-prep variant 4 \u2014 widest M1/M2).",

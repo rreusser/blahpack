@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgghrd",
   "version": "0.0.0",
   "description": "Reduces a pair of real matrices (A,B) to generalized upper Hessenberg form using orthogonal transformations.",

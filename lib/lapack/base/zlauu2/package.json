@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlauu2",
   "version": "0.0.0",
   "description": "Compute the product of a complex triangular matrix with its conjugate transpose (unblocked)",

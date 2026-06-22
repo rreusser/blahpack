@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqz1",
   "version": "0.0.0",
   "description": "Chases a 1x1 shift bulge in a matrix pencil down a single position (complex QZ)",

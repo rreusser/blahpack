@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztpcon",
   "version": "0.0.0",
   "description": "Estimates the reciprocal condition number of a complex triangular matrix in packed storage.",

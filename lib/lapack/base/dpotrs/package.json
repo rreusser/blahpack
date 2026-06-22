@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpotrs",
   "version": "0.0.0",
   "description": "Solve a symmetric positive definite system using the Cholesky factorization computed by dpotrf.",

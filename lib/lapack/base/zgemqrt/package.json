@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgemqrt",
   "version": "0.0.0",
   "description": "Overwrites a complex M-by-N matrix C with op(Q)*C or C*op(Q), where Q is a unitary matrix defined as the product of K elementary reflectors stored in the compact WY representation produced by ZGEQRT",

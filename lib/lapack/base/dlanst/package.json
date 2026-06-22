@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlanst",
   "version": "0.0.0",
   "description": "Compute the norm of a symmetric tridiagonal matrix",

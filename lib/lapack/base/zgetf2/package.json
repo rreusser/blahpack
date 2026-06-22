@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgetf2",
   "version": "0.0.0",
   "description": "Computes an LU factorization of a general M-by-N complex matrix using partial pivoting with row interchanges (unblocked algorithm).",

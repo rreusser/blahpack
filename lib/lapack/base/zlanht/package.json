@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlanht",
   "version": "0.0.0",
   "description": "Returns the norm of a complex Hermitian tridiagonal matrix.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgerfs",
   "version": "0.0.0",
   "description": "Improves the solution to A*X = B using iterative refinement",

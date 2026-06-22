@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlapy3",
   "version": "0.0.0",
   "description": "Return sqrt(x^2 + y^2 + z^2) safely avoiding overflow",

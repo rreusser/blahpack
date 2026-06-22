@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlas2",
   "version": "0.0.0",
   "description": "Compute singular values of a 2-by-2 triangular matrix",

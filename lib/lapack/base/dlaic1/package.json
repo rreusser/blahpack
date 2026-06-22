@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaic1",
   "version": "0.0.0",
   "description": "Applies one step of incremental condition estimation",

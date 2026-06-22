@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlagtf",
   "version": "0.0.0",
   "description": "Factorizes the matrix (T - lambda*I) where T is a tridiagonal matrix",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgbtrs",
   "version": "0.0.0",
   "description": "Solve a complex banded system using LU factorization",

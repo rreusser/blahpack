@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtbmv",
   "version": "0.0.0",
   "description": "Perform matrix-vector operation with a triangular band matrix",

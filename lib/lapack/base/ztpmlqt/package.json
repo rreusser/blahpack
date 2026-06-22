@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztpmlqt",
   "version": "0.0.0",
   "description": "Apply complex unitary Q from triangular-pentagonal compact-WY (ztplqt) to a stacked matrix C = [A; B] or [A B].",

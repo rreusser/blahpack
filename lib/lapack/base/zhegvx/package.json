@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhegvx",
   "version": "0.0.0",
   "description": "Computes selected eigenvalues and eigenvectors of a complex generalized Hermitian-definite eigenproblem",

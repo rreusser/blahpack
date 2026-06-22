@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ddisna",
   "version": "0.0.0",
   "description": "Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix",

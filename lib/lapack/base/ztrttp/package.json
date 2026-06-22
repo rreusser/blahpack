@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztrttp",
   "version": "0.0.0",
   "description": "Copy a complex triangular matrix from full format (TR) to standard packed format (TP)",

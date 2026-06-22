@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/ztbmv",
   "version": "0.0.0",
   "description": "Perform one of the matrix-vector operations x := A*x, x := A**T*x, or x := A**H*x, where A is a triangular band matrix",

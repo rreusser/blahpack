@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlat2c",
   "version": "0.0.0",
   "description": "Converts a double-complex triangular matrix to a complex triangular matrix",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsymv",
   "version": "0.0.0",
   "description": "Complex symmetric matrix-vector multiply",

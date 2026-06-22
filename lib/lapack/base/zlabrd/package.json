@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlabrd",
   "version": "0.0.0",
   "description": "Reduce first NB rows/columns to bidiagonal form",

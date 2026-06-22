@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaunhr_col_getrfnp",
   "version": "0.0.0",
   "description": "TODO: Add description for ZLAUNHR_COL_GETRFNP.",

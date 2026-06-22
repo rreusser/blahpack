@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztgsen",
   "version": "0.0.0",
   "description": "Reorders the generalized Schur decomposition of a complex matrix pair",

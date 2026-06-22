@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgttrf",
   "version": "0.0.0",
   "description": "Compute LU factorization of complex tridiagonal matrix",

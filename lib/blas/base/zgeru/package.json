@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/zgeru",
   "version": "0.0.0",
   "description": "Perform complex rank-1 update (unconjugated)",

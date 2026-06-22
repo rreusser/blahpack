@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztpqrt",
   "version": "0.0.0",
   "description": "Computes a blocked QR factorization of a complex triangular-pentagonal matrix using the compact WY representation for Q.",

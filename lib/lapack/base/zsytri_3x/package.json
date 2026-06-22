@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsytri_3x",
   "version": "0.0.0",
   "description": "Compute the inverse of a complex symmetric indefinite matrix using the factorization computed by zsytrf_rk (worker routine called by zsytri_3)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunbdb3",
   "version": "0.0.0",
   "description": "Simultaneously bidiagonalize the blocks of a tall and skinny complex matrix with orthonormal columns (variant 3)",

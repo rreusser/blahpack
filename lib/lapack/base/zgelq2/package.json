@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgelq2",
   "version": "0.0.0",
   "description": "Compute LQ factorization of a complex matrix (unblocked)",

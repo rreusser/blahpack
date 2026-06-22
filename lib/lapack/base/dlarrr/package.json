@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarrr",
   "version": "0.0.0",
   "description": "Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetrf_rk",
   "version": "0.0.0",
   "description": "computes the factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method (RK storage format)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zggqrf",
   "version": "0.0.0",
   "description": "Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B.",

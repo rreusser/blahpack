@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetrs_3",
   "version": "0.0.0",
   "description": "Solve A*X = B for Hermitian A using factorization computed by ZHETRF_RK",

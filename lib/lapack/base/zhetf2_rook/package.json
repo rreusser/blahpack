@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetf2_rook",
   "version": "0.0.0",
   "description": "Bounded Bunch-Kaufman (rook) factorization of a complex Hermitian indefinite matrix",

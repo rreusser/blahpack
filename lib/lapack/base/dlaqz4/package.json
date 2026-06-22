@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaqz4",
   "version": "0.0.0",
   "description": "Executes a single multishift QZ sweep on a matrix pencil.",

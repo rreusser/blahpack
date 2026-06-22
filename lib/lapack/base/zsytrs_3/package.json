@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsytrs_3",
   "version": "0.0.0",
   "description": "Solve A*X = B for symmetric (non-Hermitian) complex A using factorization computed by ZSYTRF_RK",

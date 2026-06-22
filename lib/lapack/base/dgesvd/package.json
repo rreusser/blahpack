@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgesvd",
   "version": "0.0.0",
   "description": "Compute the singular value decomposition of a real matrix",

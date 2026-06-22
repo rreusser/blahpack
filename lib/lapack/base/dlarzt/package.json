@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarzt",
   "version": "0.0.0",
   "description": "Forms the triangular factor T of a block reflector",

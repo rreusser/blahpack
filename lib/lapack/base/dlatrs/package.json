@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlatrs",
   "version": "0.0.0",
   "description": "Solve a triangular system with scaling to prevent overflow",

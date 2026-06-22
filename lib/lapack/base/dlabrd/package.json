@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlabrd",
   "version": "0.0.0",
   "description": "Reduce the first NB rows and columns of a matrix to bidiagonal form",

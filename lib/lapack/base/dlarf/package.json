@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarf",
   "version": "0.0.0",
   "description": "Apply a real Householder reflector to a matrix.",

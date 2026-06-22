@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zla_syamv",
   "version": "0.0.0",
   "description": "Computes a matrix-vector product using a complex symmetric matrix to calculate error bounds",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhetrd_he2hb",
   "version": "0.0.0",
   "description": "Reduce a complex Hermitian matrix A to complex Hermitian band-diagonal form AB by a unitary similarity transformation: Q^H * A * Q = AB.",

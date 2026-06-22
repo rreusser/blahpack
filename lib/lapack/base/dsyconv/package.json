@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsyconv",
   "version": "0.0.0",
   "description": "Converts a symmetric matrix factored by dsytrf to standard L*D*L^T form and vice versa",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgeevx",
   "version": "0.0.0",
   "description": "Computes eigenvalues, eigenvectors, and reciprocal condition numbers for a real nonsymmetric matrix",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarzb",
   "version": "0.0.0",
   "description": "Applies a complex block reflector from RZ factorization to a general matrix",

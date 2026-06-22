@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtrsv",
   "version": "0.0.0",
   "description": "Solve a triangular system of equations with a single right-hand side",

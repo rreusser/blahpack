@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zspsv",
   "version": "0.0.0",
   "description": "Computes the solution to a complex system of linear equations A * X = B where A is symmetric in packed storage.",

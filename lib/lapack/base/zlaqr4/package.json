@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqr4",
   "version": "0.0.0",
   "description": "Complex multishift QR with aggressive early deflation (non-recursive)",

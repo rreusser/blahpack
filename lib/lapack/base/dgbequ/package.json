@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgbequ",
   "version": "0.0.0",
   "description": "Computes row and column scalings to equilibrate a real general band matrix.",

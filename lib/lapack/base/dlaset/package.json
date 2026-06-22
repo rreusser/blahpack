@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaset",
   "version": "0.0.0",
   "description": "Initialize a matrix to given diagonal and off-diagonal values",

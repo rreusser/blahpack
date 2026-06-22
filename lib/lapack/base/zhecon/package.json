@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhecon",
   "version": "0.0.0",
   "description": "Estimate the reciprocal condition number of a Hermitian indefinite matrix",

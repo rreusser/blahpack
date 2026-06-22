@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsbevx",
   "version": "0.0.0",
   "description": "Computes selected eigenvalues and optionally eigenvectors of a real symmetric band matrix.",

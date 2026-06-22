@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpttrf",
   "version": "0.0.0",
   "description": "Computes the LDL^T factorization of a real symmetric positive definite tridiagonal matrix",

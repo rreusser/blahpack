@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zupmtr",
   "version": "0.0.0",
   "description": "Overwrites a general complex matrix with a transformation from the unitary matrix Q returned by zhptrd.",

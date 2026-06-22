@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zptcon",
   "version": "0.0.0",
   "description": "Compute the reciprocal of the condition number of a complex Hermitian positive definite tridiagonal matrix",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqr1",
   "version": "0.0.0",
   "description": "Set initial vector for Francis QR step",

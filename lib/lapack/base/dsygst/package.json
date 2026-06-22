@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsygst",
   "version": "0.0.0",
   "description": "Reduces a symmetric definite generalized eigenproblem to standard form (blocked)",

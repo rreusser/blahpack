@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dtpmqrt",
   "version": "0.0.0",
   "description": "Apply Q from a triangular-pentagonal QR factorization (output of dtpqrt) to a stacked matrix C composed of A and B blocks",

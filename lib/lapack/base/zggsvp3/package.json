@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zggsvp3",
   "version": "0.0.0",
   "description": "Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair",

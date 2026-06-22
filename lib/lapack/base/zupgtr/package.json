@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zupgtr",
   "version": "0.0.0",
   "description": "Generates an orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order n, as returned by zhptrd.",

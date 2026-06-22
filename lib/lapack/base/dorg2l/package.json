@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorg2l",
   "version": "0.0.0",
   "description": "Generate an orthogonal matrix from a QL factorization (unblocked)",

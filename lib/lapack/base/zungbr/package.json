@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zungbr",
   "version": "0.0.0",
   "description": "Generate unitary matrices Q and P^H from bidiagonal reduction",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zungrq",
   "version": "0.0.0",
   "description": "Generates an M-by-N complex matrix Q with orthonormal rows, defined as the last M rows of a product of K elementary reflectors of order N.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsptrf",
   "version": "0.0.0",
   "description": "Computes the Bunch-Kaufman factorization of a complex symmetric matrix in packed storage.",

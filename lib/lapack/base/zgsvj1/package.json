@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgsvj1",
   "version": "0.0.0",
   "description": "Pre-processor for zgesvj applying Jacobi rotations to off-diagonal block pivots",

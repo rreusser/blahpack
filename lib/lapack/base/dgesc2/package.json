@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgesc2",
   "version": "0.0.0",
   "description": "Solves a system of linear equations with an LU factored matrix using complete pivoting",

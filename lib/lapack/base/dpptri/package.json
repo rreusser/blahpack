@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpptri",
   "version": "0.0.0",
   "description": "Computes the inverse of a real symmetric positive definite matrix in packed storage using the Cholesky factorization.",

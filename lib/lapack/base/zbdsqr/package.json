@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zbdsqr",
   "version": "0.0.0",
   "description": "Compute SVD of a real bidiagonal matrix",

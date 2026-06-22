@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsytri",
   "version": "0.0.0",
   "description": "Computes the inverse of a complex symmetric matrix using the factorization computed by zsytrf.",

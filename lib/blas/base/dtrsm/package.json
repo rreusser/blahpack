@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtrsm",
   "version": "0.0.0",
   "description": "Double-precision real triangular solve with multiple right-hand sides.",

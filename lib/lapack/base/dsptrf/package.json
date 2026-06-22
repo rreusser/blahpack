@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsptrf",
   "version": "0.0.0",
   "description": "Computes the Bunch-Kaufman factorization of a real symmetric matrix in packed storage.",

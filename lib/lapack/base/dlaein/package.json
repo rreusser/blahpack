@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaein",
   "version": "0.0.0",
   "description": "Uses inverse iteration to find a right or left eigenvector of a real upper Hessenberg matrix",

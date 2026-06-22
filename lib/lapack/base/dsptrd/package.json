@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsptrd",
   "version": "0.0.0",
   "description": "Reduces a real symmetric matrix in packed storage to tridiagonal form.",

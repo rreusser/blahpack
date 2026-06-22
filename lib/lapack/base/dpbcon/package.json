@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpbcon",
   "version": "0.0.0",
   "description": "Estimates the reciprocal condition number of a positive definite banded matrix",

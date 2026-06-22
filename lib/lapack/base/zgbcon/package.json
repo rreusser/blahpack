@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgbcon",
   "version": "0.0.0",
   "description": "Estimate reciprocal condition number of complex general band matrix",

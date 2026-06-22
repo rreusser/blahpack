@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dtrevc3",
   "version": "0.0.0",
   "description": "Computes eigenvectors of a real upper quasi-triangular matrix",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorm2r",
   "version": "0.0.0",
   "description": "Multiply a general matrix by the orthogonal matrix from a QR factorization (unblocked)",

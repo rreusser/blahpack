@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlag2s",
   "version": "0.0.0",
   "description": "Converts a double precision matrix to a single precision matrix",

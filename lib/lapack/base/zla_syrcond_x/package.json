@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zla_syrcond_x",
   "version": "0.0.0",
   "description": "Estimates the infinity norm condition number for a complex symmetric indefinite matrix with x scaling",

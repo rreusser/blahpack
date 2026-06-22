@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsysvx",
   "version": "0.0.0",
   "description": "Expert symmetric indefinite solver with condition estimation and iterative refinement",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsycon_3",
   "version": "0.0.0",
   "description": "Estimates the reciprocal of the 1-norm condition number of a real symmetric matrix using the factorization computed by dsytrf_rk",

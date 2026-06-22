@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zggbak",
   "version": "0.0.0",
   "description": "Back-transform eigenvectors of a balanced pair of matrices.",

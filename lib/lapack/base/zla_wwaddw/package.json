@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zla_wwaddw",
   "version": "0.0.0",
   "description": "Add a complex vector into a doubled-single accumulation vector.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaqp2",
   "version": "0.0.0",
   "description": "Computes a QR factorization with column pivoting using Level 2 BLAS",

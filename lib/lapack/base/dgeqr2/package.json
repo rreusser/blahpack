@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgeqr2",
   "version": "0.0.0",
   "description": "Compute QR factorization of a real matrix (unblocked).",

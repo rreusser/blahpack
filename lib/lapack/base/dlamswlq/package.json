@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlamswlq",
   "version": "0.0.0",
   "description": "Apply Q from a Short-Wide LQ (SWLQ) factorization to a matrix",

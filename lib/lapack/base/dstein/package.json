@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dstein",
   "version": "0.0.0",
   "description": "Compute eigenvectors of a real symmetric tridiagonal matrix by inverse iteration",

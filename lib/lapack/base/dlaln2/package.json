@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaln2",
   "version": "0.0.0",
   "description": "Solves a 1x1 or 2x2 linear system with scaling to prevent overflow",

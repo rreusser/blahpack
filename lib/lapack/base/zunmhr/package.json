@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunmhr",
   "version": "0.0.0",
   "description": "Multiplies a matrix by the unitary matrix Q from Hessenberg reduction",

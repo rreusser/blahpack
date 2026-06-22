@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorbdb3",
   "version": "0.0.0",
   "description": "Simultaneously bidiagonalize the blocks of a tall and skinny matrix with orthonormal columns (M-P minimum dimension variant)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsycon_rook",
   "version": "0.0.0",
   "description": "Estimate reciprocal condition number of a real symmetric matrix using rook-pivoted factorization",

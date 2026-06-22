@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dtgsja",
   "version": "0.0.0",
   "description": "Computes the generalized SVD of two upper triangular matrices via Jacobi-Kogbetliantz iteration",

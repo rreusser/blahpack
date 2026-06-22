@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgbsv",
   "version": "0.0.0",
   "description": "Solve a banded system of linear equations",

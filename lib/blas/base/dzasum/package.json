@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dzasum",
   "version": "0.0.0",
   "description": "Compute the sum of absolute values of a complex vector",

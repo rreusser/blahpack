@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgeqrt3",
   "version": "0.0.0",
   "description": "recursively computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q",

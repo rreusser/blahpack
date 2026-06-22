@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlahef",
   "version": "0.0.0",
   "description": "Complex Hermitian indefinite panel factorization (blocked Bunch-Kaufman)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgees",
   "version": "0.0.0",
   "description": "Compute eigenvalues and Schur decomposition of a complex matrix",

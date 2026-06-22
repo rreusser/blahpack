@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpftrf",
   "version": "0.0.0",
   "description": "Computes the Cholesky factorization of a complex Hermitian positive definite matrix in Rectangular Full Packed format.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlag2",
   "version": "0.0.0",
   "description": "Compute the eigenvalues of a 2-by-2 generalized eigenvalue problem.",

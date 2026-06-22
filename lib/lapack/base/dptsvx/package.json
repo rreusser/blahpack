@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dptsvx",
   "version": "0.0.0",
   "description": "Solves a real system A * X = B where A is symmetric positive definite tridiagonal, with condition estimation and error bounds.",

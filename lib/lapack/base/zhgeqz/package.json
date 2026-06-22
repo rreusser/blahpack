@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhgeqz",
   "version": "0.0.0",
   "description": "Implement the single-shift QZ method for computing generalized eigenvalues of a complex matrix pair in Hessenberg-triangular form.",

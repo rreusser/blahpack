@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dggsvp3",
   "version": "0.0.0",
   "description": "Compute the preprocessing for the generalized SVD of real matrices A and B",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaset",
   "version": "0.0.0",
   "description": "Initialize a complex matrix to given values",

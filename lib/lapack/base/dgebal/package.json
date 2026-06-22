@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgebal",
   "version": "0.0.0",
   "description": "Balances a general real matrix for eigenvalue computation",

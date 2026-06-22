@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaic1",
   "version": "0.0.0",
   "description": "Applies one step of incremental condition estimation for complex matrices",

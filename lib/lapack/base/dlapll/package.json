@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlapll",
   "version": "0.0.0",
   "description": "Measures linear dependence of two vectors via QR factorization and SVD",

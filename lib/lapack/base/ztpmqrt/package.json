@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztpmqrt",
   "version": "0.0.0",
   "description": "Apply complex unitary matrix Q (or Q**H) from a triangular-pentagonal compact-WY block reflector to a stacked matrix C.",

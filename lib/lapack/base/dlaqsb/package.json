@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaqsb",
   "version": "0.0.0",
   "description": "Equilibrates a real symmetric band matrix using scaling factors.",

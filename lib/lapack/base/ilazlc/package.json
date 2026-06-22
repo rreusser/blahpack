@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ilazlc",
   "version": "0.0.0",
   "description": "Scan a complex matrix for its last non-zero column",

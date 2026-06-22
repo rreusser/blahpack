@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsteqr",
   "version": "0.0.0",
   "description": "Compute eigenvalues and eigenvectors of a symmetric tridiagonal matrix (complex accumulation)",

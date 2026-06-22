@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarz",
   "version": "0.0.0",
   "description": "Applies an elementary reflector from RZ factorization to a general matrix",

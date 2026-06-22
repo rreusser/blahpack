@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsytri2x",
   "version": "0.0.0",
   "description": "Compute the inverse of a complex symmetric indefinite matrix (classic Bunch-Kaufman, blocked worker)",

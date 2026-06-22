@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpbtf2",
   "version": "0.0.0",
   "description": "Compute Cholesky factorization of a Hermitian positive definite banded matrix (unblocked)",

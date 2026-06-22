@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/drot",
   "version": "0.0.0",
   "description": "Apply a Givens plane rotation",

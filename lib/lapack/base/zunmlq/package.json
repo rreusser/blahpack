@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunmlq",
   "version": "0.0.0",
   "description": "Apply unitary matrix Q from LQ factorization",

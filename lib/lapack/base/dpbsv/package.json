@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpbsv",
   "version": "0.0.0",
   "description": "Solve a banded symmetric positive definite system of linear equations",

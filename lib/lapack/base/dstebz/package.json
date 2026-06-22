@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dstebz",
   "version": "0.0.0",
   "description": "Computes selected eigenvalues of a real symmetric tridiagonal matrix by bisection",

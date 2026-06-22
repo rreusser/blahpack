@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zsprfs",
   "version": "0.0.0",
   "description": "Improves the computed solution to a complex system A * X = B where A is symmetric in packed storage and provides error bounds.",

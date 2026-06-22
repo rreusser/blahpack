@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgetc2",
   "version": "0.0.0",
   "description": "Computes the LU factorization with complete pivoting of the general n-by-n matrix.",

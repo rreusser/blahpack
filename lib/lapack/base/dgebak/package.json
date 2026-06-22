@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgebak",
   "version": "0.0.0",
   "description": "Back-transforms eigenvectors after balancing by dgebal",

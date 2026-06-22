@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgeqrt",
   "version": "0.0.0",
   "description": "Compute a blocked QR factorization of a complex M-by-N matrix using the compact WY representation of Q.",

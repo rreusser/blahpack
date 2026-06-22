@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlascl",
   "version": "0.0.0",
   "description": "Multiply a matrix by a real scalar CTO/CFROM",

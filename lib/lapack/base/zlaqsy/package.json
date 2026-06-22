@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqsy",
   "version": "0.0.0",
   "description": "Scales a symmetric/Hermitian matrix using scaling factors computed by zpoequ.",

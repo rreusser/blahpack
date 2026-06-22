@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaeda",
   "version": "0.0.0",
   "description": "Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhsein",
   "version": "0.0.0",
   "description": "Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix",

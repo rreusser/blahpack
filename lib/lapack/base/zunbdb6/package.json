@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunbdb6",
   "version": "0.0.0",
   "description": "orthogonalizes a complex column vector against the columns of a complex orthonormal basis matrix",

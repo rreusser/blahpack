@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zppsvx",
   "version": "0.0.0",
   "description": "Solves a complex system A * X = B where A is Hermitian positive definite in packed storage, with equilibration, condition estimation, and error bounds.",

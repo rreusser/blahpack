@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zunbdb2",
   "version": "0.0.0",
   "description": "Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix [X11; X21] with orthonormal columns (P <= min(M-P, Q, M-Q))",

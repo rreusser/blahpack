@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgtts2",
   "version": "0.0.0",
   "description": "Solve tridiagonal system using LU factorization (complex)",

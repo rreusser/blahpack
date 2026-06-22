@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dla_wwaddw",
   "version": "0.0.0",
   "description": "Adds a vector in doubled-single precision representation",

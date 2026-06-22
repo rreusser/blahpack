@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztgsy2",
   "version": "0.0.0",
   "description": "Solves the generalized Sylvester matrix equation for small subsystems.",

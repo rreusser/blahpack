@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarrb",
   "version": "0.0.0",
   "description": "Provides limited bisection to locate eigenvalues for more accuracy",

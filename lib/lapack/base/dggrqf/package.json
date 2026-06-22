@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dggrqf",
   "version": "0.0.0",
   "description": "Computes a generalized RQ factorization of an M-by-N matrix A and a P-by-N matrix B.",

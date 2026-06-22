@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/iladlr",
   "version": "0.0.0",
   "description": "Find the last non-zero row of a real matrix.",

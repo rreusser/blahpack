@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaqr5",
   "version": "0.0.0",
   "description": "Performs a single small-bulge multi-shift QR sweep",

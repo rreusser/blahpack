@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlatrs3",
   "version": "0.0.0",
   "description": "solves a triangular system of equations with the scale factors set to prevent overflow.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhecon_3",
   "version": "0.0.0",
   "description": "Estimates the reciprocal of the 1-norm condition number of a complex Hermitian matrix using the factorization computed by zhetrf_rk",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaisnan",
   "version": "0.0.0",
   "description": "Test for NaN by comparing two arguments for inequality",

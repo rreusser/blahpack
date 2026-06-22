@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaswp",
   "version": "0.0.0",
   "description": "Perform a series of row interchanges on a matrix A using pivot indices stored in IPIV.",

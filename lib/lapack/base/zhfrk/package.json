@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zhfrk",
   "version": "0.0.0",
   "description": "Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.",

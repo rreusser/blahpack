@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarrk",
   "version": "0.0.0",
   "description": "Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy",

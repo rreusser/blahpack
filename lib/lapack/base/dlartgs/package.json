@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlartgs",
   "version": "0.0.0",
   "description": "Generates a plane rotation for the bidiagonal SVD implicit QR iteration",

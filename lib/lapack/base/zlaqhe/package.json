@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqhe",
   "version": "0.0.0",
   "description": "Equilibrate a Hermitian matrix using scaling factors",

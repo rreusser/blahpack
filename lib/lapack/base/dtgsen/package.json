@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dtgsen",
   "version": "0.0.0",
   "description": "Reorders the generalized real Schur decomposition of a real matrix pair",

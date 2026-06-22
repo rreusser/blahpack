@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dtrmv",
   "version": "0.0.0",
   "description": "Perform one of the matrix-vector operations x := A*x or x := A**T*x where A is an N by N upper or lower triangular matrix.",

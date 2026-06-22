@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dsyr",
   "version": "0.0.0",
   "description": "Perform the symmetric rank 1 operation A := alpha*x*x**T + A",

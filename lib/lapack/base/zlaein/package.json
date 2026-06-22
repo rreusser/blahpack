@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaein",
   "version": "0.0.0",
   "description": "Uses inverse iteration to find an eigenvector of a complex upper Hessenberg matrix",

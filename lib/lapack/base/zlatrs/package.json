@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlatrs",
   "version": "0.0.0",
   "description": "Solves a complex triangular system with scaling to prevent overflow",

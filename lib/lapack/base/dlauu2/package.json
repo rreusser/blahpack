@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlauu2",
   "version": "0.0.0",
   "description": "Compute the product of an upper or lower triangular matrix with its transpose (unblocked)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarscl2",
   "version": "0.0.0",
   "description": "Perform reciprocal diagonal scaling on a complex matrix.",

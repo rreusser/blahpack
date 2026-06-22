@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarfx",
   "version": "0.0.0",
   "description": "Applies an elementary reflector to a general matrix with unrolled loops",

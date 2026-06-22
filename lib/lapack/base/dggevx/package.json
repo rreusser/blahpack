@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dggevx",
   "version": "0.0.0",
   "description": "Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of real matrices",

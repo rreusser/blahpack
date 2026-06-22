@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dpotrf",
   "version": "0.0.0",
   "description": "Compute the Cholesky factorization of a real symmetric positive definite matrix.",

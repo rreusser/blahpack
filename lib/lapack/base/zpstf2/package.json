@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpstf2",
   "version": "0.0.0",
   "description": "Computes the Cholesky factorization with complete pivoting of a complex Hermitian positive semi-definite matrix (unblocked algorithm).",

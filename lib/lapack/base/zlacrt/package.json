@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlacrt",
   "version": "0.0.0",
   "description": "Apply a plane rotation with complex cosine and sine to two complex vectors.",

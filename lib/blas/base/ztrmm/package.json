@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/ztrmm",
   "version": "0.0.0",
   "description": "Perform one of the matrix-matrix operations B := alpha*op(A)*B or B := alpha*B*op(A)",

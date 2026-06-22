@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqgb",
   "version": "0.0.0",
   "description": "Equilibrates a complex general band matrix using row and column scaling factors.",

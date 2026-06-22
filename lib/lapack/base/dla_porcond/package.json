@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dla_porcond",
   "version": "0.0.0",
   "description": "Estimates the Skeel condition number for a symmetric positive-definite matrix",

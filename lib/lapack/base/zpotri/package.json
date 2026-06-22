@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpotri",
   "version": "0.0.0",
   "description": "Compute the inverse of a complex Hermitian positive definite matrix using its Cholesky factorization",

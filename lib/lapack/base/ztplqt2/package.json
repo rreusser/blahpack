@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/ztplqt2",
   "version": "0.0.0",
   "description": "Computes LQ factorization of a complex triangular-pentagonal matrix using compact WY representation (unblocked)",

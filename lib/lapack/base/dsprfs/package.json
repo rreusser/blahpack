@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsprfs",
   "version": "0.0.0",
   "description": "Improves the computed solution to a real system A * X = B where A is symmetric in packed storage and provides error bounds.",

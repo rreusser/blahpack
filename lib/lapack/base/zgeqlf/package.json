@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zgeqlf",
   "version": "0.0.0",
   "description": "Computes a QL factorization of a complex general matrix",

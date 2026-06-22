@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlatrd",
   "version": "0.0.0",
   "description": "Reduce NB rows and columns of a Hermitian matrix to tridiagonal form",

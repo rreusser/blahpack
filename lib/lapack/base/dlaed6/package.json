@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlaed6",
   "version": "0.0.0",
   "description": "Compute one Newton step in the solution of the secular equation.",

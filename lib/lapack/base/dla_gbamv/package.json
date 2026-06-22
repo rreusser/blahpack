@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dla_gbamv",
   "version": "0.0.0",
   "description": "Performs a matrix-vector operation to calculate error bounds on banded matrices",

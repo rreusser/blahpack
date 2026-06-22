@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarmm",
   "version": "0.0.0",
   "description": "Compute a safe BLAS-style constant for scaling matrix norms",

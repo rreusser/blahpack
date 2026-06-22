@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpotrs",
   "version": "0.0.0",
   "description": "Solves a Hermitian positive definite system using Cholesky factorization (complex double-precision).",

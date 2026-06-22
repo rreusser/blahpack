@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlabad",
   "version": "0.0.0",
   "description": "Take the square root of the overflow and underflow thresholds if the exponent range is very large.",

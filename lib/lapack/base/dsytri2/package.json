@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsytri2",
   "version": "0.0.0",
   "description": "Computes the inverse of a real symmetric indefinite matrix using the factorization produced by dsytrf, dispatching to dsytri (unblocked) or dsytri2x (blocked)",

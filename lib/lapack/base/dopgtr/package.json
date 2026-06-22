@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dopgtr",
   "version": "0.0.0",
   "description": "Generates a real orthogonal matrix Q from the elementary reflectors returned by dsptrd.",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaswp",
   "version": "0.0.0",
   "description": "Performs a series of row interchanges (complex double-precision).",

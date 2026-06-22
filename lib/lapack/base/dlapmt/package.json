@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlapmt",
   "version": "0.0.0",
   "description": "Permute columns of a matrix",

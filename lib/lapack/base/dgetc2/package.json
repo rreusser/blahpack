@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgetc2",
   "version": "0.0.0",
   "description": "LU factorization with complete pivoting of a general NxN matrix",

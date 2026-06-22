@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dnrm2",
   "version": "0.0.0",
   "description": "Compute the Euclidean norm of a real vector.",

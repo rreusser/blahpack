@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dorglq",
   "version": "0.0.0",
   "description": "Generate an orthogonal matrix from an LQ factorization (blocked)",

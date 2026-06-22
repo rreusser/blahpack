@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlarrf",
   "version": "0.0.0",
   "description": "Finds a new relatively robust representation for eigenvalues",

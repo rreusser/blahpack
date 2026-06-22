@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqps",
   "version": "0.0.0",
   "description": "QR factorization with column pivoting (blocked panel)",

@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zungr2",
   "version": "0.0.0",
   "description": "Generates all or part of the unitary matrix Q from an RQ factorization determined by zgerqf (unblocked algorithm).",

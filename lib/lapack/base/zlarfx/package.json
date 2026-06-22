@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlarfx",
   "version": "0.0.0",
   "description": "Applies an elementary reflector to a general rectangular matrix with loop unrolling when the reflector has order at most 10.",

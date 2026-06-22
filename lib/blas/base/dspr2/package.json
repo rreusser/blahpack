@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/blas/base/dspr2",
   "version": "0.0.0",
   "description": "Perform symmetric rank-2 update of a packed matrix",

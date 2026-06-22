@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dptts2",
   "version": "0.0.0",
   "description": "Solves a tridiagonal system using the LDL^T factorization from dpttrf",

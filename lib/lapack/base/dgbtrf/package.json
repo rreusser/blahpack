@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dgbtrf",
   "version": "0.0.0",
   "description": "Compute LU factorization of a banded matrix (blocked)",

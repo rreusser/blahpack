@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zlaqr5",
   "version": "0.0.0",
   "description": "Complex multi-shift QR sweep",

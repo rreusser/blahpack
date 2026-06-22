@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dsytrf_aa",
   "version": "0.0.0",
   "description": "Computes the factorization of a real symmetric matrix using Aasen's algorithm (blocked)",

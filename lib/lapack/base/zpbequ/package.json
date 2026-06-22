@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/zpbequ",
   "version": "0.0.0",
   "description": "Compute row and column scalings to equilibrate a complex Hermitian positive definite band matrix.",

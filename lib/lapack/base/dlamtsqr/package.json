@@ -1,4 +1,5 @@
 {
+	"type": "module",
   "name": "@stdlib/lapack/base/dlamtsqr",
   "version": "0.0.0",
   "description": "applies an orthogonal matrix from a TSQR factorization to a real M-by-N matrix",

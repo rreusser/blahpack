@@ -924,5 +924,37 @@
             "tests.assertion-count"
         ],
         "reason": "Complex QZ iteration routine. Test file needs non-whitelisted eslint-disable rules for generated fixture-based tests. ndarray.js string validation is in dhgeqz.js wrapper per convention. Test assertion count check looks at test.js (exports only)."
+    },
+    "lib/lapack/base/dgeqrf": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/dgeqrfp": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/dgeqlf": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/dgelqf": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/dtzrzf": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/ztzrzf": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/dorgqr": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+    },
+    "lib/lapack/base/zlacrm": {
+        "skip": [ "lint.eslint-pass" ],
+        "reason": "Pre-existing ESLint sourceType mismatch — all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
     }
 }

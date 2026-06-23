@@ -41,12 +41,12 @@ YEAR = '2025'
 LICENSE_HEADER = ""
 
 STDLIB_VALIDATORS = {
-    'uplo': ('isMatrixTriangle', '@stdlib/blas/base/assert/is-matrix-triangle', 'a valid matrix triangle'),
-    'trans': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation', 'a valid transpose operation'),
-    'transa': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation', 'a valid transpose operation'),
-    'transb': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation', 'a valid transpose operation'),
-    'diag': ('isDiagonalType', '@stdlib/blas/base/assert/is-diagonal-type', 'a valid diagonal type'),
-    'side': ('isOperationSide', '@stdlib/blas/base/assert/is-operation-side', 'a valid operation side'),
+    'uplo': ('isMatrixTriangle', '@stdlib/blas/base/assert/is-matrix-triangle/lib/index.js', 'a valid matrix triangle'),
+    'trans': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js', 'a valid transpose operation'),
+    'transa': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js', 'a valid transpose operation'),
+    'transb': ('isTransposeOperation', '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js', 'a valid transpose operation'),
+    'diag': ('isDiagonalType', '@stdlib/blas/base/assert/is-diagonal-type/lib/index.js', 'a valid diagonal type'),
+    'side': ('isOperationSide', '@stdlib/blas/base/assert/is-operation-side/lib/index.js', 'a valid operation side'),
 }
 
 ORDINALS = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth',
@@ -158,12 +158,11 @@ def gen_base_js(routine, sig, description):
     """Generate lib/base.js — core algorithm stub with correct signature."""
     args = ', '.join(sig['js_args'])
     eslint = ' // eslint-disable-line max-len, max-params' if len(sig['js_args']) > 6 else ''
+    eslint_block = '\n/* eslint-disable max-len, max-params */\n' if len(sig['js_args']) > 6 else ''
     returns_line = gen_jsdoc_returns(sig)
     returns_doc = f'\n{returns_line}' if returns_line else ''
     return f"""{LICENSE_HEADER}
-
-'use strict';
-
+{eslint_block}
 // MAIN //
 
 /**
@@ -180,7 +179,7 @@ function {routine}( {args} ) {{{eslint}
 
 // EXPORTS //
 
-module.exports = {routine};
+export default {routine};
 """
 
 
@@ -207,18 +206,18 @@ def gen_ndarray_js(routine, sig, package, description):
                 'ordinal': ordinal,
             })
 
-    # Build requires
-    requires = []
+    # Build imports
+    imports = []
     seen_vars = set()
     for sp in string_params:
         if sp['var'] not in seen_vars:
-            requires.append(f"var {sp['var']} = require( '{sp['require']}' );")
+            imports.append(f"import {sp['var']} from '{sp['require']}';")
             seen_vars.add(sp['var'])
     if string_params:
-        requires.append("var format = require( '@stdlib/string/format' );")
-    requires.append("var base = require( './base.js' );")
+        imports.append("import format from '@stdlib/string/format/lib/index.js';")
+    imports.append("import base from './base.js';")
 
-    requires_block = '\n'.join(requires)
+    imports_block = '\n'.join(imports)
 
     # Build validation code
     validation_lines = []
@@ -239,13 +238,13 @@ def gen_ndarray_js(routine, sig, package, description):
     body = validation_block + '\n' if validation_block else ''
     body += f'\treturn base( {base_args} );{eslint_call}'
 
+    eslint_block = '\n/* eslint-disable max-len, max-params */\n' if len(sig['js_args']) > 6 else ''
+
     return f"""{LICENSE_HEADER}
-
-'use strict';
-
+{eslint_block}
 // MODULES //
 
-{requires_block}
+{imports_block}
 
 
 // MAIN //
@@ -262,7 +261,7 @@ function {routine}( {args} ) {{{eslint}
 
 // EXPORTS //
 
-module.exports = {routine};
+export default {routine};
 """
 
 
@@ -301,11 +300,11 @@ def gen_routine_js(routine, sig, package, description):
                 continue
         i += 1
 
-    # Build requires
-    requires = []
+    # Build imports
+    imports = []
     if has_order:
-        requires.append("var isLayout = require( '@stdlib/blas/base/assert/is-layout' );")
-    requires.append("var format = require( '@stdlib/string/format' );")
+        imports.append("import isLayout from '@stdlib/blas/base/assert/is-layout/lib/index.js';")
+    imports.append("import format from '@stdlib/string/format/lib/index.js';")
 
     # String param validators
     string_params = []
@@ -322,16 +321,16 @@ def gen_routine_js(routine, sig, package, description):
                 'ordinal': ordinal,
             })
             if var_name not in seen_vars:
-                requires.append(f"var {var_name} = require( '{require_path}' );")
+                imports.append(f"import {var_name} from '{require_path}';")
                 seen_vars.add(var_name)
 
     if array_ld_map:
-        requires.append("var max = require( '@stdlib/math/base/special/fast/max' );")
+        imports.append("import max from '@stdlib/math/base/special/fast/max/lib/index.js';")
     if arrays_1d and not has_order:
-        requires.append("var stride2offset = require( '@stdlib/strided/base/stride2offset' );")
-    requires.append("var base = require( './base.js' );")
+        imports.append("import stride2offset from '@stdlib/strided/base/stride2offset/lib/index.js';")
+    imports.append("import base from './base.js';")
 
-    requires_block = '\n'.join(requires)
+    requires_block = '\n'.join(imports)
 
     # Build JSDoc params
     jsdoc_lines = []
@@ -505,8 +504,6 @@ def gen_routine_js(routine, sig, package, description):
 
     return f"""{LICENSE_HEADER}
 {eslint_disable}
-'use strict';
-
 // MODULES //
 
 {requires_block}
@@ -526,7 +523,7 @@ function {routine}( {args_str} ) {{{eslint}
 
 // EXPORTS //
 
-module.exports = {routine};
+export default {routine};
 """
 
 
@@ -534,13 +531,11 @@ def gen_main_js(routine):
     """Generate lib/main.js — attaches .ndarray to the routine."""
     return f"""{LICENSE_HEADER}
 
-'use strict';
-
 // MODULES //
 
-var setReadOnly = require( '@stdlib/utils/define-nonenumerable-read-only-property' );
-var {routine} = require( './{routine}.js' );
-var ndarray = require( './ndarray.js' );
+import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
+import {routine} from './{routine}.js';
+import ndarray from './ndarray.js';
 
 
 // MAIN //
@@ -550,36 +545,16 @@ setReadOnly( {routine}, 'ndarray', ndarray );
 
 // EXPORTS //
 
-module.exports = {routine};
+export default {routine};
 """
 
 
 def gen_index_js(routine, package, description):
     """Generate lib/index.js — entry point."""
-    mod_path = f'@stdlib/{package}/base/{routine}'
     return f"""{LICENSE_HEADER}
 
-'use strict';
-
-/**
-* {description}
-*
-* @module {mod_path}
-*
-* @example
-* // TODO: Add example
-*/
-
-// MODULES //
-
-var main = require( './main.js' );
-
-
-// EXPORTS //
-
-module.exports = main;
-
-// exports: {{ "ndarray": "{routine}.ndarray" }}
+export {{ default }} from './main.js';
+export {{ default as ndarray }} from './ndarray.js';
 """
 
 
@@ -599,6 +574,7 @@ def gen_package_json(routine, package, description, sig):
         "version": "0.0.0",
         "description": description,
         "license": "Apache-2.0",
+        "type": "module",
         "author": {
             "name": "The Stdlib Authors",
             "url": "https://github.com/stdlib-js/stdlib/graphs/contributors"
@@ -647,13 +623,11 @@ def gen_test_js(routine, package, sig):
 
 /* eslint-disable no-restricted-syntax, stdlib/first-unit-test */
 
-'use strict';
-
 // MODULES //
 
-var test = require( 'node:test' );
-var assert = require( 'node:assert/strict' );
-var {routine} = require( './../lib' );
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {routine} from './../lib/index.js';
 
 
 // TESTS //
@@ -723,14 +697,12 @@ def gen_test_routine_js(routine, package, sig, description):
 
 /* eslint-disable no-restricted-syntax, stdlib/first-unit-test */
 
-'use strict';
-
 // MODULES //
 
-var test = require( 'node:test' );
-var assert = require( 'node:assert/strict' );
-var Float64Array = require( '@stdlib/array/float64' );
-var {routine} = require( './../lib/{routine}.js' );
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import Float64Array from '@stdlib/array/float64/lib/index.js';
+import {routine} from './../lib/{routine}.js';
 
 
 // TESTS //
@@ -753,14 +725,12 @@ def gen_test_ndarray_js(routine, package, sig, description):
 
 /* eslint-disable no-restricted-syntax, stdlib/first-unit-test */
 
-'use strict';
-
 // MODULES //
 
-var test = require( 'node:test' );
-var assert = require( 'node:assert/strict' );
-var Float64Array = require( '@stdlib/array/float64' );
-var {routine} = require( './../lib/ndarray.js' );
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import Float64Array from '@stdlib/array/float64/lib/index.js';
+import {routine} from './../lib/ndarray.js';
 
 
 // TESTS //
@@ -882,7 +852,7 @@ limitations under the License.
 ## Usage
 
 ```javascript
-var {routine} = require( '{mod_path}' );
+import {routine} from '{mod_path}/lib/index.js';
 ```
 
 #### {routine}( {blas_args_str} )
@@ -890,7 +860,7 @@ var {routine} = require( '{mod_path}' );
 {description}
 
 ```javascript
-var Float64Array = require( '@stdlib/array/float64' );
+import Float64Array from '@stdlib/array/float64/lib/index.js';
 
 // TODO: Add usage example
 ```
@@ -904,7 +874,7 @@ The function has the following parameters:
 {description}, using alternative indexing semantics.
 
 ```javascript
-var Float64Array = require( '@stdlib/array/float64' );
+import Float64Array from '@stdlib/array/float64/lib/index.js';
 
 // TODO: Add usage example
 ```
@@ -1215,10 +1185,10 @@ def gen_examples_js(routine, package, sig):
         if has_2d:
             return f"""{LICENSE_HEADER}
 
-'use strict';
+// MODULES //
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var {routine} = require( '{mod_path}' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import {routine} from '{mod_path}/lib/index.js';
 
 var M = 3;
 var N = 3;
@@ -1232,10 +1202,10 @@ console.log( C ); // eslint-disable-line no-console
 """
         return f"""{LICENSE_HEADER}
 
-'use strict';
+// MODULES //
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var {routine} = require( '{mod_path}' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import {routine} from '{mod_path}/lib/index.js';
 
 var N = 10;
 var x = new Complex128Array( N );
@@ -1249,10 +1219,10 @@ console.log( y ); // eslint-disable-line no-console
     if has_2d:
         return f"""{LICENSE_HEADER}
 
-'use strict';
+// MODULES //
 
-var discreteUniform = require( '@stdlib/random/array/discrete-uniform' );
-var {routine} = require( '{mod_path}' );
+import discreteUniform from '@stdlib/random/array/discrete-uniform/lib/index.js';
+import {routine} from '{mod_path}/lib/index.js';
 
 var opts = {{
 \t'dtype': 'float64'
@@ -1270,10 +1240,10 @@ console.log( C ); // eslint-disable-line no-console
 """
     return f"""{LICENSE_HEADER}
 
-'use strict';
+// MODULES //
 
-var discreteUniform = require( '@stdlib/random/array/discrete-uniform' );
-var {routine} = require( '{mod_path}' );
+import discreteUniform from '@stdlib/random/array/discrete-uniform/lib/index.js';
+import {routine} from '{mod_path}/lib/index.js';
 
 var opts = {{
 \t'dtype': 'float64'
@@ -1361,25 +1331,23 @@ def gen_benchmark_js(routine, package, sig, description):
             array_creates = '\n'.join(f"\tvar {name} = uniform( N, -10.0, 10.0, options );" for name in array_names)
 
     if is_complex:
-        random_import = "var Complex128Array = require( '@stdlib/array/complex128' );"
+        random_import = "import Complex128Array from '@stdlib/array/complex128/lib/index.js';"
         options_block = ""
     else:
-        random_import = "var uniform = require( '@stdlib/random/array/uniform' );"
+        random_import = "import uniform from '@stdlib/random/array/uniform/lib/index.js';"
         options_block = "var options = {\n\t'dtype': 'float64'\n};\n\n\n"
 
     return f"""{LICENSE_HEADER}
 
-'use strict';
-
 // MODULES //
 
-var bench = require( '@stdlib/bench' );
+import bench from '@stdlib/bench/lib/index.js';
 {random_import}
-var isnan = require( '@stdlib/math/base/assert/is-nan' );
-var pow = require( '@stdlib/math/base/special/pow' );
-var format = require( '@stdlib/string/format' );
-var pkg = require( './../package.json' ).name;
-var {routine} = require( './../lib/{routine}.js' );
+import isnan from '@stdlib/math/base/assert/is-nan/lib/index.js';
+import pow from '@stdlib/math/base/special/pow/lib/index.js';
+import format from '@stdlib/string/format/lib/index.js';
+import {{ name as pkg }} from './../package.json' with {{ type: 'json' }};
+import {routine} from './../lib/{routine}.js';
 
 
 // VARIABLES //
@@ -1507,25 +1475,23 @@ def gen_benchmark_ndarray_js(routine, package, sig, description):
         array_creates = '\n'.join(f"\tvar {name} = uniform( N, -10.0, 10.0, options );" for name in array_names)
 
     if is_complex:
-        random_import = "var Complex128Array = require( '@stdlib/array/complex128' );"
+        random_import = "import Complex128Array from '@stdlib/array/complex128/lib/index.js';"
         options_block = ""
     else:
-        random_import = "var uniform = require( '@stdlib/random/array/uniform' );"
+        random_import = "import uniform from '@stdlib/random/array/uniform/lib/index.js';"
         options_block = "var options = {\n\t'dtype': 'float64'\n};\n\n\n"
 
     return f"""{LICENSE_HEADER}
 
-'use strict';
-
 // MODULES //
 
-var bench = require( '@stdlib/bench' );
+import bench from '@stdlib/bench/lib/index.js';
 {random_import}
-var isnan = require( '@stdlib/math/base/assert/is-nan' );
-var pow = require( '@stdlib/math/base/special/pow' );
-var format = require( '@stdlib/string/format' );
-var pkg = require( './../package.json' ).name;
-var {routine} = require( './../lib/ndarray.js' );
+import isnan from '@stdlib/math/base/assert/is-nan/lib/index.js';
+import pow from '@stdlib/math/base/special/pow/lib/index.js';
+import format from '@stdlib/string/format/lib/index.js';
+import {{ name as pkg }} from './../package.json' with {{ type: 'json' }};
+import {routine} from './../lib/ndarray.js';
 
 
 // VARIABLES //
@@ -1668,7 +1634,7 @@ def gen_test_ts(routine, package, sig, description):
 
     return f"""{license}
 
-import {routine} = require( './index' );
+import {routine} from './index';
 
 
 // TESTS //

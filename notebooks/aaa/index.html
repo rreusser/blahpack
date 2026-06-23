@@ -5,7 +5,7 @@
   <script id="intro" type="text/markdown">
     # Rational Approximation with blahpack
 
-    This notebook demonstrates [blahpack](https://github.com/rreusser/notes/tree/main/blahpack/), a JavaScript implementation of reference BLAS and LAPACK routines translated from Fortran. We exercise these routines through the **AAA algorithm** for rational approximation and its applications to solving PDEs via complex rational functions.
+    This notebook demonstrates [blahpack](https://github.com/rreusser/blahpack/tree/main/blahpack/), a JavaScript implementation of reference BLAS and LAPACK routines translated from Fortran. We exercise these routines through the **AAA algorithm** for rational approximation and its applications to solving PDEs via complex rational functions.
 
     The chain of LAPACK dependencies is: **zgesvd** (complex SVD, bidiagonal QR) drives the AAA iteration; **zggev** (QZ algorithm) extracts poles and zeros; **Householder QR** (via a standalone solver) handles the least-squares fits. All computation runs in a web worker; visualizations use WebGPU.
 

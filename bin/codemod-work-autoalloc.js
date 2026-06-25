@@ -69,6 +69,42 @@ function fortranExprToJS( s ) {
 }
 
 /**
+ * Clean a raw Fortran LWORK/workspace expression string:
+ *   - Strip Fortran ! inline comments
+ *   - Strip trailing period / semicolon
+ *   - Handle "N when NORM = '...'..." prose (take value before "when")
+ *   - Stop at English prose that follows a complete expression
+ *     (e.g. ", and for best performance" or "where NB is...")
+ */
+function cleanFortranLworkExpr( raw ) {
+	var expr = raw.trim()
+		.replace( /\s*!.*$/, '' )
+		.replace( /[.;]\s*$/, '' )
+		.trim();
+	if ( / when /i.test( expr ) ) {
+		expr = expr.replace( / when .*/i, '' ).trim();
+	}
+	// Walk paren-depth to stop before trailing English prose
+	var depth = 0;
+	var started = false;
+	var i;
+	var ch;
+	for ( i = 0; i < expr.length; i++ ) {
+		ch = expr[ i ];
+		if ( ch === '(' ) { depth++; started = true; }
+		else if ( ch === ')' ) { depth--; }
+		else { started = true; }
+		if ( depth === 0 && started && i + 1 < expr.length ) {
+			var rest = expr.slice( i + 1 );
+			if ( /^[,\s]+(and|or|where|if|for|when)\b/i.test( rest ) ) {
+				return expr.slice( 0, i + 1 ).trim();
+			}
+		}
+	}
+	return expr;
+}
+
+/**
  * Extract the minimum workspace size from Fortran source comments.
  *
  * Tries two patterns in order:
@@ -94,9 +130,7 @@ function extractSizeFromFortran( fortran, workArg, lenArg, varName ) {
 	for ( i = 0; i < lines.length; i++ ) {
 		m = lenRe.exec( lines[ i ] );
 		if ( m ) {
-			expr = m[ 1 ].trim()
-				.replace( /\s*[,!].*$/, '' )
-				.trim();
+			expr = cleanFortranLworkExpr( m[ 1 ] );
 			if ( expr ) {
 				return {
 					prepLines: [],
@@ -110,7 +144,7 @@ function extractSizeFromFortran( fortran, workArg, lenArg, varName ) {
 	for ( i = 0; i < lines.length; i++ ) {
 		m = dimRe.exec( lines[ i ] );
 		if ( m ) {
-			expr = m[ 1 ].trim();
+			expr = cleanFortranLworkExpr( m[ 1 ] );
 			if ( expr && expr !== '*' ) {
 				return {
 					prepLines: [],

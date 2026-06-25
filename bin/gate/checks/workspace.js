@@ -28,8 +28,7 @@ var util = require( '../util.js' );
 
 var ID = 'workspace';
 
-// Fortran workspace argument names (caller-provided scratch):
-var WORK_ARGS = [ 'WORK', 'RWORK', 'IWORK', 'SWORK', 'BWORK' ];
+var WORK_ARGS = util.FORTRAN_WORK_ARGS;
 
 // Fortran workspace length arguments (dropped in JS — size is documented):
 var LEN_ARGS = [ 'LWORK', 'LRWORK', 'LIWORK', 'LWORK1', 'LWORK2' ];
@@ -45,141 +44,9 @@ var SCALAR_MAX = 8;
 
 // HELPERS //
 
-/**
-* Locate the reference Fortran source for a routine.
-*
-* @param {string} routine - routine name (e.g. `dgesvd`)
-* @returns {(string|null)} file content or null
-*/
-function readFortran( routine ) {
-	var candidates = [
-		path.join( util.ROOT, 'data', 'lapack-3.12.0', 'SRC', routine + '.f' ),
-		path.join( util.ROOT, 'data', 'lapack-3.12.0', 'SRC', routine + '.F' ),
-		path.join( util.ROOT, 'data', 'BLAS-3.12.0', routine + '.f' ),
-		path.join( util.ROOT, 'data', 'lapack-3.12.0', 'SRC', 'DEPRECATED', routine + '.f' )
-	];
-	var i;
-	var c;
-	for ( i = 0; i < candidates.length; i++ ) {
-		c = util.readFile( candidates[ i ] );
-		if ( c !== null ) {
-			return c;
-		}
-	}
-	return null;
-}
-
-/**
-* Extract the uppercase argument list from a fixed-form Fortran declaration.
-*
-* Handles `$`/`&`-continued declaration lines and both SUBROUTINE and
-* (typed) FUNCTION forms while skipping the commented copy in the doc block.
-*
-* @param {string} content - Fortran source
-* @param {string} routine - routine name
-* @returns {Array<string>} uppercase argument names
-*/
-function fortranArgs( content, routine ) {
-	var lines = content.split( '\n' );
-	var re = new RegExp( '\\b(?:SUBROUTINE|FUNCTION)\\s+' + routine.toUpperCase() + '\\s*\\(', 'i' );
-	var buf = null;
-	var depth = 0;
-	var line;
-	var frag;
-	var i;
-	var j;
-	var ch;
-
-	for ( i = 0; i < lines.length; i++ ) {
-		line = lines[ i ];
-		// Skip fixed-form comment lines (col 1 in C/c/*/!):
-		if ( /^[*cC!]/.test( line ) ) {
-			continue;
-		}
-		if ( buf === null ) {
-			if ( !re.test( line ) ) {
-				continue;
-			}
-			frag = line.slice( line.indexOf( '(' ) );
-		} else {
-			// Continuation line: drop the 6-column label/continuation field.
-			frag = line.slice( 6 );
-		}
-		for ( j = 0; j < frag.length; j++ ) {
-			ch = frag[ j ];
-			if ( ch === '(' ) {
-				depth += 1;
-				if ( depth === 1 ) {
-					buf = '';
-					continue;
-				}
-			} else if ( ch === ')' ) {
-				depth -= 1;
-				if ( depth === 0 ) {
-					return splitArgs( buf );
-				}
-			}
-			if ( buf !== null ) {
-				buf += ch;
-			}
-		}
-	}
-	return [];
-}
-
-/**
-* Split a Fortran/JS argument string into trimmed uppercase identifiers.
-*/
-function splitArgs( s ) {
-	return s.split( ',' )
-		.map( function map( a ) {
-			return a.replace( /=.*$/, '' ).trim().toUpperCase();
-		})
-		.filter( function filter( a ) {
-			return a.length > 0;
-		});
-}
-
-/**
-* Extract the parameter list of the primary exported function in a JS file.
-*
-* @param {string} content - JS source
-* @param {string} routine - routine name
-* @returns {Array<string>} parameter names (original casing)
-*/
-function jsParams( content, routine ) {
-	if ( !content ) {
-		return [];
-	}
-	var re = new RegExp( 'function\\s+' + routine + '\\s*\\(', 'i' );
-	var m = re.exec( content );
-	if ( !m ) {
-		return [];
-	}
-	var start = content.indexOf( '(', m.index );
-	var depth = 0;
-	var i;
-	var ch;
-	for ( i = start; i < content.length; i++ ) {
-		ch = content[ i ];
-		if ( ch === '(' ) {
-			depth += 1;
-		} else if ( ch === ')' ) {
-			depth -= 1;
-			if ( depth === 0 ) {
-				return content.slice( start + 1, i )
-					.split( ',' )
-					.map( function map( a ) {
-						return a.replace( /=.*$/, '' ).trim();
-					})
-					.filter( function filter( a ) {
-						return a.length > 0 && !/^\/\//.test( a );
-					});
-			}
-		}
-	}
-	return [];
-}
+var readFortran = util.readFortran;
+var fortranArgs = util.fortranArgs;
+var jsParams = util.jsParams;
 
 /**
 * Scan a JS source for internal workspace allocations, ignoring imports,

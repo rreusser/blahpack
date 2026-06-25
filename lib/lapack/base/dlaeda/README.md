@@ -36,8 +36,21 @@ Computes the Z vector determining the rank-one modification of the diagonal matr
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var dlaeda = require( '@stdlib/lapack/base/dlaeda' );
 
-// TODO: Add usage example
+var N = 4;
+var QPTR = new Int32Array( [ 1, 5, 9 ] );
+var q = new Float64Array( [ 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0 ] );
+var z = new Float64Array( N );
+var ZTEMP = new Float64Array( N );
+var prmptr = new Int32Array( 4 );
+var perm = new Int32Array( 4 );
+var givptr = new Int32Array( 4 );
+var givcol = new Int32Array( 2 * 4 );
+var givnum = new Float64Array( 2 * 4 );
+
+dlaeda( 'row-major', N, 1, 1, 0, prmptr, 1, 0, perm, 1, 0, givptr, 1, 0, givcol, 2, 1, 0, givnum, N, q, 1, QPTR, 1, 0, z, 1, ZTEMP, 1 );
 ```
 
 The function has the following parameters:
@@ -78,8 +91,21 @@ Computes the Z vector determining the rank-one modification of the diagonal matr
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var dlaeda = require( '@stdlib/lapack/base/dlaeda' );
 
-// TODO: Add usage example
+var N = 4;
+var QPTR = new Int32Array( [ 1, 5, 9 ] );
+var q = new Float64Array( [ 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0 ] );
+var z = new Float64Array( N );
+var ZTEMP = new Float64Array( N );
+var prmptr = new Int32Array( 4 );
+var perm = new Int32Array( 4 );
+var givptr = new Int32Array( 4 );
+var givcol = new Int32Array( 2 * 4 );
+var givnum = new Float64Array( 2 * 4 );
+
+dlaeda.ndarray( N, 1, 1, 0, prmptr, 1, 0, perm, 1, 0, givptr, 1, 0, givcol, 1, 2, 0, givnum, 1, 2, 0, q, 1, 0, QPTR, 1, 0, z, 1, 0, ZTEMP, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -126,7 +152,7 @@ The function has the following additional parameters:
 
 ## Notes
 
--   TODO: Add notes.
+-   `dlaeda()` corresponds to the [LAPACK][lapack] level routine [`dlaeda`][lapack-dlaeda].
 
 </section>
 
@@ -136,8 +162,26 @@ The function has the following additional parameters:
 
 ## Examples
 
+<!-- eslint no-undef: "error" -->
+
 ```javascript
-// TODO: Add examples
+var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var dlaeda = require( '@stdlib/lapack/base/dlaeda' );
+
+var N = 4;
+var QPTR = new Int32Array( [ 1, 5, 9 ] );
+var q = new Float64Array( [ 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0 ] );
+var z = new Float64Array( N );
+var ZTEMP = new Float64Array( N );
+var prmptr = new Int32Array( 4 );
+var perm = new Int32Array( 4 );
+var givptr = new Int32Array( 4 );
+var givcol = new Int32Array( 2 * 4 );
+var givnum = new Float64Array( 2 * 4 );
+
+dlaeda( 'row-major', N, 1, 1, 0, prmptr, 1, 0, perm, 1, 0, givptr, 1, 0, givcol, 2, 1, 0, givnum, N, q, 1, QPTR, 1, 0, z, 1, ZTEMP, 1 );
+console.log( z );
 ```
 
 </section>
@@ -155,6 +199,10 @@ The function has the following additional parameters:
 <!-- Section for all links. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
 
 <section class="links">
+
+[lapack]: https://www.netlib.org/lapack/explore-html/
+
+[lapack-dlaeda]: https://www.netlib.org/lapack/explore-html/d3/d2e/group__laeda.html
 
 [mdn-float64array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array
 [mdn-float32array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array

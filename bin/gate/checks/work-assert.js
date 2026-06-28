@@ -29,6 +29,10 @@ var ID = 'work-assert';
 var ASSERT_RE = /\bWORK\b.*\.length|\.length.*\bWORK\b/;
 var THROW_RE = /throw\s+new\s+RangeError/;
 
+// Early return: `return 0;`, `return N;`, `return rcond[...]...`, etc.
+// Matches simple literal/short-expression returns (zero-dim quick exits).
+var EARLY_RETURN_RE = /^\s*return\s+(?:\d+|rcond\s*\[)/;
+
 /**
  * True if the file contains a WORK size assertion (length check + throw).
  *
@@ -54,6 +58,50 @@ function hasWorkAssert( content ) {
 		}
 	}
 	return false;
+}
+
+/**
+ * Returns 1-based line numbers of early returns that appear AFTER the
+ * WORK assertion but BEFORE `return base(...)`. These indicate zero-dim
+ * quick exits that should have been placed before the WORK check.
+ *
+ * @param {string} content - file source
+ * @returns {Array<number>}
+ */
+function misplacedEarlyReturns( content ) {
+	if ( !content ) {
+		return [];
+	}
+	var lines = content.split( '\n' );
+	var workCheckLine = -1;
+	var baseCallLine = -1;
+	var i;
+
+	for ( i = 0; i < lines.length; i++ ) {
+		if ( ASSERT_RE.test( lines[ i ] ) ) {
+			workCheckLine = i;
+			break;
+		}
+	}
+	if ( workCheckLine === -1 ) {
+		return [];
+	}
+	for ( i = workCheckLine; i < lines.length; i++ ) {
+		if ( /return\s+base\s*\(/.test( lines[ i ] ) ) {
+			baseCallLine = i;
+			break;
+		}
+	}
+	if ( baseCallLine === -1 ) {
+		return [];
+	}
+	var misplaced = [];
+	for ( i = workCheckLine + 1; i < baseCallLine; i++ ) {
+		if ( EARLY_RETURN_RE.test( lines[ i ] ) ) {
+			misplaced.push( i + 1 );
+		}
+	}
+	return misplaced;
 }
 
 /**
@@ -83,6 +131,21 @@ function check( mod ) {
 
 	if ( hasWorkAssert( ndarrayContent ) ) {
 		results.push( util.pass( ID, 'ndarray.js asserts WORK array size' ) );
+
+		var misplaced = misplacedEarlyReturns( ndarrayContent );
+		if ( misplaced.length > 0 ) {
+			results.push( util.fail(
+				ID + '.early-return-order',
+				'ndarray.js zero-dim early return precedes WORK check',
+				misplaced.length,
+				misplaced.map( function( ln ) {
+					return path.relative( util.ROOT, ndarrayPath ) + ':' + ln + ' (return appears after WORK assertion)';
+				}),
+				'ndarray.js has quick return(s) AFTER the WORK.length assertion (line(s) ' + misplaced.join( ', ' ) + '). Move zero-dim early returns before the WORK check — an empty matrix must not require a valid workspace buffer.'
+			));
+		} else {
+			results.push( util.pass( ID + '.early-return-order', 'ndarray.js zero-dim early return precedes WORK check' ) );
+		}
 	} else {
 		results.push( util.fail(
 			ID,

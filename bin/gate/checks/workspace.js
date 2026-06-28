@@ -182,19 +182,21 @@ function check( mod ) {
 		results.push( util.pass( ID + '.no-internal-alloc', 'No internal workspace allocation' ) );
 	}
 
-	// 3. Naming/shape conventions: camelCase strideWork/offsetWork, and NO
-	//    lwork parameter (size is documented in JSDoc, per dlarf1f).
+	// 3. Naming/shape conventions: camelCase strideWork/offsetWork (covers
+	//    all variants: strideIWork, strideRWork, strideSWork, strideBWork),
+	//    and NO lwork parameter (size is documented in JSDoc, per dlarf1f).
 	var namingProblems = [];
 	for ( i = 0; i < baseParamsRaw.length; i++ ) {
-		if ( /^(stride|offset)WORK$/i.test( baseParamsRaw[ i ] ) && !/^(stride|offset)Work$/.test( baseParamsRaw[ i ] ) ) {
-			namingProblems.push( baseParamsRaw[ i ] + ' (use ' + baseParamsRaw[ i ].replace( /WORK/i, 'Work' ) + ')' );
+		// Catch all-caps WORK suffix: strideWORK, strideIWORK, strideRWORK, etc.
+		if ( /^(stride|offset)\w*WORK$/.test( baseParamsRaw[ i ] ) ) {
+			namingProblems.push( baseParamsRaw[ i ] + ' (use ' + baseParamsRaw[ i ].replace( /WORK$/, 'Work' ) + ')' );
 		}
 		if ( /^l[a-z]*work$/i.test( baseParamsRaw[ i ] ) ) {
 			namingProblems.push( baseParamsRaw[ i ] + ' (drop; document required size in JSDoc instead)' );
 		}
 	}
 	if ( namingProblems.length > 0 ) {
-		results.push( util.warn(
+		results.push( util.fail(
 			ID + '.naming',
 			'Workspace params use stdlib naming',
 			namingProblems.length,
@@ -231,6 +233,45 @@ function check( mod ) {
 		} else {
 			results.push( util.pass( ID + '.ndarray-parity', 'ndarray.js exposes the same caller-provided workspace' ) );
 		}
+	}
+
+	// 5. z/c-prefix routines must allocate Complex128Array/Complex64Array for
+	//    workspace in the wrapper (<routine>.js), never Float64Array/Float32Array.
+	var isComplex = /^[zc]/.test( mod.routine );
+	if ( isComplex ) {
+		var routineWrapperPath = path.join( mod.dir, 'lib', mod.routine + '.js' );
+		var wrapperContent = util.readFile( routineWrapperPath );
+		if ( wrapperContent ) {
+			var complexViolations = [];
+			var wrapperLines = wrapperContent.split( '\n' );
+			var WRONG_CPLX_RE = /new\s+(Float64Array|Float32Array)\s*\(/;
+			var wl, wt;
+			for ( i = 0; i < wrapperLines.length; i++ ) {
+				wl = wrapperLines[ i ];
+				wt = wl.trim();
+				if ( wt.charAt( 0 ) === '*' || /^\/\//.test( wt ) || wt.indexOf( 'import ' ) !== -1 ) {
+					continue;
+				}
+				if ( WRONG_CPLX_RE.test( wl ) ) {
+					complexViolations.push( path.relative( util.ROOT, routineWrapperPath ) + ':' + ( i + 1 ) + '  ' + wt );
+				}
+			}
+			if ( complexViolations.length > 0 ) {
+				results.push( util.fail(
+					ID + '.complex-workspace-type',
+					'z/c-prefix routine allocates complex workspace type',
+					complexViolations.length,
+					complexViolations,
+					'z-prefix wrappers must allocate Complex128Array (not Float64Array) for workspace; c-prefix must use Complex64Array.'
+				));
+			} else {
+				results.push( util.pass( ID + '.complex-workspace-type', 'z/c-prefix routine allocates complex workspace type' ) );
+			}
+		} else {
+			results.push( util.skip( ID + '.complex-workspace-type', 'No ' + mod.routine + '.js' ) );
+		}
+	} else {
+		results.push( util.skip( ID + '.complex-workspace-type', 'Not a complex routine' ) );
 	}
 
 	return results;

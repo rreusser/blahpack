@@ -185,21 +185,8 @@ function check( mod ) {
 	// index.js checks
 	// ──────────────────────────────────────────
 
-	if ( indexContent ) {
-		// index.js should try native addon loading
-		if ( /tryRequire/.test( indexContent ) || /addon/.test( indexContent ) ) {
-			results.push( util.pass( ID + '.index-native-loading', 'index.js has native addon loading' ) );
-		} else {
-			results.push( util.warn(
-				ID + '.index-native-loading',
-				'index.js has native addon loading',
-				1, [ 'index.js' ],
-				'index.js does not have native addon loading pattern'
-			));
-		}
-	} else {
-		results.push( util.skip( ID + '.index-native-loading', 'No index.js' ) );
-	}
+	// Native addon loading is not used in this project.
+	results.push( util.skip( ID + '.index-native-loading', 'Not applicable (no native addons in this project)' ) );
 
 	// ──────────────────────────────────────────
 	// main.js checks

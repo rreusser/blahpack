@@ -48,7 +48,7 @@ jobs:
       - name: Build
         run: npx vite build
         env:
-          BASE_URL: /notes/
+          BASE_URL: /blahpack/
 
       - uses: actions/upload-pages-artifact@v3
         with:

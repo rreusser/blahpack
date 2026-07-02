@@ -11,6 +11,9 @@ set -uo pipefail
 BLAHPACK_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$BLAHPACK_DIR"
 
+export ESLINT_USE_FLAT_CONFIG=true
+ESLINT="$BLAHPACK_DIR/node_modules/.bin/eslint"
+
 # Per-invocation backup path so concurrent runs (multiple parallel agents)
 # do not race on the test.js revert path. Cleaned up on exit.
 BACKUP_FILE=$(mktemp -t lint_fix_backup.XXXXXX.js)
@@ -69,7 +72,7 @@ for mod in "${MODULES[@]}"; do
     # Step 3a: eslint --fix on lib and examples files (no backup needed)
     for f in "$mod"/lib/*.js "$mod"/examples/index.js; do
         [ -f "$f" ] || continue
-        npx eslint --resolve-plugins-relative-to tools/eslint --fix "$f" 2>/dev/null
+        "$ESLINT" --fix "$f" 2>/dev/null
     done
 
     # Step 3b: eslint --fix on test.js with backup. The vars-order rule can
@@ -77,7 +80,7 @@ for mod in "${MODULES[@]}"; do
     # Backup is per-invocation (see BACKUP_FILE at top); pulled out of the
     # file loop so it preserves test.js content, not the last-iterated file.
     cp "$test_file" "$BACKUP_FILE"
-    npx eslint --resolve-plugins-relative-to tools/eslint --fix "$test_file" 2>/dev/null
+    "$ESLINT" --fix "$test_file" 2>/dev/null
 
     # Step 4: Verify tests still pass
     FAILS=$(node --test "$test_file" 2>&1 | grep -c '✖')
@@ -85,8 +88,7 @@ for mod in "${MODULES[@]}"; do
         # Revert test file and retry without vars-order (known to break some files)
         cp "$BACKUP_FILE" "$test_file"
         node bin/codemod-tests.js "$test_file" > /dev/null 2>&1
-        npx eslint --resolve-plugins-relative-to tools/eslint --fix \
-            --rule 'stdlib/vars-order: off' "$test_file" 2>/dev/null
+        "$ESLINT" --fix "$test_file" 2>/dev/null
         FAILS=$(node --test "$test_file" 2>&1 | grep -c '✖')
         if [ "$FAILS" -gt 1 ]; then
             # Still broken — revert to codemod-only
@@ -100,7 +102,7 @@ for mod in "${MODULES[@]}"; do
         fi
     else
         # Check remaining errors
-        ERRS=$(npx eslint --resolve-plugins-relative-to tools/eslint "$mod" 2>&1 | grep -cE '^\s+\d+:\d+\s+error')
+        ERRS=$("$ESLINT" "$mod" 2>&1 | grep -cE '^\s+\d+:\d+\s+error')
         if [ "$ERRS" -eq 0 ]; then
             CLEAN=$((CLEAN + 1))
             echo -e "  ${GREEN}CLEAN${NC}     $name"

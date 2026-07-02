@@ -2,35 +2,45 @@
 
 // Copy-on-write ESLint plugin.
 //
-// Priority: local rule in tools/eslint/rules/<name>.js first,
-// then fall back to @stdlib/_tools/eslint/rules from the stdlib checkout.
+// Rules resolve in two layers:
+//   1. Local rules in tools/eslint/rules/<name>.cjs (always available).
+//   2. Optionally, stdlib's internal rules from a stdlib source checkout,
+//      IF one is available. stdlib's ESLint rules are not published to npm
+//      (`@stdlib/_tools` / `eslint-plugin-stdlib` do not exist there), so
+//      this layer only activates when a checkout is present.
+//
+// Point at a stdlib checkout with the STDLIB_ESLINT_DIR environment
+// variable (the repo root of a stdlib clone). When it is unset or invalid,
+// only the local rules load — and eslint.config.cjs references only rules
+// this plugin actually provides, so ESLint still runs instead of erroring
+// on undefined rules.
 
 var path = require( 'path' );
 var fs = require( 'fs' );
 
-// --- stdlib fallback path ---------------------------------------------------
+// --- optional stdlib fallback ----------------------------------------------
 
-var STDLIB_DIR = '/Users/rreusser/gh/stdlib-js/stdlib';
-var STDLIB_NODE_MODULES = path.join( STDLIB_DIR, 'lib', 'node_modules' );
-
-var stdlibRules;
+var STDLIB_DIR = process.env.STDLIB_ESLINT_DIR || '';
 
 function loadStdlibRules() {
-	if ( stdlibRules ) {
-		return stdlibRules;
+	if ( !STDLIB_DIR ) {
+		return {};
 	}
-	// Temporarily add stdlib's internal node_modules to the resolve chain
+	if ( !fs.existsSync( STDLIB_DIR ) ) {
+		console.error( '[blahpack eslint] STDLIB_ESLINT_DIR is set but does not exist: ' + STDLIB_DIR + ' — skipping stdlib rules.' );
+		return {};
+	}
+	var stdlibNodeModules = path.join( STDLIB_DIR, 'lib', 'node_modules' );
 	var origPaths = module.paths.slice();
-	module.paths = [ STDLIB_NODE_MODULES ].concat( origPaths );
+	module.paths = [ stdlibNodeModules ].concat( origPaths );
 	try {
-		stdlibRules = require( '@stdlib/_tools/eslint/rules' );
+		return require( '@stdlib/_tools/eslint/rules' );
 	} catch ( err ) {
-		console.error( 'Warning: could not load stdlib ESLint rules from', STDLIB_DIR );
-		console.error( err.message );
-		stdlibRules = {};
+		console.error( '[blahpack eslint] could not load stdlib ESLint rules from ' + STDLIB_DIR + ': ' + err.message );
+		return {};
+	} finally {
+		module.paths = origPaths;
 	}
-	module.paths = origPaths;
-	return stdlibRules;
 }
 
 // --- local rules ------------------------------------------------------------
@@ -43,9 +53,17 @@ function loadLocalRules() {
 		return rules;
 	}
 	fs.readdirSync( LOCAL_RULES_DIR ).forEach( function forEach( file ) {
-		if ( file.endsWith( '.cjs' ) ) {
-			var name = file.replace( /\.cjs$/, '' );
+		if ( !file.endsWith( '.cjs' ) ) {
+			return;
+		}
+		var name = file.replace( /\.cjs$/, '' );
+		try {
 			rules[ name ] = require( path.join( LOCAL_RULES_DIR, file ) );
+		} catch ( err ) {
+			// A rule that transitively requires stdlib internals (absent
+			// without STDLIB_ESLINT_DIR) is skipped rather than crashing the
+			// whole lint run.
+			console.error( '[blahpack eslint] skipping rule "' + name + '": ' + err.message );
 		}
 	});
 	return rules;
@@ -53,20 +71,11 @@ function loadLocalRules() {
 
 // --- merged plugin ----------------------------------------------------------
 
+var merged = {};
 var fallback = loadStdlibRules();
 var local = loadLocalRules();
-
-// Local rules override stdlib rules of the same name
-var merged = {};
-var names = Object.keys( fallback );
-var i;
-for ( i = 0; i < names.length; i++ ) {
-	merged[ names[i] ] = fallback[ names[i] ];
-}
-names = Object.keys( local );
-for ( i = 0; i < names.length; i++ ) {
-	merged[ names[i] ] = local[ names[i] ];
-}
+Object.keys( fallback ).forEach( function ( n ) { merged[ n ] = fallback[ n ]; } );
+Object.keys( local ).forEach( function ( n ) { merged[ n ] = local[ n ]; } ); // local overrides
 
 module.exports = {
 	rules: merged

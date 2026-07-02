@@ -14,8 +14,12 @@ var COMMA_PERIOD = /,\.\s*(\*\/|$)/;
 // `{integer} info` or `{Float64Array}` etc.).
 var STAR_RETURN = /@returns\s*\{\*\}/;
 
-// Stray translator-attribution comment beneath the proper Apache-2.0 header.
-var STRAY_COPYRIGHT = /Ricky Reusser/;
+// Stray translator-attribution LINE comment (e.g.
+// `// Copyright (c) 2025 Ricky Reusser. Apache-2.0 License.`) left over
+// from scaffolding. The legitimate copyright line lives inside the
+// block `/** ... */` license header (prefixed with `*`), so match only
+// `//` line comments here.
+var STRAY_COPYRIGHT = /^\s*\/\/.*Ricky Reusser/;
 
 // test.ndarray.js requiring lib/base.js bypasses the validator. The public
 // ndarray surface is the layer being tested; bypassing it has hidden silent

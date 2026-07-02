@@ -1,35 +1,24 @@
 {
-	"type": "module",
-  "main": "./lib",
+  "name": "@rreusser/blahpack/lapack/base/dlamch",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
   "types": "./docs/types",
-  "homepage": "https://github.com/stdlib-js/stdlib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/stdlib-js/stdlib.git"
+    "url": "git+https://github.com/rreusser/blahpack.git"
   },
+  "homepage": "https://github.com/rreusser/blahpack",
   "bugs": {
-    "url": "https://github.com/stdlib-js/stdlib/issues"
+    "url": "https://github.com/rreusser/blahpack/issues"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "engines": {
-    "node": ">=0.10.0",
-    "npm": ">2.7.0"
-  },
-  "os": [
-    "aix",
-    "darwin",
-    "freebsd",
-    "linux",
-    "macos",
-    "openbsd",
-    "sunos",
-    "win32",
-    "windows"
-  ],
   "keywords": [
-    "stdlib",
-    "stdmath",
     "mathematics",
     "math",
     "lapack",

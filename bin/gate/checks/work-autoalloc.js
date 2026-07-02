@@ -76,7 +76,7 @@ function check( mod ) {
 	}
 
 	if ( fortran === null ) {
-		results.push( util.skip( ID, 'Reference Fortran source not found' ) );
+		results.push( util.skip( ID, 'Reference Fortran source not found (run: npm run fetch-reference)' ) );
 		return results;
 	}
 

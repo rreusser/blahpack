@@ -35,7 +35,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( transr, uplo, N, A, strideA1, strideA2, offsetA, lda, ARF, strideARF, offsetARF )
+{{alias}}.ndarray( transr, uplo, N, A, strideA1, strideA2, offsetA, ARF, strideARF, offsetARF )
     Copies a triangular matrix from standard full format (TR) to Rectangular
     Full Packed format (RFP) using alternative indexing semantics.
 
@@ -61,9 +61,6 @@
 
     offsetA: integer
         starting index for `A`.
-
-    lda: number
-        `lda`.
 
     ARF: Float64Array
         `ARF`.

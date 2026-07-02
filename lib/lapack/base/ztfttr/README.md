@@ -41,7 +41,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0, 1 );
+ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
 ```
 
 The function has the following parameters:
@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **A**: input array `A`.
 -   **LDA**: leading dimension of `A`.
 
-#### ztfttr.ndarray( transr, uplo, N, ARF, strideARF, offsetARF, A, strideA1, strideA2, offsetA, lda )
+#### ztfttr.ndarray( transr, uplo, N, ARF, strideARF, offsetARF, A, strideA1, strideA2, offsetA )
 
 Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard full format (TR), using alternative indexing semantics.
 
@@ -65,7 +65,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0, 1 );
+ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -75,7 +75,6 @@ The function has the following additional parameters:
 -   **strideA1**: stride of dimension 1 of `A`.
 -   **strideA2**: stride of dimension 2 of `A`.
 -   **offsetA**: starting index for `A`.
--   **lda**: `lda`.
 
 </section>
 
@@ -104,7 +103,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0, 1 );
+ztfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
 ```
 
 </section>

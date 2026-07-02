@@ -41,7 +41,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, 1, ARF, 1, 0 );
+dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
 ```
 
 The function has the following parameters:
@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **LDA**: leading dimension of `A`.
 -   **ARF**: input array `ARF`.
 
-#### dtrttf.ndarray( transr, uplo, N, A, strideA1, strideA2, offsetA, lda, ARF, strideARF, offsetARF )
+#### dtrttf.ndarray( transr, uplo, N, A, strideA1, strideA2, offsetA, ARF, strideARF, offsetARF )
 
 Copies a triangular matrix from standard full format (TR) to Rectangular Full Packed format (RFP), using alternative indexing semantics.
 
@@ -65,7 +65,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, 1, ARF, 1, 0 );
+dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -73,7 +73,6 @@ The function has the following additional parameters:
 -   **strideA1**: stride of dimension 1 of `A`.
 -   **strideA2**: stride of dimension 2 of `A`.
 -   **offsetA**: starting index for `A`.
--   **lda**: `lda`.
 -   **strideARF**: stride length for `ARF`.
 -   **offsetARF**: starting index for `ARF`.
 
@@ -104,7 +103,7 @@ var N = 3;
 var A = discreteUniform( N * N, -10, 10, opts );
 var ARF = discreteUniform( N, -10, 10, opts );
 
-dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, 1, ARF, 1, 0 );
+dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
 ```
 
 </section>

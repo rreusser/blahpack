@@ -10,3 +10,6 @@ __pycache__
 papers
 dist
 coverage
+
+# Generated notebook bundles (rebuilt by npm run bundle:* / deploy CI)
+notebooks/**/*-bundle.js

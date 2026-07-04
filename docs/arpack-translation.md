@@ -13,10 +13,15 @@ provenance slot and faithful translation — not grafted into a LAPACK routine.
 ## Closure is self-contained
 
 Every numeric leaf the `dsband`/`dsaupd`/`dseupd` closure calls **already
-exists in blahpack** (21 routines, verified 2026-07). Only `xerbla` is
-missing, and it is the LAPACK error handler — translate as a `throw`.
+exists in blahpack** (21 routines, verified 2026-07). Nothing else numeric is
+needed. `xerbla` is *not* on the path: the only reference to it is the
+argument-check block in `dstqrb`, which ARPACK ships commented out (`c$$$`),
+and blahpack does not translate `xerbla` anyway — routines that validate
+arguments return the negative info code directly (e.g. `dsteqr` does
+`return -1`), dropping the Fortran `XERBLA` print/stop as legacy error
+reporting with no idiomatic-JS equivalent.
 
-### Routines to translate (14, all vendored under `data/arpack-ng-3.9.1/SRC/`)
+### Routines to translate (13, all vendored under `data/arpack-ng-3.9.1/SRC/`)
 
 Reverse-communication driver and its dependency subtree:
 
@@ -34,7 +39,6 @@ Reverse-communication driver and its dependency subtree:
 | `dgetv0` | generate/restart the starting vector |
 | `dseupd` | eigenvector extraction / back-transform (post-process) |
 | `dsesrt` | sort Ritz values + vectors (used by `dseupd`) |
-| `dstats` | init the timing/stat state (see stubs) |
 | `dsband` | banded shift-invert driver (`EXAMPLES/BAND/dsband.f`) |
 
 ### Reuse (already in `lib/`, do not re-translate)
@@ -46,13 +50,17 @@ dsteqr dgbtrf dgbtrs`.
 Note `dgbtrf`/`dgbtrs` are the routines whose blocked off-by-one was fixed in
 PR #9 — directly on this path, since `dsband` factors `K − σM` with them.
 
-### Stubs / strip (debug, timing, I/O — no numerics)
+### Strip (debug, timing, stat plumbing — no numerics)
 
-`arscnd` (timer → no-op), `dvout`/`ivout`/`dmout` (debug vector/matrix print →
-no-op), and the `debug.h` / `stat.h` COMMON blocks (→ a module-level state
-object, or strip). `dstats` initializes the stat COMMON; keep it as a no-op
-that clears the state object so call sites stay faithful. Decide once,
-consistently, and document in each module's `DIFFERENCES.md`.
+Consistent with dropping `xerbla`, strip the legacy debug/timing/stat plumbing
+rather than translate it: the `dvout`/`ivout`/`dmout` calls are all gated on
+`if (msglvl > k)` (debug printing), `arscnd` is a timer, `dstats` only zeroes
+timing/counter COMMON (`nopx`, `tsaupd`, …), and `debug.h`/`stat.h` are those
+COMMON blocks. None affect the numerical result. Omit the calls and drop
+`dstats`; no stub routines are created. Record the omission in each module's
+`DIFFERENCES.md`. (If a future ARPACK consumer wants iteration counts, expose
+them on the reverse-communication state object rather than reviving the COMMON
+plumbing.)
 
 ## The one genuinely new pattern: reverse communication
 
@@ -96,6 +104,39 @@ This state-object pattern is blahpack's first reverse-communication routine;
 design it once here — ARPACK's nonsymmetric drivers (`dnaupd`) and the complex
 ones reuse it.
 
+### Reverse communication vs. a matvec callback
+
+ARPACK defers the operator apply (`OP·x`, `B·x`) so it never needs to know how
+the matrix is stored — but the mechanism is **reverse communication, not a
+passed-in function**. `dsaupd` takes no matvec argument; it returns to the
+caller with `IDO` set and asks it to fill a slice of `workd`. The faithful
+translation must keep this: turning `dsaupd`'s own signature into a
+callback-taking API would be changing the routine, not translating it (per
+[optimization-policy.md](optimization-policy.md)).
+
+The callback intuition is right one layer up. Two idiomatic options sit on top
+of the faithful `dsaupd`, and they are *composition*, not a change to the
+reference:
+
+- **`dsband` (preferred for Fix A).** ARPACK's own banded driver already
+  encapsulates the loop: it factors `K − σM` once with `dgbtrf`, runs the
+  `IDO` loop, and applies the operator **inline** with `dgbmv` (banded matvec)
+  and `dgbtrs` (banded solve) — all already in `lib/`. No callback surface at
+  all; the notebook just calls `dsband(...)` and gets eigenpairs. This is the
+  reference-backed route (verifiable against arpack-ng's `dsbdr*` examples), so
+  it is what the plan targets.
+- **A generic callback driver** (`dsaupdDriver(applyOP, applyB, …)`) that runs
+  the `IDO` loop and dispatches to caller-supplied closures. Legitimate and
+  idiomatic, but it is *authored* glue, not a reference translation, so it
+  belongs at the application layer (or a clearly-labeled non-reference helper),
+  never inside `lib/arpack`. Fix A does not need it, since `dsband` covers the
+  banded case.
+
+So: reverse communication at the faithful bottom (`dsaupd`), and the operator
+lives either inline in the faithful `dsband` or, if a consumer ever wants the
+generic form, in an app-layer closure — matching "algorithm/operator selection
+is a driver concern."
+
 ## Verification (faithful-translation trust model)
 
 - Side-by-side Fortran/JS on identical inputs, observing state across
@@ -117,7 +158,8 @@ per-routine metadata will come from the Fortran headers directly.
 
 ## Translation order (leaves first)
 
-1. `xerbla` (throw) + the no-op stubs (`arscnd`, `dvout`, `ivout`, `dmout`).
+1. The no-op stubs (`arscnd`, `dvout`, `ivout`, `dmout`). (No `xerbla`: it is
+   not called on the path and blahpack does not translate it — see above.)
 2. `dsconv`, `dsortr`, `dsesrt`, `dstqrb`, `dseigt`, `dsgets` — pure numeric
    leaves of the RC subtree, individually fixture-testable.
 3. `dgetv0`, `dsaitr`, `dsapps` — the Lanczos-step routines.

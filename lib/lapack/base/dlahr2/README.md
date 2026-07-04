@@ -30,7 +30,7 @@ limitations under the License.
 var dlahr2 = require( '@stdlib/lapack/base/dlahr2' );
 ```
 
-#### dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT, ldt, y, strideY, ldy )
+#### dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT1, strideT2, y, strideY1, strideY2 )
 
 Reduces NB columns of a real general n-by-(n-k+1) matrix A.
 
@@ -43,7 +43,7 @@ var tau = discreteUniform( N, -10, 10, opts );
 var T = discreteUniform( N, -10, 10, opts );
 var Y = discreteUniform( N, -10, 10, opts );
 
-dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 0, 1, Y, 1, 0, 1 );
+dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 1, 0, Y, 1, 1, 0 );
 ```
 
 The function has the following parameters:
@@ -57,13 +57,13 @@ The function has the following parameters:
 -   **tau**: `tau`.
 -   **strideTAU**: stride length for `TAU`.
 -   **t**: `t`.
--   **strideT**: stride length for `T`.
--   **ldt**: `ldt`.
+-   **strideT1**: stride of dimension 1 of `T`.
+-   **strideT2**: stride of dimension 2 of `T`.
 -   **y**: `y`.
--   **strideY**: stride length for `Y`.
--   **ldy**: `ldy`.
+-   **strideY1**: stride of dimension 1 of `Y`.
+-   **strideY2**: stride of dimension 2 of `Y`.
 
-#### dlahr2.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT, offsetT, ldT, Y, strideY, offsetY, ldY )
+#### dlahr2.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
 
 Reduces NB columns of a real general n-by-(n-k+1) matrix A, using alternative indexing semantics.
 
@@ -76,7 +76,7 @@ var tau = discreteUniform( N, -10, 10, opts );
 var T = discreteUniform( N, -10, 10, opts );
 var Y = discreteUniform( N, -10, 10, opts );
 
-dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 0, 1, Y, 1, 0, 1 );
+dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 1, 0, Y, 1, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -86,11 +86,11 @@ The function has the following additional parameters:
 -   **offsetA**: starting index for `A`.
 -   **offsetTAU**: starting index for `TAU`.
 -   **T**: input array `T`.
+-   **strideT2**: stride of dimension 2 of `T`.
 -   **offsetT**: starting index for `T`.
--   **ldT**: `ldT`.
 -   **Y**: input array `Y`.
+-   **strideY2**: stride of dimension 2 of `Y`.
 -   **offsetY**: starting index for `Y`.
--   **ldY**: `ldY`.
 
 </section>
 
@@ -121,7 +121,7 @@ var tau = discreteUniform( N, -10, 10, opts );
 var T = discreteUniform( N, -10, 10, opts );
 var Y = discreteUniform( N, -10, 10, opts );
 
-dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 0, 1, Y, 1, 0, 1 );
+dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 1, 0, Y, 1, 1, 0 );
 ```
 
 </section>

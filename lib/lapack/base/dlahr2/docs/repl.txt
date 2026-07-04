@@ -1,4 +1,4 @@
-{{alias}}( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT, ldt, y, strideY, ldy )
+{{alias}}( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT1, strideT2, y, strideY1, strideY2 )
     Reduces NB columns of a real general n-by-(n-k+1) matrix A.
 
     Parameters
@@ -30,20 +30,20 @@
     t: Float64Array
         `t`.
 
-    strideT: integer
-        stride length for `T`.
+    strideT1: integer
+        stride of dimension 1 of `T`.
 
-    ldt: number
-        `ldt`.
+    strideT2: integer
+        stride of dimension 2 of `T`.
 
     y: Float64Array
         `y`.
 
-    strideY: integer
-        stride length for `Y`.
+    strideY1: integer
+        stride of dimension 1 of `Y`.
 
-    ldy: number
-        `ldy`.
+    strideY2: integer
+        stride of dimension 2 of `Y`.
 
     Returns
     -------
@@ -55,7 +55,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT, offsetT, ldT, Y, strideY, offsetY, ldY )
+{{alias}}.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
     Reduces NB columns of a real general n-by-(n-k+1) matrix A using
     alternative indexing semantics.
 
@@ -94,26 +94,26 @@
     T: Float64Array
         `T`.
 
-    strideT: integer
-        stride length for `T`.
+    strideT1: integer
+        stride of dimension 1 of `T`.
+
+    strideT2: integer
+        stride of dimension 2 of `T`.
 
     offsetT: integer
         starting index for `T`.
 
-    ldT: number
-        `ldT`.
-
     Y: Float64Array
         `Y`.
 
-    strideY: integer
-        stride length for `Y`.
+    strideY1: integer
+        stride of dimension 1 of `Y`.
+
+    strideY2: integer
+        stride of dimension 2 of `Y`.
 
     offsetY: integer
         starting index for `Y`.
-
-    ldY: number
-        `ldY`.
 
     Returns
     -------

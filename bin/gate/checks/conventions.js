@@ -444,6 +444,48 @@ function check( mod ) {
 		results.push( util.skip( ID + '.base-no-param-validation', 'No base.js' ) );
 	}
 
+	// ──────────────────────────────────────────
+	// No leading-dimension params in the stride tier
+	// ──────────────────────────────────────────
+
+	// base.js and ndarray.js address matrices with BLIS-style two-stride
+	// indexing (strideA1, strideA2, offsetA). A leftover Fortran-style
+	// leading-dimension param (lda, ldT, ldb, ...) is either redundant with
+	// the two strides or a single-stride leak that should be a second
+	// stride (e.g. ldT -> strideT2). The `order`+`LDA` surface belongs only
+	// in the routine wrapper. Flag any `ld`-prefixed param in the kernel tier.
+	var ldTiers = [
+		[ 'base.js', baseParams ],
+		[ 'ndarray.js', ndarrayParams ]
+	];
+	var ldLocs = [];
+	var t, p, name;
+	for ( t = 0; t < ldTiers.length; t++ ) {
+		if ( !ldTiers[ t ][ 1 ] ) {
+			continue;
+		}
+		for ( p = 0; p < ldTiers[ t ][ 1 ].length; p++ ) {
+			name = ldTiers[ t ][ 1 ][ p ];
+			// LAPACK leading dimensions are `ld` + exactly one matrix letter
+			// (lda, ldb, ldc, ldT, ldY, ...). Match that shape only, so a
+			// legitimately-named array param like `ld` (which carries its own
+			// strideLD/offsetLD) is not a false positive.
+			if ( /^ld[A-Za-z]$/.test( name ) ) {
+				ldLocs.push( ldTiers[ t ][ 0 ] + ':' + name );
+			}
+		}
+	}
+	if ( ldLocs.length === 0 ) {
+		results.push( util.pass( ID + '.no-leading-dimension-in-stride-tier', 'No leading-dimension params in base.js/ndarray.js' ) );
+	} else {
+		results.push( util.fail(
+			ID + '.no-leading-dimension-in-stride-tier',
+			'No leading-dimension params in base.js/ndarray.js',
+			ldLocs.length, ldLocs,
+			'Remove redundant leading-dimension params or convert to a second stride (e.g. `ldT` -> `strideT2`); the stride tier uses BLIS-style two-stride indexing'
+		));
+	}
+
 	return results;
 }
 

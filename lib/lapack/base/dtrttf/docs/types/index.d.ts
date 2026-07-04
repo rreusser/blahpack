@@ -50,13 +50,12 @@ interface Routine {
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param lda - `lda`
 	* @param ARF - `ARF`
 	* @param strideARF - stride of `ARF`
 	* @param offsetARF - starting index for `ARF`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, lda: number, ARF: Float64Array, strideARF: number, offsetARF: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ARF: Float64Array, strideARF: number, offsetARF: number ): Float64Array;
 }
 
 /**

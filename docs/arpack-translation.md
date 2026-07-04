@@ -137,6 +137,40 @@ lives either inline in the faithful `dsband` or, if a consumer ever wants the
 generic form, in an app-layer closure — matching "algorithm/operator selection
 is a driver concern."
 
+### Layering strategy: reverse communication never escapes the base
+
+Three tiers, each with a clear faithfulness status. The invariant: **a library
+user never sees `IDO`.**
+
+1. **Faithful RC base** — `dsaupd`, `dsaup2`, `dseupd`, and the subtree
+   (`dsaitr`, `dsapps`, …). Translated verbatim: state object, `IDO`/`info` as
+   length-1 arrays, `workd`/`workl`/`ipntr` exactly as Fortran. These carry the
+   trust and are tested number-for-number against arpack-ng by driving the same
+   `IDO` loop in both and comparing `workd`/`resid`/state at **every**
+   round-trip (the fixture is the sequence of `(IDO, workd-in → workd-out)`
+   steps, not a single output). Reverse communication is *preserved* here, not
+   hidden — it is the routine's real interface.
+2. **Faithful reference driver** — `dsband`. ARPACK's own banded driver, so
+   translating it faithfully gives a reference-backed encapsulation: it factors
+   `K − σM` once, runs the `IDO` loop internally, applies the operator inline
+   with `dgbmv`/`dgbtrs`, and returns eigenpairs — no `IDO` in its signature.
+   Verified end-to-end against arpack-ng's `dsbdr1`–`dsbdr6` example outputs.
+   This is the preferred encapsulation whenever a reference driver fits the
+   problem shape (banded → `dsband`): the legacy loop is hidden *and* the
+   hiding is itself checked against Fortran.
+3. **Idiomatic wrapper (authored, no numerics)** — a thin layer that gives the
+   consumer a clean call: marshal banded arrays, default `ncv`/`iparam`, return
+   plain arrays of eigenvalues/vectors. Lives in the module's wrapper files or
+   notebook-side. Contains no algorithm — only argument plumbing over tier 2
+   (or, if the generic callback form is ever wanted, over tier 1) — so it is
+   validated by the tiers beneath plus a couple of integration checks.
+
+Recommended path for Fix A: tiers 1 + 2 faithfully (maximal verification,
+including the driver plumbing), then a thin tier-3 wrapper for the notebook. Do
+**not** hand-roll the RC loop as authored glue when a reference driver
+(`dsband`) already encapsulates it — that would trade a Fortran-verifiable
+driver for one checkable only by property tests, against the trust model.
+
 ## Verification (faithful-translation trust model)
 
 - Side-by-side Fortran/JS on identical inputs, observing state across

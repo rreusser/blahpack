@@ -14,3 +14,10 @@ BLAS and LAPACK routines in this package are translated from the reference
 Fortran implementations (BLAS 3.12.0, LAPACK 3.12.0), which are distributed
 under the BSD-3-Clause license. See https://www.netlib.org/lapack/LICENSE.txt
 for the upstream license and attribution.
+
+ARPACK routines in this package (lib/arpack/) are translated from arpack-ng
+3.9.1 (https://github.com/opencollab/arpack-ng), which continues the original
+ARPACK, Copyright (c) 1996-2008 Rice University, developed by D.C. Sorensen,
+R.B. Lehoucq, C. Yang, and K. Maschhoff, under the BSD-3-Clause license. The
+full upstream text is retained at data/arpack-ng-3.9.1/COPYING; derived
+modules carry the Rice copyright notice in their headers.

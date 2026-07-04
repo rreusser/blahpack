@@ -7,10 +7,10 @@ npm ci                     # JS dependencies
 npm run fetch-reference    # BLAS/LAPACK reference Fortran sources into data/
 ```
 
-`npm run fetch-reference` downloads the reference BLAS 3.12.0 and LAPACK
-3.12.0 sources (gitignored, upstream-owned) into `data/`. They are
-required to regenerate test fixtures and to run the gate's
-workspace-family checks; without them those checks skip.
+`npm run fetch-reference` downloads the reference BLAS 3.12.0, LAPACK
+3.12.0, and arpack-ng 3.9.1 sources (gitignored, upstream-owned) into
+`data/`. They are required to regenerate test fixtures and to run the
+gate's workspace-family checks; without them those checks skip.
 
 ### Python tooling
 

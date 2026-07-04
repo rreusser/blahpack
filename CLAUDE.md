@@ -39,6 +39,7 @@ docs/                          # Reference documentation
   ndarray-conformance.md       #   ndarray.js validation spec
   goto-patterns.md             #   Fortran GOTO → JS restructuring
   performance-patterns.md      #   Optimization patterns with code examples
+  optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
 bench/                         # Performance benchmarks
 archive/bin/                   # Archived one-time migration scripts
 gate.config.json               # Per-module gate exceptions (with mandatory reasons)

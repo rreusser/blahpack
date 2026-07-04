@@ -1,7 +1,37 @@
 {
-  "name": "@rreusser/blapack",
+  "name": "@rreusser/blahpack",
   "version": "1.0.0",
-  "description": "",
+  "description": "JavaScript implementations of BLAS and LAPACK routines, translated from the Fortran reference implementations",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "blas",
+    "lapack",
+    "linear",
+    "algebra",
+    "matrix",
+    "vector",
+    "math",
+    "mathematics",
+    "float64",
+    "complex128",
+    "svd",
+    "eigenvalues",
+    "cholesky",
+    "lu",
+    "qr"
+  ],
   "main": "./index.js",
   "type": "module",
   "exports": {
@@ -907,8 +937,15 @@
     "./lapack/base/zupmtr": "./lib/lapack/base/zupmtr/lib/index.js"
   },
   "files": [
+    "index.js",
     "lib/",
-    "index.js"
+    "!lib/**/test/",
+    "!lib/**/benchmark/",
+    "!lib/**/examples/",
+    "!lib/**/docs/repl.txt",
+    "!lib/**/docs/types/test.ts",
+    "!lib/**/LEARNINGS.md",
+    "!lib/**/LEARNINGS.integrated.md"
   ],
   "scripts": {
     "test": "bash bin/run-tests.sh",
@@ -928,9 +965,6 @@
     "dev": "npm run bundle:notebook && npm run bundle:naca && npm run bundle:pseudospectra && vite --port 5174",
     "gen-exports": "node bin/gen-exports.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@stdlib/array": "^0.3.3",
     "@stdlib/assert": "^0.3.3",

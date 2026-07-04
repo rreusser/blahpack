@@ -1,56 +1,24 @@
 {
-	"type": "module",
-  "name": "@stdlib/lapack/base/dsygst",
-  "version": "0.0.0",
+  "name": "@rreusser/blahpack/lapack/base/dsygst",
+  "version": "1.0.0",
   "description": "Reduces a symmetric definite generalized eigenproblem to standard form (blocked)",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "author": {
-    "name": "The Stdlib Authors",
-    "url": "https://github.com/stdlib-js/stdlib/graphs/contributors"
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
   },
-  "contributors": [
-    {
-      "name": "The Stdlib Authors",
-      "url": "https://github.com/stdlib-js/stdlib/graphs/contributors"
-    }
-  ],
-  "main": "./lib",
-  "directories": {
-    "doc": "./docs",
-    "example": "./examples",
-    "lib": "./lib",
-    "test": "./test"
-  },
+  "type": "module",
+  "main": "./lib/index.js",
   "types": "./docs/types",
-  "scripts": {},
-  "homepage": "https://github.com/stdlib-js/stdlib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/stdlib-js/stdlib.git"
+    "url": "git+https://github.com/rreusser/blahpack.git"
   },
+  "homepage": "https://github.com/rreusser/blahpack",
   "bugs": {
-    "url": "https://github.com/stdlib-js/stdlib/issues"
+    "url": "https://github.com/rreusser/blahpack/issues"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "engines": {
-    "node": ">=0.10.0",
-    "npm": ">2.7.0"
-  },
-  "os": [
-    "aix",
-    "darwin",
-    "freebsd",
-    "linux",
-    "macos",
-    "openbsd",
-    "sunos",
-    "win32",
-    "windows"
-  ],
   "keywords": [
-    "stdlib",
-    "stdmath",
     "mathematics",
     "math",
     "lapack",

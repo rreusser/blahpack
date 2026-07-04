@@ -90,10 +90,54 @@ for ( const m of modules ) {
 const pkgPath = join( ROOT, 'package.json' );
 const pkg = JSON.parse( readFileSync( pkgPath, 'utf8' ) );
 
-pkg.name = '@rreusser/blapack';
+pkg.name = '@rreusser/blahpack';
+pkg.version = pkg.version || '1.0.0';
+pkg.description = 'JavaScript implementations of BLAS and LAPACK routines, translated from the Fortran reference implementations';
+pkg.license = 'MIT';
+pkg.author = {
+	name: 'Ricky Reusser',
+	url: 'https://github.com/rreusser'
+};
+pkg.repository = {
+	type: 'git',
+	url: 'git+https://github.com/rreusser/blahpack.git'
+};
+pkg.homepage = 'https://github.com/rreusser/blahpack';
+pkg.bugs = { url: 'https://github.com/rreusser/blahpack/issues' };
+pkg.keywords = [
+	'blas',
+	'lapack',
+	'linear',
+	'algebra',
+	'matrix',
+	'vector',
+	'math',
+	'mathematics',
+	'float64',
+	'complex128',
+	'svd',
+	'eigenvalues',
+	'cholesky',
+	'lu',
+	'qr'
+];
 pkg.main = './index.js';
 pkg.exports = exportsMap;
-pkg.files = [ 'lib/', 'index.js' ];
+
+// Whitelist shipped files. Per-module test/benchmark/examples and the
+// stdlib REPL/type-test artifacts are development-only; the negations
+// keep the tarball to source, types, and docs.
+pkg.files = [
+	'index.js',
+	'lib/',
+	'!lib/**/test/',
+	'!lib/**/benchmark/',
+	'!lib/**/examples/',
+	'!lib/**/docs/repl.txt',
+	'!lib/**/docs/types/test.ts',
+	'!lib/**/LEARNINGS.md',
+	'!lib/**/LEARNINGS.integrated.md'
+];
 
 // Swap @stdlib/stdlib mega-dep for the 9 actually-used scoped packages.
 const STDLIB_VERSION = '^0.3.3';
@@ -113,7 +157,7 @@ pkg.dependencies = {
 if ( pkg.scripts ) pkg.scripts[ 'gen-exports' ] = 'node bin/gen-exports.js';
 
 // Keep key order clean: name, version, description, main, type, exports, files, ...
-const KEY_ORDER = [ 'name', 'version', 'description', 'main', 'type', 'exports', 'files', 'scripts', 'keywords', 'author', 'license', 'dependencies', 'devDependencies' ];
+const KEY_ORDER = [ 'name', 'version', 'description', 'license', 'author', 'repository', 'homepage', 'bugs', 'keywords', 'main', 'type', 'exports', 'files', 'scripts', 'dependencies', 'devDependencies' ];
 const ordered = {};
 for ( const k of KEY_ORDER ) if ( k in pkg ) ordered[ k ] = pkg[ k ];
 for ( const k of Object.keys( pkg ) ) if ( !( k in ordered ) ) ordered[ k ] = pkg[ k ];

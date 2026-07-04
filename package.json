@@ -911,7 +911,7 @@
     "index.js"
   ],
   "scripts": {
-    "test": "node --test 'lib/**/test/test*.js' 'lib/*.test.js' 2>&1 | awk '/ℹ (tests|suites|pass|fail|cancelled|skipped|todo|duration)/{buf=buf $0 ORS; next} {print} END{printf buf}'",
+    "test": "bash bin/run-tests.sh",
     "lint": "bash bin/lint.sh",
     "lint:fix": "bash bin/lint-fix.sh",
     "gate": "node bin/gate.js --all",

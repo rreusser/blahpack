@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Run tests
+        run: npm test
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Generated files are up to date
+        run: |
+          node bin/gen-exports.js
+          git diff --exit-code package.json index.js
+      - name: Pack and import smoke test
+        run: |
+          npm pack
+          TARBALL="$(ls -- *.tgz)"
+          PKG_NAME="$(node -p "require('./package.json').name")"
+          mkdir -p /tmp/pack-smoke
+          cp "$TARBALL" /tmp/pack-smoke/
+          cd /tmp/pack-smoke
+          npm init -y > /dev/null
+          npm install "./$TARBALL"
+          PKG_NAME="$PKG_NAME" node -e "
+            import(process.env.PKG_NAME).then((m) => {
+              const n = Object.keys(m).length;
+              if (n < 1000) throw new Error('expected >1000 exports, got ' + n);
+              const x = new Float64Array([1, 2, 3]);
+              const d = m.ddot(3, x, 1, x, 1);
+              if (d !== 14) throw new Error('ddot smoke test failed: ' + d);
+              console.log('pack smoke test OK:', n, 'exports');
+            });
+          "

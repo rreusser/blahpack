@@ -1,0 +1,1 @@
+# dsesrt calls dswap (BLAS, auto-linked); no other deps.

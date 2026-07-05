@@ -1,0 +1,94 @@
+
+{{alias}}( which, apply, N, x, strideX, na, A, lda )
+    Sorts the values in `x` with a gapped (Shell) insertion sort, optionally
+    applying the same permutation to the columns of a column-major companion
+    matrix `A`.
+
+    Both `x` and (when `apply`) the columns of `A` are permuted in place;
+    there is no return value. Only the first `na` rows of each column of `A`
+    are swapped.
+
+    Parameters
+    ----------
+        which: string
+            Ordering (ARPACK convention; the selected values move toward the
+            end of `x`): 'LM', 'SM', 'LA', or 'SA'.
+
+        apply: boolean
+            Whether to apply the sorting permutation to the columns of `A`.
+
+        N: integer
+            Number of elements to sort.
+
+        x: Float64Array
+            Array whose values determine (and receive) the sort.
+
+        strideX: integer
+            Stride length for `x`.
+
+        na: integer
+            Number of rows of `A` to permute.
+
+        A: Float64Array
+            Companion matrix (column-major) whose columns are permuted.
+
+        lda: integer
+            Leading dimension of `A`.
+
+    Examples
+    --------
+    > var x = new {{alias:@stdlib/array/float64}}( [ 3.0, 1.0, 2.0 ] );
+    > var A = new {{alias:@stdlib/array/float64}}( [ 11.0, 12.0, 21.0, 22.0, 31.0, 32.0 ] );
+    > {{alias}}( 'LA', true, 3, x, 1, 2, A, 2 );
+    > x
+    <Float64Array>[ 1.0, 2.0, 3.0 ]
+
+
+{{alias}}.ndarray( which, apply, N, x, strideX, offsetX, na, A, strideA1, strideA2, offsetA )
+    Sorts the values in `x`, using alternative indexing semantics.
+
+    Parameters
+    ----------
+        which: string
+            Ordering: 'LM', 'SM', 'LA', or 'SA'.
+
+        apply: boolean
+            Whether to apply the sorting permutation to the columns of `A`.
+
+        N: integer
+            Number of elements to sort.
+
+        x: Float64Array
+            Array whose values determine (and receive) the sort.
+
+        strideX: integer
+            Stride length for `x`.
+
+        offsetX: integer
+            Starting index for `x`.
+
+        na: integer
+            Number of rows of `A` to permute.
+
+        A: Float64Array
+            Companion matrix whose columns are permuted.
+
+        strideA1: integer
+            Stride of the first (row) dimension of `A`.
+
+        strideA2: integer
+            Stride of the second (column) dimension of `A`.
+
+        offsetA: integer
+            Starting index for `A`.
+
+    Examples
+    --------
+    > var x = new {{alias:@stdlib/array/float64}}( [ 3.0, 1.0, 2.0 ] );
+    > var A = new {{alias:@stdlib/array/float64}}( [ 11.0, 12.0, 21.0, 22.0, 31.0, 32.0 ] );
+    > {{alias}}.ndarray( 'LA', true, 3, x, 1, 0, 2, A, 1, 2, 0 );
+    > x
+    <Float64Array>[ 1.0, 2.0, 3.0 ]
+
+    See Also
+    --------

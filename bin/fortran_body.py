@@ -48,8 +48,12 @@ def extract_body(path):
             if result and result[-1].strip():
                 result.append('\n')
             continue
-        # Skip comment-only lines (but keep inline comments)
-        if stripped[0] in ('*', 'C', 'c') and len(stripped) > 1 and stripped[1] == ' ':
+        # Skip fixed-form comment lines. A fixed-form comment marker (C/c/*)
+        # must be in COLUMN 1 (the literal first character of the line); an
+        # indented statement such as `c = -c` (a cosine variable) is CODE, not
+        # a comment. Testing `stripped[0]` (post-lstrip) instead of `line[0]`
+        # silently dropped such lines.
+        if line[0] in ('*', 'C', 'c'):
             continue
         if stripped.startswith('!') and not stripped.startswith('!$'):
             # Keep short algorithmic comments (< 60 chars), skip doc boilerplate

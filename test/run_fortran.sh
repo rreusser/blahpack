@@ -133,8 +133,8 @@ elif [ "$PACKAGE" = "arpack" ]; then
   ARPACK_UTIL="$ROOT_DIR/data/arpack-ng-3.9.1/UTIL"
   LAPACK_DIR="$ROOT_DIR/data/lapack-3.12.0/SRC"
   LAPACK_INSTALL="$ROOT_DIR/data/lapack-3.12.0/INSTALL"
-  for f in "$BLAS_DIR"/*.f; do
-    SOURCES+=("$f")
+  for f in "$BLAS_DIR"/*.f "$BLAS_DIR"/*.f90; do
+    [ -f "$f" ] && SOURCES+=("$f")
   done
   # The routine under test itself (unless replaced by a --source override).
   [ -z "$SOURCE_OVERRIDE" ] && SOURCES+=("$ORIGINAL_SOURCE")

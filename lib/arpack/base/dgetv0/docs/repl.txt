@@ -1,0 +1,68 @@
+
+{{alias}}( state, ido, bmat, itry, initv, N, j, V, ldv, resid, rnorm, ipntr, workd )
+    Generates the initial residual vector for the symmetric Lanczos/Arnoldi
+    iteration, orthogonal to the current `V` basis, via reverse communication.
+
+    The caller drives `dgetv0` in a loop, dispatching on `ido[0]`: -1/1 compute
+    `Y = OP*X` (X at workd[ipntr[0]], Y at workd[ipntr[1]]), 2 compute `Y = B*X`
+    (bmat='generalized'), 99 done. Persistent state lives on `state` (pass `{}` once).
+
+    Parameters
+    ----------
+        state: Object
+            Persistent reverse-communication state (pass {} on first use).
+
+        ido: Int32Array
+            Reverse-communication flag (length-1; in/out).
+
+        bmat: string
+            'standard' (standard) or 'generalized' (generalized) eigenproblem.
+
+        itry: integer
+            Restart attempt counter (>= 1).
+
+        initv: boolean
+            If true, `resid` holds an initial vector; if false, it is randomized.
+
+        N: integer
+            Order of the problem.
+
+        j: integer
+            Index of the residual vector to generate.
+
+        V: Float64Array
+            Lanczos/Arnoldi basis (N-by-j, column-major).
+
+        ldv: integer
+            Leading dimension of `V`.
+
+        resid: Float64Array
+            Residual vector (length N; in/out).
+
+        rnorm: Float64Array
+            B-norm of the generated residual (length-1; out).
+
+        ipntr: Int32Array
+            Pointers into `workd` for the operator (0-based; out).
+
+        workd: Float64Array
+            Reverse-communication workspace (length >= 2*N).
+
+    Returns
+    -------
+    ierr: integer
+        0 on success; -1 if refinement failed.
+
+    Examples
+    --------
+    > var ido = new {{alias:@stdlib/array/int32}}( 1 );
+    > var state = {};
+    > var V = new {{alias:@stdlib/array/float64}}( 4 );
+    > var resid = new {{alias:@stdlib/array/float64}}( 4 );
+    > var workd = new {{alias:@stdlib/array/float64}}( 8 );
+    > var rnorm = new {{alias:@stdlib/array/float64}}( 1 );
+    > var ipntr = new {{alias:@stdlib/array/int32}}( 3 );
+    > // Drive the reverse-communication loop applying OP each time ido != 99.
+
+    See Also
+    --------

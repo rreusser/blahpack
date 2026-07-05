@@ -1,0 +1,7 @@
+# Non-BLAS Fortran dependencies for the dgetv0 reference driver.
+# (dgemv, dcopy, ddot, dnrm2 are BLAS, auto-linked.)
+dgetv0
+dlarnv
+dlaruv
+dvout
+second

@@ -1,0 +1,20 @@
+# Non-BLAS Fortran dependencies for the dseigt reference driver.
+# (dcopy is BLAS, auto-linked.) dstqrb pulls in the dsteqr closure;
+# la_constants/la_xisnan modules must precede dlartg/dlassq.
+la_constants
+la_xisnan
+dstqrb
+dlamch
+dlanst
+dlapy2
+dlae2
+dlaev2
+dlartg
+dlascl
+dlasr
+dlasrt
+disnan
+dlaisnan
+dlassq
+dvout
+second

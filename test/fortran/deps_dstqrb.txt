@@ -1,0 +1,18 @@
+# Non-BLAS Fortran dependencies for the dstqrb reference driver.
+# Module sources (la_constants, la_xisnan) must precede their users
+# (dlartg, dlassq) so gfortran generates the .mod files first.
+la_constants
+la_xisnan
+dlamch
+dlanst
+dlapy2
+dlae2
+dlaev2
+dlartg
+dlascl
+dlasr
+dlasrt
+disnan
+dlaisnan
+dlassq
+second

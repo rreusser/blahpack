@@ -146,7 +146,7 @@ elif [ "$PACKAGE" = "arpack" ]; then
         continue  # already added as ORIGINAL_SOURCE (or via --source)
       fi
       DEP_FILE=""
-      for cand in "$ARPACK_SRC/${dep}.f" "$ARPACK_UTIL/${dep}.f" "$LAPACK_DIR/${dep}.f" "$LAPACK_INSTALL/${dep}.f"; do
+      for cand in "$ARPACK_SRC/${dep}.f" "$ARPACK_UTIL/${dep}.f" "$LAPACK_DIR/${dep}.f" "$LAPACK_DIR/${dep}.f90" "$LAPACK_DIR/${dep}.F90" "$LAPACK_DIR/${dep}.F" "$LAPACK_INSTALL/${dep}.f"; do
         [ -f "$cand" ] && { DEP_FILE="$cand"; break; }
       done
       if [ -n "$DEP_FILE" ]; then

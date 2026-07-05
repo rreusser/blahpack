@@ -1,0 +1,114 @@
+
+{{alias}}( N, d, strideD, e, strideE, Z, strideZ, WORK, strideWork )
+    Computes all eigenvalues and the last components of the eigenvectors of a
+    symmetric tridiagonal matrix using the implicit QL or QR method.
+
+    On entry, `d` holds the diagonal and `e` the subdiagonal. On exit, `d`
+    holds the eigenvalues in ascending order, `e` is destroyed, and `Z` holds
+    the last row of the orthonormal eigenvector matrix.
+
+    Parameters
+    ----------
+        N: integer
+            Order of the matrix.
+
+        d: Float64Array
+            Diagonal elements of the tridiagonal matrix (length N).
+
+        strideD: integer
+            Stride length for `d`.
+
+        e: Float64Array
+            Subdiagonal elements of the tridiagonal matrix (length N-1).
+
+        strideE: integer
+            Stride length for `e`.
+
+        Z: Float64Array
+            On exit, the last row of the eigenvector matrix (length N).
+
+        strideZ: integer
+            Stride length for `Z`.
+
+        WORK: Float64Array
+            Workspace array (length >= 2*(N-1)).
+
+        strideWork: integer
+            Stride length for `WORK`.
+
+    Returns
+    -------
+    info: integer
+        0 on success; > 0 if that many eigenvalues failed to converge.
+
+    Examples
+    --------
+    > var d = new {{alias:@stdlib/array/float64}}( [ 2.0, 2.0, 2.0, 2.0 ] );
+    > var e = new {{alias:@stdlib/array/float64}}( [ -1.0, -1.0, -1.0 ] );
+    > var Z = new {{alias:@stdlib/array/float64}}( 4 );
+    > var WORK = new {{alias:@stdlib/array/float64}}( 6 );
+    > {{alias}}( 4, d, 1, e, 1, Z, 1, WORK, 1 )
+    0
+
+
+{{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ, offsetZ, WORK, strideWork, offsetWork )
+    Computes all eigenvalues and the last eigenvector row, using alternative
+    indexing semantics.
+
+    Parameters
+    ----------
+        N: integer
+            Order of the matrix.
+
+        d: Float64Array
+            Diagonal elements (length N).
+
+        strideD: integer
+            Stride length for `d`.
+
+        offsetD: integer
+            Starting index for `d`.
+
+        e: Float64Array
+            Subdiagonal elements (length N-1).
+
+        strideE: integer
+            Stride length for `e`.
+
+        offsetE: integer
+            Starting index for `e`.
+
+        Z: Float64Array
+            On exit, the last row of the eigenvector matrix (length N).
+
+        strideZ: integer
+            Stride length for `Z`.
+
+        offsetZ: integer
+            Starting index for `Z`.
+
+        WORK: Float64Array
+            Workspace array (length >= 2*(N-1)).
+
+        strideWork: integer
+            Stride length for `WORK`.
+
+        offsetWork: integer
+            Starting index for `WORK`.
+
+    Returns
+    -------
+    info: integer
+        0 on success; > 0 if that many eigenvalues failed to converge.
+
+    Examples
+    --------
+    > var d = new {{alias:@stdlib/array/float64}}( [ 2.0, 2.0, 2.0, 2.0 ] );
+    > var e = new {{alias:@stdlib/array/float64}}( [ -1.0, -1.0, -1.0 ] );
+    > var Z = new {{alias:@stdlib/array/float64}}( 4 );
+    > var WORK = new {{alias:@stdlib/array/float64}}( 6 );
+    > {{alias}}.ndarray( 4, d, 1, 0, e, 1, 0, Z, 1, 0, WORK, 1, 0 )
+    0
+
+    See Also
+    --------

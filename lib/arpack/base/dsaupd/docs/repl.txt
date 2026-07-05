@@ -1,0 +1,82 @@
+
+{{alias}}( state, ido, bmat, N, which, nev, tol, resid, ncv, V, ldv, iparam, ipntr, workd, workl, lworkl, infoIn )
+    Reverse communication interface for the Implicitly Restarted Lanczos
+    iteration.
+
+    The caller drives the routine in a loop, dispatching on `ido[0]`: -1/1
+    compute `Y = OP*X` (X at workd[ipntr[0]], Y to workd[ipntr[1]]); 2 compute
+    `Y = B*X`; 3 supply `iparam(8)` shifts in workl (only when ishift=0); 99
+    done. Persistent state lives on `state` (pass {} once). On convergence
+    iparam(5) is the converged Ritz-value count and iparam(3) the iteration
+    count; extract eigenvectors with dseupd.
+
+    The workd pointers ipntr(1:3) are 0-based offsets into `workd`, while the
+    workl pointers ipntr(4:7,11) are ARPACK's 1-based offsets into `workl`.
+
+    Parameters
+    ----------
+        state: Object
+            Persistent reverse-communication state (pass {} on first use).
+
+        ido: Int32Array
+            Reverse-communication flag (length-1; in/out).
+
+        bmat: string
+            'standard' or 'generalized' eigenproblem.
+
+        N: integer
+            Order of the problem.
+
+        which: string
+            Which Ritz values to compute ('LM', 'SM', 'LA', 'SA', or 'BE').
+
+        nev: integer
+            Number of eigenvalues to compute.
+
+        tol: number
+            Relative accuracy for Ritz value convergence.
+
+        resid: Float64Array
+            Residual vector (length N; in/out).
+
+        ncv: integer
+            Number of Lanczos vectors (columns of V).
+
+        V: Float64Array
+            Lanczos basis (N-by-ncv, column-major; out).
+
+        ldv: integer
+            Leading dimension of `V`.
+
+        iparam: Int32Array
+            Input/output parameters (length 11; in/out).
+
+        ipntr: Int32Array
+            Workspace pointers (length 11; out).
+
+        workd: Float64Array
+            Reverse-communication workspace (length >= 3*N).
+
+        workl: Float64Array
+            Private workspace (length >= ncv^2 + 8*ncv).
+
+        lworkl: integer
+            Length of `workl`.
+
+        infoIn: integer
+            Nonzero on the first call to signal a user-supplied initial residual.
+
+    Returns
+    -------
+    info: integer
+        0 on success; 1 if max iterations reached; 3 if no shifts could be
+        applied; negative on failure.
+
+    Examples
+    --------
+    > var ido = new {{alias:@stdlib/array/int32}}( 1 );
+    > var state = {};
+    > // Drive the reverse-communication loop applying OP until ido[0] === 99.
+
+    See Also
+    --------

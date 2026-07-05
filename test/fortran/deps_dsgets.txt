@@ -1,0 +1,6 @@
+# Non-BLAS Fortran dependencies for the dsgets reference driver.
+# (dswap, dcopy are BLAS, auto-linked.) dsortr is self-contained.
+dsortr
+dvout
+ivout
+second

@@ -1,0 +1,71 @@
+
+{{alias}}( state, ido, bmat, N, k, np, mode, resid, rnorm, V, ldv, H, ldh, ipntr, workd )
+    Extends a symmetric Lanczos factorization from length `k` to length `k+np`,
+    via reverse communication.
+
+    The caller drives the routine in a loop, dispatching on `ido[0]`: -1/1
+    compute `Y = OP*X` (X at workd[ipntr[0]], Y to workd[ipntr[1]]); 2 compute
+    `Y = B*X`; 99 done. On entry (ido[0]=0) `resid` holds the initial residual,
+    `rnorm[0]` its B-norm, and workd(0:N-1) holds B*resid. Persistent state
+    lives on `state` (pass {} once).
+
+    Parameters
+    ----------
+        state: Object
+            Persistent reverse-communication state (pass {} on first use).
+
+        ido: Int32Array
+            Reverse-communication flag (length-1; in/out).
+
+        bmat: string
+            'standard' or 'generalized' eigenproblem.
+
+        N: integer
+            Order of the problem.
+
+        k: integer
+            Current order of the factorization.
+
+        np: integer
+            Number of additional steps.
+
+        mode: integer
+            Problem mode.
+
+        resid: Float64Array
+            Residual vector (length N; in/out).
+
+        rnorm: Float64Array
+            B-norm of the residual (length-1; in/out).
+
+        V: Float64Array
+            Lanczos basis (N-by-(k+np), column-major).
+
+        ldv: integer
+            Leading dimension of `V`.
+
+        H: Float64Array
+            Tridiagonal matrix in 2-column layout.
+
+        ldh: integer
+            Leading dimension of `H`.
+
+        ipntr: Int32Array
+            Operator pointers into `workd` (0-based; out).
+
+        workd: Float64Array
+            Reverse-communication workspace (length >= 3*N).
+
+    Returns
+    -------
+    info: integer
+        0 on success; converged subspace size on restart failure.
+
+    Examples
+    --------
+    > var ido = new {{alias:@stdlib/array/int32}}( 1 );
+    > var state = {};
+    > // Drive the reverse-communication loop applying OP until ido[0] === 99.
+
+    See Also
+    --------

@@ -25,7 +25,9 @@ done
 TEST_SRC="$SCRIPT_DIR/fortran/test_${ROUTINE}.f90"
 UTILS_SRC="$SCRIPT_DIR/fortran/test_utils.f90"
 FIXTURE_OUT="${OUTPUT_OVERRIDE:-$SCRIPT_DIR/fixtures/${ROUTINE}.jsonl}"
-BUILD_DIR="$SCRIPT_DIR/build"
+# Per-routine build directory so parallel fixture builds don't clobber each
+# other's object files or Fortran `.mod` module files (la_constants, la_xisnan).
+BUILD_DIR="$SCRIPT_DIR/build/${ROUTINE}"
 
 mkdir -p "$BUILD_DIR" "$(dirname "$FIXTURE_OUT")"
 
@@ -173,7 +175,9 @@ fi
 BINARY="$BUILD_DIR/test_${ROUTINE}"
 
 echo "Compiling test_${ROUTINE}..." >&2
-gfortran -O2 -cpp -ffixed-line-length-none ${INCLUDES[@]+"${INCLUDES[@]}"} -o "$BINARY" "${SOURCES[@]}" 2>&1 >&2
+# -J writes (and searches for) Fortran .mod files in the per-routine build
+# directory, keeping parallel builds isolated.
+gfortran -O2 -cpp -ffixed-line-length-none -J "$BUILD_DIR" ${INCLUDES[@]+"${INCLUDES[@]}"} -o "$BINARY" "${SOURCES[@]}" 2>&1 >&2
 
 echo "Running test_${ROUTINE}..." >&2
 "$BINARY" > "$FIXTURE_OUT"

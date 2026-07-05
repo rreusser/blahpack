@@ -31,6 +31,11 @@ def find_source(routine, package):
             os.path.join(ROOT, 'data', 'BLAS-3.12.0', f'{routine}.f'),
             os.path.join(ROOT, 'data', 'BLAS-3.12.0', f'{routine}.f90'),
         ]
+    elif package == 'arpack':
+        candidates = [
+            os.path.join(ROOT, 'data', 'arpack-ng-3.9.1', 'SRC', f'{routine}.f'),
+            os.path.join(ROOT, 'data', 'arpack-ng-3.9.1', 'EXAMPLES', 'BAND', f'{routine}.f'),
+        ]
     else:
         candidates = [
             os.path.join(ROOT, 'data', 'lapack-3.12.0', 'SRC', f'{routine}.f'),
@@ -98,7 +103,7 @@ def generate_deps_file(routine, package):
 
 def main():
     parser = argparse.ArgumentParser(description='Initialize a routine for translation')
-    parser.add_argument('package', choices=['blas', 'lapack'])
+    parser.add_argument('package', choices=['blas', 'lapack', 'arpack'])
     parser.add_argument('routine')
     parser.add_argument('-d', '--description', default=None)
     args = parser.parse_args()

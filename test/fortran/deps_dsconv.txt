@@ -1,0 +1,5 @@
+# Non-BLAS Fortran dependencies for the dsconv reference driver.
+# Resolved against arpack SRC/UTIL, then lapack SRC/INSTALL.
+# (lsame is BLAS and linked automatically.)
+dlamch
+second

@@ -1,0 +1,90 @@
+
+{{alias}}( N, ritz, strideRITZ, bounds, strideBOUNDS, tol )
+    Counts the number of "converged" Ritz values for the symmetric
+    Lanczos/Arnoldi eigenvalue iteration.
+
+    The i-th Ritz value is considered "converged" when
+
+        bounds[i] <= tol*max( eps23, abs( ritz[i] ) )
+
+    where eps23 = eps**(2/3) and eps is the machine epsilon.
+
+    Parameters
+    ----------
+        N: integer
+            number of Ritz values to check for convergence.
+
+        ritz: Float64Array
+            Ritz values to be checked for convergence.
+
+        strideRITZ: integer
+            stride length for `ritz`.
+
+        bounds: Float64Array
+            Ritz estimates associated with the Ritz values in `ritz`.
+
+        strideBOUNDS: integer
+            stride length for `bounds`.
+
+        tol: number
+            desired relative accuracy for a Ritz value to be considered
+            "converged".
+
+    Returns
+    -------
+    nconv: integer
+        Number of "converged" Ritz values.
+
+    Examples
+    --------
+    > var ritz = new {{alias:@stdlib/array/float64}}( [ 1.0, 2.0, 0.5 ] );
+    > var bounds = new {{alias:@stdlib/array/float64}}( [ 1.0e-14, 0.5, 1.0e-16 ] );
+    > {{alias}}( 3, ritz, 1, bounds, 1, 1.0e-6 )
+    2
+
+
+{{alias}}.ndarray( N, ritz, strideRITZ, offsetRITZ, bounds, strideBOUNDS, offsetBOUNDS, tol )
+    Counts the number of "converged" Ritz values for the symmetric
+    Lanczos/Arnoldi eigenvalue iteration, using alternative indexing semantics.
+
+    Parameters
+    ----------
+        N: integer
+            number of Ritz values to check for convergence.
+
+        ritz: Float64Array
+            Ritz values to be checked for convergence.
+
+        strideRITZ: integer
+            stride length for `ritz`.
+
+        offsetRITZ: integer
+            starting index for `ritz`.
+
+        bounds: Float64Array
+            Ritz estimates associated with the Ritz values in `ritz`.
+
+        strideBOUNDS: integer
+            stride length for `bounds`.
+
+        offsetBOUNDS: integer
+            starting index for `bounds`.
+
+        tol: number
+            desired relative accuracy for a Ritz value to be considered
+            "converged".
+
+    Returns
+    -------
+    nconv: integer
+        Number of "converged" Ritz values.
+
+    Examples
+    --------
+    > var ritz = new {{alias:@stdlib/array/float64}}( [ 1.0, 2.0, 0.5 ] );
+    > var bounds = new {{alias:@stdlib/array/float64}}( [ 1.0e-14, 0.5, 1.0e-16 ] );
+    > {{alias}}.ndarray( 3, ritz, 1, 0, bounds, 1, 0, 1.0e-6 )
+    2
+
+    See Also
+    --------

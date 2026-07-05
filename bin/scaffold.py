@@ -1706,7 +1706,7 @@ def gen_jsdoc_returns(sig):
 
 def main():
     parser = argparse.ArgumentParser(description='Generate stdlib-js module scaffold')
-    parser.add_argument('package', choices=['blas', 'lapack'], help='Package (blas or lapack)')
+    parser.add_argument('package', choices=['blas', 'lapack', 'arpack'], help='Package (blas, lapack, or arpack)')
     parser.add_argument('routine', help='Routine name (e.g., daxpy, dpotf2)')
     parser.add_argument('--description', '-d', default=None, help='One-line description')
     parser.add_argument('--dry-run', action='store_true', help='Print files without writing')
@@ -1717,6 +1717,10 @@ def main():
     # Locate Fortran source
     if args.package == 'blas':
         fortran_path = os.path.join(root_dir, 'data', 'BLAS-3.12.0', f'{args.routine}.f')
+    elif args.package == 'arpack':
+        fortran_path = os.path.join(root_dir, 'data', 'arpack-ng-3.9.1', 'SRC', f'{args.routine}.f')
+        if not os.path.exists(fortran_path):
+            fortran_path = os.path.join(root_dir, 'data', 'arpack-ng-3.9.1', 'EXAMPLES', 'BAND', f'{args.routine}.f')
     else:
         fortran_path = os.path.join(root_dir, 'data', 'lapack-3.12.0', 'SRC', f'{args.routine}.f')
 

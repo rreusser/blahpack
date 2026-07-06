@@ -32,10 +32,11 @@ function extractParams( content ) {
 	if ( !content ) {
 		return null;
 	}
-	// Find the exported function: look for module.exports (CommonJS) or
-	// `export default` (ESM) to get the name, then find that function's
-	// signature
-	var exportMatch = content.match( /module\.exports\s*=\s*(\w+)/ ) || content.match( /export\s+default\s+(\w+)/ );
+	// Find the exported function name, then that function's signature. The
+	// modules are ESM (`export default <name>`); older code used CommonJS
+	// (`module.exports = <name>`). Support both so the check keys off the
+	// real export rather than silently falling back to the first function.
+	var exportMatch = content.match( /export\s+default\s+(\w+)/ ) || content.match( /module\.exports\s*=\s*(\w+)/ );
 	var m;
 	if ( exportMatch ) {
 		var fnName = exportMatch[ 1 ];

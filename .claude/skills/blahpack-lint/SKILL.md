@@ -113,8 +113,8 @@ rollback if anything breaks.
 | `bin/lint-fix.sh` | Full pipeline: codemods + eslint --fix + test verify |
 | `bin/codemod-tests.js` | Test file codemod (var hoisting, Array.from, JSDoc) |
 | `bin/codemod-index.js` | Index.js codemod (use strict, emphasis, empty lines) |
-| `.eslintrc.cjs` | Root config (merges all severity configs) |
-| `tools/eslint/plugin.cjs` | Copy-on-write plugin loader |
+| `eslint.config.cjs` | Flat config (active): blahpack rules + core correctness rules over ESM `lib/` sources |
+| `tools/eslint/plugin.cjs` | Plugin loader: local rules + optional stdlib rules via `STDLIB_ESLINT_DIR` |
 | `tools/eslint/shims.cjs` | Drop-in replacements for @stdlib utilities |
 | `tools/eslint/find-jsdoc.cjs` | JSDoc comment locator (used by 72+ rules) |
 | `tools/eslint/config/*.json` | Rule severity configs (from stdlib + blahpack overrides) |
@@ -128,6 +128,10 @@ rollback if anything breaks.
   so ESLint tooling files use `.cjs` extension for CommonJS.
 - One stdlib rule (`jsdoc-markdown-remark`) is disabled due to a remark version
   incompatibility when loaded cross-project.
-- The stdlib plugin resolves via `tools/eslint/node_modules/eslint-plugin-stdlib/`.
-- Run with `--resolve-plugins-relative-to tools/eslint` (already wired into
-  `bin/lint.sh` and `package.json` scripts).
+- Linting uses ESLint's flat config (`eslint.config.cjs`) via the pinned local
+  binary; `bin/lint.sh` sets `ESLINT_USE_FLAT_CONFIG=true` and batches per
+  module to avoid EMFILE. The blahpack rules load from `tools/eslint/plugin.cjs`.
+- stdlib's own ESLint rules are not on npm; they load only when
+  `STDLIB_ESLINT_DIR` points at a stdlib checkout. Without it, the blahpack
+  rules (the ones that enforce this project's conventions) plus core
+  correctness rules still run.

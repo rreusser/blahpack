@@ -1,0 +1,112 @@
+
+{{alias}}( rvec, howmny, select, d, Z, ldz, sigma, N, AB, MB, lda, RFAC, kl, ku, which, bmat, nev, tol, resid, ncv, V, ldv, iparam, workd, workl, lworkl, iwork, infoIn )
+    Computes converged approximations to eigenvalues of the banded symmetric
+    generalized eigenproblem A*z = lambda*B*z, and optionally the eigenvectors.
+
+    This is a self-contained driver: it runs the full Implicitly Restarted
+    Lanczos iteration internally, applying the banded operators via
+    dgbtrf/dgbtrs/dgbmv, and returns once the iteration converges. The mode is
+    selected via iparam[6] (1 regular, 2 inverse, 3 shift-invert, 4 buckling,
+    5 Cayley) and combined with `bmat`.
+
+    On exit, `d` holds the iparam[4] converged Ritz values in ascending order,
+    and (if rvec) the first iparam[4] columns of `Z` hold the eigenvectors.
+
+    Parameters
+    ----------
+        rvec: boolean
+            Whether to compute Ritz vectors.
+
+        howmny: string
+            'all' or 'select' (only 'all' is implemented).
+
+        select: Int32Array
+            Selection array (length ncv).
+
+        d: Float64Array
+            Ritz values (length nev; out).
+
+        Z: Float64Array
+            Ritz vectors (N-by-nev, column-major; out).
+
+        ldz: integer
+            Leading dimension of `Z`.
+
+        sigma: number
+            The shift (modes 3, 4, 5).
+
+        N: integer
+            Order of the problem.
+
+        AB: Float64Array
+            Matrix A in LAPACK band storage.
+
+        MB: Float64Array
+            Matrix M in LAPACK band storage.
+
+        lda: integer
+            Leading dimension of `AB`, `MB`, and `RFAC`.
+
+        RFAC: Float64Array
+            Band LU workspace/output.
+
+        kl: integer
+            Number of subdiagonals.
+
+        ku: integer
+            Number of superdiagonals.
+
+        which: string
+            Which Ritz values to compute ('LM', 'SM', 'LA', 'SA', or 'BE').
+
+        bmat: string
+            'standard' or 'generalized' eigenproblem.
+
+        nev: integer
+            Number of eigenvalues to compute.
+
+        tol: number
+            Relative accuracy for Ritz value convergence.
+
+        resid: Float64Array
+            Residual vector (length N; in/out).
+
+        ncv: integer
+            Number of Lanczos vectors.
+
+        V: Float64Array
+            Lanczos basis (N-by-ncv, column-major; out).
+
+        ldv: integer
+            Leading dimension of `V`.
+
+        iparam: Int32Array
+            Input/output parameters (length 11; in/out).
+
+        workd: Float64Array
+            Reverse-communication workspace (length >= 3*N).
+
+        workl: Float64Array
+            Private workspace (length >= ncv^2 + 8*ncv).
+
+        lworkl: integer
+            Length of `workl`.
+
+        iwork: Int32Array
+            Integer pivot workspace (length >= N).
+
+        infoIn: integer
+            Nonzero to signal a user-supplied initial residual.
+
+    Returns
+    -------
+    info: integer
+        0 on success; 1 if max iterations reached; negative on failure.
+
+    Examples
+    --------
+    > var d = new {{alias:@stdlib/array/float64}}( 4 );
+    > // Build banded A, M and call dsband to fill `d` with the eigenvalues.
+
+    See Also
+    --------

@@ -1,0 +1,262 @@
+
+{{alias}}( rvec, howmny, select, strideSelect, d, strideD, z, ldz, sigma, bmat, N, which, nev, tol, resid, strideResid, ncv, v, ldv, iparam, strideIparam, ipntr, strideIpntr, workd, strideWorkd, workl, strideWorkl, lworkl )
+    Returns the converged Ritz values and (optionally) Ritz vectors for a
+    symmetric eigenproblem from an ARPACK Lanczos factorization.
+
+    Must be called after the `dsaupd` iteration converges. It consumes the
+    internal state (`v`, `workl`, `iparam`, `ipntr`) produced by `dsaupd` and,
+    on exit, `d` holds the converged Ritz values in ascending order and the
+    first `nconv` columns of `z` hold the corresponding Ritz vectors.
+
+    Parameters
+    ----------
+    rvec: boolean
+        If `true`, compute Ritz vectors; if `false`, compute Ritz values only.
+
+    howmny: string
+        `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented).
+
+    select: Array|Uint8Array
+        Logical work array of length `ncv`.
+
+    strideSelect: integer
+        Stride length for `select`.
+
+    d: Float64Array
+        Output array for the Ritz values (length `nev`).
+
+    strideD: integer
+        Stride length for `d`.
+
+    z: Float64Array
+        Output matrix of Ritz vectors (N-by-nev when `howmny='all'`).
+
+    ldz: integer
+        Leading dimension of `z`.
+
+    sigma: number
+        Shift used when the mode is 3, 4, or 5.
+
+    bmat: string
+        `'standard'` for a standard problem, `'generalized'` for a generalized problem.
+
+    N: integer
+        Dimension of the eigenproblem.
+
+    which: string
+        Eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'`.
+
+    nev: integer
+        Number of eigenvalues requested.
+
+    tol: number
+        Relative accuracy tolerance used by `dsaupd`.
+
+    resid: Float64Array
+        Final residual vector (length N).
+
+    strideResid: integer
+        Stride length for `resid`.
+
+    ncv: integer
+        Number of Lanczos basis vectors.
+
+    v: Float64Array
+        Lanczos basis matrix (N-by-ncv); overwritten on exit.
+
+    ldv: integer
+        Leading dimension of `v`.
+
+    iparam: Array|Int32Array
+        ARPACK parameter array.
+
+    strideIparam: integer
+        Stride length for `iparam`.
+
+    ipntr: Array|Int32Array
+        ARPACK pointer array into `workl`.
+
+    strideIpntr: integer
+        Stride length for `ipntr`.
+
+    workd: Float64Array
+        Work array of length `2*N`.
+
+    strideWorkd: integer
+        Stride length for `workd`.
+
+    workl: Float64Array
+        Private work array set by `dsaupd` (length `lworkl`); modified on exit.
+
+    strideWorkl: integer
+        Stride length for `workl`.
+
+    lworkl: integer
+        Length of `workl`.
+
+    Returns
+    -------
+    info: integer
+        0 on success; a negative error code otherwise.
+
+    Examples
+    --------
+    // Post-convergence state is produced by `dsaupd`; see the package tests
+    // for realistic inputs recorded from the ARPACK Fortran reference.
+    > var iparam = [ 0, 0, 0, 0, 0, 0, 1 ];
+    > var ipntr = [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1 ];
+    > var select = new Array( 4 );
+    > var d = new {{alias:@stdlib/array/float64}}( 2 );
+    > var z = new {{alias:@stdlib/array/float64}}( 8 );
+    > var v = new {{alias:@stdlib/array/float64}}( 8 );
+    > var resid = new {{alias:@stdlib/array/float64}}( 2 );
+    > var workd = new {{alias:@stdlib/array/float64}}( 4 );
+    > var workl = new {{alias:@stdlib/array/float64}}( 48 );
+    > {{alias}}( true, 'all', select, 1, d, 1, z, 2, 0.0, 'standard', 2, 'LM', 2, 0.0, resid, 1, 4, v, 2, iparam, 1, ipntr, 1, workd, 1, workl, 1, 48 )
+    0
+
+
+{{alias}}.ndarray( rvec, howmny, select, strideSelect, offsetSelect, d, strideD, offsetD, z, strideZ1, strideZ2, offsetZ, sigma, bmat, N, which, nev, tol, resid, strideResid, offsetResid, ncv, v, strideV1, strideV2, offsetV, iparam, strideIparam, offsetIparam, ipntr, strideIpntr, offsetIpntr, workd, strideWorkd, offsetWorkd, workl, strideWorkl, offsetWorkl, lworkl )
+    Returns the converged Ritz values and (optionally) Ritz vectors, using
+    alternative indexing semantics.
+
+    Parameters
+    ----------
+    rvec: boolean
+        If `true`, compute Ritz vectors; if `false`, compute Ritz values only.
+
+    howmny: string
+        `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented).
+
+    select: Array|Uint8Array
+        Logical work array of length `ncv`.
+
+    strideSelect: integer
+        Stride length for `select`.
+
+    offsetSelect: integer
+        Starting index for `select`.
+
+    d: Float64Array
+        Output array for the Ritz values (length `nev`).
+
+    strideD: integer
+        Stride length for `d`.
+
+    offsetD: integer
+        Starting index for `d`.
+
+    z: Float64Array
+        Output matrix of Ritz vectors (N-by-nev when `howmny='all'`).
+
+    strideZ1: integer
+        Stride of the first (row) dimension of `z`.
+
+    strideZ2: integer
+        Stride of the second (column) dimension of `z`.
+
+    offsetZ: integer
+        Starting index for `z`.
+
+    sigma: number
+        Shift used when the mode is 3, 4, or 5.
+
+    bmat: string
+        `'standard'` for a standard problem, `'generalized'` for a generalized problem.
+
+    N: integer
+        Dimension of the eigenproblem.
+
+    which: string
+        Eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'`.
+
+    nev: integer
+        Number of eigenvalues requested.
+
+    tol: number
+        Relative accuracy tolerance used by `dsaupd`.
+
+    resid: Float64Array
+        Final residual vector (length N).
+
+    strideResid: integer
+        Stride length for `resid`.
+
+    offsetResid: integer
+        Starting index for `resid`.
+
+    ncv: integer
+        Number of Lanczos basis vectors.
+
+    v: Float64Array
+        Lanczos basis matrix (N-by-ncv); overwritten on exit.
+
+    strideV1: integer
+        Stride of the first (row) dimension of `v`.
+
+    strideV2: integer
+        Stride of the second (column) dimension of `v`.
+
+    offsetV: integer
+        Starting index for `v`.
+
+    iparam: Array|Int32Array
+        ARPACK parameter array.
+
+    strideIparam: integer
+        Stride length for `iparam`.
+
+    offsetIparam: integer
+        Starting index for `iparam`.
+
+    ipntr: Array|Int32Array
+        ARPACK pointer array into `workl`.
+
+    strideIpntr: integer
+        Stride length for `ipntr`.
+
+    offsetIpntr: integer
+        Starting index for `ipntr`.
+
+    workd: Float64Array
+        Work array of length `2*N`.
+
+    strideWorkd: integer
+        Stride length for `workd`.
+
+    offsetWorkd: integer
+        Starting index for `workd`.
+
+    workl: Float64Array
+        Private work array set by `dsaupd` (length `lworkl`); modified on exit.
+
+    strideWorkl: integer
+        Stride length for `workl`.
+
+    offsetWorkl: integer
+        Starting index for `workl`.
+
+    lworkl: integer
+        Length of `workl`.
+
+    Returns
+    -------
+    info: integer
+        0 on success; a negative error code otherwise.
+
+    Examples
+    --------
+    > var iparam = [ 0, 0, 0, 0, 0, 0, 1 ];
+    > var ipntr = [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1 ];
+    > var select = new Array( 4 );
+    > var d = new {{alias:@stdlib/array/float64}}( 2 );
+    > var z = new {{alias:@stdlib/array/float64}}( 8 );
+    > var v = new {{alias:@stdlib/array/float64}}( 8 );
+    > var resid = new {{alias:@stdlib/array/float64}}( 2 );
+    > var workd = new {{alias:@stdlib/array/float64}}( 4 );
+    > var workl = new {{alias:@stdlib/array/float64}}( 48 );
+    > {{alias}}.ndarray( true, 'all', select, 1, 0, d, 1, 0, z, 1, 2, 0, 0.0, 'standard', 2, 'LM', 2, 0.0, resid, 1, 0, 4, v, 1, 2, 0, iparam, 1, 0, ipntr, 1, 0, workd, 1, 0, workl, 1, 0, 48 )
+    0
+
+    See Also
+    --------

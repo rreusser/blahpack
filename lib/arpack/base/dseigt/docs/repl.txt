@@ -1,0 +1,124 @@
+
+{{alias}}( rnorm, N, H, ldh, eig, strideEig, bounds, strideBounds, workl, strideWorkl )
+    Computes the eigenvalues of the current symmetric tridiagonal matrix `H`
+    and the corresponding Ritz estimates.
+
+    On exit, `eig` holds the eigenvalues in ascending order and `bounds` holds
+    the Ritz estimates rnorm*|z|, where z is the last component of each
+    eigenvector.
+
+    Parameters
+    ----------
+        rnorm: number
+            Residual norm of the Lanczos/Arnoldi factorization.
+
+        N: integer
+            Order of the matrix `H`.
+
+        H: Float64Array
+            Tridiagonal matrix in 2-column layout: subdiagonal in column 0
+            (rows 1..N-1) and diagonal in column 1.
+
+        ldh: integer
+            Leading dimension of `H`.
+
+        eig: Float64Array
+            Output array for the eigenvalues (length N).
+
+        strideEig: integer
+            Stride length for `eig`.
+
+        bounds: Float64Array
+            Output array for the Ritz estimates (length N).
+
+        strideBounds: integer
+            Stride length for `bounds`.
+
+        workl: Float64Array
+            Workspace array (length >= 3*N).
+
+        strideWorkl: integer
+            Stride length for `workl`.
+
+    Returns
+    -------
+    ierr: integer
+        0 on success; otherwise the dstqrb error code.
+
+    Examples
+    --------
+    > var H = new {{alias:@stdlib/array/float64}}( [ 0.0, -1.0, -1.0, -1.0, 2.0, 2.0, 2.0, 2.0 ] );
+    > var eig = new {{alias:@stdlib/array/float64}}( 4 );
+    > var bounds = new {{alias:@stdlib/array/float64}}( 4 );
+    > var workl = new {{alias:@stdlib/array/float64}}( 12 );
+    > {{alias}}( 0.5, 4, H, 4, eig, 1, bounds, 1, workl, 1 )
+    0
+
+
+{{alias}}.ndarray( rnorm, N, H, strideH1, strideH2, offsetH, eig, strideEig, offsetEig, bounds, strideBounds, offsetBounds, workl, strideWorkl, offsetWorkl )
+    Computes the eigenvalues and Ritz estimates, using alternative indexing
+    semantics.
+
+    Parameters
+    ----------
+        rnorm: number
+            Residual norm of the Lanczos/Arnoldi factorization.
+
+        N: integer
+            Order of the matrix `H`.
+
+        H: Float64Array
+            Tridiagonal matrix in 2-column layout.
+
+        strideH1: integer
+            Stride of the first (row) dimension of `H`.
+
+        strideH2: integer
+            Stride of the second (column) dimension of `H`.
+
+        offsetH: integer
+            Starting index for `H`.
+
+        eig: Float64Array
+            Output array for the eigenvalues (length N).
+
+        strideEig: integer
+            Stride length for `eig`.
+
+        offsetEig: integer
+            Starting index for `eig`.
+
+        bounds: Float64Array
+            Output array for the Ritz estimates (length N).
+
+        strideBounds: integer
+            Stride length for `bounds`.
+
+        offsetBounds: integer
+            Starting index for `bounds`.
+
+        workl: Float64Array
+            Workspace array (length >= 3*N).
+
+        strideWorkl: integer
+            Stride length for `workl`.
+
+        offsetWorkl: integer
+            Starting index for `workl`.
+
+    Returns
+    -------
+    ierr: integer
+        0 on success; otherwise the dstqrb error code.
+
+    Examples
+    --------
+    > var H = new {{alias:@stdlib/array/float64}}( [ 0.0, -1.0, -1.0, -1.0, 2.0, 2.0, 2.0, 2.0 ] );
+    > var eig = new {{alias:@stdlib/array/float64}}( 4 );
+    > var bounds = new {{alias:@stdlib/array/float64}}( 4 );
+    > var workl = new {{alias:@stdlib/array/float64}}( 12 );
+    > {{alias}}.ndarray( 0.5, 4, H, 1, 4, 0, eig, 1, 0, bounds, 1, 0, workl, 1, 0 )
+    0
+
+    See Also
+    --------

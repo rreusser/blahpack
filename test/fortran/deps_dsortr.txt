@@ -1,0 +1,1 @@
+# dsortr has no external Fortran dependencies (self-contained sort).

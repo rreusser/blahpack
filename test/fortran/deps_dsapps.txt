@@ -1,0 +1,16 @@
+# Non-BLAS Fortran dependencies for the dsapps reference driver.
+# (daxpy, dcopy, dscal, dgemv are BLAS, auto-linked.) The modern .f90
+# dlartg pulls in the la_constants / la_xisnan modules, which must be
+# compiled before their users; disnan/dlaisnan/dlassq round out that closure.
+la_constants
+la_xisnan
+dlartg
+dlaset
+dlamch
+disnan
+dlaisnan
+dlassq
+dvout
+dmout
+ivout
+second

@@ -1,0 +1,83 @@
+
+{{alias}}( which, apply, N, x1, strideX1, x2, strideX2 )
+    Sorts the values in `x1` with a gapped (Shell) insertion sort, optionally
+    applying the same permutation to a companion vector `x2`.
+
+    Both `x1` and `x2` are sorted in place; there is no return value.
+
+    Parameters
+    ----------
+        which: string
+            Ordering (ARPACK convention; the selected values move toward the
+            end of `x1`): 'LM' (largest magnitude), 'SM' (smallest magnitude),
+            'LA' (largest algebraic), or 'SA' (smallest algebraic).
+
+        apply: boolean
+            Whether to apply the sorting permutation to `x2`.
+
+        N: integer
+            Number of elements to sort.
+
+        x1: Float64Array
+            Array whose values determine (and receive) the sort.
+
+        strideX1: integer
+            Stride length for `x1`.
+
+        x2: Float64Array
+            Companion array permuted alongside `x1` when `apply` is true.
+
+        strideX2: integer
+            Stride length for `x2`.
+
+    Examples
+    --------
+    > var x1 = new {{alias:@stdlib/array/float64}}( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );
+    > var x2 = new {{alias:@stdlib/array/float64}}( [ 10.0, 20.0, 30.0, 40.0, 50.0 ] );
+    > {{alias}}( 'LA', true, 5, x1, 1, x2, 1 );
+    > x1
+    <Float64Array>[ -1.5, -1.0, 2.0, 3.0, 4.0 ]
+
+
+{{alias}}.ndarray( which, apply, N, x1, strideX1, offsetX1, x2, strideX2, offsetX2 )
+    Sorts the values in `x1`, using alternative indexing semantics.
+
+    Parameters
+    ----------
+        which: string
+            Ordering: 'LM', 'SM', 'LA', or 'SA'.
+
+        apply: boolean
+            Whether to apply the sorting permutation to `x2`.
+
+        N: integer
+            Number of elements to sort.
+
+        x1: Float64Array
+            Array whose values determine (and receive) the sort.
+
+        strideX1: integer
+            Stride length for `x1`.
+
+        offsetX1: integer
+            Starting index for `x1`.
+
+        x2: Float64Array
+            Companion array permuted alongside `x1` when `apply` is true.
+
+        strideX2: integer
+            Stride length for `x2`.
+
+        offsetX2: integer
+            Starting index for `x2`.
+
+    Examples
+    --------
+    > var x1 = new {{alias:@stdlib/array/float64}}( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );
+    > var x2 = new {{alias:@stdlib/array/float64}}( [ 10.0, 20.0, 30.0, 40.0, 50.0 ] );
+    > {{alias}}.ndarray( 'LA', true, 5, x1, 1, 0, x2, 1, 0 );
+    > x1
+    <Float64Array>[ -1.5, -1.0, 2.0, 3.0, 4.0 ]
+
+    See Also
+    --------

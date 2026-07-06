@@ -23,8 +23,10 @@ FORCE=0
 
 BLAS_VERSION="3.12.0"
 LAPACK_VERSION="3.12.0"
+ARPACK_VERSION="3.9.1"
 BLAS_URL="https://www.netlib.org/blas/blas-${BLAS_VERSION}.tgz"
 LAPACK_URL="https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v${LAPACK_VERSION}.tar.gz"
+ARPACK_URL="https://github.com/opencollab/arpack-ng/archive/refs/tags/${ARPACK_VERSION}.tar.gz"
 
 mkdir -p "${DATA_DIR}"
 cd "${DATA_DIR}"
@@ -69,10 +71,26 @@ else
 	echo "Extracted lapack-${LAPACK_VERSION}/"
 fi
 
+# --- ARPACK -----------------------------------------------------------------
+# The GitHub tag tarball extracts to arpack-ng-${ARPACK_VERSION}/ with the
+# routine sources under SRC/ (dsaupd.f, dseupd.f, ...) and the banded driver
+# under EXAMPLES/BAND/ (dsband.f). BSD-3-Clause (Rice); see docs/optimization-
+# policy.md and docs/arpack-translation.md.
+if [ "${FORCE}" -eq 0 ] && [ -d "arpack-ng-${ARPACK_VERSION}/SRC" ]; then
+	echo "arpack-ng-${ARPACK_VERSION}/SRC already present; skipping (use --force to refetch)."
+else
+	rm -rf "arpack-ng-${ARPACK_VERSION}"
+	fetch "${ARPACK_URL}" "arpack.tar.gz"
+	tar -xzf "arpack.tar.gz"
+	rm -f "arpack.tar.gz"
+	echo "Extracted arpack-ng-${ARPACK_VERSION}/"
+fi
+
 # --- Verify -----------------------------------------------------------------
 MISSING=0
 [ -f "BLAS-${BLAS_VERSION}/ddot.f" ] || { echo "WARN: BLAS-${BLAS_VERSION}/ddot.f not found — layout may have changed." >&2; MISSING=1; }
 [ -f "lapack-${LAPACK_VERSION}/SRC/dpotf2.f" ] || { echo "WARN: lapack-${LAPACK_VERSION}/SRC/dpotf2.f not found — layout may have changed." >&2; MISSING=1; }
+[ -f "arpack-ng-${ARPACK_VERSION}/SRC/dsaupd.f" ] || { echo "WARN: arpack-ng-${ARPACK_VERSION}/SRC/dsaupd.f not found — layout may have changed." >&2; MISSING=1; }
 if [ "${MISSING}" -eq 0 ]; then
 	echo "Reference sources ready under data/."
 fi

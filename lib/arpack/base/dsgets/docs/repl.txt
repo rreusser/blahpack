@@ -1,0 +1,104 @@
+
+{{alias}}( ishift, which, kev, np, ritz, strideRitz, bounds, strideBounds, shifts, strideShifts )
+    Sorts the current Ritz values (permuting the associated bounds) and, when
+    requested, selects the `np` shifts for the implicitly restarted symmetric
+    Lanczos/Arnoldi iteration.
+
+    Parameters
+    ----------
+        ishift: integer
+            If 1, compute the shifts; if 0, leave `shifts` untouched.
+
+        which: string
+            Ordering: 'LM', 'SM', 'LA', 'SA', or 'BE' (both ends).
+
+        kev: integer
+            Number of wanted Ritz values.
+
+        np: integer
+            Number of shifts (unwanted Ritz values).
+
+        ritz: Float64Array
+            Ritz values (length kev+np); reordered in place.
+
+        strideRitz: integer
+            Stride length for `ritz`.
+
+        bounds: Float64Array
+            Ritz estimates (length kev+np); permuted alongside `ritz`.
+
+        strideBounds: integer
+            Stride length for `bounds`.
+
+        shifts: Float64Array
+            Output array for the selected shifts (length np).
+
+        strideShifts: integer
+            Stride length for `shifts`.
+
+    Examples
+    --------
+    > var ritz = new {{alias:@stdlib/array/float64}}( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );
+    > var bounds = new {{alias:@stdlib/array/float64}}( [ 0.1, 0.5, 0.02, 0.3, 0.05 ] );
+    > var shifts = new {{alias:@stdlib/array/float64}}( 2 );
+    > {{alias}}( 1, 'LM', 3, 2, ritz, 1, bounds, 1, shifts, 1 );
+    > ritz
+    <Float64Array>[ -1.0, -1.5, 2.0, 3.0, 4.0 ]
+
+
+{{alias}}.ndarray( ishift, which, kev, np, ritz, strideRitz, offsetRitz, bounds, strideBounds, offsetBounds, shifts, strideShifts, offsetShifts )
+    Selects shifts and sorts the Ritz values, using alternative indexing
+    semantics.
+
+    Parameters
+    ----------
+        ishift: integer
+            If 1, compute the shifts; if 0, leave `shifts` untouched.
+
+        which: string
+            Ordering: 'LM', 'SM', 'LA', 'SA', or 'BE'.
+
+        kev: integer
+            Number of wanted Ritz values.
+
+        np: integer
+            Number of shifts.
+
+        ritz: Float64Array
+            Ritz values (length kev+np); reordered in place.
+
+        strideRitz: integer
+            Stride length for `ritz`.
+
+        offsetRitz: integer
+            Starting index for `ritz`.
+
+        bounds: Float64Array
+            Ritz estimates (length kev+np); permuted alongside `ritz`.
+
+        strideBounds: integer
+            Stride length for `bounds`.
+
+        offsetBounds: integer
+            Starting index for `bounds`.
+
+        shifts: Float64Array
+            Output array for the selected shifts (length np).
+
+        strideShifts: integer
+            Stride length for `shifts`.
+
+        offsetShifts: integer
+            Starting index for `shifts`.
+
+    Examples
+    --------
+    > var ritz = new {{alias:@stdlib/array/float64}}( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );
+    > var bounds = new {{alias:@stdlib/array/float64}}( [ 0.1, 0.5, 0.02, 0.3, 0.05 ] );
+    > var shifts = new {{alias:@stdlib/array/float64}}( 2 );
+    > {{alias}}.ndarray( 1, 'LM', 3, 2, ritz, 1, 0, bounds, 1, 0, shifts, 1, 0 );
+    > ritz
+    <Float64Array>[ -1.0, -1.5, 2.0, 3.0, 4.0 ]
+
+    See Also
+    --------

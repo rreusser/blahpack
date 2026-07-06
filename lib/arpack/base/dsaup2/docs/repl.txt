@@ -1,0 +1,101 @@
+
+{{alias}}( state, ido, bmat, N, which, nev, np, tol, resid, mode, iupd, ishift, mxiter, V, ldv, H, ldh, ritz, bounds, Q, ldq, workl, ipntr, workd, infoIn )
+    Intermediate driver for the Implicitly Restarted Lanczos iteration, via
+    reverse communication.
+
+    The caller drives the routine in a loop, dispatching on `ido[0]`: -1/1
+    compute `Y = OP*X` (X at workd[ipntr[0]], Y to workd[ipntr[1]]); 2 compute
+    `Y = B*X`; 3 supply `np[0]` shifts in workl (only when ishift=0); 99 done.
+    Persistent state lives on `state` (pass {} once). On convergence `np[0]`
+    returns the converged Ritz-value count and `mxiter[0]` the iteration count.
+
+    Parameters
+    ----------
+        state: Object
+            Persistent reverse-communication state (pass {} on first use).
+
+        ido: Int32Array
+            Reverse-communication flag (length-1; in/out).
+
+        bmat: string
+            'standard' or 'generalized' eigenproblem.
+
+        N: integer
+            Order of the problem.
+
+        which: string
+            Which Ritz values to compute ('LM', 'SM', 'LA', 'SA', or 'BE').
+
+        nev: Int32Array
+            Number of eigenvalues to compute (length-1; in/out).
+
+        np: Int32Array
+            Number of implicit shifts; returns nconv on exit (length-1; in/out).
+
+        tol: number
+            Relative accuracy for Ritz value convergence.
+
+        resid: Float64Array
+            Residual vector (length N; in/out).
+
+        mode: integer
+            Problem mode.
+
+        iupd: integer
+            Restart flag.
+
+        ishift: integer
+            0 for user-supplied shifts (reverse communication), 1 for exact.
+
+        mxiter: Int32Array
+            Max iterations (in) / actual iterations (out) (length-1; in/out).
+
+        V: Float64Array
+            Lanczos basis (N-by-ncv, column-major, ncv = nev+np).
+
+        ldv: integer
+            Leading dimension of `V`.
+
+        H: Float64Array
+            Tridiagonal matrix in 2-column layout.
+
+        ldh: integer
+            Leading dimension of `H`.
+
+        ritz: Float64Array
+            Ritz values (length ncv; out).
+
+        bounds: Float64Array
+            Ritz estimates (length ncv; out).
+
+        Q: Float64Array
+            Rotation accumulation matrix (ncv-by-ncv, column-major).
+
+        ldq: integer
+            Leading dimension of `Q`.
+
+        workl: Float64Array
+            Workspace (length >= 3*ncv).
+
+        ipntr: Int32Array
+            Operator pointers into `workd` (0-based; out).
+
+        workd: Float64Array
+            Reverse-communication workspace (length >= 3*N).
+
+        infoIn: integer
+            Nonzero on the first call to signal a user-supplied initial residual.
+
+    Returns
+    -------
+    info: integer
+        0 on success; 1 if max iterations reached; negative on failure.
+
+    Examples
+    --------
+    > var ido = new {{alias:@stdlib/array/int32}}( 1 );
+    > var state = {};
+    > // Drive the reverse-communication loop applying OP until ido[0] === 99.
+
+    See Also
+    --------

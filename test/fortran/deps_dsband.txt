@@ -1,0 +1,59 @@
+# Non-BLAS Fortran deps for the dsband banded driver (full symmetric ARPACK
+# closure + dseupd LAPACK helpers + banded factor/solve dgbtrf/dgbtrs).
+# The driver runs the full dsaupd + dseupd pipeline, so it needs the entire
+# symmetric ARPACK closure plus the LAPACK helpers dseupd/dstqrb/dsteqr call.
+# BLAS (dcopy, dscal, dger, dgemv, dswap, ddot, daxpy, dnrm2) is auto-linked.
+# la_constants / la_xisnan are Fortran modules and must precede dlartg/dlassq.
+la_constants
+la_xisnan
+# ARPACK closure (SRC)
+dsband
+dseupd
+dsaupd
+dsaup2
+dsaitr
+dsapps
+dsconv
+dseigt
+dsgets
+dsortr
+dsesrt
+dgetv0
+dstqrb
+dstats
+# ARPACK UTIL (debug printers + timer)
+dvout
+ivout
+dmout
+second
+# LAPACK helpers
+dlarnv
+dlaruv
+disnan
+dlaisnan
+dlassq
+dlamch
+dlanst
+dlapy2
+dlae2
+dlaev2
+dlartg
+dlascl
+dlaset
+dlasr
+dlasrt
+dsteqr
+dgeqr2
+dlarf
+dlarfg
+iladlc
+iladlr
+dorm2r
+dlacpy
+dgbtrf
+dgbtf2
+dgbtrs
+dlaswp
+ilaenv
+ieeeck
+iparmq

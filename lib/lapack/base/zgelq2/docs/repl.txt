@@ -1,5 +1,6 @@
 {{alias}}( order, M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
-    Computes an LQ factorization of a complex M-by-N matrix A = L * Q.
+    Computes the LQ factorization of a general rectangular matrix using an
+    unblocked algorithm.
 
     Parameters
     ----------
@@ -41,8 +42,8 @@
 
 
 {{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
-    Computes an LQ factorization of a complex M-by-N matrix A = L * Q using
-    alternative indexing semantics.
+    Computes the LQ factorization of a general rectangular matrix using an
+    unblocked algorithm, using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgeqr2",
   "version": "1.0.0",
-  "description": "Compute QR factorization of a real matrix (unblocked).",
+  "description": "Computes the QR factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

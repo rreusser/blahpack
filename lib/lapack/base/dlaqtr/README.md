@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaqtr
 
-> Solves a real quasi-triangular system of equations
+> Solves a real quasi-triangular system of equations, or a complex quasi-triangular system of special form, in real arithmetic
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaqtr = require( '@stdlib/lapack/base/dlaqtr' );
 
 #### dlaqtr( order, ltran, lreal, N, T, LDT, b, strideB, w, scale, x, strideX, WORK, strideWORK )
 
-Solves a real quasi-triangular system of equations
+Solves a real quasi-triangular system of equations, or a complex quasi-triangular system of special form, in real arithmetic
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dlaqtr.ndarray( ltran, lreal, N, T, strideT1, strideT2, offsetT, b, strideB, offsetB, w, scale, x, strideX, offsetX, WORK, strideWORK, offsetWORK )
 
-Solves a real quasi-triangular system of equations, using alternative indexing semantics.
+Solves a real quasi-triangular system of equations, or a complex quasi-triangular system of special form, in real arithmetic, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

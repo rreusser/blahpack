@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgtsv",
   "version": "1.0.0",
-  "description": "Solve a complex general tridiagonal system of linear equations A * X = B",
+  "description": "Computes the solution to system of linear equations A·X = B for general tridiagonal matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpotrs",
   "version": "1.0.0",
-  "description": "Solves a Hermitian positive definite system using Cholesky factorization (complex double-precision).",
+  "description": "Solves a system of linear equations A·X = B with a Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

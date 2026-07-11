@@ -20,7 +20,7 @@ limitations under the License.
 
 # zptrfs
 
-> Improves the computed solution to a complex Hermitian positive definite.
+> Improves the computed solution to a system of linear equations when the coefficient matrix is Hermitian positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zptrfs = require( '@stdlib/lapack/base/zptrfs' );
 
 #### zptrfs( uplo, N, nrhs, d, strideD, e, strideE, DF, strideDF, EF, strideEF, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, RWORK, strideRWORK )
 
-Improves the computed solution to a complex Hermitian positive definite.
+Improves the computed solution to a system of linear equations when the coefficient matrix is Hermitian positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var zptrfs = require( '@stdlib/lapack/base/zptrfs' );
@@ -80,7 +80,7 @@ The function has the following parameters:
 
 #### zptrfs.ndarray( uplo, N, nrhs, d, strideD, offsetD, e, strideE, offsetE, DF, strideDF, offsetDF, EF, strideEF, offsetEF, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
 
-Improves the computed solution to a complex Hermitian positive definite, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations when the coefficient matrix is Hermitian positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var zptrfs = require( '@stdlib/lapack/base/zptrfs' );

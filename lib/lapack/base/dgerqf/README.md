@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgerqf
 
-> Computes an RQ factorization of a real M-by-N matrix A = R * Q.
+> Computes an RQ factorization of a real M-by-N matrix A: A = R·Q.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgerqf = require( '@stdlib/lapack/base/dgerqf' );
 
 #### dgerqf( M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Computes an RQ factorization of a real M-by-N matrix A = R * Q.
+Computes an RQ factorization of a real M-by-N matrix A: A = R·Q.
 
 ```javascript
 var dgerqf = require( '@stdlib/lapack/base/dgerqf' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgerqf.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
 
-Computes an RQ factorization of a real M-by-N matrix A = R * Q, using alternative indexing semantics.
+Computes an RQ factorization of a real M-by-N matrix A: A = R·Q, using alternative indexing semantics.
 
 ```javascript
 var dgerqf = require( '@stdlib/lapack/base/dgerqf' );

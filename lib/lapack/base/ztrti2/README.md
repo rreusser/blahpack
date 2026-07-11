@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrti2
 
-> Computes the inverse of a complex upper or lower triangular matrix.
+> Computes the inverse of a triangular matrix (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrti2 = require( '@stdlib/lapack/base/ztrti2' );
 
 #### ztrti2( order, uplo, diag, N, A, LDA )
 
-Computes the inverse of a complex upper or lower triangular matrix.
+Computes the inverse of a triangular matrix (unblocked algorithm).
 
 ```javascript
 var ztrti2 = require( '@stdlib/lapack/base/ztrti2' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### ztrti2.ndarray( uplo, diag, N, A, strideA1, strideA2, offsetA )
 
-Computes the inverse of a complex upper or lower triangular matrix, using alternative indexing semantics.
+Computes the inverse of a triangular matrix (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var ztrti2 = require( '@stdlib/lapack/base/ztrti2' );

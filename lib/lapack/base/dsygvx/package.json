@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsygvx",
   "version": "1.0.0",
-  "description": "Computes selected eigenvalues and eigenvectors of a real generalized symmetric-definite eigenproblem",
+  "description": "Computes selected eigenvalues, and optionally, eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

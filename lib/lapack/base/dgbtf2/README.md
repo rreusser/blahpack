@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgbtf2
 
-> Computes an LU factorization of a real M-by-N band matrix A using partial.
+> Computes the LU factorization of a general band matrix using the unblocked version of the algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgbtf2 = require( '@stdlib/lapack/base/dgbtf2' );
 
 #### dgbtf2( order, M, N, kl, ku, AB, LDAB, IPIV, strideIPIV )
 
-Computes an LU factorization of a real M-by-N band matrix A using partial.
+Computes the LU factorization of a general band matrix using the unblocked version of the algorithm.
 
 ```javascript
 var dgbtf2 = require( '@stdlib/lapack/base/dgbtf2' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgbtf2.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
 
-Computes an LU factorization of a real M-by-N band matrix A using partial, using alternative indexing semantics.
+Computes the LU factorization of a general band matrix using the unblocked version of the algorithm, using alternative indexing semantics.
 
 ```javascript
 var dgbtf2 = require( '@stdlib/lapack/base/dgbtf2' );

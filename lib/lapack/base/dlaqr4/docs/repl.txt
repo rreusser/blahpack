@@ -1,6 +1,6 @@
 {{alias}}( wantt, wantz, N, ilo, ihi, H, LDH, WR, strideWR, WI, strideWI, iloz, ihiz, Z, LDZ, WORK, strideWORK, lwork )
-    Implements one level of recursion for DLAQR0. It is a complete
-    implementation.
+    Computes the eigenvalues of a Hessenberg matrix, and optionally the
+    matrices from the Schur decomposition.
 
     Parameters
     ----------
@@ -69,8 +69,9 @@
 
 
 {{alias}}.ndarray( wantt, wantz, N, ilo, ihi, H, strideH1, strideH2, offsetH, WR, strideWR, offsetWR, WI, strideWI, offsetWI, iloz, ihiz, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork )
-    Implements one level of recursion for DLAQR0. It is a complete
-    implementation using alternative indexing semantics.
+    Computes the eigenvalues of a Hessenberg matrix, and optionally the
+    matrices from the Schur decomposition, using alternative indexing
+    semantics.
 
     Parameters
     ----------

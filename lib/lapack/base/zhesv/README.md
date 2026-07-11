@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhesv
 
-> Computes the solution to a complex system of linear equations A*X = B.
+> Computes the solution to system of linear equations A·X = B for Hermitian matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhesv = require( '@stdlib/lapack/base/zhesv' );
 
 #### zhesv( uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK, strideWORK, lwork )
 
-Computes the solution to a complex system of linear equations A*X = B.
+Computes the solution to system of linear equations A·X = B for Hermitian matrices.
 
 ```javascript
 var zhesv = require( '@stdlib/lapack/base/zhesv' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### zhesv.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the solution to a complex system of linear equations A*X = B,, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for Hermitian matrices,, using alternative indexing semantics.
 
 ```javascript
 var zhesv = require( '@stdlib/lapack/base/zhesv' );

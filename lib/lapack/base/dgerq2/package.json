@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgerq2",
   "version": "1.0.0",
-  "description": "Compute the RQ factorization of a real matrix (unblocked)",
+  "description": "Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

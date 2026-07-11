@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsygs2
 
-> Reduces a real symmetric-definite generalized eigenproblem to standard form.
+> Reduces a symmetric definite generalized eigenproblem to standard form, using the factorization results obtained from spotrf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsygs2 = require( '@stdlib/lapack/base/dsygs2' );
 
 #### dsygs2( itype, uplo, N, A, LDA, B, LDB )
 
-Reduces a real symmetric-definite generalized eigenproblem to standard form.
+Reduces a symmetric definite generalized eigenproblem to standard form, using the factorization results obtained from spotrf (unblocked algorithm).
 
 ```javascript
 var dsygs2 = require( '@stdlib/lapack/base/dsygs2' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### dsygs2.ndarray( itype, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Reduces a real symmetric-definite generalized eigenproblem to standard form, using alternative indexing semantics.
+Reduces a symmetric definite generalized eigenproblem to standard form, using the factorization results obtained from spotrf (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dsygs2 = require( '@stdlib/lapack/base/dsygs2' );

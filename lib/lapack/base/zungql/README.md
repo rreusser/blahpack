@@ -20,7 +20,7 @@ limitations under the License.
 
 # zungql
 
-> Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+> Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zungql = require( '@stdlib/lapack/base/zungql' );
 
 #### zungql( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k).
 
 ```javascript
 var zungql = require( '@stdlib/lapack/base/zungql' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zungql.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N complex unitary matrix Q with orthonormal columns,, using alternative indexing semantics.
+Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k),, using alternative indexing semantics.
 
 ```javascript
 var zungql = require( '@stdlib/lapack/base/zungql' );

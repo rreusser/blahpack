@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpftri",
   "version": "1.0.0",
-  "description": "Computes the inverse of a complex Hermitian positive definite matrix in Rectangular Full Packed format.",
+  "description": "Computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPFTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

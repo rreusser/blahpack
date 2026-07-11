@@ -20,7 +20,7 @@ limitations under the License.
 
 # zung2l
 
-> Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+> Generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zung2l = require( '@stdlib/lapack/base/zung2l' );
 
 #### zung2l( M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+Generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
 
 ```javascript
 var zung2l = require( '@stdlib/lapack/base/zung2l' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zung2l.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N complex unitary matrix Q with orthonormal columns,, using alternative indexing semantics.
+Generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm),, using alternative indexing semantics.
 
 ```javascript
 var zung2l = require( '@stdlib/lapack/base/zung2l' );

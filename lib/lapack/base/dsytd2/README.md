@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsytd2
 
-> Reduces a real symmetric matrix A to real symmetric tridiagonal form T.
+> Reduces a symmetric matrix to real symmetric tridiagonal form by an orthogonal similarity transformation (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsytd2 = require( '@stdlib/lapack/base/dsytd2' );
 
 #### dsytd2( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU )
 
-Reduces a real symmetric matrix A to real symmetric tridiagonal form T.
+Reduces a symmetric matrix to real symmetric tridiagonal form by an orthogonal similarity transformation (unblocked algorithm).
 
 ```javascript
 var dsytd2 = require( '@stdlib/lapack/base/dsytd2' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dsytd2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
 
-Reduces a real symmetric matrix A to real symmetric tridiagonal form T, using alternative indexing semantics.
+Reduces a symmetric matrix to real symmetric tridiagonal form by an orthogonal similarity transformation (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dsytd2 = require( '@stdlib/lapack/base/dsytd2' );

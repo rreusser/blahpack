@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunm2l
 
-> Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+> Multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunm2l = require( '@stdlib/lapack/base/zunm2l' );
 
 #### zunm2l( side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+Multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm).
 
 ```javascript
 var zunm2l = require( '@stdlib/lapack/base/zunm2l' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### zunm2l.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H,, using alternative indexing semantics.
+Multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm),, using alternative indexing semantics.
 
 ```javascript
 var zunm2l = require( '@stdlib/lapack/base/zunm2l' );

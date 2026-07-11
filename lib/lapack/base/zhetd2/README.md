@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhetd2
 
-> Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+> Reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhetd2 = require( '@stdlib/lapack/base/zhetd2' );
 
 #### zhetd2( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU )
 
-Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+Reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm).
 
 ```javascript
 var zhetd2 = require( '@stdlib/lapack/base/zhetd2' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### zhetd2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
 
-Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T, using alternative indexing semantics.
+Reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var zhetd2 = require( '@stdlib/lapack/base/zhetd2' );

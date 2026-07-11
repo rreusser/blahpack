@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrsen
 
-> Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
+> Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper quasi-triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrsen = require( '@stdlib/lapack/base/dtrsen' );
 
 #### dtrsen( job, compq, SELECT, strideSELECT, N, T, LDT, Q, LDQ, WR, strideWR, WI, strideWI, M, s, sep, WORK, strideWORK, lwork, IWORK, strideIWORK, liwork )
 
-Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
+Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper quasi-triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace.
 
 ```javascript
 var dtrsen = require( '@stdlib/lapack/base/dtrsen' );
@@ -76,7 +76,7 @@ The function has the following parameters:
 
 #### dtrsen.ndarray( job, compq, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, WR, strideWR, offsetWR, WI, strideWI, offsetWI, M, s, sep, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
 
-Reorders the real Schur factorization of a real matrix A = Q_T_Q**T,, using alternative indexing semantics.
+Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper quasi-triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace,, using alternative indexing semantics.
 
 ```javascript
 var dtrsen = require( '@stdlib/lapack/base/dtrsen' );

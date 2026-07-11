@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaebz
 
-> Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
+> Computes the number of eigenvalues of a real symmetric tridiagonal matrix which are less than or equal to a given value, and performs other tasks required by the routine sstebz.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaebz = require( '@stdlib/lapack/base/dlaebz' );
 
 #### dlaebz( ijob, nitmax, N, mmax, minp, nbmin, abstol, reltol, pivmin, d, strideD, e, strideE, E2, strideE2, NVAL, strideNVAL, AB, LDAB, c, strideC, mout, NAB, LDNAB, WORK, strideWORK, IWORK, strideIWORK )
 
-Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
+Computes the number of eigenvalues of a real symmetric tridiagonal matrix which are less than or equal to a given value, and performs other tasks required by the routine sstebz.
 
 ```javascript
 var dlaebz = require( '@stdlib/lapack/base/dlaebz' );
@@ -84,7 +84,7 @@ The function has the following parameters:
 
 #### dlaebz.ndarray( ijob, nitmax, N, mmax, minp, nbmin, abstol, reltol, pivmin, d, strideD, offsetD, e, strideE, offsetE, E2, strideE2, offsetE2, NVAL, strideNVAL, offsetNVAL, AB, strideAB1, strideAB2, offsetAB, c, strideC, offsetC, mout, NAB, strideNAB1, strideNAB2, offsetNAB, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Computes the number of eigenvalues of a symmetric tridiagonal matrix T, using alternative indexing semantics.
+Computes the number of eigenvalues of a real symmetric tridiagonal matrix which are less than or equal to a given value, and performs other tasks required by the routine sstebz, using alternative indexing semantics.
 
 ```javascript
 var dlaebz = require( '@stdlib/lapack/base/dlaebz' );

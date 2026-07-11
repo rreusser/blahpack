@@ -1,6 +1,6 @@
 {{alias}}( order, uplo, N, kd, AB, LDAB )
     Computes the Cholesky factorization of a complex Hermitian positive
-    definite.
+    definite band matrix A.
 
     Parameters
     ----------
@@ -34,7 +34,7 @@
 
 {{alias}}.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB )
     Computes the Cholesky factorization of a complex Hermitian positive
-    definite using alternative indexing semantics.
+    definite band matrix A, using alternative indexing semantics.
 
     Parameters
     ----------

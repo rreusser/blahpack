@@ -1,6 +1,7 @@
 {{alias}}( norm, N, d, strideD, e, strideE )
-    Computes the value of the one norm, or the Frobenius norm, or the
-    infinity.
+    Returns the value of the 1-norm, or the Frobenius norm, or the infinity
+    norm, or the element of largest absolute value of a real symmetric
+    tridiagonal matrix.
 
     Parameters
     ----------
@@ -33,8 +34,9 @@
 
 
 {{alias}}.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE )
-    Computes the value of the one norm, or the Frobenius norm, or the
-    infinity using alternative indexing semantics.
+    Returns the value of the 1-norm, or the Frobenius norm, or the infinity
+    norm, or the element of largest absolute value of a real symmetric
+    tridiagonal matrix, using alternative indexing semantics.
 
     Parameters
     ----------

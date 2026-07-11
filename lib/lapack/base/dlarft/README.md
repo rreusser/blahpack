@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlarft
 
-> Forms the triangular factor T of a real block reflector H of order N.
+> Forms the triangular factor T of a block reflector H = I - vtvH.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlarft = require( '@stdlib/lapack/base/dlarft' );
 
 #### dlarft( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT )
 
-Forms the triangular factor T of a real block reflector H of order N.
+Forms the triangular factor T of a block reflector H = I - vtvH.
 
 ```javascript
 var dlarft = require( '@stdlib/lapack/base/dlarft' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dlarft.ndarray( direct, storev, N, K, V, strideV1, strideV2, offsetV, TAU, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT )
 
-Forms the triangular factor T of a real block reflector H of order N,, using alternative indexing semantics.
+Forms the triangular factor T of a block reflector H = I - vtvH,, using alternative indexing semantics.
 
 ```javascript
 var dlarft = require( '@stdlib/lapack/base/dlarft' );

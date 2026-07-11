@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlapy3",
   "version": "1.0.0",
-  "description": "Return sqrt(x^2 + y^2 + z^2) safely avoiding overflow",
+  "description": "Returns sqrt(x2+y2+z2)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsysv
 
-> Solves a real symmetric indefinite system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsysv = require( '@stdlib/lapack/base/dsysv' );
 
 #### dsysv( uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
-Solves a real symmetric indefinite system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 ```javascript
 var dsysv = require( '@stdlib/lapack/base/dsysv' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dsysv.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK, lwork )
 
-Solves a real symmetric indefinite system of linear equations A * X = B, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for symmetric matrices, using alternative indexing semantics.
 
 ```javascript
 var dsysv = require( '@stdlib/lapack/base/dsysv' );

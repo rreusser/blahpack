@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpbsv",
   "version": "1.0.0",
-  "description": "Computes the solution to a complex Hermitian positive definite banded system of linear equations A * X = B",
+  "description": "Computes the solution to system of linear equations A·X = B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

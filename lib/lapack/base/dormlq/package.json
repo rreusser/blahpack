@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dormlq",
   "version": "1.0.0",
-  "description": "Multiply a general matrix by the orthogonal matrix from an LQ factorization (blocked)",
+  "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an LQ factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

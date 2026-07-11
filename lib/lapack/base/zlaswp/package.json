@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlaswp",
   "version": "1.0.0",
-  "description": "Performs a series of row interchanges (complex double-precision).",
+  "description": "Performs a series of row interchanges on a general rectangular matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgeev
 
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgeev = require( '@stdlib/lapack/base/zgeev' );
 
 #### zgeev( jobvl, jobvr, N, A, LDA, w, strideW, VL, LDVL, VR, LDVR, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices.
 
 ```javascript
 var zgeev = require( '@stdlib/lapack/base/zgeev' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### zgeev.ndarray( jobvl, jobvr, N, A, strideA1, strideA2, offsetA, w, strideW, offsetW, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Computes the eigenvalues and, optionally, the left and/or right eigenvectors, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices, using alternative indexing semantics.
 
 ```javascript
 var zgeev = require( '@stdlib/lapack/base/zgeev' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrti2
 
-> Computes the inverse of a real upper or lower triangular matrix.
+> Computes the inverse of a triangular matrix (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrti2 = require( '@stdlib/lapack/base/dtrti2' );
 
 #### dtrti2( order, uplo, diag, N, A, LDA )
 
-Computes the inverse of a real upper or lower triangular matrix.
+Computes the inverse of a triangular matrix (unblocked algorithm).
 
 ```javascript
 var dtrti2 = require( '@stdlib/lapack/base/dtrti2' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dtrti2.ndarray( uplo, diag, N, A, strideA1, strideA2, offsetA )
 
-Computes the inverse of a real upper or lower triangular matrix, using alternative indexing semantics.
+Computes the inverse of a triangular matrix (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dtrti2 = require( '@stdlib/lapack/base/dtrti2' );

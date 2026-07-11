@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgees
 
-> Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
+> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgees = require( '@stdlib/lapack/base/zgees' );
 
 #### zgees( jobvs, sort, select, N, A, LDA, sdim, W, strideW, VS, LDVS, WORK, strideWORK, lwork, RWORK, strideRWORK, BWORK, strideBWORK )
 
-Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
+Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices.
 
 ```javascript
 var zgees = require( '@stdlib/lapack/base/zgees' );
@@ -71,7 +71,7 @@ The function has the following parameters:
 
 #### zgees.ndarray( jobvs, sort, select, N, A, strideA1, strideA2, offsetA, sdim, W, strideW, offsetW, VS, strideVS1, strideVS2, offsetVS, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, BWORK, strideBWORK, offsetBWORK )
 
-Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues,, using alternative indexing semantics.
+Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices,, using alternative indexing semantics.
 
 ```javascript
 var zgees = require( '@stdlib/lapack/base/zgees' );

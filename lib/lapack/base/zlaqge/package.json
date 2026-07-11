@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlaqge",
   "version": "1.0.0",
-  "description": "Equilibrate a complex general matrix using row and column scalings",
+  "description": "Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

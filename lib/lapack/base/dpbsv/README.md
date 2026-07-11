@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpbsv
 
-> Computes the solution to a real system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpbsv = require( '@stdlib/lapack/base/dpbsv' );
 
 #### dpbsv( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB )
 
-Computes the solution to a real system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B.
 
 ```javascript
 var dpbsv = require( '@stdlib/lapack/base/dpbsv' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dpbsv.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
 
-Computes the solution to a real system of linear equations A * X = B,, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B,, using alternative indexing semantics.
 
 ```javascript
 var dpbsv = require( '@stdlib/lapack/base/dpbsv' );

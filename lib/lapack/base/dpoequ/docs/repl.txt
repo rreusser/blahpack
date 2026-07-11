@@ -1,6 +1,7 @@
 {{alias}}( N, A, LDA, s, strideS )
     Computes row and column scalings intended to equilibrate a symmetric
-    positive.
+    positive definite matrix A and reduce its condition number (with respect
+    to the two-norm).
 
     Parameters
     ----------
@@ -31,7 +32,8 @@
 
 {{alias}}.ndarray( N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, scond, amax )
     Computes row and column scalings intended to equilibrate a symmetric
-    positive using alternative indexing semantics.
+    positive definite matrix A and reduce its condition number (with respect
+    to the two-norm), using alternative indexing semantics.
 
     Parameters
     ----------

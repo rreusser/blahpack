@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrevc
 
-> Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix.
+> Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrevc = require( '@stdlib/lapack/base/dtrevc' );
 
 #### dtrevc( order, side, howmny, SELECT, strideSELECT, N, T, LDT, VL, LDVL, VR, LDVR, mm, M, WORK, strideWORK )
 
-Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix.
+Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

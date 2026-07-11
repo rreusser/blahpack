@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrcon
 
-> Estimates the reciprocal of the condition number of a triangular matrix A.
+> Estimates the reciprocal of the condition number of a triangular matrix A, in either the 1-norm or the infinity-norm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrcon = require( '@stdlib/lapack/base/dtrcon' );
 
 #### dtrcon( norm, uplo, diag, N, A, LDA, RCOND, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a triangular matrix A.
+Estimates the reciprocal of the condition number of a triangular matrix A, in either the 1-norm or the infinity-norm.
 
 ```javascript
 var dtrcon = require( '@stdlib/lapack/base/dtrcon' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dtrcon.ndarray( norm, uplo, diag, N, A, strideA1, strideA2, offsetA, RCOND, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a triangular matrix A,, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a triangular matrix A, in either the 1-norm or the infinity-norm,, using alternative indexing semantics.
 
 ```javascript
 var dtrcon = require( '@stdlib/lapack/base/dtrcon' );

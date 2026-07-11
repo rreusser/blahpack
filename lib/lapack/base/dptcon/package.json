@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dptcon",
   "version": "1.0.0",
-  "description": "Compute the reciprocal of the condition number of a real symmetric positive definite tridiagonal matrix",
+  "description": "Computes the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite tridiagonal matrix using the factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

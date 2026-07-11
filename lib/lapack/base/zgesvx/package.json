@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgesvx",
   "version": "1.0.0",
-  "description": "Expert driver for solving complex general linear systems",
+  "description": "Computes the solution to system of linear equations A·X = B for general matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

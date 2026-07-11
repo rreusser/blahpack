@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpotrf",
   "version": "1.0.0",
-  "description": "Compute the Cholesky factorization of a real symmetric positive definite matrix.",
+  "description": "Computes the Cholesky factorization of a real symmetric positive definite matrix A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

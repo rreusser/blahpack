@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsyconvf",
   "version": "1.0.0",
-  "description": "Converts the factorization output format used in dsytrf",
+  "description": "If parameter WAY = 'C': DSYCONVF converts the factorization output format used in DSYTRF provided on entry in parameter A into the factorization output format used in DSYTRF_RK (or DSYTRF_BK) that is stored on exit in parameters A and E",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

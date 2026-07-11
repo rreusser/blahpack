@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlatrd
 
-> Reduces NB rows and columns of a real symmetric matrix A to symmetric.
+> Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an orthogonal similarity transformation.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlatrd = require( '@stdlib/lapack/base/dlatrd' );
 
 #### dlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW )
 
-Reduces NB rows and columns of a real symmetric matrix A to symmetric.
+Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an orthogonal similarity transformation.
 
 ```javascript
 var dlatrd = require( '@stdlib/lapack/base/dlatrd' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### dlatrd.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, e, strideE, offsetE, TAU, strideTAU, offsetTAU, W, strideW1, strideW2, offsetW )
 
-Reduces NB rows and columns of a real symmetric matrix A to symmetric, using alternative indexing semantics.
+Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an orthogonal similarity transformation, using alternative indexing semantics.
 
 ```javascript
 var dlatrd = require( '@stdlib/lapack/base/dlatrd' );

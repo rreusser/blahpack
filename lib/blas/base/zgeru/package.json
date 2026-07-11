@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zgeru",
   "version": "1.0.0",
-  "description": "Perform complex rank-1 update (unconjugated)",
+  "description": "Performs the rank 1 operation A := α·x·yᵀ + A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

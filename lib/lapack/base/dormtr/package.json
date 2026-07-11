@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dormtr",
   "version": "1.0.0",
-  "description": "Apply orthogonal matrix Q from dsytrd to a general matrix",
+  "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a symmetric tridiagonal reduction",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

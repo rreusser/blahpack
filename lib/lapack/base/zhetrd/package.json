@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhetrd",
   "version": "1.0.0",
-  "description": "Reduce a Hermitian matrix to tridiagonal form (blocked)",
+  "description": "Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T by a unitary similarity transformation: Qᴴ·A·Q = T",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

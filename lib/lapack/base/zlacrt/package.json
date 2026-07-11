@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlacrt",
   "version": "1.0.0",
-  "description": "Apply a plane rotation with complex cosine and sine to two complex vectors.",
+  "description": "Performs a linear transformation of a pair of complex vectors",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

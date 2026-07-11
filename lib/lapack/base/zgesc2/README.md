@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgesc2
 
-> Solves a system of linear equations `A * X = scale * RHS` with a general.
+> Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgesc2 = require( '@stdlib/lapack/base/zgesc2' );
 
 #### zgesc2( N, A, LDA, RHS, strideRHS, IPIV, strideIPIV, JPIV, strideJPIV, scale )
 
-Solves a system of linear equations `A * X = scale * RHS` with a general.
+Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### zgesc2.ndarray( N, A, strideA1, strideA2, offsetA, RHS, strideRHS, offsetRHS, IPIV, strideIPIV, offsetIPIV, JPIV, strideJPIV, offsetJPIV, scale )
 
-Solves a system of linear equations `A * X = scale * RHS` with a general, using alternative indexing semantics.
+Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

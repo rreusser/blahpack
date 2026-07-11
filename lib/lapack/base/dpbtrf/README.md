@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpbtrf
 
-> Computes the Cholesky factorization of a real symmetric positive definite.
+> Computes the Cholesky factorization of a real symmetric positive definite band matrix A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpbtrf = require( '@stdlib/lapack/base/dpbtrf' );
 
 #### dpbtrf( order, uplo, N, kd, AB, LDAB )
 
-Computes the Cholesky factorization of a real symmetric positive definite.
+Computes the Cholesky factorization of a real symmetric positive definite band matrix A.
 
 ```javascript
 var dpbtrf = require( '@stdlib/lapack/base/dpbtrf' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dpbtrf.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB )
 
-Computes the Cholesky factorization of a real symmetric positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a real symmetric positive definite band matrix A, using alternative indexing semantics.
 
 ```javascript
 var dpbtrf = require( '@stdlib/lapack/base/dpbtrf' );

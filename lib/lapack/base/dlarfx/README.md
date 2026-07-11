@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlarfx
 
-> Applies an elementary reflector H to a real M-by-N matrix C, from either.
+> Applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlarfx = require( '@stdlib/lapack/base/dlarfx' );
 
 #### dlarfx( side, M, N, v, strideV, tau, C, LDC, WORK, strideWORK )
 
-Applies an elementary reflector H to a real M-by-N matrix C, from either.
+Applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10.
 
 ```javascript
 var dlarfx = require( '@stdlib/lapack/base/dlarfx' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dlarfx.ndarray( side, M, N, v, strideV, offsetV, tau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Applies an elementary reflector H to a real M-by-N matrix C, from either, using alternative indexing semantics.
+Applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10, using alternative indexing semantics.
 
 ```javascript
 var dlarfx = require( '@stdlib/lapack/base/dlarfx' );

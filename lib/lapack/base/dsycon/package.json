@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsycon",
   "version": "1.0.0",
-  "description": "Estimates the reciprocal condition number of a symmetric indefinite matrix",
+  "description": "Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

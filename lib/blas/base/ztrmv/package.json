@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/ztrmv",
   "version": "1.0.0",
-  "description": "Perform one of the matrix-vector operations x := A*x, x := A**T*x, or x := A**H*x",
+  "description": "Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x, or x := Aᴴ·x",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

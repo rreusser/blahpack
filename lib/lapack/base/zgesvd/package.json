@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgesvd",
   "version": "1.0.0",
-  "description": "Compute the SVD of a complex matrix",
+  "description": "Computes the singular value decomposition (SVD) for general matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

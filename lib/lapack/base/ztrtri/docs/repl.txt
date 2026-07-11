@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, diag, N, A, LDA )
-    Computes the inverse of a complex upper or lower triangular matrix.
+    Computes the inverse of a complex upper or lower triangular matrix A.
 
     Parameters
     ----------
@@ -32,8 +32,8 @@
 
 
 {{alias}}.ndarray( uplo, diag, N, A, strideA1, strideA2, offsetA )
-    Computes the inverse of a complex upper or lower triangular matrix using
-    alternative indexing semantics.
+    Computes the inverse of a complex upper or lower triangular matrix A,
+    using alternative indexing semantics.
 
     Parameters
     ----------

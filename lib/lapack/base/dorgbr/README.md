@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorgbr
 
-> Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD.
+> Generates one of the real orthogonal matrices Q or Pᵀ determined by DGEBRD when reducing a real matrix A to bidiagonal form: A = Q·B·Pᵀ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorgbr = require( '@stdlib/lapack/base/dorgbr' );
 
 #### dorgbr( order, vect, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD.
+Generates one of the real orthogonal matrices Q or Pᵀ determined by DGEBRD when reducing a real matrix A to bidiagonal form: A = Q·B·Pᵀ.
 
 ```javascript
 var dorgbr = require( '@stdlib/lapack/base/dorgbr' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dorgbr.ndarray( vect, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD, using alternative indexing semantics.
+Generates one of the real orthogonal matrices Q or Pᵀ determined by DGEBRD when reducing a real matrix A to bidiagonal form: A = Q·B·Pᵀ, using alternative indexing semantics.
 
 ```javascript
 var dorgbr = require( '@stdlib/lapack/base/dorgbr' );

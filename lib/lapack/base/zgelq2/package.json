@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgelq2",
   "version": "1.0.0",
-  "description": "Compute LQ factorization of a complex matrix (unblocked)",
+  "description": "Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

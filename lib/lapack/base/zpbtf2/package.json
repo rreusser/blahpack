@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpbtf2",
   "version": "1.0.0",
-  "description": "Compute Cholesky factorization of a Hermitian positive definite banded matrix (unblocked)",
+  "description": "Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

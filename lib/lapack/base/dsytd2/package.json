@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsytd2",
   "version": "1.0.0",
-  "description": "Reduce a symmetric matrix to tridiagonal form (unblocked)",
+  "description": "Reduces a symmetric matrix to real symmetric tridiagonal form by an orthogonal similarity transformation (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

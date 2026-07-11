@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zptts2",
   "version": "1.0.0",
-  "description": "Solves a complex Hermitian tridiagonal system using LDL^H factorization",
+  "description": "Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

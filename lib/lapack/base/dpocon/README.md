@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpocon
 
-> Estimates the reciprocal of the condition number of a symmetric positive.
+> Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpocon = require( '@stdlib/lapack/base/dpocon' );
 
 #### dpocon( order, uplo, N, A, LDA, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a symmetric positive.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 ```javascript
 var dpocon = require( '@stdlib/lapack/base/dpocon' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dpocon.ndarray( uplo, N, A, strideA1, strideA2, offsetA, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a symmetric positive, using alternative indexing semantics.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF, using alternative indexing semantics.
 
 ```javascript
 var dpocon = require( '@stdlib/lapack/base/dpocon' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # drscl
 
-> Scales a vector by the reciprocal of a scalar, performing the scaling.
+> Multiplies a vector by the reciprocal of a real scalar.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var drscl = require( '@stdlib/lapack/base/drscl' );
 
 #### drscl( N, sa, x, strideX )
 
-Scales a vector by the reciprocal of a scalar, performing the scaling.
+Multiplies a vector by the reciprocal of a real scalar.
 
 ```javascript
 var drscl = require( '@stdlib/lapack/base/drscl' );
@@ -52,7 +52,7 @@ The function has the following parameters:
 
 #### drscl.ndarray( N, sa, x, strideX, offsetX )
 
-Scales a vector by the reciprocal of a scalar, performing the scaling, using alternative indexing semantics.
+Multiplies a vector by the reciprocal of a real scalar, using alternative indexing semantics.
 
 ```javascript
 var drscl = require( '@stdlib/lapack/base/drscl' );

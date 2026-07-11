@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmlq",
   "version": "1.0.0",
-  "description": "Apply unitary matrix Q from LQ factorization",
+  "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an LQ factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

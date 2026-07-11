@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgerq2
 
-> Computes an RQ factorization of a real M-by-N matrix A = R * Q.
+> Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgerq2 = require( '@stdlib/lapack/base/dgerq2' );
 
 #### dgerq2( M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Computes an RQ factorization of a real M-by-N matrix A = R * Q.
+Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm.
 
 ```javascript
 var dgerq2 = require( '@stdlib/lapack/base/dgerq2' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgerq2.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Computes an RQ factorization of a real M-by-N matrix A = R * Q, using alternative indexing semantics.
+Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm, using alternative indexing semantics.
 
 ```javascript
 var dgerq2 = require( '@stdlib/lapack/base/dgerq2' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaqr4",
   "version": "1.0.0",
-  "description": "Multi-shift QR algorithm for eigenvalues of a Hessenberg matrix",
+  "description": "Computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

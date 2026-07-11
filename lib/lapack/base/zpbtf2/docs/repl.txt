@@ -1,6 +1,6 @@
 {{alias}}( order, uplo, N, kd, AB, LDAB )
-    Computes the Cholesky factorization of a complex Hermitian positive
-    definite.
+    Computes the Cholesky factorization of a symmetric/Hermitian positive
+    definite band matrix (unblocked algorithm).
 
     Parameters
     ----------
@@ -33,8 +33,9 @@
 
 
 {{alias}}.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB )
-    Computes the Cholesky factorization of a complex Hermitian positive
-    definite using alternative indexing semantics.
+    Computes the Cholesky factorization of a symmetric/Hermitian positive
+    definite band matrix (unblocked algorithm), using alternative indexing
+    semantics.
 
     Parameters
     ----------

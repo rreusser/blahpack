@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrtri",
   "version": "1.0.0",
-  "description": "Compute the inverse of a real upper or lower triangular matrix.",
+  "description": "Computes the inverse of a real upper or lower triangular matrix A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

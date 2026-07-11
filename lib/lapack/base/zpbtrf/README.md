@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpbtrf
 
-> Computes the Cholesky factorization of a complex Hermitian positive definite.
+> Computes the Cholesky factorization of a complex Hermitian positive definite band matrix A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpbtrf = require( '@stdlib/lapack/base/zpbtrf' );
 
 #### zpbtrf( order, uplo, N, kd, AB, LDAB )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite.
+Computes the Cholesky factorization of a complex Hermitian positive definite band matrix A.
 
 ```javascript
 var zpbtrf = require( '@stdlib/lapack/base/zpbtrf' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### zpbtrf.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a complex Hermitian positive definite band matrix A, using alternative indexing semantics.
 
 ```javascript
 var zpbtrf = require( '@stdlib/lapack/base/zpbtrf' );

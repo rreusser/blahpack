@@ -1,6 +1,7 @@
 {{alias}}( itype, uplo, N, A, LDA, B, LDB )
-    Reduces a complex Hermitian-definite generalized eigenproblem to
-    standard form.
+    Reduces a Hermitian definite generalized eigenproblem to standard form,
+    using the factorization results obtained from cpotrf (unblocked
+    algorithm).
 
     Parameters
     ----------
@@ -36,8 +37,9 @@
 
 
 {{alias}}.ndarray( itype, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
-    Reduces a complex Hermitian-definite generalized eigenproblem to
-    standard form using alternative indexing semantics.
+    Reduces a Hermitian definite generalized eigenproblem to standard form,
+    using the factorization results obtained from cpotrf (unblocked
+    algorithm), using alternative indexing semantics.
 
     Parameters
     ----------

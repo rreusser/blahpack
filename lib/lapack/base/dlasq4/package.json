@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasq4",
   "version": "1.0.0",
-  "description": "Compute approximate singular value for dqds iteration",
+  "description": "Computes an approximation to the smallest eigenvalue using values of d from the previous transform",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

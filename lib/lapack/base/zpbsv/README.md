@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpbsv
 
-> Computes the solution to a complex system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpbsv = require( '@stdlib/lapack/base/zpbsv' );
 
 #### zpbsv( uplo, N, kd, nrhs, AB, LDAB, B, LDB )
 
-Computes the solution to a complex system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B.
 
 ```javascript
 var zpbsv = require( '@stdlib/lapack/base/zpbsv' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### zpbsv.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
 
-Computes the solution to a complex system of linear equations A * X = B,, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B,, using alternative indexing semantics.
 
 ```javascript
 var zpbsv = require( '@stdlib/lapack/base/zpbsv' );

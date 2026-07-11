@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgbsv",
   "version": "1.0.0",
-  "description": "Solve a banded system of linear equations",
+  "description": "Computes the solution to system of linear equations A·X = B for general band matrices (simple driver)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

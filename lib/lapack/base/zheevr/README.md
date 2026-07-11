@@ -20,7 +20,7 @@ limitations under the License.
 
 # zheevr
 
-> Computes selected eigenvalues and, optionally, eigenvectors of a complex.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zheevr = require( '@stdlib/lapack/base/zheevr' );
 
 #### zheevr( jobz, range, uplo, N, A, LDA, vl, vu, il, iu, abstol, out, w, strideW, Z, LDZ, ISUPPZ, strideISUPPZ, WORK, strideWORK, lwork, RWORK, strideRWORK, lrwork, IWORK, strideIWORK, liwork )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a complex.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices.
 
 ```javascript
 var zheevr = require( '@stdlib/lapack/base/zheevr' );
@@ -81,7 +81,7 @@ The function has the following parameters:
 
 #### zheevr.ndarray( jobz, range, uplo, N, A, strideA1, strideA2, offsetA, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, ISUPPZ, strideISUPPZ, offsetISUPPZ, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, lrwork, IWORK, strideIWORK, offsetIWORK, liwork )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a complex, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices, using alternative indexing semantics.
 
 ```javascript
 var zheevr = require( '@stdlib/lapack/base/zheevr' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasrt",
   "version": "1.0.0",
-  "description": "Sort an array of doubles in increasing or decreasing order",
+  "description": "Sorts numbers in increasing or decreasing order",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

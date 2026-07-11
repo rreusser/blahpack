@@ -20,7 +20,7 @@ limitations under the License.
 
 # dstev
 
-> Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dstev = require( '@stdlib/lapack/base/dstev' );
 
 #### dstev( jobz, N, d, strideD, e, strideE, Z, LDZ, WORK, strideWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 ```javascript
 var dstev = require( '@stdlib/lapack/base/dstev' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dstev.ndarray( jobz, N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors, using alternative indexing semantics.
 
 ```javascript
 var dstev = require( '@stdlib/lapack/base/dstev' );

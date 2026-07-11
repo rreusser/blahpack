@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgbtrf
 
-> Computes an LU factorization of a real M-by-N band matrix A using partial.
+> Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgbtrf = require( '@stdlib/lapack/base/dgbtrf' );
 
 #### dgbtrf( order, M, N, kl, ku, AB, LDAB, IPIV, strideIPIV )
 
-Computes an LU factorization of a real M-by-N band matrix A using partial.
+Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges.
 
 ```javascript
 var dgbtrf = require( '@stdlib/lapack/base/dgbtrf' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgbtrf.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
 
-Computes an LU factorization of a real M-by-N band matrix A using partial, using alternative indexing semantics.
+Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges, using alternative indexing semantics.
 
 ```javascript
 var dgbtrf = require( '@stdlib/lapack/base/dgbtrf' );

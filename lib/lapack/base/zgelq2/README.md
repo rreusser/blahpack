@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgelq2
 
-> Computes an LQ factorization of a complex M-by-N matrix A = L * Q.
+> Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgelq2 = require( '@stdlib/lapack/base/zgelq2' );
 
 #### zgelq2( order, M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Computes an LQ factorization of a complex M-by-N matrix A = L * Q.
+Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm.
 
 ```javascript
 var zgelq2 = require( '@stdlib/lapack/base/zgelq2' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zgelq2.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Computes an LQ factorization of a complex M-by-N matrix A = L * Q, using alternative indexing semantics.
+Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm, using alternative indexing semantics.
 
 ```javascript
 var zgelq2 = require( '@stdlib/lapack/base/zgelq2' );

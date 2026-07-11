@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgebrd
 
-> Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+> Reduces a general complex M-by-N matrix A to upper or lower bidiagonal form B by a unitary transformation: Qᴴ·A·P = B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgebrd = require( '@stdlib/lapack/base/zgebrd' );
 
 #### zgebrd( order, M, N, A, LDA, d, strideD, e, strideE, TAUQ, strideTAUQ, TAUP, strideTAUP, WORK, strideWORK, lwork )
 
-Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+Reduces a general complex M-by-N matrix A to upper or lower bidiagonal form B by a unitary transformation: Qᴴ·A·P = B.
 
 ```javascript
 var zgebrd = require( '@stdlib/lapack/base/zgebrd' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### zgebrd.ndarray( M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAUQ, strideTAUQ, offsetTAUQ, TAUP, strideTAUP, offsetTAUP, WORK, strideWORK, offsetWORK, lwork )
 
-Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B, using alternative indexing semantics.
+Reduces a general complex M-by-N matrix A to upper or lower bidiagonal form B by a unitary transformation: Qᴴ·A·P = B, using alternative indexing semantics.
 
 ```javascript
 var zgebrd = require( '@stdlib/lapack/base/zgebrd' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsycon
 
-> Estimates the reciprocal of the condition number (in the 1-norm) of a real.
+> Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsycon = require( '@stdlib/lapack/base/dsycon' );
 
 #### dsycon( uplo, N, A, LDA, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a real.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF.
 
 ```javascript
 var dsycon = require( '@stdlib/lapack/base/dsycon' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### dsycon.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a real, using alternative indexing semantics.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF, using alternative indexing semantics.
 
 ```javascript
 var dsycon = require( '@stdlib/lapack/base/dsycon' );

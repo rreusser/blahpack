@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsycon
 
-> Estimates the reciprocal of the condition number (in the 1-norm) of a complex.
+> Estimates the reciprocal of the condition number (in the 1-norm) of a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsycon = require( '@stdlib/lapack/base/zsycon' );
 
 #### zsycon( uplo, N, A, LDA, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a complex.
+Estimates the reciprocal of the condition number (in the 1-norm) of a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF.
 
 ```javascript
 var zsycon = require( '@stdlib/lapack/base/zsycon' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zsycon.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a complex, using alternative indexing semantics.
+Estimates the reciprocal of the condition number (in the 1-norm) of a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF, using alternative indexing semantics.
 
 ```javascript
 var zsycon = require( '@stdlib/lapack/base/zsycon' );

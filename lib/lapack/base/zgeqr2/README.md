@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgeqr2
 
-> Computes a QR factorization of a complex M-by-N matrix A = Q * R.
+> Computes the QR factorization of a general rectangular matrix using an unblocked algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgeqr2 = require( '@stdlib/lapack/base/zgeqr2' );
 
 #### zgeqr2( order, M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Computes a QR factorization of a complex M-by-N matrix A = Q * R.
+Computes the QR factorization of a general rectangular matrix using an unblocked algorithm.
 
 ```javascript
 var zgeqr2 = require( '@stdlib/lapack/base/zgeqr2' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zgeqr2.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Computes a QR factorization of a complex M-by-N matrix A = Q * R, using alternative indexing semantics.
+Computes the QR factorization of a general rectangular matrix using an unblocked algorithm, using alternative indexing semantics.
 
 ```javascript
 var zgeqr2 = require( '@stdlib/lapack/base/zgeqr2' );

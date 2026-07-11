@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlabrd",
   "version": "1.0.0",
-  "description": "Reduce the first NB rows and columns of a matrix to bidiagonal form",
+  "description": "Reduces the first nb rows and columns of a general matrix to a bidiagonal form",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

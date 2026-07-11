@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlaqge
 
-> Equilibrates a complex general M-by-N matrix A using the row and column.
+> Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlaqge = require( '@stdlib/lapack/base/zlaqge' );
 
 #### zlaqge( M, N, A, LDA, r, strideR, c, strideC, rowcnd, colcnd, amax )
 
-Equilibrates a complex general M-by-N matrix A using the row and column.
+Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ.
 
 ```javascript
 var zlaqge = require( '@stdlib/lapack/base/zlaqge' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zlaqge.ndarray( M, N, A, strideA1, strideA2, offsetA, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax, equed )
 
-Equilibrates a complex general M-by-N matrix A using the row and column, using alternative indexing semantics.
+Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ, using alternative indexing semantics.
 
 ```javascript
 var zlaqge = require( '@stdlib/lapack/base/zlaqge' );

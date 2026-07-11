@@ -20,7 +20,7 @@ limitations under the License.
 
 # zungqr
 
-> Generate an M-by-N complex unitary matrix Q from the elementary.
+> Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zungqr = require( '@stdlib/lapack/base/zungqr' );
 
 #### zungqr( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary.
+Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2).
 
 ```javascript
 var zungqr = require( '@stdlib/lapack/base/zungqr' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zungqr.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary, using alternative indexing semantics.
+Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2), using alternative indexing semantics.
 
 ```javascript
 var zungqr = require( '@stdlib/lapack/base/zungqr' );

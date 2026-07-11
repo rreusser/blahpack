@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhetrf",
   "version": "1.0.0",
-  "description": "Complex Hermitian indefinite factorization (blocked Bunch-Kaufman)",
+  "description": "Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

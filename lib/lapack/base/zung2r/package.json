@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zung2r",
   "version": "1.0.0",
-  "description": "Generate unitary matrix Q from QR factorization (unblocked)",
+  "description": "Generates an m by n complex matrix Q with orthonormal columns, which is defined as the first n columns of a product of k elementary reflectors of order m Q = H(1) H(2)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

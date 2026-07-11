@@ -1,5 +1,7 @@
 {{alias}}( order, uplo, N, nrhs, A, LDA, B, LDB )
-    Solves a system of linear equations A_X = B with a Hermitian positive.
+    Solves a system of linear equations A·X = B with a Hermitian positive
+    definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ
+    computed by ZPOTRF.
 
     Parameters
     ----------
@@ -38,8 +40,9 @@
 
 
 {{alias}}.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
-    Solves a system of linear equations A_X = B with a Hermitian positive
-    using alternative indexing semantics.
+    Solves a system of linear equations A·X = B with a Hermitian positive
+    definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ
+    computed by ZPOTRF, using alternative indexing semantics.
 
     Parameters
     ----------

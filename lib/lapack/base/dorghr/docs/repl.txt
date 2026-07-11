@@ -1,5 +1,7 @@
 {{alias}}( N, ilo, ihi, A, LDA, TAU, strideTAU, WORK, strideWORK, lwork )
-    Generates the real orthogonal matrix Q which is defined as the product.
+    Generates a real orthogonal matrix Q which is defined as the product of
+    IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q =
+    H(ilo) H(ilo+1).
 
     Parameters
     ----------
@@ -44,8 +46,9 @@
 
 
 {{alias}}.ndarray( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
-    Generates the real orthogonal matrix Q which is defined as the product
-    using alternative indexing semantics.
+    Generates a real orthogonal matrix Q which is defined as the product of
+    IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q =
+    H(ilo) H(ilo+1), using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,6 +1,7 @@
 {{alias}}( N, d, strideD, e, strideE, anorm, rcond, WORK, strideWORK )
     Computes the reciprocal of the condition number (in the 1-norm) of a
-    real.
+    real symmetric positive definite tridiagonal matrix using the
+    factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF.
 
     Parameters
     ----------
@@ -43,7 +44,9 @@
 
 {{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, WORK, strideWORK, offsetWORK )
     Computes the reciprocal of the condition number (in the 1-norm) of a
-    real using alternative indexing semantics.
+    real symmetric positive definite tridiagonal matrix using the
+    factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF, using
+    alternative indexing semantics.
 
     Parameters
     ----------

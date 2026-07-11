@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlacrt
 
-> Applies a plane rotation to two complex vectors, where both the cosine.
+> Performs a linear transformation of a pair of complex vectors.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlacrt = require( '@stdlib/lapack/base/zlacrt' );
 
 #### zlacrt( N, cx, strideX, cy, strideY, c, s )
 
-Applies a plane rotation to two complex vectors, where both the cosine.
+Performs a linear transformation of a pair of complex vectors.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zlacrt.ndarray( N, cx, strideX, offsetX, cy, strideY, offsetY, c, s )
 
-Applies a plane rotation to two complex vectors, where both the cosine, using alternative indexing semantics.
+Performs a linear transformation of a pair of complex vectors, using alternative indexing semantics.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );

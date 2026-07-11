@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgebd2
 
-> Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+> Reduces a general matrix to bidiagonal form using an unblocked algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgebd2 = require( '@stdlib/lapack/base/zgebd2' );
 
 #### zgebd2( order, M, N, A, LDA, d, strideD, e, strideE, TAUQ, strideTAUQ, TAUP, strideTAUP, WORK, strideWORK )
 
-Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+Reduces a general matrix to bidiagonal form using an unblocked algorithm.
 
 ```javascript
 var zgebd2 = require( '@stdlib/lapack/base/zgebd2' );
@@ -68,7 +68,7 @@ The function has the following parameters:
 
 #### zgebd2.ndarray( M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAUQ, strideTAUQ, offsetTAUQ, TAUP, strideTAUP, offsetTAUP, WORK, strideWORK, offsetWORK )
 
-Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B, using alternative indexing semantics.
+Reduces a general matrix to bidiagonal form using an unblocked algorithm, using alternative indexing semantics.
 
 ```javascript
 var zgebd2 = require( '@stdlib/lapack/base/zgebd2' );

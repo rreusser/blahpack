@@ -20,7 +20,7 @@ limitations under the License.
 
 # dstebz
 
-> Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
+> Computes the eigenvalues of a symmetric tridiagonal matrix T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dstebz = require( '@stdlib/lapack/base/dstebz' );
 
 #### dstebz( range, order, N, vl, vu, il, iu, abstol, d, strideD, e, strideE, M, nsplit, w, strideW, IBLOCK, strideIBLOCK, ISPLIT, strideISPLIT, WORK, strideWORK, IWORK, strideIWORK )
 
-Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
+Computes the eigenvalues of a symmetric tridiagonal matrix T.
 
 ```javascript
 var dstebz = require( '@stdlib/lapack/base/dstebz' );
@@ -78,7 +78,7 @@ The function has the following parameters:
 
 #### dstebz.ndarray( range, order, N, vl, vu, il, iu, abstol, d, strideD, offsetD, e, strideE, offsetE, M, nsplit, w, strideW, offsetW, IBLOCK, strideIBLOCK, offsetIBLOCK, ISPLIT, strideISPLIT, offsetISPLIT, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Computes selected eigenvalues of a real symmetric tridiagonal matrix T, using alternative indexing semantics.
+Computes the eigenvalues of a symmetric tridiagonal matrix T, using alternative indexing semantics.
 
 ```javascript
 var dstebz = require( '@stdlib/lapack/base/dstebz' );

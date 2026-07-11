@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrti2",
   "version": "1.0.0",
-  "description": "Computes the inverse of a triangular matrix (unblocked, complex double-precision).",
+  "description": "Computes the inverse of a triangular matrix (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

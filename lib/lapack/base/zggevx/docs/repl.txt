@@ -1,6 +1,7 @@
 
 {{alias}}( order, balanc, jobvl, jobvr, sense, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, VL, LDVL, VR, LDVR, ilo, ihi, LSCALE, strideLSCALE, RSCALE, strideRSCALE, abnrm, bbnrm, RCONDE, strideRCONDE, RCONDV, strideRCONDV, WORK, strideWORK, lwork, RWORK, strideRWORK, IWORK, strideIWORK, offsetIWORK, BWORK, strideBWORK )
-    Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of complex matrices
+    Computes the eigenvalues and, optionally, the left and/or right
+    eigenvectors for general matrices.
 
     Parameters
     ----------
@@ -135,7 +136,8 @@
 
 
 {{alias}}.ndarray( balanc, jobvl, jobvr, sense, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, ilo, ihi, LSCALE, strideLSCALE, offsetLSCALE, RSCALE, strideRSCALE, offsetRSCALE, abnrm, bbnrm, RCONDE, strideRCONDE, offsetRCONDE, RCONDV, strideRCONDV, offsetRCONDV, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, IWORK, strideIWORK, offsetIWORK, BWORK, strideBWORK, offsetBWORK )
-    Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of complex matrices, using alternative indexing semantics.
+    Computes the eigenvalues and, optionally, the left and/or right
+    eigenvectors for general matrices, using alternative indexing semantics.
 
     Parameters
     ----------

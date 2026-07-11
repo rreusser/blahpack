@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpotrf2",
   "version": "1.0.0",
-  "description": "Compute the Cholesky factorization of a real symmetric positive definite matrix using the recursive algorithm.",
+  "description": "Computes the Cholesky factorization of a real symmetric positive definite matrix A using the recursive algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

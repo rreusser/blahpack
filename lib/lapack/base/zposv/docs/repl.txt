@@ -1,5 +1,6 @@
 {{alias}}( uplo, N, nrhs, A, LDA, B, LDB )
-    Computes the solution to a complex system of linear equations A*X = B.
+    Computes the solution to system of linear equations A·X = B for positive
+    definite matrices.
 
     Parameters
     ----------
@@ -35,8 +36,8 @@
 
 
 {{alias}}.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
-    Computes the solution to a complex system of linear equations A*X = B,
-    using alternative indexing semantics.
+    Computes the solution to system of linear equations A·X = B for positive
+    definite matrices, using alternative indexing semantics.
 
     Parameters
     ----------

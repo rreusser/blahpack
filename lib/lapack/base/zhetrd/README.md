@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhetrd
 
-> Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+> Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T by a unitary similarity transformation: Qᴴ·A·Q = T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhetrd = require( '@stdlib/lapack/base/zhetrd' );
 
 #### zhetrd( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU )
 
-Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T by a unitary similarity transformation: Qᴴ·A·Q = T.
 
 ```javascript
 var zhetrd = require( '@stdlib/lapack/base/zhetrd' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### zhetrd.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
 
-Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T, using alternative indexing semantics.
+Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T by a unitary similarity transformation: Qᴴ·A·Q = T, using alternative indexing semantics.
 
 ```javascript
 var zhetrd = require( '@stdlib/lapack/base/zhetrd' );

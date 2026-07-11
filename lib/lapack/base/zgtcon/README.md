@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgtcon
 
-> Estimates the reciprocal of the condition number of a complex general.
+> Estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgtcon = require( '@stdlib/lapack/base/zgtcon' );
 
 #### zgtcon( norm, N, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK )
 
-Estimates the reciprocal of the condition number of a complex general.
+Estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF.
 
 ```javascript
 var zgtcon = require( '@stdlib/lapack/base/zgtcon' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### zgtcon.ndarray( norm, N, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK )
 
-Estimates the reciprocal of the condition number of a complex general, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF, using alternative indexing semantics.
 
 ```javascript
 var zgtcon = require( '@stdlib/lapack/base/zgtcon' );

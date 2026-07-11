@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsytrd",
   "version": "1.0.0",
-  "description": "Reduce a symmetric matrix to tridiagonal form (blocked)",
+  "description": "Reduces a real symmetric matrix A to real symmetric tridiagonal form T by an orthogonal similarity transformation: Qᵀ·A·Q = T",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

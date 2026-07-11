@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunglq
 
-> Generate an M-by-N complex unitary matrix Q from the elementary.
+> Generates an M-by-N complex matrix Q with orthonormal rows, which is defined as the first M rows of a product of K elementary reflectors of order N Q = H(k)ᴴ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunglq = require( '@stdlib/lapack/base/zunglq' );
 
 #### zunglq( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary.
+Generates an M-by-N complex matrix Q with orthonormal rows, which is defined as the first M rows of a product of K elementary reflectors of order N Q = H(k)ᴴ.
 
 ```javascript
 var zunglq = require( '@stdlib/lapack/base/zunglq' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zunglq.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary, using alternative indexing semantics.
+Generates an M-by-N complex matrix Q with orthonormal rows, which is defined as the first M rows of a product of K elementary reflectors of order N Q = H(k)ᴴ, using alternative indexing semantics.
 
 ```javascript
 var zunglq = require( '@stdlib/lapack/base/zunglq' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgttrs",
   "version": "1.0.0",
-  "description": "Solve tridiagonal system using LU factorization (complex)",
+  "description": "Solves one of the systems of equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B, with a tridiagonal matrix A using the LU factorization computed by ZGTTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

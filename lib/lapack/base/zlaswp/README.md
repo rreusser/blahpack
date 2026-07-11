@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlaswp
 
-> Performs a series of row interchanges on a complex double-precision matrix `A`.
+> Performs a series of row interchanges on a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlaswp = require( '@stdlib/lapack/base/zlaswp' );
 
 #### zlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx )
 
-Performs a series of row interchanges on a complex double-precision matrix `A`.
+Performs a series of row interchanges on a general rectangular matrix.
 
 ```javascript
 var zlaswp = require( '@stdlib/lapack/base/zlaswp' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zlaswp.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, IPIV, strideIPIV, offsetIPIV, incx )
 
-Performs a series of row interchanges on a complex double-precision matrix `A`, using alternative indexing semantics.
+Performs a series of row interchanges on a general rectangular matrix, using alternative indexing semantics.
 
 ```javascript
 var zlaswp = require( '@stdlib/lapack/base/zlaswp' );

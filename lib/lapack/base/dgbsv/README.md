@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgbsv
 
-> Solves a system of linear equations A * X = B where A is an N-by-N band.
+> Computes the solution to system of linear equations A·X = B for general band matrices (simple driver).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgbsv = require( '@stdlib/lapack/base/dgbsv' );
 
 #### dgbsv( order, N, kl, ku, nrhs, AB, LDAB, IPIV, strideIPIV, B, LDB )
 
-Solves a system of linear equations A * X = B where A is an N-by-N band.
+Computes the solution to system of linear equations A·X = B for general band matrices (simple driver).
 
 ```javascript
 var dgbsv = require( '@stdlib/lapack/base/dgbsv' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dgbsv.ndarray( N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A * X = B where A is an N-by-N band, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general band matrices (simple driver), using alternative indexing semantics.
 
 ```javascript
 var dgbsv = require( '@stdlib/lapack/base/dgbsv' );

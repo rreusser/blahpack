@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsytrs2
 
-> Solves a system of linear equations A*X = B with a complex symmetric matrix A.
+> Solves a system of linear equations A·X = B with a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF and converted by ZSYCONV.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsytrs2 = require( '@stdlib/lapack/base/zsytrs2' );
 
 #### zsytrs2( uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK, strideWORK )
 
-Solves a system of linear equations A*X = B with a complex symmetric matrix A.
+Solves a system of linear equations A·X = B with a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF and converted by ZSYCONV.
 
 ```javascript
 var zsytrs2 = require( '@stdlib/lapack/base/zsytrs2' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### zsytrs2.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK )
 
-Solves a system of linear equations A*X = B with a complex symmetric matrix A, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a complex symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by ZSYTRF and converted by ZSYCONV, using alternative indexing semantics.
 
 ```javascript
 var zsytrs2 = require( '@stdlib/lapack/base/zsytrs2' );

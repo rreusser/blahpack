@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlatrd",
   "version": "1.0.0",
-  "description": "Reduce NB rows and columns of a symmetric matrix to tridiagonal form",
+  "description": "Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an orthogonal similarity transformation",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaqr1",
   "version": "1.0.0",
-  "description": "Sets a scalar multiple of the first column of H - shift product",
+  "description": "Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

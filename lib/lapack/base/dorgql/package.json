@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dorgql",
   "version": "1.0.0",
-  "description": "Generate an orthogonal matrix from a QL factorization (blocked)",
+  "description": "Generates an M-by-N real matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

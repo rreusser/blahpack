@@ -1,6 +1,6 @@
 {{alias}}( N, A, LDA, RHS, strideRHS, IPIV, strideIPIV, JPIV, strideJPIV, scale )
-    Solves a system of linear equations `A * X = scale * RHS` with a
-    general.
+    Solves a system of linear equations using the LU factorization with
+    complete pivoting computed by sgetc2.
 
     Parameters
     ----------
@@ -45,8 +45,9 @@
 
 
 {{alias}}.ndarray( N, A, strideA1, strideA2, offsetA, RHS, strideRHS, offsetRHS, IPIV, strideIPIV, offsetIPIV, JPIV, strideJPIV, offsetJPIV, scale )
-    Solves a system of linear equations `A * X = scale * RHS` with a general
-    using alternative indexing semantics.
+    Solves a system of linear equations using the LU factorization with
+    complete pivoting computed by sgetc2, using alternative indexing
+    semantics.
 
     Parameters
     ----------

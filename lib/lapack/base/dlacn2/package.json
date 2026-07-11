@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlacn2",
   "version": "1.0.0",
-  "description": "Estimate the 1-norm of a square matrix using reverse communication",
+  "description": "Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

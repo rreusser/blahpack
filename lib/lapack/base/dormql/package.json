@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dormql",
   "version": "1.0.0",
-  "description": "Multiply a matrix by the orthogonal matrix Q from QL factorization (blocked)",
+  "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QL factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

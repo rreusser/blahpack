@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zgerc",
   "version": "1.0.0",
-  "description": "Perform the rank 1 operation A := alpha*x*y**H + A",
+  "description": "Performs the rank 1 operation A := α·x·yᴴ + A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

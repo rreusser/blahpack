@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtgexc
 
-> Reorders the generalized real Schur decomposition of a real matrix pair
+> Reorders the generalized real Schur decomposition of a real matrix pair (A,B) using an orthogonal equivalence transformation (A, B) = Q·(A, B)·Zᵀ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtgexc = require( '@stdlib/lapack/base/dtgexc' );
 
 #### dtgexc( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, ifst, ilst, WORK, strideWORK, lwork )
 
-Reorders the generalized real Schur decomposition of a real matrix pair
+Reorders the generalized real Schur decomposition of a real matrix pair (A,B) using an orthogonal equivalence transformation (A, B) = Q·(A, B)·Zᵀ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### dtgexc.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, ifst, ilst, WORK, strideWORK, offsetWORK, lwork )
 
-Reorders the generalized real Schur decomposition of a real matrix pair, using alternative indexing semantics.
+Reorders the generalized real Schur decomposition of a real matrix pair (A,B) using an orthogonal equivalence transformation (A, B) = Q·(A, B)·Zᵀ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

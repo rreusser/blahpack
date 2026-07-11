@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgesvx
 
-> Expert driver for solving a real system of linear equations A*X = B.
+> Computes the solution to system of linear equations A·X = B for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgesvx = require( '@stdlib/lapack/base/dgesvx' );
 
 #### dgesvx( fact, trans, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, equed, r, strideR, c, strideC, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR )
 
-Expert driver for solving a real system of linear equations A*X = B.
+Computes the solution to system of linear equations A·X = B for general matrices.
 
 ```javascript
 var dgesvx = require( '@stdlib/lapack/base/dgesvx' );
@@ -81,7 +81,7 @@ The function has the following parameters:
 
 #### dgesvx.ndarray( fact, trans, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, equed, r, strideR, offsetR, c, strideC, offsetC, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Expert driver for solving a real system of linear equations A*X = B,, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general matrices,, using alternative indexing semantics.
 
 ```javascript
 var dgesvx = require( '@stdlib/lapack/base/dgesvx' );

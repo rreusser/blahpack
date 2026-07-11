@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zsysvx",
   "version": "1.0.0",
-  "description": "Complex symmetric indefinite expert solver",
+  "description": "Computes the solution to system of linear equations A·X = B for symmetric matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

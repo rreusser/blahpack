@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorgqr
 
-> Generates an M-by-N real orthogonal matrix Q from the elementary.
+> Generates an M-by-N real matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorgqr = require( '@stdlib/lapack/base/dorgqr' );
 
 #### dorgqr( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generates an M-by-N real orthogonal matrix Q from the elementary.
+Generates an M-by-N real matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2).
 
 ```javascript
 var dorgqr = require( '@stdlib/lapack/base/dorgqr' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dorgqr.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generates an M-by-N real orthogonal matrix Q from the elementary, using alternative indexing semantics.
+Generates an M-by-N real matrix Q with orthonormal columns, which is defined as the first N columns of a product of K elementary reflectors of order M Q = H(1) H(2), using alternative indexing semantics.
 
 ```javascript
 var dorgqr = require( '@stdlib/lapack/base/dorgqr' );

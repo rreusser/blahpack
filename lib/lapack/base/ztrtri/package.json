@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrtri",
   "version": "1.0.0",
-  "description": "Computes the inverse of a triangular matrix (blocked, complex double-precision).",
+  "description": "Computes the inverse of a complex upper or lower triangular matrix A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpbtrs
 
-> Solves a complex Hermitian positive definite banded system of equations.
+> Solves a system of linear equations A·X = B with a Hermitian positive definite band matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPBTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpbtrs = require( '@stdlib/lapack/base/zpbtrs' );
 
 #### zpbtrs( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB )
 
-Solves a complex Hermitian positive definite banded system of equations.
+Solves a system of linear equations A·X = B with a Hermitian positive definite band matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPBTRF.
 
 ```javascript
 var zpbtrs = require( '@stdlib/lapack/base/zpbtrs' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zpbtrs.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
 
-Solves a complex Hermitian positive definite banded system of equations, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a Hermitian positive definite band matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPBTRF, using alternative indexing semantics.
 
 ```javascript
 var zpbtrs = require( '@stdlib/lapack/base/zpbtrs' );

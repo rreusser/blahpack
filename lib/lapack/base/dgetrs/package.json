@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgetrs",
   "version": "1.0.0",
-  "description": "Solve a system of linear equations using LU factorization from DGETRF.",
+  "description": "Solves a system of linear equations A·X = B or Aᵀ·X = B with a general N-by-N matrix A using the LU factorization computed by DGETRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,5 +1,6 @@
 {{alias}}( jobvs, sort, select, N, A, LDA, sdim, W, strideW, VS, LDVS, WORK, strideWORK, lwork, RWORK, strideRWORK, BWORK, strideBWORK )
-    Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
+    Computes the eigenvalues, the Schur form, and, optionally, the matrix of
+    Schur vectors for general matrices.
 
     Parameters
     ----------
@@ -68,8 +69,9 @@
 
 
 {{alias}}.ndarray( jobvs, sort, select, N, A, strideA1, strideA2, offsetA, sdim, W, strideW, offsetW, VS, strideVS1, strideVS2, offsetVS, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, BWORK, strideBWORK, offsetBWORK )
-    Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues,
-    using alternative indexing semantics.
+    Computes the eigenvalues, the Schur form, and, optionally, the matrix of
+    Schur vectors for general matrices, using alternative indexing
+    semantics.
 
     Parameters
     ----------

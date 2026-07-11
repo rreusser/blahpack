@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zungbr",
   "version": "1.0.0",
-  "description": "Generate unitary matrices Q and P^H from bidiagonal reduction",
+  "description": "Generates one of the complex unitary matrices Q or Pᴴ determined by ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

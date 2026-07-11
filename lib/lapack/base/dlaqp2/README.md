@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaqp2
 
-> Computes a QR factorization with column pivoting of the block.
+> Computes a QR factorization with column pivoting of the matrix block.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaqp2 = require( '@stdlib/lapack/base/dlaqp2' );
 
 #### dlaqp2( M, N, offset, A, LDA, JPVT, strideJPVT, TAU, strideTAU, VN1, strideVN1, VN2, strideVN2, WORK, strideWORK )
 
-Computes a QR factorization with column pivoting of the block.
+Computes a QR factorization with column pivoting of the matrix block.
 
 ```javascript
 var dlaqp2 = require( '@stdlib/lapack/base/dlaqp2' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dlaqp2.ndarray( M, N, offset, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, VN1, strideVN1, offsetVN1, VN2, strideVN2, offsetVN2, WORK, strideWORK, offsetWORK )
 
-Computes a QR factorization with column pivoting of the block, using alternative indexing semantics.
+Computes a QR factorization with column pivoting of the matrix block, using alternative indexing semantics.
 
 ```javascript
 var dlaqp2 = require( '@stdlib/lapack/base/dlaqp2' );

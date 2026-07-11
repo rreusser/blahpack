@@ -36,7 +36,27 @@ const OVERRIDES = {
 	dlauu2: 'Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices',
 	dlauum: 'Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices',
 	zlauu2: 'Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices',
-	zlauum: 'Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices'
+	zlauum: 'Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices',
+
+	// QR/LQ factorizations whose upstream brief flattens a matrix-block layout.
+	dgeqrf: 'Computes a QR factorization of a real M-by-N matrix (A = Q·R)',
+	zgeqrf: 'Computes a QR factorization of a complex M-by-N matrix (A = Q·R)',
+	dgelqf: 'Computes an LQ factorization of a real M-by-N matrix (A = L·Q)',
+	zgelqf: 'Computes an LQ factorization of a complex M-by-N matrix (A = L·Q)',
+
+	// Apply-Q routines whose brief flattens a SIDE/TRANS case table.
+	dormqr: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QR factorization',
+	zunmqr: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a QR factorization',
+	dormlq: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an LQ factorization',
+	zunmlq: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an LQ factorization',
+	dormql: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QL factorization',
+	zunmql: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a QL factorization',
+	dormrq: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an RQ factorization',
+	zunmrq: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an RQ factorization',
+	dormtr: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a symmetric tridiagonal reduction',
+	zunmtr: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction',
+	dormhr: 'Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a Hessenberg reduction',
+	zunmhr: 'Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hessenberg reduction'
 };
 
 const SUP = { T: 'ᵀ', H: 'ᴴ' };
@@ -83,6 +103,8 @@ function expandCodes( s ) {
 // split on a period inside parentheses (e.g. `|Re(.)|`).
 function shorten( raw ) {
 	let s = raw.trim();
+	// Rejoin words split by a line-break hyphen (e.g. "trans- formation").
+	s = s.replace( /([a-z])-\s+([a-z])/g, '$1$2' );
 	// Drop a trailing ", where ..." (or " where ...") qualifier.
 	s = s.split( /,?\s+where\s+/i )[ 0 ];
 	// Stop at the first real sentence boundary: ". " followed by a capital,

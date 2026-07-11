@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgeev",
   "version": "1.0.0",
-  "description": "Computes eigenvalues and eigenvectors of a complex general matrix",
+  "description": "Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

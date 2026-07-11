@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsytrs
 
-> Solves a system of linear equations A_X = B with a real symmetric matrix A.
+> Solves a system of linear equations A·X = B with a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsytrs = require( '@stdlib/lapack/base/dsytrs' );
 
 #### dsytrs( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
-Solves a system of linear equations A_X = B with a real symmetric matrix A.
+Solves a system of linear equations A·X = B with a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF.
 
 ```javascript
 var dsytrs = require( '@stdlib/lapack/base/dsytrs' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dsytrs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A_X = B with a real symmetric matrix A, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF, using alternative indexing semantics.
 
 ```javascript
 var dsytrs = require( '@stdlib/lapack/base/dsytrs' );

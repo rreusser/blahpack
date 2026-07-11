@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgbcon
 
-> Estimates the reciprocal of the condition number of a general band matrix A.
+> Estimates the reciprocal of the condition number of a real general band matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGBTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgbcon = require( '@stdlib/lapack/base/dgbcon' );
 
 #### dgbcon( norm, N, kl, ku, AB, LDAB, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a general band matrix A.
+Estimates the reciprocal of the condition number of a real general band matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGBTRF.
 
 ```javascript
 var dgbcon = require( '@stdlib/lapack/base/dgbcon' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dgbcon.ndarray( norm, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a general band matrix A,, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a real general band matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGBTRF,, using alternative indexing semantics.
 
 ```javascript
 var dgbcon = require( '@stdlib/lapack/base/dgbcon' );

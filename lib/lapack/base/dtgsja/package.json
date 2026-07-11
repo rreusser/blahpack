@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgsja",
   "version": "1.0.0",
-  "description": "Computes the generalized SVD of two upper triangular matrices via Jacobi-Kogbetliantz iteration",
+  "description": "Computes the generalized singular value decomposition (GSVD) of two real upper triangular (or trapezoidal) matrices A and B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

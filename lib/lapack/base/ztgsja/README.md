@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztgsja
 
-> Computes the generalized singular value decomposition (GSVD) of two complex.
+> Computes the generalized singular value decomposition (GSVD) of two complex upper triangular (or trapezoidal) matrices A and B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztgsja = require( '@stdlib/lapack/base/ztgsja' );
 
 #### ztgsja( jobu, jobv, jobq, M, p, N, K, l, A, LDA, B, LDB, tola, tolb, ALPHA, BETA, U, LDU, V, LDV, Q, LDQ, WORK, ncycle )
 
-Computes the generalized singular value decomposition (GSVD) of two complex.
+Computes the generalized singular value decomposition (GSVD) of two complex upper triangular (or trapezoidal) matrices A and B.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -87,7 +87,7 @@ The function has the following parameters:
 
 #### ztgsja.ndarray( jobu, jobv, jobq, M, p, N, K, l, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, tola, tolb, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, U, strideU1, strideU2, offsetU, V, strideV1, strideV2, offsetV, Q, strideQ1, strideQ2, offsetQ, WORK, strideWORK, offsetWORK, ncycle )
 
-Computes the generalized singular value decomposition (GSVD) of two complex, using alternative indexing semantics.
+Computes the generalized singular value decomposition (GSVD) of two complex upper triangular (or trapezoidal) matrices A and B, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

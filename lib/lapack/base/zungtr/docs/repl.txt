@@ -1,6 +1,7 @@
 {{alias}}( uplo, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
     Generates a complex unitary matrix Q which is defined as the product of
-    N-1.
+    n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO =
+    'U', Q = H(n-1).
 
     Parameters
     ----------
@@ -40,7 +41,8 @@
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
     Generates a complex unitary matrix Q which is defined as the product of
-    N-1 using alternative indexing semantics.
+    n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO =
+    'U', Q = H(n-1), using alternative indexing semantics.
 
     Parameters
     ----------

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlahqr
 
-> Computes the eigenvalues and optionally the Schur factorization of an upper.
+> Computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlahqr = require( '@stdlib/lapack/base/dlahqr' );
 
 #### dlahqr( wantt, wantz, N, ilo, ihi, H, LDH, WR, strideWR, WI, strideWI, iloz, ihiz, Z, LDZ )
 
-Computes the eigenvalues and optionally the Schur factorization of an upper.
+Computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm.
 
 ```javascript
 var dlahqr = require( '@stdlib/lapack/base/dlahqr' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dlahqr.ndarray( wantt, wantz, N, ilo, ihi, H, strideH1, strideH2, offsetH, WR, strideWR, offsetWR, WI, strideWI, offsetWI, iloz, ihiz, Z, strideZ1, strideZ2, offsetZ )
 
-Computes the eigenvalues and optionally the Schur factorization of an upper, using alternative indexing semantics.
+Computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm, using alternative indexing semantics.
 
 ```javascript
 var dlahqr = require( '@stdlib/lapack/base/dlahqr' );

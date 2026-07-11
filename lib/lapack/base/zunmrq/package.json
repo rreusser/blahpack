@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmrq",
   "version": "1.0.0",
-  "description": "Multiplies a general matrix by the unitary matrix Q from an RQ factorization (blocked)",
+  "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an RQ factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

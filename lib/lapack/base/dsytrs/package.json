@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsytrs",
   "version": "1.0.0",
-  "description": "Solve a symmetric indefinite system using the factorization from dsytrf",
+  "description": "Solves a system of linear equations A·X = B with a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

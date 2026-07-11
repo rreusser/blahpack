@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgees
 
-> Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real.
+> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgees = require( '@stdlib/lapack/base/dgees' );
 
 #### dgees( jobvs, sort, select, N, A, LDA, sdim, WR, strideWR, WI, strideWI, VS, LDVS, WORK, strideWORK, lwork, BWORK, strideBWORK )
 
-Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real.
+Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices.
 
 ```javascript
 var dgees = require( '@stdlib/lapack/base/dgees' );
@@ -71,7 +71,7 @@ The function has the following parameters:
 
 #### dgees.ndarray( jobvs, sort, select, N, A, strideA1, strideA2, offsetA, sdim, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VS, strideVS1, strideVS2, offsetVS, WORK, strideWORK, offsetWORK, lwork, BWORK, strideBWORK, offsetBWORK )
 
-Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real, using alternative indexing semantics.
+Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices, using alternative indexing semantics.
 
 ```javascript
 var dgees = require( '@stdlib/lapack/base/dgees' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaqtr",
   "version": "1.0.0",
-  "description": "Solves a real quasi-triangular system of equations",
+  "description": "Solves a real quasi-triangular system of equations, or a complex quasi-triangular system of special form, in real arithmetic",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

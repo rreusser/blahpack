@@ -1,5 +1,6 @@
 {{alias}}( order, trans, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
-    Solves a system of linear equations.
+    Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with
+    a general N-by-N matrix A using the LU factorization computed by ZGETRF.
 
     Parameters
     ----------
@@ -44,8 +45,9 @@
 
 
 {{alias}}.ndarray( trans, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
-    Solves a system of linear equations using alternative indexing
-    semantics.
+    Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with
+    a general N-by-N matrix A using the LU factorization computed by ZGETRF,
+    using alternative indexing semantics.
 
     Parameters
     ----------

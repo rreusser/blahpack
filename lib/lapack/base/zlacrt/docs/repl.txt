@@ -1,5 +1,5 @@
 {{alias}}( N, cx, strideX, cy, strideY, c, s )
-    Applies a plane rotation to two complex vectors, where both the cosine.
+    Performs a linear transformation of a pair of complex vectors.
 
     Parameters
     ----------
@@ -35,8 +35,8 @@
 
 
 {{alias}}.ndarray( N, cx, strideX, offsetX, cy, strideY, offsetY, c, s )
-    Applies a plane rotation to two complex vectors, where both the cosine
-    using alternative indexing semantics.
+    Performs a linear transformation of a pair of complex vectors, using
+    alternative indexing semantics.
 
     Parameters
     ----------

@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztgexc
 
-> Reorders the generalized Schur decomposition of a complex matrix pair
+> Reorders the generalized Schur decomposition of a complex matrix pair (A,B), using an unitary equivalence transformation (A, B) := Q·(A, B)·Zᴴ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztgexc = require( '@stdlib/lapack/base/ztgexc' );
 
 #### ztgexc( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, ifst, ilst )
 
-Reorders the generalized Schur decomposition of a complex matrix pair
+Reorders the generalized Schur decomposition of a complex matrix pair (A,B), using an unitary equivalence transformation (A, B) := Q·(A, B)·Zᴴ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### ztgexc.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, ifst, ilst )
 
-Reorders the generalized Schur decomposition of a complex matrix pair, using alternative indexing semantics.
+Reorders the generalized Schur decomposition of a complex matrix pair (A,B), using an unitary equivalence transformation (A, B) := Q·(A, B)·Zᴴ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST, using alternative indexing semantics.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );

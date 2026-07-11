@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zptrfs",
   "version": "1.0.0",
-  "description": "Improves solution to a complex Hermitian tridiagonal system and provides error bounds",
+  "description": "Improves the computed solution to a system of linear equations when the coefficient matrix is Hermitian positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

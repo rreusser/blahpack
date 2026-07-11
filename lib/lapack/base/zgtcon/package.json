@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgtcon",
   "version": "1.0.0",
-  "description": "Estimate reciprocal condition number of complex tridiagonal matrix",
+  "description": "Estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

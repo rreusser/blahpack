@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpotrs
 
-> Solves a system of linear equations A_X = B with a symmetric positive.
+> Solves a system of linear equations A·X = B with a symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpotrs = require( '@stdlib/lapack/base/dpotrs' );
 
 #### dpotrs( order, uplo, N, nrhs, A, LDA, B, LDB )
 
-Solves a system of linear equations A_X = B with a symmetric positive.
+Solves a system of linear equations A·X = B with a symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 ```javascript
 var dpotrs = require( '@stdlib/lapack/base/dpotrs' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### dpotrs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A_X = B with a symmetric positive, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF, using alternative indexing semantics.
 
 ```javascript
 var dpotrs = require( '@stdlib/lapack/base/dpotrs' );

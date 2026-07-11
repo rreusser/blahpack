@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsytrd
 
-> Reduces a real symmetric matrix A to real symmetric tridiagonal form T.
+> Reduces a real symmetric matrix A to real symmetric tridiagonal form T by an orthogonal similarity transformation: Qᵀ·A·Q = T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsytrd = require( '@stdlib/lapack/base/dsytrd' );
 
 #### dsytrd( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU )
 
-Reduces a real symmetric matrix A to real symmetric tridiagonal form T.
+Reduces a real symmetric matrix A to real symmetric tridiagonal form T by an orthogonal similarity transformation: Qᵀ·A·Q = T.
 
 ```javascript
 var dsytrd = require( '@stdlib/lapack/base/dsytrd' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dsytrd.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
 
-Reduces a real symmetric matrix A to real symmetric tridiagonal form T, using alternative indexing semantics.
+Reduces a real symmetric matrix A to real symmetric tridiagonal form T by an orthogonal similarity transformation: Qᵀ·A·Q = T, using alternative indexing semantics.
 
 ```javascript
 var dsytrd = require( '@stdlib/lapack/base/dsytrd' );

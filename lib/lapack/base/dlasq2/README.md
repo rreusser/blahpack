@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasq2
 
-> Computes all the eigenvalues of the symmetric positive definite tridiagonal.
+> Computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasq2 = require( '@stdlib/lapack/base/dlasq2' );
 
 #### dlasq2( N, z, stride )
 
-Computes all the eigenvalues of the symmetric positive definite tridiagonal.
+Computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy.
 
 ```javascript
 var dlasq2 = require( '@stdlib/lapack/base/dlasq2' );
@@ -48,7 +48,7 @@ The function has the following parameters:
 
 #### dlasq2.ndarray( N, z, stride, offset )
 
-Computes all the eigenvalues of the symmetric positive definite tridiagonal, using alternative indexing semantics.
+Computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy, using alternative indexing semantics.
 
 ```javascript
 var dlasq2 = require( '@stdlib/lapack/base/dlasq2' );

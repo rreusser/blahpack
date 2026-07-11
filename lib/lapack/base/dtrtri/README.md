@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrtri
 
-> Computes the inverse of a real upper or lower triangular matrix.
+> Computes the inverse of a real upper or lower triangular matrix A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrtri = require( '@stdlib/lapack/base/dtrtri' );
 
 #### dtrtri( order, uplo, diag, N, A, LDA )
 
-Computes the inverse of a real upper or lower triangular matrix.
+Computes the inverse of a real upper or lower triangular matrix A.
 
 ```javascript
 var dtrtri = require( '@stdlib/lapack/base/dtrtri' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dtrtri.ndarray( uplo, diag, N, A, strideA1, strideA2, offsetA )
 
-Computes the inverse of a real upper or lower triangular matrix, using alternative indexing semantics.
+Computes the inverse of a real upper or lower triangular matrix A, using alternative indexing semantics.
 
 ```javascript
 var dtrtri = require( '@stdlib/lapack/base/dtrtri' );

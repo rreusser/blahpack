@@ -1,6 +1,6 @@
 {{alias}}( order, compz, N, d, strideD, e, strideE, Z, LDZ, WORK, strideWORK )
-    Computes all eigenvalues and, optionally, eigenvectors of a real
-    symmetric.
+    Computes all eigenvalues and, optionally, eigenvectors of a symmetric
+    tridiagonal matrix using the implicit QL or QR method.
 
     Parameters
     ----------
@@ -48,8 +48,9 @@
 
 
 {{alias}}.ndarray( compz, N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK )
-    Computes all eigenvalues and, optionally, eigenvectors of a real
-    symmetric using alternative indexing semantics.
+    Computes all eigenvalues and, optionally, eigenvectors of a symmetric
+    tridiagonal matrix using the implicit QL or QR method, using alternative
+    indexing semantics.
 
     Parameters
     ----------

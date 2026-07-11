@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgebrd
 
-> Reduces a real M-by-N matrix A to upper or lower real bidiagonal form B.
+> Reduces a general real M-by-N matrix A to upper or lower bidiagonal form B by an orthogonal transformation: Qᵀ·A·P = B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgebrd = require( '@stdlib/lapack/base/dgebrd' );
 
 #### dgebrd( order, M, N, A, LDA, d, strideD, e, strideE, TAUQ, strideTAUQ, TAUP, strideTAUP, WORK, strideWORK, lwork )
 
-Reduces a real M-by-N matrix A to upper or lower real bidiagonal form B.
+Reduces a general real M-by-N matrix A to upper or lower bidiagonal form B by an orthogonal transformation: Qᵀ·A·P = B.
 
 ```javascript
 var dgebrd = require( '@stdlib/lapack/base/dgebrd' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### dgebrd.ndarray( M, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAUQ, strideTAUQ, offsetTAUQ, TAUP, strideTAUP, offsetTAUP, WORK, strideWORK, offsetWORK, lwork )
 
-Reduces a real M-by-N matrix A to upper or lower real bidiagonal form B, using alternative indexing semantics.
+Reduces a general real M-by-N matrix A to upper or lower bidiagonal form B by an orthogonal transformation: Qᵀ·A·P = B, using alternative indexing semantics.
 
 ```javascript
 var dgebrd = require( '@stdlib/lapack/base/dgebrd' );

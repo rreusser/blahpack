@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlahef_rook
 
-> Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method.
+> Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm, calling Level 3 BLAS).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlahefRook = require( '@stdlib/lapack/base/zlahef_rook' );
 
 #### zlahefRook( order, uplo, N, nb, A, LDA, IPIV, W, LDW )
 
-Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method.
+Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm, calling Level 3 BLAS).
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );
@@ -70,7 +70,7 @@ The function returns an object `{ info, kb }`:
 
 #### zlahefRook.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
 
-Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method, using alternative indexing semantics.
+Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm, calling Level 3 BLAS), using alternative indexing semantics.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );

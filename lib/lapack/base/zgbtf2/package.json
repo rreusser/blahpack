@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgbtf2",
   "version": "1.0.0",
-  "description": "Compute LU factorization of a complex banded matrix (unblocked)",
+  "description": "Computes the LU factorization of a general band matrix using the unblocked version of the algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

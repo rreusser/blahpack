@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlarf",
   "version": "1.0.0",
-  "description": "Apply a real Householder reflector to a matrix.",
+  "description": "Applies an elementary reflector to a general rectangular matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

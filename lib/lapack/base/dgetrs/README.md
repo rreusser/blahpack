@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgetrs
 
-> Solves a system of linear equations A_X = B or A^T_X = B with a general.
+> Solves a system of linear equations A·X = B or Aᵀ·X = B with a general N-by-N matrix A using the LU factorization computed by DGETRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgetrs = require( '@stdlib/lapack/base/dgetrs' );
 
 #### dgetrs( order, trans, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
-Solves a system of linear equations A_X = B or A^T_X = B with a general.
+Solves a system of linear equations A·X = B or Aᵀ·X = B with a general N-by-N matrix A using the LU factorization computed by DGETRF.
 
 ```javascript
 var dgetrs = require( '@stdlib/lapack/base/dgetrs' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dgetrs.ndarray( trans, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A_X = B or A^T_X = B with a general, using alternative indexing semantics.
+Solves a system of linear equations A·X = B or Aᵀ·X = B with a general N-by-N matrix A using the LU factorization computed by DGETRF, using alternative indexing semantics.
 
 ```javascript
 var dgetrs = require( '@stdlib/lapack/base/dgetrs' );

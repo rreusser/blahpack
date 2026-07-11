@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpoequ
 
-> Computes row and column scalings intended to equilibrate a Hermitian positive.
+> Computes row and column scalings intended to equilibrate a Hermitian positive definite matrix A and reduce its condition number (with respect to the two-norm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpoequ = require( '@stdlib/lapack/base/zpoequ' );
 
 #### zpoequ( N, A, LDA, s, strideS )
 
-Computes row and column scalings intended to equilibrate a Hermitian positive.
+Computes row and column scalings intended to equilibrate a Hermitian positive definite matrix A and reduce its condition number (with respect to the two-norm).
 
 ```javascript
 var zpoequ = require( '@stdlib/lapack/base/zpoequ' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### zpoequ.ndarray( N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, scond, amax )
 
-Computes row and column scalings intended to equilibrate a Hermitian positive, using alternative indexing semantics.
+Computes row and column scalings intended to equilibrate a Hermitian positive definite matrix A and reduce its condition number (with respect to the two-norm), using alternative indexing semantics.
 
 ```javascript
 var zpoequ = require( '@stdlib/lapack/base/zpoequ' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zsyconv",
   "version": "1.0.0",
-  "description": "Converts a complex symmetric matrix factored by zsytrf to standard form",
+  "description": "Converts A given by ZHETRF into L and D or vice-versa",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

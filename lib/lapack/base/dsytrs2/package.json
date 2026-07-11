@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsytrs2",
   "version": "1.0.0",
-  "description": "Solves a symmetric indefinite system using Bunch-Kaufman factorization with BLAS-3",
+  "description": "Solves a system of linear equations A·X = B with a real symmetric matrix A using the factorization A = U·D·Uᵀ or A = L·D·Lᵀ computed by DSYTRF and converted by DSYCONV",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

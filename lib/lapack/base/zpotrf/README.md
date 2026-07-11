@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpotrf
 
-> Computes the Cholesky factorization of a complex Hermitian positive definite.
+> Computes the Cholesky factorization of a complex Hermitian positive definite matrix A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpotrf = require( '@stdlib/lapack/base/zpotrf' );
 
 #### zpotrf( order, uplo, N, A, LDA )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite.
+Computes the Cholesky factorization of a complex Hermitian positive definite matrix A.
 
 ```javascript
 var zpotrf = require( '@stdlib/lapack/base/zpotrf' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### zpotrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a complex Hermitian positive definite matrix A, using alternative indexing semantics.
 
 ```javascript
 var zpotrf = require( '@stdlib/lapack/base/zpotrf' );

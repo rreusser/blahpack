@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zung2l",
   "version": "1.0.0",
-  "description": "Generate unitary matrix Q from QL reflectors",
+  "description": "Generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

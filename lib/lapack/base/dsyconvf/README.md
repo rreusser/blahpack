@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyconvf
 
-> Converts the factorization output format used in dsytrf
+> If parameter WAY = 'C': DSYCONVF converts the factorization output format used in DSYTRF provided on entry in parameter A into the factorization output format used in DSYTRF_RK (or DSYTRF_BK) that is stored on exit in parameters A and E
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyconvf = require( '@stdlib/lapack/base/dsyconvf' );
 
 #### dsyconvf( order, uplo, way, N, A, LDA, e, strideE, IPIV, strideIPIV, offsetIPIV )
 
-Converts the factorization output format used in dsytrf
+If parameter WAY = 'C': DSYCONVF converts the factorization output format used in DSYTRF provided on entry in parameter A into the factorization output format used in DSYTRF_RK (or DSYTRF_BK) that is stored on exit in parameters A and E
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dsyconvf.ndarray( uplo, way, N, A, strideA1, strideA2, offsetA, e, strideE, offsetE, IPIV, strideIPIV, offsetIPIV )
 
-Converts the factorization output format used in dsytrf, using alternative indexing semantics.
+If parameter WAY = 'C': DSYCONVF converts the factorization output format used in DSYTRF provided on entry in parameter A into the factorization output format used in DSYTRF_RK (or DSYTRF_BK) that is stored on exit in parameters A and E, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

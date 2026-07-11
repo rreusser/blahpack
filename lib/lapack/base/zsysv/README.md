@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsysv
 
-> Solves a complex symmetric indefinite system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsysv = require( '@stdlib/lapack/base/zsysv' );
 
 #### zsysv( uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
-Solves a complex symmetric indefinite system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 ```javascript
 var zsysv = require( '@stdlib/lapack/base/zsysv' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zsysv.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK, lwork )
 
-Solves a complex symmetric indefinite system of linear equations A * X = B, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for symmetric matrices, using alternative indexing semantics.
 
 ```javascript
 var zsysv = require( '@stdlib/lapack/base/zsysv' );

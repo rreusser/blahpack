@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlarf
 
-> Apply a complex elementary reflector H to a complex M-by-N matrix C.
+> Applies an elementary reflector to a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlarf = require( '@stdlib/lapack/base/zlarf' );
 
 #### zlarf( order, side, M, N, v, strideV, tau, offsetTau, C, LDC, WORK, strideWORK )
 
-Apply a complex elementary reflector H to a complex M-by-N matrix C.
+Applies an elementary reflector to a general rectangular matrix.
 
 ```javascript
 var zlarf = require( '@stdlib/lapack/base/zlarf' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### zlarf.ndarray( side, M, N, v, strideV, offsetV, tau, offsetTau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Apply a complex elementary reflector H to a complex M-by-N matrix C,, using alternative indexing semantics.
+Applies an elementary reflector to a general rectangular matrix,, using alternative indexing semantics.
 
 ```javascript
 var zlarf = require( '@stdlib/lapack/base/zlarf' );

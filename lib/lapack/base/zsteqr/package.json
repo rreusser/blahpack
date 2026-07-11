@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zsteqr",
   "version": "1.0.0",
-  "description": "Compute eigenvalues and eigenvectors of a symmetric tridiagonal matrix (complex accumulation)",
+  "description": "Computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

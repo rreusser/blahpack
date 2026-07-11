@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlacn2
 
-> Estimates the 1-norm of a square matrix using reverse communication.
+> Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlacn2 = require( '@stdlib/lapack/base/dlacn2' );
 
 #### dlacn2( N, v, strideV, x, strideX, ISGN, strideISGN, EST, KASE, ISAVE, strideISAVE )
 
-Estimates the 1-norm of a square matrix using reverse communication.
+Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
 
 ```javascript
 var dlacn2 = require( '@stdlib/lapack/base/dlacn2' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dlacn2.ndarray( N, v, strideV, offsetV, x, strideX, offsetX, ISGN, strideISGN, offsetISGN, EST, KASE, ISAVE, strideISAVE, offsetISAVE )
 
-Estimates the 1-norm of a square matrix using reverse communication, using alternative indexing semantics.
+Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products, using alternative indexing semantics.
 
 ```javascript
 var dlacn2 = require( '@stdlib/lapack/base/dlacn2' );

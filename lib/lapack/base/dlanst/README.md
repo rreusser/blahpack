@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlanst
 
-> Computes the value of the one norm, or the Frobenius norm, or the infinity.
+> Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric tridiagonal matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlanst = require( '@stdlib/lapack/base/dlanst' );
 
 #### dlanst( norm, N, d, strideD, e, strideE )
 
-Computes the value of the one norm, or the Frobenius norm, or the infinity.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric tridiagonal matrix.
 
 ```javascript
 var dlanst = require( '@stdlib/lapack/base/dlanst' );
@@ -55,7 +55,7 @@ The function has the following parameters:
 
 #### dlanst.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE )
 
-Computes the value of the one norm, or the Frobenius norm, or the infinity, using alternative indexing semantics.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric tridiagonal matrix, using alternative indexing semantics.
 
 ```javascript
 var dlanst = require( '@stdlib/lapack/base/dlanst' );

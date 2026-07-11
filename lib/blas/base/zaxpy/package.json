@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zaxpy",
   "version": "1.0.0",
-  "description": "Scale a complex vector and add to another complex vector",
+  "description": "Constant times a vector plus a vector",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

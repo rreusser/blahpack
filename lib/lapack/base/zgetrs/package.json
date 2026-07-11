@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgetrs",
   "version": "1.0.0",
-  "description": "Solves a system of linear equations using LU factorization (complex double-precision).",
+  "description": "Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with a general N-by-N matrix A using the LU factorization computed by ZGETRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

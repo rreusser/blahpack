@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmqr",
   "version": "1.0.0",
-  "description": "Apply orthogonal matrix Q from QR factorization to a matrix (blocked)",
+  "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a QR factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

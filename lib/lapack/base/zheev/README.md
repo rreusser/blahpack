@@ -20,7 +20,7 @@ limitations under the License.
 
 # zheev
 
-> Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zheev = require( '@stdlib/lapack/base/zheev' );
 
 #### zheev( order, jobz, uplo, N, A, LDA, w, strideW, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices.
 
 ```javascript
 var zheev = require( '@stdlib/lapack/base/zheev' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### zheev.ndarray( jobz, uplo, N, A, strideA1, strideA2, offsetA, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices, using alternative indexing semantics.
 
 ```javascript
 var zheev = require( '@stdlib/lapack/base/zheev' );

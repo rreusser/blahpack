@@ -20,7 +20,7 @@ limitations under the License.
 
 # zungtr
 
-> Generates a complex unitary matrix Q which is defined as the product of N-1.
+> Generates a complex unitary matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO = 'U', Q = H(n-1).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zungtr = require( '@stdlib/lapack/base/zungtr' );
 
 #### zungtr( uplo, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generates a complex unitary matrix Q which is defined as the product of N-1.
+Generates a complex unitary matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO = 'U', Q = H(n-1).
 
 ```javascript
 var zungtr = require( '@stdlib/lapack/base/zungtr' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zungtr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
 
-Generates a complex unitary matrix Q which is defined as the product of N-1, using alternative indexing semantics.
+Generates a complex unitary matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO = 'U', Q = H(n-1), using alternative indexing semantics.
 
 ```javascript
 var zungtr = require( '@stdlib/lapack/base/zungtr' );

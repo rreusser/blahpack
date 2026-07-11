@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgtcon",
   "version": "1.0.0",
-  "description": "Estimate the reciprocal of the condition number of a real general tridiagonal matrix",
+  "description": "Estimates the reciprocal of the condition number of a real tridiagonal matrix A using the LU factorization as computed by DGTTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

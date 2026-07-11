@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpotrs
 
-> Solves a system of linear equations A_X = B with a Hermitian positive.
+> Solves a system of linear equations A·X = B with a Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpotrs = require( '@stdlib/lapack/base/zpotrs' );
 
 #### zpotrs( order, uplo, N, nrhs, A, LDA, B, LDB )
 
-Solves a system of linear equations A_X = B with a Hermitian positive.
+Solves a system of linear equations A·X = B with a Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF.
 
 ```javascript
 var zpotrs = require( '@stdlib/lapack/base/zpotrs' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### zpotrs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A_X = B with a Hermitian positive, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF, using alternative indexing semantics.
 
 ```javascript
 var zpotrs = require( '@stdlib/lapack/base/zpotrs' );

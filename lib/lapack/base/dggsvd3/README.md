@@ -20,7 +20,7 @@ limitations under the License.
 
 # dggsvd3
 
-> Computes the generalized singular value decomposition (GSVD) of an M-by-N.
+> Computes the singular value decomposition (SVD).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dggsvd3 = require( '@stdlib/lapack/base/dggsvd3' );
 
 #### dggsvd3( jobu, jobv, jobq, M, N, p, K, l, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, U, LDU, V, LDV, Q, LDQ, WORK, strideWORK, lwork, IWORK, strideIWORK )
 
-Computes the generalized singular value decomposition (GSVD) of an M-by-N.
+Computes the singular value decomposition (SVD).
 
 ```javascript
 var dggsvd3 = require( '@stdlib/lapack/base/dggsvd3' );
@@ -83,7 +83,7 @@ The function has the following parameters:
 
 #### dggsvd3.ndarray( jobu, jobv, jobq, M, N, p, K, l, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, U, strideU1, strideU2, offsetU, V, strideV1, strideV2, offsetV, Q, strideQ1, strideQ2, offsetQ, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
 
-Computes the generalized singular value decomposition (GSVD) of an M-by-N, using alternative indexing semantics.
+Computes the singular value decomposition (SVD), using alternative indexing semantics.
 
 ```javascript
 var dggsvd3 = require( '@stdlib/lapack/base/dggsvd3' );

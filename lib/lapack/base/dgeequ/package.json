@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgeequ",
   "version": "1.0.0",
-  "description": "Computes row and column scalings for equilibrating a general matrix",
+  "description": "Computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

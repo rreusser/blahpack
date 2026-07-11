@@ -1,5 +1,5 @@
 {{alias}}( N, za, zx, strideX, zy, strideY )
-    Scales a complex double-precision vector by a complex constant and adds.
+    Constant times a vector plus a vector.
 
     Parameters
     ----------
@@ -32,8 +32,8 @@
 
 
 {{alias}}.ndarray( N, za, zx, strideX, offsetX, zy, strideY, offsetY )
-    Scales a complex double-precision vector by a complex constant and adds
-    using alternative indexing semantics.
+    Constant times a vector plus a vector, using alternative indexing
+    semantics.
 
     Parameters
     ----------

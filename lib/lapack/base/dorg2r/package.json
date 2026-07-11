@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dorg2r",
   "version": "1.0.0",
-  "description": "Generate an orthogonal matrix from a QR factorization (unblocked)",
+  "description": "Generates all or part of the orthogonal matrix Q from a QR factorization determined by sgeqrf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

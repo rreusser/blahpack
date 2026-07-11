@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dorml2",
   "version": "1.0.0",
-  "description": "Multiply a general matrix by the orthogonal matrix from an LQ factorization (unblocked)",
+  "description": "Multiplies a general matrix by the orthogonal matrix from a LQ factorization determined by sgelqf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

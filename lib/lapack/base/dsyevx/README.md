@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyevx
 
-> Computes selected eigenvalues and, optionally, eigenvectors of a real.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyevx = require( '@stdlib/lapack/base/dsyevx' );
 
 #### dsyevx( jobz, range, uplo, N, A, LDA, vl, vu, il, iu, abstol, out, w, strideW, Z, LDZ, WORK, strideWORK, lwork, IWORK, strideIWORK, IFAIL, strideIFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices.
 
 ```javascript
 var dsyevx = require( '@stdlib/lapack/base/dsyevx' );
@@ -76,7 +76,7 @@ The function has the following parameters:
 
 #### dsyevx.ndarray( jobz, range, uplo, N, A, strideA1, strideA2, offsetA, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices, using alternative indexing semantics.
 
 ```javascript
 var dsyevx = require( '@stdlib/lapack/base/dsyevx' );

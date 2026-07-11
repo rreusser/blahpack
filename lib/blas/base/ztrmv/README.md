@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrmv
 
-> Perform one of the matrix-vector operations.
+> Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x, or x := Aᴴ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrmv = require( '@stdlib/blas/base/ztrmv' );
 
 #### ztrmv( order, uplo, trans, diag, N, A, LDA, x, strideX )
 
-Perform one of the matrix-vector operations.
+Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x, or x := Aᴴ·x.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### ztrmv.ndarray( uplo, trans, diag, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
 
-Perform one of the matrix-vector operations, using alternative indexing semantics.
+Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x, or x := Aᴴ·x, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

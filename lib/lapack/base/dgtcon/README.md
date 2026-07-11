@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgtcon
 
-> Estimates the reciprocal of the condition number of a real general tridiagonal.
+> Estimates the reciprocal of the condition number of a real tridiagonal matrix A using the LU factorization as computed by DGTTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgtcon = require( '@stdlib/lapack/base/dgtcon' );
 
 #### dgtcon( norm, N, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a real general tridiagonal.
+Estimates the reciprocal of the condition number of a real tridiagonal matrix A using the LU factorization as computed by DGTTRF.
 
 ```javascript
 var dgtcon = require( '@stdlib/lapack/base/dgtcon' );
@@ -72,7 +72,7 @@ The function has the following parameters:
 
 #### dgtcon.ndarray( norm, N, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a real general tridiagonal, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a real tridiagonal matrix A using the LU factorization as computed by DGTTRF, using alternative indexing semantics.
 
 ```javascript
 var dgtcon = require( '@stdlib/lapack/base/dgtcon' );

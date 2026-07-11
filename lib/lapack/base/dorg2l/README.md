@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorg2l
 
-> Generate an M-by-N real orthogonal matrix Q with orthonormal columns.
+> Generates all or part of the orthogonal matrix Q from a QL factorization determined by sgeqlf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorg2l = require( '@stdlib/lapack/base/dorg2l' );
 
 #### dorg2l( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N real orthogonal matrix Q with orthonormal columns.
+Generates all or part of the orthogonal matrix Q from a QL factorization determined by sgeqlf (unblocked algorithm).
 
 ```javascript
 var dorg2l = require( '@stdlib/lapack/base/dorg2l' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dorg2l.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N real orthogonal matrix Q with orthonormal columns,, using alternative indexing semantics.
+Generates all or part of the orthogonal matrix Q from a QL factorization determined by sgeqlf (unblocked algorithm),, using alternative indexing semantics.
 
 ```javascript
 var dorg2l = require( '@stdlib/lapack/base/dorg2l' );

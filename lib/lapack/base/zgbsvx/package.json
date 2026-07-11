@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgbsvx",
   "version": "1.0.0",
-  "description": "Solves a complex system A * X = B where A is general band, with equilibration, condition estimation, and error bounds.",
+  "description": "Computes the solution to system of linear equations A·X = B for general band matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

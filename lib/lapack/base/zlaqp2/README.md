@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlaqp2
 
-> Computes a QR factorization with column pivoting of the M-by-N matrix A.
+> Computes a QR factorization with column pivoting of the matrix block.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlaqp2 = require( '@stdlib/lapack/base/zlaqp2' );
 
 #### zlaqp2( order, M, N, offset, A, LDA, JPVT, strideJPVT, TAU, strideTAU, VN1, strideVN1, VN2, strideVN2, WORK, strideWORK )
 
-Computes a QR factorization with column pivoting of the M-by-N matrix A.
+Computes a QR factorization with column pivoting of the matrix block.
 
 ```javascript
 var zlaqp2 = require( '@stdlib/lapack/base/zlaqp2' );
@@ -67,7 +67,7 @@ The function has the following parameters:
 
 #### zlaqp2.ndarray( M, N, offset, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, VN1, strideVN1, offsetVN1, VN2, strideVN2, offsetVN2, WORK, strideWORK, offsetWORK )
 
-Computes a QR factorization with column pivoting of the M-by-N matrix A, using alternative indexing semantics.
+Computes a QR factorization with column pivoting of the matrix block, using alternative indexing semantics.
 
 ```javascript
 var zlaqp2 = require( '@stdlib/lapack/base/zlaqp2' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgesc2",
   "version": "1.0.0",
-  "description": "Solves a system of linear equations with an LU factored matrix using complete pivoting",
+  "description": "Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

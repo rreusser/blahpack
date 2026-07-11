@@ -20,7 +20,7 @@ limitations under the License.
 
 # zstein
 
-> Computes the eigenvectors of a real symmetric tridiagonal matrix T.
+> Computes the eigenvectors of a real symmetric tridiagonal matrix T corresponding to specified eigenvalues, using inverse iteration.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zstein = require( '@stdlib/lapack/base/zstein' );
 
 #### zstein( N, d, strideD, e, strideE, M, w, strideW, IBLOCK, strideIBLOCK, ISPLIT, strideISPLIT, Z, LDZ, WORK, strideWORK, IWORK, strideIWORK, IFAIL, strideIFAIL )
 
-Computes the eigenvectors of a real symmetric tridiagonal matrix T.
+Computes the eigenvectors of a real symmetric tridiagonal matrix T corresponding to specified eigenvalues, using inverse iteration.
 
 ```javascript
 var zstein = require( '@stdlib/lapack/base/zstein' );
@@ -76,7 +76,7 @@ The function has the following parameters:
 
 #### zstein.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, M, w, strideW, offsetW, IBLOCK, strideIBLOCK, offsetIBLOCK, ISPLIT, strideISPLIT, offsetISPLIT, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes the eigenvectors of a real symmetric tridiagonal matrix T, using alternative indexing semantics.
+Computes the eigenvectors of a real symmetric tridiagonal matrix T corresponding to specified eigenvalues, using inverse iteration, using alternative indexing semantics.
 
 ```javascript
 var zstein = require( '@stdlib/lapack/base/zstein' );

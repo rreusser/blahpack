@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsyconv
 
-> Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
+> Converts A given by ZHETRF into L and D or vice-versa.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsyconv = require( '@stdlib/lapack/base/zsyconv' );
 
 #### zsyconv( uplo, way, N, A, LDA, IPIV, strideIPIV, E, strideE )
 
-Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
+Converts A given by ZHETRF into L and D or vice-versa.
 
 ```javascript
 var zsyconv = require( '@stdlib/lapack/base/zsyconv' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zsyconv.ndarray( uplo, way, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, E, strideE, offsetE )
 
-Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman, using alternative indexing semantics.
+Converts A given by ZHETRF into L and D or vice-versa, using alternative indexing semantics.
 
 ```javascript
 var zsyconv = require( '@stdlib/lapack/base/zsyconv' );

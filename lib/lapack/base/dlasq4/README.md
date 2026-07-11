@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasq4
 
-> Computes an approximation TAU to the smallest eigenvalue using values of d.
+> Computes an approximation to the smallest eigenvalue using values of d from the previous transform.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasq4 = require( '@stdlib/lapack/base/dlasq4' );
 
 #### dlasq4( i0, n0, z, stride, pp, n0in, dmin, dmin1, dmin2, dn, dn1, dn2, tau, ttype, g )
 
-Computes an approximation TAU to the smallest eigenvalue using values of d.
+Computes an approximation to the smallest eigenvalue using values of d from the previous transform.
 
 ```javascript
 var dlasq4 = require( '@stdlib/lapack/base/dlasq4' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dlasq4.ndarray( i0, n0, z, stride, offset, pp, n0in, dmin, dmin1, dmin2, dn, dn1, dn2, tau, ttype, g )
 
-Computes an approximation TAU to the smallest eigenvalue using values of d, using alternative indexing semantics.
+Computes an approximation to the smallest eigenvalue using values of d from the previous transform, using alternative indexing semantics.
 
 ```javascript
 var dlasq4 = require( '@stdlib/lapack/base/dlasq4' );

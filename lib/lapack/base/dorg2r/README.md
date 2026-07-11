@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorg2r
 
-> Generate an M-by-N real orthogonal matrix Q from the elementary.
+> Generates all or part of the orthogonal matrix Q from a QR factorization determined by sgeqrf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorg2r = require( '@stdlib/lapack/base/dorg2r' );
 
 #### dorg2r( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N real orthogonal matrix Q from the elementary.
+Generates all or part of the orthogonal matrix Q from a QR factorization determined by sgeqrf (unblocked algorithm).
 
 ```javascript
 var dorg2r = require( '@stdlib/lapack/base/dorg2r' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dorg2r.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N real orthogonal matrix Q from the elementary, using alternative indexing semantics.
+Generates all or part of the orthogonal matrix Q from a QR factorization determined by sgeqrf (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dorg2r = require( '@stdlib/lapack/base/dorg2r' );

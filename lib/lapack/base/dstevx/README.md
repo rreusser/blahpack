@@ -20,7 +20,7 @@ limitations under the License.
 
 # dstevx
 
-> Computes selected eigenvalues and, optionally, eigenvectors of a real.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dstevx = require( '@stdlib/lapack/base/dstevx' );
 
 #### dstevx( jobz, range, N, d, strideD, e, strideE, vl, vu, il, iu, abstol, M, w, strideW, Z, LDZ, WORK, strideWORK, IWORK, strideIWORK, IFAIL, strideIFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 ```javascript
 var dstevx = require( '@stdlib/lapack/base/dstevx' );
@@ -77,7 +77,7 @@ The function has the following parameters:
 
 #### dstevx.ndarray( jobz, range, N, d, strideD, offsetD, e, strideE, offsetE, vl, vu, il, iu, abstol, M, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors, using alternative indexing semantics.
 
 ```javascript
 var dstevx = require( '@stdlib/lapack/base/dstevx' );

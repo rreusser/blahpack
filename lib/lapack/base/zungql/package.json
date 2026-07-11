@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zungql",
   "version": "1.0.0",
-  "description": "Generate unitary matrix Q from QL factorization (blocked)",
+  "description": "Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

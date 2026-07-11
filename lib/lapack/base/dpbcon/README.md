@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpbcon
 
-> Estimates the reciprocal of the condition number of a symmetric positive.
+> Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite band matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpbcon = require( '@stdlib/lapack/base/dpbcon' );
 
 #### dpbcon( uplo, N, kd, AB, LDAB, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a symmetric positive.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite band matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF.
 
 ```javascript
 var dpbcon = require( '@stdlib/lapack/base/dpbcon' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dpbcon.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a symmetric positive, using alternative indexing semantics.
+Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite band matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF, using alternative indexing semantics.
 
 ```javascript
 var dpbcon = require( '@stdlib/lapack/base/dpbcon' );

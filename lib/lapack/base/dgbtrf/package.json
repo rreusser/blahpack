@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgbtrf",
   "version": "1.0.0",
-  "description": "Compute LU factorization of a banded matrix (blocked)",
+  "description": "Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

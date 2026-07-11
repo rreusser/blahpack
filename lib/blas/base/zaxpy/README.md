@@ -20,7 +20,7 @@ limitations under the License.
 
 # zaxpy
 
-> Scales a complex double-precision vector by a complex constant and adds.
+> Constant times a vector plus a vector.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zaxpy = require( '@stdlib/blas/base/zaxpy' );
 
 #### zaxpy( N, za, zx, strideX, zy, strideY )
 
-Scales a complex double-precision vector by a complex constant and adds.
+Constant times a vector plus a vector.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zaxpy.ndarray( N, za, zx, strideX, offsetX, zy, strideY, offsetY )
 
-Scales a complex double-precision vector by a complex constant and adds, using alternative indexing semantics.
+Constant times a vector plus a vector, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

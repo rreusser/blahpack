@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU )
-    Reduces a real symmetric matrix A to real symmetric tridiagonal form T.
+    Reduces a real symmetric matrix A to real symmetric tridiagonal form T
+    by an orthogonal similarity transformation: Qᵀ·A·Q = T.
 
     Parameters
     ----------
@@ -48,7 +49,8 @@
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAU, strideTAU, offsetTAU )
     Reduces a real symmetric matrix A to real symmetric tridiagonal form T
-    using alternative indexing semantics.
+    by an orthogonal similarity transformation: Qᵀ·A·Q = T, using
+    alternative indexing semantics.
 
     Parameters
     ----------

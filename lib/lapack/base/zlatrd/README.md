@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlatrd
 
-> Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian.
+> Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlatrd = require( '@stdlib/lapack/base/zlatrd' );
 
 #### zlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW )
 
-Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian.
+Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation.
 
 ```javascript
 var zlatrd = require( '@stdlib/lapack/base/zlatrd' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### zlatrd.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, e, strideE, offsetE, TAU, strideTAU, offsetTAU, W, strideW1, strideW2, offsetW )
 
-Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian, using alternative indexing semantics.
+Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation, using alternative indexing semantics.
 
 ```javascript
 var zlatrd = require( '@stdlib/lapack/base/zlatrd' );

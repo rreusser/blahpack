@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyev
 
-> Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyev = require( '@stdlib/lapack/base/dsyev' );
 
 #### dsyev( order, jobz, uplo, N, A, LDA, w, strideW, WORK, strideWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices.
 
 ```javascript
 var dsyev = require( '@stdlib/lapack/base/dsyev' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dsyev.ndarray( jobz, uplo, N, A, strideA1, strideA2, offsetA, w, strideW, offsetW, WORK, strideWORK, offsetWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices, using alternative indexing semantics.
 
 ```javascript
 var dsyev = require( '@stdlib/lapack/base/dsyev' );

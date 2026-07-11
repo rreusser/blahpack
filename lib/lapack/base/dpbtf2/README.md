@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpbtf2
 
-> Computes the Cholesky factorization of a real symmetric positive definite.
+> Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpbtf2 = require( '@stdlib/lapack/base/dpbtf2' );
 
 #### dpbtf2( order, uplo, N, kd, AB, LDAB )
 
-Computes the Cholesky factorization of a real symmetric positive definite.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm).
 
 ```javascript
 var dpbtf2 = require( '@stdlib/lapack/base/dpbtf2' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dpbtf2.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB )
 
-Computes the Cholesky factorization of a real symmetric positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dpbtf2 = require( '@stdlib/lapack/base/dpbtf2' );

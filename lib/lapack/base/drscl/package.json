@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/drscl",
   "version": "1.0.0",
-  "description": "Scale a vector by the reciprocal of a scalar",
+  "description": "Multiplies a vector by the reciprocal of a real scalar",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

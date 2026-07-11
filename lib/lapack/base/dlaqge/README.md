@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaqge
 
-> Equilibrates a general M-by-N matrix A using the row and column scaling.
+> Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaqge = require( '@stdlib/lapack/base/dlaqge' );
 
 #### dlaqge( M, N, A, LDA, r, strideR, c, strideC, rowcnd, colcnd, amax )
 
-Equilibrates a general M-by-N matrix A using the row and column scaling.
+Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ.
 
 ```javascript
 var dlaqge = require( '@stdlib/lapack/base/dlaqge' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dlaqge.ndarray( M, N, A, strideA1, strideA2, offsetA, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax, equed )
 
-Equilibrates a general M-by-N matrix A using the row and column scaling, using alternative indexing semantics.
+Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ, using alternative indexing semantics.
 
 ```javascript
 var dlaqge = require( '@stdlib/lapack/base/dlaqge' );

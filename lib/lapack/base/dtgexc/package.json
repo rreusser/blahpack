@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgexc",
   "version": "1.0.0",
-  "description": "Reorders the generalized real Schur decomposition of a real matrix pair",
+  "description": "Reorders the generalized real Schur decomposition of a real matrix pair (A,B) using an orthogonal equivalence transformation (A, B) = Q·(A, B)·Zᵀ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

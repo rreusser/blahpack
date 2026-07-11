@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zheevr",
   "version": "1.0.0",
-  "description": "Computes selected eigenvalues and eigenvectors of a complex Hermitian matrix using MRRR",
+  "description": "Computes the eigenvalues and, optionally, the left and/or right eigenvectors for Hermitian matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # zungbr
 
-> Generate one of the complex unitary matrices Q or P^H determined by ZGEBRD.
+> Generates one of the complex unitary matrices Q or Pᴴ determined by ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zungbr = require( '@stdlib/lapack/base/zungbr' );
 
 #### zungbr( order, vect, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate one of the complex unitary matrices Q or P^H determined by ZGEBRD.
+Generates one of the complex unitary matrices Q or Pᴴ determined by ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ.
 
 ```javascript
 var zungbr = require( '@stdlib/lapack/base/zungbr' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zungbr.ndarray( vect, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate one of the complex unitary matrices Q or P^H determined by ZGEBRD, using alternative indexing semantics.
+Generates one of the complex unitary matrices Q or Pᴴ determined by ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ, using alternative indexing semantics.
 
 ```javascript
 var zungbr = require( '@stdlib/lapack/base/zungbr' );

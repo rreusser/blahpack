@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaqr4
 
-> Implements one level of recursion for DLAQR0. It is a complete implementation.
+> Computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaqr4 = require( '@stdlib/lapack/base/dlaqr4' );
 
 #### dlaqr4( wantt, wantz, N, ilo, ihi, H, LDH, WR, strideWR, WI, strideWI, iloz, ihiz, Z, LDZ, WORK, strideWORK, lwork )
 
-Implements one level of recursion for DLAQR0. It is a complete implementation.
+Computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition.
 
 ```javascript
 var dlaqr4 = require( '@stdlib/lapack/base/dlaqr4' );
@@ -70,7 +70,7 @@ The function has the following parameters:
 
 #### dlaqr4.ndarray( wantt, wantz, N, ilo, ihi, H, strideH1, strideH2, offsetH, WR, strideWR, offsetWR, WI, strideWI, offsetWI, iloz, ihiz, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork )
 
-Implements one level of recursion for DLAQR0. It is a complete implementation, using alternative indexing semantics.
+Computes the eigenvalues of a Hessenberg matrix, and optionally the matrices from the Schur decomposition, using alternative indexing semantics.
 
 ```javascript
 var dlaqr4 = require( '@stdlib/lapack/base/dlaqr4' );

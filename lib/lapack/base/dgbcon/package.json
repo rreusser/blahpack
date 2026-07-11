@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgbcon",
   "version": "1.0.0",
-  "description": "Estimates the reciprocal condition number of a general banded matrix",
+  "description": "Estimates the reciprocal of the condition number of a real general band matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGBTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

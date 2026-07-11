@@ -20,7 +20,7 @@ limitations under the License.
 
 # dptrfs
 
-> Improves the computed solution to a real symmetric positive definite.
+> Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dptrfs = require( '@stdlib/lapack/base/dptrfs' );
 
 #### dptrfs( N, nrhs, d, strideD, e, strideE, DF, strideDF, EF, strideEF, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK )
 
-Improves the computed solution to a real symmetric positive definite.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var dptrfs = require( '@stdlib/lapack/base/dptrfs' );
@@ -76,7 +76,7 @@ The function has the following parameters:
 
 #### dptrfs.ndarray( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, DF, strideDF, offsetDF, EF, strideEF, offsetEF, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK )
 
-Improves the computed solution to a real symmetric positive definite, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var dptrfs = require( '@stdlib/lapack/base/dptrfs' );

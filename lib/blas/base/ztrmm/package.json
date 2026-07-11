@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/ztrmm",
   "version": "1.0.0",
-  "description": "Perform one of the matrix-matrix operations B := alpha*op(A)*B or B := alpha*B*op(A)",
+  "description": "Performs one of the matrix-matrix operations B := α·op(A)·B, or B := α·B·op(A)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtgevc
 
-> Computes some or all of the right and/or left eigenvectors of a pair of real matrices.
+> Computes some or all of the right and/or left eigenvectors of a pair of real matrices (S,P).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtgevc = require( '@stdlib/lapack/base/dtgevc' );
 
 #### dtgevc( order, side, howmny, SELECT, strideSELECT, N, S, LDS, P, LDP, VL, LDVL, VR, LDVR, mm, M, WORK, strideWORK )
 
-Computes some or all of the right and/or left eigenvectors of a pair of real matrices.
+Computes some or all of the right and/or left eigenvectors of a pair of real matrices (S,P).
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -72,7 +72,7 @@ The function has the following parameters:
 
 #### dtgevc.ndarray( side, howmny, SELECT, strideSELECT, offsetSELECT, N, S, strideS1, strideS2, offsetS, P, strideP1, strideP2, offsetP, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, mm, M, WORK, strideWORK, offsetWORK )
 
-Computes some or all of the right and/or left eigenvectors of a pair of real matrices., using alternative indexing semantics.
+Computes some or all of the right and/or left eigenvectors of a pair of real matrices (S,P)., using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

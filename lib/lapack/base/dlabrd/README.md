@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlabrd
 
-> Reduces the first NB rows and columns of a real general M-by-N matrix A.
+> Reduces the first nb rows and columns of a general matrix to a bidiagonal form.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlabrd = require( '@stdlib/lapack/base/dlabrd' );
 
 #### dlabrd( order, M, N, nb, A, LDA, d, strideD, e, strideE, TAUQ, strideTAUQ, TAUP, strideTAUP, X, LDX, Y, LDY )
 
-Reduces the first NB rows and columns of a real general M-by-N matrix A.
+Reduces the first nb rows and columns of a general matrix to a bidiagonal form.
 
 ```javascript
 var dlabrd = require( '@stdlib/lapack/base/dlabrd' );
@@ -72,7 +72,7 @@ The function has the following parameters:
 
 #### dlabrd.ndarray( M, N, nb, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAUQ, strideTAUQ, offsetTAUQ, TAUP, strideTAUP, offsetTAUP, X, strideX1, strideX2, offsetX, Y, strideY1, strideY2, offsetY )
 
-Reduces the first NB rows and columns of a real general M-by-N matrix A, using alternative indexing semantics.
+Reduces the first nb rows and columns of a general matrix to a bidiagonal form, using alternative indexing semantics.
 
 ```javascript
 var dlabrd = require( '@stdlib/lapack/base/dlabrd' );

@@ -1,5 +1,6 @@
 {{alias}}( N, H, LDH, sr1, si1, sr2, si2, v, strideV )
-    Sets a scalar multiple of the first column of the product.
+    Sets a scalar multiple of the first column of the product of 2-by-2 or
+    3-by-3 matrix H and specified shifts.
 
     Parameters
     ----------
@@ -41,8 +42,9 @@
 
 
 {{alias}}.ndarray( N, H, strideH1, strideH2, offsetH, sr1, si1, sr2, si2, v, strideV, offsetV )
-    Sets a scalar multiple of the first column of the product using
-    alternative indexing semantics.
+    Sets a scalar multiple of the first column of the product of 2-by-2 or
+    3-by-3 matrix H and specified shifts, using alternative indexing
+    semantics.
 
     Parameters
     ----------

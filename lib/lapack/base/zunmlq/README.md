@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunmlq
 
-> Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H.
+> Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an LQ factorization.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunmlq = require( '@stdlib/lapack/base/zunmlq' );
 
 #### zunmlq( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H.
+Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an LQ factorization.
 
 ```javascript
 var zunmlq = require( '@stdlib/lapack/base/zunmlq' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### zunmlq.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H,, using alternative indexing semantics.
+Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from an LQ factorization,, using alternative indexing semantics.
 
 ```javascript
 var zunmlq = require( '@stdlib/lapack/base/zunmlq' );

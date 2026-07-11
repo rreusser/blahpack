@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasrt
 
-> Sort an array of doubles in increasing or decreasing order using quicksort.
+> Sorts numbers in increasing or decreasing order.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasrt = require( '@stdlib/lapack/base/dlasrt' );
 
 #### dlasrt( id, N, d, stride )
 
-Sort an array of doubles in increasing or decreasing order using quicksort.
+Sorts numbers in increasing or decreasing order.
 
 ```javascript
 var dlasrt = require( '@stdlib/lapack/base/dlasrt' );
@@ -49,7 +49,7 @@ The function has the following parameters:
 
 #### dlasrt.ndarray( id, N, d, stride, offset )
 
-Sort an array of doubles in increasing or decreasing order using quicksort, using alternative indexing semantics.
+Sorts numbers in increasing or decreasing order, using alternative indexing semantics.
 
 ```javascript
 var dlasrt = require( '@stdlib/lapack/base/dlasrt' );

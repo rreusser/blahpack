@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrsv
 
-> Solve one of the systems of equations.
+> Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrsv = require( '@stdlib/blas/base/ztrsv' );
 
 #### ztrsv( order, uplo, trans, diag, N, A, LDA, x, strideX )
 
-Solve one of the systems of equations.
+Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### ztrsv.ndarray( uplo, trans, diag, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
 
-Solve one of the systems of equations, using alternative indexing semantics.
+Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

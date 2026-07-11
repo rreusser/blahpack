@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpotrf
 
-> Computes the Cholesky factorization of a real symmetric positive definite.
+> Computes the Cholesky factorization of a real symmetric positive definite matrix A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpotrf = require( '@stdlib/lapack/base/dpotrf' );
 
 #### dpotrf( order, uplo, N, A, LDA )
 
-Computes the Cholesky factorization of a real symmetric positive definite.
+Computes the Cholesky factorization of a real symmetric positive definite matrix A.
 
 ```javascript
 var dpotrf = require( '@stdlib/lapack/base/dpotrf' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### dpotrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the Cholesky factorization of a real symmetric positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a real symmetric positive definite matrix A, using alternative indexing semantics.
 
 ```javascript
 var dpotrf = require( '@stdlib/lapack/base/dpotrf' );

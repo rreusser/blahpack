@@ -1,6 +1,6 @@
 {{alias}}( order, uplo, N, A, LDA )
     Computes the Cholesky factorization of a real symmetric positive
-    definite.
+    definite matrix A using the recursive algorithm.
 
     Parameters
     ----------
@@ -31,7 +31,8 @@
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
     Computes the Cholesky factorization of a real symmetric positive
-    definite using alternative indexing semantics.
+    definite matrix A using the recursive algorithm, using alternative
+    indexing semantics.
 
     Parameters
     ----------

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaqr1
 
-> Sets a scalar multiple of the first column of the product.
+> Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaqr1 = require( '@stdlib/lapack/base/dlaqr1' );
 
 #### dlaqr1( N, H, LDH, sr1, si1, sr2, si2, v, strideV )
 
-Sets a scalar multiple of the first column of the product.
+Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.
 
 ```javascript
 var dlaqr1 = require( '@stdlib/lapack/base/dlaqr1' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dlaqr1.ndarray( N, H, strideH1, strideH2, offsetH, sr1, si1, sr2, si2, v, strideV, offsetV )
 
-Sets a scalar multiple of the first column of the product, using alternative indexing semantics.
+Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts, using alternative indexing semantics.
 
 ```javascript
 var dlaqr1 = require( '@stdlib/lapack/base/dlaqr1' );

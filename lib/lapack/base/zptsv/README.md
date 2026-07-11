@@ -20,7 +20,7 @@ limitations under the License.
 
 # zptsv
 
-> Solves a complex Hermitian positive definite tridiagonal system of linear.
+> Computes the solution to system of linear equations A·X = B for positive definite tridiagonal matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zptsv = require( '@stdlib/lapack/base/zptsv' );
 
 #### zptsv( N, nrhs, d, strideD, e, strideE, B, LDB )
 
-Solves a complex Hermitian positive definite tridiagonal system of linear.
+Computes the solution to system of linear equations A·X = B for positive definite tridiagonal matrices.
 
 ```javascript
 var zptsv = require( '@stdlib/lapack/base/zptsv' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zptsv.ndarray( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, B, strideB1, strideB2, offsetB )
 
-Solves a complex Hermitian positive definite tridiagonal system of linear, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for positive definite tridiagonal matrices, using alternative indexing semantics.
 
 ```javascript
 var zptsv = require( '@stdlib/lapack/base/zptsv' );

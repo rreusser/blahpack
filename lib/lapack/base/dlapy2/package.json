@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlapy2",
   "version": "1.0.0",
-  "description": "Return sqrt(x**2 + y**2), taking care not to cause unnecessary overflow.",
+  "description": "Returns sqrt(x2+y2)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

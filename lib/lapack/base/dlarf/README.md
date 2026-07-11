@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlarf
 
-> Applies a real elementary reflector H to a real M-by-N matrix C.
+> Applies an elementary reflector to a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlarf = require( '@stdlib/lapack/base/dlarf' );
 
 #### dlarf( order, side, M, N, v, strideV, tau, C, LDC, WORK, strideWORK )
 
-Applies a real elementary reflector H to a real M-by-N matrix C.
+Applies an elementary reflector to a general rectangular matrix.
 
 ```javascript
 var dlarf = require( '@stdlib/lapack/base/dlarf' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dlarf.ndarray( side, M, N, v, strideV, offsetV, tau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Applies a real elementary reflector H to a real M-by-N matrix C,, using alternative indexing semantics.
+Applies an elementary reflector to a general rectangular matrix,, using alternative indexing semantics.
 
 ```javascript
 var dlarf = require( '@stdlib/lapack/base/dlarf' );

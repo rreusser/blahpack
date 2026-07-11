@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpbtrs",
   "version": "1.0.0",
-  "description": "Solve a Hermitian positive definite banded system using Cholesky factorization",
+  "description": "Solves a system of linear equations A·X = B with a Hermitian positive definite band matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPBTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

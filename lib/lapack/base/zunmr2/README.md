@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunmr2
 
-> Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+> Multiplies a general matrix by the unitary matrix from a RQ factorization determined by cgerqf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunmr2 = require( '@stdlib/lapack/base/zunmr2' );
 
 #### zunmr2( side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+Multiplies a general matrix by the unitary matrix from a RQ factorization determined by cgerqf (unblocked algorithm).
 
 ```javascript
 var zunmr2 = require( '@stdlib/lapack/base/zunmr2' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### zunmr2.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H,, using alternative indexing semantics.
+Multiplies a general matrix by the unitary matrix from a RQ factorization determined by cgerqf (unblocked algorithm),, using alternative indexing semantics.
 
 ```javascript
 var zunmr2 = require( '@stdlib/lapack/base/zunmr2' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zstein",
   "version": "1.0.0",
-  "description": "Computes eigenvectors of a real symmetric tridiagonal matrix by inverse iteration",
+  "description": "Computes the eigenvectors of a real symmetric tridiagonal matrix T corresponding to specified eigenvalues, using inverse iteration",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

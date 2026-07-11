@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhegvx
 
-> Computes selected eigenvalues, and optionally, eigenvectors of a complex.
+> Computes selected eigenvalues, and optionally, eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhegvx = require( '@stdlib/lapack/base/zhegvx' );
 
 #### zhegvx( itype, jobz, range, uplo, N, A, LDA, B, LDB, vl, vu, il, iu, abstol, out, w, strideW, Z, LDZ, WORK, strideWORK, lwork, RWORK, strideRWORK, IWORK, strideIWORK, IFAIL, strideIFAIL )
 
-Computes selected eigenvalues, and optionally, eigenvectors of a complex.
+Computes selected eigenvalues, and optionally, eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 ```javascript
 var zhegvx = require( '@stdlib/lapack/base/zhegvx' );
@@ -83,7 +83,7 @@ The function has the following parameters:
 
 #### zhegvx.ndarray( itype, jobz, range, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes selected eigenvalues, and optionally, eigenvectors of a complex, using alternative indexing semantics.
+Computes selected eigenvalues, and optionally, eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.
 
 ```javascript
 var zhegvx = require( '@stdlib/lapack/base/zhegvx' );

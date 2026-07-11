@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmtr",
   "version": "1.0.0",
-  "description": "Applies a complex unitary matrix from zhetrd to a matrix",
+  "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dposv
 
-> Computes the solution to a real system of linear equations A*X = B.
+> Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dposv = require( '@stdlib/lapack/base/dposv' );
 
 #### dposv( order, uplo, N, nrhs, A, LDA, B, LDB )
 
-Computes the solution to a real system of linear equations A*X = B.
+Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 ```javascript
 var dposv = require( '@stdlib/lapack/base/dposv' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### dposv.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Computes the solution to a real system of linear equations A*X = B,, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for positive definite matrices,, using alternative indexing semantics.
 
 ```javascript
 var dposv = require( '@stdlib/lapack/base/dposv' );

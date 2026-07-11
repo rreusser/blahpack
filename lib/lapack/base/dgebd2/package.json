@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgebd2",
   "version": "1.0.0",
-  "description": "Reduce a general matrix to bidiagonal form (unblocked)",
+  "description": "Reduces a general matrix to bidiagonal form using an unblocked algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

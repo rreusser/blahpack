@@ -1,6 +1,7 @@
 {{alias}}( itype, jobz, uplo, N, A, LDA, B, LDB, w, strideW, WORK, strideWORK, lwork, RWORK, strideRWORK )
     Computes all the eigenvalues, and optionally, the eigenvectors of a
-    complex.
+    complex generalized Hermitian-definite eigenproblem, of the form
+    A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
     Parameters
     ----------
@@ -61,7 +62,8 @@
 
 {{alias}}.ndarray( itype, jobz, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
     Computes all the eigenvalues, and optionally, the eigenvectors of a
-    complex using alternative indexing semantics.
+    complex generalized Hermitian-definite eigenproblem, of the form
+    A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.
 
     Parameters
     ----------

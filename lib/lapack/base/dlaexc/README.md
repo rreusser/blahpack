@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaexc
 
-> Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
+> Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaexc = require( '@stdlib/lapack/base/dlaexc' );
 
 #### dlaexc( wantq, N, T, LDT, Q, LDQ, j1, n1, n2, WORK, strideWORK )
 
-Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
+Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation.
 
 ```javascript
 var dlaexc = require( '@stdlib/lapack/base/dlaexc' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dlaexc.ndarray( wantq, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, j1, n1, n2, WORK, strideWORK, offsetWORK )
 
-Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper, using alternative indexing semantics.
+Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation, using alternative indexing semantics.
 
 ```javascript
 var dlaexc = require( '@stdlib/lapack/base/dlaexc' );

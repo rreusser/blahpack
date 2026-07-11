@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgtsv
 
-> Solves a general real tridiagonal system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgtsv = require( '@stdlib/lapack/base/dgtsv' );
 
 #### dgtsv( N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB )
 
-Solves a general real tridiagonal system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 ```javascript
 var dgtsv = require( '@stdlib/lapack/base/dgtsv' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dgtsv.ndarray( N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, B, strideB1, strideB2, offsetB )
 
-Solves a general real tridiagonal system of linear equations A * X = B, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices, using alternative indexing semantics.
 
 ```javascript
 var dgtsv = require( '@stdlib/lapack/base/dgtsv' );

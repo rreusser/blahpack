@@ -1,6 +1,6 @@
 {{alias}}( order, M, N, kl, ku, AB, LDAB, IPIV, strideIPIV )
-    Computes an LU factorization of a real M-by-N band matrix A using
-    partial.
+    Computes an LU factorization of a real m-by-n band matrix A using
+    partial pivoting with row interchanges.
 
     Parameters
     ----------
@@ -42,8 +42,9 @@
 
 
 {{alias}}.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
-    Computes an LU factorization of a real M-by-N band matrix A using
-    partial using alternative indexing semantics.
+    Computes an LU factorization of a real m-by-n band matrix A using
+    partial pivoting with row interchanges, using alternative indexing
+    semantics.
 
     Parameters
     ----------

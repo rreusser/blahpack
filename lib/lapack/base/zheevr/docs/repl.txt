@@ -1,6 +1,6 @@
 {{alias}}( jobz, range, uplo, N, A, LDA, vl, vu, il, iu, abstol, out, w, strideW, Z, LDZ, ISUPPZ, strideISUPPZ, WORK, strideWORK, lwork, RWORK, strideRWORK, lrwork, IWORK, strideIWORK, liwork )
-    Computes selected eigenvalues and, optionally, eigenvectors of a
-    complex.
+    Computes the eigenvalues and, optionally, the left and/or right
+    eigenvectors for Hermitian matrices.
 
     Parameters
     ----------
@@ -96,8 +96,9 @@
 
 
 {{alias}}.ndarray( jobz, range, uplo, N, A, strideA1, strideA2, offsetA, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, ISUPPZ, strideISUPPZ, offsetISUPPZ, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK, lrwork, IWORK, strideIWORK, offsetIWORK, liwork )
-    Computes selected eigenvalues and, optionally, eigenvectors of a complex
-    using alternative indexing semantics.
+    Computes the eigenvalues and, optionally, the left and/or right
+    eigenvectors for Hermitian matrices, using alternative indexing
+    semantics.
 
     Parameters
     ----------

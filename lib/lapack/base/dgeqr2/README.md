@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgeqr2
 
-> Computes a QR factorization of a real M-by-N matrix A = Q * R.
+> Computes the QR factorization of a general rectangular matrix using an unblocked algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgeqr2 = require( '@stdlib/lapack/base/dgeqr2' );
 
 #### dgeqr2( order, M, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Computes a QR factorization of a real M-by-N matrix A = Q * R.
+Computes the QR factorization of a general rectangular matrix using an unblocked algorithm.
 
 ```javascript
 var dgeqr2 = require( '@stdlib/lapack/base/dgeqr2' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dgeqr2.ndarray( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Computes a QR factorization of a real M-by-N matrix A = Q * R, using alternative indexing semantics.
+Computes the QR factorization of a general rectangular matrix using an unblocked algorithm, using alternative indexing semantics.
 
 ```javascript
 var dgeqr2 = require( '@stdlib/lapack/base/dgeqr2' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dptrfs",
   "version": "1.0.0",
-  "description": "Improves solution to a real tridiagonal system and provides error bounds",
+  "description": "Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite and tridiagonal, and provides error bounds and backward error estimates for the solution",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

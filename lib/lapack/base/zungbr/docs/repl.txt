@@ -1,6 +1,6 @@
 {{alias}}( order, vect, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
-    Generate one of the complex unitary matrices Q or P^H determined by
-    ZGEBRD.
+    Generates one of the complex unitary matrices Q or Pᴴ determined by
+    ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ.
 
     Parameters
     ----------
@@ -48,8 +48,9 @@
 
 
 {{alias}}.ndarray( vect, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
-    Generate one of the complex unitary matrices Q or P^H determined by
-    ZGEBRD using alternative indexing semantics.
+    Generates one of the complex unitary matrices Q or Pᴴ determined by
+    ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ,
+    using alternative indexing semantics.
 
     Parameters
     ----------

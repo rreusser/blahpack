@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgetrs
 
-> Solves a system of linear equations.
+> Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with a general N-by-N matrix A using the LU factorization computed by ZGETRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgetrs = require( '@stdlib/lapack/base/zgetrs' );
 
 #### zgetrs( order, trans, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
-Solves a system of linear equations.
+Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with a general N-by-N matrix A using the LU factorization computed by ZGETRF.
 
 ```javascript
 var zgetrs = require( '@stdlib/lapack/base/zgetrs' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zgetrs.ndarray( trans, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations, using alternative indexing semantics.
+Solves a system of linear equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B with a general N-by-N matrix A using the LU factorization computed by ZGETRF, using alternative indexing semantics.
 
 ```javascript
 var zgetrs = require( '@stdlib/lapack/base/zgetrs' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpoequ
 
-> Computes row and column scalings intended to equilibrate a symmetric positive.
+> Computes row and column scalings intended to equilibrate a symmetric positive definite matrix A and reduce its condition number (with respect to the two-norm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpoequ = require( '@stdlib/lapack/base/dpoequ' );
 
 #### dpoequ( N, A, LDA, s, strideS )
 
-Computes row and column scalings intended to equilibrate a symmetric positive.
+Computes row and column scalings intended to equilibrate a symmetric positive definite matrix A and reduce its condition number (with respect to the two-norm).
 
 ```javascript
 var dpoequ = require( '@stdlib/lapack/base/dpoequ' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dpoequ.ndarray( N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, scond, amax )
 
-Computes row and column scalings intended to equilibrate a symmetric positive, using alternative indexing semantics.
+Computes row and column scalings intended to equilibrate a symmetric positive definite matrix A and reduce its condition number (with respect to the two-norm), using alternative indexing semantics.
 
 ```javascript
 var dpoequ = require( '@stdlib/lapack/base/dpoequ' );

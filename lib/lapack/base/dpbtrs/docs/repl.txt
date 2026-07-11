@@ -1,5 +1,7 @@
 {{alias}}( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB )
-    Solves a system of linear equations A_X = B with a symmetric positive.
+    Solves a system of linear equations A·X = B with a symmetric positive
+    definite band matrix A using the Cholesky factorization A = Uᵀ·U or A =
+    L·Lᵀ computed by DPBTRF.
 
     Parameters
     ----------
@@ -41,8 +43,9 @@
 
 
 {{alias}}.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
-    Solves a system of linear equations A_X = B with a symmetric positive
-    using alternative indexing semantics.
+    Solves a system of linear equations A·X = B with a symmetric positive
+    definite band matrix A using the Cholesky factorization A = Uᵀ·U or A =
+    L·Lᵀ computed by DPBTRF, using alternative indexing semantics.
 
     Parameters
     ----------

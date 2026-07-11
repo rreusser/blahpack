@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgerqf",
   "version": "1.0.0",
-  "description": "Compute the RQ factorization of a real matrix (blocked)",
+  "description": "Computes an RQ factorization of a real M-by-N matrix A: A = R·Q",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

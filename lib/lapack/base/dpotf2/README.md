@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpotf2
 
-> Computes the Cholesky factorization of a real symmetric positive definite.
+> Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpotf2 = require( '@stdlib/lapack/base/dpotf2' );
 
 #### dpotf2( order, uplo, N, A, LDA )
 
-Computes the Cholesky factorization of a real symmetric positive definite.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm).
 
 ```javascript
 var dpotf2 = require( '@stdlib/lapack/base/dpotf2' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### dpotf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the Cholesky factorization of a real symmetric positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dpotf2 = require( '@stdlib/lapack/base/dpotf2' );

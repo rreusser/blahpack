@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlascl
 
-> Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow.
+> Multiplies a general rectangular matrix by a real scalar defined as cto/cfrom.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlascl = require( '@stdlib/lapack/base/zlascl' );
 
 #### zlascl( order, type, kl, ku, cfrom, cto, M, N, A, LDA )
 
-Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow.
+Multiplies a general rectangular matrix by a real scalar defined as cto/cfrom.
 
 ```javascript
 var zlascl = require( '@stdlib/lapack/base/zlascl' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zlascl.ndarray( type, kl, ku, cfrom, cto, M, N, A, strideA1, strideA2, offsetA )
 
-Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow, using alternative indexing semantics.
+Multiplies a general rectangular matrix by a real scalar defined as cto/cfrom, using alternative indexing semantics.
 
 ```javascript
 var zlascl = require( '@stdlib/lapack/base/zlascl' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgtsv",
   "version": "1.0.0",
-  "description": "Solves a general real tridiagonal system of linear equations",
+  "description": "Computes the solution to system of linear equations A·X = B for general tridiagonal matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

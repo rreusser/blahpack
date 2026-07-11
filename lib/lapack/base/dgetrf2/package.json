@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgetrf2",
   "version": "1.0.0",
-  "description": "Recursive LU factorization of a general M-by-N matrix using partial pivoting.",
+  "description": "Computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

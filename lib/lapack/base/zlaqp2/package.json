@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlaqp2",
   "version": "1.0.0",
-  "description": "QR factorization with column pivoting (unblocked)",
+  "description": "Computes a QR factorization with column pivoting of the matrix block",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

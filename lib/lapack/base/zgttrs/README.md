@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgttrs
 
-> Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
+> Solves one of the systems of equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B, with a tridiagonal matrix A using the LU factorization computed by ZGTTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgttrs = require( '@stdlib/lapack/base/zgttrs' );
 
 #### zgttrs( trans, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV, B, LDB )
 
-Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
+Solves one of the systems of equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B, with a tridiagonal matrix A using the LU factorization computed by ZGTTRF.
 
 ```javascript
 var zgttrs = require( '@stdlib/lapack/base/zgttrs' );
@@ -68,7 +68,7 @@ The function has the following parameters:
 
 #### zgttrs.ndarray( trans, N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B, using alternative indexing semantics.
+Solves one of the systems of equations A·X = B, Aᵀ·X = B, or Aᴴ·X = B, with a tridiagonal matrix A using the LU factorization computed by ZGTTRF, using alternative indexing semantics.
 
 ```javascript
 var zgttrs = require( '@stdlib/lapack/base/zgttrs' );

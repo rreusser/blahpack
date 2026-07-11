@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunm2r",
   "version": "1.0.0",
-  "description": "Apply orthogonal matrix Q from QR factorization to a matrix (unblocked)",
+  "description": "Multiplies a general matrix by the unitary matrix from a QR factorization determined by cgeqrf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztgsen
 
-> Reorders the generalized Schur decomposition of a complex matrix pair
+> Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B)
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztgsen = require( '@stdlib/lapack/base/ztgsen' );
 
 #### ztgsen( order, ijob, wantq, wantz, SELECT, strideSELECT, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, M, pl, pr, DIF, strideDIF, WORK, strideWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
 
-Reorders the generalized Schur decomposition of a complex matrix pair
+Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B)
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -91,7 +91,7 @@ The function has the following parameters:
 
 #### ztgsen.ndarray( ijob, wantq, wantz, SELECT, strideSELECT, offsetSELECT, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, M, pl, pr, DIF, strideDIF, offsetDIF, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
 
-Reorders the generalized Schur decomposition of a complex matrix pair, using alternative indexing semantics.
+Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B), using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

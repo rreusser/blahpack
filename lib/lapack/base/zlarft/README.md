@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlarft
 
-> Form the triangular factor T of a complex block reflector H of order N.
+> Forms the triangular factor T of a block reflector H = I - vtvH.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlarft = require( '@stdlib/lapack/base/zlarft' );
 
 #### zlarft( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT )
 
-Form the triangular factor T of a complex block reflector H of order N.
+Forms the triangular factor T of a block reflector H = I - vtvH.
 
 ```javascript
 var zlarft = require( '@stdlib/lapack/base/zlarft' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zlarft.ndarray( direct, storev, N, K, V, strideV1, strideV2, offsetV, TAU, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT )
 
-Form the triangular factor T of a complex block reflector H of order N,, using alternative indexing semantics.
+Forms the triangular factor T of a block reflector H = I - vtvH,, using alternative indexing semantics.
 
 ```javascript
 var zlarft = require( '@stdlib/lapack/base/zlarft' );

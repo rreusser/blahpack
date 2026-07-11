@@ -1,5 +1,5 @@
 {{alias}}( x, y, z )
-    Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow.
+    Returns sqrt(x2+y2+z2).
 
     Parameters
     ----------
@@ -23,8 +23,7 @@
 
 
 {{alias}}.ndarray( x, y, z )
-    Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow
-    using alternative indexing semantics.
+    Returns sqrt(x2+y2+z2), using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlarfx",
   "version": "1.0.0",
-  "description": "Applies an elementary reflector to a general matrix with unrolled loops",
+  "description": "Applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order ≤ 10",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

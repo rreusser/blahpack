@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhetd2",
   "version": "1.0.0",
-  "description": "Reduce a Hermitian matrix to tridiagonal form (unblocked)",
+  "description": "Reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

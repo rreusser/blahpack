@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlapy2
 
-> Returns sqrt(x**2 + y**2), taking care not to cause unnecessary.
+> Returns sqrt(x2+y2).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlapy2 = require( '@stdlib/lapack/base/dlapy2' );
 
 #### dlapy2( x, y )
 
-Returns sqrt(x**2 + y**2), taking care not to cause unnecessary.
+Returns sqrt(x2+y2).
 
 ```javascript
 var dlapy2 = require( '@stdlib/lapack/base/dlapy2' );
@@ -47,7 +47,7 @@ The function has the following parameters:
 
 #### dlapy2.ndarray( x, y )
 
-Returns sqrt(x**2 + y**2), taking care not to cause unnecessary, using alternative indexing semantics.
+Returns sqrt(x2+y2), using alternative indexing semantics.
 
 ```javascript
 var dlapy2 = require( '@stdlib/lapack/base/dlapy2' );

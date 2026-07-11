@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dormr2",
   "version": "1.0.0",
-  "description": "Multiply a matrix by the orthogonal matrix Q from RQ factorization (unblocked)",
+  "description": "Multiplies a general matrix by the orthogonal matrix from a RQ factorization determined by sgerqf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlapy3
 
-> Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow.
+> Returns sqrt(x2+y2+z2).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlapy3 = require( '@stdlib/lapack/base/dlapy3' );
 
 #### dlapy3( x, y, z )
 
-Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow.
+Returns sqrt(x2+y2+z2).
 
 ```javascript
 var dlapy3 = require( '@stdlib/lapack/base/dlapy3' );
@@ -48,7 +48,7 @@ The function has the following parameters:
 
 #### dlapy3.ndarray( x, y, z )
 
-Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow, using alternative indexing semantics.
+Returns sqrt(x2+y2+z2), using alternative indexing semantics.
 
 ```javascript
 var dlapy3 = require( '@stdlib/lapack/base/dlapy3' );

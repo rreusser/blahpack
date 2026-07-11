@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgtsv
 
-> Solves a complex general tridiagonal system of linear equations A * X = B.
+> Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgtsv = require( '@stdlib/lapack/base/zgtsv' );
 
 #### zgtsv( N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB )
 
-Solves a complex general tridiagonal system of linear equations A * X = B.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 ```javascript
 var zgtsv = require( '@stdlib/lapack/base/zgtsv' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zgtsv.ndarray( N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, B, strideB1, strideB2, offsetB )
 
-Solves a complex general tridiagonal system of linear equations A * X = B, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices, using alternative indexing semantics.
 
 ```javascript
 var zgtsv = require( '@stdlib/lapack/base/zgtsv' );

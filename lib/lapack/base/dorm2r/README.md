@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorm2r
 
-> Overwrites the M-by-N matrix C with Q_C, Q__T_C, C_Q, or `C_Q*_T`.
+> Multiplies a general matrix by the orthogonal matrix from a QR factorization determined by sgeqrf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorm2r = require( '@stdlib/lapack/base/dorm2r' );
 
 #### dorm2r( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrites the M-by-N matrix C with Q_C, Q__T_C, C_Q, or `C_Q*_T`.
+Multiplies a general matrix by the orthogonal matrix from a QR factorization determined by sgeqrf (unblocked algorithm).
 
 ```javascript
 var dorm2r = require( '@stdlib/lapack/base/dorm2r' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dorm2r.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrites the M-by-N matrix C with Q_C, Q__T_C, C_Q, or `C_Q*_T`, using alternative indexing semantics.
+Multiplies a general matrix by the orthogonal matrix from a QR factorization determined by sgeqrf (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dorm2r = require( '@stdlib/lapack/base/dorm2r' );

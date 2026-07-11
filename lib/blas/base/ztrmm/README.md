@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrmm
 
-> Perform one of the matrix-matrix operations.
+> Performs one of the matrix-matrix operations B := α·op(A)·B, or B := α·B·op(A).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrmm = require( '@stdlib/blas/base/ztrmm' );
 
 #### ztrmm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB )
 
-Perform one of the matrix-matrix operations.
+Performs one of the matrix-matrix operations B := α·op(A)·B, or B := α·B·op(A).
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### ztrmm.ndarray( side, uplo, transa, diag, M, N, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Perform one of the matrix-matrix operations, using alternative indexing semantics.
+Performs one of the matrix-matrix operations B := α·op(A)·B, or B := α·B·op(A), using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

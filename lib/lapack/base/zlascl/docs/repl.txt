@@ -1,6 +1,6 @@
 {{alias}}( order, type, kl, ku, cfrom, cto, M, N, A, LDA )
-    Multiplies a complex matrix by a real scalar CTO/CFROM, handling
-    overflow.
+    Multiplies a general rectangular matrix by a real scalar defined as
+    cto/cfrom.
 
     Parameters
     ----------
@@ -45,8 +45,8 @@
 
 
 {{alias}}.ndarray( type, kl, ku, cfrom, cto, M, N, A, strideA1, strideA2, offsetA )
-    Multiplies a complex matrix by a real scalar CTO/CFROM, handling
-    overflow using alternative indexing semantics.
+    Multiplies a general rectangular matrix by a real scalar defined as
+    cto/cfrom, using alternative indexing semantics.
 
     Parameters
     ----------

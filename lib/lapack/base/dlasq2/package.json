@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasq2",
   "version": "1.0.0",
-  "description": "Compute all eigenvalues of a symmetric positive definite tridiagonal matrix via dqds",
+  "description": "Computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

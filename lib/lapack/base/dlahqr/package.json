@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlahqr",
   "version": "1.0.0",
-  "description": "Computes eigenvalues and Schur form of an upper Hessenberg matrix (small/medium)",
+  "description": "Computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

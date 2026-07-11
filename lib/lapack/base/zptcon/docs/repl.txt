@@ -1,6 +1,7 @@
 {{alias}}( N, d, strideD, e, strideE, anorm, rcond, RWORK, strideRWORK )
     Computes the reciprocal of the condition number (in the 1-norm) of a
-    complex.
+    complex Hermitian positive definite tridiagonal matrix using the
+    factorization A = L·D·Lᴴ or A = Uᴴ·D·U computed by ZPTTRF.
 
     Parameters
     ----------
@@ -43,7 +44,9 @@
 
 {{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, RWORK, strideRWORK, offsetRWORK )
     Computes the reciprocal of the condition number (in the 1-norm) of a
-    complex using alternative indexing semantics.
+    complex Hermitian positive definite tridiagonal matrix using the
+    factorization A = L·D·Lᴴ or A = Uᴴ·D·U computed by ZPTTRF, using
+    alternative indexing semantics.
 
     Parameters
     ----------

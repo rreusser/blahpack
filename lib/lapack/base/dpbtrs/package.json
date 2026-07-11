@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpbtrs",
   "version": "1.0.0",
-  "description": "Solve a banded symmetric positive definite system using Cholesky factorization",
+  "description": "Solves a system of linear equations A·X = B with a symmetric positive definite band matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

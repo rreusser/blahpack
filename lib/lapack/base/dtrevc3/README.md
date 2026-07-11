@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrevc3
 
-> Computes some or all of the right and/or left eigenvectors of a real.
+> Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrevc3 = require( '@stdlib/lapack/base/dtrevc3' );
 
 #### dtrevc3( side, howmny, SELECT, strideSELECT, N, T, LDT, VL, LDVL, VR, LDVR, mm, M, WORK, strideWORK, lwork )
 
-Computes some or all of the right and/or left eigenvectors of a real.
+Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T.
 
 ```javascript
 var dtrevc3 = require( '@stdlib/lapack/base/dtrevc3' );
@@ -68,7 +68,7 @@ The function has the following parameters:
 
 #### dtrevc3.ndarray( side, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, mm, M, WORK, strideWORK, offsetWORK, lwork )
 
-Computes some or all of the right and/or left eigenvectors of a real, using alternative indexing semantics.
+Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T, using alternative indexing semantics.
 
 ```javascript
 var dtrevc3 = require( '@stdlib/lapack/base/dtrevc3' );

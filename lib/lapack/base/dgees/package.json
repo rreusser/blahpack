@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgees",
   "version": "1.0.0",
-  "description": "Computes eigenvalues and Schur decomposition of a real general matrix",
+  "description": "Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

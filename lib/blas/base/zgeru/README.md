@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgeru
 
-> Perform the rank 1 operation A := alpha_x_y**T + A (unconjugated).
+> Performs the rank 1 operation A := α·x·yᵀ + A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgeru = require( '@stdlib/blas/base/zgeru' );
 
 #### zgeru( order, M, N, alpha, x, strideX, y, strideY, A, LDA )
 
-Perform the rank 1 operation A := alpha_x_y**T + A (unconjugated).
+Performs the rank 1 operation A := α·x·yᵀ + A.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zgeru.ndarray( M, N, alpha, x, strideX, offsetX, y, strideY, offsetY, A, strideA1, strideA2, offsetA )
 
-Perform the rank 1 operation A := alpha_x_y**T + A (unconjugated),, using alternative indexing semantics.
+Performs the rank 1 operation A := α·x·yᵀ + A,, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

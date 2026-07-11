@@ -1,5 +1,6 @@
 {{alias}}( M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
-    Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+    Generates all or part of the unitary matrix Q from a QL factorization
+    determined by cgeqlf (unblocked algorithm).
 
     Parameters
     ----------
@@ -41,8 +42,9 @@
 
 
 {{alias}}.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
-    Generate an M-by-N complex unitary matrix Q with orthonormal columns,
-    using alternative indexing semantics.
+    Generates all or part of the unitary matrix Q from a QL factorization
+    determined by cgeqlf (unblocked algorithm), using alternative indexing
+    semantics.
 
     Parameters
     ----------

@@ -20,7 +20,7 @@ limitations under the License.
 
 # zggqrf
 
-> Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B.
+> Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zggqrf = require( '@stdlib/lapack/base/zggqrf' );
 
 #### zggqrf( N, M, p, A, LDA, TAUA, strideTAUA, B, LDB, TAUB, strideTAUB, WORK, strideWORK, lwork )
 
-Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B.
+Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### zggqrf.ndarray( N, M, p, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB, WORK, strideWORK, offsetWORK, lwork )
 
-Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B, using alternative indexing semantics.
+Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z, using alternative indexing semantics.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dggsvd3",
   "version": "1.0.0",
-  "description": "Computes the generalized singular value decomposition of a real matrix pair",
+  "description": "Computes the singular value decomposition (SVD)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

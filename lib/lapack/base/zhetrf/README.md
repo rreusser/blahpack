@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhetrf
 
-> Computes the factorization of a complex Hermitian matrix using Bunch-Kaufman.
+> Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhetrf = require( '@stdlib/lapack/base/zhetrf' );
 
 #### zhetrf( uplo, N, A, LDA, IPIV, strideIPIV )
 
-Computes the factorization of a complex Hermitian matrix using Bunch-Kaufman.
+Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method.
 
 ```javascript
 var zhetrf = require( '@stdlib/lapack/base/zhetrf' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zhetrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the factorization of a complex Hermitian matrix using Bunch-Kaufman, using alternative indexing semantics.
+Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method, using alternative indexing semantics.
 
 ```javascript
 var zhetrf = require( '@stdlib/lapack/base/zhetrf' );

@@ -1,5 +1,5 @@
 {{alias}}( order, side, M, N, v, strideV, tau, C, LDC, WORK, strideWORK )
-    Applies a real elementary reflector H to a real M-by-N matrix C.
+    Applies an elementary reflector to a general rectangular matrix.
 
     Parameters
     ----------
@@ -47,7 +47,7 @@
 
 
 {{alias}}.ndarray( side, M, N, v, strideV, offsetV, tau, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
-    Applies a real elementary reflector H to a real M-by-N matrix C, using
+    Applies an elementary reflector to a general rectangular matrix, using
     alternative indexing semantics.
 
     Parameters

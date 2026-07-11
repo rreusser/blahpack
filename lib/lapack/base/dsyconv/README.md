@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyconv
 
-> Converts a symmetric matrix given by `dsytrf` (Bunch-Kaufman factorization).
+> Convert A given by TRF into L and D and vice-versa.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyconv = require( '@stdlib/lapack/base/dsyconv' );
 
 #### dsyconv( uplo, way, N, A, LDA, IPIV, strideIPIV, E, strideE )
 
-Converts a symmetric matrix given by `dsytrf` (Bunch-Kaufman factorization).
+Convert A given by TRF into L and D and vice-versa.
 
 ```javascript
 var dsyconv = require( '@stdlib/lapack/base/dsyconv' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dsyconv.ndarray( uplo, way, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, E, strideE, offsetE )
 
-Converts a symmetric matrix given by `dsytrf` (Bunch-Kaufman factorization), using alternative indexing semantics.
+Convert A given by TRF into L and D and vice-versa, using alternative indexing semantics.
 
 ```javascript
 var dsyconv = require( '@stdlib/lapack/base/dsyconv' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgeev
 
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgeev = require( '@stdlib/lapack/base/dgeev' );
 
 #### dgeev( jobvl, jobvr, N, A, LDA, WR, strideWR, WI, strideWI, VL, LDVL, VR, LDVR )
 
-Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices.
 
 ```javascript
 var dgeev = require( '@stdlib/lapack/base/dgeev' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dgeev.ndarray( jobvl, jobvr, N, A, strideA1, strideA2, offsetA, WR, strideWR, offsetWR, WI, strideWI, offsetWI, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the eigenvalues and, optionally, the left and/or right eigenvectors, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices, using alternative indexing semantics.
 
 ```javascript
 var dgeev = require( '@stdlib/lapack/base/dgeev' );

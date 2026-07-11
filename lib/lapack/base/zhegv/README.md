@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhegv
 
-> Computes all the eigenvalues, and optionally, the eigenvectors of a complex.
+> Computes all the eigenvalues, and optionally, the eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhegv = require( '@stdlib/lapack/base/zhegv' );
 
 #### zhegv( itype, jobz, uplo, N, A, LDA, B, LDB, w, strideW, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Computes all the eigenvalues, and optionally, the eigenvectors of a complex.
+Computes all the eigenvalues, and optionally, the eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 ```javascript
 var zhegv = require( '@stdlib/lapack/base/zhegv' );
@@ -67,7 +67,7 @@ The function has the following parameters:
 
 #### zhegv.ndarray( itype, jobz, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Computes all the eigenvalues, and optionally, the eigenvectors of a complex, using alternative indexing semantics.
+Computes all the eigenvalues, and optionally, the eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.
 
 ```javascript
 var zhegv = require( '@stdlib/lapack/base/zhegv' );

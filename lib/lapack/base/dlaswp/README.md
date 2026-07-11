@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaswp
 
-> Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`.
+> Performs a series of row interchanges on a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
 
 #### dlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx )
 
-Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`.
+Performs a series of row interchanges on a general rectangular matrix.
 
 ```javascript
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dlaswp.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, IPIV, strideIPIV, offsetIPIV, incx )
 
-Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`, using alternative indexing semantics.
+Performs a series of row interchanges on a general rectangular matrix, using alternative indexing semantics.
 
 ```javascript
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );

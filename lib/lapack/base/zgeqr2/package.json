@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgeqr2",
   "version": "1.0.0",
-  "description": "Compute a QR factorization of a complex matrix (unblocked algorithm).",
+  "description": "Computes the QR factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

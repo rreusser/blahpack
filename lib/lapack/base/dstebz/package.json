@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dstebz",
   "version": "1.0.0",
-  "description": "Computes selected eigenvalues of a real symmetric tridiagonal matrix by bisection",
+  "description": "Computes the eigenvalues of a symmetric tridiagonal matrix T",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

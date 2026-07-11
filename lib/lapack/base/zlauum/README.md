@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlauum
 
-> Computes the product of a complex triangular matrix with its conjugate.
+> Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlauum = require( '@stdlib/lapack/base/zlauum' );
 
 #### zlauum( order, uplo, N, A, LDA )
 
-Computes the product of a complex triangular matrix with its conjugate.
+Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices.
 
 ```javascript
 var zlauum = require( '@stdlib/lapack/base/zlauum' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### zlauum.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the product of a complex triangular matrix with its conjugate, using alternative indexing semantics.
+Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices, using alternative indexing semantics.
 
 ```javascript
 var zlauum = require( '@stdlib/lapack/base/zlauum' );

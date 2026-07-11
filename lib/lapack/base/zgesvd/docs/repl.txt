@@ -1,6 +1,5 @@
 {{alias}}( order, jobu, jobvt, M, N, A, LDA, s, strideS, U, LDU, VT, LDVT, WORK, strideWORK, lwork, RWORK, strideRWORK )
-    Computes the singular value decomposition (SVD) of a complex M-by-N
-    matrix A.
+    Computes the singular value decomposition (SVD) for general matrices.
 
     Parameters
     ----------
@@ -69,8 +68,8 @@
 
 
 {{alias}}.ndarray( jobu, jobvt, M, N, A, strideA1, strideA2, offsetA, s, strideS, offsetS, U, strideU1, strideU2, offsetU, VT, strideVT1, strideVT2, offsetVT, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
-    Computes the singular value decomposition (SVD) of a complex M-by-N
-    matrix A, using alternative indexing semantics.
+    Computes the singular value decomposition (SVD) for general matrices,
+    using alternative indexing semantics.
 
     Parameters
     ----------

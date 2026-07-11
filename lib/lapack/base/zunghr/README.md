@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunghr
 
-> Generates the complex unitary matrix Q which is defined as the product.
+> Generates a complex unitary matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by ZGEHRD: Q = H(ilo) H(ilo+1).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunghr = require( '@stdlib/lapack/base/zunghr' );
 
 #### zunghr( N, ilo, ihi, A, LDA, TAU, strideTAU, WORK, strideWORK, lwork )
 
-Generates the complex unitary matrix Q which is defined as the product.
+Generates a complex unitary matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by ZGEHRD: Q = H(ilo) H(ilo+1).
 
 ```javascript
 var zunghr = require( '@stdlib/lapack/base/zunghr' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zunghr.ndarray( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
 
-Generates the complex unitary matrix Q which is defined as the product, using alternative indexing semantics.
+Generates a complex unitary matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by ZGEHRD: Q = H(ilo) H(ilo+1), using alternative indexing semantics.
 
 ```javascript
 var zunghr = require( '@stdlib/lapack/base/zunghr' );

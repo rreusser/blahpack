@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpbsv",
   "version": "1.0.0",
-  "description": "Solve a banded symmetric positive definite system of linear equations",
+  "description": "Computes the solution to system of linear equations A·X = B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

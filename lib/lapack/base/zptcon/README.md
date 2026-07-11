@@ -20,7 +20,7 @@ limitations under the License.
 
 # zptcon
 
-> Computes the reciprocal of the condition number (in the 1-norm) of a complex.
+> Computes the reciprocal of the condition number (in the 1-norm) of a complex Hermitian positive definite tridiagonal matrix using the factorization A = L·D·Lᴴ or A = Uᴴ·D·U computed by ZPTTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zptcon = require( '@stdlib/lapack/base/zptcon' );
 
 #### zptcon( N, d, strideD, e, strideE, anorm, rcond, RWORK, strideRWORK )
 
-Computes the reciprocal of the condition number (in the 1-norm) of a complex.
+Computes the reciprocal of the condition number (in the 1-norm) of a complex Hermitian positive definite tridiagonal matrix using the factorization A = L·D·Lᴴ or A = Uᴴ·D·U computed by ZPTTRF.
 
 ```javascript
 var zptcon = require( '@stdlib/lapack/base/zptcon' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zptcon.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, RWORK, strideRWORK, offsetRWORK )
 
-Computes the reciprocal of the condition number (in the 1-norm) of a complex, using alternative indexing semantics.
+Computes the reciprocal of the condition number (in the 1-norm) of a complex Hermitian positive definite tridiagonal matrix using the factorization A = L·D·Lᴴ or A = Uᴴ·D·U computed by ZPTTRF, using alternative indexing semantics.
 
 ```javascript
 var zptcon = require( '@stdlib/lapack/base/zptcon' );

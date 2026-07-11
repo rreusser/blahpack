@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlatdf
 
-> Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
+> Uses the LU factorization of the n-by-n matrix computed by sgetc2 and computes a contribution to the reciprocal Dif-estimate.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlatdf = require( '@stdlib/lapack/base/dlatdf' );
 
 #### dlatdf( ijob, N, Z, LDZ, RHS, strideRHS, rdsum, rdscal, IPIV, strideIPIV, JPIV, strideJPIV )
 
-Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
+Uses the LU factorization of the n-by-n matrix computed by sgetc2 and computes a contribution to the reciprocal Dif-estimate.
 
 ```javascript
 var dlatdf = require( '@stdlib/lapack/base/dlatdf' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### dlatdf.ndarray( ijob, N, Z, strideZ1, strideZ2, offsetZ, RHS, strideRHS, offsetRHS, rdsum, rdscal, IPIV, strideIPIV, offsetIPIV, JPIV, strideJPIV, offsetJPIV )
 
-Uses the LU factorization of the n-by-n matrix Z computed by dgetc2, using alternative indexing semantics.
+Uses the LU factorization of the n-by-n matrix computed by sgetc2 and computes a contribution to the reciprocal Dif-estimate, using alternative indexing semantics.
 
 ```javascript
 var dlatdf = require( '@stdlib/lapack/base/dlatdf' );

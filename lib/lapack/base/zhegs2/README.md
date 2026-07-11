@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhegs2
 
-> Reduces a complex Hermitian-definite generalized eigenproblem to standard form.
+> Reduces a Hermitian definite generalized eigenproblem to standard form, using the factorization results obtained from cpotrf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhegs2 = require( '@stdlib/lapack/base/zhegs2' );
 
 #### zhegs2( itype, uplo, N, A, LDA, B, LDB )
 
-Reduces a complex Hermitian-definite generalized eigenproblem to standard form.
+Reduces a Hermitian definite generalized eigenproblem to standard form, using the factorization results obtained from cpotrf (unblocked algorithm).
 
 ```javascript
 var zhegs2 = require( '@stdlib/lapack/base/zhegs2' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zhegs2.ndarray( itype, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Reduces a complex Hermitian-definite generalized eigenproblem to standard form, using alternative indexing semantics.
+Reduces a Hermitian definite generalized eigenproblem to standard form, using the factorization results obtained from cpotrf (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var zhegs2 = require( '@stdlib/lapack/base/zhegs2' );

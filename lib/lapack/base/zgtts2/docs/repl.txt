@@ -1,5 +1,6 @@
 {{alias}}( itrans, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV, B, LDB )
-    Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
+    Solves a system of linear equations with a tridiagonal matrix using the
+    LU factorization computed by sgttrf.
 
     Parameters
     ----------
@@ -59,8 +60,9 @@
 
 
 {{alias}}.ndarray( itrans, N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
-    Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B
-    using alternative indexing semantics.
+    Solves a system of linear equations with a tridiagonal matrix using the
+    LU factorization computed by sgttrf, using alternative indexing
+    semantics.
 
     Parameters
     ----------

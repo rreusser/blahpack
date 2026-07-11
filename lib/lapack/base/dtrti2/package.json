@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrti2",
   "version": "1.0.0",
-  "description": "Compute the inverse of a real upper or lower triangular matrix (unblocked algorithm).",
+  "description": "Computes the inverse of a triangular matrix (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

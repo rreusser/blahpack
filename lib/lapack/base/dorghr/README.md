@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorghr
 
-> Generates the real orthogonal matrix Q which is defined as the product.
+> Generates a real orthogonal matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q = H(ilo) H(ilo+1).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorghr = require( '@stdlib/lapack/base/dorghr' );
 
 #### dorghr( N, ilo, ihi, A, LDA, TAU, strideTAU, WORK, strideWORK, lwork )
 
-Generates the real orthogonal matrix Q which is defined as the product.
+Generates a real orthogonal matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q = H(ilo) H(ilo+1).
 
 ```javascript
 var dorghr = require( '@stdlib/lapack/base/dorghr' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dorghr.ndarray( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
 
-Generates the real orthogonal matrix Q which is defined as the product, using alternative indexing semantics.
+Generates a real orthogonal matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q = H(ilo) H(ilo+1), using alternative indexing semantics.
 
 ```javascript
 var dorghr = require( '@stdlib/lapack/base/dorghr' );

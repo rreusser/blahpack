@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunmtr
 
-> Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+> Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunmtr = require( '@stdlib/lapack/base/zunmtr' );
 
 #### zunmtr( side, uplo, trans, M, N, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK, lwork )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction.
 
 ```javascript
 var zunmtr = require( '@stdlib/lapack/base/zunmtr' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### zunmtr.ndarray( side, uplo, trans, M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
 
-Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H,, using alternative indexing semantics.
+Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction,, using alternative indexing semantics.
 
 ```javascript
 var zunmtr = require( '@stdlib/lapack/base/zunmtr' );

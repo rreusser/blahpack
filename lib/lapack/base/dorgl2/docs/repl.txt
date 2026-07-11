@@ -1,5 +1,7 @@
 {{alias}}( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
-    Generates an M-by-N real orthogonal matrix Q from the elementary.
+    Generates an m by n real matrix Q with orthonormal rows, which is
+    defined as the first m rows of a product of k elementary reflectors of
+    order n Q = H(k).
 
     Parameters
     ----------
@@ -44,8 +46,9 @@
 
 
 {{alias}}.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
-    Generates an M-by-N real orthogonal matrix Q from the elementary using
-    alternative indexing semantics.
+    Generates an m by n real matrix Q with orthonormal rows, which is
+    defined as the first m rows of a product of k elementary reflectors of
+    order n Q = H(k), using alternative indexing semantics.
 
     Parameters
     ----------

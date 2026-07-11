@@ -1,5 +1,6 @@
 {{alias}}( N, v, strideV, x, strideX, ISGN, strideISGN, EST, KASE, ISAVE, strideISAVE )
-    Estimates the 1-norm of a square matrix using reverse communication.
+    Estimates the 1-norm of a square matrix, using reverse communication for
+    evaluating matrix-vector products.
 
     Parameters
     ----------
@@ -47,8 +48,8 @@
 
 
 {{alias}}.ndarray( N, v, strideV, offsetV, x, strideX, offsetX, ISGN, strideISGN, offsetISGN, EST, KASE, ISAVE, strideISAVE, offsetISAVE )
-    Estimates the 1-norm of a square matrix using reverse communication
-    using alternative indexing semantics.
+    Estimates the 1-norm of a square matrix, using reverse communication for
+    evaluating matrix-vector products, using alternative indexing semantics.
 
     Parameters
     ----------

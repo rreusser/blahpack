@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztgsja",
   "version": "1.0.0",
-  "description": "Computes the generalized singular value decomposition of two complex upper triangular matrices.",
+  "description": "Computes the generalized singular value decomposition (GSVD) of two complex upper triangular (or trapezoidal) matrices A and B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

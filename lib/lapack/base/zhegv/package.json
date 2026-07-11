@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhegv",
   "version": "1.0.0",
-  "description": "Computes all eigenvalues and optionally eigenvectors of a complex generalized Hermitian-definite eigenproblem",
+  "description": "Computes all the eigenvalues, and optionally, the eigenvectors of a complex generalized Hermitian-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

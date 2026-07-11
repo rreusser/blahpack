@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgevc",
   "version": "1.0.0",
-  "description": "Computes some or all of the right and/or left eigenvectors of a pair of real matrices.",
+  "description": "Computes some or all of the right and/or left eigenvectors of a pair of real matrices (S,P)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

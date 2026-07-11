@@ -20,7 +20,7 @@ limitations under the License.
 
 # zggevx
 
-> Computes, for a pair of N-by-N complex matrices (A, B), the generalized eigenvalues and, optionally, the left and/or right generalized eigenvectors, with optional balancing.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for general matrices.
 
 <section class="usage">
 

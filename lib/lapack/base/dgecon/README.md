@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgecon
 
-> Estimates the reciprocal of the condition number of a general real matrix A.
+> Estimates the reciprocal of the condition number of a general real matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGETRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgecon = require( '@stdlib/lapack/base/dgecon' );
 
 #### dgecon( order, norm, N, A, LDA, anorm, rcond, WORK, strideWORK, IWORK, strideIWORK )
 
-Estimates the reciprocal of the condition number of a general real matrix A.
+Estimates the reciprocal of the condition number of a general real matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGETRF.
 
 ```javascript
 var dgecon = require( '@stdlib/lapack/base/dgecon' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dgecon.ndarray( norm, N, A, strideA1, strideA2, offsetA, anorm, rcond, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Estimates the reciprocal of the condition number of a general real matrix A,, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a general real matrix A, in either the 1-norm or the infinity-norm, using the LU factorization computed by DGETRF,, using alternative indexing semantics.
 
 ```javascript
 var dgecon = require( '@stdlib/lapack/base/dgecon' );

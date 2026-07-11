@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpbtrs
 
-> Solves a system of linear equations A_X = B with a symmetric positive.
+> Solves a system of linear equations A·X = B with a symmetric positive definite band matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpbtrs = require( '@stdlib/lapack/base/dpbtrs' );
 
 #### dpbtrs( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB )
 
-Solves a system of linear equations A_X = B with a symmetric positive.
+Solves a system of linear equations A·X = B with a symmetric positive definite band matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF.
 
 ```javascript
 var dpbtrs = require( '@stdlib/lapack/base/dpbtrs' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dpbtrs.ndarray( uplo, N, kd, nrhs, AB, strideAB1, strideAB2, offsetAB, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations A_X = B with a symmetric positive, using alternative indexing semantics.
+Solves a system of linear equations A·X = B with a symmetric positive definite band matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF, using alternative indexing semantics.
 
 ```javascript
 var dpbtrs = require( '@stdlib/lapack/base/dpbtrs' );

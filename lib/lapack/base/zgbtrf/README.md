@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgbtrf
 
-> Computes an LU factorization of a complex M-by-N band matrix A.
+> Computes an LU factorization of a complex m-by-n band matrix A using partial pivoting with row interchanges.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgbtrf = require( '@stdlib/lapack/base/zgbtrf' );
 
 #### zgbtrf( order, M, N, kl, ku, AB, LDAB, IPIV, strideIPIV )
 
-Computes an LU factorization of a complex M-by-N band matrix A.
+Computes an LU factorization of a complex m-by-n band matrix A using partial pivoting with row interchanges.
 
 ```javascript
 var zgbtrf = require( '@stdlib/lapack/base/zgbtrf' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### zgbtrf.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV )
 
-Computes an LU factorization of a complex M-by-N band matrix A, using alternative indexing semantics.
+Computes an LU factorization of a complex m-by-n band matrix A using partial pivoting with row interchanges, using alternative indexing semantics.
 
 ```javascript
 var zgbtrf = require( '@stdlib/lapack/base/zgbtrf' );

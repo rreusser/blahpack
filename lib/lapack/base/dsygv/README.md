@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsygv
 
-> Computes all the eigenvalues, and optionally, the eigenvectors of a real.
+> Computes all the eigenvalues, and optionally, the eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsygv = require( '@stdlib/lapack/base/dsygv' );
 
 #### dsygv( itype, jobz, uplo, N, A, LDA, B, LDB, w, strideW, WORK, strideWORK, lwork )
 
-Computes all the eigenvalues, and optionally, the eigenvectors of a real.
+Computes all the eigenvalues, and optionally, the eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 ```javascript
 var dsygv = require( '@stdlib/lapack/base/dsygv' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### dsygv.ndarray( itype, jobz, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, w, strideW, offsetW, WORK, strideWORK, offsetWORK, lwork )
 
-Computes all the eigenvalues, and optionally, the eigenvectors of a real, using alternative indexing semantics.
+Computes all the eigenvalues, and optionally, the eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.
 
 ```javascript
 var dsygv = require( '@stdlib/lapack/base/dsygv' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpotrs",
   "version": "1.0.0",
-  "description": "Solve a symmetric positive definite system using the Cholesky factorization computed by dpotrf.",
+  "description": "Solves a system of linear equations A·X = B with a symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

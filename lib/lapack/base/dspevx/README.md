@@ -20,7 +20,7 @@ limitations under the License.
 
 # dspevx
 
-> Computes selected eigenvalues and, optionally, eigenvectors of a real.
+> Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dspevx = require( '@stdlib/lapack/base/dspevx' );
 
 #### dspevx( order, jobz, range, uplo, N, AP, vl, vu, il, iu, abstol, out, w, Z, LDZ, WORK, IWORK, IFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -72,7 +72,7 @@ The function has the following parameters:
 
 #### dspevx.ndarray( jobz, range, uplo, N, AP, strideAP, offsetAP, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes selected eigenvalues and, optionally, eigenvectors of a real, using alternative indexing semantics.
+Computes the eigenvalues and, optionally, the left and/or right eigenvectors, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

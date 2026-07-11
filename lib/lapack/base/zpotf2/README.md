@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpotf2
 
-> Computes the Cholesky factorization of a complex Hermitian positive definite.
+> Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpotf2 = require( '@stdlib/lapack/base/zpotf2' );
 
 #### zpotf2( order, uplo, N, A, LDA )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm).
 
 ```javascript
 var zpotf2 = require( '@stdlib/lapack/base/zpotf2' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### zpotf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the Cholesky factorization of a complex Hermitian positive definite, using alternative indexing semantics.
+Computes the Cholesky factorization of a symmetric/Hermitian positive definite matrix (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var zpotf2 = require( '@stdlib/lapack/base/zpotf2' );

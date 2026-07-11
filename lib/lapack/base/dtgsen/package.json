@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgsen",
   "version": "1.0.0",
-  "description": "Reorders the generalized real Schur decomposition of a real matrix pair",
+  "description": "Reorders the generalized real Schur decomposition of a real matrix pair (A, B) (in terms of an orthonormal equivalence transformation Qᵀ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper quasi-triangular matrix A and the upper triangular B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

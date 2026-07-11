@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dorgbr",
   "version": "1.0.0",
-  "description": "Generate orthogonal matrix Q or P-transpose from a bidiagonal reduction",
+  "description": "Generates one of the real orthogonal matrices Q or Pᵀ determined by DGEBRD when reducing a real matrix A to bidiagonal form: A = Q·B·Pᵀ",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dptts2
 
-> Solves a tridiagonal system of the form A _ X = B using the L_D*L^T.
+> Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dptts2 = require( '@stdlib/lapack/base/dptts2' );
 
 #### dptts2( N, nrhs, d, strideD, e, strideE, B, LDB )
 
-Solves a tridiagonal system of the form A _ X = B using the L_D*L^T.
+Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf.
 
 ```javascript
 var dptts2 = require( '@stdlib/lapack/base/dptts2' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dptts2.ndarray( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, B, strideB1, strideB2, offsetB )
 
-Solves a tridiagonal system of the form A _ X = B using the L_D*L^T, using alternative indexing semantics.
+Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf, using alternative indexing semantics.
 
 ```javascript
 var dptts2 = require( '@stdlib/lapack/base/dptts2' );

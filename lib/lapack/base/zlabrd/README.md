@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlabrd
 
-> Reduces the first NB rows and columns of a complex general M-by-N matrix A.
+> Reduces the first nb rows and columns of a general matrix to a bidiagonal form.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlabrd = require( '@stdlib/lapack/base/zlabrd' );
 
 #### zlabrd( order, M, N, nb, A, LDA, d, strideD, e, strideE, TAUQ, strideTAUQ, TAUP, strideTAUP, X, LDX, Y, LDY )
 
-Reduces the first NB rows and columns of a complex general M-by-N matrix A.
+Reduces the first nb rows and columns of a general matrix to a bidiagonal form.
 
 ```javascript
 var zlabrd = require( '@stdlib/lapack/base/zlabrd' );
@@ -72,7 +72,7 @@ The function has the following parameters:
 
 #### zlabrd.ndarray( M, N, nb, A, strideA1, strideA2, offsetA, d, strideD, offsetD, e, strideE, offsetE, TAUQ, strideTAUQ, offsetTAUQ, TAUP, strideTAUP, offsetTAUP, X, strideX1, strideX2, offsetX, Y, strideY1, strideY2, offsetY )
 
-Reduces the first NB rows and columns of a complex general M-by-N matrix A, using alternative indexing semantics.
+Reduces the first nb rows and columns of a general matrix to a bidiagonal form, using alternative indexing semantics.
 
 ```javascript
 var zlabrd = require( '@stdlib/lapack/base/zlabrd' );

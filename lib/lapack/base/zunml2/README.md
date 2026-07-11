@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunml2
 
-> Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H.
+> Multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunml2 = require( '@stdlib/lapack/base/zunml2' );
 
 #### zunml2( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H.
+Multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm).
 
 ```javascript
 var zunml2 = require( '@stdlib/lapack/base/zunml2' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### zunml2.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrite the M-by-N matrix C with Q_C, Q^H_C, C_Q, or C_Q^H,, using alternative indexing semantics.
+Multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm),, using alternative indexing semantics.
 
 ```javascript
 var zunml2 = require( '@stdlib/lapack/base/zunml2' );

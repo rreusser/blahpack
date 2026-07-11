@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhesv",
   "version": "1.0.0",
-  "description": "Complex Hermitian indefinite linear system solver",
+  "description": "Computes the solution to system of linear equations A·X = B for Hermitian matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

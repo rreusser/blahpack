@@ -1,5 +1,6 @@
 {{alias}}( norm, N, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK )
-    Estimates the reciprocal of the condition number of a complex general.
+    Estimates the reciprocal of the condition number of a complex
+    tridiagonal matrix A using the LU factorization as computed by ZGTTRF.
 
     Parameters
     ----------
@@ -62,7 +63,8 @@
 
 
 {{alias}}.ndarray( norm, N, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK )
-    Estimates the reciprocal of the condition number of a complex general
+    Estimates the reciprocal of the condition number of a complex
+    tridiagonal matrix A using the LU factorization as computed by ZGTTRF,
     using alternative indexing semantics.
 
     Parameters

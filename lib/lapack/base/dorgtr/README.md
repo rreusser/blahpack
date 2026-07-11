@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorgtr
 
-> Generates an orthogonal matrix Q which is defined as the product of N-1.
+> Generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by DSYTRD: if UPLO = 'U', Q = H(n-1).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorgtr = require( '@stdlib/lapack/base/dorgtr' );
 
 #### dorgtr( order, uplo, N, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generates an orthogonal matrix Q which is defined as the product of N-1.
+Generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by DSYTRD: if UPLO = 'U', Q = H(n-1).
 
 ```javascript
 var dorgtr = require( '@stdlib/lapack/base/dorgtr' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dorgtr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generates an orthogonal matrix Q which is defined as the product of N-1, using alternative indexing semantics.
+Generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by DSYTRD: if UPLO = 'U', Q = H(n-1), using alternative indexing semantics.
 
 ```javascript
 var dorgtr = require( '@stdlib/lapack/base/dorgtr' );

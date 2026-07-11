@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsteqr
 
-> Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+> Computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsteqr = require( '@stdlib/lapack/base/dsteqr' );
 
 #### dsteqr( order, compz, N, d, strideD, e, strideE, Z, LDZ, WORK, strideWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+Computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method.
 
 ```javascript
 var dsteqr = require( '@stdlib/lapack/base/dsteqr' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dsteqr.ndarray( compz, N, d, strideD, offsetD, e, strideE, offsetE, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK )
 
-Computes all eigenvalues and, optionally, eigenvectors of a real symmetric, using alternative indexing semantics.
+Computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method, using alternative indexing semantics.
 
 ```javascript
 var dsteqr = require( '@stdlib/lapack/base/dsteqr' );

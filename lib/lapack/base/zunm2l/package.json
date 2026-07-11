@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunm2l",
   "version": "1.0.0",
-  "description": "Applies a complex unitary matrix Q from a QL factorization to a matrix (unblocked)",
+  "description": "Multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

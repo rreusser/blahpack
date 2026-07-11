@@ -20,7 +20,7 @@ limitations under the License.
 
 # zptts2
 
-> Solves a complex Hermitian positive definite tridiagonal system of the form.
+> Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zptts2 = require( '@stdlib/lapack/base/zptts2' );
 
 #### zptts2( iuplo, N, nrhs, d, strideD, e, strideE, B, LDB )
 
-Solves a complex Hermitian positive definite tridiagonal system of the form.
+Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf.
 
 ```javascript
 var zptts2 = require( '@stdlib/lapack/base/zptts2' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### zptts2.ndarray( iuplo, N, nrhs, d, strideD, offsetD, e, strideE, offsetE, B, strideB1, strideB2, offsetB )
 
-Solves a complex Hermitian positive definite tridiagonal system of the form, using alternative indexing semantics.
+Solves a tridiagonal system of the form AX=B using the L D LH factorization computed by spttrf, using alternative indexing semantics.
 
 ```javascript
 var zptts2 = require( '@stdlib/lapack/base/zptts2' );

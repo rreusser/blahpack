@@ -4,10 +4,14 @@
  * package.json "description", using the clean text from
  * data/descriptions.generated.json (produced by bin/gen-descriptions.js).
  *
- * Only modules whose current README tagline is a truncated FRAGMENT (ends
- * at a colon or a dangling function word) are rewritten; complete
- * descriptions are left untouched. A module with no generated description
- * (e.g. not in routines.json) is reported and skipped.
+ * A module's committed description is TRUNCATED when the README tagline is a
+ * proper prefix of the module's own JSDoc summary paragraph — i.e. the
+ * generator kept only the first physical line of a multi-line summary. This
+ * catches every mid-sentence cut (at a colon, a dangling preposition, or a
+ * dangling adjective like "using partial" / "a real symmetric") regardless
+ * of wording, because the tagline was derived from that very paragraph.
+ * Complete descriptions (tagline == the whole paragraph, or already equal to
+ * the clean text) are left untouched.
  *
  * Usage:
  *   node bin/fix-descriptions.js --dry   # report what would change
@@ -22,10 +26,11 @@ const DRY = process.argv.includes( '--dry' );
 
 const DESCS = JSON.parse( readFileSync( join( ROOT, 'data', 'descriptions.generated.json' ), 'utf8' ) );
 
-// Lowercase words that leave a sentence obviously incomplete when trailing.
-const FRAGMENT_WORDS = new Set( 'the of a an and or to with for when using by from into that as on in provides than such is are its their which'.split( ' ' ) );
-
 const NDARRAY_SUFFIX = ', using alternative indexing semantics';
+
+function norm( s ) {
+	return ( s || '' ).toLowerCase().replace( /[^a-z0-9]/g, '' );
+}
 
 function tagline( readme ) {
 	for ( const line of readme.split( '\n' ) ) {
@@ -34,15 +39,29 @@ function tagline( readme ) {
 	return null;
 }
 
-function isFragment( tag ) {
-	if ( !tag ) return false;
-	const t = tag.replace( /\.\s*$/, '' ).trim();
-	if ( t.endsWith( ':' ) ) return true;
-	if ( /[`)\]]$/.test( t ) ) return false; // ends in an equation/bracket — complete
-	const words = t.split( /\s+/ );
-	const last = words[ words.length - 1 ].replace( /[`*_]/g, '' );
-	if ( /^[A-Z]$/.test( last ) ) return false; // single matrix name — complete
-	return FRAGMENT_WORDS.has( last.toLowerCase() );
+// Collapse the first JSDoc summary paragraph (the block that is NOT the
+// license header) to a single line: the run of `* ...` lines from the first
+// prose line until a blank `*`, an `* @tag`, or a `* ##` heading.
+function summaryParagraph( content ) {
+	if ( !content ) return '';
+	const blocks = content.match( /\/\*\*[\s\S]*?\*\//g ) || [];
+	for ( const b of blocks ) {
+		if ( /@license/.test( b ) ) continue;
+		const lines = b.split( '\n' );
+		const prose = [];
+		for ( const raw of lines ) {
+			const m = raw.match( /^\s*\*\s?(.*)$/ );
+			if ( !m ) continue;
+			const text = m[ 1 ].trim();
+			if ( text === '' && prose.length ) break;      // blank * ends paragraph
+			if ( text === '' ) continue;                    // leading blanks
+			if ( text.startsWith( '@' ) ) break;            // @tag ends it
+			if ( text.startsWith( '#' ) || text.startsWith( '/' ) ) break;
+			prose.push( text );
+		}
+		if ( prose.length ) return prose.join( ' ' ).replace( /\s+/g, ' ' ).trim();
+	}
+	return '';
 }
 
 // Word-wrap `text` to `width` columns, prefixing every line with `indent`.
@@ -73,10 +92,6 @@ function listModules() {
 
 // --- surface rewriters ------------------------------------------------------
 
-// README: the old fragment appears verbatim as a prefix in the tagline
-// (`> frag.`), the layout blurb (`frag.`), and the ndarray blurb
-// (`frag, using alternative indexing semantics.`). Replacing every literal
-// occurrence of the fragment with the clean description fixes all of them.
 function fixReadme( dir, oldFrag, desc ) {
 	const p = join( dir, 'README.md' );
 	if ( !existsSync( p ) ) return false;
@@ -87,9 +102,6 @@ function fixReadme( dir, oldFrag, desc ) {
 	return true;
 }
 
-// repl.txt: replace the description block following each `{{alias}}...(`
-// signature line (the block runs until the first blank line). The
-// `.ndarray` signature's block gets the alternative-indexing suffix.
 function fixRepl( dir, desc ) {
 	const p = join( dir, 'docs', 'repl.txt' );
 	if ( !existsSync( p ) ) return false;
@@ -109,7 +121,7 @@ function fixRepl( dir, desc ) {
 		const indent = ( lines[ start ].match( /^(\s*)/ ) || [ '', '    ' ] )[ 1 ];
 		const text = desc + ( isNd ? NDARRAY_SUFFIX : '' ) + '.';
 		for ( const w of wrapText( text, indent, 76 ) ) out.push( w );
-		i = j - 1; // resume after the replaced block
+		i = j - 1;
 	}
 	const result = out.join( '\n' );
 	if ( result === src ) return false;
@@ -130,24 +142,40 @@ function fixPackage( dir, desc ) {
 
 // --- run --------------------------------------------------------------------
 
-let broken = 0, fixed = 0;
+let truncated = 0, fixed = 0;
 const noDesc = [];
 const changes = [];
 for ( const mod of listModules() ) {
 	const readmePath = join( mod.dir, 'README.md' );
 	if ( !existsSync( readmePath ) ) continue;
 	const tag = tagline( readFileSync( readmePath, 'utf8' ) );
-	if ( !isFragment( tag ) ) continue;
-	broken++;
+	if ( !tag ) continue;
 	const desc = DESCS[ mod.name.toLowerCase() ];
+	const tStripped = tag.replace( /\.\s*$/, '' );
+	const nTag = norm( tStripped );
+
+	// Already equal to the clean target — nothing to do.
+	if ( desc && nTag === norm( desc ) ) continue;
+
+	// Detect truncation: tagline is a proper prefix of the module's own
+	// JSDoc summary paragraph, or ends at a colon.
+	const baseC = existsSync( join( mod.dir, 'lib', 'base.js' ) ) ? readFileSync( join( mod.dir, 'lib', 'base.js' ), 'utf8' ) : '';
+	const ndC = existsSync( join( mod.dir, 'lib', 'ndarray.js' ) ) ? readFileSync( join( mod.dir, 'lib', 'ndarray.js' ), 'utf8' ) : '';
+	const para = norm( summaryParagraph( ndC ) ) || norm( summaryParagraph( baseC ) );
+	const isPrefixOfPara = para && para.length > nTag.length && para.startsWith( nTag );
+	const endsColon = tStripped.endsWith( ':' );
+	const isPrefixOfClean = desc && norm( desc ).length > nTag.length && norm( desc ).startsWith( nTag );
+
+	if ( !( isPrefixOfPara || endsColon || isPrefixOfClean ) ) continue;
+	truncated++;
 	if ( !desc ) { noDesc.push( mod.name ); continue; }
-	const oldFrag = tag.replace( /\.\s*$/, '' );
-	const a = fixReadme( mod.dir, oldFrag, desc );
+
+	const a = fixReadme( mod.dir, tStripped, desc );
 	const b = fixRepl( mod.dir, desc );
 	const c = fixPackage( mod.dir, desc );
 	if ( a || b || c ) { fixed++; changes.push( mod.name + '  ->  ' + desc ); }
 }
 
-console.log( ( DRY ? '[dry] ' : '' ) + 'fragment taglines: ' + broken + ', fixed: ' + fixed + ', no generated description: ' + noDesc.length );
+console.log( ( DRY ? '[dry] ' : '' ) + 'truncated descriptions: ' + truncated + ', fixed: ' + fixed + ', no generated description: ' + noDesc.length );
 if ( noDesc.length ) console.log( 'NO DESCRIPTION (skipped): ' + noDesc.join( ', ' ) );
 for ( const c of changes ) console.log( '  ' + c );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dormqr",
   "version": "1.0.0",
-  "description": "Multiply a general matrix by the orthogonal matrix from a QR factorization (blocked)",
+  "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QR factorization",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

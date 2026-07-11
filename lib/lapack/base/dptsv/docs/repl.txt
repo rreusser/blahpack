@@ -1,5 +1,6 @@
 {{alias}}( N, nrhs, d, strideD, e, strideE, B, LDB )
-    Solves a real symmetric positive definite tridiagonal system of linear.
+    Computes the solution to system of linear equations A·X = B for positive
+    definite tridiagonal matrices.
 
     Parameters
     ----------
@@ -38,8 +39,8 @@
 
 
 {{alias}}.ndarray( N, nrhs, d, strideD, offsetD, e, strideE, offsetE, B, strideB1, strideB2, offsetB )
-    Solves a real symmetric positive definite tridiagonal system of linear
-    using alternative indexing semantics.
+    Computes the solution to system of linear equations A·X = B for positive
+    definite tridiagonal matrices, using alternative indexing semantics.
 
     Parameters
     ----------

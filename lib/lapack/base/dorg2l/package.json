@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dorg2l",
   "version": "1.0.0",
-  "description": "Generate an orthogonal matrix from a QL factorization (unblocked)",
+  "description": "Generates all or part of the orthogonal matrix Q from a QL factorization determined by sgeqlf (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

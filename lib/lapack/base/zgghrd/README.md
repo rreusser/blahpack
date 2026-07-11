@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgghrd
 
-> Reduce a pair of complex matrices (A, B) to generalized upper Hessenberg.
+> Reduces a pair of complex matrices (A,B) to generalized upper Hessenberg form using unitary transformations.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgghrd = require( '@stdlib/lapack/base/zgghrd' );
 
 #### zgghrd( order, compq, compz, N, ilo, ihi, A, LDA, B, LDB, Q, LDQ, Z, LDZ )
 
-Reduce a pair of complex matrices (A, B) to generalized upper Hessenberg.
+Reduces a pair of complex matrices (A,B) to generalized upper Hessenberg form using unitary transformations.
 
 ```javascript
 var zgghrd = require( '@stdlib/lapack/base/zgghrd' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### zgghrd.ndarray( compq, compz, N, ilo, ihi, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ )
 
-Reduce a pair of complex matrices (A, B) to generalized upper Hessenberg, using alternative indexing semantics.
+Reduces a pair of complex matrices (A,B) to generalized upper Hessenberg form using unitary transformations, using alternative indexing semantics.
 
 ```javascript
 var zgghrd = require( '@stdlib/lapack/base/zgghrd' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgghrd",
   "version": "1.0.0",
-  "description": "Reduce a pair of complex matrices to generalized upper Hessenberg form.",
+  "description": "Reduces a pair of complex matrices (A,B) to generalized upper Hessenberg form using unitary transformations",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

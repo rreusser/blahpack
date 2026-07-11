@@ -1,6 +1,5 @@
 {{alias}}( id, N, d, stride )
-    Sort an array of doubles in increasing or decreasing order using
-    quicksort.
+    Sorts numbers in increasing or decreasing order.
 
     Parameters
     ----------
@@ -27,8 +26,8 @@
 
 
 {{alias}}.ndarray( id, N, d, stride, offset )
-    Sort an array of doubles in increasing or decreasing order using
-    quicksort using alternative indexing semantics.
+    Sorts numbers in increasing or decreasing order, using alternative
+    indexing semantics.
 
     Parameters
     ----------

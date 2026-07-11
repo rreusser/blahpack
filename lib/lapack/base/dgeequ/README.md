@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgeequ
 
-> Computes row and column scalings intended to equilibrate an M-by-N matrix A.
+> Computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgeequ = require( '@stdlib/lapack/base/dgeequ' );
 
 #### dgeequ( M, N, A, LDA, r, strideR, c, strideC )
 
-Computes row and column scalings intended to equilibrate an M-by-N matrix A.
+Computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number.
 
 ```javascript
 var dgeequ = require( '@stdlib/lapack/base/dgeequ' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgeequ.ndarray( M, N, A, strideA1, strideA2, offsetA, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax )
 
-Computes row and column scalings intended to equilibrate an M-by-N matrix A, using alternative indexing semantics.
+Computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number, using alternative indexing semantics.
 
 ```javascript
 var dgeequ = require( '@stdlib/lapack/base/dgeequ' );

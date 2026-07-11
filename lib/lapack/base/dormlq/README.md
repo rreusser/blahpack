@@ -20,7 +20,7 @@ limitations under the License.
 
 # dormlq
 
-> Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
+> Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an LQ factorization.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dormlq = require( '@stdlib/lapack/base/dormlq' );
 
 #### dormlq( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
+Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an LQ factorization.
 
 ```javascript
 var dormlq = require( '@stdlib/lapack/base/dormlq' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dormlq.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T,, using alternative indexing semantics.
+Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from an LQ factorization,, using alternative indexing semantics.
 
 ```javascript
 var dormlq = require( '@stdlib/lapack/base/dormlq' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgbsvx
 
-> Expert driver for solving a complex system of linear equations A*X = B.
+> Computes the solution to system of linear equations A·X = B for general band matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgbsvx = require( '@stdlib/lapack/base/zgbsvx' );
 
 #### zgbsvx( fact, trans, N, kl, ku, nrhs, AB, LDAB, AFB, LDAFB, IPIV, strideIPIV, equed, r, strideR, c, strideC, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, RWORK, strideRWORK )
 
-Expert driver for solving a complex system of linear equations A*X = B.
+Computes the solution to system of linear equations A·X = B for general band matrices.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -93,7 +93,7 @@ The function has the following parameters:
 
 #### zgbsvx.ndarray( fact, trans, N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, AFB, strideAFB1, strideAFB2, offsetAFB, IPIV, strideIPIV, offsetIPIV, equed, r, strideR, offsetR, c, strideC, offsetC, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
 
-Expert driver for solving a complex system of linear equations A*X = B, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general band matrices, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

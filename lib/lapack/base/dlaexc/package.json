@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaexc",
   "version": "1.0.0",
-  "description": "Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix",
+  "description": "Swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

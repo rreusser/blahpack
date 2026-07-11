@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpotrf",
   "version": "1.0.0",
-  "description": "Computes the Cholesky factorization of a Hermitian positive definite matrix (blocked, complex double-precision).",
+  "description": "Computes the Cholesky factorization of a complex Hermitian positive definite matrix A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

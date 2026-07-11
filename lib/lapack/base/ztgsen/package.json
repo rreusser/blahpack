@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztgsen",
   "version": "1.0.0",
-  "description": "Reorders the generalized Schur decomposition of a complex matrix pair",
+  "description": "Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

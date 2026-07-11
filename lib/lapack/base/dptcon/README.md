@@ -20,7 +20,7 @@ limitations under the License.
 
 # dptcon
 
-> Computes the reciprocal of the condition number (in the 1-norm) of a real.
+> Computes the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite tridiagonal matrix using the factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dptcon = require( '@stdlib/lapack/base/dptcon' );
 
 #### dptcon( N, d, strideD, e, strideE, anorm, rcond, WORK, strideWORK )
 
-Computes the reciprocal of the condition number (in the 1-norm) of a real.
+Computes the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite tridiagonal matrix using the factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF.
 
 ```javascript
 var dptcon = require( '@stdlib/lapack/base/dptcon' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dptcon.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, anorm, rcond, WORK, strideWORK, offsetWORK )
 
-Computes the reciprocal of the condition number (in the 1-norm) of a real, using alternative indexing semantics.
+Computes the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite tridiagonal matrix using the factorization A = L·D·Lᵀ or A = Uᵀ·D·U computed by DPTTRF, using alternative indexing semantics.
 
 ```javascript
 var dptcon = require( '@stdlib/lapack/base/dptcon' );

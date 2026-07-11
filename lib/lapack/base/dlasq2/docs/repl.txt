@@ -1,6 +1,7 @@
 {{alias}}( N, z, stride )
     Computes all the eigenvalues of the symmetric positive definite
-    tridiagonal.
+    tridiagonal matrix associated with the qd Array Z to high relative
+    accuracy.
 
     Parameters
     ----------
@@ -25,7 +26,8 @@
 
 {{alias}}.ndarray( N, z, stride, offset )
     Computes all the eigenvalues of the symmetric positive definite
-    tridiagonal using alternative indexing semantics.
+    tridiagonal matrix associated with the qd Array Z to high relative
+    accuracy, using alternative indexing semantics.
 
     Parameters
     ----------

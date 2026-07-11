@@ -20,7 +20,7 @@ limitations under the License.
 
 # zungl2
 
-> Generate an M-by-N complex unitary matrix Q from the elementary.
+> Generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zungl2 = require( '@stdlib/lapack/base/zungl2' );
 
 #### zungl2( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary.
+Generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm).
 
 ```javascript
 var zungl2 = require( '@stdlib/lapack/base/zungl2' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zungl2.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generate an M-by-N complex unitary matrix Q from the elementary, using alternative indexing semantics.
+Generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var zungl2 = require( '@stdlib/lapack/base/zungl2' );

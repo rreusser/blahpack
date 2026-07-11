@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztgexc",
   "version": "1.0.0",
-  "description": "Reorders the generalized Schur decomposition of a complex matrix pair",
+  "description": "Reorders the generalized Schur decomposition of a complex matrix pair (A,B), using an unitary equivalence transformation (A, B) := Q·(A, B)·Zᴴ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

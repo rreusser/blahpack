@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgebrd",
   "version": "1.0.0",
-  "description": "Reduce a general matrix to bidiagonal form (blocked)",
+  "description": "Reduces a general real M-by-N matrix A to upper or lower bidiagonal form B by an orthogonal transformation: Qᵀ·A·P = B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

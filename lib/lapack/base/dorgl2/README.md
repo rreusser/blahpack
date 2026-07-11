@@ -20,7 +20,7 @@ limitations under the License.
 
 # dorgl2
 
-> Generates an M-by-N real orthogonal matrix Q from the elementary.
+> Generates an m by n real matrix Q with orthonormal rows, which is defined as the first m rows of a product of k elementary reflectors of order n Q = H(k).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dorgl2 = require( '@stdlib/lapack/base/dorgl2' );
 
 #### dorgl2( order, M, N, K, A, LDA, TAU, strideTAU, WORK, strideWORK )
 
-Generates an M-by-N real orthogonal matrix Q from the elementary.
+Generates an m by n real matrix Q with orthonormal rows, which is defined as the first m rows of a product of k elementary reflectors of order n Q = H(k).
 
 ```javascript
 var dorgl2 = require( '@stdlib/lapack/base/dorgl2' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dorgl2.ndarray( M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
-Generates an M-by-N real orthogonal matrix Q from the elementary, using alternative indexing semantics.
+Generates an m by n real matrix Q with orthonormal rows, which is defined as the first m rows of a product of k elementary reflectors of order n Q = H(k), using alternative indexing semantics.
 
 ```javascript
 var dorgl2 = require( '@stdlib/lapack/base/dorgl2' );

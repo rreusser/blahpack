@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlascl",
   "version": "1.0.0",
-  "description": "Multiply a matrix by a real scalar CTO/CFROM",
+  "description": "Multiplies a general rectangular matrix by a real scalar defined as cto/cfrom",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

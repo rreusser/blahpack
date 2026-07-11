@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrevc
 
-> Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix.
+> Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix T.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrevc = require( '@stdlib/lapack/base/ztrevc' );
 
 #### ztrevc( order, side, howmny, SELECT, strideSELECT, N, T, LDT, VL, LDVL, VR, LDVR, mm, M, WORK, strideWORK, RWORK, strideRWORK )
 
-Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix.
+Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix T.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );
@@ -70,7 +70,7 @@ The function has the following parameters:
 
 #### ztrevc.ndarray( side, howmny, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, VL, strideVL1, strideVL2, offsetVL, VR, strideVR1, strideVR2, offsetVR, mm, M, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
 
-Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix., using alternative indexing semantics.
+Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix T., using alternative indexing semantics.
 
 ```javascript
 var Complex128Array = require( '@stdlib/array/complex128' );

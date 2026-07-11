@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dptsv",
   "version": "1.0.0",
-  "description": "Solves a real symmetric positive definite tridiagonal system of linear equations",
+  "description": "Computes the solution to system of linear equations A·X = B for positive definite tridiagonal matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlarft",
   "version": "1.0.0",
-  "description": "Form the triangular factor T of a block reflector",
+  "description": "Forms the triangular factor T of a block reflector H = I - vtvH",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

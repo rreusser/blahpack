@@ -1,5 +1,5 @@
 {{alias}}( order, M, N, alpha, x, strideX, y, strideY, A, LDA )
-    Perform the rank 1 operation A := alpha_x_y**T + A (unconjugated).
+    Performs the rank 1 operation A := α·x·yᵀ + A.
 
     Parameters
     ----------
@@ -44,8 +44,8 @@
 
 
 {{alias}}.ndarray( M, N, alpha, x, strideX, offsetX, y, strideY, offsetY, A, strideA1, strideA2, offsetA )
-    Perform the rank 1 operation A := alpha_x_y**T + A (unconjugated), using
-    alternative indexing semantics.
+    Performs the rank 1 operation A := α·x·yᵀ + A, using alternative
+    indexing semantics.
 
     Parameters
     ----------

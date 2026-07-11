@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsygvx
 
-> Computes selected eigenvalues, and optionally, eigenvectors of a real.
+> Computes selected eigenvalues, and optionally, eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsygvx = require( '@stdlib/lapack/base/dsygvx' );
 
 #### dsygvx( itype, jobz, range, uplo, N, A, LDA, B, LDB, vl, vu, il, iu, abstol, out, w, strideW, Z, LDZ, WORK, strideWORK, lwork, IWORK, strideIWORK, IFAIL, strideIFAIL )
 
-Computes selected eigenvalues, and optionally, eigenvectors of a real.
+Computes selected eigenvalues, and optionally, eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x.
 
 ```javascript
 var dsygvx = require( '@stdlib/lapack/base/dsygvx' );
@@ -80,7 +80,7 @@ The function has the following parameters:
 
 #### dsygvx.ndarray( itype, jobz, range, uplo, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, vl, vu, il, iu, abstol, out, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, IFAIL, strideIFAIL, offsetIFAIL )
 
-Computes selected eigenvalues, and optionally, eigenvectors of a real, using alternative indexing semantics.
+Computes selected eigenvalues, and optionally, eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x, using alternative indexing semantics.
 
 ```javascript
 var dsygvx = require( '@stdlib/lapack/base/dsygvx' );

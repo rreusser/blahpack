@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhseqr
 
-> Computes the eigenvalues of a complex upper Hessenberg matrix H, and.
+> Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᴴ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhseqr = require( '@stdlib/lapack/base/zhseqr' );
 
 #### zhseqr( job, compz, N, ilo, ihi, H, LDH, w, strideW, Z, LDZ, WORK, strideWORK, lwork )
 
-Computes the eigenvalues of a complex upper Hessenberg matrix H, and.
+Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᴴ.
 
 ```javascript
 var zhseqr = require( '@stdlib/lapack/base/zhseqr' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### zhseqr.ndarray( job, compz, N, ilo, ihi, H, strideH1, strideH2, offsetH, w, strideW, offsetW, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the eigenvalues of a complex upper Hessenberg matrix H, and, using alternative indexing semantics.
+Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᴴ, using alternative indexing semantics.
 
 ```javascript
 var zhseqr = require( '@stdlib/lapack/base/zhseqr' );

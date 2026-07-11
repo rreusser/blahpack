@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, M, N, alpha, beta, A, LDA )
-    Initializes a complex matrix to BETA on the diagonal and ALPHA on the.
+    Initializes the off-diagonal elements and the diagonal elements of a
+    matrix to given values.
 
     Parameters
     ----------
@@ -38,8 +39,8 @@
 
 
 {{alias}}.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA )
-    Initializes a complex matrix to BETA on the diagonal and ALPHA on the
-    using alternative indexing semantics.
+    Initializes the off-diagonal elements and the diagonal elements of a
+    matrix to given values, using alternative indexing semantics.
 
     Parameters
     ----------

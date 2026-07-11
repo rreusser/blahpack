@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlapmt
 
-> Rearranges the columns of the M-by-N matrix X as specified by the.
+> Performs a forward or backward permutation of the columns of a matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlapmt = require( '@stdlib/lapack/base/dlapmt' );
 
 #### dlapmt( forwrd, M, N, X, LDX, k, strideK )
 
-Rearranges the columns of the M-by-N matrix X as specified by the.
+Performs a forward or backward permutation of the columns of a matrix.
 
 ```javascript
 var dlapmt = require( '@stdlib/lapack/base/dlapmt' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### dlapmt.ndarray( forwrd, M, N, X, strideX1, strideX2, offsetX, k, strideK, offsetK )
 
-Rearranges the columns of the M-by-N matrix X as specified by the, using alternative indexing semantics.
+Performs a forward or backward permutation of the columns of a matrix, using alternative indexing semantics.
 
 ```javascript
 var dlapmt = require( '@stdlib/lapack/base/dlapmt' );

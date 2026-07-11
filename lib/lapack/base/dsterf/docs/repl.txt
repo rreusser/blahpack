@@ -1,6 +1,6 @@
 {{alias}}( N, d, strideD, e, strideE )
-    Computes all eigenvalues of a real symmetric tridiagonal matrix using
-    the.
+    Computes all eigenvalues of a symmetric tridiagonal matrix using the
+    Pal-Walker-Kahan variant of the QL or QR algorithm.
 
     Parameters
     ----------
@@ -30,8 +30,9 @@
 
 
 {{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE )
-    Computes all eigenvalues of a real symmetric tridiagonal matrix using
-    the using alternative indexing semantics.
+    Computes all eigenvalues of a symmetric tridiagonal matrix using the
+    Pal-Walker-Kahan variant of the QL or QR algorithm, using alternative
+    indexing semantics.
 
     Parameters
     ----------

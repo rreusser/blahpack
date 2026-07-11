@@ -20,7 +20,7 @@ limitations under the License.
 
 # dormhr
 
-> Overwrites the general real M-by-N matrix C with.
+> Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'T': Qᵀ·C C·Qᵀ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dormhr = require( '@stdlib/lapack/base/dormhr' );
 
 #### dormhr( side, trans, M, N, ilo, ihi, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK, lwork )
 
-Overwrites the general real M-by-N matrix C with.
+Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'T': Qᵀ·C C·Qᵀ.
 
 ```javascript
 var dormhr = require( '@stdlib/lapack/base/dormhr' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dormhr.ndarray( side, trans, M, N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
 
-Overwrites the general real M-by-N matrix C with, using alternative indexing semantics.
+Overwrites the general real M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'T': Qᵀ·C C·Qᵀ, using alternative indexing semantics.
 
 ```javascript
 var dormhr = require( '@stdlib/lapack/base/dormhr' );

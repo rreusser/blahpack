@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrrfs
 
-> Provides error bounds and backward error estimates for the solution to a.
+> Provides error bounds and backward error estimates for the solution to a system of linear equations with a triangular coefficient matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrrfs = require( '@stdlib/lapack/base/dtrrfs' );
 
 #### dtrrfs( uplo, trans, diag, N, nrhs, A, LDA, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
 
-Provides error bounds and backward error estimates for the solution to a.
+Provides error bounds and backward error estimates for the solution to a system of linear equations with a triangular coefficient matrix.
 
 ```javascript
 var dtrrfs = require( '@stdlib/lapack/base/dtrrfs' );
@@ -73,7 +73,7 @@ The function has the following parameters:
 
 #### dtrrfs.ndarray( uplo, trans, diag, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Provides error bounds and backward error estimates for the solution to a, using alternative indexing semantics.
+Provides error bounds and backward error estimates for the solution to a system of linear equations with a triangular coefficient matrix, using alternative indexing semantics.
 
 ```javascript
 var dtrrfs = require( '@stdlib/lapack/base/dtrrfs' );

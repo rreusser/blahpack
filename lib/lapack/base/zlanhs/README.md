@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlanhs
 
-> Returns the value of the one norm, Frobenius norm, infinity norm, or.
+> Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlanhs = require( '@stdlib/lapack/base/zlanhs' );
 
 #### zlanhs( order, norm, N, A, LDA, WORK, strideWORK )
 
-Returns the value of the one norm, Frobenius norm, infinity norm, or.
+Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix.
 
 ```javascript
 var zlanhs = require( '@stdlib/lapack/base/zlanhs' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zlanhs.ndarray( norm, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
 
-Returns the value of the one norm, Frobenius norm, infinity norm, or, using alternative indexing semantics.
+Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix, using alternative indexing semantics.
 
 ```javascript
 var zlanhs = require( '@stdlib/lapack/base/zlanhs' );

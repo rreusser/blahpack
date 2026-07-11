@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrmv
 
-> Performs one of the matrix-vector operations:.
+> Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrmv = require( '@stdlib/blas/base/dtrmv' );
 
 #### dtrmv( order, uplo, trans, diag, N, A, LDA, x, strideX )
 
-Performs one of the matrix-vector operations:.
+Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dtrmv.ndarray( uplo, trans, diag, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
 
-Performs one of the matrix-vector operations:, using alternative indexing semantics.
+Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlartg",
   "version": "1.0.0",
-  "description": "Generate a plane rotation (real Givens rotation)",
+  "description": "Generates a plane rotation with real cosine and real sine",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

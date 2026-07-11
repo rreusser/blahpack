@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasyf",
   "version": "1.0.0",
-  "description": "Compute a partial factorization of a symmetric matrix using Bunch-Kaufman pivoting",
+  "description": "Computes a partial factorization of a real symmetric matrix using the Bunch-Kaufman diagonal pivoting method",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

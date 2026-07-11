@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlarfb",
   "version": "1.0.0",
-  "description": "Apply a real block Householder reflector to a matrix.",
+  "description": "Applies a block reflector or its transpose to a general rectangular matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

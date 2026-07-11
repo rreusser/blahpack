@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlarfb
 
-> Apply a complex block reflector H or its conjugate-transpose H^H to a.
+> Applies a block reflector or its conjugate-transpose to a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlarfb = require( '@stdlib/lapack/base/zlarfb' );
 
 #### zlarfb( order, side, trans, direct, storev, M, N, K, V, LDV, T, LDT, C, LDC, WORK, LDWORK )
 
-Apply a complex block reflector H or its conjugate-transpose H^H to a.
+Applies a block reflector or its conjugate-transpose to a general rectangular matrix.
 
 ```javascript
 var zlarfb = require( '@stdlib/lapack/base/zlarfb' );
@@ -67,7 +67,7 @@ The function has the following parameters:
 
 #### zlarfb.ndarray( side, trans, direct, storev, M, N, K, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK1, strideWORK2, offsetWORK )
 
-Apply a complex block reflector H or its conjugate-transpose H^H to a, using alternative indexing semantics.
+Applies a block reflector or its conjugate-transpose to a general rectangular matrix, using alternative indexing semantics.
 
 ```javascript
 var zlarfb = require( '@stdlib/lapack/base/zlarfb' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlansy
 
-> Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
+> Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlansy = require( '@stdlib/lapack/base/dlansy' );
 
 #### dlansy( order, norm, uplo, N, A, LDA, WORK, strideWORK )
 
-Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric matrix.
 
 ```javascript
 var dlansy = require( '@stdlib/lapack/base/dlansy' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### dlansy.ndarray( norm, uplo, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
 
-Computes the value of the one-norm, Frobenius norm, infinity-norm, or the, using alternative indexing semantics.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric matrix, using alternative indexing semantics.
 
 ```javascript
 var dlansy = require( '@stdlib/lapack/base/dlansy' );

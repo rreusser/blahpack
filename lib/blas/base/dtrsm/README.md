@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrsm
 
-> Solves one of the matrix equations:.
+> Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrsm = require( '@stdlib/blas/base/dtrsm' );
 
 #### dtrsm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB )
 
-Solves one of the matrix equations:.
+Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dtrsm.ndarray( side, uplo, transa, diag, M, N, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves one of the matrix equations:, using alternative indexing semantics.
+Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

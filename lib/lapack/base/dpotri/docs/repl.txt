@@ -1,5 +1,7 @@
 {{alias}}( order, uplo, N, A, LDA )
-    Computes the inverse of a real symmetric positive definite matrix using.
+    Computes the inverse of a real symmetric positive definite matrix A
+    using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by
+    DPOTRF.
 
     Parameters
     ----------
@@ -29,8 +31,9 @@
 
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
-    Computes the inverse of a real symmetric positive definite matrix using
-    using alternative indexing semantics.
+    Computes the inverse of a real symmetric positive definite matrix A
+    using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by
+    DPOTRF, using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmbr",
   "version": "1.0.0",
-  "description": "Apply unitary matrices from bidiagonal reduction",
+  "description": "Multiplies a general matrix by the unitary matrix Q or P from a bidiagonal reduction",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

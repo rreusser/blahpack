@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhecon
 
-> Estimates the reciprocal of the condition number (in the 1-norm) of a.
+> Estimates the reciprocal of the condition number of a complex Hermitian matrix A using the factorization A = U·D·Uᴴ or A = L·D·Lᴴ computed by ZHETRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhecon = require( '@stdlib/lapack/base/zhecon' );
 
 #### zhecon( uplo, N, A, LDA, IPIV, strideIPIV, anorm, rcond, WORK, strideWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a.
+Estimates the reciprocal of the condition number of a complex Hermitian matrix A using the factorization A = U·D·Uᴴ or A = L·D·Lᴴ computed by ZHETRF.
 
 ```javascript
 var zhecon = require( '@stdlib/lapack/base/zhecon' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zhecon.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, anorm, rcond, WORK, strideWORK, offsetWORK )
 
-Estimates the reciprocal of the condition number (in the 1-norm) of a, using alternative indexing semantics.
+Estimates the reciprocal of the condition number of a complex Hermitian matrix A using the factorization A = U·D·Uᴴ or A = L·D·Lᴴ computed by ZHETRF, using alternative indexing semantics.
 
 ```javascript
 var zhecon = require( '@stdlib/lapack/base/zhecon' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrsyl
 
-> Solves the complex Sylvester matrix equation:.
+> Solves the complex Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrsyl = require( '@stdlib/lapack/base/ztrsyl' );
 
 #### ztrsyl( trana, tranb, isgn, M, N, A, LDA, B, LDB, C, LDC, scale )
 
-Solves the complex Sylvester matrix equation:.
+Solves the complex Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C.
 
 ```javascript
 var ztrsyl = require( '@stdlib/lapack/base/ztrsyl' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### ztrsyl.ndarray( trana, tranb, isgn, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, scale )
 
-Solves the complex Sylvester matrix equation:, using alternative indexing semantics.
+Solves the complex Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C, using alternative indexing semantics.
 
 ```javascript
 var ztrsyl = require( '@stdlib/lapack/base/ztrsyl' );

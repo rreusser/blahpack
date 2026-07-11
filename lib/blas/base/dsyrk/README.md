@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyrk
 
-> Performs one of the symmetric rank-k operations:.
+> Performs one of the symmetric rank k operations C := α·A·Aᵀ + β·C, or C := α·Aᵀ·A + β·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyrk = require( '@stdlib/blas/base/dsyrk' );
 
 #### dsyrk( order, uplo, trans, N, K, alpha, A, LDA, beta, C, LDC )
 
-Performs one of the symmetric rank-k operations:.
+Performs one of the symmetric rank k operations C := α·A·Aᵀ + β·C, or C := α·Aᵀ·A + β·C.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dsyrk.ndarray( uplo, trans, N, K, alpha, A, strideA1, strideA2, offsetA, beta, C, strideC1, strideC2, offsetC )
 
-Performs one of the symmetric rank-k operations:, using alternative indexing semantics.
+Performs one of the symmetric rank k operations C := α·A·Aᵀ + β·C, or C := α·Aᵀ·A + β·C, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgbtrs
 
-> Solves a system of linear equations:.
+> Solves a system of linear equations A·X = B or Aᵀ·X = B with a general band matrix A using the LU factorization computed by DGBTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgbtrs = require( '@stdlib/lapack/base/dgbtrs' );
 
 #### dgbtrs( order, trans, N, kl, ku, nrhs, AB, LDAB, IPIV, strideIPIV, B, LDB )
 
-Solves a system of linear equations:.
+Solves a system of linear equations A·X = B or Aᵀ·X = B with a general band matrix A using the LU factorization computed by DGBTRF.
 
 ```javascript
 var dgbtrs = require( '@stdlib/lapack/base/dgbtrs' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dgbtrs.ndarray( trans, N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 
-Solves a system of linear equations:, using alternative indexing semantics.
+Solves a system of linear equations A·X = B or Aᵀ·X = B with a general band matrix A using the LU factorization computed by DGBTRF, using alternative indexing semantics.
 
 ```javascript
 var dgbtrs = require( '@stdlib/lapack/base/dgbtrs' );

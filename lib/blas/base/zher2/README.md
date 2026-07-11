@@ -20,7 +20,7 @@ limitations under the License.
 
 # zher2
 
-> Perform Hermitian rank-2 update:.
+> Performs the Hermitian rank 2 operation A := α·x·yᴴ + conj(α)·y·xᴴ + A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zher2 = require( '@stdlib/blas/base/zher2' );
 
 #### zher2( order, uplo, N, alpha, x, strideX, y, strideY, A, LDA )
 
-Perform Hermitian rank-2 update:.
+Performs the Hermitian rank 2 operation A := α·x·yᴴ + conj(α)·y·xᴴ + A.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zher2.ndarray( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, A, strideA1, strideA2, offsetA )
 
-Perform Hermitian rank-2 update:, using alternative indexing semantics.
+Performs the Hermitian rank 2 operation A := α·x·yᴴ + conj(α)·y·xᴴ + A, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

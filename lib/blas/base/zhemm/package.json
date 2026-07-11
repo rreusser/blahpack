@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zhemm",
   "version": "1.0.0",
-  "description": "Performs Hermitian matrix-matrix multiplication",
+  "description": "Performs one of the matrix-matrix operations C := α·A·B + β·C, or C := α·B·A + β·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

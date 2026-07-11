@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlaset
 
-> Initializes a complex matrix to BETA on the diagonal and ALPHA on the.
+> Initializes the off-diagonal elements and the diagonal elements of a matrix to given values.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlaset = require( '@stdlib/lapack/base/zlaset' );
 
 #### zlaset( order, uplo, M, N, alpha, beta, A, LDA )
 
-Initializes a complex matrix to BETA on the diagonal and ALPHA on the.
+Initializes the off-diagonal elements and the diagonal elements of a matrix to given values.
 
 ```javascript
 var zlaset = require( '@stdlib/lapack/base/zlaset' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA )
 
-Initializes a complex matrix to BETA on the diagonal and ALPHA on the, using alternative indexing semantics.
+Initializes the off-diagonal elements and the diagonal elements of a matrix to given values, using alternative indexing semantics.
 
 ```javascript
 var zlaset = require( '@stdlib/lapack/base/zlaset' );

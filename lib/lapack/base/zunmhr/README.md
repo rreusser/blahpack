@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunmhr
 
-> Overwrites the general complex M-by-N matrix C with.
+> Overwrites the general complex M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'C': Qᴴ·C C·Qᴴ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunmhr = require( '@stdlib/lapack/base/zunmhr' );
 
 #### zunmhr( side, trans, M, N, ilo, ihi, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK, lwork )
 
-Overwrites the general complex M-by-N matrix C with.
+Overwrites the general complex M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'C': Qᴴ·C C·Qᴴ.
 
 ```javascript
 var zunmhr = require( '@stdlib/lapack/base/zunmhr' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### zunmhr.ndarray( side, trans, M, N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
 
-Overwrites the general complex M-by-N matrix C with, using alternative indexing semantics.
+Overwrites the general complex M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'C': Qᴴ·C C·Qᴴ, using alternative indexing semantics.
 
 ```javascript
 var zunmhr = require( '@stdlib/lapack/base/zunmhr' );

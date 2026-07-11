@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrsm
 
-> Solves one of the matrix equations:.
+> Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrsm = require( '@stdlib/blas/base/ztrsm' );
 
 #### ztrsm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB )
 
-Solves one of the matrix equations:.
+Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B.
 
 ```javascript
 var ztrsm = require( '@stdlib/blas/base/ztrsm' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### ztrsm.ndarray( side, uplo, transa, diag, M, N, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves one of the matrix equations:, using alternative indexing semantics.
+Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B, using alternative indexing semantics.
 
 ```javascript
 var ztrsm = require( '@stdlib/blas/base/ztrsm' );

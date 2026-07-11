@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlarfg
 
-> Generate a complex elementary reflector H of order N, such that.
+> Generates an elementary reflector (Householder matrix).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlarfg = require( '@stdlib/lapack/base/zlarfg' );
 
 #### zlarfg( N, alpha, offsetAlpha, x, strideX, tau, offsetTau )
 
-Generate a complex elementary reflector H of order N, such that.
+Generates an elementary reflector (Householder matrix).
 
 ```javascript
 var zlarfg = require( '@stdlib/lapack/base/zlarfg' );
@@ -55,7 +55,7 @@ The function has the following parameters:
 
 #### zlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau )
 
-Generate a complex elementary reflector H of order N, such that, using alternative indexing semantics.
+Generates an elementary reflector (Householder matrix), using alternative indexing semantics.
 
 ```javascript
 var zlarfg = require( '@stdlib/lapack/base/zlarfg' );

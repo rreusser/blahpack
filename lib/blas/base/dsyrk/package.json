@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dsyrk",
   "version": "1.0.0",
-  "description": "Perform symmetric rank-k update.",
+  "description": "Performs one of the symmetric rank k operations C := α·A·Aᵀ + β·C, or C := α·Aᵀ·A + β·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dggqrf
 
-> Computes a generalized QR factorization of an N-by-M matrix A and an.
+> Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dggqrf = require( '@stdlib/lapack/base/dggqrf' );
 
 #### dggqrf( N, M, p, A, LDA, TAUA, strideTAUA, B, LDB, TAUB, strideTAUB, WORK, strideWORK, lwork )
 
-Computes a generalized QR factorization of an N-by-M matrix A and an.
+Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z.
 
 ```javascript
 var dggqrf = require( '@stdlib/lapack/base/dggqrf' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dggqrf.ndarray( N, M, p, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB, WORK, strideWORK, offsetWORK, lwork )
 
-Computes a generalized QR factorization of an N-by-M matrix A and an, using alternative indexing semantics.
+Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z, using alternative indexing semantics.
 
 ```javascript
 var dggqrf = require( '@stdlib/lapack/base/dggqrf' );

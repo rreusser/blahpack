@@ -1,6 +1,5 @@
 {{alias}}( N, sa, x, strideX )
-    Scales a complex vector by the reciprocal of a real scalar, performing
-    the.
+    Multiplies a vector by the reciprocal of a real scalar.
 
     Parameters
     ----------
@@ -27,8 +26,8 @@
 
 
 {{alias}}.ndarray( N, sa, x, strideX, offsetX )
-    Scales a complex vector by the reciprocal of a real scalar, performing
-    the using alternative indexing semantics.
+    Multiplies a vector by the reciprocal of a real scalar, using
+    alternative indexing semantics.
 
     Parameters
     ----------

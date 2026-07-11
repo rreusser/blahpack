@@ -1,5 +1,5 @@
 {{alias}}( f, g )
-    Generates a plane rotation so that:.
+    Generates a plane rotation with real cosine and real sine.
 
     Parameters
     ----------
@@ -20,8 +20,8 @@
 
 
 {{alias}}.ndarray( f, g, out )
-    Generates a plane rotation so that: using alternative indexing
-    semantics.
+    Generates a plane rotation with real cosine and real sine, using
+    alternative indexing semantics.
 
     Parameters
     ----------

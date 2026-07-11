@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlartg
 
-> Generates a plane rotation so that:.
+> Generates a plane rotation with real cosine and real sine.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlartg = require( '@stdlib/lapack/base/dlartg' );
 
 #### dlartg( f, g )
 
-Generates a plane rotation so that:.
+Generates a plane rotation with real cosine and real sine.
 
 ```javascript
 var dlartg = require( '@stdlib/lapack/base/dlartg' );
@@ -47,7 +47,7 @@ The function has the following parameters:
 
 #### dlartg.ndarray( f, g, out )
 
-Generates a plane rotation so that:, using alternative indexing semantics.
+Generates a plane rotation with real cosine and real sine, using alternative indexing semantics.
 
 ```javascript
 var dlartg = require( '@stdlib/lapack/base/dlartg' );

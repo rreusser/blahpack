@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zunmhr",
   "version": "1.0.0",
-  "description": "Multiplies a matrix by the unitary matrix Q from Hessenberg reduction",
+  "description": "Overwrites the general complex M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'C': Qᴴ·C C·Qᴴ",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

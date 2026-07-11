@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zposvx",
   "version": "1.0.0",
-  "description": "Expert solver for Hermitian positive definite system",
+  "description": "Computes the solution to system of linear equations A·X = B for positive definite matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

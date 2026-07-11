@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsytf2
 
-> Computes the factorization of a complex symmetric matrix A using the.
+> Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsytf2 = require( '@stdlib/lapack/base/zsytf2' );
 
 #### zsytf2( order, uplo, N, A, LDA, IPIV, strideIPIV )
 
-Computes the factorization of a complex symmetric matrix A using the.
+Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm).
 
 ```javascript
 var zsytf2 = require( '@stdlib/lapack/base/zsytf2' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zsytf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 
-Computes the factorization of a complex symmetric matrix A using the, using alternative indexing semantics.
+Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var zsytf2 = require( '@stdlib/lapack/base/zsytf2' );

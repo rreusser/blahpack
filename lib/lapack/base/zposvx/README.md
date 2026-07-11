@@ -20,7 +20,7 @@ limitations under the License.
 
 # zposvx
 
-> Expert driver for solving a complex Hermitian positive definite system of.
+> Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zposvx = require( '@stdlib/lapack/base/zposvx' );
 
 #### zposvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, RWORK, strideRWORK )
 
-Expert driver for solving a complex Hermitian positive definite system of.
+Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 ```javascript
 var zposvx = require( '@stdlib/lapack/base/zposvx' );
@@ -80,7 +80,7 @@ The function has the following parameters:
 
 #### zposvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, equed, s, strideS, offsetS, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
 
-Expert driver for solving a complex Hermitian positive definite system of, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for positive definite matrices, using alternative indexing semantics.
 
 ```javascript
 var zposvx = require( '@stdlib/lapack/base/zposvx' );

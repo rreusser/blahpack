@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrexc",
   "version": "1.0.0",
-  "description": "Reorder Schur factorization of a complex matrix",
+  "description": "Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that the diagonal element of T with row index IFST is moved to row ILST",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

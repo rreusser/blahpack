@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dggsvp3",
   "version": "1.0.0",
-  "description": "Compute the preprocessing for the generalized SVD of real matrices A and B",
+  "description": "Computes orthogonal matrices U, V, and Q that reduce a matrix pair to triangular form for the generalized SVD",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

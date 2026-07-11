@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, N, nb, A, LDA, IPIV, strideIPIV, W, LDW )
-    Computes a partial factorization of a real symmetric matrix A using the.
+    Computes a partial factorization of a real symmetric matrix using the
+    Bunch-Kaufman diagonal pivoting method.
 
     Parameters
     ----------
@@ -44,8 +45,9 @@
 
 
 {{alias}}.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
-    Computes a partial factorization of a real symmetric matrix A using the
-    using alternative indexing semantics.
+    Computes a partial factorization of a real symmetric matrix using the
+    Bunch-Kaufman diagonal pivoting method, using alternative indexing
+    semantics.
 
     Parameters
     ----------

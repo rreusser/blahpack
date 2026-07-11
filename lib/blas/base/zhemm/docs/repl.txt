@@ -1,5 +1,6 @@
 {{alias}}( order, side, uplo, M, N, alpha, A, LDA, B, LDB, beta, C, LDC )
-    Performs one of the Hermitian matrix-matrix operations:.
+    Performs one of the matrix-matrix operations C := α·A·B + β·C, or C :=
+    α·B·A + β·C.
 
     Parameters
     ----------
@@ -53,8 +54,8 @@
 
 
 {{alias}}.ndarray( side, uplo, M, N, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, beta, C, strideC1, strideC2, offsetC )
-    Performs one of the Hermitian matrix-matrix operations: using
-    alternative indexing semantics.
+    Performs one of the matrix-matrix operations C := α·A·B + β·C, or C :=
+    α·B·A + β·C, using alternative indexing semantics.
 
     Parameters
     ----------

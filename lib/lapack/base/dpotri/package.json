@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dpotri",
   "version": "1.0.0",
-  "description": "Compute the inverse of a real symmetric positive definite matrix using its Cholesky factorization",
+  "description": "Computes the inverse of a real symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

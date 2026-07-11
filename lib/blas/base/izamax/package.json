@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/izamax",
   "version": "1.0.0",
-  "description": "Find the index of the element having the maximum sum of absolute values of real and imaginary parts.",
+  "description": "Finds the index of the first element having maximum |Re(.)| + |Im(.)|",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

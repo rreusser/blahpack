@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgemv
 
-> Performs one of the matrix-vector operations:.
+> Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgemv = require( '@stdlib/blas/base/dgemv' );
 
 #### dgemv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY )
 
-Performs one of the matrix-vector operations:.
+Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dgemv.ndarray( trans, M, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
 
-Performs one of the matrix-vector operations:, using alternative indexing semantics.
+Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

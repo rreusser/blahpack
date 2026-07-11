@@ -20,7 +20,7 @@ limitations under the License.
 
 # dzsum1
 
-> Takes the sum of the absolute values of a complex vector and returns a.
+> Forms the 1-norm of the complex vector using the true absolute value.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dzsum1 = require( '@stdlib/lapack/base/dzsum1' );
 
 #### dzsum1( N, CX, strideCX )
 
-Takes the sum of the absolute values of a complex vector and returns a.
+Forms the 1-norm of the complex vector using the true absolute value.
 
 ```javascript
 var dzsum1 = require( '@stdlib/lapack/base/dzsum1' );
@@ -51,7 +51,7 @@ The function has the following parameters:
 
 #### dzsum1.ndarray( N, CX, strideCX, offsetCX )
 
-Takes the sum of the absolute values of a complex vector and returns a, using alternative indexing semantics.
+Forms the 1-norm of the complex vector using the true absolute value, using alternative indexing semantics.
 
 ```javascript
 var dzsum1 = require( '@stdlib/lapack/base/dzsum1' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaset",
   "version": "1.0.0",
-  "description": "Initialize a matrix to given diagonal and off-diagonal values",
+  "description": "Initializes the off-diagonal elements and the diagonal elements of a matrix to given values",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrsyl",
   "version": "1.0.0",
-  "description": "Solves the real Sylvester matrix equation",
+  "description": "Solves the real Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

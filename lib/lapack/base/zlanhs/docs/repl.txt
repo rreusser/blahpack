@@ -1,5 +1,6 @@
 {{alias}}( order, norm, N, A, LDA, WORK, strideWORK )
-    Returns the value of the one norm, Frobenius norm, infinity norm, or.
+    Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the
+    largest absolute value of any element of an upper Hessenberg matrix.
 
     Parameters
     ----------
@@ -35,7 +36,8 @@
 
 
 {{alias}}.ndarray( norm, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
-    Returns the value of the one norm, Frobenius norm, infinity norm, or
+    Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the
+    largest absolute value of any element of an upper Hessenberg matrix,
     using alternative indexing semantics.
 
     Parameters

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhseqr",
   "version": "1.0.0",
-  "description": "Compute eigenvalues and Schur form of complex upper Hessenberg matrix",
+  "description": "Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᴴ",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrsyl",
   "version": "1.0.0",
-  "description": "Solve complex Sylvester matrix equation",
+  "description": "Solves the complex Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

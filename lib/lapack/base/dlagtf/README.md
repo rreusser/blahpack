@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlagtf
 
-> Computes an LU factorization of the matrix (T - lambda_I), where T is an.
+> Computes an LU factorization of a matrix T-λI.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlagtf = require( '@stdlib/lapack/base/dlagtf' );
 
 #### dlagtf( N, a, strideA, lambda, b, strideB, c, strideC, tol, d, strideD, IN, strideIN )
 
-Computes an LU factorization of the matrix (T - lambda_I), where T is an.
+Computes an LU factorization of a matrix T-λI.
 
 ```javascript
 var dlagtf = require( '@stdlib/lapack/base/dlagtf' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dlagtf.ndarray( N, a, strideA, offsetA, lambda, b, strideB, offsetB, c, strideC, offsetC, tol, d, strideD, offsetD, IN, strideIN, offsetIN )
 
-Computes an LU factorization of the matrix (T - lambda_I), where T is an, using alternative indexing semantics.
+Computes an LU factorization of a matrix T-λI, using alternative indexing semantics.
 
 ```javascript
 var dlagtf = require( '@stdlib/lapack/base/dlagtf' );

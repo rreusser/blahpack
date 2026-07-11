@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dtbsv",
   "version": "1.0.0",
-  "description": "Solve a triangular banded system of equations",
+  "description": "Solves one of the systems of equations A·x = b, or Aᵀ·x = b",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

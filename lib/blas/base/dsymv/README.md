@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsymv
 
-> Performs the matrix-vector operation:.
+> Performs the matrix-vector operation y := α·A·x + β·y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsymv = require( '@stdlib/blas/base/dsymv' );
 
 #### dsymv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY )
 
-Performs the matrix-vector operation:.
+Performs the matrix-vector operation y := α·A·x + β·y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### dsymv.ndarray( uplo, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
 
-Performs the matrix-vector operation:, using alternative indexing semantics.
+Performs the matrix-vector operation y := α·A·x + β·y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

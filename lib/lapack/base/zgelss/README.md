@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgelss
 
-> Computes the minimum norm solution to a complex linear least squares problem:.
+> Solves overdetermined or underdetermined systems for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgelss = require( '@stdlib/lapack/base/zgelss' );
 
 #### zgelss( M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Computes the minimum norm solution to a complex linear least squares problem:.
+Solves overdetermined or underdetermined systems for general matrices.
 
 ```javascript
 var zgelss = require( '@stdlib/lapack/base/zgelss' );
@@ -68,7 +68,7 @@ The function has the following parameters:
 
 #### zgelss.ndarray( M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, S, strideS, offsetS, rcond, rank, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Computes the minimum norm solution to a complex linear least squares problem:, using alternative indexing semantics.
+Solves overdetermined or underdetermined systems for general matrices, using alternative indexing semantics.
 
 ```javascript
 var zgelss = require( '@stdlib/lapack/base/zgelss' );

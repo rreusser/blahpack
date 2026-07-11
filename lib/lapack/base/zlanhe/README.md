@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlanhe
 
-> Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
+> Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlanhe = require( '@stdlib/lapack/base/zlanhe' );
 
 #### zlanhe( order, norm, uplo, N, A, LDA, WORK, strideWORK )
 
-Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix.
 
 ```javascript
 var zlanhe = require( '@stdlib/lapack/base/zlanhe' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### zlanhe.ndarray( norm, uplo, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
 
-Computes the value of the one-norm, Frobenius norm, infinity-norm, or the, using alternative indexing semantics.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix, using alternative indexing semantics.
 
 ```javascript
 var zlanhe = require( '@stdlib/lapack/base/zlanhe' );

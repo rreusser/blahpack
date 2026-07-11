@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaln2
 
-> Solves a 1-by-1 or 2-by-2 linear system of the form:.
+> Solves a 1-by-1 or 2-by-2 linear system of equations of the specified form.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaln2 = require( '@stdlib/lapack/base/dlaln2' );
 
 #### dlaln2( ltrans, na, nw, smin, ca, A, LDA, d1, d2, B, LDB, wr, wi, X, LDX )
 
-Solves a 1-by-1 or 2-by-2 linear system of the form:.
+Solves a 1-by-1 or 2-by-2 linear system of equations of the specified form.
 
 ```javascript
 var dlaln2 = require( '@stdlib/lapack/base/dlaln2' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dlaln2.ndarray( ltrans, na, nw, smin, ca, A, strideA1, strideA2, offsetA, d1, d2, B, strideB1, strideB2, offsetB, wr, wi, X, strideX1, strideX2, offsetX, scale, xnorm )
 
-Solves a 1-by-1 or 2-by-2 linear system of the form:, using alternative indexing semantics.
+Solves a 1-by-1 or 2-by-2 linear system of equations of the specified form, using alternative indexing semantics.
 
 ```javascript
 var dlaln2 = require( '@stdlib/lapack/base/dlaln2' );

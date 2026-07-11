@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlarfb
 
-> Applies a real block reflector H or its transpose H**T to a.
+> Applies a block reflector or its transpose to a general rectangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlarfb = require( '@stdlib/lapack/base/dlarfb' );
 
 #### dlarfb( order, side, trans, direct, storev, M, N, K, V, LDV, T, LDT, C, LDC, WORK, LDWORK )
 
-Applies a real block reflector H or its transpose H**T to a.
+Applies a block reflector or its transpose to a general rectangular matrix.
 
 ```javascript
 var dlarfb = require( '@stdlib/lapack/base/dlarfb' );
@@ -67,7 +67,7 @@ The function has the following parameters:
 
 #### dlarfb.ndarray( side, trans, direct, storev, M, N, K, V, strideV1, strideV2, offsetV, T, strideT1, strideT2, offsetT, C, strideC1, strideC2, offsetC, WORK, strideWORK1, strideWORK2, offsetWORK )
 
-Applies a real block reflector H or its transpose H**T to a, using alternative indexing semantics.
+Applies a block reflector or its transpose to a general rectangular matrix, using alternative indexing semantics.
 
 ```javascript
 var dlarfb = require( '@stdlib/lapack/base/dlarfb' );

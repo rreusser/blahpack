@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlarfb",
   "version": "1.0.0",
-  "description": "Apply a block Householder reflector",
+  "description": "Applies a block reflector or its conjugate-transpose to a general rectangular matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

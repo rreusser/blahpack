@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsyr
 
-> Performs the complex symmetric rank-1 operation:.
+> Performs the symmetric rank-1 update of a complex symmetric matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsyr = require( '@stdlib/lapack/base/zsyr' );
 
 #### zsyr( order, uplo, N, alpha, x, strideX, A, LDA )
 
-Performs the complex symmetric rank-1 operation:.
+Performs the symmetric rank-1 update of a complex symmetric matrix.
 
 ```javascript
 var zsyr = require( '@stdlib/lapack/base/zsyr' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### zsyr.ndarray( uplo, N, alpha, x, strideX, offsetX, A, strideA1, strideA2, offsetA )
 
-Performs the complex symmetric rank-1 operation:, using alternative indexing semantics.
+Performs the symmetric rank-1 update of a complex symmetric matrix, using alternative indexing semantics.
 
 ```javascript
 var zsyr = require( '@stdlib/lapack/base/zsyr' );

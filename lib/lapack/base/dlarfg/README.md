@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlarfg
 
-> Generates a real elementary reflector H of order N, such that.
+> Generates an elementary reflector (Householder matrix).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlarfg = require( '@stdlib/lapack/base/dlarfg' );
 
 #### dlarfg( N, alpha, offsetAlpha, x, strideX, tau, offsetTau )
 
-Generates a real elementary reflector H of order N, such that.
+Generates an elementary reflector (Householder matrix).
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### dlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau )
 
-Generates a real elementary reflector H of order N, such that, using alternative indexing semantics.
+Generates an elementary reflector (Householder matrix), using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

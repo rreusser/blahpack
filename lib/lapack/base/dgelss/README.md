@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgelss
 
-> Computes the minimum norm solution to a real linear least squares problem:.
+> Solves overdetermined or underdetermined systems for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgelss = require( '@stdlib/lapack/base/dgelss' );
 
 #### dgelss( order, M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, strideWORK, lwork )
 
-Computes the minimum norm solution to a real linear least squares problem:.
+Solves overdetermined or underdetermined systems for general matrices.
 
 ```javascript
 var dgelss = require( '@stdlib/lapack/base/dgelss' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dgelss.ndarray( M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, S, strideS, offsetS, rcond, rank, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the minimum norm solution to a real linear least squares problem:, using alternative indexing semantics.
+Solves overdetermined or underdetermined systems for general matrices, using alternative indexing semantics.
 
 ```javascript
 var dgelss = require( '@stdlib/lapack/base/dgelss' );

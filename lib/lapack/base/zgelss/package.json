@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zgelss",
   "version": "1.0.0",
-  "description": "Computes the minimum norm solution to a complex linear least squares problem using SVD",
+  "description": "Solves overdetermined or underdetermined systems for general matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

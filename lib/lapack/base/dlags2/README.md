@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlags2
 
-> Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
+> Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlags2 = require( '@stdlib/lapack/base/dlags2' );
 
 #### dlags2( upper, a1, a2, a3, b1, b2, b3 )
 
-Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
+Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel.
 
 ```javascript
 var dlags2 = require( '@stdlib/lapack/base/dlags2' );
@@ -52,7 +52,7 @@ The function has the following parameters:
 
 #### dlags2.ndarray( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq )
 
-Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:, using alternative indexing semantics.
+Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel, using alternative indexing semantics.
 
 ```javascript
 var dlags2 = require( '@stdlib/lapack/base/dlags2' );

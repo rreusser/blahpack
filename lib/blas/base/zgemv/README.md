@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgemv
 
-> Perform one of the complex matrix-vector operations:.
+> Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y, or y := α·Aᴴ·x + β·y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgemv = require( '@stdlib/blas/base/zgemv' );
 
 #### zgemv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY )
 
-Perform one of the complex matrix-vector operations:.
+Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y, or y := α·Aᴴ·x + β·y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### zgemv.ndarray( trans, M, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
 
-Perform one of the complex matrix-vector operations:, using alternative indexing semantics.
+Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y, or y := α·Aᴴ·x + β·y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

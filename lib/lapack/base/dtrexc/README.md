@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrexc
 
-> Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
+> Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that the diagonal block of T with row index IFST is moved to row ILST.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrexc = require( '@stdlib/lapack/base/dtrexc' );
 
 #### dtrexc( compq, N, T, LDT, Q, LDQ, ifst, ilst, WORK, strideWORK )
 
-Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
+Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that the diagonal block of T with row index IFST is moved to row ILST.
 
 ```javascript
 var dtrexc = require( '@stdlib/lapack/base/dtrexc' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dtrexc.ndarray( compq, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, ifst, ilst, WORK, strideWORK, offsetWORK )
 
-Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that, using alternative indexing semantics.
+Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that the diagonal block of T with row index IFST is moved to row ILST, using alternative indexing semantics.
 
 ```javascript
 var dtrexc = require( '@stdlib/lapack/base/dtrexc' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtgsy2
 
-> Solves the generalized Sylvester equation (unblocked):.
+> Solves the generalized Sylvester equation (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtgsy2 = require( '@stdlib/lapack/base/dtgsy2' );
 
 #### dtgsy2( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, rdsum, rdscal, IWORK, strideIWORK, pq )
 
-Solves the generalized Sylvester equation (unblocked):.
+Solves the generalized Sylvester equation (unblocked algorithm).
 
 ```javascript
 var dtgsy2 = require( '@stdlib/lapack/base/dtgsy2' );
@@ -76,7 +76,7 @@ The function has the following parameters:
 
 #### dtgsy2.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, rdsum, rdscal, IWORK, strideIWORK, offsetIWORK, pq )
 
-Solves the generalized Sylvester equation (unblocked):, using alternative indexing semantics.
+Solves the generalized Sylvester equation (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dtgsy2 = require( '@stdlib/lapack/base/dtgsy2' );

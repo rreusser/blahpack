@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zdrscl",
   "version": "1.0.0",
-  "description": "Scale a complex vector by the reciprocal of a real scalar with overflow protection",
+  "description": "Multiplies a vector by the reciprocal of a real scalar",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

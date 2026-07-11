@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlaset
 
-> Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
+> Initializes the off-diagonal elements and the diagonal elements of a matrix to given values.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlaset = require( '@stdlib/lapack/base/dlaset' );
 
 #### dlaset( order, uplo, M, N, alpha, beta, A, LDA )
 
-Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
+Initializes the off-diagonal elements and the diagonal elements of a matrix to given values.
 
 ```javascript
 var dlaset = require( '@stdlib/lapack/base/dlaset' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### dlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA )
 
-Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the, using alternative indexing semantics.
+Initializes the off-diagonal elements and the diagonal elements of a matrix to given values, using alternative indexing semantics.
 
 ```javascript
 var dlaset = require( '@stdlib/lapack/base/dlaset' );

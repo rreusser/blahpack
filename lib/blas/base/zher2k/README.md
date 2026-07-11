@@ -20,7 +20,7 @@ limitations under the License.
 
 # zher2k
 
-> Performs one of the Hermitian rank-2k operations:.
+> Performs one of the Hermitian rank 2k operations C := α·A·Bᴴ + conj(α)·B·Aᴴ + β·C, or C := α·Aᴴ·B + conj(α)·Bᴴ·A + β·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zher2k = require( '@stdlib/blas/base/zher2k' );
 
 #### zher2k( order, uplo, trans, N, K, alpha, A, LDA, B, LDB, beta, C, LDC )
 
-Performs one of the Hermitian rank-2k operations:.
+Performs one of the Hermitian rank 2k operations C := α·A·Bᴴ + conj(α)·B·Aᴴ + β·C, or C := α·Aᴴ·B + conj(α)·Bᴴ·A + β·C.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -64,7 +64,7 @@ The function has the following parameters:
 
 #### zher2k.ndarray( uplo, trans, N, K, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, beta, C, strideC1, strideC2, offsetC )
 
-Performs one of the Hermitian rank-2k operations:, using alternative indexing semantics.
+Performs one of the Hermitian rank 2k operations C := α·A·Bᴴ + conj(α)·B·Aᴴ + β·C, or C := α·Aᴴ·B + conj(α)·Bᴴ·A + β·C, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgtts2",
   "version": "1.0.0",
-  "description": "Solves a real tridiagonal system using LU factorization from dgttrf (unblocked)",
+  "description": "Solves a system of linear equations with a tridiagonal matrix using the LU factorization computed by sgttrf",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

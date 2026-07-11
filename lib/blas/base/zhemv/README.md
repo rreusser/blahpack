@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhemv
 
-> Perform Hermitian matrix-vector multiplication:.
+> Performs the matrix-vector operation y := α·A·x + β·y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhemv = require( '@stdlib/blas/base/zhemv' );
 
 #### zhemv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY )
 
-Perform Hermitian matrix-vector multiplication:.
+Performs the matrix-vector operation y := α·A·x + β·y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### zhemv.ndarray( uplo, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
 
-Perform Hermitian matrix-vector multiplication:, using alternative indexing semantics.
+Performs the matrix-vector operation y := α·A·x + β·y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

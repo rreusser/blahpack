@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgels
 
-> Solves overdetermined or underdetermined complex linear systems involving an.
+> Solves overdetermined or underdetermined systems for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgels = require( '@stdlib/lapack/base/zgels' );
 
 #### zgels( trans, M, N, nrhs, A, LDA, B, LDB, WORK, strideWORK, lwork )
 
-Solves overdetermined or underdetermined complex linear systems involving an.
+Solves overdetermined or underdetermined systems for general matrices.
 
 ```javascript
 var zgels = require( '@stdlib/lapack/base/zgels' );
@@ -61,7 +61,7 @@ The function has the following parameters:
 
 #### zgels.ndarray( trans, M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK, lwork )
 
-Solves overdetermined or underdetermined complex linear systems involving an, using alternative indexing semantics.
+Solves overdetermined or underdetermined systems for general matrices, using alternative indexing semantics.
 
 ```javascript
 var zgels = require( '@stdlib/lapack/base/zgels' );

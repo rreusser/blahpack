@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyr2
 
-> Performs the symmetric rank-2 operation:.
+> Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyr2 = require( '@stdlib/blas/base/dsyr2' );
 
 #### dsyr2( order, uplo, N, alpha, x, strideX, y, strideY, A, LDA )
 
-Performs the symmetric rank-2 operation:.
+Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### dsyr2.ndarray( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, A, strideA1, strideA2, offsetA )
 
-Performs the symmetric rank-2 operation:, using alternative indexing semantics.
+Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

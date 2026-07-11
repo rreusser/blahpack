@@ -1,5 +1,6 @@
 {{alias}}( order, trans, N, kl, ku, nrhs, AB, LDAB, IPIV, strideIPIV, B, LDB )
-    Solves a system of linear equations:.
+    Solves a system of linear equations A·X = B or Aᵀ·X = B with a general
+    band matrix A using the LU factorization computed by DGBTRF.
 
     Parameters
     ----------
@@ -50,8 +51,9 @@
 
 
 {{alias}}.ndarray( trans, N, kl, ku, nrhs, AB, strideAB1, strideAB2, offsetAB, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
-    Solves a system of linear equations: using alternative indexing
-    semantics.
+    Solves a system of linear equations A·X = B or Aᵀ·X = B with a general
+    band matrix A using the LU factorization computed by DGBTRF, using
+    alternative indexing semantics.
 
     Parameters
     ----------

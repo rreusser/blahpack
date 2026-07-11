@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrtrs
 
-> Solves a triangular system of the form:.
+> Solves a triangular system of the form A·X = B or Aᵀ·X = B.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrtrs = require( '@stdlib/lapack/base/dtrtrs' );
 
 #### dtrtrs( order, uplo, trans, diag, N, nrhs, A, LDA, B, LDB )
 
-Solves a triangular system of the form:.
+Solves a triangular system of the form A·X = B or Aᵀ·X = B.
 
 ```javascript
 var dtrtrs = require( '@stdlib/lapack/base/dtrtrs' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### dtrtrs.ndarray( uplo, trans, diag, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves a triangular system of the form:, using alternative indexing semantics.
+Solves a triangular system of the form A·X = B or Aᵀ·X = B, using alternative indexing semantics.
 
 ```javascript
 var dtrtrs = require( '@stdlib/lapack/base/dtrtrs' );

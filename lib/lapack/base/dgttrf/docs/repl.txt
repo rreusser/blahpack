@@ -1,5 +1,6 @@
 {{alias}}( N, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV )
-    Computes an LU factorization of a real tridiagonal matrix A using.
+    Computes an LU factorization of a real tridiagonal matrix A using
+    elimination with partial pivoting and row interchanges.
 
     Parameters
     ----------
@@ -47,7 +48,8 @@
 
 
 {{alias}}.ndarray( N, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV )
-    Computes an LU factorization of a real tridiagonal matrix A using using
+    Computes an LU factorization of a real tridiagonal matrix A using
+    elimination with partial pivoting and row interchanges, using
     alternative indexing semantics.
 
     Parameters

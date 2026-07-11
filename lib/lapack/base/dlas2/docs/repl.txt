@@ -1,5 +1,5 @@
 {{alias}}( f, g, h, out )
-    Computes the singular values of a 2-by-2 triangular matrix:.
+    Computes singular values of a 2-by-2 triangular matrix.
 
     Parameters
     ----------
@@ -26,7 +26,7 @@
 
 
 {{alias}}.ndarray( f, g, h, out )
-    Computes the singular values of a 2-by-2 triangular matrix: using
+    Computes singular values of a 2-by-2 triangular matrix, using
     alternative indexing semantics.
 
     Parameters

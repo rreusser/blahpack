@@ -1,5 +1,5 @@
 {{alias}}( N, d, strideD, e, strideE, WORK, strideWORK )
-    Computes all the singular values of a real upper bidiagonal matrix of.
+    Computes the singular values of a real square bidiagonal matrix.
 
     Parameters
     ----------
@@ -35,8 +35,8 @@
 
 
 {{alias}}.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, WORK, strideWORK, offsetWORK )
-    Computes all the singular values of a real upper bidiagonal matrix of
-    using alternative indexing semantics.
+    Computes the singular values of a real square bidiagonal matrix, using
+    alternative indexing semantics.
 
     Parameters
     ----------

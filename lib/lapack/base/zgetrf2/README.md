@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgetrf2
 
-> Computes an LU factorization of a general complex M-by-N matrix A using.
+> Computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgetrf2 = require( '@stdlib/lapack/base/zgetrf2' );
 
 #### zgetrf2( order, M, N, A, LDA, IPIV, strideIPIV )
 
-Computes an LU factorization of a general complex M-by-N matrix A using.
+Computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges.
 
 ```javascript
 var zgetrf2 = require( '@stdlib/lapack/base/zgetrf2' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zgetrf2.ndarray( M, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 
-Computes an LU factorization of a general complex M-by-N matrix A using, using alternative indexing semantics.
+Computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges, using alternative indexing semantics.
 
 ```javascript
 var zgetrf2 = require( '@stdlib/lapack/base/zgetrf2' );

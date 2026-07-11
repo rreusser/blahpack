@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgeqp3
 
-> Computes a QR factorization with column pivoting of an M-by-N matrix:.
+> Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R using Level 3 BLAS.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgeqp3 = require( '@stdlib/lapack/base/zgeqp3' );
 
 #### zgeqp3( order, M, N, A, LDA, JPVT, strideJPVT, TAU, strideTAU, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Computes a QR factorization with column pivoting of an M-by-N matrix:.
+Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R using Level 3 BLAS.
 
 ```javascript
 var zgeqp3 = require( '@stdlib/lapack/base/zgeqp3' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### zgeqp3.ndarray( M, N, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Computes a QR factorization with column pivoting of an M-by-N matrix:, using alternative indexing semantics.
+Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R using Level 3 BLAS, using alternative indexing semantics.
 
 ```javascript
 var zgeqp3 = require( '@stdlib/lapack/base/zgeqp3' );

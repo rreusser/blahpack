@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsterf",
   "version": "1.0.0",
-  "description": "Compute all eigenvalues of a symmetric tridiagonal matrix",
+  "description": "Computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

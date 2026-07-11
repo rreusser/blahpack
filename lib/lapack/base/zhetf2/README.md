@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhetf2
 
-> Computes the factorization of a complex Hermitian matrix A using the.
+> Computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhetf2 = require( '@stdlib/lapack/base/zhetf2' );
 
 #### zhetf2( uplo, N, A, LDA, IPIV, strideIPIV )
 
-Computes the factorization of a complex Hermitian matrix A using the.
+Computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS).
 
 ```javascript
 var zhetf2 = require( '@stdlib/lapack/base/zhetf2' );
@@ -55,7 +55,7 @@ The function has the following parameters:
 
 #### zhetf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 
-Computes the factorization of a complex Hermitian matrix A using the, using alternative indexing semantics.
+Computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS), using alternative indexing semantics.
 
 ```javascript
 var zhetf2 = require( '@stdlib/lapack/base/zhetf2' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # izamax
 
-> Finds the index of the element having the maximum sum of absolute values of.
+> Finds the index of the first element having maximum |Re(.)| + |Im(.)|.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var izamax = require( '@stdlib/blas/base/izamax' );
 
 #### izamax( N, zx, strideX )
 
-Finds the index of the element having the maximum sum of absolute values of.
+Finds the index of the first element having maximum |Re(.)| + |Im(.)|.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -51,7 +51,7 @@ The function has the following parameters:
 
 #### izamax.ndarray( N, zx, strideX, offsetX )
 
-Finds the index of the element having the maximum sum of absolute values of, using alternative indexing semantics.
+Finds the index of the first element having maximum |Re(.)| + |Im(.)|, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

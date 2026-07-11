@@ -1,6 +1,5 @@
 {{alias}}( N, zx, strideX )
-    Finds the index of the element having the maximum sum of absolute values
-    of.
+    Finds the index of the first element having maximum |Re(.)| + |Im(.)|.
 
     Parameters
     ----------
@@ -24,8 +23,8 @@
 
 
 {{alias}}.ndarray( N, zx, strideX, offsetX )
-    Finds the index of the element having the maximum sum of absolute values
-    of using alternative indexing semantics.
+    Finds the index of the first element having maximum |Re(.)| + |Im(.)|,
+    using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dgemm",
   "version": "1.0.0",
-  "description": "Double-precision real matrix-matrix multiply.",
+  "description": "Performs one of the matrix-matrix operations C := α·op(A)·op(B) + β·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

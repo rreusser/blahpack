@@ -20,7 +20,7 @@ limitations under the License.
 
 # zdrot
 
-> Applies a real plane rotation to a pair of complex double-precision vectors:.
+> Applies a plane rotation.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zdrot = require( '@stdlib/blas/base/zdrot' );
 
 #### zdrot( N, zx, strideX, zy, strideY, c, s )
 
-Applies a real plane rotation to a pair of complex double-precision vectors:.
+Applies a plane rotation.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zdrot.ndarray( N, zx, strideX, offsetX, zy, strideY, offsetY, c, s )
 
-Applies a real plane rotation to a pair of complex double-precision vectors:, using alternative indexing semantics.
+Applies a plane rotation, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

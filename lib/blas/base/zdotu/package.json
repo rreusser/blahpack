@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zdotu",
   "version": "1.0.0",
-  "description": "Compute unconjugated dot product of two complex vectors",
+  "description": "Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

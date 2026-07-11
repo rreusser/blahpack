@@ -1,6 +1,7 @@
 {{alias}}( norm, uplo, N, A, LDA, WORK, strideWORK )
-    Returns the value of the one-norm, Frobenius norm, infinity-norm, or
-    the.
+    Returns the value of the 1-norm, or the Frobenius norm, or the infinity
+    norm, or the element of largest absolute value of a complex symmetric
+    matrix.
 
     Parameters
     ----------
@@ -36,8 +37,9 @@
 
 
 {{alias}}.ndarray( norm, uplo, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
-    Returns the value of the one-norm, Frobenius norm, infinity-norm, or the
-    using alternative indexing semantics.
+    Returns the value of the 1-norm, or the Frobenius norm, or the infinity
+    norm, or the element of largest absolute value of a complex symmetric
+    matrix, using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, N, A, LDA, IPIV, strideIPIV )
-    Computes the factorization of a real symmetric matrix A using the.
+    Computes the factorization of a real symmetric matrix A using the
+    Bunch-Kaufman diagonal pivoting method.
 
     Parameters
     ----------
@@ -35,8 +36,9 @@
 
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
-    Computes the factorization of a real symmetric matrix A using the using
-    alternative indexing semantics.
+    Computes the factorization of a real symmetric matrix A using the
+    Bunch-Kaufman diagonal pivoting method, using alternative indexing
+    semantics.
 
     Parameters
     ----------

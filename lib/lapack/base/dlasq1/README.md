@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasq1
 
-> Computes all the singular values of a real upper bidiagonal matrix of.
+> Computes the singular values of a real square bidiagonal matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasq1 = require( '@stdlib/lapack/base/dlasq1' );
 
 #### dlasq1( N, d, strideD, e, strideE, WORK, strideWORK )
 
-Computes all the singular values of a real upper bidiagonal matrix of.
+Computes the singular values of a real square bidiagonal matrix.
 
 ```javascript
 var dlasq1 = require( '@stdlib/lapack/base/dlasq1' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### dlasq1.ndarray( N, d, strideD, offsetD, e, strideE, offsetE, WORK, strideWORK, offsetWORK )
 
-Computes all the singular values of a real upper bidiagonal matrix of, using alternative indexing semantics.
+Computes the singular values of a real square bidiagonal matrix, using alternative indexing semantics.
 
 ```javascript
 var dlasq1 = require( '@stdlib/lapack/base/dlasq1' );

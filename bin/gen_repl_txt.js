@@ -13,6 +13,16 @@ var fs = require( 'fs' );
 var path = require( 'path' );
 var util = require( './gate/util.js' );
 
+// Clean, curated descriptions keyed by routine name (see
+// bin/gen-descriptions.js). Preferred over the JSDoc-derived summary, which
+// is only the first physical line and is often a truncated fragment.
+var CLEAN_DESCS = {};
+try {
+	CLEAN_DESCS = JSON.parse( fs.readFileSync( path.join( __dirname, '..', 'data', 'descriptions.generated.json' ), 'utf8' ) );
+} catch ( err ) {
+	CLEAN_DESCS = {};
+}
+
 // Max line width for wrapping descriptions
 var MAX_WIDTH = 76;
 
@@ -190,7 +200,7 @@ function generateReplTxt( routine, mod ) {
 		return null;
 	}
 
-	var desc = getDescription( ndarrayContent ) || getDescription( baseContent ) ||
+	var desc = CLEAN_DESCS[ routine.toLowerCase() ] || getDescription( ndarrayContent ) || getDescription( baseContent ) ||
 		getDescription( routineContent ) || routine;
 
 	// Detect arrays from ndarray strides

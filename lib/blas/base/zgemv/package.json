@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zgemv",
   "version": "1.0.0",
-  "description": "Perform complex matrix-vector multiplication",
+  "description": "Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y, or y := α·Aᴴ·x + β·y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

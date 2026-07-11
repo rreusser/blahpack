@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zdotc",
   "version": "1.0.0",
-  "description": "Compute the conjugate dot product of two complex vectors",
+  "description": "Forms the dot product of two complex vectors ZDOTC = Xᴴ·Y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

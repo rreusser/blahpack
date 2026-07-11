@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlauu2
 
-> Computes the product of an upper or lower triangular matrix with its.
+> Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlauu2 = require( '@stdlib/lapack/base/dlauu2' );
 
 #### dlauu2( order, uplo, N, A, LDA )
 
-Computes the product of an upper or lower triangular matrix with its.
+Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices.
 
 ```javascript
 var dlauu2 = require( '@stdlib/lapack/base/dlauu2' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### dlauu2.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the product of an upper or lower triangular matrix with its, using alternative indexing semantics.
+Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices, using alternative indexing semantics.
 
 ```javascript
 var dlauu2 = require( '@stdlib/lapack/base/dlauu2' );

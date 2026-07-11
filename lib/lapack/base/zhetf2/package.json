@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhetf2",
   "version": "1.0.0",
-  "description": "Complex Hermitian indefinite factorization (unblocked Bunch-Kaufman)",
+  "description": "Computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

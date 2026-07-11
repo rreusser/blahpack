@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrtrs",
   "version": "1.0.0",
-  "description": "Solve a complex triangular system with multiple right-hand sides",
+  "description": "Solves a triangular system of the form A·X = B, Aᵀ·X = B, or Aᴴ·X = B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

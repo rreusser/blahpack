@@ -20,7 +20,7 @@ limitations under the License.
 
 # zsymv
 
-> Performs the matrix-vector operation:.
+> Computes a matrix-vector product for a complex symmetric matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zsymv = require( '@stdlib/lapack/base/zsymv' );
 
 #### zsymv( uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY )
 
-Performs the matrix-vector operation:.
+Computes a matrix-vector product for a complex symmetric matrix.
 
 ```javascript
 var zsymv = require( '@stdlib/lapack/base/zsymv' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zsymv.ndarray( uplo, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
 
-Performs the matrix-vector operation:, using alternative indexing semantics.
+Computes a matrix-vector product for a complex symmetric matrix, using alternative indexing semantics.
 
 ```javascript
 var zsymv = require( '@stdlib/lapack/base/zsymv' );

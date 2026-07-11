@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrsen
 
-> Reorders the Schur factorization of a complex matrix A = Q*T*Q**H so that a.
+> Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that a selected cluster of eigenvalues appears in the leading positions on the diagonal of the upper triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrsen = require( '@stdlib/lapack/base/ztrsen' );
 
 #### ztrsen( job, compq, SELECT, strideSELECT, N, T, LDT, Q, LDQ, W, strideW, M, s, sep, WORK, strideWORK, lwork )
 
-Reorders the Schur factorization of a complex matrix A = Q*T*Q**H so that a.
+Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that a selected cluster of eigenvalues appears in the leading positions on the diagonal of the upper triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace.
 
 ```javascript
 var ztrsen = require( '@stdlib/lapack/base/ztrsen' );
@@ -69,7 +69,7 @@ The function has the following parameters:
 
 #### ztrsen.ndarray( job, compq, SELECT, strideSELECT, offsetSELECT, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, W, strideW, offsetW, M, s, sep, WORK, strideWORK, offsetWORK, lwork )
 
-Reorders the Schur factorization of a complex matrix A = Q*T*Q**H so that a, using alternative indexing semantics.
+Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that a selected cluster of eigenvalues appears in the leading positions on the diagonal of the upper triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace, using alternative indexing semantics.
 
 ```javascript
 var ztrsen = require( '@stdlib/lapack/base/ztrsen' );

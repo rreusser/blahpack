@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dtrmv",
   "version": "1.0.0",
-  "description": "Perform one of the matrix-vector operations x := A*x or x := A**T*x where A is an N by N upper or lower triangular matrix.",
+  "description": "Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

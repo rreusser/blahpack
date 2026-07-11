@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlas2
 
-> Computes the singular values of a 2-by-2 triangular matrix:.
+> Computes singular values of a 2-by-2 triangular matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlas2 = require( '@stdlib/lapack/base/dlas2' );
 
 #### dlas2( f, g, h, out )
 
-Computes the singular values of a 2-by-2 triangular matrix:.
+Computes singular values of a 2-by-2 triangular matrix.
 
 ```javascript
 var dlas2 = require( '@stdlib/lapack/base/dlas2' );
@@ -49,7 +49,7 @@ The function has the following parameters:
 
 #### dlas2.ndarray( f, g, h, out )
 
-Computes the singular values of a 2-by-2 triangular matrix:, using alternative indexing semantics.
+Computes singular values of a 2-by-2 triangular matrix, using alternative indexing semantics.
 
 ```javascript
 var dlas2 = require( '@stdlib/lapack/base/dlas2' );

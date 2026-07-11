@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, trans, diag, N, nrhs, A, LDA, B, LDB )
-    Solves a complex triangular system of the form:.
+    Solves a triangular system of the form A·X = B, Aᵀ·X = B, or Aᴴ·X = B.
 
     Parameters
     ----------
@@ -44,8 +44,8 @@
 
 
 {{alias}}.ndarray( uplo, trans, diag, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
-    Solves a complex triangular system of the form: using alternative
-    indexing semantics.
+    Solves a triangular system of the form A·X = B, Aᵀ·X = B, or Aᴴ·X = B,
+    using alternative indexing semantics.
 
     Parameters
     ----------

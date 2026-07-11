@@ -20,7 +20,7 @@ limitations under the License.
 
 # dposvx
 
-> Expert driver for solving a real symmetric positive definite system of.
+> Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dposvx = require( '@stdlib/lapack/base/dposvx' );
 
 #### dposvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
 
-Expert driver for solving a real symmetric positive definite system of.
+Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
 ```javascript
 var dposvx = require( '@stdlib/lapack/base/dposvx' );
@@ -79,7 +79,7 @@ The function has the following parameters:
 
 #### dposvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, equed, s, strideS, offsetS, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Expert driver for solving a real symmetric positive definite system of, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for positive definite matrices, using alternative indexing semantics.
 
 ```javascript
 var dposvx = require( '@stdlib/lapack/base/dposvx' );

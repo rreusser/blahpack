@@ -1,5 +1,6 @@
 {{alias}}( uplo, N, A, LDA, IPIV, strideIPIV )
-    Computes the factorization of a complex Hermitian matrix A using the.
+    Computes the factorization of a complex Hermitian matrix, using the
+    diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS).
 
     Parameters
     ----------
@@ -32,7 +33,8 @@
 
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
-    Computes the factorization of a complex Hermitian matrix A using the
+    Computes the factorization of a complex Hermitian matrix, using the
+    diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS),
     using alternative indexing semantics.
 
     Parameters

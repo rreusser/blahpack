@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgsy2",
   "version": "1.0.0",
-  "description": "Solves the generalized Sylvester equation (unblocked)",
+  "description": "Solves the generalized Sylvester equation (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

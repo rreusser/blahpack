@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgtrfs
 
-> Improves the computed solution to a system of linear equations when.
+> Improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgtrfs = require( '@stdlib/lapack/base/dgtrfs' );
 
 #### dgtrfs( trans, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, DLF, strideDLF, DF, strideDF, DUF, strideDUF, DU2, strideDU2, IPIV, strideIPIV, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
 
-Improves the computed solution to a system of linear equations when.
+Improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var dgtrfs = require( '@stdlib/lapack/base/dgtrfs' );
@@ -92,7 +92,7 @@ The function has the following parameters:
 
 #### dgtrfs.ndarray( trans, N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DLF, strideDLF, offsetDLF, DF, strideDF, offsetDF, DUF, strideDUF, offsetDUF, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Improves the computed solution to a system of linear equations when, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var dgtrfs = require( '@stdlib/lapack/base/dgtrfs' );

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgerfs",
   "version": "1.0.0",
-  "description": "Improves the solution to A*X = B using iterative refinement",
+  "description": "Improves the computed solution to a system of linear equations and provides error bounds and backward error estimates for the solution",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

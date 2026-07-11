@@ -20,7 +20,7 @@ limitations under the License.
 
 # dhseqr
 
-> Computes the eigenvalues of a real upper Hessenberg matrix H, and.
+> Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᵀ.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dhseqr = require( '@stdlib/lapack/base/dhseqr' );
 
 #### dhseqr( job, compz, N, ilo, ihi, H, LDH, WR, strideWR, WI, strideWI, Z, LDZ )
 
-Computes the eigenvalues of a real upper Hessenberg matrix H, and.
+Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᵀ.
 
 ```javascript
 var dhseqr = require( '@stdlib/lapack/base/dhseqr' );
@@ -65,7 +65,7 @@ The function has the following parameters:
 
 #### dhseqr.ndarray( job, compz, N, ilo, ihi, H, strideH1, strideH2, offsetH, WR, strideWR, offsetWR, WI, strideWI, offsetWI, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork )
 
-Computes the eigenvalues of a real upper Hessenberg matrix H, and, using alternative indexing semantics.
+Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᵀ, using alternative indexing semantics.
 
 ```javascript
 var dhseqr = require( '@stdlib/lapack/base/dhseqr' );

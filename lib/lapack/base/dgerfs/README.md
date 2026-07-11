@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgerfs
 
-> Improves the computed solution to a system of linear equations and provides.
+> Improves the computed solution to a system of linear equations and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgerfs = require( '@stdlib/lapack/base/dgerfs' );
 
 #### dgerfs( trans, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR )
 
-Improves the computed solution to a system of linear equations and provides.
+Improves the computed solution to a system of linear equations and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var dgerfs = require( '@stdlib/lapack/base/dgerfs' );
@@ -71,7 +71,7 @@ The function has the following parameters:
 
 #### dgerfs.ndarray( trans, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR )
 
-Improves the computed solution to a system of linear equations and provides, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var dgerfs = require( '@stdlib/lapack/base/dgerfs' );

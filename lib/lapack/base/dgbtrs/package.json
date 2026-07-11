@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgbtrs",
   "version": "1.0.0",
-  "description": "Solve a banded system using the LU factorization from dgbtrf",
+  "description": "Solves a system of linear equations A·X = B or Aᵀ·X = B with a general band matrix A using the LU factorization computed by DGBTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

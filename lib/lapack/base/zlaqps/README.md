@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlaqps
 
-> Computes a step of QR factorization with column pivoting using a.
+> Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlaqps = require( '@stdlib/lapack/base/zlaqps' );
 
 #### zlaqps( order, M, N, offset, nb, A, LDA, JPVT, strideJPVT, TAU, strideTAU, VN1, strideVN1, VN2, strideVN2, AUXV, strideAUXV, F, LDF )
 
-Computes a step of QR factorization with column pivoting using a.
+Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.
 
 ```javascript
 var zlaqps = require( '@stdlib/lapack/base/zlaqps' );
@@ -71,7 +71,7 @@ The function has the following parameters:
 
 #### zlaqps.ndarray( M, N, offset, nb, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, VN1, strideVN1, offsetVN1, VN2, strideVN2, offsetVN2, AUXV, strideAUXV, offsetAUXV, F, strideF1, strideF2, offsetF )
 
-Computes a step of QR factorization with column pivoting using a, using alternative indexing semantics.
+Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3, using alternative indexing semantics.
 
 ```javascript
 var zlaqps = require( '@stdlib/lapack/base/zlaqps' );

@@ -1,5 +1,6 @@
 {{alias}}( order, M, N, A, LDA, IPIV, strideIPIV )
-    Computes an LU factorization of a general complex M-by-N matrix A using.
+    Computes an LU factorization of a general M-by-N matrix A using partial
+    pivoting with row interchanges.
 
     Parameters
     ----------
@@ -35,8 +36,8 @@
 
 
 {{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
-    Computes an LU factorization of a general complex M-by-N matrix A using
-    using alternative indexing semantics.
+    Computes an LU factorization of a general M-by-N matrix A using partial
+    pivoting with row interchanges, using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgeqp3",
   "version": "1.0.0",
-  "description": "Computes a QR factorization with column pivoting of a real matrix",
+  "description": "Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R using Level 3 BLAS",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

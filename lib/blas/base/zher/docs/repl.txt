@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, N, alpha, x, strideX, A, LDA )
-    Perform Hermitian rank-1 update:.
+    Performs the Hermitian rank 1 operation A := α·x·xᴴ + A.
 
     Parameters
     ----------
@@ -38,7 +38,8 @@
 
 
 {{alias}}.ndarray( uplo, N, alpha, x, strideX, offsetX, A, strideA1, strideA2, offsetA )
-    Perform Hermitian rank-1 update: using alternative indexing semantics.
+    Performs the Hermitian rank 1 operation A := α·x·xᴴ + A, using
+    alternative indexing semantics.
 
     Parameters
     ----------

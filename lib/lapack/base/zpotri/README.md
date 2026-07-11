@@ -20,7 +20,7 @@ limitations under the License.
 
 # zpotri
 
-> Computes the inverse of a complex Hermitian positive definite matrix using.
+> Computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zpotri = require( '@stdlib/lapack/base/zpotri' );
 
 #### zpotri( order, uplo, N, A, LDA )
 
-Computes the inverse of a complex Hermitian positive definite matrix using.
+Computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF.
 
 ```javascript
 var zpotri = require( '@stdlib/lapack/base/zpotri' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### zpotri.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the inverse of a complex Hermitian positive definite matrix using, using alternative indexing semantics.
+Computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF, using alternative indexing semantics.
 
 ```javascript
 var zpotri = require( '@stdlib/lapack/base/zpotri' );

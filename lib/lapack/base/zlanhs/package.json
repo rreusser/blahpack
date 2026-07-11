@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlanhs",
   "version": "1.0.0",
-  "description": "Return the value of the one norm, Frobenius norm, infinity norm, or max absolute value of an upper Hessenberg complex matrix",
+  "description": "Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

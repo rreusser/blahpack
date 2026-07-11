@@ -20,7 +20,7 @@ limitations under the License.
 
 # dporfs
 
-> Improves the computed solution to a system of linear equations when the.
+> Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite, and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dporfs = require( '@stdlib/lapack/base/dporfs' );
 
 #### dporfs( uplo, N, nrhs, A, LDA, AF, LDAF, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR )
 
-Improves the computed solution to a system of linear equations when the.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite, and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var dporfs = require( '@stdlib/lapack/base/dporfs' );
@@ -70,7 +70,7 @@ The function has the following parameters:
 
 #### dporfs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Improves the computed solution to a system of linear equations when the, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite, and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var dporfs = require( '@stdlib/lapack/base/dporfs' );

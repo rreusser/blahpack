@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsterf
 
-> Computes all eigenvalues of a real symmetric tridiagonal matrix using the.
+> Computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsterf = require( '@stdlib/lapack/base/dsterf' );
 
 #### dsterf( N, d, strideD, e, strideE )
 
-Computes all eigenvalues of a real symmetric tridiagonal matrix using the.
+Computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm.
 
 ```javascript
 var dsterf = require( '@stdlib/lapack/base/dsterf' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### dsterf.ndarray( N, d, strideD, offsetD, e, strideE, offsetE )
 
-Computes all eigenvalues of a real symmetric tridiagonal matrix using the, using alternative indexing semantics.
+Computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm, using alternative indexing semantics.
 
 ```javascript
 var dsterf = require( '@stdlib/lapack/base/dsterf' );

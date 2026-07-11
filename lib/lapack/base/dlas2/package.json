@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlas2",
   "version": "1.0.0",
-  "description": "Compute singular values of a 2-by-2 triangular matrix",
+  "description": "Computes singular values of a 2-by-2 triangular matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

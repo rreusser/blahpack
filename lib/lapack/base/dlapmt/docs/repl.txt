@@ -1,5 +1,5 @@
 {{alias}}( forwrd, M, N, X, LDX, k, strideK )
-    Rearranges the columns of the M-by-N matrix X as specified by the.
+    Performs a forward or backward permutation of the columns of a matrix.
 
     Parameters
     ----------
@@ -35,8 +35,8 @@
 
 
 {{alias}}.ndarray( forwrd, M, N, X, strideX1, strideX2, offsetX, k, strideK, offsetK )
-    Rearranges the columns of the M-by-N matrix X as specified by the using
-    alternative indexing semantics.
+    Performs a forward or backward permutation of the columns of a matrix,
+    using alternative indexing semantics.
 
     Parameters
     ----------

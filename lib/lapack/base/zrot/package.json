@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zrot",
   "version": "1.0.0",
-  "description": "Apply a complex Givens plane rotation",
+  "description": "Applies a plane rotation with real cosine and complex sine to a pair of complex vectors",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

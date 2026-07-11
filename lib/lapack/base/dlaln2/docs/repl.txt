@@ -1,5 +1,6 @@
 {{alias}}( ltrans, na, nw, smin, ca, A, LDA, d1, d2, B, LDB, wr, wi, X, LDX )
-    Solves a 1-by-1 or 2-by-2 linear system of the form:.
+    Solves a 1-by-1 or 2-by-2 linear system of equations of the specified
+    form.
 
     Parameters
     ----------
@@ -59,8 +60,8 @@
 
 
 {{alias}}.ndarray( ltrans, na, nw, smin, ca, A, strideA1, strideA2, offsetA, d1, d2, B, strideB1, strideB2, offsetB, wr, wi, X, strideX1, strideX2, offsetX, scale, xnorm )
-    Solves a 1-by-1 or 2-by-2 linear system of the form: using alternative
-    indexing semantics.
+    Solves a 1-by-1 or 2-by-2 linear system of equations of the specified
+    form, using alternative indexing semantics.
 
     Parameters
     ----------

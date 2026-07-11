@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, trans, diag, N, K, A, LDA, x, strideX )
-    Solves one of the systems of equations:.
+    Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x =
+    b.
 
     Parameters
     ----------
@@ -44,8 +45,8 @@
 
 
 {{alias}}.ndarray( uplo, trans, diag, N, K, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
-    Solves one of the systems of equations: using alternative indexing
-    semantics.
+    Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x =
+    b, using alternative indexing semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlagts",
   "version": "1.0.0",
-  "description": "Solves a tridiagonal system factored by dlagtf",
+  "description": "Solves the system of equations (T-λI)x = y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

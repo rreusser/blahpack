@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrtrs",
   "version": "1.0.0",
-  "description": "Solve a triangular system of linear equations.",
+  "description": "Solves a triangular system of the form A·X = B or Aᵀ·X = B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zsyr",
   "version": "1.0.0",
-  "description": "Perform complex symmetric rank-1 update",
+  "description": "Performs the symmetric rank-1 update of a complex symmetric matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

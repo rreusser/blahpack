@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsysvx
 
-> Solves a real symmetric indefinite system of linear equations A_X = B using.
+> Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsysvx = require( '@stdlib/lapack/base/dsysvx' );
 
 #### dsysvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, lwork, IWORK, strideIWORK )
 
-Solves a real symmetric indefinite system of linear equations A_X = B using.
+Computes the solution to system of linear equations A·X = B for symmetric matrices.
 
 ```javascript
 var dsysvx = require( '@stdlib/lapack/base/dsysvx' );
@@ -80,7 +80,7 @@ The function has the following parameters:
 
 #### dsysvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
 
-Solves a real symmetric indefinite system of linear equations A_X = B using, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for symmetric matrices, using alternative indexing semantics.
 
 ```javascript
 var dsysvx = require( '@stdlib/lapack/base/dsysvx' );

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsytrf
 
-> Computes the factorization of a real symmetric matrix A using the.
+> Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsytrf = require( '@stdlib/lapack/base/dsytrf' );
 
 #### dsytrf( order, uplo, N, A, LDA, IPIV, strideIPIV )
 
-Computes the factorization of a real symmetric matrix A using the.
+Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method.
 
 ```javascript
 var dsytrf = require( '@stdlib/lapack/base/dsytrf' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### dsytrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 
-Computes the factorization of a real symmetric matrix A using the, using alternative indexing semantics.
+Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method, using alternative indexing semantics.
 
 ```javascript
 var dsytrf = require( '@stdlib/lapack/base/dsytrf' );

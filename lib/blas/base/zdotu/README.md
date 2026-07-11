@@ -20,7 +20,7 @@ limitations under the License.
 
 # zdotu
 
-> Computes the unconjugated dot product of two complex vectors:.
+> Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zdotu = require( '@stdlib/blas/base/zdotu' );
 
 #### zdotu( N, x, strideX, y, strideY )
 
-Computes the unconjugated dot product of two complex vectors:.
+Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### zdotu.ndarray( N, x, strideX, offsetX, y, strideY, offsetY )
 
-Computes the unconjugated dot product of two complex vectors:, using alternative indexing semantics.
+Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

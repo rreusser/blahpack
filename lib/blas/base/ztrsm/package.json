@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/ztrsm",
   "version": "1.0.0",
-  "description": "Solves a triangular matrix equation (complex double-precision).",
+  "description": "Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

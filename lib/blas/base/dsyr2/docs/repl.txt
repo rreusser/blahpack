@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, N, alpha, x, strideX, y, strideY, A, LDA )
-    Performs the symmetric rank-2 operation:.
+    Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A.
 
     Parameters
     ----------
@@ -44,8 +44,8 @@
 
 
 {{alias}}.ndarray( uplo, N, alpha, x, strideX, offsetX, y, strideY, offsetY, A, strideA1, strideA2, offsetA )
-    Performs the symmetric rank-2 operation: using alternative indexing
-    semantics.
+    Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A, using
+    alternative indexing semantics.
 
     Parameters
     ----------

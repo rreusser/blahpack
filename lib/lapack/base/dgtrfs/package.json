@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgtrfs",
   "version": "1.0.0",
-  "description": "Iterative refinement for a general tridiagonal system",
+  "description": "Improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

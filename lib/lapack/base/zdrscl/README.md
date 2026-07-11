@@ -20,7 +20,7 @@ limitations under the License.
 
 # zdrscl
 
-> Scales a complex vector by the reciprocal of a real scalar, performing the.
+> Multiplies a vector by the reciprocal of a real scalar.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zdrscl = require( '@stdlib/lapack/base/zdrscl' );
 
 #### zdrscl( N, sa, x, strideX )
 
-Scales a complex vector by the reciprocal of a real scalar, performing the.
+Multiplies a vector by the reciprocal of a real scalar.
 
 ```javascript
 var zdrscl = require( '@stdlib/lapack/base/zdrscl' );
@@ -52,7 +52,7 @@ The function has the following parameters:
 
 #### zdrscl.ndarray( N, sa, x, strideX, offsetX )
 
-Scales a complex vector by the reciprocal of a real scalar, performing the, using alternative indexing semantics.
+Multiplies a vector by the reciprocal of a real scalar, using alternative indexing semantics.
 
 ```javascript
 var zdrscl = require( '@stdlib/lapack/base/zdrscl' );

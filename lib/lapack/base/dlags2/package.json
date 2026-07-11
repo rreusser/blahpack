@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlags2",
   "version": "1.0.0",
-  "description": "Computes 2-by-2 orthogonal matrices U, V, Q for simultaneous upper/lower triangularization",
+  "description": "Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,6 +1,6 @@
 {{alias}}( trans, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR )
     Improves the computed solution to a system of linear equations and
-    provides.
+    provides error bounds and backward error estimates for the solution.
 
     Parameters
     ----------
@@ -67,7 +67,8 @@
 
 {{alias}}.ndarray( trans, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR )
     Improves the computed solution to a system of linear equations and
-    provides using alternative indexing semantics.
+    provides error bounds and backward error estimates for the solution,
+    using alternative indexing semantics.
 
     Parameters
     ----------

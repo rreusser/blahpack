@@ -20,7 +20,7 @@ limitations under the License.
 
 # zdotc
 
-> Compute the conjugate dot product of two complex vectors:.
+> Forms the dot product of two complex vectors ZDOTC = Xᴴ·Y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zdotc = require( '@stdlib/blas/base/zdotc' );
 
 #### zdotc( N, x, strideX, y, strideY )
 
-Compute the conjugate dot product of two complex vectors:.
+Forms the dot product of two complex vectors ZDOTC = Xᴴ·Y.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### zdotc.ndarray( N, x, strideX, offsetX, y, strideY, offsetY )
 
-Compute the conjugate dot product of two complex vectors:, using alternative indexing semantics.
+Forms the dot product of two complex vectors ZDOTC = Xᴴ·Y, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

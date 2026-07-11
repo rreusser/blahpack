@@ -20,7 +20,7 @@ limitations under the License.
 
 # dggsvp3
 
-> Computes orthogonal matrices U, V, and Q such that:.
+> Computes orthogonal matrices U, V, and Q that reduce a matrix pair to triangular form for the generalized SVD.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dggsvp3 = require( '@stdlib/lapack/base/dggsvp3' );
 
 #### dggsvp3( jobu, jobv, jobq, M, p, N, A, LDA, B, LDB, tola, tolb, K, l, U, LDU, V, LDV, Q, LDQ, IWORK, strideIWORK, TAU, strideTAU, WORK, strideWORK, lwork )
 
-Computes orthogonal matrices U, V, and Q such that:.
+Computes orthogonal matrices U, V, and Q that reduce a matrix pair to triangular form for the generalized SVD.
 
 ```javascript
 var dggsvp3 = require( '@stdlib/lapack/base/dggsvp3' );
@@ -82,7 +82,7 @@ The function has the following parameters:
 
 #### dggsvp3.ndarray( jobu, jobv, jobq, M, p, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, tola, tolb, K, l, U, strideU1, strideU2, offsetU, V, strideV1, strideV2, offsetV, Q, strideQ1, strideQ2, offsetQ, IWORK, strideIWORK, offsetIWORK, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
 
-Computes orthogonal matrices U, V, and Q such that:, using alternative indexing semantics.
+Computes orthogonal matrices U, V, and Q that reduce a matrix pair to triangular form for the generalized SVD, using alternative indexing semantics.
 
 ```javascript
 var dggsvp3 = require( '@stdlib/lapack/base/dggsvp3' );

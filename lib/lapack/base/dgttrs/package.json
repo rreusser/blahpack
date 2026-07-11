@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgttrs",
   "version": "1.0.0",
-  "description": "Solves a real tridiagonal system using LU factorization from dgttrf",
+  "description": "Solves one of the systems of equations A·X = B or Aᵀ·X = B, with a tridiagonal matrix A using the LU factorization computed by DGTTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

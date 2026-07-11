@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgels
 
-> Solves overdetermined or underdetermined real linear systems involving an.
+> Solves overdetermined or underdetermined systems for general matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgels = require( '@stdlib/lapack/base/dgels' );
 
 #### dgels( order, trans, M, N, nrhs, A, LDA, B, LDB )
 
-Solves overdetermined or underdetermined real linear systems involving an.
+Solves overdetermined or underdetermined systems for general matrices.
 
 ```javascript
 var dgels = require( '@stdlib/lapack/base/dgels' );
@@ -58,7 +58,7 @@ The function has the following parameters:
 
 #### dgels.ndarray( trans, M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB )
 
-Solves overdetermined or underdetermined real linear systems involving an, using alternative indexing semantics.
+Solves overdetermined or underdetermined systems for general matrices, using alternative indexing semantics.
 
 ```javascript
 var dgels = require( '@stdlib/lapack/base/dgels' );

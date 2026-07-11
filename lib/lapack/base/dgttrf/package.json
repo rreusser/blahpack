@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgttrf",
   "version": "1.0.0",
-  "description": "Computes the LU factorization of a real tridiagonal matrix",
+  "description": "Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

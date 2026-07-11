@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zhemv",
   "version": "1.0.0",
-  "description": "Perform Hermitian matrix-vector multiplication",
+  "description": "Performs the matrix-vector operation y := α·A·x + β·y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

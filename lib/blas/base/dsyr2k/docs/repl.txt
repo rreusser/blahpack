@@ -1,5 +1,6 @@
 {{alias}}( order, uplo, trans, N, K, alpha, A, LDA, B, LDB, beta, C, LDC )
-    Performs one of the symmetric rank-2k operations:.
+    Performs one of the symmetric rank 2k operations C := α·A·Bᵀ + α·B·Aᵀ +
+    β·C, or C := α·Aᵀ·B + α·Bᵀ·A + β·C.
 
     Parameters
     ----------
@@ -53,8 +54,9 @@
 
 
 {{alias}}.ndarray( uplo, trans, N, K, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, beta, C, strideC1, strideC2, offsetC )
-    Performs one of the symmetric rank-2k operations: using alternative
-    indexing semantics.
+    Performs one of the symmetric rank 2k operations C := α·A·Bᵀ + α·B·Aᵀ +
+    β·C, or C := α·Aᵀ·B + α·Bᵀ·A + β·C, using alternative indexing
+    semantics.
 
     Parameters
     ----------

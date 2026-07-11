@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zpotri",
   "version": "1.0.0",
-  "description": "Compute the inverse of a complex Hermitian positive definite matrix using its Cholesky factorization",
+  "description": "Computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zdrot",
   "version": "1.0.0",
-  "description": "Apply a plane rotation to complex vectors",
+  "description": "Applies a plane rotation",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

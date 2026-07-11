@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dgtsvx",
   "version": "1.0.0",
-  "description": "Expert driver for solving a general tridiagonal system",
+  "description": "Computes the solution to system of linear equations A·X = B for general tridiagonal matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasq3",
   "version": "1.0.0",
-  "description": "Check for deflation and compute shift for dqds iteration",
+  "description": "Checks for deflation, computes a shift and calls dqds",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

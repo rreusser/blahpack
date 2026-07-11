@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlansf",
   "version": "1.0.0",
-  "description": "Returns the norm of a complex symmetric matrix in Rectangular Full Packed format.",
+  "description": "Returns the one-norm, Frobenius norm, infinity-norm, or largest absolute value of a complex Hermitian matrix in RFP format",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

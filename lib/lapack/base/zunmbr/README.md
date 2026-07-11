@@ -20,7 +20,7 @@ limitations under the License.
 
 # zunmbr
 
-> If VECT = 'Q', overwrite the matrix C with one of:.
+> Multiplies a general matrix by the unitary matrix Q or P from a bidiagonal reduction.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zunmbr = require( '@stdlib/lapack/base/zunmbr' );
 
 #### zunmbr( order, vect, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK, strideWORK )
 
-If VECT = 'Q', overwrite the matrix C with one of:.
+Multiplies a general matrix by the unitary matrix Q or P from a bidiagonal reduction.
 
 ```javascript
 var zunmbr = require( '@stdlib/lapack/base/zunmbr' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### zunmbr.ndarray( vect, side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
-If VECT = 'Q', overwrite the matrix C with one of:, using alternative indexing semantics.
+Multiplies a general matrix by the unitary matrix Q or P from a bidiagonal reduction, using alternative indexing semantics.
 
 ```javascript
 var zunmbr = require( '@stdlib/lapack/base/zunmbr' );

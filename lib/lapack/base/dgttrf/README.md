@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgttrf
 
-> Computes an LU factorization of a real tridiagonal matrix A using.
+> Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgttrf = require( '@stdlib/lapack/base/dgttrf' );
 
 #### dgttrf( N, DL, strideDL, d, strideD, DU, strideDU, DU2, strideDU2, IPIV, strideIPIV )
 
-Computes an LU factorization of a real tridiagonal matrix A using.
+Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges.
 
 ```javascript
 var dgttrf = require( '@stdlib/lapack/base/dgttrf' );
@@ -63,7 +63,7 @@ The function has the following parameters:
 
 #### dgttrf.ndarray( N, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV )
 
-Computes an LU factorization of a real tridiagonal matrix A using, using alternative indexing semantics.
+Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges, using alternative indexing semantics.
 
 ```javascript
 var dgttrf = require( '@stdlib/lapack/base/dgttrf' );

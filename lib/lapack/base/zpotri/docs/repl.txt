@@ -1,6 +1,7 @@
 {{alias}}( order, uplo, N, A, LDA )
-    Computes the inverse of a complex Hermitian positive definite matrix
-    using.
+    Computes the inverse of a complex Hermitian positive definite matrix A
+    using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by
+    ZPOTRF.
 
     Parameters
     ----------
@@ -30,8 +31,9 @@
 
 
 {{alias}}.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
-    Computes the inverse of a complex Hermitian positive definite matrix
-    using using alternative indexing semantics.
+    Computes the inverse of a complex Hermitian positive definite matrix A
+    using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by
+    ZPOTRF, using alternative indexing semantics.
 
     Parameters
     ----------

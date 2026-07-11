@@ -20,7 +20,7 @@ limitations under the License.
 
 # zhgeqz
 
-> Compute the eigenvalues of a complex matrix pair (H, T), where H is.
+> Computes the eigenvalues of a complex matrix pair (H,T).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zhgeqz = require( '@stdlib/lapack/base/zhgeqz' );
 
 #### zhgeqz( order, job, compq, compz, N, ilo, ihi, H, LDH, T, LDT, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, WORK, strideWORK, lwork, RWORK, strideRWORK )
 
-Compute the eigenvalues of a complex matrix pair (H, T), where H is.
+Computes the eigenvalues of a complex matrix pair (H,T).
 
 ```javascript
 var zhgeqz = require( '@stdlib/lapack/base/zhgeqz' );
@@ -79,7 +79,7 @@ The function has the following parameters:
 
 #### zhgeqz.ndarray( job, compq, compz, N, ilo, ihi, H, strideH1, strideH2, offsetH, T, strideT1, strideT2, offsetT, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 
-Compute the eigenvalues of a complex matrix pair (H, T), where H is, using alternative indexing semantics.
+Computes the eigenvalues of a complex matrix pair (H,T), using alternative indexing semantics.
 
 ```javascript
 var zhgeqz = require( '@stdlib/lapack/base/zhgeqz' );

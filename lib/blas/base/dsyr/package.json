@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dsyr",
   "version": "1.0.0",
-  "description": "Perform the symmetric rank 1 operation A := alpha*x*x**T + A",
+  "description": "Performs the symmetric rank 1 operation A := α·x·xᵀ + A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

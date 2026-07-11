@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtgsyl",
   "version": "1.0.0",
-  "description": "Solves the generalized Sylvester equation (blocked)",
+  "description": "Solves the generalized Sylvester equation: A·R - L·B = scale·C (1) D·R - L·E = scale·F",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

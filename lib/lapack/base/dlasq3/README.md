@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasq3
 
-> Checks for deflation, computes a shift (TAU) and calls dqds. In case of.
+> Checks for deflation, computes a shift and calls dqds.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasq3 = require( '@stdlib/lapack/base/dlasq3' );
 
 #### dlasq3( i0, n0, z, stride, pp, dmin, sigma, desig, qmax, nfail, iter, ndiv, ieee, ttype, dmin1, dmin2, dn, dn1, dn2, g, tau )
 
-Checks for deflation, computes a shift (TAU) and calls dqds. In case of.
+Checks for deflation, computes a shift and calls dqds.
 
 ```javascript
 var dlasq3 = require( '@stdlib/lapack/base/dlasq3' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dlasq3.ndarray( i0, n0, z, stride, offset, pp, dmin, sigma, desig, qmax, nfail, iter, ndiv, ieee, ttype, dmin1, dmin2, dn, dn1, dn2, g, tau )
 
-Checks for deflation, computes a shift (TAU) and calls dqds. In case of, using alternative indexing semantics.
+Checks for deflation, computes a shift and calls dqds, using alternative indexing semantics.
 
 ```javascript
 var dlasq3 = require( '@stdlib/lapack/base/dlasq3' );

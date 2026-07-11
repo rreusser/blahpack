@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasy2",
   "version": "1.0.0",
-  "description": "Solves the real Sylvester matrix equation for 1-by-1 or 2-by-2 matrices",
+  "description": "Solves the Sylvester matrix equation",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

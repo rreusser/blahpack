@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlauu2",
   "version": "1.0.0",
-  "description": "Compute the product of a complex triangular matrix with its conjugate transpose (unblocked)",
+  "description": "Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

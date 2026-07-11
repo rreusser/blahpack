@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY )
-    Performs the matrix-vector operation:.
+    Performs the matrix-vector operation y := α·A·x + β·y.
 
     Parameters
     ----------
@@ -47,8 +47,8 @@
 
 
 {{alias}}.ndarray( uplo, N, alpha, A, strideA1, strideA2, offsetA, x, strideX, offsetX, beta, y, strideY, offsetY )
-    Performs the matrix-vector operation: using alternative indexing
-    semantics.
+    Performs the matrix-vector operation y := α·A·x + β·y, using alternative
+    indexing semantics.
 
     Parameters
     ----------

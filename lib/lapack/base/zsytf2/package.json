@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zsytf2",
   "version": "1.0.0",
-  "description": "Compute complex symmetric indefinite factorization with Bunch-Kaufman pivoting (unblocked)",
+  "description": "Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

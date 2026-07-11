@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztrexc
 
-> Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that.
+> Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that the diagonal element of T with row index IFST is moved to row ILST.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztrexc = require( '@stdlib/lapack/base/ztrexc' );
 
 #### ztrexc( compq, N, T, LDT, Q, LDQ, ifst, ilst )
 
-Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that.
+Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that the diagonal element of T with row index IFST is moved to row ILST.
 
 ```javascript
 var ztrexc = require( '@stdlib/lapack/base/ztrexc' );
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 #### ztrexc.ndarray( compq, N, T, strideT1, strideT2, offsetT, Q, strideQ1, strideQ2, offsetQ, ifst, ilst )
 
-Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that, using alternative indexing semantics.
+Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that the diagonal element of T with row index IFST is moved to row ILST, using alternative indexing semantics.
 
 ```javascript
 var ztrexc = require( '@stdlib/lapack/base/ztrexc' );

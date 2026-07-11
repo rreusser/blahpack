@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zher",
   "version": "1.0.0",
-  "description": "Perform Hermitian rank-1 update",
+  "description": "Performs the Hermitian rank 1 operation A := α·x·xᴴ + A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

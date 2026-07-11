@@ -1,5 +1,5 @@
 {{alias}}( order, uplo, trans, diag, N, A, LDA, x, strideX )
-    Performs one of the matrix-vector operations:.
+    Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x.
 
     Parameters
     ----------
@@ -41,8 +41,8 @@
 
 
 {{alias}}.ndarray( uplo, trans, diag, N, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
-    Performs one of the matrix-vector operations: using alternative indexing
-    semantics.
+    Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x,
+    using alternative indexing semantics.
 
     Parameters
     ----------

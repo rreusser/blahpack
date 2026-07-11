@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zhecon",
   "version": "1.0.0",
-  "description": "Estimate the reciprocal condition number of a Hermitian indefinite matrix",
+  "description": "Estimates the reciprocal of the condition number of a complex Hermitian matrix A using the factorization A = U·D·Uᴴ or A = L·D·Lᴴ computed by ZHETRF",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

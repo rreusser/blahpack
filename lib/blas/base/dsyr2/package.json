@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dsyr2",
   "version": "1.0.0",
-  "description": "Perform symmetric rank-2 update",
+  "description": "Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

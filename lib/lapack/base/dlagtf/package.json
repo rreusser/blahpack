@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlagtf",
   "version": "1.0.0",
-  "description": "Factorizes the matrix (T - lambda*I) where T is a tridiagonal matrix",
+  "description": "Computes an LU factorization of a matrix T-λI",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

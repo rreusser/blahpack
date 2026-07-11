@@ -1,5 +1,6 @@
 {{alias}}( M, p, N, A, LDA, TAUA, strideTAUA, B, LDB, TAUB, strideTAUB )
-    Computes a generalized RQ factorization of an M-by-N matrix A and a.
+    Computes a generalized RQ factorization of an M-by-N matrix A and a
+    P-by-N matrix B: A = R·Q, B = Z·T·Q.
 
     Parameters
     ----------
@@ -48,7 +49,8 @@
 
 {{alias}}.ndarray( M, p, N, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB )
     Computes a generalized RQ factorization of an M-by-N matrix A and a
-    using alternative indexing semantics.
+    P-by-N matrix B: A = R·Q, B = Z·T·Q, using alternative indexing
+    semantics.
 
     Parameters
     ----------

@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrexc",
   "version": "1.0.0",
-  "description": "Reorders the real Schur factorization by an orthogonal similarity transformation",
+  "description": "Reorders the real Schur factorization of a real matrix A = Q·T·Qᵀ, so that the diagonal block of T with row index IFST is moved to row ILST",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

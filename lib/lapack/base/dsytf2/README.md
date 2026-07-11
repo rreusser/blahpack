@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsytf2
 
-> Computes the factorization of a real symmetric matrix A using the.
+> Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm).
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsytf2 = require( '@stdlib/lapack/base/dsytf2' );
 
 #### dsytf2( order, uplo, N, A, LDA, IPIV, strideIPIV )
 
-Computes the factorization of a real symmetric matrix A using the.
+Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm).
 
 ```javascript
 var dsytf2 = require( '@stdlib/lapack/base/dsytf2' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### dsytf2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 
-Computes the factorization of a real symmetric matrix A using the, using alternative indexing semantics.
+Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm), using alternative indexing semantics.
 
 ```javascript
 var dsytf2 = require( '@stdlib/lapack/base/dsytf2' );

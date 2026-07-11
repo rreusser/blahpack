@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlansy
 
-> Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+> Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex symmetric matrix.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlansy = require( '@stdlib/lapack/base/zlansy' );
 
 #### zlansy( norm, uplo, N, A, LDA, WORK, strideWORK )
 
-Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex symmetric matrix.
 
 ```javascript
 var zlansy = require( '@stdlib/lapack/base/zlansy' );
@@ -56,7 +56,7 @@ The function has the following parameters:
 
 #### zlansy.ndarray( norm, uplo, N, A, strideA1, strideA2, offsetA, WORK, strideWORK, offsetWORK )
 
-Returns the value of the one-norm, Frobenius norm, infinity-norm, or the, using alternative indexing semantics.
+Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex symmetric matrix, using alternative indexing semantics.
 
 ```javascript
 var zlansy = require( '@stdlib/lapack/base/zlansy' );

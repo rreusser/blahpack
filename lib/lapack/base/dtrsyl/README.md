@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtrsyl
 
-> Solves the real Sylvester matrix equation:.
+> Solves the real Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtrsyl = require( '@stdlib/lapack/base/dtrsyl' );
 
 #### dtrsyl( trana, tranb, isgn, M, N, A, LDA, B, LDB, C, LDC, scale )
 
-Solves the real Sylvester matrix equation:.
+Solves the real Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C.
 
 ```javascript
 var dtrsyl = require( '@stdlib/lapack/base/dtrsyl' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dtrsyl.ndarray( trana, tranb, isgn, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, scale )
 
-Solves the real Sylvester matrix equation:, using alternative indexing semantics.
+Solves the real Sylvester matrix equation: op(A)·X + X·op(B) = scale·C or op(A)·X - X·op(B) = scale·C, using alternative indexing semantics.
 
 ```javascript
 var dtrsyl = require( '@stdlib/lapack/base/dtrsyl' );

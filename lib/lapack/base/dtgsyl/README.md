@@ -20,7 +20,7 @@ limitations under the License.
 
 # dtgsyl
 
-> Solves the generalized Sylvester equation (blocked):.
+> Solves the generalized Sylvester equation: A·R - L·B = scale·C (1) D·R - L·E = scale·F.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dtgsyl = require( '@stdlib/lapack/base/dtgsyl' );
 
 #### dtgsyl( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, dif, WORK, strideWORK, lwork, IWORK, strideIWORK )
 
-Solves the generalized Sylvester equation (blocked):.
+Solves the generalized Sylvester equation: A·R - L·B = scale·C (1) D·R - L·E = scale·F.
 
 ```javascript
 var dtgsyl = require( '@stdlib/lapack/base/dtgsyl' );
@@ -78,7 +78,7 @@ The function has the following parameters:
 
 #### dtgsyl.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, dif, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
 
-Solves the generalized Sylvester equation (blocked):, using alternative indexing semantics.
+Solves the generalized Sylvester equation: A·R - L·B = scale·C (1) D·R - L·E = scale·F, using alternative indexing semantics.
 
 ```javascript
 var dtgsyl = require( '@stdlib/lapack/base/dtgsyl' );

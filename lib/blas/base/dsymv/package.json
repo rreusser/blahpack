@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dsymv",
   "version": "1.0.0",
-  "description": "Perform symmetric matrix-vector multiplication",
+  "description": "Performs the matrix-vector operation y := α·A·x + β·y",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

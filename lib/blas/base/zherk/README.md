@@ -20,7 +20,7 @@ limitations under the License.
 
 # zherk
 
-> Performs one of the Hermitian rank-k operations:.
+> Performs one of the Hermitian rank k operations C := α·A·Aᴴ + β·C, or C := α·Aᴴ·A + β·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zherk = require( '@stdlib/blas/base/zherk' );
 
 #### zherk( order, uplo, trans, N, K, alpha, A, LDA, beta, C, LDC )
 
-Performs one of the Hermitian rank-k operations:.
+Performs one of the Hermitian rank k operations C := α·A·Aᴴ + β·C, or C := α·Aᴴ·A + β·C.
 
 ```javascript
 var zherk = require( '@stdlib/blas/base/zherk' );
@@ -60,7 +60,7 @@ The function has the following parameters:
 
 #### zherk.ndarray( uplo, trans, N, K, alpha, A, strideA1, strideA2, offsetA, beta, C, strideC1, strideC2, offsetC )
 
-Performs one of the Hermitian rank-k operations:, using alternative indexing semantics.
+Performs one of the Hermitian rank k operations C := α·A·Aᴴ + β·C, or C := α·Aᴴ·A + β·C, using alternative indexing semantics.
 
 ```javascript
 var zherk = require( '@stdlib/blas/base/zherk' );

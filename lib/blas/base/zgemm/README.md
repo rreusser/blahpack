@@ -20,7 +20,7 @@ limitations under the License.
 
 # zgemm
 
-> Perform one of the complex matrix-matrix operations:.
+> Performs one of the matrix-matrix operations C := α·op(A)·op(B) + β·C.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zgemm = require( '@stdlib/blas/base/zgemm' );
 
 #### zgemm( order, transa, transb, M, N, K, alpha, A, LDA, B, LDB, beta, C, LDC )
 
-Perform one of the complex matrix-matrix operations:.
+Performs one of the matrix-matrix operations C := α·op(A)·op(B) + β·C.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### zgemm.ndarray( transa, transb, M, N, K, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, beta, C, strideC1, strideC2, offsetC )
 
-Perform one of the complex matrix-matrix operations:, using alternative indexing semantics.
+Performs one of the matrix-matrix operations C := α·op(A)·op(B) + β·C, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

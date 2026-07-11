@@ -20,7 +20,7 @@ limitations under the License.
 
 # ztbsv
 
-> Solves one of the systems of equations:.
+> Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var ztbsv = require( '@stdlib/blas/base/ztbsv' );
 
 #### ztbsv( order, uplo, trans, diag, N, K, A, LDA, x, strideX )
 
-Solves one of the systems of equations:.
+Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -59,7 +59,7 @@ The function has the following parameters:
 
 #### ztbsv.ndarray( uplo, trans, diag, N, K, A, strideA1, strideA2, offsetA, x, strideX, offsetX )
 
-Solves one of the systems of equations:, using alternative indexing semantics.
+Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

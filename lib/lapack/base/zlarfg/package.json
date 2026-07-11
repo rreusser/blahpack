@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/zlarfg",
   "version": "1.0.0",
-  "description": "Generate a complex Householder reflector",
+  "description": "Generates an elementary reflector (Householder matrix)",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

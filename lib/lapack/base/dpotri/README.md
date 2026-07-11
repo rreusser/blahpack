@@ -20,7 +20,7 @@ limitations under the License.
 
 # dpotri
 
-> Computes the inverse of a real symmetric positive definite matrix using.
+> Computes the inverse of a real symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dpotri = require( '@stdlib/lapack/base/dpotri' );
 
 #### dpotri( order, uplo, N, A, LDA )
 
-Computes the inverse of a real symmetric positive definite matrix using.
+Computes the inverse of a real symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF.
 
 ```javascript
 var dpotri = require( '@stdlib/lapack/base/dpotri' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### dpotri.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the inverse of a real symmetric positive definite matrix using, using alternative indexing semantics.
+Computes the inverse of a real symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF, using alternative indexing semantics.
 
 ```javascript
 var dpotri = require( '@stdlib/lapack/base/dpotri' );

@@ -1,6 +1,6 @@
 {{alias}}( M, N, A, LDA, JPVT, strideJPVT, TAU, strideTAU )
-    Computes a QR factorization with column pivoting of a real M-by-N
-    matrix:.
+    Computes a QR factorization with column pivoting of a matrix A: A·P =
+    Q·R using Level 3 BLAS.
 
     Parameters
     ----------
@@ -39,8 +39,8 @@
 
 
 {{alias}}.ndarray( M, N, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
-    Computes a QR factorization with column pivoting of a real M-by-N
-    matrix: using alternative indexing semantics.
+    Computes a QR factorization with column pivoting of a matrix A: A·P =
+    Q·R using Level 3 BLAS, using alternative indexing semantics.
 
     Parameters
     ----------

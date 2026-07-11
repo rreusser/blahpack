@@ -1,5 +1,6 @@
 {{alias}}( job, compz, N, ilo, ihi, H, LDH, WR, strideWR, WI, strideWI, Z, LDZ )
-    Computes the eigenvalues of a real upper Hessenberg matrix H, and.
+    Computes the eigenvalues of a Hessenberg matrix H and, optionally, the
+    matrices T and Z from the Schur decomposition H = Z T Zᵀ.
 
     Parameters
     ----------
@@ -53,7 +54,8 @@
 
 
 {{alias}}.ndarray( job, compz, N, ilo, ihi, H, strideH1, strideH2, offsetH, WR, strideWR, offsetWR, WI, strideWI, offsetWI, Z, strideZ1, strideZ2, offsetZ, WORK, strideWORK, offsetWORK, lwork )
-    Computes the eigenvalues of a real upper Hessenberg matrix H, and using
+    Computes the eigenvalues of a Hessenberg matrix H and, optionally, the
+    matrices T and Z from the Schur decomposition H = Z T Zᵀ, using
     alternative indexing semantics.
 
     Parameters

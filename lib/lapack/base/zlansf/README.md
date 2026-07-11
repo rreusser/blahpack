@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlansf
 
-> Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+> Returns the one-norm, Frobenius norm, infinity-norm, or largest absolute value of a complex Hermitian matrix in RFP format.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlansf = require( '@stdlib/lapack/base/zlansf' );
 
 #### zlansf( norm, transr, uplo, N, A, WORK )
 
-Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+Returns the one-norm, Frobenius norm, infinity-norm, or largest absolute value of a complex Hermitian matrix in RFP format.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -54,7 +54,7 @@ The function has the following parameters:
 
 #### zlansf.ndarray( norm, transr, uplo, N, A, strideA, offsetA, WORK, strideWORK, offsetWORK )
 
-Returns the value of the one-norm, Frobenius norm, infinity-norm, or the, using alternative indexing semantics.
+Returns the one-norm, Frobenius norm, infinity-norm, or largest absolute value of a complex Hermitian matrix in RFP format, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

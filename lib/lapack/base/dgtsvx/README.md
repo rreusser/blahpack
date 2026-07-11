@@ -20,7 +20,7 @@ limitations under the License.
 
 # dgtsvx
 
-> Uses the LU factorization to compute the solution to a real system of.
+> Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dgtsvx = require( '@stdlib/lapack/base/dgtsvx' );
 
 #### dgtsvx( fact, trans, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, DLF, strideDLF, DF, strideDF, DUF, strideDUF, DU2, strideDU2, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
 
-Uses the LU factorization to compute the solution to a real system of.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices.
 
 ```javascript
 var dgtsvx = require( '@stdlib/lapack/base/dgtsvx' );
@@ -94,7 +94,7 @@ The function has the following parameters:
 
 #### dgtsvx.ndarray( fact, trans, N, nrhs, DL, strideDL, offsetDL, d, strideD, offsetD, DU, strideDU, offsetDU, DLF, strideDLF, offsetDLF, DF, strideDF, offsetDF, DUF, strideDUF, offsetDUF, DU2, strideDU2, offsetDU2, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Uses the LU factorization to compute the solution to a real system of, using alternative indexing semantics.
+Computes the solution to system of linear equations A·X = B for general tridiagonal matrices, using alternative indexing semantics.
 
 ```javascript
 var dgtsvx = require( '@stdlib/lapack/base/dgtsvx' );

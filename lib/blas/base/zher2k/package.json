@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/zher2k",
   "version": "1.0.0",
-  "description": "Perform Hermitian rank-2k update",
+  "description": "Performs one of the Hermitian rank 2k operations C := α·A·Bᴴ + conj(α)·B·Aᴴ + β·C, or C := α·Aᴴ·B + conj(α)·Bᴴ·A + β·C",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

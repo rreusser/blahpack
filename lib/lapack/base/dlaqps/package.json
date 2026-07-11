@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlaqps",
   "version": "1.0.0",
-  "description": "Computes a step of QR factorization with column pivoting using Level 3 BLAS",
+  "description": "Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

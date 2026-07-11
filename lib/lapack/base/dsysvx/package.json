@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dsysvx",
   "version": "1.0.0",
-  "description": "Expert symmetric indefinite solver with condition estimation and iterative refinement",
+  "description": "Computes the solution to system of linear equations A·X = B for symmetric matrices",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

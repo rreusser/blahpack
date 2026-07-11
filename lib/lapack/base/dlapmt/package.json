@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlapmt",
   "version": "1.0.0",
-  "description": "Permute columns of a matrix",
+  "description": "Performs a forward or backward permutation of the columns of a matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

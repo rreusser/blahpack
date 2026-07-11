@@ -1,5 +1,5 @@
 {{alias}}( N, alpha, offsetAlpha, x, strideX, tau, offsetTau )
-    Generate a complex elementary reflector H of order N, such that.
+    Generates an elementary reflector (Householder matrix).
 
     Parameters
     ----------
@@ -35,7 +35,7 @@
 
 
 {{alias}}.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau )
-    Generate a complex elementary reflector H of order N, such that using
+    Generates an elementary reflector (Householder matrix), using
     alternative indexing semantics.
 
     Parameters

@@ -1,5 +1,5 @@
 {{alias}}( N, CX, strideCX )
-    Takes the sum of the absolute values of a complex vector and returns a.
+    Forms the 1-norm of the complex vector using the true absolute value.
 
     Parameters
     ----------
@@ -23,7 +23,7 @@
 
 
 {{alias}}.ndarray( N, CX, strideCX, offsetCX )
-    Takes the sum of the absolute values of a complex vector and returns a
+    Forms the 1-norm of the complex vector using the true absolute value,
     using alternative indexing semantics.
 
     Parameters

@@ -20,7 +20,7 @@ limitations under the License.
 
 # dsyrfs
 
-> Improves the computed solution to a system of linear equations when the.
+> Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric indefinite, and provides error bounds and backward error estimates for the solution.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dsyrfs = require( '@stdlib/lapack/base/dsyrfs' );
 
 #### dsyrfs( uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
 
-Improves the computed solution to a system of linear equations when the.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric indefinite, and provides error bounds and backward error estimates for the solution.
 
 ```javascript
 var dsyrfs = require( '@stdlib/lapack/base/dsyrfs' );
@@ -77,7 +77,7 @@ The function has the following parameters:
 
 #### dsyrfs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
-Improves the computed solution to a system of linear equations when the, using alternative indexing semantics.
+Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric indefinite, and provides error bounds and backward error estimates for the solution, using alternative indexing semantics.
 
 ```javascript
 var dsyrfs = require( '@stdlib/lapack/base/dsyrfs' );

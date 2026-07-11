@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlagts
 
-> Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
+> Solves the system of equations (T-λI)x = y.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlagts = require( '@stdlib/lapack/base/dlagts' );
 
 #### dlagts( job, N, a, strideA, b, strideB, c, strideC, d, strideD, IN, strideIN, y, strideY, tol )
 
-Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
+Solves the system of equations (T-λI)x = y.
 
 ```javascript
 var dlagts = require( '@stdlib/lapack/base/dlagts' );
@@ -68,7 +68,7 @@ The function has the following parameters:
 
 #### dlagts.ndarray( job, N, a, strideA, offsetA, b, strideB, offsetB, c, strideC, offsetC, d, strideD, offsetD, IN, strideIN, offsetIN, y, strideY, offsetY, tol )
 
-Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using, using alternative indexing semantics.
+Solves the system of equations (T-λI)x = y, using alternative indexing semantics.
 
 ```javascript
 var dlagts = require( '@stdlib/lapack/base/dlagts' );

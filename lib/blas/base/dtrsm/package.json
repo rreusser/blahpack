@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/blas/base/dtrsm",
   "version": "1.0.0",
-  "description": "Double-precision real triangular solve with multiple right-hand sides.",
+  "description": "Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

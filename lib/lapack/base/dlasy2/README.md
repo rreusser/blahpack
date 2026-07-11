@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlasy2
 
-> Solves for the N1-by-N2 matrix X in:.
+> Solves the Sylvester matrix equation.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlasy2 = require( '@stdlib/lapack/base/dlasy2' );
 
 #### dlasy2( ltranl, ltranr, isgn, n1, n2, TL, LDTL, TR, LDTR, B, LDB, scale, X, LDX, xnorm )
 
-Solves for the N1-by-N2 matrix X in:.
+Solves the Sylvester matrix equation.
 
 ```javascript
 var dlasy2 = require( '@stdlib/lapack/base/dlasy2' );
@@ -66,7 +66,7 @@ The function has the following parameters:
 
 #### dlasy2.ndarray( ltranl, ltranr, isgn, n1, n2, TL, strideTL1, strideTL2, offsetTL, TR, strideTR1, strideTR2, offsetTR, B, strideB1, strideB2, offsetB, scale, X, strideX1, strideX2, offsetX, xnorm )
 
-Solves for the N1-by-N2 matrix X in:, using alternative indexing semantics.
+Solves the Sylvester matrix equation, using alternative indexing semantics.
 
 ```javascript
 var dlasy2 = require( '@stdlib/lapack/base/dlasy2' );

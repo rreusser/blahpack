@@ -20,7 +20,7 @@ limitations under the License.
 
 # zrot
 
-> Applies a plane rotation, where the cos (C) is real and the sin (S) is.
+> Applies a plane rotation with real cosine and complex sine to a pair of complex vectors.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zrot = require( '@stdlib/lapack/base/zrot' );
 
 #### zrot( N, cx, strideX, cy, strideY, c, s )
 
-Applies a plane rotation, where the cos (C) is real and the sin (S) is.
+Applies a plane rotation with real cosine and complex sine to a pair of complex vectors.
 
 ```javascript
 var zrot = require( '@stdlib/lapack/base/zrot' );
@@ -52,7 +52,7 @@ The function has the following parameters:
 
 #### zrot.ndarray( N, cx, strideX, offsetX, cy, strideY, offsetY, c, s )
 
-Applies a plane rotation, where the cos (C) is real and the sin (S) is, using alternative indexing semantics.
+Applies a plane rotation with real cosine and complex sine to a pair of complex vectors, using alternative indexing semantics.
 
 ```javascript
 var zrot = require( '@stdlib/lapack/base/zrot' );

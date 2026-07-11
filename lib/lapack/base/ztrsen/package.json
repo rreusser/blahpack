@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/ztrsen",
   "version": "1.0.0",
-  "description": "Reorder Schur factorization and compute condition numbers",
+  "description": "Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that a selected cluster of eigenvalues appears in the leading positions on the diagonal of the upper triangular matrix T, and the leading columns of Q form an orthonormal basis of the corresponding right invariant subspace",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

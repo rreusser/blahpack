@@ -1,5 +1,5 @@
 {{alias}}( N, x, strideX, y, strideY )
-    Computes the unconjugated dot product of two complex vectors:.
+    Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@
 
 
 {{alias}}.ndarray( N, x, strideX, offsetX, y, strideY, offsetY )
-    Computes the unconjugated dot product of two complex vectors: using
+    Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y, using
     alternative indexing semantics.
 
     Parameters

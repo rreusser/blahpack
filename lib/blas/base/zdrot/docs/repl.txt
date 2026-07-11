@@ -1,6 +1,5 @@
 {{alias}}( N, zx, strideX, zy, strideY, c, s )
-    Applies a real plane rotation to a pair of complex double-precision
-    vectors:.
+    Applies a plane rotation.
 
     Parameters
     ----------
@@ -36,8 +35,7 @@
 
 
 {{alias}}.ndarray( N, zx, strideX, offsetX, zy, strideY, offsetY, c, s )
-    Applies a real plane rotation to a pair of complex double-precision
-    vectors: using alternative indexing semantics.
+    Applies a plane rotation, using alternative indexing semantics.
 
     Parameters
     ----------

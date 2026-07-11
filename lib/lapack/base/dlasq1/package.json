@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlasq1",
   "version": "1.0.0",
-  "description": "Compute all singular values of a real bidiagonal matrix via dqds",
+  "description": "Computes the singular values of a real square bidiagonal matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

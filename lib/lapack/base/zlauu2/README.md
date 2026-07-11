@@ -20,7 +20,7 @@ limitations under the License.
 
 # zlauu2
 
-> Computes the product of a complex upper or lower triangular matrix with its.
+> Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var zlauu2 = require( '@stdlib/lapack/base/zlauu2' );
 
 #### zlauu2( order, uplo, N, A, LDA )
 
-Computes the product of a complex upper or lower triangular matrix with its.
+Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices.
 
 ```javascript
 var zlauu2 = require( '@stdlib/lapack/base/zlauu2' );
@@ -53,7 +53,7 @@ The function has the following parameters:
 
 #### zlauu2.ndarray( uplo, N, A, strideA1, strideA2, offsetA )
 
-Computes the product of a complex upper or lower triangular matrix with its, using alternative indexing semantics.
+Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices, using alternative indexing semantics.
 
 ```javascript
 var zlauu2 = require( '@stdlib/lapack/base/zlauu2' );

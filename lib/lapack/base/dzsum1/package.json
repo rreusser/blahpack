@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dzsum1",
   "version": "1.0.0",
-  "description": "Sum of absolute values of a complex vector",
+  "description": "Forms the 1-norm of the complex vector using the true absolute value",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

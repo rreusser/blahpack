@@ -20,7 +20,7 @@ limitations under the License.
 
 # dggrqf
 
-> Computes a generalized RQ factorization of an M-by-N matrix A and a.
+> Computes a generalized RQ factorization of an M-by-N matrix A and a P-by-N matrix B: A = R·Q, B = Z·T·Q.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dggrqf = require( '@stdlib/lapack/base/dggrqf' );
 
 #### dggrqf( M, p, N, A, LDA, TAUA, strideTAUA, B, LDB, TAUB, strideTAUB )
 
-Computes a generalized RQ factorization of an M-by-N matrix A and a.
+Computes a generalized RQ factorization of an M-by-N matrix A and a P-by-N matrix B: A = R·Q, B = Z·T·Q.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
@@ -62,7 +62,7 @@ The function has the following parameters:
 
 #### dggrqf.ndarray( M, p, N, A, strideA1, strideA2, offsetA, TAUA, strideTAUA, offsetTAUA, B, strideB1, strideB2, offsetB, TAUB, strideTAUB, offsetTAUB )
 
-Computes a generalized RQ factorization of an M-by-N matrix A and a, using alternative indexing semantics.
+Computes a generalized RQ factorization of an M-by-N matrix A and a P-by-N matrix B: A = R·Q, B = Z·T·Q, using alternative indexing semantics.
 
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );

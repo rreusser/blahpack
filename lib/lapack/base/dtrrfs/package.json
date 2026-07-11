@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dtrrfs",
   "version": "1.0.0",
-  "description": "Provides error bounds for solution of a triangular system",
+  "description": "Provides error bounds and backward error estimates for the solution to a system of linear equations with a triangular coefficient matrix",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

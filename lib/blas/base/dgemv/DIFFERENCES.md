@@ -40,9 +40,27 @@ Our module has a single `test/test.js` using JSONL fixtures and
 - Private `isTransposed()` helper function
 - Two-pass structure: first handle y scaling (beta), then matrix-vector product
 
-**Ours**: Direct Fortran-to-JS translation with inline loops for y scaling
-and matrix-vector operations. No external dependencies for fill/scale.
+**Ours**: Optimized layout-adaptive blocked kernel (previously a direct
+Fortran-to-JS translation). No external dependencies for fill/scale.
 Functionally equivalent but uses a different code structure.
+
+---
+
+## [OPTIMIZATION] base.js -- Layout-adaptive four-wide register blocking
+
+The reference (BLAS 3.12.0 `dgemv.f`) always iterates rows in the inner
+loop. Our `base.js` treats `B = op(A)` and selects dot form (four rows per
+pass, four accumulators) or axpy form (four columns per pass, fused `y`
+update) so the inner loop always walks the smaller-stride dimension.
+
+- **Verification tier**: backward error (both forms reorder summation; see
+  `docs/optimization-policy.md`). Gated against the preserved reference
+  kernel elementwise at rel. tol. `1e-14 * max(4, K)` over 3000 cases
+  spanning transpose modes, layouts, general/negative strides, remainder
+  sizes, and alpha/beta specials (`bench/dgemv-opt/check.mjs`).
+- **Measured**: ~2.0-2.6x across square/tall/wide shapes, both layouts,
+  both transpose modes (`bench/dgemv-opt/bench.mjs`).
+- **Oracle preserved**: `bench/dgemv-opt/variants/v0-reference.js`.
 
 ---
 

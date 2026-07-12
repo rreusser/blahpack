@@ -145,3 +145,29 @@ Stdlib has 2 JS benchmark files. Ours has none.
 | `homepage`, `repository`, `bugs` | Present | Absent |
 | `engines`, `os`, `keywords` | Present | Absent |
 | `description` | Unicode (`A*x = b` or `A^T*x = b`) | Generic description |
+
+---
+
+## [OPTIMIZATION] base.js -- Layout-adaptive four-wide blocked substitution
+
+The reference (BLAS 3.12.0 `dtrsv.f`) performs scalar forward/backward
+substitution one unknown at a time. Our `base.js` folds the transpose into
+logical strides (`B = op(A)`, which also flips which triangle `B` occupies)
+and performs **block substitution**: the 4x4 triangular diagonal corner is
+solved with scalar code in reference order (dividing by the diagonal exactly
+as the reference does, never reciprocal-multiplying), and the resulting four
+solved unknowns are folded into the remaining right-hand sides with a fused
+four-wide pass -- whichever of dot or axpy form walks the smaller-stride
+dimension. This is the same recurrence with the updates re-associated, not a
+different solve method. `diag = 'unit'` never reads the diagonal.
+
+- **Verification tier**: backward error (the blocked updates reorder
+  summation; see `docs/optimization-policy.md`). Gated against the preserved
+  reference kernel elementwise at rel. tol. `1e-13 * max(4, N)` over 3168
+  cases spanning all 8 `uplo x trans x diag` combos,
+  col/row/general/negative-stride layouts, `strideX` in {1, 2, -1}, and `N`
+  in 0..64, with well-conditioned triangular `A`
+  (`bench/dtrsv-opt/check.mjs`).
+- **Measured**: 2.0-2.1x col-major and 2.3x row-major at `n` in {500, 2000},
+  all `uplo x trans` combos (`bench/dtrsv-opt/bench.mjs`).
+- **Oracle preserved**: `bench/dtrsv-opt/variants/v0-reference.js`.

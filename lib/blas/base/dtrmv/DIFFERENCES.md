@@ -146,3 +146,29 @@ Stdlib has 2 JS benchmark files. Ours has none.
 | `homepage`, `repository`, `bugs` | Present | Absent |
 | `engines`, `os`, `keywords` | Present | Absent |
 | `description` | Unicode (`x = A*x` or `x = A^T*x`) | ASCII (`x := A*x` or `x := A**T*x`) |
+
+---
+
+## [OPTIMIZATION] base.js -- Layout-adaptive four-wide blocked kernel
+
+The reference (BLAS 3.12.0 `dtrmv.f`) walks one column (or row) of the
+triangle at a time. Our `base.js` folds the transpose into logical strides
+(`B = op(A)`, which also flips which triangle `B` occupies, collapsing the
+four `(uplo, trans)` cases into two) and then selects whichever of two
+four-wide blocked forms walks `B`'s smaller-stride dimension in the inner
+loop: **dot form** (four rows per pass, four accumulators) or **axpy form**
+(four columns per pass, one fused update of `x`). Per block the 4x4
+triangular diagonal corner is scalar code; the rest is a dense four-wide
+loop. Rows are processed toward the triangle's empty side and columns away
+from it, so every `x` entry is read before it is overwritten -- the same
+in-place dataflow as the reference. `diag = 'unit'` never reads the diagonal.
+
+- **Verification tier**: backward error (both forms reorder summation; see
+  `docs/optimization-policy.md`). Gated against the preserved reference
+  kernel elementwise at rel. tol. `1e-13 * max(4, N)` over 3168 cases
+  spanning all 8 `uplo x trans x diag` combos, col/row/general/negative-stride
+  layouts, `strideX` in {1, 2, -1}, and `N` in 0..64
+  (`bench/dtrmv-opt/check.mjs`).
+- **Measured**: 2.0-2.1x col-major and 2.4x row-major at `n` in {500, 2000},
+  all `uplo x trans` combos (`bench/dtrmv-opt/bench.mjs`).
+- **Oracle preserved**: `bench/dtrmv-opt/variants/v0-reference.js`.

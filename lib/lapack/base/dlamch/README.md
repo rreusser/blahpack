@@ -20,7 +20,7 @@ limitations under the License.
 
 # dlamch
 
-> @license Apache-2.0.
+> Determines double-precision machine parameters.
 
 <section class="usage">
 
@@ -32,7 +32,7 @@ var dlamch = require( '@stdlib/lapack/base/dlamch' );
 
 #### dlamch( cmach )
 
-@license Apache-2.0.
+Determines double-precision machine parameters.
 
 ```javascript
 var dlamch = require( '@stdlib/lapack/base/dlamch' );
@@ -42,7 +42,9 @@ dlamch( 'epsilon' );
 
 The function has the following parameters:
 
--   **cmach**: `cmach`.
+-   **cmach**: string specifying which machine parameter to return. Long-form (preferred): `epsilon`, `safe-minimum`, `base`, `precision`, `digits`, `rounding`, `min-exponent`, `underflow`, `max-exponent`, `overflow`, or `scale`. The single-character LAPACK codes (`E`, `S`, `B`, `P`, `N`, `R`, `M`, `U`, `L`, `O`, either case) are also accepted. An unrecognized value returns `0`.
+
+The function returns a `number`.
 
 </section>
 

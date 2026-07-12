@@ -1,19 +1,35 @@
 {{alias}}( cmach )
-    @license Apache-2.0.
+    Determines double-precision machine parameters.
+
+    An unrecognized `cmach` returns 0.
 
     Parameters
     ----------
     cmach: string
-        `cmach`.
+        Machine parameter to return. Long-form (preferred): 'epsilon',
+        'safe-minimum', 'base', 'precision', 'digits', 'rounding',
+        'min-exponent', 'underflow', 'max-exponent', 'overflow', or 'scale'.
+        The single-character LAPACK codes ('E', 'S', 'B', 'P', 'N', 'R', 'M',
+        'U', 'L', 'O', either case) are also accepted.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    out: number
+        Machine parameter value.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = {{alias}}( 'epsilon' )
+    1.1102230246251565e-16
+    > out = {{alias}}( 'precision' )
+    2.220446049250313e-16
+    > out = {{alias}}( 'overflow' )
+    1.7976931348623157e+308
+    > out = {{alias}}( 'underflow' )
+    2.2250738585072014e-308
+    > out = {{alias}}( 'digits' )
+    53
 
     See Also
     --------
+

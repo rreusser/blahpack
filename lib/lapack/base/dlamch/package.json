@@ -1,7 +1,7 @@
 {
   "name": "@rreusser/blahpack/lapack/base/dlamch",
   "version": "1.0.0",
-  "description": "",
+  "description": "Determine double-precision machine parameters",
   "license": "MIT",
   "author": {
     "name": "Ricky Reusser",

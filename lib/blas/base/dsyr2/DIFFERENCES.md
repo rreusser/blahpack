@@ -134,3 +134,27 @@ Ours has no `benchmark/` directory.
 | `homepage`, `repository`, `bugs` | Present | Absent |
 | `engines`, `os`, `keywords` | Present | Absent |
 | `description` | Unicode math notation | Short generic description |
+
+---
+
+## [OPTIMIZATION] base.js -- Four-wide register-blocked rank update
+
+The reference walks one column of `A` at a time. Our `base.js` selects
+whichever traversal walks `A`'s smaller-stride dimension in the inner loop
+and register-blocks the other dimension four wide, so a single pass over the
+vector operand feeds four output streams. Only the stored triangle is read or written; the reference guard that skips a column when `x[j]` and `y[j]` are both zero is preserved.
+
+- **Verification tier**: **bit-identical** (see `docs/optimization-policy.md`).
+  The kernel only reschedules memory -- each element of `A` still receives a
+  single reference-order update, with no summation reordered -- so it is held
+  to the strict tier rather than a tolerance. Gated against the preserved
+  reference kernel with `Object.is` over the FULL `A` storage (which also
+  proves no element outside the reference's write set is touched) over 4400
+  cases spanning col/row/general/negative-stride layouts, vector strides in
+  {1, 2, -1}, sizes 0..64, and alpha specials (`bench/dsyr2-opt/check.mjs`).
+- **Measured**: 1.7-2.6x at `n` in {500, 2000}, both layouts. This is a
+  memory-bound symmetric rank-2 update `A += alpha*(x*y^T + y*x^T)` (one read plus one write of `A` per element), and the
+  kernel moves `A` at 19-35 GB/s against a ~40 GB/s streaming ceiling on the
+  reference machine, so it is now near the bandwidth limit
+  (`bench/dsyr2-opt/bench.mjs`).
+- **Oracle preserved**: `bench/dsyr2-opt/variants/v0-reference.js`.

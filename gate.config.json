@@ -953,10 +953,9 @@
   },
   "lib/lapack/base/dhseqr": {
     "skip": [
-      "workspace.no-internal-alloc",
-      "lint.eslint-pass"
+      "workspace.no-internal-alloc"
     ],
-    "reason": "HL (NL\u00d7NL) and workl (NL elements) are genuinely algorithm-internal temporaries that mirror Fortran's local array declarations (HL(NL,NL) and WORKL(NL)): HL is a scratch embedding matrix used only when N < NL=49 and dlahqr fails to converge, and workl is the matching 49-element scratch buffer passed to dlaqr0 for that embedded call. Caller-provided work is used for all other dlaqr0 invocations. ESLint sourceType mismatch: all .js files use ESM import/export but .eslintrc has sourceType: script (pre-existing; no changes to ESLint config)."
+    "reason": "HL (49x49) and workl (49 elements) are genuinely algorithm-internal temporaries that mirror the reference Fortran local array declarations HL(NL,NL) and WORKL(NL) with NL=49 (a fixed compile-time constant). They are used only in the rare fallback path where N < NL=49 and dlahqr fails to converge: HL is the scratch embedding matrix and workl is the matching 49-element buffer passed to dlaqr0 for that embedded call. All other dlaqr0 invocations use the caller-provided work, so base.js never allocates problem-scaled workspace. These two allocations use bare literal sizes (2401 and 49), which the ESLint no-internal-workspace-alloc rule correctly treats as fixed-size bookkeeping (exempt) \u2014 base.js and ndarray.js pass ESLint with zero errors. This gate exception remains only because the gate's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
   },
   "lib/lapack/base/dgeqrf": {
     "skip": [

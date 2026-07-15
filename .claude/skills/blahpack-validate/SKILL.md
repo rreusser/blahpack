@@ -20,6 +20,11 @@ structure. Fixture equality and coverage % are NOT correctness.
 
 - [ ] Property check passes across the full size sweep and **all** flag combos.
 - [ ] **Layout-invariance** fuzz passes (bit-exact across storage layouts).
+- [ ] If the routine has an `order`+`LDA`/`LDB` wrapper: **leading-dimension
+      conformance** passes (Step 4b) — the wrapper enforces each operand's
+      output-inclusive minimum LD.
+- [ ] If the routine takes a `work` buffer: **workspace conformance** passes
+      (Step 4c) — the advertised WORK minimum suffices on the blocked path.
 - [ ] Level recorded via `ledger.checked(...)`; `node bin/validation-level.js`
       shows `$ARGUMENTS` at **L3 or higher**.
 - [ ] Any bug found is logged in `test/harness/LEARNINGS.md` (before/with the fix).
@@ -118,6 +123,83 @@ Fuzz **every** operand's layout (the matrix scheme AND the vectors), including
 negative strides and row-major, which `schemes.dense.layouts()` /
 `vectorLayouts()` already include.
 
+**Blocked-path caveat**: routines that reach an optimized `dgemv`/`dger`/`dgemm`
+(via `dlarf`/`dlarfb` — `dgeqrf`, `dgels`, `dormqr`, large `dpotrf`, …) are NOT
+bit-exact across the **col↔row storage-order flip**: the kernel legitimately
+reorders its accumulation (~1e-16). They ARE bit-exact within one storage-order
+family (offset/padding/stride-**sign** all preserved). So fuzz the col-major and
+row-major layout families **separately** for bit-exactness, and verify cross-order
+agreement with the correctness *property* (Step 2), not bit-equality. A real
+row/col bug still fails the property. (See `LEARNINGS.md`, dgels.)
+
+## Step 4b — Leading-dimension conformance (drives `<routine>.js`, not `ndarray.js`)
+
+Steps 2–4 drive `ndarray.js` with buffers sized to each operand's full shape, so
+they **never exercise the `order`+`LDA`/`LDB` wrapper** in `<routine>.js`, and
+never stress a routine whose OUTPUT region exceeds its INPUT region in a shared
+buffer (e.g. `dgels` `M<N`: `B` grows from `M` to `N` rows in place). A wrong `LD`
+constraint there is a **silent out-of-bounds write** — the exact class that
+escaped the harness once already. If the routine has an LD wrapper (an `order` +
+`LDA`/`LDB` form), this step is **mandatory**.
+
+The oracle is the **math, not the wrapper's code**: an operand's required leading
+dimension is its *output-inclusive* extent — `col-major → rows`, `row-major →
+cols`. For `dgels`'s `B` that is `max(M,N) × nrhs` (not `M`/`N`).
+
+```js
+import { realizeLD, requiredLD, assertLeadingDimGuard } from '../../../../../test/harness/leadingdim.js';
+import wrap from './../lib/<routine>.js';   // the LDA/LDB wrapper, not ndarray
+
+// For each order ∈ {column-major,row-major}, each flag combo, and shapes that
+// make the output grow (e.g. M<N): the wrapper must REJECT required-1 and ACCEPT
+// required. `call(ld)` drives the wrapper with the operand under test at `ld`,
+// all other operands at valid dims.
+assertLeadingDimGuard( ( ldb ) => {
+  const A = realizeLD( order, M, N, M, N, requiredLD(order,M,N), aVal );
+  const B = realizeLD( order, pRows, nrhs, Math.max(M,N), nrhs, ldb, bVal );
+  wrap( order, ...flags, M, N, nrhs, A.data, A.ld, B.data, ldb, null, 1 );
+}, requiredLD( order, Math.max(M,N), nrhs ), 'LDB guard' );
+```
+
+Also add one positive run **through the wrapper at the minimal valid LD** on the
+output-growth shape, reading the full output back via `R.read` (OOB → `undefined`
+→ caught by `assertFinite`) and checking the Step-2 property. Record as the same
+property kind (this is `residual`/`structural` correctness, exercised via the real
+wrapper). A row/col transpose or off-by-one in the order→stride mapping fails here.
+
+## Step 4c — Workspace conformance (for any routine with a caller/auto-sized WORK)
+
+Reference LAPACK negotiates `LWORK` at runtime and shrinks `NB` to fit whatever it
+is handed, so an under-estimate only costs speed. **Our JS hardcodes `NB` and does
+not adapt**, and several blocked routines store the block-reflector `T` in a
+separate trailing block — so a copied reference `LWORK` formula UNDER-counts real
+consumption and the routine reads past its own buffer → `undefined` → NaN. The
+property layer misses this because it over-sizes WORK and its fixtures are
+unblocked. **Mandatory for any routine with a `work` argument** (blocked
+factorizations/drivers: `dgels`, `dgelss`, `dgeqrf`, `dgehrd`, `dgetri`, …).
+
+Probe the minimum WORK length the wrapper advertises (its throw boundary — no
+formula duplicated) and assert it actually suffices on the BLOCKED path, with a
+poisoned buffer, across both factorization paths and a large `nrhs` (to stress the
+application-workspace branch separately from factorization):
+
+```js
+import { assertWorkspaceSufficient, poisonedWork } from '../../../../../test/harness/workspace.js';
+
+// run(workLen): build a poisoned WORK of that length, drive the ndarray form
+// (must THROW when WORK is too small), and return the flat output components.
+assertWorkspaceSufficient( ( workLen ) => {
+  const R = schemes.dense.realize( sc, A, spec, layout );
+  const work = poisonedWork( workLen );
+  routine( ...flags, dims, R.data, ...R.args, /*B*/..., work, 1, 0 );
+  return /* flat output components via R.read */;
+}, {}, 'WORK sufficiency <flags> <M>x<N> nrhs=<k>' );
+```
+
+Run the LD-guard (4b) and WORK-sufficiency (4c) as plain assertions (not `checked`)
+— they are robustness contracts, not correctness levels, so they gate CI without
+inflating the recorded L-level.
+
 ## Step 5 — Record the level (honestly)
 
 Wrap each real check so it only counts when it passes:
@@ -168,7 +250,13 @@ Then fix. Never fix silently — the learning is the deliverable.
 4. Always run the layout-invariance fuzz (bit-exact). No routine ships below L3.
 5. Always record via `checked(...)` so the level is honest.
 6. Validate `d` and `z` forms together when both exist.
-7. Any failure → `LEARNINGS.md` entry first.
+7. If the routine has an LD wrapper, always run the leading-dimension conformance
+   step (Step 4b) — LD constraints are validated from the operand's
+   output-inclusive shape, never from the wrapper's own code.
+8. If the routine takes a `work` buffer, always run workspace conformance (Step 4c)
+   — the advertised WORK minimum must suffice on the blocked path (probe it; never
+   trust a copied reference `LWORK` formula for our non-adaptive, separate-T deps).
+9. Any failure → `LEARNINGS.md` entry first.
 
 ## Batch validation
 

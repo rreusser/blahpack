@@ -236,7 +236,11 @@ function check( mod ) {
 	}
 
 	// 5. z/c-prefix routines must allocate Complex128Array/Complex64Array for
-	//    workspace in the wrapper (<routine>.js), never Float64Array/Float32Array.
+	//    the COMPLEX workspace in the wrapper (<routine>.js), never
+	//    Float64Array/Float32Array. Only the complex `WORK` buffer is covered:
+	//    a real `RWORK` buffer (Fortran's second, real-valued workspace) is
+	//    LEGITIMATELY a Float64Array, so we match assignments to a `WORK`-named
+	//    target only (the `\b` boundary excludes `RWORK`, `IWORK`, `SWORK`).
 	var isComplex = /^[zc]/.test( mod.routine );
 	if ( isComplex ) {
 		var routineWrapperPath = path.join( mod.dir, 'lib', mod.routine + '.js' );
@@ -244,7 +248,7 @@ function check( mod ) {
 		if ( wrapperContent ) {
 			var complexViolations = [];
 			var wrapperLines = wrapperContent.split( '\n' );
-			var WRONG_CPLX_RE = /new\s+(Float64Array|Float32Array)\s*\(/;
+			var WRONG_CPLX_RE = /\bWORK\d*\s*=\s*new\s+(Float64Array|Float32Array)\s*\(/;
 			var wl, wt;
 			for ( i = 0; i < wrapperLines.length; i++ ) {
 				wl = wrapperLines[ i ];

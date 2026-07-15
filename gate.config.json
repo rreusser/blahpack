@@ -265,10 +265,9 @@
   },
   "lib/lapack/base/dggevx": {
     "skip": [
-      "lint.eslint-pass",
-      "workspace.no-internal-alloc"
+      "lint.eslint-pass"
     ],
-    "reason": "lint.eslint-pass: Private helper normalizeEigenvectors triggers a false-positive stdlib/signature-conformance warning because the checker matches all functions against the DGGEVX Fortran signature. All real ESLint errors are zero. workspace.no-internal-alloc: The 3 remaining internal allocations (workVL, workVR, SNSWORK) are sub-slices of the Fortran WORK array used only inside the per-eigenvalue sense loop (when sense != 'none'). They are allocated inside a conditional branch and cannot be exposed as top-level caller-provided buffers without making the public API depend on the current eigenvalue index. The caller-provided work/iwork/bwork buffers already satisfy the Fortran WORK/IWORK/BWORK interface; these are legitimately internal JS temporaries that carve from the conceptual WORK space."
+    "reason": "lint.eslint-pass: Private helper normalizeEigenvectors triggers a false-positive stdlib/signature-conformance warning because the checker matches all functions against the DGGEVX Fortran signature. All real ESLint errors are zero."
   },
   "lib/lapack/base/zgeevx": {
     "skip": [
@@ -956,6 +955,12 @@
       "workspace.no-internal-alloc"
     ],
     "reason": "HL (49x49) and workl (49 elements) are genuinely algorithm-internal temporaries that mirror the reference Fortran local array declarations HL(NL,NL) and WORKL(NL) with NL=49 (a fixed compile-time constant). They are used only in the rare fallback path where N < NL=49 and dlahqr fails to converge: HL is the scratch embedding matrix and workl is the matching 49-element buffer passed to dlaqr0 for that embedded call. All other dlaqr0 invocations use the caller-provided work, so base.js never allocates problem-scaled workspace. These two allocations use bare literal sizes (2401 and 49), which the ESLint no-internal-workspace-alloc rule correctly treats as fixed-size bookkeeping (exempt) \u2014 base.js and ndarray.js pass ESLint with zero errors. This gate exception remains only because the gate's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
+  },
+  "lib/lapack/base/dtgsy2": {
+    "skip": [
+      "workspace.no-internal-alloc"
+    ],
+    "reason": "The only problem-scaling workspace, IWORK (M+N+2), is caller-owned: it is a parameter of base.js/ndarray.js and is allocated only in the dtgsy2.js wrapper when null. The base.js allocations flagged by this check are Z (LDZ*LDZ = 64), RHS (LDZ = 8), IPIV (LDZ = 8) and JPIV (LDZ = 8) \u2014 the fixed-size scratch for the (at most 8x8) Kronecker-product linear solve, mirroring the reference Fortran locals Z(LDZ,LDZ), RHS(LDZ), IPIV(LDZ), JPIV(LDZ) with LDZ=8 (a compile-time constant). These do NOT scale with M or N. Written as bare literals, the ESLint no-internal-workspace-alloc rule correctly treats all four as fixed-size bookkeeping (base.js passes ESLint with zero errors). Only the Z allocation trips this gate check, and solely because the gate's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
   },
   "lib/lapack/base/dgeqrf": {
     "skip": [

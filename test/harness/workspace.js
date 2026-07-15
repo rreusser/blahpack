@@ -115,14 +115,16 @@ function assertWorkspaceSufficient( run, opts, label ) {
 }
 
 /**
-* Allocate a poisoned (NaN-filled) real WORK buffer — a convenience for `run`
-* closures so over-reads past the used region AND reads-before-write both surface
-* as NaN.
+* Allocate a poisoned (NaN-filled) WORK buffer — a convenience for `run` closures
+* so over-reads past the used region AND reads-before-write both surface as NaN.
+* Generic over the scalar trait: pass `scalar.real` for a Float64Array WORK or
+* `scalar.complex` for a Complex128Array WORK (both poisoned via `scalar.alloc`).
+*
+* @param {Object} scalar - scalar trait (real/complex) from scalar.js
+* @param {number} workLen - number of ELEMENTS (complex counts as one element)
 */
-function poisonedWork( workLen ) {
-	var w = new Float64Array( Math.max( workLen, 0 ) );
-	w.fill( NaN );
-	return w;
+function poisonedWork( scalar, workLen ) {
+	return scalar.alloc( Math.max( workLen, 0 ) );
 }
 
 

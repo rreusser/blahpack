@@ -39,6 +39,19 @@ Keep entries short. Newest first.
   confirmed complex-LS bugs below. **These fixes are NOT yet applied** — zgels &
   zgelss need a full validation pass (harness extended to complex) rather than
   hand-patching, so this entry is the runnable-repro handoff.
+- **⚠ CORRECTION (workspace strategy)**: an earlier draft of this entry (and my
+  first zgels/zgelss patch) treated **base.js allocating WORK internally** as
+  acceptable — "pass `WORK=null` through to base." That is WRONG.
+  **base.js and ndarray.js must NEVER allocate a problem-sized workspace**; only
+  the `<routine>.js` wrapper allocates, on a null `work` arg. Reasons: (a) these
+  routines model C — if C doesn't allocate, JS shouldn't; (b) the ndarray layer
+  reuses ONE workspace across same-size batches, so per-call allocation defeats
+  batching. Enforced now by the `no-internal-workspace-alloc` ESLint rule
+  (flags 37 base.js routines incl. zgels/zgelss). So the real fix for zgels/zgelss
+  is the dgels template: base+ndarray take caller-owned WORK (no alloc), ndarray
+  asserts the size (loud RangeError, not silent NaN), wrapper auto-allocs on null,
+  drop `lwork`. The blocked-path *sizing insight* below is still correct; where it
+  says "fix base's formula" read "size the wrapper's allocation / ndarray's assert."
 - **Triage — LDB output-growth class is confined to the LS/min-norm family**
   (`gels`/`gelss`): only there does the solution overwrite `B` with MORE rows
   (`max(M,N)`) than the RHS (`M`). All other ~150 `LDB < max(1,N)` solves keep `B`
@@ -54,8 +67,9 @@ Keep entries short. Newest first.
      (TAU is already a separate array here), so scratch needs
      `max(MN,nrhs)*NB + (NB+1)*NB`, not `MN + max(MN,nrhs)*NB`.
   2. `lib/zgels.js:52` wrapper auto-alloc references undefined `MN`/`NRHS`
-     → ReferenceError on `WORK=null` (params are `M`,`N`,`nrhs`). Simplest correct
-     fix: pass `WORK=null` through to base (after base's formula is fixed).
+     → ReferenceError on `WORK=null` (params are `M`,`N`,`nrhs`). Correct fix: the
+     WRAPPER allocates a correctly-sized Complex128Array (NOT defer to base — see
+     CORRECTION above); base must not allocate.
   3. `lib/zgels.js:72` `LDB < max( 1, M )` → must be `max( 1, max(M,N) )`
      (column-major; no `order` param). Repro: `ldb=3` for `M=3,N=5` is accepted and
      the 5-row solution overflows → NaN.

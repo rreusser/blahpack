@@ -21,15 +21,6 @@
 * real, shipped bug classes.
 */
 
-var real = {
-	'alloc': function alloc( n ) {
-		var d = new Float64Array( n );
-		d.fill( NaN ); // poison
-		return d;
-	}
-};
-
-
 // MAIN //
 
 /**
@@ -38,21 +29,24 @@ var real = {
 * `(i,j)` at `j*ld + i`; row-major at `i*ld + j`. The buffer spans `ld*cols`
 * (col-major) or `ld*rows` (row-major) — the standard wrapper allocation — so that
 * an operand written past the `ld`-implied region lands out of bounds and reads
-* back as a non-finite value.
+* back as a non-finite value. Generic over the scalar trait (real Float64Array or
+* complex Complex128Array), with poisoning via `scalar.alloc`.
 *
+* @param {Object} scalar - scalar trait (real/complex) from scalar.js
 * @param {string} order - 'column-major' | 'row-major'
 * @param {number} rowsRef - number of referenced (initialized) input rows
 * @param {number} colsRef - number of referenced input columns
 * @param {number} rowsFull - full leading extent used to size the buffer's rows
 * @param {number} colsFull - full trailing extent used to size the buffer's cols
 * @param {number} ld - leading dimension to use
-* @param {Function} val - `val(i,j)` supplies the referenced element value
+* @param {Function} val - `val(i,j)` supplies the referenced element VALUE (a
+*   number for real, `{re,im}` for complex)
 * @returns {Object} { data, ld, read(i,j) }
 */
-function realizeLD( order, rowsRef, colsRef, rowsFull, colsFull, ld, val ) {
+function realizeLD( scalar, order, rowsRef, colsRef, rowsFull, colsFull, ld, val ) {
 	var col = ( order === 'column-major' );
 	var len = col ? ( ld * colsFull ) : ( ld * rowsFull );
-	var data = real.alloc( Math.max( len, 1 ) );
+	var data = scalar.alloc( Math.max( len, 1 ) );
 	var i;
 	var j;
 	function addr( a, b ) {
@@ -60,7 +54,7 @@ function realizeLD( order, rowsRef, colsRef, rowsFull, colsFull, ld, val ) {
 	}
 	for ( j = 0; j < colsRef; j++ ) {
 		for ( i = 0; i < rowsRef; i++ ) {
-			data[ addr( i, j ) ] = val( i, j );
+			scalar.write( data, addr( i, j ), val( i, j ) );
 		}
 	}
 	return {
@@ -68,7 +62,7 @@ function realizeLD( order, rowsRef, colsRef, rowsFull, colsFull, ld, val ) {
 		'ld': ld,
 		'read': function read( a, b ) {
 			var idx = addr( a, b );
-			return ( idx >= 0 && idx < data.length ) ? data[ idx ] : void 0;
+			return ( idx >= 0 && idx < data.length ) ? scalar.read( data, idx ) : void 0;
 		}
 	};
 }

@@ -34,6 +34,12 @@ var DESIRED_RULES = {
 	'no-stub-wrappers': 'error',
 	'no-todo-params': 'error',
 	'z-prefix-reinterpret': 'error',
+
+	// Structural enforcement of the workspace strategy: base.js and ndarray.js must
+	// never allocate a problem-sized workspace buffer (the caller owns it; the
+	// ndarray layer reuses one buffer across same-size batches). Allocation is
+	// allowed only in the <routine>.js wrapper on a null work argument.
+	'no-internal-workspace-alloc': 'error',
 	'vars-order': 'warn'
 };
 var BLAHPACK_RULES = {};

@@ -122,6 +122,13 @@ Use these skills for translation and review workflows:
   for convention violations, scaffolding remnants, and quality issues.
   Runs `node bin/gate.js` and applies the full review checklist.
 
+- `/blahpack-validate <routine>` — Rigorously validate a routine's
+  correctness with the property-based harness (`test/harness/`). Fixed,
+  repeatable procedure: classify the routine, pick generator/scheme/property
+  from tables, sweep sizes + flags, fuzz storage layouts (bit-exact), and
+  record a validation level (L0–L4). Use this to prove correctness — the gate
+  and lint check conformance, not correctness.
+
 - `/blahpack-scaffold <package> <routine>` — Generate module scaffold
 - `/blahpack-signature <routine>` — Generate stdlib-js call signature
 - `/blahpack-deps <routine>` — Show dependency tree
@@ -133,6 +140,33 @@ Use these skills for translation and review workflows:
 Any manual work that repeats across routines is a bug in the tooling. If you
 perform the same mechanical transformation twice, stop and automate it (new
 transform in `bin/transform.py` or script in `bin/`) before continuing.
+
+## Validation Harness (correctness, not just coverage)
+
+Fixture tests and coverage % do NOT prove correctness — tests that assert
+nothing meaningful inflate both. For rigorous validation use the
+property-based harness in `test/harness/` (see its `README.md`):
+
+- **Generate structured inputs, validate by mathematical property** against an
+  independent oracle: reconstruction (`A = UᴴU`, `PA = LU`, `A = QR`), residual
+  (`Ax = b`), structural (zeros produced), orthogonality (`QᴴQ = I`).
+- **Three orthogonal layers**: scalar trait (`real`/`complex`), storage-agnostic
+  `logical` matrices, and pluggable storage `schemes` (`dense`/`banded`/`packed`
+  + vectors). Works across the full `[d|z] × structure × storage` taxonomy.
+- **Poisoned storage** (unused slots = NaN) turns off-by-one/out-of-bounds reads
+  into loud failures. **Layout invariance** asserts bit-exact output across
+  offsets, strides, leading dims, and row/col-major — the highest-signal test for
+  the offset/stride bug class. ALWAYS fuzz layouts for any routine with a working
+  property check.
+- **Validation levels** are recorded honestly at runtime (only passing checks
+  count): `node bin/validation-level.js [--badges|--md]`. Ladder L0–L4 in the
+  README. Aim to raise every routine to at least L3 (layout-fuzzed).
+
+**MANDATORY: when the harness catches ANY bug (in a routine OR the harness),
+add an entry to `test/harness/LEARNINGS.md` before/with the fix** — with the
+reproducing seed, scalar type, storage scheme, flags, dimensions, root cause,
+bug class, and where else it might hide. Never fix silently; the learning is the
+most valuable output. This overrides any inclination to "just fix it."
 
 ## Known Limitations
 

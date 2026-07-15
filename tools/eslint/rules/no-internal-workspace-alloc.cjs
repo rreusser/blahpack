@@ -92,6 +92,9 @@ function isWorkspaceSized( arg ) {
 	if ( arg.type === 'Literal' ) {
 		return false; // fixed size => bounded bookkeeping / scalar temp, not workspace
 	}
+	if ( arg.type === 'ArrayExpression' ) {
+		return false; // `new T([a,b])` builds a fixed-size value (e.g. a complex scalar), not workspace
+	}
 	if ( arg.type === 'MemberExpression' && arg.property && arg.property.name === 'buffer' ) {
 		return false;
 	}

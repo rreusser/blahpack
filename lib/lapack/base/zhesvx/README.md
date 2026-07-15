@@ -30,7 +30,7 @@ limitations under the License.
 var zhesvx = require( '@stdlib/lapack/base/zhesvx' );
 ```
 
-#### zhesvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, lwork, RWORK, strideRWORK )
+#### zhesvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, RWORK, strideRWORK )
 
 Computes the solution to system of linear equations A·X = B for Hermitian matrices.
 
@@ -48,7 +48,7 @@ var BERR = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 var RWORK = discreteUniform( N, -10, 10, opts );
 
-zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, N, RWORK, 1, 0 );
+zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 ```
 
 The function has the following parameters:
@@ -74,11 +74,10 @@ The function has the following parameters:
 -   **strideBERR**: stride length for `BERR`.
 -   **WORK**: input array `WORK`.
 -   **strideWORK**: stride length for `WORK`.
--   **lwork**: `lwork`.
 -   **RWORK**: input array `RWORK`.
 -   **strideRWORK**: stride length for `RWORK`.
 
-#### zhesvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
+#### zhesvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
 
 Computes the solution to system of linear equations A·X = B for Hermitian matrices, using alternative indexing semantics.
 
@@ -96,7 +95,7 @@ var BERR = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 var RWORK = discreteUniform( N, -10, 10, opts );
 
-zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, N, RWORK, 1, 0 );
+zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -153,7 +152,7 @@ var BERR = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 var RWORK = discreteUniform( N, -10, 10, opts );
 
-zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, N, RWORK, 1, 0 );
+zhesvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, X, N, 1, 0, 1.0, FERR, 1, 0, BERR, 1, 0, WORK, 1, 0, RWORK, 1, 0 );
 ```
 
 </section>

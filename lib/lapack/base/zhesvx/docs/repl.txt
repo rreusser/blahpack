@@ -1,4 +1,4 @@
-{{alias}}( fact, uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, lwork, RWORK, strideRWORK )
+{{alias}}( fact, uplo, N, nrhs, A, LDA, AF, LDAF, IPIV, strideIPIV, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, RWORK, strideRWORK )
     Computes the solution to system of linear equations A·X = B for
     Hermitian matrices.
 
@@ -67,9 +67,6 @@
     strideWORK: integer
         stride length for `WORK`.
 
-    lwork: integer
-        `lwork`.
-
     RWORK: Float64Array
         `RWORK`.
 
@@ -86,7 +83,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
+{{alias}}.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, RWORK, strideRWORK, offsetRWORK )
     Computes the solution to system of linear equations A·X = B for
     Hermitian matrices, using alternative indexing semantics.
 
@@ -190,9 +187,6 @@
 
     offsetWORK: integer
         starting index for `WORK`.
-
-    lwork: integer
-        `lwork`.
 
     RWORK: Float64Array
         `RWORK`.

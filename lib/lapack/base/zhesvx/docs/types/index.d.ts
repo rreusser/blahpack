@@ -48,14 +48,13 @@ interface Routine {
 	* @param strideFERR - stride of `FERR`
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
-	* @param WORK - `WORK`
+	* @param WORK - complex workspace (allocated internally if `null`)
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
-	* @param RWORK - `RWORK`
+	* @param RWORK - real workspace (allocated internally if `null`)
 	* @param strideRWORK - stride of `RWORK`
 	* @returns result
 	*/
-	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
 
 	/**
 	* Solves a complex Hermitian indefinite system of linear equations A*X = B using alternative indexing semantics.
@@ -90,16 +89,15 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
-	* @param WORK - `WORK`
+	* @param WORK - complex workspace
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
-	* @param RWORK - `RWORK`
+	* @param RWORK - real workspace
 	* @param strideRWORK - stride of `RWORK`
 	* @param offsetRWORK - starting index for `RWORK`
 	* @returns result
 	*/
-	ndarray( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
 }
 
 /**

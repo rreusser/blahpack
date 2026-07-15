@@ -163,7 +163,13 @@ function scanModules( pkg ) {
 			hasTests: hasTests,
 			testCount: testCount,
 			lineCov: lineCov,
-			branchCov: branchCov
+			branchCov: branchCov,
+
+			// Property-based validation: a `test.validate.js` file signals a
+			// validation approach is in place; `validationLevel` (L0-L4) is filled
+			// in later from the runtime ledger. See test/harness/.
+			hasValidation: fs.existsSync( path.join( testDir, 'test.validate.js' ) ),
+			validationLevel: 0
 		};
 	});
 	return out;
@@ -173,8 +179,42 @@ function scanModules( pkg ) {
 // Build the report
 // ---------------------------------------------------------------------------
 
+// Clear stale validation-ledger fragments so recorded levels reflect THIS run:
+// scanModules runs every test file (including test.validate.js), which
+// repopulates the ledger via each test process's on-exit flush.
+var LEDGER_DIR = path.join( ROOT, 'test', '.validation-ledger' );
+try {
+	if ( fs.existsSync( LEDGER_DIR ) ) {
+		fs.readdirSync( LEDGER_DIR ).forEach( function( f ) {
+			if ( /^frag-.*\.jsonl$/.test( f ) ) {
+				fs.unlinkSync( path.join( LEDGER_DIR, f ) );
+			}
+		});
+	}
+} catch ( e ) {}
+
 var blasImpl = scanModules( 'blas' );
 var lapackImpl = scanModules( 'lapack' );
+
+// Attach recorded validation levels (from the runtime ledger the test.validate.js
+// runs above repopulated) to each implementation, keyed by routine name.
+( function attachValidationLevels() {
+	var summary = {};
+	try {
+		execSync( 'node ' + path.join( ROOT, 'bin', 'validation-level.js' ), { cwd: ROOT, stdio: [ 'ignore', 'ignore', 'ignore' ] } );
+		var sp = path.join( LEDGER_DIR, 'summary.json' );
+		if ( fs.existsSync( sp ) ) {
+			summary = JSON.parse( fs.readFileSync( sp, 'utf8' ) );
+		}
+	} catch ( e ) {}
+	[ blasImpl, lapackImpl ].forEach( function( set ) {
+		Object.keys( set ).forEach( function( n ) {
+			if ( summary[ n ] ) {
+				set[ n ].validationLevel = summary[ n ].level;
+			}
+		});
+	});
+})();
 
 // Lookup: routine name (lowercase) -> implementation info
 function getImpl( name ) {
@@ -257,13 +297,22 @@ function variantCell( variant ) {
 		}
 		tip += ' — tests: ' + impl.testCount;
 	}
+	// Property-based validation indicator: a corner dot on the variant, colored by
+	// the recorded validation level (L2 property / L3 layout-fuzzed / L4 cross-diff).
+	var vdot = '';
+	if ( impl && impl.hasValidation ) {
+		var vlvl = impl.validationLevel || 0;
+		cls += ' variant-validated';
+		tip += ' — validation: ' + ( vlvl >= 1 ? ( 'L' + vlvl ) : 'in place' );
+		vdot = '<span class="vdot vdot-l' + vlvl + '"></span>';
+	}
 	var id = variant.name.toLowerCase();
 	var href = '#' + id;
 	if ( impl && impl.hasImpl ) {
 		var pkg = impl.package || 'lapack';
 		href = 'https://github.com/rreusser/notes/tree/main/lib/' + pkg + '/base/' + id;
 	}
-	return '<a id="' + id + '" href="' + href + '" class="' + cls + '" title="' + esc( tip ) + '">' + variant.type + '</a>';
+	return '<a id="' + id + '" href="' + href + '" class="' + cls + '" title="' + esc( tip ) + '">' + variant.type + vdot + '</a>';
 }
 
 function texifyDesc( raw ) {
@@ -714,6 +763,13 @@ var html = '<!DOCTYPE html>\n' +
 '.variant-done.variant-cov-warn { background: #fde68a; color: #78350f; }\n' +
 '.variant-done.variant-cov-bad { background: #fecaca; color: #7f1d1d; }\n' +
 '.variant-done.variant-cov-unknown { background: #dcfce7; color: #166534; }\n' +
+'.variant-validated { position: relative; }\n' +
+'.vdot { position: absolute; top: 0; right: 0; width: 5px; height: 5px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(255,255,255,0.85); }\n' +
+'.vdot-l0, .vdot-l1 { background: #9ca3af; }\n' +
+'.vdot-l2 { background: #60a5fa; }\n' +
+'.vdot-l3 { background: #6366f1; }\n' +
+'.vdot-l4 { background: #7c3aed; }\n' +
+'.vlegend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }\n' +
 '.cov-sample { color: #999; font-weight: 400; font-size: 0.7rem; }\n' +
 '.tests { text-align: center; }\n' +
 '.desc { color: #555; font-size: 0.8rem; }\n' +
@@ -784,6 +840,15 @@ Object.keys( db.meta.storage_codes ).sort().map( function( code ) {
 	return '<tr><td class="legend-code">' + code + '</td><td>' + esc( db.meta.storage_codes[ code ] ) + '</td></tr>';
 }).join( '\n' ) +
 '\n</tbody></table>\n' +
+'</div>\n' +
+'<div class="legend-col">\n' +
+'<h4>Validation</h4>\n' +
+'<table class="legend-table"><tbody>\n' +
+'<tr><td><span class="vlegend-dot vdot-l2"></span></td><td>L2 property (independent oracle)</td></tr>\n' +
+'<tr><td><span class="vlegend-dot vdot-l3"></span></td><td>L3 layout-fuzzed (bit-exact)</td></tr>\n' +
+'<tr><td><span class="vlegend-dot vdot-l4"></span></td><td>L4 cross / differential</td></tr>\n' +
+'</tbody></table>\n' +
+'<div style="font-size:0.7rem;color:#888;margin-top:0.25rem;">corner dot on a variant = property-based validation in place</div>\n' +
 '</div>\n' +
 '</div>\n' +
 '</details>\n' +

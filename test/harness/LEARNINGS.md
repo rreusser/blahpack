@@ -32,6 +32,45 @@ Keep entries short. Newest first.
 
 ---
 
+## 2026-07-15 — SWEEP of LD wrappers: zgels/zgelss broken (LDB + blocked-path workspace, base AND wrapper)
+
+- **What**: Systematic sweep of every LAPACK LD wrapper for the two dgels bug
+  classes (LDB output-growth; blocked-path WORK under-allocation). Triage +
+  confirmed complex-LS bugs below. **These fixes are NOT yet applied** — zgels &
+  zgelss need a full validation pass (harness extended to complex) rather than
+  hand-patching, so this entry is the runnable-repro handoff.
+- **Triage — LDB output-growth class is confined to the LS/min-norm family**
+  (`gels`/`gelss`): only there does the solution overwrite `B` with MORE rows
+  (`max(M,N)`) than the RHS (`M`). All other ~150 `LDB < max(1,N)` solves keep `B`
+  at `N×NRHS`, so `LDB >= N` is correct — NOT the bug class. Real `dgels`/`dgelss`
+  LDB fixed (Stephan Schiffels, cherry-picked). `dgelss` blocked workspace spot-
+  checked finite.
+- **CONFIRMED BUG — zgels** (`lib/lapack/base/zgels/`), three defects:
+  1. `lib/base.js:109` WORK=null auto-alloc `MN + max(MN,nrhs)*32` **under-allocates
+     the blocked path** (min(M,N) > 32): all-NaN solution. Repro: `zgels('no-
+     transpose',40,33,2,A,1,40,0,B,1,40,0,null,1,0,-1)` with Complex128Array A/B →
+     NaN; `33×40`, `64×64` too. `3×5` (unblocked) is fine. Base is CORRECT with
+     adequate WORK (residual ~1e-16). Complex `zgeqrf`/`zunmqr` store `T` separately
+     (TAU is already a separate array here), so scratch needs
+     `max(MN,nrhs)*NB + (NB+1)*NB`, not `MN + max(MN,nrhs)*NB`.
+  2. `lib/zgels.js:52` wrapper auto-alloc references undefined `MN`/`NRHS`
+     → ReferenceError on `WORK=null` (params are `M`,`N`,`nrhs`). Simplest correct
+     fix: pass `WORK=null` through to base (after base's formula is fixed).
+  3. `lib/zgels.js:72` `LDB < max( 1, M )` → must be `max( 1, max(M,N) )`
+     (column-major; no `order` param). Repro: `ldb=3` for `M=3,N=5` is accepted and
+     the 5-row solution overflows → NaN.
+- **CONFIRMED BUG — zgelss** (`lib/lapack/base/zgelss/lib/zgelss.js:81`):
+  `LDB < max( 1, M )` → `max( 1, max(M,N) )` (same output-growth class). Workspace
+  path is a query stub (`minWork=1`); its blocked sufficiency needs the same check.
+- **Bug class**: `storage-mapping` (LDB) + `convention` (workspace under-alloc,
+  same JS-hardcoded-NB / separate-T root cause as dgels).
+- **Next step (the right way, per the procedure)**: extend `leadingdim.js` /
+  `workspace.js` to complex (Complex128Array operands, `2*len` poison), then run
+  `/blahpack-validate zgels` and `zgelss` — the LD-guard + workspace-conformance
+  steps will drive out defects 1–3 and defect above, and property/cross-val will
+  confirm the fixes. Do NOT ship LDB alone: base still NaNs on blocked until (1) is
+  fixed, so a partial fix gives false confidence.
+
 ## 2026-07-15 — HARNESS GAP + dgels LDB under/over-constraint (leading-dim wrapper unvalidated)
 
 - **What**: `dgels`'s `order`+`LDA`+`LDB` wrapper (`lib/dgels.js`) had two wrong

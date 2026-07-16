@@ -21,6 +21,7 @@
 /// <reference types="@stdlib/types"/>
 
 import { Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zsytrf_aa`.
@@ -35,14 +36,11 @@ interface Routine {
 	* @param A - input matrix
 	* @param LDA - leading dimension of `A`
 	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
-	* @returns result
+	* @param WORK - caller-provided workspace (`null` requests internal allocation)
+	* @param strideWork - stride length for `WORK`
+	* @returns `info` (always 0)
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, uplo: string, N: number, A: Complex128Array, LDA: number, IPIV: Int32Array, WORK: Complex128Array | null, strideWork: number ): number;
 
 	/**
 	* Computes the factorization of a complex symmetric matrix using Aasen's algorithm (blocked), using alternative indexing semantics.
@@ -56,13 +54,12 @@ interface Routine {
 	* @param IPIV - input array
 	* @param strideIPIV - stride length for `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
-	* @returns result
+	* @param WORK - caller-owned workspace
+	* @param strideWork - stride length for `WORK`
+	* @param offsetWork - starting index for `WORK`
+	* @returns `info` (always 0)
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( uplo: string, N: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Complex128Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**

@@ -21,6 +21,7 @@
 /// <reference types="@stdlib/types"/>
 
 import { MatrixTriangle } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zsysv`.
@@ -38,9 +39,11 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @returns result
+	* @param WORK - caller-provided workspace (length `>= N` when `N > 0` and `nrhs > 0`); `null` requests internal allocation
+	* @param strideWork - stride of `WORK`
+	* @returns `info` status code (0 on success; k>0 if D(k-1,k-1) is exactly zero)
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, nrhs: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Complex128Array, LDB: number, WORK: Complex128Array | null, strideWork: number ): number;
 
 	/**
 	* Solves a complex symmetric indefinite system of linear equations A * X = B using alternative indexing semantics.
@@ -59,13 +62,12 @@ interface Routine {
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
-	* @returns result
+	* @param WORK - caller-owned workspace (length `>= N` when `N > 0` and `nrhs > 0`; unused otherwise)
+	* @param strideWork - stride of `WORK`
+	* @param offsetWork - starting index for `WORK`
+	* @returns `info` status code (0 on success; k>0 if D(k-1,k-1) is exactly zero)
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Complex128Array, strideB1: number, strideB2: number, offsetB: number, WORK: Complex128Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**

@@ -32,6 +32,50 @@ Keep entries short. Newest first.
 
 ---
 
+## 2026-07-16 — dznrm2 unit-stride fast path broke layout invariance (zgels)
+
+- **What**: `zgels` layout-invariance check failed — output not bit-exact within
+  the row-major storage family. Root-caused down the call chain
+  `zgels → zgelqf → zgelq2 → zlarfg → dznrm2`.
+- **Repro**: `node --test lib/lapack/base/zgels/test/test.validate.js` →
+  `zgels layout invariance row-major no-transpose 33x40 [variant 1 vs 0]: differ
+  at component 0: -0.29653930753419944 vs -0.296539307534199`. Complex scalar,
+  dense scheme, `trans='no-transpose'`, M=33 N=40 nrhs=2, harness seed
+  `0x6000 + M*17 + N`. Variant 0 = tight row-major (element stride 1), variant 1 =
+  gapped row-major (element stride 2). Divergence first appears at `A(12,12)`:
+  iteration i=12 calls `dznrm2` with N=27 (**odd**) — the trigger.
+- **Root cause**: `lib/blas/base/dznrm2/lib/base.js` had a `strideX === 1` fast
+  path whose **tail loop** (leftover complex element when N is odd) added *both*
+  re² and im² to accumulator `s0` (`for (;i<2*N;i++) s0 += v0*v0`), while the
+  strided path's tail adds re²→`s0`, im²→`s1`. Same math, different running-sum
+  grouping ⇒ different rounding ⇒ last-ULP difference. The two paths' main loops
+  were already identical; only the odd-N tail diverged. Fix: unit-stride tail now
+  walks the leftover complex element as `s0 += re²; s1 += im²`, matching the
+  strided tail exactly. Verified bit-exact over N=1..40 × strides {1,2,3,-1,-2}
+  (1280 checks, 0 mismatches).
+- **Bug class**: `convention` (FP-associativity / stride-fast-path reproducibility).
+- **Generalization**: ANY optimized BLAS/LAPACK kernel with a `stride === 1`
+  fast path is a layout-invariance risk if its accumulation ORDER (accumulator
+  assignment, unroll grouping, or tail handling) differs from the strided path —
+  even when both are mathematically equal. The high-signal probe is exactly this
+  one: bit-exact output across unit vs non-unit stride. I audited every existing
+  double-precision reduction kernel this way:
+    - `dznrm2` — **BUG (fixed here)**: stdlib fast path with a self-inconsistent
+      tail. Both paths are stdlib optimizations that MUST agree → align them.
+    - `dnrm2`, `dzasum`, `zdotc`, `zdotu` — bit-exact (safe). `dnrm2` shares one
+      tail loop across both branches, which is why it's correct.
+    - `dasum` (unroll-6) and `ddot` (unroll-5) — **DIVERGE across strides, but
+      DO NOT "fix"**: the unit-stride unroll IS the reference BLAS algorithm
+      (DASUM/DDOT unroll only for `incx==1`), so the stride dependence is
+      faithful to reference and no test requires bit-exactness. Changing them
+      would deviate from reference numerics for no gain. If a routine's
+      layout-invariance test ever traces to `dasum`/`ddot`, that is the moment to
+      revisit — with a scoped decision, not a blanket patch.
+  Rule of thumb: **fix a stdlib-introduced fast-path inconsistency (align the
+  paths, keep the optimization); leave a reference-faithful unroll alone.** The
+  untranslated single-precision siblings (`snrm2`, `scnrm2`, `sasum`, `sdot`)
+  should get the same probe when they land.
+
 ## 2026-07-15 — SWEEP of LD wrappers: zgels/zgelss broken (LDB + blocked-path workspace, base AND wrapper)
 
 - **What**: Systematic sweep of every LAPACK LD wrapper for the two dgels bug

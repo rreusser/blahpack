@@ -99,6 +99,28 @@ function internalAllocs( content, file ) {
 	return hits;
 }
 
+/**
+ * True if base.js documents the named workspace array as a REAL typed array
+ * (Float64Array/Float32Array), i.e. a genuinely real workspace that a wrapper
+ * should allocate as a real array — not a complex buffer misdeclared.
+ *
+ * @param {string} baseContent - base.js source
+ * @param {string} name - workspace var name as used in the wrapper (e.g. `WORK`, `WORK2`)
+ * @returns {boolean}
+ */
+function baseWorkIsReal( baseContent, name ) {
+	if ( !baseContent ) {
+		return false;
+	}
+	// Match the JSDoc `@param {TYPE} <name>` for this exact workspace array.
+	var re = new RegExp( '@param\\s+\\{([^}]*)\\}\\s+' + name + '\\b', 'i' );
+	var m = re.exec( baseContent );
+	if ( !m ) {
+		return false;
+	}
+	return /^(Float64Array|Float32Array)$/.test( m[ 1 ].trim() );
+}
+
 
 // CHECK //
 
@@ -248,15 +270,26 @@ function check( mod ) {
 		if ( wrapperContent ) {
 			var complexViolations = [];
 			var wrapperLines = wrapperContent.split( '\n' );
-			var WRONG_CPLX_RE = /\bWORK\d*\s*=\s*new\s+(Float64Array|Float32Array)\s*\(/;
-			var wl, wt;
+			var WRONG_CPLX_RE = /\b(WORK\d*)\s*=\s*new\s+(Float64Array|Float32Array)\s*\(/;
+			var wl, wt, cm;
 			for ( i = 0; i < wrapperLines.length; i++ ) {
 				wl = wrapperLines[ i ];
 				wt = wl.trim();
 				if ( wt.charAt( 0 ) === '*' || /^\/\//.test( wt ) || wt.indexOf( 'import ' ) !== -1 ) {
 					continue;
 				}
-				if ( WRONG_CPLX_RE.test( wl ) ) {
+				cm = WRONG_CPLX_RE.exec( wl );
+				if ( cm ) {
+					// A real allocation is only a violation when the workspace is
+					// actually COMPLEX. Many z/c-prefix routines (matrix norms
+					// `zlan*`, pivot growth `zla_*pvgrw`, and real-arithmetic
+					// scratch like `zsteqr`/`zpstrf`) use a genuinely REAL WORK
+					// buffer; base.js documents it as `@param {Float64Array} WORK`
+					// and indexes it numerically. Skip those — allocating a real
+					// typed array for a real workspace is correct.
+					if ( baseWorkIsReal( baseContent, cm[ 1 ] ) ) {
+						continue;
+					}
 					complexViolations.push( path.relative( util.ROOT, routineWrapperPath ) + ':' + ( i + 1 ) + '  ' + wt );
 				}
 			}

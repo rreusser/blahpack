@@ -265,6 +265,13 @@ function jsParams( content, routine ) {
 	}
 	var re = new RegExp( 'function\\s+' + routine + '\\s*\\(', 'i' );
 	var m = re.exec( content );
+	if ( !m && routine.indexOf( '_' ) !== -1 ) {
+		// The JS implementation strips underscores from the reference routine
+		// name (e.g. `dsytrf_rk` is implemented as `function dsytrfrk`), so fall
+		// back to the underscore-free form before giving up.
+		re = new RegExp( 'function\\s+' + routine.replace( /_/g, '' ) + '\\s*\\(', 'i' );
+		m = re.exec( content );
+	}
 	if ( !m ) {
 		return [];
 	}

@@ -40,7 +40,7 @@ interface Routine {
 	* @param strideIPIV - stride length for `IPIV`
 	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number ): number;
+	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array | null, strideWork: number ): number;
 
 	/**
 	* Computes the bounded Bunch-Kaufman (rook) factorization of a real symmetric indefinite matrix in `_rk` storage format, using alternative indexing semantics.
@@ -59,7 +59,7 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
+	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**

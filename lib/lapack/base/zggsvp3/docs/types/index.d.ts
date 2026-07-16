@@ -59,10 +59,9 @@ interface Routine {
 	* @param strideTAU - stride length for `TAU`
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair, using alternative indexing semantics.
@@ -109,10 +108,9 @@ interface Routine {
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

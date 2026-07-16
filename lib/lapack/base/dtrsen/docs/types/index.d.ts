@@ -43,13 +43,11 @@ interface Routine {
 	* @param sep - `sep`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @param IWORK - `IWORK`
 	* @param strideIWORK - stride of `IWORK`
-	* @param liwork - `liwork`
 	* @returns result
 	*/
-	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, liwork: number ): Float64Array;
+	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
 
 	/**
 	* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T, using alternative indexing semantics.
@@ -80,14 +78,12 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @param IWORK - `IWORK`
 	* @param strideIWORK - stride of `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
-	* @param liwork - `liwork`
 	* @returns result
 	*/
-	ndarray( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, liwork: number ): Float64Array;
+	ndarray( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

@@ -51,13 +51,12 @@ interface Routine {
 	* @param M - number of rows
 	* @param WORK - input array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @param IWORK - output array
 	* @param strideIWORK - stride length for `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
 	* @returns result
 	*/
-	( order: Layout, job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, s: Float64Array, strideS: number, DIF: Float64Array, strideDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( order: Layout, job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, s: Float64Array, strideS: number, DIF: Float64Array, strideDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 
 	/**
 	* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a generalized Schur form, using alternative indexing semantics.
@@ -95,13 +94,12 @@ interface Routine {
 	* @param WORK - input array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @param IWORK - output array
 	* @param strideIWORK - stride length for `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
 	* @returns result
 	*/
-	ndarray( job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, s: Float64Array, strideS: number, offsetS: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( job: string, howmny: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, s: Float64Array, strideS: number, offsetS: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

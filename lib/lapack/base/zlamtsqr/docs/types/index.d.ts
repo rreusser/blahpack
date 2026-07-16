@@ -45,10 +45,9 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* applies a complex unitary matrix Q (or its conjugate-transpose Q^H) from a TSQR factorization to a complex M-by-N matrix C, using alternative indexing semantics.
@@ -75,10 +74,9 @@ interface Routine {
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( side: string, trans: TransposeOperation, M: number, N: number, K: number, mb: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( side: string, trans: TransposeOperation, M: number, N: number, K: number, mb: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

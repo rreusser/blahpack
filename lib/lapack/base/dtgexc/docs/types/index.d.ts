@@ -45,10 +45,9 @@ interface Routine {
 	* @param ilst - ilst
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Reorders the generalized real Schur decomposition of a real matrix pair, using alternative indexing semantics.
@@ -77,10 +76,9 @@ interface Routine {
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

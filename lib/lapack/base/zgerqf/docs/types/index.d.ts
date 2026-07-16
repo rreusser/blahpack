@@ -33,10 +33,9 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	( M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Computes an RQ factorization of a complex M-by-N matrix A = R * Q using alternative indexing semantics.
@@ -53,10 +52,9 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

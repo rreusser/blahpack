@@ -42,10 +42,9 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H, using alternative indexing semantics.
@@ -69,10 +68,9 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	ndarray( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

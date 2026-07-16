@@ -44,10 +44,9 @@ interface Routine {
 	* @param strideTAUP - stride of `TAUP`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Reduces a real M-by-N matrix A to upper or lower real bidiagonal form B using alternative indexing semantics.
@@ -73,10 +72,9 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

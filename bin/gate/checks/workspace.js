@@ -87,6 +87,13 @@ function internalAllocs( content, file ) {
 			continue;
 		}
 		size = m[ 2 ].trim();
+		// Skip complex-scalar constructions: `new Complex128Array( [ re, im ] )`
+		// materializes a single complex value (e.g. a conjugated TAU) to hand to
+		// a BLAS call — it is not a workspace buffer. A workspace allocation always
+		// passes a numeric size expression, never an array literal.
+		if ( size.charAt( 0 ) === '[' ) {
+			continue;
+		}
 		// Variable-sized (references an identifier) OR a large numeric
 		// literal => workspace. Small bare numbers => scalar temporary.
 		if ( /[A-Za-z_]/.test( size ) || ( /^\d+$/.test( size ) && Number( size ) > SCALAR_MAX ) ) {

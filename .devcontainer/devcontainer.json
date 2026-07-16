@@ -1,0 +1,45 @@
+{
+	// Official Dev Container Feature setup — no hand-rolled Dockerfile or
+	// firewall. Drive it headless from the terminal with the Dev Containers CLI
+	// (see bin/claude-sandbox), or "Reopen in Container" from any editor that
+	// supports the dev container spec.
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"features": {
+		// Installs Claude Code (and, in editors that support it, the extension).
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
+		// This project's toolchain.
+		"ghcr.io/devcontainers/features/node:1": { "version": "24" },
+		"ghcr.io/devcontainers/features/python:1": { "version": "3" },
+		// GitHub CLI (`gh`) — adds the GitHub apt repo + installs gh.
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+
+	// Reference BLAS/LAPACK is compiled with gfortran. If your bin/*.py scripts
+	// need pip packages, add a venv + pip install to postCreateCommand.
+	"onCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends gfortran",
+	"postCreateCommand": "npm install",
+
+	// Inject your Claude Code auth token from the host so the container skips
+	// the interactive browser login — the plain devcontainer CLI does NOT
+	// forward the OAuth localhost callback, so interactive /login flaps. On the
+	// HOST, run `claude setup-token`, then `export CLAUDE_CODE_OAUTH_TOKEN=<token>`
+	// before launching. Uses your Claude Max subscription; keep the token secret.
+	"containerEnv": {
+		"CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}",
+		// gh authenticates non-interactively from GH_TOKEN. bin/claude-sandbox
+		// sources it from your `gh` login (macOS Keychain) at launch and exports
+		// it scoped to that process — nothing in your shell rc or the repo.
+		"GH_TOKEN": "${localEnv:GH_TOKEN}"
+	},
+
+	// NOTE: no volume mount at ~/.claude on purpose. A named volume mounts
+	// root-owned, so the non-root `vscode` user can't write credentials/settings
+	// there (login appears to succeed, then reads back as "not logged in").
+	// Auth comes from CLAUDE_CODE_OAUTH_TOKEN above, so ~/.claude stays a normal
+	// writable home dir. (If you later want session history to persist across
+	// rebuilds, re-add a volume AND chown it to vscode in a lifecycle hook.)
+
+	// A non-root user is REQUIRED for --dangerously-skip-permissions; the CLI
+	// rejects that flag when run as root.
+	"remoteUser": "vscode"
+}

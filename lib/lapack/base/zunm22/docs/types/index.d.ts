@@ -42,10 +42,9 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, n1: number, n2: number, Q: Float64Array, LDQ: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, n1: number, n2: number, Q: Float64Array, LDQ: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Multiplies a general matrix by a unitary matrix, using alternative indexing semantics.
@@ -67,10 +66,9 @@ interface Routine {
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( side: string, trans: TransposeOperation, M: number, N: number, n1: number, n2: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( side: string, trans: TransposeOperation, M: number, N: number, n1: number, n2: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

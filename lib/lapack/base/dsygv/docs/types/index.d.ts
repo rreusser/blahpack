@@ -41,10 +41,9 @@ interface Routine {
 	* @param strideW - stride of `W`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Computes all the eigenvalues, and optionally, the eigenvectors of a real using alternative indexing semantics.
@@ -67,10 +66,9 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @returns result
 	*/
-	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

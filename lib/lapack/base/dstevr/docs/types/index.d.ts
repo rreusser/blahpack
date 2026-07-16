@@ -46,13 +46,11 @@ interface Routine {
 	* @param strideISUPPZ - stride of `ISUPPZ`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @param IWORK - `IWORK`
 	* @param strideIWORK - stride of `IWORK`
-	* @param liwork - `liwork`
 	* @returns result
 	*/
-	( jobz: string, range: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, WORK: Float64Array, strideWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, liwork: number ): Float64Array;
+	( jobz: string, range: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
 
 	/**
 	* Computes selected eigenvalues and, optionally, eigenvectors of a real using alternative indexing semantics.
@@ -85,14 +83,12 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @param IWORK - `IWORK`
 	* @param strideIWORK - stride of `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
-	* @param liwork - `liwork`
 	* @returns result
 	*/
-	ndarray( jobz: string, range: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, liwork: number ): Float64Array;
+	ndarray( jobz: string, range: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

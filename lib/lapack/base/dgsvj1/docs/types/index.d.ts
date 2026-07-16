@@ -49,10 +49,9 @@ interface Routine {
 	* @param nsweep - nsweep
 	* @param work - input array
 	* @param strideWORK - stride length for `work`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, jobv: number, M: number, N: number, n1: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, jobv: number, M: number, N: number, n1: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Pre-processor for dgesvj applying Jacobi rotations to off-diagonal block pivots, using alternative indexing semantics.
@@ -83,10 +82,9 @@ interface Routine {
 	* @param work - input array
 	* @param strideWORK - stride length for `work`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( jobv: number, M: number, N: number, n1: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, sva: Float64Array, strideSVA: number, offsetSVA: number, mv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( jobv: number, M: number, N: number, n1: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, sva: Float64Array, strideSVA: number, offsetSVA: number, mv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

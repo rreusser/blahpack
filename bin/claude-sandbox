@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+#
+# claude-sandbox — launch Claude Code inside this project's Docker dev container
+# with per-command permission prompts disabled. That flag is reckless on a real
+# machine, but safe here because execution is confined to the container (running
+# as the non-root `vscode` user); your file edits still appear in the local repo
+# via the bind mount.
+#
+# Prerequisites:
+#   - Docker (running)
+#   - Dev Containers CLI:  npm install -g @devcontainers/cli
+#
+# Usage:
+#   bin/claude-sandbox [extra args passed through to `claude`]
+#
+# The first run builds the container from .devcontainer/devcontainer.json; later
+# runs reuse it. Auth persists across rebuilds via the mounted ~/.claude volume.
+
+set -euo pipefail
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+if ! command -v devcontainer >/dev/null 2>&1; then
+	echo "error: the Dev Containers CLI is not installed." >&2
+	echo "       install it with: npm install -g @devcontainers/cli" >&2
+	exit 1
+fi
+
+if ! docker info >/dev/null 2>&1; then
+	echo "error: Docker does not appear to be running. Start Docker and retry." >&2
+	exit 1
+fi
+
+# --- Auth tokens ------------------------------------------------------------
+# Sourced from SECURE STORAGE at launch and exported only into this script's
+# process (and thus the devcontainer it starts) — never into your interactive
+# shell, and never committed to the repo. containerEnv in
+# .devcontainer/devcontainer.json injects them at container-create time.
+#
+#   GH_TOKEN                 : read from your `gh` login (gh keeps it in the
+#                              macOS Keychain). Run `gh auth login` once.
+#   CLAUDE_CODE_OAUTH_TOKEN  : read from the macOS Keychain. Store it once:
+#                                claude setup-token          # prints a token
+#                                security add-generic-password -a "$USER" \
+#                                    -s CLAUDE_CODE_OAUTH_TOKEN -w '<token>'
+#
+# An env var already set in the caller's shell still wins (handy for CI).
+
+if [ -z "${GH_TOKEN:-}" ] && command -v gh >/dev/null 2>&1; then
+	GH_TOKEN="$( gh auth token 2>/dev/null || true )"
+	export GH_TOKEN
+fi
+
+if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] && command -v security >/dev/null 2>&1; then
+	CLAUDE_CODE_OAUTH_TOKEN="$( security find-generic-password -a "$USER" -s CLAUDE_CODE_OAUTH_TOKEN -w 2>/dev/null || true )"
+	export CLAUDE_CODE_OAUTH_TOKEN
+fi
+
+if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]; then
+	echo "warning: no CLAUDE_CODE_OAUTH_TOKEN in env or Keychain — interactive login" >&2
+	echo "         inside the container is unreliable. Store one on the HOST:" >&2
+	echo "             claude setup-token" >&2
+	echo "             security add-generic-password -a \"\$USER\" -s CLAUDE_CODE_OAUTH_TOKEN -w '<token>'" >&2
+	echo "         then recreate: devcontainer up --remove-existing-container --workspace-folder ." >&2
+	echo "" >&2
+fi
+
+# Build/start the container from .devcontainer/devcontainer.json (idempotent).
+devcontainer up --workspace-folder "$ROOT"
+
+# Drop into an interactive Claude Code session inside the container.
+exec devcontainer exec --workspace-folder "$ROOT" \
+	claude --dangerously-skip-permissions "$@"

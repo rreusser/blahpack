@@ -40,12 +40,11 @@ interface Routine {
 	* @param LDVS - leading dimension of `VS`
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
 	* @param BWORK - `BWORK`
 	* @param strideBWORK - stride of `BWORK`
 	* @returns result
 	*/
-	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWORK: number, lwork: number, BWORK: Int32Array, strideBWORK: number ): Float64Array;
+	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWORK: number, BWORK: Int32Array, strideBWORK: number ): Float64Array;
 
 	/**
 	* Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real using alternative indexing semantics.
@@ -72,13 +71,12 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @param strideWORK - stride of `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
 	* @param BWORK - `BWORK`
 	* @param strideBWORK - stride of `BWORK`
 	* @param offsetBWORK - starting index for `BWORK`
 	* @returns result
 	*/
-	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, BWORK: Int32Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
+	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, BWORK: Int32Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
 }
 
 /**

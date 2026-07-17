@@ -5,6 +5,15 @@ conforming to [stdlib-js](https://github.com/stdlib-js/stdlib) conventions.
 
 stdlib-js reference clone: `/Users/rreusser/gh/stdlib-js/stdlib/`
 
+> ## ⚠️ BATCH DISPATCH RULE — READ FIRST
+>
+> When dispatching background agents for batch work (translation OR validation),
+> dispatch a **SMALL, REASONABLE NUMBER PER WAVE (~3–5 agents)** and let them
+> finish before launching the next wave. **NEVER fan out 12+ (let alone dozens)
+> at once** — with too many concurrent agents the work fails / never completes.
+> Break a large batch (e.g. ~75 BLAS routines) into sequential waves of ~4:
+> dispatch a wave → review results → run regression check → dispatch the next.
+
 ## Project Structure
 
 ```
@@ -104,11 +113,14 @@ conventions reference — read it once in the main context, then embed
 the relevant parts into each agent prompt. Do NOT invoke the skill
 inside an agent (skills are not available to agents).
 
-**Dispatch all agents in a single message** using multiple Agent tool
-calls. Do not serialize them or wait between launches.
+**Dispatch a wave of ~3–5 agents in a single message** (see the BATCH
+DISPATCH RULE at the top of this file) using multiple Agent tool calls.
+**Do NOT dispatch more than ~5 at once** — too many concurrent agents fail
+to complete. Let a wave finish, review, then dispatch the next wave.
 
-**When agents complete**, review their results and run
-`bin/test-failures.sh 2>&1 | tail -30` to check for regressions.
+**When a wave completes**, review their results and run
+`bin/test-failures.sh 2>&1 | tail -30` to check for regressions before
+dispatching the next wave.
 
 ## Skills
 

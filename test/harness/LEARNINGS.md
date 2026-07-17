@@ -120,29 +120,41 @@ Keep entries short. Newest first.
   `zhetrf` is the trustworthy oracle here: dense `zhetri` inverts the dense factor
   to ~1e-15 (dense pipeline is validated), so the DENSE factor is correct and the
   PACKED (`zhptrf` upper) factor is wrong.
-- **Root cause**: NOT fully localized (a fix belongs to a dedicated `zhptrf`
-  validation pass, out of scope for the zhptri inverse task — same discipline as
-  the zpptri-sweep / zlatps entries: do not hand-patch a factorization without its
-  own validation). Best evidence: the errors are CONJUGATIONS introduced on the
-  UPPER path only, and the minimal failing case (n=3) DOES perform an interchange
-  (IPIV=[0,0,0] ⇒ 0-based kp=0 ⇒ 1-based kp=1≠k for k=3 ⇒ swap cols 1,3). So the
-  prime suspects are the upper-triangle "swap and conjugate rows kp+1..kk-1" loop
-  and the surrounding conjugation of the interchanged column
-  (`lib/lapack/base/zhptrf/lib/base.js` ~L251–L268, and the 2×2 block update
-  ~L305–L390), where a `conj` is applied with the wrong sign or to the wrong
-  operand relative to reference ZHPTRF. The lower path's analogous logic is
-  correct, which localizes it to the upper branch. `zhpr` (the shared BLAS
-  Hermitian packed rank-1 update zhptrf calls) was independently verified CORRECT
-  against a from-scratch `A + α·x·xᴴ` reference, so the bug is in zhptrf's own
-  upper indexing/conjugation, not in zhpr.
-- **Bug class**: `uplo/trans/diag-handling` (upper-branch conjugation error in a
-  Hermitian packed factorization).
-- **zhptri itself is CORRECT**: fed a VALID factor+IPIV (the dense `zhetrf` factor
-  re-packed), `zhptri` reconstructs `A0·inv=I` to ~1e-13 for BOTH uplo across
-  n=1..64. So `lib/lapack/base/zhptri/test/test.validate.js` sources its factor
-  from `zhetrf` (documented in the test header) to validate zhptri INDEPENDENTLY
-  of the broken zhptrf — reaching L3 honestly. Switch the factor source back to
-  `zhptrf` once its upper path is fixed.
+- **Root cause (FOUND & FIXED 2026-07-17)**: an OFF-BY-ONE on the running packed
+  index `KX` in the upper-triangle interchange (`lib/lapack/base/zhptrf/lib/base.js`
+  "swap and conjugate rows kp+1..kk-1" loop). Reference ZHPTRF initializes
+  `KX = KPC + KP - 1` and, after swapping the conjugated inner elements, conjugates
+  the interchanged column element `AP(KX+KK-1)`. The JS had instead set
+  `kx = kpc + kp` (Fortran KX **+1**) and compensated with a `-2` in the in-loop
+  addressing — but the POST-loop conjugation line (`kx + kk - 2`) did NOT carry the
+  same compensation, so it conjugated the element ONE SLOT PAST `A(kp,kk)`,
+  corrupting the interchanged column and every downstream update. Because it
+  conjugates the *wrong* off-diagonal element, the symptom read as "conjugation
+  slips" — but the operand was misindexed, not mis-signed. Fix: make `kx` track the
+  reference exactly (`kx = kpc + kp - 1`; in-loop `p2 = oAP + (kx-1)*sap`), so the
+  post-loop `oAP + (kx+kk-2)*sap` now hits `A(kp,kk)`. The rank-1/rank-2 updates and
+  all conjugation *signs* were already correct. Two oracles confirmed the fix: the
+  dense `zhetrf` factor of the same A0 (element-diff now matches), and the
+  factor+solve residual `A0·X=B0` via `zhptrs` (now ~1e-15 for BOTH uplo at every N).
+- **SECOND bug caught by the harness during the fix (stride, both paths)**: with
+  the poisoned-storage `zhptrf` validate sweeping non-unit packed strides (2,3), the
+  factor returned NaN at `strideAP∈{2,3}` for BOTH uplo. Root cause: the private
+  packed-index helpers `iupp`/`ilow` hardcoded `* 2` (a UNIT-stride Float64 offset)
+  instead of `* sap` (`sap = strideAP*2`), so the 2×2-pivot rank-2 update read/wrote
+  the poisoned inter-element gaps. This is the exact `zpptri` packed stride-mapping
+  class (`offset+idx` vs `offset+idx*stride`). Fix: thread `sap` into `iupp`/`ilow`
+  and multiply by it. The rest of `zhptrf` already used `oAP + (pos-1)*sap`; only the
+  two helpers were stride-blind. This bug was invisible to the unit-stride fixture
+  suite and only surfaced under the poisoned non-unit-stride sweep.
+- **Bug class**: `uplo/trans/diag-handling` (upper-branch off-by-one interchange
+  index) + `storage-mapping` (stride-blind packed index helper).
+- **zhptri itself is CORRECT**: fed a VALID factor+IPIV it reconstructs
+  `A0·inv=I` to ~1e-13 for BOTH uplo across n=1..64. During the bug it temporarily
+  sourced its factor from the dense `zhetrf` re-packed; now that `zhptrf` is fixed,
+  `lib/lapack/base/zhptri/test/test.validate.js` sources the factor from the natural
+  packed `zhptrf` again (the full zhptrf→zhptri pipeline is validated end-to-end for
+  BOTH uplo at L3). `zhptrf` and `zhptrs` are now their own L3 validate suites
+  (`test.validate.js`) with factor+solve residual + IPIV structural + layout fuzz.
 - **Generalization**: audit the UPPER branch of every complex Hermitian packed
   factorization / two-sided update for the same conjugation-sign slip — `zhptrf`
   (fix), and re-check `zhptrd` (Hermitian packed tridiagonal reduction),

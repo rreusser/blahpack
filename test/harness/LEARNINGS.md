@@ -32,6 +32,129 @@ Keep entries short. Newest first.
 
 ---
 
+## 2026-07-17 — zlatps (COMPLEX packed triangular solve) IGNORES `strideAP` in its base packed pointers → WRONG rcond / garbage for any strideAP ≠ 1; surfaced by ztpcon packed layout-invariance
+
+- **What**: `ztpcon` (complex packed triangular condition estimator) passes its
+  correctness PROPERTY and is bit-exact across stride-1 offset changes, but its
+  packed layout-invariance sweep DIVERGES badly the moment the packed stride is
+  non-unit or negative: `ztpcon one-norm upper non-unit layout variant 2`
+  (`{stride:2}`) gives rcond `0.4439890764168357` vs `0.33182199866551526` at
+  stride 1 — a ~34% error, and `{stride:3,-1,-2}` collapse rcond to **0**. Not a
+  ~1 ULP reorder: a real wrong-answer. The REAL sibling `dtpcon` is bit-exact
+  across ALL packed layouts (strides 1/2/3/−1/−2), so only the complex path is
+  broken.
+- **Repro**: `sc=complex`, `schemes.packed`, `uplo='upper'`, `diag='non-unit'`,
+  `norm='one-norm'`, N=9, seed `0x100+N`. Isolation: `zlantp` returns the correct
+  norm at EVERY stride (so the norm dep is fine); the corruption is in the SOLVE.
+  Driving `zlatps` directly (`_probe`: same upper non-unit triangular, N=6, seed
+  42, RHS ones) — `{stride:1}` and `{stride:2}` agree (both take the ztpsv FAST
+  path, which handles strides), but `{stride:-1}` returns garbage `x=[1,0,0,0,0,0]`
+  with `scale=0` (the grow-estimate picked the CAREFUL path off a mis-indexed
+  diagonal, then the careful solve mis-indexed too). In `ztpcon` the alternating
+  dlacn2 RHS drives more calls onto the careful/CNORM path, so stride 2 already
+  diverges there.
+- **Root cause** (`lib/lapack/base/zlatps/lib/base.js`): `ip` is carried as a
+  **Float64 pointer** initialized `ip = ( offsetAP + packedLinearIndex ) * 2` (lines
+  ~260, 267, 316, 367, 416, 551, 674) and walked by `ip ± jlen*sap` where
+  `sap = strideAP*2`. The WALK includes the stride, but the BASE omits it: the
+  physical Float64 address of packed slot `p` is `(offsetAP + p*strideAP)*2`, yet
+  the code uses `(offsetAP + p)*2`. Every derived access inherits the error — the
+  CNORM `dzasum` bases `offsetAP + (j*(j+1))/2` / `offsetAP + ip/sap + 1` (lines
+  262, 269), the `zaxpy`/`zdotc` start offsets `(ip/2) - j` and `(ip/2) + 1` (lines
+  446, 451, 530, 535 and `computeTransposeSum` 123/128/134/139), and the diagonal
+  reads `cabs1(av, ip)` — all assume `strideAP == 1`. With stride 1 the two
+  coincide, so every unit-stride fixture and the stride-1 property pass. The REAL
+  `dlatps` does it correctly: `ip` stays a PURE 0-based packed index (`ip += (j+1)`,
+  `ip -= (j+1)`) and EVERY access scales — `offsetAP + (ip*sa)`,
+  `offsetAP + ((ip-j)*sa)`, `offsetAP + ((ip+1)*sa)` (dlatps lines 129/136/181/265/
+  286/295/399/401/405/409).
+- **Fix (APPLIED)**: rewrote the addressing in `lib/lapack/base/zlatps/lib/base.js`
+  to the `dlatps` index-then-scale pattern. The five diagonal `ip` base inits
+  `( offsetAP + (jfirst*(jfirst+1)/2 + jfirst) ) * 2` now scale the packed linear
+  index by `strideAP`: `( offsetAP + ((jfirst*(jfirst+1)/2 + jfirst) * strideAP) )
+  * 2` (the `ip ± jlen*sap` walks, `sap = strideAP*2`, were already stride-aware,
+  so a correct base makes every relative `av[ip ± k*sap]` read correct). The two
+  CNORM loops now carry a PURE packed index and address as
+  `offsetAP + idx*strideAP` (upper: `dzasum(j, AP, strideAP, offsetAP + ip*strideAP)`;
+  lower: `... offsetAP + (ip+1)*strideAP`). The derived `zaxpy`/`zdotc`/`zdotu`
+  start offsets became `(ip/2) - j*strideAP` and `(ip/2) + strideAP` (from `-j` /
+  `+1`) at all 8 sites (4 in `computeTransposeSum`, 4 in the no-transpose careful
+  solve). VERIFIED: driving `zlatps` directly across the full packed layout sweep
+  (strides 1/2/3/−1/−2 + offset/pad) for every uplo × trans × diag now reproduces
+  the stride-1 solution BIT-EXACTLY (max deviation 0.0), no non-finite. `ztpcon`
+  correctness + full-`schemes.packed.layouts()` bit-exact layout-invariance now
+  pass; `dtpcon` (real, unaffected) unchanged. Other `zlatps` callers should be
+  re-run — see generalization.
+- **Bug class**: `storage-mapping` (packed-index-vs-strided-offset conflation) —
+  the SAME defect as the zpptri entry below, in a different complex packed routine.
+- **Generalization**: audit every complex packed routine that carries a Float64
+  `ip`-pointer of the form `(offsetAP + linear)*2` (rather than a pure index scaled
+  at access): the whole `zlatps`/`ztpcon`/`ztbcon`-adjacent family, `zlatrs`'s
+  packed cousins, and any `ztpmv`/`ztpsv`/`zhpr`/`zspr` caller that precomputes a
+  running packed base. The real (`d`) siblings, validated against strided packed
+  layouts, are the correct template. The high-signal probe is exactly this: run the
+  routine at packed stride ∈ {2,3,−1,−2} and compare to stride 1 — unit-stride
+  fixtures never see it.
+
+---
+
+## 2026-07-17 — zhptrf UPPER path produces a WRONG Hermitian packed factorization (lower path is correct); surfaced while validating zhptri
+
+- **What**: Validating `zhptri` (inverse from a packed Hermitian Bunch-Kaufman
+  factor) via the natural pipeline `zhptrf` → `zhptri`, the reconstruction
+  `A0·inv(A0)=I` FAILED LOUDLY for **uplo='upper'** at every size — e.g.
+  `zhptri upper n=3: relative error 4.477e-1 exceeds tolerance 6.661e-14`
+  (residual 1.4e1). Not a NaN and NOT layout-dependent: the same wrong result
+  appears bit-identically across ALL packed layouts (tight, strided, negative),
+  so it is an ARITHMETIC/factor error, not an addressing bug. The **lower** path
+  of the very same pipeline reconstructs correctly (~1e-15) at every size. The
+  defect is in **zhptrf** (the FACTOR), NOT in zhptri.
+- **Repro**: `sc=complex`, `logical.hermitian`, seed `0x100+n`, `uplo='upper'`,
+  any `n≥3` (n=3 is the minimal reproducer; residual grows with n: 1.4e1 @ n=3,
+  4.2e1 @ n=8, 1.9e2 @ n=33). Minimal: factor A0 with `zhptrf('upper',…)`, then
+  compare the packed factor against the DENSE `zhetrf('upper',…)` factor of the
+  SAME A0 packed into the upper triangle — they DIFFER, with the differences being
+  **complex conjugations** of off-diagonal multipliers (e.g. factor(0,2) imag
+  `+0.3283` vs correct `−0.3283`; factor(1,2) imag `−0.8314` vs `+0.8314`) plus a
+  downstream-corrupted leading block (diagonal D(0,0) `0.3780` vs `0.4038`).
+  `zhetrf` is the trustworthy oracle here: dense `zhetri` inverts the dense factor
+  to ~1e-15 (dense pipeline is validated), so the DENSE factor is correct and the
+  PACKED (`zhptrf` upper) factor is wrong.
+- **Root cause**: NOT fully localized (a fix belongs to a dedicated `zhptrf`
+  validation pass, out of scope for the zhptri inverse task — same discipline as
+  the zpptri-sweep / zlatps entries: do not hand-patch a factorization without its
+  own validation). Best evidence: the errors are CONJUGATIONS introduced on the
+  UPPER path only, and the minimal failing case (n=3) DOES perform an interchange
+  (IPIV=[0,0,0] ⇒ 0-based kp=0 ⇒ 1-based kp=1≠k for k=3 ⇒ swap cols 1,3). So the
+  prime suspects are the upper-triangle "swap and conjugate rows kp+1..kk-1" loop
+  and the surrounding conjugation of the interchanged column
+  (`lib/lapack/base/zhptrf/lib/base.js` ~L251–L268, and the 2×2 block update
+  ~L305–L390), where a `conj` is applied with the wrong sign or to the wrong
+  operand relative to reference ZHPTRF. The lower path's analogous logic is
+  correct, which localizes it to the upper branch. `zhpr` (the shared BLAS
+  Hermitian packed rank-1 update zhptrf calls) was independently verified CORRECT
+  against a from-scratch `A + α·x·xᴴ` reference, so the bug is in zhptrf's own
+  upper indexing/conjugation, not in zhpr.
+- **Bug class**: `uplo/trans/diag-handling` (upper-branch conjugation error in a
+  Hermitian packed factorization).
+- **zhptri itself is CORRECT**: fed a VALID factor+IPIV (the dense `zhetrf` factor
+  re-packed), `zhptri` reconstructs `A0·inv=I` to ~1e-13 for BOTH uplo across
+  n=1..64. So `lib/lapack/base/zhptri/test/test.validate.js` sources its factor
+  from `zhetrf` (documented in the test header) to validate zhptri INDEPENDENTLY
+  of the broken zhptrf — reaching L3 honestly. Switch the factor source back to
+  `zhptrf` once its upper path is fixed.
+- **Generalization**: audit the UPPER branch of every complex Hermitian packed
+  factorization / two-sided update for the same conjugation-sign slip — `zhptrf`
+  (fix), and re-check `zhptrd` (Hermitian packed tridiagonal reduction),
+  `zhpgst`, and any `hp` routine with a "swap-and-conjugate" interchange loop. The
+  high-signal probe is exactly this one: factor the SAME Hermitian matrix with the
+  DENSE (`he`) sibling and the PACKED (`hp`) routine and diff the factors
+  element-by-element per uplo — the reference-faithful dense routine is the oracle,
+  and conjugation slips show up as sign-flipped imaginary parts. A same-uplo-only
+  fixture suite (or one that only checks `info`) will never catch it.
+
+---
+
 ## 2026-07-17 — zlatps (COMPLEX packed triangular solve, CONJUGATE-TRANSPOSE) is NOT bit-exact under a change of AP BASE OFFSET alone → ~1 ULP offset-dependent reorder; surfaced by zppcon lower layout-invariance
 
 - **What**: While validating `zppcon`/`zpocon` (SPD condition-number estimators),

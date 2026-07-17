@@ -228,6 +228,43 @@ function positiveDefiniteBanded( scalar, rng, n, k ) {
 	return M;
 }
 
+/**
+* Triangular banded n x n matrix of half-bandwidth k; exact zero outside the band
+* AND in the opposite triangle. Diagonally dominant (well-conditioned for solves);
+* a unit diagonal stores 1. Pairs with `schemes.banded` under spec
+* `{ part:uplo, k, unit }` (upper => kl=0/ku=k, lower => kl=k/ku=0), matching the
+* standard `tb` band-storage map.
+*
+* @param {Object} scalar - scalar trait
+* @param {Object} rng - RNG
+* @param {number} n - order
+* @param {number} k - half-bandwidth
+* @param {Object} opts - { uplo:'upper'|'lower', unit:boolean }
+* @returns {LogicalMatrix}
+*/
+function triangularBanded( scalar, rng, n, k, opts ) {
+	var o = opts || {};
+	var upper = ( o.uplo || 'upper' )[ 0 ].toLowerCase() === 'u';
+	var unit = !!o.unit;
+	var M = new LogicalMatrix( scalar, n, n ); // inits to scalar.zero everywhere
+	var i;
+	var j;
+	for ( j = 0; j < n; j++ ) {
+		M.set( j, j, unit ? scalar.one : scalar.fromReal( ( n + 1.0 ) * rng.sign() ) );
+		if ( upper ) {
+			for ( i = Math.max( 0, j - k ); i < j; i++ ) {
+				M.set( i, j, scalar.random( rng ) );
+			}
+		} else {
+			for ( i = j + 1; i <= Math.min( n - 1, j + k ); i++ ) {
+				M.set( i, j, scalar.random( rng ) );
+			}
+		}
+	}
+	M.meta = { 'kind': 'triangular', 'uplo': upper ? 'upper' : 'lower', 'unit': unit, 'k': k, 'banded': true };
+	return M;
+}
+
 
 // EXPORTS //
 
@@ -240,5 +277,6 @@ export {
 	triangular,
 	banded,
 	hermitianBanded,
-	positiveDefiniteBanded
+	positiveDefiniteBanded,
+	triangularBanded
 };

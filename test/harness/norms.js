@@ -68,6 +68,57 @@ function maxAbs( scalar, M ) {
 }
 
 
+/**
+* 1-norm of a LogicalMatrix (max absolute column sum). For a vector realized as
+* an N x 1 matrix this is the sum of moduli.
+*
+* @param {Object} scalar - scalar trait
+* @param {LogicalMatrix} M
+* @returns {number}
+*/
+function oneNorm( scalar, M ) {
+	var mx = 0.0;
+	var s;
+	var i;
+	var j;
+	for ( j = 0; j < M.cols; j++ ) {
+		s = 0.0;
+		for ( i = 0; i < M.rows; i++ ) {
+			s += scalar.abs( M.get( i, j ) );
+		}
+		if ( s > mx ) {
+			mx = s;
+		}
+	}
+	return mx;
+}
+
+/**
+* Infinity-norm of a LogicalMatrix (max absolute row sum). For a symmetric or
+* Hermitian matrix this equals the 1-norm.
+*
+* @param {Object} scalar - scalar trait
+* @param {LogicalMatrix} M
+* @returns {number}
+*/
+function infNorm( scalar, M ) {
+	var mx = 0.0;
+	var s;
+	var i;
+	var j;
+	for ( i = 0; i < M.rows; i++ ) {
+		s = 0.0;
+		for ( j = 0; j < M.cols; j++ ) {
+			s += scalar.abs( M.get( i, j ) );
+		}
+		if ( s > mx ) {
+			mx = s;
+		}
+	}
+	return mx;
+}
+
+
 // EXPORTS //
 
-export { norm2, frobenius, maxAbs };
+export { norm2, frobenius, maxAbs, oneNorm, infNorm };

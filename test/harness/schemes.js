@@ -127,6 +127,39 @@ var dense = {
 	'layouts': function layouts() {
 		return denseLayouts();
 	},
+
+	// Layouts valid for routines whose inner kernel does a PIVOT SEARCH over a
+	// column via `i*amax` (LU factorizations: getf2/getrf/getrf2, gbtf2, getc2,
+	// sytrf/hetrf, and the gesv/gels wrappers). `i*amax` faithfully implements the
+	// reference-BLAS `INCX<=0 -> no index` contract, so a negative FIRST-dimension
+	// (row) stride cannot be searched — it is out of contract for the whole
+	// pivoting family (reference LAPACK only factors positive-leading-dimension
+	// column-major storage). Fuzz these instead of `layouts()` for such routines;
+	// offset, leading-dim padding, negative COLUMN stride, and the col<->row flip
+	// are all still exercised. (See test/harness/LEARNINGS.md, getrf/getf2 family.)
+	'pivotLayouts': function pivotLayouts() {
+		return denseLayouts().filter( function positiveRowStride( L ) {
+			return L.sgn1 !== -1;
+		});
+	},
+
+	// Layouts that vary ONLY base offset and leading-dimension padding — always
+	// tight column-major with unit positive strides (g=1, sgn1=sgn2=1). Changing
+	// these cannot reorder any arithmetic, so a correct routine is BIT-EXACT
+	// across them even when it has a unit-stride/`incx==1` fast path or a col<->row
+	// kernel-form switch that reorders on order/stride-sign/gap changes. Use this
+	// (instead of `layouts()`) for the L3 invariance check of real Level-2/3-heavy
+	// routines whose fast paths legitimately reorder (dpotri/dpptri/dlauum/dsytri/
+	// dlauu2 families); cross-order/sign/gap correctness is then certified by the
+	// Step-2 property swept over the full `layouts()`. (See test/harness/LEARNINGS.md.)
+	'pureAddrLayouts': function pureAddrLayouts() {
+		return [
+			{ 'order': 'col', 'sgn1': 1, 'sgn2': 1, 'g': 1, 'ldaExtra': 0, 'lead': 0, 'tail': 0 },
+			{ 'order': 'col', 'sgn1': 1, 'sgn2': 1, 'g': 1, 'ldaExtra': 3, 'lead': 2, 'tail': 1 },
+			{ 'order': 'col', 'sgn1': 1, 'sgn2': 1, 'g': 1, 'ldaExtra': 1, 'lead': 5, 'tail': 0 },
+			{ 'order': 'col', 'sgn1': 1, 'sgn2': 1, 'g': 1, 'ldaExtra': 2, 'lead': 1, 'tail': 3 }
+		];
+	},
 	'realize': function realize( scalar, M, spec, layout ) {
 		var A = denseAlloc( scalar, M.rows, M.cols, layout );
 		var i;

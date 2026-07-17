@@ -265,6 +265,67 @@ function triangularBanded( scalar, rng, n, k, opts ) {
 	return M;
 }
 
+/**
+* General tridiagonal n x n matrix (nonzero only on the sub-, main, and super-
+* diagonal), diagonally dominant so the LU/solve is well-conditioned (gttrf still
+* pivots). Extract the three storage vectors as DL(i)=get(i+1,i), D(i)=get(i,i),
+* DU(i)=get(i,i+1). Zero elsewhere.
+*
+* @returns {LogicalMatrix}
+*/
+function tridiagonal( scalar, rng, n ) {
+	var M = new LogicalMatrix( scalar, n, n ); // inits to scalar.zero
+	var s;
+	var i;
+	for ( i = 0; i < n - 1; i++ ) {
+		M.set( i, i + 1, scalar.random( rng ) ); // super-diagonal
+		M.set( i + 1, i, scalar.random( rng ) ); // sub-diagonal
+	}
+	for ( i = 0; i < n; i++ ) {
+		s = 0.0;
+		if ( i > 0 ) {
+			s += scalar.abs( M.get( i, i - 1 ) );
+		}
+		if ( i < n - 1 ) {
+			s += scalar.abs( M.get( i, i + 1 ) );
+		}
+		M.set( i, i, scalar.add( scalar.random( rng ), scalar.fromReal( s + 2.0 ) ) );
+	}
+	M.meta = { 'kind': 'tridiagonal' };
+	return M;
+}
+
+/**
+* Hermitian (symmetric for real) positive-definite tridiagonal n x n matrix: real
+* positive diagonal, `A(i+1,i)=e`, `A(i,i+1)=conj(e)`, diagonally dominant within
+* the tridiagonal band. Storage vectors: D(i)=get(i,i) (real), E(i)=get(i+1,i).
+*
+* @returns {LogicalMatrix}
+*/
+function tridiagonalPositiveDefinite( scalar, rng, n ) {
+	var M = new LogicalMatrix( scalar, n, n );
+	var v;
+	var s;
+	var i;
+	for ( i = 0; i < n - 1; i++ ) {
+		v = scalar.random( rng );
+		M.set( i + 1, i, v );
+		M.set( i, i + 1, scalar.conj( v ) );
+	}
+	for ( i = 0; i < n; i++ ) {
+		s = 0.0;
+		if ( i > 0 ) {
+			s += scalar.abs( M.get( i, i - 1 ) );
+		}
+		if ( i < n - 1 ) {
+			s += scalar.abs( M.get( i, i + 1 ) );
+		}
+		M.set( i, i, scalar.fromReal( s + 1.0 + rng.between( 0.5, 1.5 ) ) );
+	}
+	M.meta = { 'kind': 'tridiagonal', 'definite': true };
+	return M;
+}
+
 
 // EXPORTS //
 
@@ -278,5 +339,7 @@ export {
 	banded,
 	hermitianBanded,
 	positiveDefiniteBanded,
-	triangularBanded
+	triangularBanded,
+	tridiagonal,
+	tridiagonalPositiveDefinite
 };

@@ -190,6 +190,12 @@ var dense = {
 *   gb              : bandrow = ku + i - j
 *   sb/hb/tb upper  : bandrow = k  + i - j   (referenced: max(0,j-k) <= i <= j)
 *   sb/hb/tb lower  : bandrow = i - j        (referenced: j <= i <= min(n-1,j+k))
+*
+* `spec.luFill` (general banded LU input, gbtf2/gbtrf): the array carries KL EXTRA
+* fill rows on top (ldab = 2*kl+ku+1) for the fill-in that partial pivoting
+* generates, and the input band is shifted down by KL (bandrow = kl+ku+i-j). The
+* top KL rows "need not be set" on input (LAPACK), so they stay NaN-poisoned — a
+* routine that reads a fill row before writing it trips the NaN.
 */
 var banded = {
 	'name': 'banded',
@@ -202,11 +208,12 @@ var banded = {
 		var general = ( spec.kl !== void 0 );
 		var kl = general ? spec.kl : ( spec.part === 'lower' ? spec.k : 0 );
 		var ku = general ? spec.ku : ( spec.part === 'lower' ? 0 : spec.k );
-		var ldab = kl + ku + 1;
+		var extra = spec.luFill ? kl : 0; // gb-LU fill rows on top
+		var ldab = kl + ku + 1 + extra;
 		var A = denseAlloc( scalar, ldab, n, layout );
 
 		function bandrow( i, j ) {
-			return ku + i - j; // valid for gb; for sb-upper ku=k; sb-lower ku=0
+			return extra + ku + i - j; // gb: ku+i-j; gb-LU: kl fill rows shift it down
 		}
 		function inBand( i, j ) {
 			return i >= Math.max( 0, j - ku ) && i <= Math.min( m - 1, j + kl );

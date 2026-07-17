@@ -32,6 +32,48 @@ Keep entries short. Newest first.
 
 ---
 
+## 2026-07-17 — zgtts2 / zgttrs (COMPLEX tridiagonal solve) addressed the `B` operand in Float64-element units while every other complex operand used complex-element units → WRONG results for any caller passing the standard element-unit `B` strides
+
+- **What**: `zgtts2` (and its wrapper `zgttrs`) reinterpret all complex operands
+  to a Float64 view. DL/D/DU/DU2 were correctly scaled to complex-element units
+  (`sdl = strideDL * 2`, `idl = offsetDL * 2`, …), but `B` was left in raw
+  Float64 units (`sb1 = strideB1; sb2 = strideB2;` and `ib = offsetB + …`). So
+  the routine's own JSDoc contradicted the library convention: it demanded `B`
+  strides in "Float64 elements" while all sibling z-routines (`zgtsv`, `zgbtrs`,
+  …) take complex-element strides for ALL operands. A caller passing standard
+  element-unit `B` (contiguous column → `strideB1 = 1`) got half-element
+  addressing: overlapping/garbage reads, and NaN once `i*strideB1` ran off the
+  end of the buffer.
+- **Repro**: `zgttrs`/`zgttrf` property harness (`test.validate.js`), scalar
+  `complex`, storage `schemes.dense`, RESIDUAL property `op(A)*X = B`, any
+  `trans`, `N ≥ 2`, `nrhs ≥ 1`. The dense scheme emits element-unit `B` args; the
+  residual blew up (the validate tests had a `× sc.floatsPerElem` workaround
+  bolted on just to feed the routine Float64-unit `B` strides — itself a red
+  flag). Also reproduced directly: contiguous complex `B` with `strideB1 = 1`
+  reads `B[0,0]`'s imaginary part as `B[1,0]`'s real part.
+- **Root cause**: `convention` / `storage-mapping` — `B` base pointer and strides
+  were never multiplied by 2 to convert complex-element units to the Float64
+  view's real-component units. Fix: `sb1 = strideB1 * 2; sb2 = strideB2 * 2;` and
+  every `ib = ( offsetB * 2 ) + …`; DL/D/DU/DU2 untouched. `zgttrs` forwards `B`
+  strides straight through, so only JSDoc changed there. Three callers that had
+  been pre-scaling `B`/`WORK` strides by 2 to match the OLD bug were de-scaled to
+  pass element units: `zgtcon` (`sw*2, N*sw*2, offsetWork*2` → `sw, N*sw,
+  offsetWork`), `zgtrfs` (`sw, N*sw, oW` → `strideWork, N*strideWork,
+  offsetWork`, plus 5 direct test-setup `zgttrs` calls). `zgtsvx` already passed
+  element-unit `X` strides — it had a latent wrong initial solve that iterative
+  refinement in `zgtrfs` silently converged away, so its tests passed before AND
+  after; now the initial solve is also correct.
+- **Bug class**: `convention` / `storage-mapping`.
+- **Generalization**: audit ANY complex routine whose JSDoc describes a complex
+  operand's stride/offset as being in "Float64 elements" — that phrasing is the
+  tell for this exact class. Grep: `grep -rn "Float64 elements" lib/**/lib/*.js`.
+  Also suspect any caller that multiplies a complex operand's stride/offset by 2
+  (or `floatsPerElem`) before handing it to another complex routine, and any
+  validate/fixture test carrying a `× floatsPerElem` workaround on one operand
+  but not the others.
+
+---
+
 ## 2026-07-17 — zlatps (COMPLEX packed triangular solve) IGNORES `strideAP` in its base packed pointers → WRONG rcond / garbage for any strideAP ≠ 1; surfaced by ztpcon packed layout-invariance
 
 - **What**: `ztpcon` (complex packed triangular condition estimator) passes its

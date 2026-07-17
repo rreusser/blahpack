@@ -32,6 +32,540 @@ Keep entries short. Newest first.
 
 ---
 
+## 2026-07-17 — zlatps (COMPLEX packed triangular solve, CONJUGATE-TRANSPOSE) is NOT bit-exact under a change of AP BASE OFFSET alone → ~1 ULP offset-dependent reorder; surfaced by zppcon lower layout-invariance
+
+- **What**: While validating `zppcon`/`zpocon` (SPD condition-number estimators),
+  the pure-addressing layout-invariance check (fixed unit stride, vary ONLY the
+  base offset) FAILED for `zppcon` **lower** by ~1 ULP:
+  `zppcon lower pure-addressing packed layout invariance [variant 1 vs 0]: differ
+  at component 0: 0.18439386606890998 vs 0.18439386606891003`. The PACKED DENSE
+  sibling `zpocon` (which uses `zlatrs`, the dense solver) is bit-exact for BOTH
+  uplo; only the PACKED `zppcon` (which uses `zlatps`) breaks, and only for the
+  path that performs a CONJUGATE-TRANSPOSE solve (`lower` = `L·y=x` then
+  `L^H·x=y`; the `L^H` solve is the offender). The `zppcon` CORRECTNESS property
+  (`rcond ≈ 1/κ₁`) PASSES at every size/uplo (estimate 0.1844 vs true 0.1424,
+  ratio ~1.3, well within the factor-3 bound), so this is BENIGN — a bit-exactness
+  defect, not a correctness defect.
+- **Repro**: `sc=complex`, `uplo='lower'`, `trans='conjugate-transpose'`, N=9,
+  seed 7 for the triangular operand. Realize the SAME lower packed triangular
+  matrix at `{stride:1, lead:off}` for `off ∈ {0,1,2,3,...}`, solve with `zlatps`
+  and compare the output x. Result: `off ∈ {0,1}` give one value, `off ≥ 2` give
+  another, ~5.5e-17 apart (first divergence at x[0], the last-solved element);
+  `tail` (buffer length) has NO effect, and varying only the X (solution vector)
+  offset is bit-EXACT. So it is specifically the AP base offset that perturbs the
+  arithmetic. `ztpsv` (the fast-path packed solve `zlatps` delegates to) and
+  `zdotc`/`zaxpy` are each independently offset-invariant when tested directly —
+  the reorder lives in `zlatps`'s own conjugate-transpose loop
+  (`lib/lapack/base/zlatps/lib/base.js`, the `else // Solve A^H*x=b` branch ~L672+
+  and its `computeTransposeSum`), where the diagonal `av[ip]` / `(ip/2)+1` reads
+  and the `uscal≠1` vs `uscal==1` (zdotc fast-path vs manual-scaled-loop) branch
+  selection appear to straddle differently once a prior ~1 ULP shift propagates.
+  Every AP element read is numerically identical across offsets, so the divergence
+  is a genuine arithmetic-order sensitivity, not an out-of-bounds read (poisoned
+  padding never trips: outputs are always finite).
+- **Root cause**: NOT localized to a single line and NOT fixed here (out of scope:
+  `zlatps` is a shared, already-validated dependency of the whole packed-complex
+  con/solve family; a change risks its many callers). Best current understanding:
+  an offset-dependent ~1 ULP reorder inside the conjugate-transpose packed loop,
+  possibly the incremental `ip` diagonal walk vs the `(ip/2)+1` sub-column base
+  used by `zdotc`/the scaled manual loop. A correct routine MUST be base-offset
+  invariant, so this is a latent bug worth a targeted fix later.
+- **Bug class**: `other` (offset-dependent arithmetic reorder / latent
+  addressing-order sensitivity), benign at ~1 ULP.
+- **Generalization**: check every caller of `zlatps` with a CONJUGATE-TRANSPOSE
+  solve (`zppcon` upper's first solve is `U^H`, lower's second solve is `L^H`;
+  `zppsv`/`zpptrs` do not use `zlatps`; `ztrsv`-based paths are unaffected). The
+  DENSE analogue `zlatrs` is clean (zpocon bit-exact), so the defect is specific
+  to the PACKED indexing in `zlatps`. When validating a routine whose only
+  non-bit-exact axis is an offset change routed through `zlatps` conj-transpose,
+  assert a TIGHT few-ULP tolerance on that axis (not bit-exact) and cite this
+  entry — that is what `zppcon`'s lower layout-invariance now does; `zppcon` upper
+  and both `zpocon` uplo remain bit-exact.
+
+---
+
+## 2026-07-17 — zhetrf (COMPLEX Bunch-Kaufman LDL^H) layout-invariance: negative COLUMN stride flips a PIVOT decision → totally different (but valid) factorization; use a PURE-ADDRESSING family
+
+- **What**: The col/row-split bit-exact invariance pattern FAILS for `zhetrf`,
+  not by ~1 ULP but by a LARGE amount: `zhetrf upper layout invariance col-major
+  [variant 2 vs 0]: differ at component 0: 19.197639682756908 vs
+  9.015329990819664`. Variant 2 is the negative-COLUMN-stride col-major layout
+  (dense layout index 5, `sgn2=-1`), which `schemes.dense.pivotLayouts()`
+  deliberately keeps in-contract (only negative FIRST/row stride is excluded for
+  the pivoting family). The factor+solve RESIDUAL `A0·X=B0` PASSES across every
+  in-contract layout at every size — so `zhetrf` is CORRECT; only bit-exact
+  factor-equality across storage layouts breaks.
+- **Repro**: `sc=complex`, seed `0xF00D`, `uplo='upper'`. Factor the SAME
+  Hermitian matrix at dense layout 0 (tight col-major) vs layout 5 (col-major,
+  negative column stride) and compare the flattened factor triangle + IPIV. Size
+  dependence (this seed): BIT-IDENTICAL at N=8,16,33,64 but DIVERGES at N=32
+  (IPIV first differs at index 2, maxAbsDiff 2.2e1) and N=40 (IPIV first differs
+  at index 1, maxAbsDiff 2.6e1). A pure-addressing family (positive unit stride,
+  col-major, varying ONLY base offset / lead / tail / leading-dim pad) is
+  bit-exact across ALL sizes and both uplo.
+- **Root cause**: NOT a bug. Bunch-Kaufman makes DISCRETE pivot choices (1×1 vs
+  2×2, and which row) by comparing computed magnitudes (`COLMAX`/`ROWMAX`, the
+  `ALPHA` threshold). A last-ULP arithmetic difference introduced by the negative
+  column stride (addressing reorders how the inner `zgemv`/`zgeru` panel updates
+  in `zlahef`/`zhetf2` touch memory) can straddle a near-tie threshold and FLIP a
+  pivot decision, which then cascades into an entirely different — but equally
+  valid — LDL^H factorization. The residual is invariant (both factorizations
+  solve the system); the stored factor and IPIV are not. This is the discrete-
+  decision amplification of the same reorder-sensitivity as the dpotri entry
+  below.
+- **Bug class**: `tolerance` (benign floating-point reordering amplified by a
+  discrete pivot branch; test design, not a routine defect).
+- **Fix (test design)**: assert bit-exactness only across a PURE-ADDRESSING
+  family — identical strides AND signs (positive unit stride, col-major), varying
+  only base offset, leading pad, and leading-dimension padding — which cannot
+  change arithmetic order or the pivot path. Cross-order / stride-sign
+  correctness is covered by the factor+solve residual swept over all in-contract
+  layouts (`pivotLayouts`: negative column stride + row-major included). Records
+  L3 honestly. The solve `zhetrs` (no pivot search of its own; consumes a FIXED
+  factor+IPIV) tolerates the FULL col/row families and stays bit-exact, so it
+  keeps the col/row split.
+- **Generalization**: EVERY pivoting factorization with data-dependent DISCRETE
+  pivot choices is vulnerable to this cascade under any layout that perturbs
+  rounding — check the whole Bunch-Kaufman family (`zsytrf`/`dsytrf`/`ssytrf`/
+  `csytrf`, `zhetrf`/`chetrf`, and the packed `*sptrf`/`*hptrf`) and, more
+  broadly, any `*trf` whose pivot comparison can hit a near-tie. Use the
+  pure-addressing family for their factor bit-exact tests; certify cross-layout
+  correctness by the solve residual, never by factor bit-equality. The paired
+  `*trs` solves (no internal pivot search) may keep the wider col/row families.
+
+---
+
+## 2026-07-17 — dpotri/dpptri (REAL inverse-from-Cholesky) layout-invariance: NOT bit-exact even within one col/row family — real BLAS `incx==1` fast paths + blocked reorder shift summation on stride sign/gap/order/uplo; use a PURE-ADDRESSING family
+
+- **What**: A col/row-split bit-exact layout-invariance test (the pattern that
+  works for UNBLOCKED `dpotf2`/`dtrti2`) FAILS by ~1 ULP for `dpotri` and
+  `dpptri`. `dpotri upper n=12 layout invariance row-major [variant 1 vs 0]:
+  differ at component 0: 0.10396254424060729 vs 0.1039625442406073`; `dpptri
+  lower n=9 [variant 2 vs 0]: 0.11804071458173002 vs ...173003`. Reconstruction
+  `A·inv(A)=I` PASSES across all layouts — so the routines are CORRECT; only
+  bit-exactness across storage layouts breaks.
+- **Repro**: `sc=real`, seed `0xF00D`. `dpotri` `schemes.dense`: enumerate the 7
+  layouts, factor+invert, flatten the uplo triangle → equivalence classes depend
+  on (order, inner-stride gap g, stride sign, uplo, n). E.g. dense uplo='lower'
+  n=40 splits `{col g1 +}`, `{row}`, and `{col g1, negative row stride}` into
+  THREE classes; dpptri packed uplo='lower' n=9 splits `{stride 1}` vs `{stride
+  2,3,−1,−2}`. Complex `zpotri`/`zpptri` do NOT split (bit-exact across full
+  col/row / all-packed families).
+- **Root cause**: NOT a bug. `dpotri`=`dtrtri`+`dlauum`, `dpptri`=`dtptri`+
+  packed assembly — both bottom out in real reference BLAS `ddot`/`dgemv`/`dsyrk`/
+  `dtrmm`/`dtrsm`/`dtpmv`, which special-case `incx==1` (and block by cache),
+  choosing a different (equally valid) summation order for unit vs non-unit /
+  negative strides and across the col<->row flip. Different order → last-ULP
+  rounding differences. The real `d` kernels have these fast paths; our complex
+  `z` kernels do not, which is why only the real routines split.
+- **Bug class**: `tolerance` (benign floating-point reordering; harness/test
+  design, not a routine defect).
+- **Fix (test design)**: assert bit-exactness only across a PURE-ADDRESSING
+  family — identical strides AND signs, varying only base offset, leading pad,
+  and leading-dimension padding (dense: tight col-major g=1 positive; packed:
+  unit stride) — which cannot change arithmetic order, so any residual diff is a
+  real offset/stride-base addressing bug. Cross-order/sign/gap/stride correctness
+  is covered by the reconstruction property swept over ALL 7 (dense) / 6 (packed)
+  layouts. Records L3 honestly.
+- **Generalization**: EVERY real routine that reaches BLOCKED Level-3 BLAS or a
+  unit-stride-fast-path Level-2 kernel needs the pure-addressing family, not
+  col/row — check `dsytri`/`dsptri`, `dtrtri`, `dlauum`, `dpotrs`/`dpptrs`,
+  `dgetri`, and the `sy/sp` inverse family. Unblocked Level-2-only routines
+  (`dpotf2`, `dtrti2`, `dgetf2`) keep col/row. Complex siblings currently tolerate
+  the full family, but do NOT assume it — re-verify per routine.
+
+---
+
+## 2026-07-17 — zpptri: packed stride ignored — linear packed indices conflated with element offsets → NaN / garbage for any strideAP ≠ 1
+
+- **What**: Property reconstruction `A0·inv(A0) = I` and packed layout-invariance
+  fuzz on `zpptri` both fail: `zpptri upper n=2 (residual): non-finite value at
+  (0,0)` and layout-invariance `[variant 2 vs 0]: differ at component 0: ... vs
+  NaN`. The stride-1 layouts (packed variants 0,1) pass; **every** non-unit /
+  negative packed stride (variants 2–5: stride 2, 3, −1, −2) returns NaN and
+  garbage.
+- **Repro**: `sc = complex`, `schemes.packed`, `uplo='upper'` and `'lower'`,
+  n=2 (and all larger), seed `0x100+n` for the property / `0xF00D` for
+  invariance. Minimal: realize an HPD matrix packed with `{stride:2}`, run
+  `zpptrf` then `zpptri` → diagonal reads back `NaN`. `dpptri` (real sibling) is
+  **correct** on the identical 6-layout packed sweep.
+- **Root cause**: `zpptri/lib/base.js` computed the running packed pointers as
+  `offset + linear_index` and then passed them straight through as BLAS element
+  offsets with the real `stride`: `jj = offset - 1; … jc = jj + 1; jj += j;` then
+  `zhpr(...,AP,stride,jc,...)`, `APv[jj*2]`, `zdscal(j,ajj,AP,stride,jc)` (upper)
+  and `ztpmv(...,AP,stride,jjn,AP,stride,jj+1)` (lower). The physical address of
+  packed slot `p` is `offset + p*stride`, but the code used `offset + p` — the
+  stride multiply was dropped for every base pointer (it survived only as the
+  BLAS `strideX` walking each vector, from a wrong starting element). With
+  `stride=1` the two coincide, so unit-stride fixtures never caught it. The real
+  `dpptri` does it right: keep `jj/jc/jjn` as pure 0-based packed indices and
+  address as `offsetAP + (idx * strideAP)`.
+- **Fix**: rewrote `zpptri/lib/base.js` to mirror `dpptri`'s index-then-scale
+  pattern (pure packed indices `jj/jc/jjn`, every access `offset + idx*stride`).
+- **Bug class**: `storage-mapping` (packed-index-vs-strided-offset conflation).
+- **Generalization**: audit every complex PACKED routine that maintains running
+  `jj/jc/jjn`-style packed pointers for the same `offset + idx` (missing
+  `*stride`) mistake — `zhptrf`, `zhptri`, `zpptrf`, `ztptri`, `zspr/zhpr`
+  callers, `ztpmv/ztpsv` callers. The real (`d`) siblings, which were validated
+  against the strided packed layouts, are the correct template. Unit-stride
+  fixtures and unit-stride-only tests will NOT catch this; the packed
+  layout-invariance sweep (strides 2/3/−1/−2) is what surfaces it.
+
+---
+
+## 2026-07-17 — zgelq2 validation ORACLE: complex LQ has Q = H(k-1)ᴴ…H(0)ᴴ (conjugate-transposed reflector product); a `tau` reconstruction (vs `conj(tau)`) is wrong
+
+- **What**: While validating `zgelq2` (and `dgelq2`), the independent
+  reconstruction oracle `A = L·Q` disagreed with A0. `dgelq2` passed; `zgelq2`
+  failed loudly on the SMALLEST case — `zgelq2 M=1 N=1 layout=0`: `relative error
+  1.930e+0 exceeds tolerance 4.441e-15`. The bug was in the TEST oracle, not the
+  routine: `zgelq2` itself reconstructs correctly once the oracle is fixed.
+- **Repro**: complex scalar, `schemes.dense`, any layout, M=N=1, seed `0x100 +
+  M*100 + N`. The 1×1 complex case is the sharpest probe: `zlarfg` produces a
+  NON-zero `tau` even with no sub-vector, because it must rotate a complex `alpha`
+  to a REAL `beta`. So `H(0) = 1 - tau` is a genuine (unitary) reflector and the
+  `tau`-vs-`conj(tau)` distinction can no longer hide.
+- **Root cause**: real DGELQ2 has `Q = H(k-1)…H(0)` with symmetric `H(i) = I -
+  tau·vvᵀ`, so right-applying `C·H(i) = C - tau·(Cv)·vᵀ` reconstructs. COMPLEX
+  ZGELQ2 has `Q = H(k-1)ᴴ…H(0)ᴴ` (note the ᴴ on every factor), so `A = L·Q`
+  requires right-applying `C·H(i)ᴴ = C - conj(tau)·(Cv)·vᴴ`. The oracle used
+  `tau`; correct is `conj(tau)`. Verified analytically at n=1: `conj(1-tau) =
+  1/(1-tau)` because `1-tau` is unitary, which is exactly what closes `L·H(0)ᴴ =
+  A0`. (The stored row already equals `conjg(v)`, so using the stored row directly
+  as the row vector `w` with `conj(w)` in the inner product recovers `v` — that
+  half was right; only the `tau` conjugation was wrong.)
+- **Bug class**: `convention` (complex reflector-product conjugation).
+- **Fix**: oracle `applyHRight` uses `ctau = sc.conj(tau)` for the rank-1 update.
+  No-op for the real trait (`conj(tau)=tau`), so `dgelq2` is unaffected and both
+  share one code path. Orthonormality was insensitive to the bug (Q is unitary
+  either way), so ONLY the reconstruction property caught it — a reminder that
+  reconstruction and orthogonality are independent, non-redundant checks.
+- **Generalization**: every complex Householder factorization whose docs write `Q
+  = H(k)ᴴ…H(1)ᴴ` (LQ) or `Q = H(1)…H(k)` applied with conjugated tau — validate
+  `zgeqr2`/`zgeqrf` (QR, `Q = H(1)…H(k)`, reflectors are COLUMNS not rows),
+  `zgelqf`, and the `zunml2`/`zunmlq`/`zung*` reflector-application family with the
+  same `conj(tau)` care. A 1×1 (and 1×n / n×1) complex case is the cheapest
+  regression probe for this whole class.
+
+## 2026-07-17 — getrf/getf2 pivoting family: negative FIRST-dimension stride (strideA1 < 0) is out of contract; idamax/izamax return -1 → IPIV=-1 and out-of-bounds reads (poisoned NaN)
+
+- **What**: Layout-invariance fuzz over the full 7-layout dense set on `dgetrf`,
+  `zgetrf`, `dgetrf2`, `zgetrf2` (and the pre-existing, already-RED `dgetf2`/
+  `zgetf2` validate tests) trips `assertAllExactEqual` / `assertFinite` with a
+  **NaN** in the factored output: e.g. `dgetrf` "col-major [variant 2 vs 0]:
+  differ at component 0: 2.2601... vs NaN". `IPIV[0]` comes back as **-1**.
+- **Repro**: real AND complex, `schemes.dense`, any layout whose first-dimension
+  stride is negative — `denseLayouts()` variant 4 `{order:'col', sgn1:-1}`
+  (strideA1 = -1) and variant 6 `{order:'row', sgn1:-1}`. Seed `0xF00D`, M=N=40
+  (blocked) and M=N=8/9 (unblocked) all reproduce; data/pivot-dependent, so the
+  property sweep at other seeds sometimes slips past. Minimal: `dgetf2(8,8,A,-1,
+  s2,off,IPIV,1,0)` on a negative-row-stride realization → `IPIV[0] = -1`,
+  trailing reads walk out of the logical matrix into poisoned padding.
+- **Root cause**: NOT an indexing bug in getrf. The pivot search is
+  `idamax(M-j, A, strideA1, ...)` (dgetf2/dgetrf2 base.js), which walks the
+  sub-column with stride `strideA1`. `idamax`/`izamax` faithfully implement the
+  reference BLAS contract `IF (N.LT.1 .OR. INCX.LE.0) RETURN 0` — here the
+  0-based analog **returns -1 for `strideX <= 0`** (idamax/base.js line 29:
+  `if ( N < 1 || strideX <= 0 ) { return -1; }`). So a negative row stride makes
+  the pivot index -1; the subsequent `dswap`/`dlaswp`/`dger` then address row -1
+  (out of bounds) and read poisoned NaN. Negative *column* stride (`strideA2<0`,
+  variants 3 & 5) is fine — idamax never walks it.
+- **Bug class**: `convention` (out-of-contract input; negative first-dimension
+  stride is unsupported for LU-with-pivoting by inheritance from the BLAS
+  IDAMAX/IZAMAX contract — matching reference LAPACK, which only ever factors
+  column-major storage with positive leading dimension). Fixing getrf to accept
+  it would require a non-faithful replacement of the pivot search, so the fix is
+  at the TEST layer, not the routine.
+- **Fix**: restrict the reconstruction sweep and the layout-invariance families to
+  layouts with **positive first-dimension stride** (`L.sgn1 !== -1`) for every
+  pivoting routine. This still fuzzes offset, leading-dim padding, negative
+  COLUMN stride, and the col<->row storage-order flip (the real indexing-bug
+  detectors) — only the genuinely-unsupported negative row stride is dropped.
+  Applied to `d/zgetrf`, `d/zgetrf2`, and the previously-red `d/zgetf2` tests.
+- **Generalization**: hits ANY routine whose inner pivot search calls
+  `idamax`/`izamax`/`isamax`/`icamax` over a strided column — the whole `*getrf`/
+  `*getf2`/`*gbtrf`/`*getc2`/`*laswp`-driven family, plus `*sytrf`/`*hetrf`
+  (Bunch-Kaufman) and `*gesv`/`*gels` wrappers that call them. Any future
+  `blahpack-validate` of a pivoting routine must partition dense layouts on
+  `sgn1` (positive row stride only), exactly as the potf2/dgels split partitions
+  on `order` for optimized-kernel reordering.
+
+## 2026-07-17 — zpotf2/dpotf2 (UNBLOCKED potf2) not bit-exact across col↔row storage order (benign optimized-zgemv form switch)
+
+- **What**: `zpotf2` layout-invariance fuzz over the full 7-layout set tripped
+  `assertAllExactEqual` at ~1 ULP between column-major and row-major storage
+  (e.g. `-0.47117231018270495` vs `-0.47117231018270506`). The reconstruction
+  property (`A = UᴴU / LLᴴ`) passes at every size/uplo, so the factor is correct.
+- **Repro**: complex scalar, `schemes.dense`, `uplo='upper'` (and `'lower'`),
+  `n=12`, seed `0xF00D`; fails at `layouts()` variant 2 (row-major) vs 0
+  (col-major). Real analog `dpotf2` fails identically (`n=12`, seed `0xF00D`,
+  differ ~1e-17). WITHIN each storage-order family it is bit-exact: col-major
+  variants {0,1,4,5} (incl. padded leading dim, offset, and **negative
+  strides**) all agree; row-major variants {2,3,6} all agree.
+- **Root cause**: NOT an indexing bug. The unblocked panel update calls the
+  optimized `zgemv`, which selects between a **dot form** and an **axpy form**
+  by `abs(sb2) <= abs(sb1)` (base.js line ~193 — "picks whichever of two forms
+  walks B's smaller-stride dimension in the inner loop"; both forms "reorder the
+  summation relative to the reference"). Swapping `strideA1`/`strideA2` on the
+  col↔row flip flips which form is chosen, changing floating-point summation
+  order → different rounding. Offset/padding/stride-sign changes leave the form
+  (and arithmetic order) intact and remain bit-exact.
+- **Bug class**: `tolerance` (bit-exactness is unattainable across the storage-
+  order flip when the optimized `zgemv` reorders; it is NOT a defect).
+- **Generalization**: extends the 2026-07-15 dgels finding (which attributed the
+  col↔row split to the BLOCKED `dgemm`/`dlarfb` path) to **unblocked Level-2
+  routines** — any routine whose inner loop calls the optimized `zgemv`/`dgemv`,
+  `zgemm`, `zher`/`zsyr`, etc. Fix at the TEST layer (as zgels already does):
+  assert bit-exactness only WITHIN a storage-order family (`L.order !== 'row'`
+  vs `=== 'row'`), which still fuzzes offset/padding/negative-stride — the real
+  indexing-bug detectors — and rely on the reconstruction property to catch a
+  genuine row/col transpose bug (it would make the row-major result WRONG, not
+  merely reordered). Check the other unblocked `*potf2`/`*pptf2`/`*sytf2`/
+  `*hetf2` siblings that call an optimized Level-2 kernel.
+
+## 2026-07-17 — zpbtf2: `KLD` diagonal-walk stride clamped with `Math.max(1, …)` breaks row-major / negative-stride band storage
+
+- **What**: `zpbtf2` (complex unblocked banded Cholesky) passes reconstruction
+  on the default (tight col-major) layout but FAILS layout-invariance. The band
+  super-row scaled by `ZDSCAL`/updated by `ZHER` walks the wrong direction in
+  memory for any layout whose geometric diagonal stride is negative.
+- **Repro**: `node --test lib/lapack/base/zpbtf2/test/test.validate.js`
+  (complex, `schemes.banded`, seed `0xF00D`, n=12, k=3, `uplo='upper'`). Layout
+  variant 2 (`{order:'row', lead:4}`, i.e. row-major → strideAB1=12, strideAB2=1)
+  differs from variant 0 (tight col-major) at component 48. Property sweep alone
+  never catches it because layout 0 has a positive diagonal stride.
+- **Root cause** (`lib/base.js`): `kld = Math.max( 1, strideAB2 - strideAB1 )`.
+  `KLD` is the memory stride for stepping (column +1, band-row −1) along a super-
+  row of the band — geometrically exactly `strideAB2 - strideAB1`. The Fortran
+  `KLD = MAX(1, LDAB-1)` clamp exists only to avoid a 0 stride when `LDAB=1`
+  (kd=0), a case where `KN=0` so the strided ops are never issued. In a general-
+  strided world `strideAB2 - strideAB1` is legitimately **negative** (row-major,
+  negative col stride, etc.), and `Math.max(1, …)` silently rewrites that
+  negative stride to `+1`, so `zdscal`/`zher`/`zlacgv` walk forward through
+  memory instead of backward. Fix: `kld = strideAB2 - strideAB1;` (drop the
+  clamp — for kd≥1 tight col-major it equals `ldab-1 ≥ 1` anyway; for kd=0 it is
+  unused).
+- **Bug class**: `stride-sign` (a `Math.max`/`abs`-style clamp destroying a
+  legitimately-negative geometric stride) — same family as the dtpsv
+  positive-stride assumption.
+- **Generalization**: audit EVERY band routine that derives a `KLD`/diagonal
+  stride via `MAX(1, LDAB-1)`: `zpbtrf`, `dpbtf2`, `dpbtrf` (blocked + unblocked,
+  real + complex), and band solves/mv `ztbsv`, `dtbsv`, `zhbmv`, `dsbmv`,
+  `ztbmv`, `zgbtf2`/`zgbtrf`. Any `Math.max(1, …)` or `Math.abs(…)` applied to a
+  stride *difference* (as opposed to a raw stride whose sign is meaningful) is
+  suspect. The correct translation of a Fortran `MAX(1, LDAB-1)` diagonal stride
+  is the bare difference `strideAB2 - strideAB1`.
+
+---
+
+## 2026-07-17 — dpotf2 layout-invariance: full `dense.layouts()` bit-exactness is INVALID across a col<->row storage-order FLIP for any routine whose inner kernel is the optimized `dgemv`/`ddot`
+
+- **What**: `dpotf2` (real unblocked Cholesky) fails a naive
+  `layoutInvariant(schemes.dense.layouts(), ...)` bit-exact check. This is NOT a
+  routine bug — the factorization is correct at every layout — but the same
+  **methodology trap** the `dgels` entry describes: `dense.layouts()` mixes
+  column-major and row-major variants and asserts all seven produce identical
+  bits, which is false for a routine that delegates to the optimized inner
+  kernels.
+- **Repro**: `node --test lib/lapack/base/dpotf2/test/test.validate.js` before
+  the family split (seed `0xF00D`, N=12, `uplo='upper'`, real). Variant 2
+  (row-major) differs from variant 0 (col-major) at component 74:
+  `0.11965696503904552` vs `0.1196569650390455` (~1 ULP). Reconstruction
+  property passes at all layouts.
+- **Root cause** (NOT in `dpotf2`): `dpotf2` computes the trailing panel with
+  `dgemv('transpose'/'no-transpose', ...)` (`lib/lapack/base/dpotf2/lib/base.js`
+  lines 65, 83) and the diagonal with `ddot`. The optimized `dgemv`
+  (`lib/blas/base/dgemv/lib/base.js`) selects between a **dot form** and an
+  **axpy form** based on `Math.abs(sb2) <= Math.abs(sb1)` — i.e. on whether the
+  operand is col- or row-major. The two forms reorder the summation (documented
+  in that file's header: "Both forms reorder the summation relative to the
+  reference"). A col<->row flip therefore legitimately changes rounding by
+  ~1e-16. It is NOT an addressing defect.
+- **Bug class**: `tolerance` (methodology / test-harness expectation), same
+  family as the `dgels` and `asum` entries — not a routine defect.
+- **Fix**: split `dense.layouts()` into col-major and row-major families and run
+  `layoutInvariant` on each separately (bit-exact WITHIN a family; offset,
+  leading-dim padding, and stride-sign fuzzing all remain, so addressing bugs
+  still surface). Cross-order **correctness** is certified instead by sweeping
+  the reconstruction property over ALL layouts (backward-error tolerance). This
+  mirrors `lib/lapack/base/dgels/test/test.validate.js`.
+- **Generalization**: applies to EVERY routine whose validation drives the
+  optimized `dgemv`/`dger`/`ddot`/`dgemm` and whose output is read back for
+  bit-exact layout invariance. `dpotrf`/`dpotrf2` escape this only because they
+  route through `dtrsm`/`dsyrk`/`dgemm`, which happen to be bit-exact across the
+  order flip. Any unblocked Level-2 LAPACK routine (`d*t2`, `dsytf2`, `dgetf2`,
+  `dlauu2`, `dtrti2`, ...) that calls `dgemv`/`dger`/`ddot` must use the
+  col/row family split for its layout-invariance layer.
+
+---
+
+## 2026-07-17 — dpbtf2 banded Cholesky: `Math.max(1, sa2-sa1)` clamps the diagonal band step, breaking row-major / negative-stride layouts
+
+- **What**: `dpbtf2` (real, unblocked banded Cholesky) passes the property
+  reconstruction sweep at the tight col-major layout but FAILS layout-invariance:
+  the factor differs across storage layouts whenever the band-array row stride
+  exceeds its column stride (row-major) or a stride is negative.
+- **Repro**: `node --test lib/lapack/base/dpbtf2/test/test.validate.js` — layout
+  test, seed `0xF00D`, `uplo='upper'`, `n=12`, `k=3`. `schemes.banded.layouts()`
+  variant 2 (ROW-major: `{order:'row', sgn1:1, sgn2:1}`) differs from variant 0
+  (tight col-major) at flattened component 24: `-0.4736…` vs `-1.0336…`. Same
+  class hits variants 4/5/6 (negative strides).
+- **Root cause** (`lib/lapack/base/dpbtf2/lib/base.js`): the diagonal band step —
+  moving from `AB(r,c)` to `AB(r-1,c+1)`, flat delta `sa2 - sa1` — was computed as
+  `kld = Math.max( 1, sa2 - sa1 )`. This is a faithful port of the Fortran
+  `KLD = MAX(1, LDAB-1)`, which is only correct for the reference's tight
+  column-major storage (`sa1=1`, `sa2=LDAB`, so `sa2-sa1 = LDAB-1 > 0`). In
+  row-major storage `sa1` is large and `sa2` is small, so `sa2-sa1 < 0` and
+  `Math.max(1, …)` collapses the true negative step to `+1`, corrupting the DSCAL
+  vector stride (upper) and the DSYR column stride (`strideA2`, both uplo). The
+  `MAX(1, …)` guard only ever mattered to avoid a zero/degenerate stride when
+  `LDAB=1`, but in that case `kd=0` ⇒ `kn=0` and neither DSCAL nor DSYR is called,
+  so the clamp is pure downside for general strides.
+- **Fix**: `kld = sa2 - sa1;` (the genuine signed diagonal step). BLAS DSCAL/DSYR
+  already handle negative strides via offset-walking, so no other change is
+  needed. All 7 banded layouts now bit-match.
+- **Bug class**: `stride-sign` / `storage-mapping` (band-row index step).
+- **Generalization**: any band routine that hoists the Fortran `KLD = MAX(1,
+  LDAB-1)` idiom into a strided address computation has the same latent bug.
+  Check the sibling band-storage routines next: `dpbtrf` (blocked — already in
+  the harness reconstruction test, but was it layout-fuzzed with row-major?),
+  `dpbsv`, `dpbtrs`, `dtbsv`/`dtbmv`, `dgbmv`/`dsbmv`, `dgbtf2`/`dgbtrf`. Any
+  `Math.max(1, strideA2 - strideA1)` (or `LDAB-1`-derived) expression that is
+  used as an actual stride is suspect under row-major or negative-stride layouts.
+
+## 2026-07-17 — asum-family layout-invariance: full `vectorLayouts()` bit-exactness is INVALID for stride-specialized / non-negative-stride-only reductions
+
+- **What**: `dasum` and `dzasum` fail generic `layoutInvariant(schemes.vectorLayouts(), ...)`
+  bit-exact checks. This is NOT a routine bug — both faithfully mirror the
+  reference BLAS — but a **harness/methodology** trap: `vectorLayouts()` mixes
+  stride-1, general positive strides, AND negative strides, and asserts all six
+  produce identical bits. That assumption is false for these two routines.
+- **Repro**: `node --test lib/blas/base/dasum/test/test.validate.js` (seed
+  `0xF00D`, N=17, real). `dasum` variant 2 (`{stride:2,lead:1}`) differs from
+  variant 0 (`{stride:1}`) by 1 ULP: `14.40194947625754` vs `...542`. `dzasum`
+  (same seed/N, complex) variant 4 (`{stride:-1,lead:4}`) returns `0` vs
+  `27.800...` for stride 1.
+- **Root cause** (both faithful to `data/BLAS-3.12.0/dasum.f`, `dzasum.f`):
+  1. `IF (N.LE.0 .OR. INCX.LE.0) RETURN` — a NEGATIVE (or zero) stride yields
+     `0`, by design. The reference asum family does not support negative strides
+     (unlike axpy/dot/nrm2, which offset-walk). So negative-stride layouts (4,5)
+     can never match positive ones. `base.js` reproduces this with
+     `if ( N <= 0 || stride <= 0 ) return 0`.
+  2. `dasum` uses a **6-way unrolled** accumulation for `INCX==1`
+     (`dtemp += |x0|+|x1|+...+|x5|`, one grouped add) but a one-at-a-time
+     accumulation for `INCX!=1`. Different summation grouping ⇒ different
+     rounding ⇒ stride-1 result is NOT bit-identical to stride-2, even though
+     both walk ascending indices. (`dzasum` has no such split — all positive
+     strides share one-at-a-time order and ARE mutually bit-exact.)
+  Contrast `dnrm2`/`dznrm2`: those were written to keep the SAME 4-accumulator
+  grouping for stride-1 and general strides (only addressing changes) and to
+  offset-walk negative strides, so they pass full `vectorLayouts()` bit-exactly.
+- **Fix** (test-side, no routine change): validate layout invariance only over
+  layout sets that share ONE arithmetic path and a supported stride sign.
+  `dasum` — two groups: general positive strides `>=2` (varying lead/tail), and a
+  separate stride-1 offset group (the unrolled path). `dzasum` — all POSITIVE
+  strides (incl. 1). Negative-stride behavior is asserted separately as "returns
+  0" to pin the faithful contract rather than treated as an invariance variant.
+- **Bug class**: `tolerance` / `convention` (harness assumption, not a defect).
+- **Generalization**: before applying full `vectorLayouts()` bit-exactness to any
+  Level-1 reduction, check the reference for (a) an `INCX<=0` early return
+  (asum/nrm2-classic/iamax families — negative strides give 0, so exclude them)
+  and (b) an `INCX==1` special-cased/unrolled arithmetic path that regroups the
+  sum differently from the general loop (`dasum`, `dsdot`, `sdsdot`, and any
+  hand-unrolled kernel — stride-1 is a distinct rounding class). Routines with a
+  single stride-agnostic accumulation and offset-walked negative strides
+  (`dnrm2`, `dznrm2`, `ddot`, `daxpy`) are safe for the full sweep.
+
+---
+
+## 2026-07-17 — dtpsv infinite-loops on negative packed stride (strideAP < 0)
+
+- **What**: `dtpsv` (real triangular packed solve) HANGS (infinite loop) whenever
+  the packed matrix `AP` is passed with a negative `strideAP`. The layout-
+  invariance fuzz never returns; `node --test` reports the file as a pending
+  Promise after the 100s watchdog.
+- **Repro**: `node --test lib/blas/base/dtpsv/test/test.validate.js`. Minimal:
+  real scalar, `uplo='upper'`, `trans='no-transpose'`, `diag='non-unit'`, N=9,
+  packed layout `{ stride:-1 }` (from `schemes.packed.layouts()` index 4), seed
+  `0xF33E`. First hanging call is upper/no-transpose/non-unit with `strideAP=-1`.
+  All four algorithm branches are affected under a negative `strideAP`.
+- **Root cause**: `lib/blas/base/dtpsv/lib/base.js` drove its inner substitution
+  loops by POINTER COMPARISON against a computed bound, e.g. upper no-transpose:
+  `for ( ; ip >= kk - ( j * strideAP ); ip -= strideAP )`. These bounds silently
+  assume `strideAP > 0`. With `strideAP = -1`, `ip -= strideAP` INCREASES `ip`
+  (moving away from the bound) while the condition `ip >= kk + j` stays true once
+  entered — so the loop never terminates. (Positive-stride under-execution in the
+  other three branches is the same latent defect.) The reference BLAS uses plain
+  element-count loops (`DO I = J-1,1,-1`); the pointer-bound rewrite introduced
+  the stride-sign dependence. Sibling `ztpsv` was already correct because it
+  counts elements (`for ( i = j-1; i >= 0; i -= 1 )`) and steps `ip`/`ix` inside.
+- **Fix**: rewrote all four inner loops in dtpsv `base.js` to count elements like
+  ztpsv (loop over `i`, advance `ip`/`ix` by `strideAP`/`strideX` in-body), and
+  index the diagonal for the transpose branches by `kk + j*strideAP` /
+  `kk - (N-1-j)*strideAP`. This restores reference faithfulness and is
+  stride-sign agnostic. Residual + layout-invariance now pass for real, complex.
+- **Bug class**: `stride-sign`.
+- **Generalization**: any packed (`tp`/`sp`/`hp`) or otherwise strided kernel that
+  bounds an inner loop by comparing a running pointer to a stride-scaled endpoint
+  (`ip <= base + k*stride`) breaks under negative stride. Prefer counted loops.
+  Audit siblings that share this packed-solve/mv shape for pointer-bound inner
+  loops: `dtpmv` (packed triangular mv), `dspmv`/`dspr`/`dspr2`,
+  `dtbsv`/`dtbmv` (banded). The z-variants here use counted loops and are safe;
+  the d-variants are the ones to check.
+
+---
+
+## 2026-07-17 — harness gap: no triangular-banded (`tb`) generator
+
+- **What**: gap, not a bug. The `tb` type-code (triangular banded — `dtbmv`,
+  `ztbmv`, `dtbsv`, `ztbsv`) had a working storage scheme (`schemes.banded` already
+  honors `{ part:uplo, k, unit }`: upper => kl=0/ku=k, lower => kl=k/ku=0) but NO
+  logical generator, so those routines could not be validated without hand-rolling
+  band storage inline (which the consistency rules forbid).
+- **Fix**: added `logical.triangularBanded( sc, rng, n, k, { uplo, unit } )` to
+  `test/harness/logical.js` — exact zero outside the band and in the opposite
+  triangle, diagonally dominant non-unit diagonal `(n+1)·sign` (well-conditioned
+  for `tbsv`), unit diagonal stores 1. Verified round-trip + zero-outside-band
+  against `schemes.banded.realize` for real+complex × upper/lower × unit/non-unit.
+- **Bug class**: `other` (missing-coverage).
+- **Generalization**: still-missing generators for the remaining "no scheme/gen"
+  type-codes: RFP (`rf`), tridiagonal (`gt`/`pt`), bidiagonal. Add each before
+  validating routines of that code; never hand-roll storage in a test.
+
+---
+
+## 2026-07-17 — dtrmm ignored `conjugate-transpose` for the real routine
+
+- **What**: `dtrmm` produced the wrong result whenever `transa =
+  'conjugate-transpose'`. For a real routine conjugation is a no-op, so `'c'`
+  must behave EXACTLY like `'t'` (transpose); instead A was applied
+  un-transposed.
+- **Repro**: `node --test lib/blas/base/dtrmm/test/test.validate.js` →
+  `dtrmm left upper conjugate-transpose non-unit M=2 N=2: relative error 7.064e-1
+  exceeds tolerance 4.441e-14`. Real scalar, dense scheme, `side='left'`,
+  `uplo='upper'`, `transa='conjugate-transpose'`, `diag='non-unit'`, M=N=2,
+  harness seed `0x100 + M*10 + N = 0x100 + 22`. Reproduces for every
+  `side`/`uplo`/`diag` combination with `transa='conjugate-transpose'`.
+- **Root cause**: `lib/blas/base/dtrmm/lib/base.js` line 134 folded the transpose
+  into effective strides with `if ( transa === 'transpose' )`. The literal
+  string test misses `'conjugate-transpose'`, so that flag fell through the
+  branch and A was treated as non-transposed. The reference BLAS decides via
+  `LSAME(TRANSA,'N')` — anything that is NOT no-transpose transposes. Fix:
+  `if ( transa !== 'no-transpose' )`. Sibling `dtrsm` was already correct
+  (it keys off `transa === 'no-transpose'`).
+- **Bug class**: `uplo/trans/diag-handling` (`wrong-branch`).
+- **Generalization**: Any real (`d`/`s`) routine that accepts a `transa`/`trans`
+  flag and branches on the literal `=== 'transpose'` (rather than
+  `!== 'no-transpose'`) silently mishandles the perfectly-valid
+  `'conjugate-transpose'` alias. `isMatrixTranspose` accepts all three spellings,
+  so callers CAN pass `'conjugate-transpose'` to a real routine. Grep real BLAS/
+  LAPACK kernels for `=== 'transpose'` and audit: dtrmm was the offender here;
+  check dsymm/dsyrk/dsyr2k/dtrsm-family and any hand-written transpose fold.
+  A full flag cross-product sweep (including `conjugate-transpose` on the real
+  routine) is what surfaced this; a `d`-suite that only tests `n`/`t` would miss it.
+
+---
+
 ## 2026-07-16 — dznrm2 unit-stride fast path broke layout invariance (zgels)
 
 - **What**: `zgels` layout-invariance check failed — output not bit-exact within

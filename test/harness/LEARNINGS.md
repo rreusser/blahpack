@@ -6,6 +6,89 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-18 — dgelqt WORK guard advertised `mb*N`, but the blocked LQ trailing update scales with trailing ROWS — for tall (M>N) inputs the true peak is `(M-min(mb,N))*min(mb,N)` → poisoned WORK of the advertised length leaked NaN into the factor
+
+- **What**: The `dgelqt` ndarray wrapper AND the auto-alloc `dgelqt.js` wrapper both
+  sized WORK as `mb*N` (copied verbatim from reference `DGELQT.f`'s documented
+  `WORK dimension (MB*N)`). But `base.js` applies the trailing block update with
+  `dlarfb('right', ..., 'rowwise', M-i-ib, N-i, ib, ..., WORK, 1, M-i-ib, ...)`,
+  i.e. WORK is used as a `(M-i-ib)`-by-`ib` column-major scratch — its size scales
+  with the trailing ROW count `M-i-ib`, NOT with `N`. The peak is the first block:
+  `(M - min(mb,K))*min(mb,K)` (K=min(M,N)). This exceeds `mb*N` exactly when
+  `M > N + mb` (tall LQ). `mb*N` is correct only for the standard wide case M≤N.
+  A caller who sized WORK to the advertised `mb*N` on a tall input got
+  out-of-bounds reads into poisoned/unallocated padding → `undefined`/NaN in the
+  on/below-diagonal L (and V) of the factored A. This is the LQ dual of the dgeqrt
+  QR case, where the trailing update instead scales with trailing COLUMNS `N-i-ib`
+  and `mb*N` is always safe because dgeqrt requires M≥N.
+- **Repro**: `lib/lapack/base/dgelqt/test/test.validate.js` Step 4c
+  `assertWorkspaceSufficient`, `schemes.dense`, real trait, seed `0xB10C+M*7+N`.
+  Case `M=40, N=20, mb=8` (K=20, M>N): advertised minimum probes to WORK length
+  **160** (= mb*N); running at exactly 160 with a POISONED buffer yields a
+  non-finite output component (index 8) — the routine reads past its own advertised
+  workspace. The true peak is `(40-8)*8 = 256`. Also caught in the primary property
+  sweep at `M=5, N=3, mb=1` (peak `(5-1)*1 = 4` vs advertised `mb*N = 3`): the
+  reconstruction A=L·Q had a non-finite value at index 4. A brute-force check over
+  all `0≤M,N≤40`, `1≤mb≤K` confirms the closed form
+  `(M-min(mb,K))*min(mb,K)` equals the exact per-block peak everywhere (0
+  mismatches), and `mb*N` under-counts by up to 200 elements for tall cases.
+- **Root cause**: `convention` / workspace under-count — the guard copied the
+  reference `MB*N` doc figure, which is a lower bound valid only for the M≤N regime
+  the reference targets; our JS supports general M,N (base computes K=min(M,N) and
+  factors tall inputs too) but never widened the WORK bound for M>N.
+- **Fix (APPLIED)**: both `ndarray.js` and `dgelqt.js` now advertise
+  `minWork = max( mb*N, (M-min(mb,K))*min(mb,K) )` when K>0 (else 0). The `max`
+  preserves the reference-documented `mb*N` for the wide M≤N regime (faithful — it
+  never LOWERS the documented minimum) and raises it to the exact peak only where
+  M>N genuinely needs more. Step 4c now passes at the corrected advertised minimum
+  (160→256 for 40×20×8, etc.) with reconstruction still holding there; the primary
+  property sweep (which poisons WORK to exactly `mb*N`) passes because the test now
+  sizes WORK from the same corrected formula.
+- **Bug class**: `convention` (workspace-size boundary).
+- **Generalization**: audit ALL `*lqt`/`*lq2`-style blocked LQ (and their complex
+  `z` siblings, e.g. `zgelqt`) and any routine whose `dlarfb` update is
+  `side='right'`/rowwise — their WORK scales with trailing ROWS, so a `mb*N` /
+  `nb*N` guard silently under-counts for M>N. This is the ROW-trailing dual of the
+  `dgeqrt`/`*qrt` COLUMN-trailing family (where `nb*N` is safe under the M≥N
+  precondition). Check `zgelqt`, `dtplqt`/`dtplqt2`, `dgemlqt` next.
+
+## 2026-07-18 — RFP-PD family harness (`pffamily.js`) over-asserted: dpftri is NOT bit-exact across ALL RFP strides — the real Cholesky-inverse (dlauum/dsyrk fast path) reorders arithmetic on any stride change
+
+- **What**: `pffamily.js` originally claimed (docstring + `pftriInvariance` using the
+  full stride-fuzzing `linearLayouts()`) that the *entire* RFP positive-definite family
+  is bit-exact across ALL linear RFP layouts (stride sign AND magnitude). That claim is
+  FALSE for **dpftri** (real RFP Cholesky inverse). The numeric reconstruct property
+  A0·inv(A0)=I passes everywhere (routine is correct → L2), but the bit-exact layout
+  fuzz fails.
+- **Repro**: `lib/lapack/base/dpftri/test/test.validate.js`, `transr='transpose'`,
+  `uplo='upper'`, `n=12`, seed `0xF00D`; RFP buffer `stride=2` vs `stride=1` differ at
+  packed component 78: `0.14882374233484508` vs `0.1488237423348451` (1 ULP). Probe
+  confirmed: **offset-only** changes (stride fixed at +1, vary lead/tail/base) are
+  bit-exact (0 differing components); ANY stride change — including `stride=-1`,
+  2, 3 — flips exactly 1 ULP.
+- **Root cause**: NOT a bug in dpftri. dpftri delegates to `dlauum` + `dsyrk` + `dtrmm`
+  (`lib/lapack/base/dpftri/lib/base.js:81-133`); `dlauum` is the RFP analog of the
+  dense **dpotri/dlauum** family already documented in `schemes.js` (`pureAddrLayouts`)
+  as legitimately reordering when a unit-stride (`incx==1`) BLAS fast path is taken.
+  Changing the RFP stride changes the strides handed to those inner kernels, which
+  switches their accumulation order → last-ULP differences. Faithful to reference LAPACK.
+- **Why zpftri is immune**: the complex RFP inverse (ztfttri/zlauum/zherk/ztrmm) has no
+  analogous unit-stride specialization in this codebase, so zpftri stays bit-exact across
+  ALL RFP layouts (verified — its full-stride fuzz passes). Same asymmetry as the dense
+  d-vs-z LAUUM/POTRI pair.
+- **Bug class**: `harness-over-assertion` / `fast-path-reorder` (invariance level, not
+  correctness). The *helper* asserted a stronger invariant than the code guarantees.
+- **Fix**: `pffamily.js` — invariance drivers now take an optional RFP-layout list;
+  added `pureAddrRfpLayouts()` (stride fixed at +1; vary lead/tail/base offset only —
+  the RFP analog of `schemes.dense.pureAddrLayouts`). dpftri's L3 invariance uses it;
+  its cross-order/stride correctness is certified by the reconstruct property swept over
+  the sizes. All other pf* routines (dpftrf, zpftrf, zpftri, dpftrs, zpftrs) keep the
+  full stride-fuzzing `linearLayouts()` and pass bit-exact.
+- **Generalization**: any RFP routine that bottoms out in a real `lauum`/`trmm`/`syrk`
+  fast path (dtftri's inverse path, dsfrk via dsyrk) may reorder on stride change —
+  fuzz it with `pureAddrRfpLayouts()` and lean on the numeric property for the
+  cross-stride guarantee. Complex analogs generally stay fully bit-exact.
+
 ## 2026-07-18 — dggqrf/zggqrf/dggrqf/zggrqf (generalized QR & RQ) ndarray WORK guards + convenience auto-allocs UNDER-advertise the reference min `max(1,N,M,P)` but forward ONE shared WORK to three blocked sub-kernels (geqrf/ormqr/gerqf) that each store a trailing block-reflector T → silent NaN in the factored A/B
 
 - **What**: All four generalized-QR/RQ wrappers guard the caller-owned WORK with the

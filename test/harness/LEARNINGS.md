@@ -6,6 +6,64 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-18 — zspsvx layout-invariance OVER-asserted: a full-`layouts()` bit-exact fuzz of the complex-symmetric packed expert driver is invalid — negative packed AP stride is out of contract for the zsptrf factor, and row-major dense B/X benignly reorders the refinement
+
+- **What**: The first-draft `zspsvx` validation asserted bit-exact
+  X ++ rcond ++ FERR ++ BERR across the FULL `schemes.packed.layouts()` ×
+  `schemes.dense.layouts()` product (copied from the `zppsvx`/`dppsvx` HERMITIAN/
+  SPD mirror, whose Cholesky kernels have no pivot search and tolerate the full
+  fuzz). Two distinct, legitimate divergences surfaced — neither a routine bug:
+    1. **Negative packed AP stride → NaN in the factor (out of contract).** For
+       `uplo='upper'`, packed stride `-1`/`-2`, `zsptrf` corrupts the
+       factorization: previously-finite packed slots become NaN, so the composed
+       `zspcon` (→ NaN `rcond`) AND the `zsptrs`/`zsprfs` solve (→ NaN X) both
+       poison. This is the DOCUMENTED `zsptrf` contract: its Bunch-Kaufman pivot
+       search calls `izamax` over the packed column, and reference BLAS `IZAMAX`
+       returns `-1` for `INCX <= 0` (`INCX<=0 -> no index`), so a non-positive
+       packed stride is out of contract for ANY diagonal-pivoting packed factor
+       (`zsptrf`/`zhptrf`/`dsptrf` and every driver composing them). Manifested as
+       `rcond=NaN` while `info=0`. (N=3 happened not to corrupt; N=5,9 did —
+       out-of-contract behavior is simply undefined, not size-monotone.)
+    2. **Row-major / negative / gapped dense B/X → ~few-ULP reorder.** With AP at
+       unit stride, switching B/X to any row-major, negative-stride, or gapped
+       dense layout shifted X by ~2e-15 (vs |X|~3.3, i.e. a few ULP), FERR by
+       ~1e-14 — a benign floating-point reordering of the `zsprfs` iterative
+       refinement / `zsptrs` packed-solve reductions, NOT an addressing bug (no
+       NaN; magnitude is rounding-scale). The sibling `zsprfs`/`zsptrs` validations
+       already certify only TIGHT col-major dense B/X for exactly this reason.
+  Additionally, even POSITIVE non-unit packed stride (2,3) can flip `izamax` pivot
+  TIES → a different (still correct) Bunch-Kaufman path → not bit-exact.
+- **Repro**: `lib/lapack/base/zspsvx/test/test.validate.js`, `sc=complex`,
+  `logical.symmetric` (complex-symmetric A=Aᵀ, NO conj), N=9, nrhs=2, seed
+  `0xBEEF`. Factor NaN: `uplo='upper'`, `schemes.packed.layouts()[4]`
+  (`{stride:-1,lead:4,tail:1}`) → `rcond=NaN`, `info=0`; `zsptrf` scan shows valid
+  packed slots turned NaN post-factor (`NaN-in-factor=4` at N=5). Benign reorder:
+  `uplo='upper'`, AP tight, B/X `layouts()[2]` (row-major) → `dX≈2.4e-15`,
+  `dFERR≈1.4e-14`, `dBERR≈3e-17`, `drcond=0`.
+- **Root cause**: `harness-over-assertion` / `fast-path-reorder` + out-of-contract
+  layout — the invariance step asserted bit-exactness over layouts the composed
+  kernels do not (and cannot) support. The mirror driver (`zppsvx`) tolerates the
+  full fuzz only because Cholesky has no `izamax` pivot and its refinement doesn't
+  reorder on B/X order; the complex-SYMMETRIC diagonal-pivoting family does both.
+- **Fix (APPLIED, test-only — no routine change)**: scoped the bit-exact
+  layout-invariance to a PURE-ADDRESSING family (unit positive stride, varying
+  ONLY base offset via `lead`/`tail` for packed and `lead`/`tail`/`ldaExtra` for
+  dense — `schemes.dense.pureAddrLayouts()`), which cannot reorder arithmetic nor
+  change a pivot decision → genuinely bit-exact and still catches base-offset
+  addressing bugs (the `zpptri` class). Cross-order correctness (non-unit packed +
+  row-major/negative dense still SOLVE to tolerance) is certified by a separate
+  cross-layout RESIDUAL sweep (POSITIVE packed strides 1,2,3 × EVERY dense layout),
+  matching the `zsysvx` pattern. Final level: **L3-layout-fuzzed**. Base-vs-ndarray
+  `rcond` agree bit-for-bit (`Object.is`) on the tight layout across the sweep.
+- **Generalization**: every `*spsvx`/`*spcon`/`*sptrf`/`*hpsvx`/`*sysvx`-class
+  diagonal-pivoting driver (packed OR dense) must (a) restrict factor/driver
+  layout-invariance to a pure-addressing (base-offset) family, (b) sweep only
+  POSITIVE packed / positive-leading-dim strides for the factor contract, and
+  (c) keep dense B/X TIGHT col-major for bit-exactness, relying on a residual
+  sweep for cross-order correctness. Any full-`layouts()` bit-exact assertion on
+  these is an over-assertion. (Cf. `zsptrf`, `zsysvx`, `zspcon` validate notes and
+  the RFP `pffamily` fast-path-reorder entry below.)
+
 ## 2026-07-18 — dgelqt WORK guard advertised `mb*N`, but the blocked LQ trailing update scales with trailing ROWS — for tall (M>N) inputs the true peak is `(M-min(mb,N))*min(mb,N)` → poisoned WORK of the advertised length leaked NaN into the factor
 
 - **What**: The `dgelqt` ndarray wrapper AND the auto-alloc `dgelqt.js` wrapper both

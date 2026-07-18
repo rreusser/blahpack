@@ -40,6 +40,12 @@ var DESIRED_RULES = {
 	// ndarray layer reuses one buffer across same-size batches). Allocation is
 	// allowed only in the <routine>.js wrapper on a null work argument.
 	'no-internal-workspace-alloc': 'error',
+
+	// The workspace-LENGTH integer (lwork/liwork/lrwork) is vestigial in JS: a
+	// typed array carries its own `.length`, so the caller-owned WORK array fully
+	// determines the available workspace. A separate length parameter is redundant
+	// and a source of signature-drift bugs — forbid it; derive from WORK.length.
+	'no-lwork-param': 'error',
 	'vars-order': 'warn'
 };
 var BLAHPACK_RULES = {};

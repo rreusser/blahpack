@@ -6,6 +6,52 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-17 — dormqr (REAL blocked apply-Q) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
+
+- **What**: The `dormqr` ndarray wrapper's WORK-length guard is `minWork =
+  (side==='left') ? max(1,N) : max(1,M)` — the UNBLOCKED minimum. But `dormqr`'s
+  own base.js (and its JSDoc) stores the block reflector `T` in a SEPARATE
+  trailing WORK segment `offsetT = offsetWork + nw*NB`, so on the BLOCKED path
+  (K>NB=32) it actually needs `nw*NB + (NB+1)*NB` elements (nw = N for left, M for
+  right). The wrapper therefore ACCEPTS a WORK buffer far too small for a blocked
+  call; dlarft/dlarfb then write past the buffer (silently dropped by the typed
+  array) and read the T region back as `undefined` → **NaN in the output C**. No
+  throw, no error — a silent wrong (non-finite) result.
+- **Repro**: `lib/lapack/base/dormqr/test/test.validate.js` Step 4c
+  (`assertWorkspaceSufficient`), `side='left'`, M=80, N=50, K=40 (K>NB → blocked),
+  seed `seedFor(80,50,40,'left')`. The wrapper's advertised minimum probes to
+  WORK length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
+  poisoned buffer yields `C[0,0] = NaN` (needs 50*32 + 33*32 = 2656). The
+  unblocked `dorm2r` is unaffected (it genuinely needs only nw). The COMPLEX
+  sibling `zunmqr` already had the CORRECT guard (`nb>=K ? nw : nw*nb+(nb+1)*nb`),
+  so only the real `dormqr` wrapper was wrong.
+- **Root cause**: `lib/lapack/base/dormqr/lib/ndarray.js` copied the reference
+  LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
+  JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
+  reference shrinks NB to fit LWORK; we do not). So the reference's minimum is not
+  a safe minimum for our non-adaptive blocked path. Fix: mirror `zunmqr`'s guard —
+  `need = (NB >= K) ? nw : (nw*NB + (NB+1)*NB)`, guarded by `K>0`.
+- **Fix (APPLIED)**: rewrote the WORK check in `dormqr/lib/ndarray.js` to compute
+  `nb=32; nw = left?max(1,N):max(1,M); need = (nb>=K)?nw:(nw*nb+(nb+1)*nb)` under
+  `if (K>0)`, matching `zunmqr`. Step 4c now passes at the (correctly larger)
+  advertised minimum for both sides, and the apply still matches the explicit-Q
+  oracle there.
+- **Bug class**: `convention` (copied reference LWORK lower bound as a hard guard
+  for a non-adaptive blocked kernel that consumes more).
+- **Generalization**: audit EVERY blocked apply-Q / generate-Q / factorization
+  wrapper that stores a block reflector `T` (or other scratch) in a trailing WORK
+  segment for the same "advertised min = reference unblocked min" mistake — the
+  `*orm*/*unm*` family (`dormlq`/`dormql`/`dormrq`/`dorm2l`… blocked variants),
+  `*org*/*ung*` generators, and any `*trf` using dlarfb. The high-signal probe is
+  exactly Step 4c: derive the wrapper's throw boundary, then run the BLOCKED path
+  at that exact length with a poisoned buffer and require finite output. A wrapper
+  whose guard is a bare `max(1,N)`/`max(1,M)` (no `K>NB` blocked branch) while its
+  base.js documents a `nw*NB + (NB+1)*NB`-style requirement is the tell. Note
+  `zungqr`/`dorgqr` guards are ALSO bare `max(1,N)` while their base needs `N*NB`
+  — re-verify those next (they were only used here as oracles with generous WORK).
+
+---
+
 ## MANDATORY LOGGING RULE (read before you "just fix it")
 
 > When the harness (or any test) surfaces a defect, **you MUST add an entry to
@@ -29,6 +75,75 @@ Each entry MUST contain:
    storage schemes to check next. This is the payoff.
 
 Keep entries short. Newest first.
+
+---
+
+## 2026-07-17 — dorglq AND zunglq (BOTH real and complex blocked LQ Q-formation) WORK guards advertised `max(1,M)` but the blocked path needs `M*NB` → poisoned WORK of the advertised length leaked NaN into Q
+
+- **What**: The `dorglq` and `zunglq` ndarray wrappers each had the workspace guard
+  `var minWork = Math.max( 1, M );` — but their OWN JSDoc says "WORK must have
+  length >= M*NB (NB=32)", and the blocked path (`dlarft`/`dlarfb`) stores the
+  `ib×ib` block-reflector T factor with leading dimension `LDWORK = M` and reuses
+  the same buffer at offset `ib` for `dlarfb` scratch, consuming up to `M*NB`
+  elements (matching reference `DORGLQ`'s `IWS = LDWORK*NB`). So both wrappers
+  ADVERTISED a sufficient minimum of `M` while actually reading `M*NB`. A caller
+  who sized WORK to the advertised `M` got out-of-bounds reads → `undefined`/lost
+  writes → NaN in Q. Unlike the QR sibling family (where only the COMPLEX `zungqr`
+  wrapper was wrong and real `dorgqr` was correct), here BOTH the real `dorglq`
+  and complex `zunglq` wrappers copied the unblocked `max(1,M)` formula.
+- **Repro**: `dorglq`/`zunglq` validation harness (`test.validate.js`), Step 4c
+  workspace probe, `schemes.dense`, `M=N=80`, `K=80 > NB=32` (blocked), seed
+  `0x100 + M*100 + N`. `assertWorkspaceSufficient` found the smallest accepted WORK
+  length = 80 (= M), ran a POISONED buffer of exactly 80, and Q came back with a
+  NaN at component 32 (= column 32, the first block seam past the advertised
+  workspace). Deterministic — purely the guard boundary, not data-dependent.
+- **Root cause**: `convention` / workspace under-count — the guard formula was
+  never updated for the blocked T-factor + scratch storage. Fix: mirror `dgelqf`:
+  `var NB = 32; var minWork = ( K > NB ) ? Math.max( 1, M*NB ) : Math.max( 1, M );`
+  (row-wise `M*NB`, no separate `NB*NB` block — `dlarft` writes T inside the same
+  `M`-lead WORK region, so `M*NB` is exact; confirmed by re-running the poisoned
+  probe at the new boundary).
+- **Bug class**: `convention` (workspace-size boundary).
+- **Generalization**: this is the LQ half of the `zungqr` learning's own predicted
+  list. The `org`/`ung` Q-formation formers mirror their `ge*f` factorizations'
+  WORK: `*orglq`/`*unglq` need `M*NB`, `*orgqr`/`*ungqr` need `N*NB`. Audit the
+  remaining blocked formers (`dorgql`/`zungql`, `dorgrq`/`zungrq`, `dorgtr`/
+  `zungtr`) and every `orm`/`unm` reflector-applier (`dormlq`/`zunmlq`,
+  `dormqr`/`zunmqr`, side-dependent `M*NB`/`N*NB`) for a bare `max(1,M/N)` guard
+  where the blocked path stores T in WORK. The property/layout tests miss this
+  because they over-size WORK; only the Step-4c poisoned-minimum probe catches it.
+
+---
+
+## 2026-07-17 — zungqr (COMPLEX blocked QR Q-formation) WORK guard advertised `max(1,N)` but the blocked path needs `N*NB` → poisoned WORK of the advertised length leaked NaN into Q
+
+- **What**: The `zungqr` ndarray wrapper's workspace guard was
+  `var minWork = Math.max( 1, N );` — but its OWN JSDoc says "WORK must have
+  length >= N*NB (NB=32)" and the blocked path (`zlarft`/`zlarfb`) stores the
+  `NB×NB` block-reflector T factor (leading dim `N`) plus `zlarfb` scratch in
+  WORK, consuming up to `N*NB` complex elements. So the wrapper ADVERTISED a
+  sufficient minimum of `N` while actually reading `N*NB`. A caller who sized WORK
+  to the advertised `N` got out-of-bounds reads → `undefined` → NaN in Q. The
+  real (`dorgqr`) sibling had the correct guard
+  `( K > NB ) ? Math.max( 1, N*NB ) : Math.max( 1, N )`; only the complex wrapper
+  copied the unblocked `max(1,N)` formula.
+- **Repro**: `zungqr` validation harness (`test.validate.js`), Step 4c workspace
+  probe, scalar `complex`, `schemes.dense`, `M=N=80`, `K=80 > NB=32` (blocked).
+  `assertWorkspaceSufficient` found the smallest accepted WORK length = 80, ran a
+  POISONED buffer of exactly 80, and Q component 5120 (= complex element 2560 =
+  `N*NB`, column 32 row 0) came back NaN. Deterministic (seed `0xB10C`); no RNG
+  dependence — purely the guard boundary.
+- **Root cause**: `convention` / workspace under-count — the guard formula was not
+  updated for the blocked T-factor + scratch storage. Fix: mirror `dorgqr`:
+  `var NB = 32; var minWork = ( K > NB ) ? Math.max( 1, N*NB ) : Math.max( 1, N );`.
+- **Bug class**: `convention` (workspace-size boundary).
+- **Generalization**: check EVERY blocked z-routine whose WORK stores a block
+  reflector T or panel scratch and whose wrapper guard might have been copied from
+  the unblocked `max(1,N)` formula — `zunglq`/`zunglq`-family, `zunmqr`/`zunmlq`
+  (side-dependent `N*NB`/`M*NB`), `zgeqrf`/`zgelqf` (need `N*NB + NB*NB`), and any
+  `z*` wrapper whose real `d*` sibling has a `( K > NB ) ? … : …` guard while the
+  `z*` one has a bare `Math.max(1,N)`. The property/layout tests miss this because
+  they over-size WORK; only the Step-4c poisoned-minimum probe catches it.
 
 ---
 

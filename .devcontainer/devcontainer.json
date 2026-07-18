@@ -25,6 +25,8 @@
 	// HOST, run `claude setup-token`, then `export CLAUDE_CODE_OAUTH_TOKEN=<token>`
 	// before launching. Uses your Claude Max subscription; keep the token secret.
 	"containerEnv": {
+		// Enable 24-bit ("truecolor") output for a nicer Claude Code session.
+		"COLORTERM": "truecolor",
 		"CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}",
 		// gh authenticates non-interactively from GH_TOKEN. bin/claude-sandbox
 		// sources it from your `gh` login (macOS Keychain) at launch and exports

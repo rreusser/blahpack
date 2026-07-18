@@ -6,6 +6,58 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-18 — dgehrd (REAL blocked Hessenberg reduction) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `N*NB + LDT*NB` → silent NaN in the factored A
+
+- **What**: The `dgehrd` ndarray wrapper's WORK-length guard was a bare
+  `minWork = Math.max( 1, N )` — the UNBLOCKED (`dgehd2`) minimum, with NO blocked
+  branch. But `dgehrd/lib/base.js` (matching reference `DGEHRD`) partitions WORK on
+  the BLOCKED path (NH = ihi-ilo+1 > NB=32, and the loop bound `ihi-1-NX >= ilo`
+  actually reached) into the N-by-NB panel scratch `Y` (`LDWORK=N`, so `N*NB`
+  elements from `offsetWork`) followed by the block reflector `T` at
+  `offsetWork + IWT` (`IWT = N*NB`) with leading dim `LDT = NBMAX+1 = 65` and up to
+  NB columns (`LDT*NB`). So the blocked path needs `N*NB + LDT*NB = N*32 + 65*32`
+  elements. The wrapper therefore ACCEPTED a WORK buffer far too small for a blocked
+  call; `dlahr2`/`dlarfb` then write/read the `T` region past the buffer (silently
+  dropped by the typed array, read back as `undefined`) → **NaN in the factored A**.
+  No throw — a silent non-finite result. The COMPLEX sibling `zgehrd` ALREADY had
+  the CORRECT guard (`need = (NB < NH) ? (N*NB + 65*NB) : N` under `if (NH > 1)`),
+  so only the real `dgehrd` wrapper was wrong — the exact real-lags-complex
+  asymmetry seen in the `dormqr`/`zunmqr`, `dgerqf`/`zgerqf`, `dormql`, `dormrq`
+  entries below.
+- **Repro**: `lib/lapack/base/dgehrd/test/test.validate.js` Step 4c
+  (`assertWorkspaceSufficient`), N=64, ilo=1, ihi=64 (NH=64 > NB=32 → blocked; the
+  block loop runs at i=1 since `ihi-1-NX = 64-1-32 = 31 >= 1`), seed `0xB10C + 64`.
+  The wrapper's advertised minimum probes to WORK length **64** (= max(1,N));
+  running the blocked reduction at exactly 64 with a poisoned buffer yields a
+  non-finite value at flattened component **64** (= A[0,1], col-major) — it actually
+  needs `64*32 + 65*32 = 4128`. The unblocked `dgehd2` remainder (N ≤ NB, or the
+  sub-threshold N=33 where the block loop body never executes) genuinely needs only
+  N and is unaffected.
+- **Root cause**: `lib/lapack/base/dgehrd/lib/ndarray.js` copied the reference
+  LAPACK unblocked LWORK lower bound (`max(1,N)`) as its guard, but our JS hardcodes
+  NB and does NOT adapt the block size down when WORK is small (the reference
+  shrinks NB to fit LWORK; we do not). So the reference's minimum is not a safe
+  minimum for our non-adaptive blocked path.
+- **Fix (APPLIED)**: rewrote the WORK check in `dgehrd/lib/ndarray.js` to mirror
+  `zgehrd`: compute `NH = ihi - ilo + 1; if (NH > 1) { NB = 32; need = (NB < NH) ?
+  (N*NB + 65*NB) : N; ... }`. Step 4c now passes at the (correctly larger)
+  advertised minimum (4128 at N=64, 5280 at N=100), and reconstruction A = Q·H·Qᴴ
+  still holds there.
+- **Bug class**: `convention` (copied reference LWORK lower bound as a hard guard
+  for a non-adaptive blocked kernel that consumes more; real wrapper lagged the
+  already-correct complex sibling).
+- **Generalization**: same tell as the `dormqr` entry — a wrapper whose WORK guard
+  is a bare `max(1,N)`/`max(1,M)` with no blocked branch while its base.js documents
+  a larger blocked requirement (here a trailing `T` block at `LDT=65`). Step 4c is
+  the high-signal probe; the property/layout tests miss it because they over-size
+  WORK. When a complex sibling already carries the correct guard, DIFF the two
+  wrappers first. Remaining reduction routines to audit for the same class:
+  `dsytrd`/`zhetrd` (tridiagonal reduction), `dgebrd`/`zgebrd` (bidiagonal
+  reduction), `dorghr`/`zunghr` (form Q from a Hessenberg reduction) — check
+  whether their real wrapper's WORK guard has a blocked branch or a bare `max(1,·)`.
+
+---
+
 ## 2026-07-18 — dormql (REAL blocked apply-Q, QL) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)`/`max(1,M)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
 - **What**: The `dormql` ndarray wrapper's WORK-length guard was a bare

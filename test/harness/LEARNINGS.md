@@ -6,6 +6,135 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-18 — dggqrf/zggqrf/dggrqf/zggrqf (generalized QR & RQ) ndarray WORK guards + convenience auto-allocs UNDER-advertise the reference min `max(1,N,M,P)` but forward ONE shared WORK to three blocked sub-kernels (geqrf/ormqr/gerqf) that each store a trailing block-reflector T → silent NaN in the factored A/B
+
+- **What**: All four generalized-QR/RQ wrappers guard the caller-owned WORK with the
+  reference LAPACK lower bound `minWork = max(1, N, M, P)` (the UNBLOCKED minimum),
+  with NO blocked branch. But each routine forwards ONE shared WORK straight into
+  THREE blocked sub-kernels:
+  - `dggqrf`/`zggqrf`: `geqrf(N,M)` + `ormqr('L',N,P,kA)` + `gerqf(N,P)`.
+  - `dggrqf`/`zggrqf`: `gerqf(M,N)` + `ormrq('R',P,N,kA)` + `geqrf(P,N)`.
+  Those sub-kernels hardcode `NB=32` and store a block-reflector `T` in a SEPARATE
+  trailing WORK segment (the `geqrf`/`gerqf` need `dim*NB + NB*NB`; the `ormqr`/`ormrq`
+  need `nw*NB + (NB+1)*NB`), and do NOT adapt `NB` down when WORK is small (the
+  reference shrinks `NB` to fit `LWORK`; our JS does not). So each wrapper ACCEPTED a
+  WORK buffer far too small for a blocked call; `dlarft`/`dlarfb` (`zlarft`/`zlarfb`)
+  then write/read the `T` region past the buffer (silently dropped by the typed
+  array, read back as `undefined`) → **NaN in the factored A/B**. No throw — a silent
+  non-finite result. Same class as the whole `dgeqrf`/`dgerqf`/`dormqr`/`dormrq`
+  family below; these are the composite drivers that inherit all of them. The
+  convenience auto-allocators (`{d,z}ggqrf.js`, `zggrqf.js`, WORK=null path) used the
+  SAME `max(1,N,M,P)` and so under-allocate identically; `dggrqf.js` alone used
+  `max(1,M,P,N)*DEFAULT_NB` (NB=64) which happens to over-cover, but was aligned to
+  the exact formula for provable safety.
+- **Repro**: `lib/lapack/base/{dggqrf,zggqrf,dggrqf,zggrqf}/test/test.validate.js`
+  Step 4c (`assertWorkspaceSufficient`), N=M=P=64 (all three sub-mins = 64 > NB=32 →
+  blocked). Seed `factor`'s `0x51 + N*1e4 + M*100 + P` (ggqrf) / `0x71 + M*1e4 + P*100
+  + N` (ggrqf). The advertised minimum probes to WORK length **64**; a poisoned buffer
+  of exactly 64 yields the first non-finite output at flattened component **2048**
+  (dggqrf, = N*NB, the geqrf/gerqf block seam) / **4096** (zggqrf, = 2·N·NB Float64s) /
+  **0** (ggrqf; its first sub-call gerqf over-reads immediately). True need is
+  `max(M*NB+NB*NB, P*NB+(NB+1)*NB, N*NB+NB*NB) = 3104` at 64/64/64. The property and
+  col/row layout-invariance sweeps PASS at every size — they over-size WORK, so only
+  Step 4c sees this.
+- **Root cause**: `convention` — copied the reference unblocked `LWORK` lower bound as
+  a hard guard for a driver that delegates to three non-adaptive blocked sub-kernels
+  each consuming a trailing `T` block.
+- **Fix (APPLIED)**: rewrote the WORK guard in all four `ndarray.js` (and the matching
+  auto-alloc in all four convenience wrappers) to `NB=32; kA=min(...); kB=min(...);
+  minWork = max(1, N, M, P, geqrfNeed, ormNeed, gerqfNeed)` mirroring the (already
+  fixed) sub-kernel guards. Step 4c now passes at the corrected advertised minimum
+  (3104 at 64/64/64), with both reconstructions still holding there.
+- **Bug class**: `convention` (workspace-size boundary; unblocked LWORK lower bound
+  used as a hard guard for non-adaptive blocked delegates that consume more).
+- **Generalization**: composite drivers that thread ONE WORK through several blocked
+  BLAS/LAPACK sub-kernels must advertise the MAX of the sub-kernels' blocked needs,
+  not the reference's adaptive lower bound. Other multi-kernel WORK-sharing drivers to
+  audit for the same tell (`max(1,·)` guard, no blocked branch): `dggsvp3`/`zggsvp3`,
+  `dgejsv`, `dtgsja`, and the `d/zgels`-family expert drivers. Step 4c is the
+  high-signal probe.
+
+## 2026-07-18 — dggrqf/zggrqf (generalized RQ) base.js quick-return was too aggressive: `M===0` (and zggrqf's extra `p===0`) SKIPPED sub-factorizations that are INDEPENDENT of that dimension → the reference still computes them, leaving TAUB/TAUA + B/A unfactored (poisoned)
+
+- **What**: `dggrqf/base.js` quick-returned on `if (M===0 || N===0)` and
+  `zggrqf/base.js` on `if (M===0 || N===0 || p===0)`. But the reference `dggrqf.f`
+  has NO top-level quick return — it always runs all three sub-factorizations, each
+  trivializing independently on its OWN zero dimension. The QR of B
+  (`dgeqrf(P,N,B)` → TAUB) is INDEPENDENT of M, so it must still run when `M===0` but
+  `P,N>0`; and the RQ of A (`dgerqf(M,N,A)` → TAUA) is INDEPENDENT of P, so it must
+  still run when `p===0` but `M,N>0`. The over-broad guards returned early and left
+  those factors uncomputed (in the test, TAUB stayed poisoned → the Z (QR-Q of B)
+  formation read NaN). The QR twin `dggqrf`/`zggqrf` guards on `N===0` ONLY (the sole
+  case where ALL three sub-ops are trivial), so they were CORRECT — the RQ wrappers
+  simply added `M===0`/`p===0` cases the reference does not skip.
+- **Repro**: `lib/lapack/base/dggrqf/test/test.validate.js` (and `zggrqf`) Steps 2-3,
+  triple `M=0, P=2, N=3` (A is 0×3 empty ⇒ Q=I_3; B is 2×3, its QR must still run),
+  seed `0x71 + 0*1e4 + 2*100 + 3`. `assertOrthonormal` on Z fails with
+  `non-finite value at index 0` (TAUB never written → poisoned NaN read back).
+  `zggrqf` additionally reproduces at `p=0, M,N>0` (RQ of A skipped → TAUA poisoned).
+- **Root cause**: `wrong-branch` — a quick-return condition that OR'd in dimensions on
+  which only SOME of the sub-factorizations depend, skipping the independent ones.
+- **Fix (APPLIED)**: removed the top-level quick return from both `base.js` (matching
+  the reference), letting each sub-call trivialize on its own zero dimension. The
+  full (N,M,P)/(M,P,N) sweep incl. all zero corners now passes; sub-calls are safe
+  with a zero dimension (`kA`/`kB`=0 loops are empty).
+- **Bug class**: `wrong-branch`.
+- **Generalization**: any composite driver with a hand-added top-level quick return
+  must OR only dimensions on which EVERY sub-step depends; if a sub-step depends on a
+  disjoint subset of dims it must run whenever THAT subset is nonzero. Re-check other
+  multi-factorization drivers that added a quick return not present in the reference:
+  `dggqrf`/`zggqrf` (verified correct: `N===0` only), `dggsvp3`, `dtgsja`. Poisoned
+  output arrays (TAU) at zero-dimension corners are what surfaced it.
+
+## 2026-07-18 — dposvx (real SPD expert solve driver) base.js DROPPED the `rcond` output argument that its own ndarray wrapper, docs/types/repl, and the complex twin zposvx all declare → the documented ndarray API crashes (args shift by one; WORK binds to a scalar in dlansy)
+
+- **What**: Reference LAPACK `DPOSVX` has `RCOND` as output argument #15 (a scalar
+  passed by reference). The complex twin `zposvx` translates this faithfully:
+  `rcond` is an explicit length-1 `Float64Array` out-param in `base.js`,
+  `zposvx.js` (LDA-main), and `ndarray.js`, written on every return path AND echoed
+  in the return object. `dposvx` was botched: `base.js` and `dposvx.js` (LDA-main)
+  OMITTED the `rcond` param entirely (rcond only in the return object), while
+  `ndarray.js` — plus the published `docs/types/index.d.ts` (ndarray line) and
+  `docs/repl.txt` — DECLARE `rcond` after `offsetX`. So the ndarray function signed
+  and documented a `rcond` argument that `base.js` did not accept. A caller
+  following the documented ndarray signature (as the validation harness and the
+  zposvx sibling test do — pass an explicit `rcond` array) shifts every subsequent
+  argument by one inside `base.js`: `rcond`→base's `FERR`, `FERR`→`strideFERR`, …,
+  `WORK`→a scalar. dposvx then calls `dlansy(..., WORK=<number>, ...)` and CRASHES
+  (`TypeError: Cannot create property 'NaN' on number '0'`) — a silent API-contract
+  break masked only because every EXISTING caller/test happened to use the LEGACY
+  no-rcond positional layout, where the missing-param double-shift (test omits
+  rcond → ndarray declares it → base omits it) accidentally re-aligned.
+- **Repro**: `lib/lapack/base/dposvx/test/test.validate.js` (residual/rcond/FERR-BERR
+  checks) — calling `ndarray(...,X,1,N,0, rcond, FERR,1,0, BERR,1,0, WORK,1,0,
+  IWORK,1,0)` with an SPD 3×3 well-conditioned system throws inside `dlansy` before
+  producing any output. Minimal: `not-factored`/`upper`, N=3, nrhs=1, any SPD A.
+- **Root cause**: incomplete translation — the `rcond` output argument was dropped
+  from `base.js` and `dposvx.js` during the d-translation but left in the ndarray
+  wrapper and all three doc artifacts, so the wrapper's advertised contract was
+  never actually implemented. Faithfulness/parity gap vs the correctly-translated
+  `zposvx`, `dsysvx`, `zsysvx` (all carry `offsetX, rcond`).
+- **Fix (APPLIED)**: added the `rcond` out-param to `dposvx/lib/base.js` mirroring
+  `zposvx/lib/base.js` — `rcond[0]=1.0` on the N==0/nrhs==0 quick return,
+  `rcond[0]=0.0` on the not-positive-definite return, `dpocon(...,rcond,...)` into
+  the caller's array, `rcond[0]<EPS` singular check, and `'rcond': rcond[0]` in the
+  return object (removed the vestigial local `RCOND` buffer). The LDA-main
+  `dposvx.js` keeps its published arity (no rcond arg) by allocating a local
+  `rcond` buffer and forwarding it to `base` (rcond still surfaced via the return
+  object there). Updated `test.ndarray.js` and `benchmark.ndarray.js` to pass an
+  explicit `rcond` array. No changes needed to `ndarray.js` or the `.d.ts`/repl —
+  they already declared `rcond`; base.js now honors it.
+- **Bug class**: `convention` / faithfulness (dropped a reference OUTPUT argument;
+  wrapper + docs declared it but base never implemented it; masked by legacy
+  positional callers whose omission double-shift accidentally realigned).
+- **Generalization**: when an ndarray wrapper's parameter list is LONGER than what
+  its `base` accepts, extra trailing/interior args are silently swallowed by JS and
+  the whole tail shifts — invisible until a caller actually USES the extra
+  argument. High-signal probe: DIFF the d/z twins' `base.js` signatures at the
+  `offsetX, …` seam; any `svx`/`sv` expert driver must carry `rcond` as an out-array
+  (it is a reference output argument), not merely a return-object field. The
+  fixture tests missed it because they all used the legacy no-rcond call layout.
+
 ## 2026-07-18 — dormbr AND zunmbr (apply Q/P of a bidiagonal reduction) ndarray WORK guards lack a BLOCKED branch (dormbr's is also side-INDEPENDENT) → poisoned WORK of the advertised length leaks NaN into the applied C
 
 - **What**: The `dormbr` and `zunmbr` ndarray wrappers guard the caller-owned WORK

@@ -6,6 +6,48 @@ reproducible trigger and the root cause. Over time this becomes a catalog of the
 *classes* of error that survive naive fixture testing — which is exactly the
 intelligence that lets us harden the tooling and the modules.
 
+## 2026-07-18 — dgerqf (REAL blocked RQ) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,M)` but the blocked path consumes `M*NB+NB*NB` → silent NaN in the factored A
+
+- **What**: The `dgerqf` ndarray wrapper's WORK guard was a bare
+  `minWork = max(1,M)` (the UNBLOCKED minimum), with NO `K>NB` blocked branch. But
+  `dgerqf/lib/base.js` (and its JSDoc) stores the block-reflector `T` factor
+  INSIDE WORK, right after the `ldwork*nb = M*NB` main scratch
+  (`offsetT = offsetWork + ldwork*nb`, `T = WORK`), so on the BLOCKED path
+  (K = min(M,N) > NB = 32) it needs `M*NB + NB*NB` elements. The wrapper therefore
+  ACCEPTED a WORK buffer far too small for a blocked call; dlarft then writes the
+  T region past the buffer (silently dropped by the typed array) and dlarfb reads
+  it back as `undefined` → **NaN in the factored A**. No throw — a silent
+  non-finite result.
+- **Repro**: `lib/lapack/base/dgerqf/test/test.validate.js` Step 4c
+  (`assertWorkspaceSufficient`), M=N=80 (K=80 > NB → blocked). The wrapper's
+  advertised minimum probes to WORK length **80** (= max(1,M)); running the
+  blocked factorization at exactly 80 with a poisoned buffer yields `A[0,0] = NaN`
+  (it actually needs `80*32 + 32*32 = 3584`).
+- **Root cause**: `lib/lapack/base/dgerqf/lib/ndarray.js` copied the reference
+  LAPACK unblocked LWORK lower bound (`max(1,M)`) as its guard, but our JS
+  hardcodes NB and does NOT adapt the block size down when WORK is small (the
+  reference shrinks NB to fit LWORK; we do not). The COMPLEX sibling `zgerqf`
+  ALREADY had the CORRECT guard (`need = (K>NB) ? (M*NB + NB*NB) : max(1,M)` under
+  `if (K>0)`), so only the real `dgerqf` wrapper was wrong — the exact same
+  real-lags-complex asymmetry seen in the 2026-07-17 `dormqr`/`zunmqr` entry
+  below. (Note the sibling `dgelqf` needs only `M*NB` because it stores `T` in a
+  SEPARATE allocation; `dgerqf` differs by keeping `T` inside WORK, so its need is
+  `M*NB + NB*NB`, not `M*NB`.)
+- **Fix (APPLIED)**: rewrote the WORK check in `dgerqf/lib/ndarray.js` to compute
+  `K = min(M,N); NB = 32; need = (K>NB) ? (M*NB + NB*NB) : max(1,M)` under
+  `if (K>0)`, matching `zgerqf`. Step 4c now passes at the (correctly larger)
+  advertised minimum, and reconstruction A=R*Q still holds there.
+- **Bug class**: `convention` (copied reference LWORK lower bound as a hard guard
+  for a non-adaptive blocked kernel that consumes more; real wrapper lagged the
+  already-correct complex sibling).
+- **Generalization**: same tell as the dormqr entry below — a wrapper whose WORK
+  guard is a bare `max(1,M)`/`max(1,N)` with no `K>NB` blocked branch while its
+  base.js documents a larger blocked requirement. Step 4c is the high-signal
+  probe. When a complex sibling already carries the correct guard, DIFF the two
+  wrappers first.
+
+---
+
 ## 2026-07-17 — dormqr (REAL blocked apply-Q) ndarray WORK guard UNDER-advertises on the blocked path: accepts `max(1,N)` but the blocked path consumes `nw*NB+(NB+1)*NB` → silent NaN in C
 
 - **What**: The `dormqr` ndarray wrapper's WORK-length guard is `minWork =

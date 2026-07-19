@@ -7,7 +7,9 @@ on:
   pull_request:
 
 jobs:
-  test:
+  # Unit tests: the node:test suite across every module.
+  unit:
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,10 +18,49 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Run tests
-        run: npm test
+      - name: Run unit tests
+        run: npm run test:unit
 
+  # Lint: ESLint (stdlib + blahpack rules) over every module. Hard gate — the
+  # target is zero errors.
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Run ESLint
+        run: npm run test:lint
+
+  # Conformance: the stdlib-conformance checks (file structure, scaffolding,
+  # workspace ownership, naming, JSDoc, ...) beyond what lint/unit cover.
+  #
+  # Informational, not a merge gate: the exit code is non-zero whenever ANY
+  # module is not yet `complete`, and this repo intentionally carries
+  # in-progress modules. `continue-on-error` lets the report surface in the
+  # run without blocking merges. Flip it to a hard gate once every module is
+  # complete (or scope it to the modules you want enforced).
+  conformance:
+    name: Conformance (informational)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Run conformance checks (fast; structural)
+        run: npm run conformance:fast
+
+  # Generated files are in sync + the published package imports and runs.
   package:
+    name: Package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

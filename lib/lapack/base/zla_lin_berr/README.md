@@ -30,7 +30,7 @@ limitations under the License.
 var zla_lin_berr = require( '@stdlib/lapack/base/zla_lin_berr' );
 ```
 
-#### zla_lin_berr( N, nz, nrhs, res, strideRES, ayb, strideAYB, berr, strideBERR )
+#### zla_lin_berr( N, nz, nrhs, res, LDRES, ayb, LDAYB, berr )
 
 Computes a component-wise relative backward error
 
@@ -52,13 +52,13 @@ The function has the following parameters:
 -   **nz**: sparsity guard parameter; `(nz+1)*safmin` is added to the numerator.
 -   **nrhs**: number of right-hand sides.
 -   **res**: complex residual matrix (`Complex128Array`), dimension `(N, nrhs)`.
--   **strideRES**: element stride for `res`.
+-   **LDRES**: leading dimension of `res` (layout API); ndarray form takes strideRES1, strideRES2.
 -   **ayb**: denominator matrix (`Float64Array`), dimension `(N, nrhs)`.
--   **strideAYB**: element stride for `ayb`.
+-   **LDAYB**: leading dimension of `ayb` (layout API); ndarray form takes strideAYB1, strideAYB2.
 -   **berr**: output array (`Float64Array`), length `nrhs`.
 -   **strideBERR**: stride length for `berr`.
 
-#### zlaLinBerr.ndarray( N, nz, nrhs, res, strideRES, offsetRES, ayb, strideAYB, offsetAYB, berr, strideBERR, offsetBERR )
+#### zlaLinBerr.ndarray( N, nz, nrhs, res, strideRES1, strideRES2, offsetRES, ayb, strideAYB1, strideAYB2, offsetAYB, berr, strideBERR, offsetBERR )
 
 Computes a component-wise relative backward error, using alternative indexing semantics.
 

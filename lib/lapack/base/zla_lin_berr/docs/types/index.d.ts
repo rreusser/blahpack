@@ -33,14 +33,14 @@ interface Routine {
 	* @param nz - nz
 	* @param nrhs - nrhs
 	* @param res - input array
-	* @param strideRES - stride length for `res`
+	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
 	* @param ayb - input array
 	* @param strideAYB - stride length for `ayb`
 	* @param berr - input array
 	* @param strideBERR - stride length for `berr`
 	* @returns result
 	*/
-	( N: number, nz: number, nrhs: number, res: Float64Array, strideRES: number, ayb: Float64Array, strideAYB: number, berr: Float64Array, strideBERR: number ): Float64Array;
+	( N: number, nz: number, nrhs: number, res: Float64Array, LDRES: number, ayb: Float64Array, LDAYB: number, berr: Float64Array ): Float64Array;
 
 	/**
 	* Computes a component-wise relative backward error, using alternative indexing semantics.
@@ -49,7 +49,7 @@ interface Routine {
 	* @param nz - nz
 	* @param nrhs - nrhs
 	* @param res - input array
-	* @param strideRES - stride length for `res`
+	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
 	* @param offsetRES - starting index for `RES`
 	* @param ayb - input array
 	* @param strideAYB - stride length for `ayb`
@@ -59,7 +59,7 @@ interface Routine {
 	* @param offsetBERR - starting index for `BERR`
 	* @returns result
 	*/
-	ndarray( N: number, nz: number, nrhs: number, res: Float64Array, strideRES: number, offsetRES: number, ayb: Float64Array, strideAYB: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
+	ndarray( N: number, nz: number, nrhs: number, res: Float64Array, strideRES1: number, strideRES2: number, offsetRES: number, ayb: Float64Array, strideAYB1: number, strideAYB2: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
 }
 
 /**

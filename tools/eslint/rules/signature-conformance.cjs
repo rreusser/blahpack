@@ -130,11 +130,16 @@ function argInfo( arg, allArgs ) {
 		//   out    → returned via result object (0), length-1 array (1),
 		//            or `arr,offset` (2)  [e.g. TAU]
 		//   in,out → `arr,offset` (2) or a plain value passthrough (1)
-		//   in     → plain value (1)
+		//   in     → plain value (1); a COMPLEX input is not a single JS number,
+		//            so it is `arr,offset` (2) or a Complex128 object (1)
+		//            [e.g. ZROTG's `b`, ZLADIV's `x`/`y`]
 		if ( dir === 'out' ) {
 			return { 'fortranName': arg.name, 'shape': 'scalar', 'sizes': [ 0, 1, 2 ] };
 		}
 		if ( dir === 'inout' ) {
+			return { 'fortranName': arg.name, 'shape': 'scalar', 'sizes': [ 1, 2 ] };
+		}
+		if ( /complex/i.test( type ) ) {
 			return { 'fortranName': arg.name, 'shape': 'scalar', 'sizes': [ 1, 2 ] };
 		}
 		return { 'fortranName': arg.name, 'shape': 'scalar', 'sizes': [ 1 ] };

@@ -1,5 +1,5 @@
 
-{{alias}}( N, nz, nrhs, res, strideRES, ayb, strideAYB, berr, strideBERR )
+{{alias}}( N, nz, nrhs, res, LDRES, ayb, LDAYB, berr )
     Computes a component-wise relative backward error
 
     Parameters
@@ -41,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, nz, nrhs, res, strideRES, offsetRES, ayb, strideAYB, offsetAYB, berr, strideBERR, offsetBERR )
+{{alias}}.ndarray( N, nz, nrhs, res, strideRES1, strideRES2, offsetRES, ayb, strideAYB1, strideAYB2, offsetAYB, berr, strideBERR, offsetBERR )
     Computes a component-wise relative backward error, using alternative indexing semantics.
 
     Parameters

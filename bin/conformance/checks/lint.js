@@ -39,6 +39,11 @@ var ALLOWED_RULES = new Set([
 	'no-unused-vars',        // function signature compatibility
 	'no-self-assign',        // intentional in-place updates
 
+	// Heuristic signature check — genuinely non-standard signatures (complex
+	// scalar/function packing, an increment kept for its sign semantics) need a
+	// documented per-line override.
+	'blahpack/signature-conformance',
+
 	// stdlib-specific
 	'stdlib/require-globals',
 	'stdlib/first-unit-test',

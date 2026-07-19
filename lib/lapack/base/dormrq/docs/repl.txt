@@ -53,7 +53,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
     Multiplies a general real matrix by the orthogonal matrix Q (or its
     transpose) from an RQ factorization, using alternative indexing
     semantics.
@@ -116,9 +116,6 @@
 
     offsetWORK: integer
         starting index for `WORK`.
-
-    lwork: integer
-        `lwork`.
 
     Returns
     -------

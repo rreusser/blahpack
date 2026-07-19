@@ -30,7 +30,7 @@ limitations under the License.
 var dtgex2 = require( '@stdlib/lapack/base/dtgex2' );
 ```
 
-#### dtgex2( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1, n1, n2, WORK, strideWORK, lwork )
+#### dtgex2( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1, n1, n2, WORK, strideWORK )
 
 Swaps adjacent diagonal blocks of sizes `n1` and `n2` starting at position `j1` in the upper quasi-triangular matrix pair `(A, B)`.
 
@@ -66,9 +66,8 @@ The function has the following parameters:
 -   **n2**: size of the second block (1 or 2).
 -   **WORK**: workspace array.
 -   **strideWORK**: stride length for `WORK`.
--   **lwork**: length of workspace (must be at least max(1, N*M, 2*M*M) where M = n1+n2).
 
-#### dtgex2.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, j1, n1, n2, WORK, strideWORK, offsetWORK, lwork )
+#### dtgex2.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, j1, n1, n2, WORK, strideWORK, offsetWORK )
 
 Swaps adjacent diagonal blocks using alternative indexing semantics.
 

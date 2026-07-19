@@ -1,5 +1,5 @@
 
-{{alias}}( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1, n1, n2, WORK, strideWORK, lwork )
+{{alias}}( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1, n1, n2, WORK, strideWORK )
     Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair.
 
     Parameters
@@ -55,9 +55,6 @@
         strideWORK: integer
             stride length for `WORK`.
 
-        lwork: integer
-            lwork.
-
     Returns
     -------
     out: integer
@@ -68,7 +65,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, j1, n1, n2, WORK, strideWORK, offsetWORK, lwork )
+{{alias}}.ndarray( wantq, wantz, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, j1, n1, n2, WORK, strideWORK, offsetWORK )
     Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair., using alternative indexing semantics.
 
     Parameters
@@ -147,9 +144,6 @@
 
         offsetWORK: integer
             starting index for `WORK`.
-
-        lwork: integer
-            lwork.
 
     Returns
     -------

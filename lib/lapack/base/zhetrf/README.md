@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **IPIV**: input array `IPIV`.
 -   **strideIPIV**: stride length for `IPIV`.
 
-#### zhetrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK, lwork )
+#### zhetrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 
 Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method, using alternative indexing semantics.
 
@@ -78,7 +78,6 @@ The function has the following additional parameters:
 -   **WORK**: input array `WORK`.
 -   **strideWORK**: stride length for `WORK`.
 -   **offsetWORK**: starting index for `WORK`.
--   **lwork**: `lwork`.
 
 </section>
 

@@ -1,5 +1,5 @@
 
-{{alias}}( order, ijob, wantq, wantz, SELECT, strideSELECT, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, M, pl, pr, DIF, strideDIF, WORK, strideWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
+{{alias}}( order, ijob, wantq, wantz, SELECT, strideSELECT, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, M, pl, pr, DIF, strideDIF, WORK, strideWORK, IWORK, strideIWORK, offsetIWORK )
     Reorders the generalized Schur decomposition of a complex matrix pair
     (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z),
     so that a selected cluster of eigenvalues appears in the leading
@@ -85,9 +85,6 @@
         strideWORK: integer
             stride length for `WORK`.
 
-        lwork: integer
-            lwork.
-
         IWORK: Int32Array
             output array.
 
@@ -96,9 +93,6 @@
 
         offsetIWORK: integer
             starting index for `IWORK`.
-
-        liwork: integer
-            liwork.
 
     Returns
     -------
@@ -110,7 +104,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ijob, wantq, wantz, SELECT, strideSELECT, offsetSELECT, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, M, pl, pr, DIF, strideDIF, offsetDIF, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
+{{alias}}.ndarray( ijob, wantq, wantz, SELECT, strideSELECT, offsetSELECT, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, M, pl, pr, DIF, strideDIF, offsetDIF, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
     Reorders the generalized Schur decomposition of a complex matrix pair
     (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z),
     so that a selected cluster of eigenvalues appears in the leading
@@ -232,9 +226,6 @@
         offsetWORK: integer
             starting index for `WORK`.
 
-        lwork: integer
-            lwork.
-
         IWORK: Int32Array
             output array.
 
@@ -243,9 +234,6 @@
 
         offsetIWORK: integer
             starting index for `IWORK`.
-
-        liwork: integer
-            liwork.
 
     Returns
     -------

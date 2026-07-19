@@ -1827,4 +1827,41 @@ Keep entries short. Newest first.
   reason the packed scheme poisons unused slots — an index collision reads a NaN
   instead of silently returning a plausible-but-wrong number.
 
+## 2026-07-19 — zlaqr3 fails to deflate the top 1×1 window (OOB spike read) → zhseqr large-N NaN [FIXED]
+
+- **What**: `zhseqr` (complex Hessenberg eigenvalue/Schur) returned `info=1` and
+  NaN eigenvalues for `N > NMIN=75` — the branch dispatching to `zlaqr0`
+  (aggressive early-deflation QR). The small-N `zlahqr` path was always correct.
+- **Repro**: any complex upper-Hessenberg with a zero/tiny subdiagonal at the top
+  triggers it deterministically — cleanest is an upper-**triangular** matrix
+  (all subdiagonals zero), `N>=76`, via `zhseqr('eigenvalues','none',...)`. The
+  spectral trace invariant `sum(eigenvalues) == trace(H)` yields NaN. `N<=75`
+  (same construction) passes exactly. Some random Hessenberg seeds also hit it
+  (whenever the last active block reaches `ktop==kbot==ilo==1`).
+- **Caught by**: an ad-hoc trace-invariant check written while removing the
+  vestigial `lwork` param. Instrumenting `zlaqr0`'s main loop showed the QR
+  deflated eigenvalues 76→2 fine (ld=1 each) but spun forever on the final
+  block `ktop==kbot==1` (ld=0), exhausting `itmax` → `info=1`.
+- **Root cause**: `zlaqr3.js` (and by inspection the same pattern lives wherever
+  this was copied). In the 1×1-deflation-window case (`kbot === kwtop`), the
+  convergence test read the subdiagonal `H(kwtop, kwtop-1)` **directly**. The
+  reference LAPACK tests the spike scalar `S`, which is explicitly set to `0`
+  when `kwtop === ktop` (no element sits above the window). When
+  `kwtop === ktop === 1`, `H(1,0)` is out of bounds → indexes
+  `Hv[offsetH - strideH2]` → `undefined` → `cabs1` = NaN → `NaN <= tol` is
+  false → the top eigenvalue never deflates.
+- **Fix**: test the spike magnitude `|Re(S)| + |Im(S)|` (the `sR`/`sI` already
+  computed a few lines above, and correctly `0` for `kwtop === ktop`) instead of
+  re-reading `H(kwtop, kwtop-1)`. One line in `zlaqr3.js`; exactly matches
+  reference `CABS1(S)`. Verified: triangular N=76/80/100, random Hessenberg
+  N=100/200, and the small-N path all pass; zlaqr0/zlaqr3/zlaqr4/zhseqr/zgeev/
+  zgees test suites green.
+- **Bug class**: `off-by-one` / `out-of-bounds-read` / `untested-code-path`.
+- **Generalization**: (1) Every deflation/spike test in the QR family must use
+  the guarded spike scalar, never a raw `H(k,k-1)` read — audit `dlaqr2/3`,
+  `zlaqr2`, `dlaqr0` for the same `kbot===kwtop` block. (2) It hid because every
+  committed `zhseqr` fixture is `N<=6` — below all size thresholds
+  (`NTINY=15`, `NL=49`, `NMIN=75`); fixtures MUST span a routine's size-based
+  dispatch cutoffs. Added a large-N regression test.
+
 <!-- Add new entries above this line. -->

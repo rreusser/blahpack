@@ -14,7 +14,7 @@
 
 var fs = require( 'fs' );
 var path = require( 'path' );
-var util = require( './gate/util.js' );
+var util = require( './conformance/util.js' );
 
 // Clean, curated descriptions keyed by routine name (see
 // bin/gen-descriptions.js). Preferred over the JSDoc-derived summary, which

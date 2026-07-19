@@ -55,14 +55,12 @@ interface Routine {
 	* @param strideDIF - stride length for `DIF`
 	* @param WORK - input array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @param IWORK - output array
 	* @param strideIWORK - stride length for `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
-	* @param liwork - liwork
 	* @returns result
 	*/
-	( order: Layout, ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, WORK: Float64Array, strideWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, liwork: number ): Float64Array;
+	( order: Layout, ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 
 	/**
 	* Reorders the generalized Schur decomposition of a complex matrix pair, using alternative indexing semantics.
@@ -105,14 +103,12 @@ interface Routine {
 	* @param WORK - input array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @param IWORK - output array
 	* @param strideIWORK - stride length for `IWORK`
 	* @param offsetIWORK - starting index for `IWORK`
-	* @param liwork - liwork
 	* @returns result
 	*/
-	ndarray( ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, liwork: number ): Float64Array;
+	ndarray( ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
 }
 
 /**

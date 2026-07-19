@@ -30,7 +30,7 @@ limitations under the License.
 var ztgsen = require( '@stdlib/lapack/base/ztgsen' );
 ```
 
-#### ztgsen( order, ijob, wantq, wantz, SELECT, strideSELECT, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, M, pl, pr, DIF, strideDIF, WORK, strideWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
+#### ztgsen( order, ijob, wantq, wantz, SELECT, strideSELECT, N, A, LDA, B, LDB, ALPHA, strideALPHA, BETA, strideBETA, Q, LDQ, Z, LDZ, M, pl, pr, DIF, strideDIF, WORK, strideWORK, IWORK, strideIWORK, offsetIWORK )
 
 Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B)
 
@@ -83,13 +83,11 @@ The function has the following parameters:
 -   **strideDIF**: stride length for `DIF`.
 -   **WORK**: input array.
 -   **strideWORK**: stride length for `WORK`.
--   **lwork**: lwork.
 -   **IWORK**: output array.
 -   **strideIWORK**: stride length for `IWORK`.
 -   **offsetIWORK**: starting index for `IWORK`.
--   **liwork**: liwork.
 
-#### ztgsen.ndarray( ijob, wantq, wantz, SELECT, strideSELECT, offsetSELECT, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, M, pl, pr, DIF, strideDIF, offsetDIF, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK, liwork )
+#### ztgsen.ndarray( ijob, wantq, wantz, SELECT, strideSELECT, offsetSELECT, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, ALPHA, strideALPHA, offsetALPHA, BETA, strideBETA, offsetBETA, Q, strideQ1, strideQ2, offsetQ, Z, strideZ1, strideZ2, offsetZ, M, pl, pr, DIF, strideDIF, offsetDIF, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
 Reorders the generalized Schur decomposition of a complex matrix pair (A, B) (in terms of an unitary equivalence transformation Qᴴ·(A, B)·Z), so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the pair (A,B), using alternative indexing semantics.
 
@@ -154,11 +152,9 @@ The function has the following additional parameters:
 -   **WORK**: input array.
 -   **strideWORK**: stride length for `WORK`.
 -   **offsetWORK**: starting index for `WORK`.
--   **lwork**: lwork.
 -   **IWORK**: output array.
 -   **strideIWORK**: stride length for `IWORK`.
 -   **offsetIWORK**: starting index for `IWORK`.
--   **liwork**: liwork.
 
 </section>
 

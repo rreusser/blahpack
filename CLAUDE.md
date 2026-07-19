@@ -18,8 +18,8 @@ stdlib-js reference clone: `/Users/rreusser/gh/stdlib-js/stdlib/`
 
 ```
 bin/                           # Pipeline scripts
-  gate.js                      #   THE quality gate — all checks in one command
-  gate/                        #   Gate check modules (file-structure, scaffolding, etc.)
+  conformance.js               #   THE conformance check — all checks in one command
+  conformance/                 #   Conformance check modules (file-structure, scaffolding, etc.)
   init_routine.py              #   Single command: scaffold + deps + test scaffold
   scaffold.py                  #   Module scaffold generator (stdlib-js structure)
   signature.py                 #   Fortran → stdlib-js signature generator
@@ -51,7 +51,7 @@ docs/                          # Reference documentation
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
 bench/                         # Performance benchmarks
 archive/bin/                   # Archived one-time migration scripts
-gate.config.json               # Per-module gate exceptions (with mandatory reasons)
+conformance.config.json        # Per-module conformance exceptions (with mandatory reasons)
 ```
 
 ## Commands
@@ -60,9 +60,9 @@ gate.config.json               # Per-module gate exceptions (with mandatory reas
 python                          # Use venv python (NOT python3)
 gfortran                       # GNU Fortran compiler (Homebrew)
 node                            # Node.js v24+ (node:test built-in)
-node bin/gate.js <module-path>  # Quality gate for one module (all checks)
-node bin/gate.js --all --fast   # Fast gate on all modules (file checks only)
-node bin/gate.js --all          # Full gate on all modules (includes lint)
+node bin/conformance.js <module-path>  # Conformance check for one module (all checks)
+node bin/conformance.js --all --fast   # Fast conformance on all modules (file checks only)
+node bin/conformance.js --all          # Full conformance on all modules (includes lint)
 npm run report                  # Generate progress.html with conformance checks
 bin/lint-fix.sh <module-path>   # Auto-fix (codemods + eslint + test verify)
 bin/lint.sh lib/<path>/base.js  # Lint a single file
@@ -72,7 +72,7 @@ bin/lint.sh lib/<path>/base.js  # Lint a single file
 
 **NEVER run these commands directly** — they produce 12,000+ lines of output:
 - `npm test` — use per-module test runs with `| tail -20` instead
-- `npm run check` — use `node bin/gate.js <module>` instead
+- `npm run check` — use `node bin/conformance.js <module>` instead
 
 **ALWAYS pipe test/lint/coverage through `tail` or `grep`:**
 ```bash
@@ -85,7 +85,7 @@ bin/test-failures.sh              # Full suite — shows ONLY summary + failures
 When translating multiple routines, **always dispatch each routine to its
 own background agent**. Do NOT translate routines in the main context. Do
 NOT use worktrees (they fail in this environment). The main context is for
-coordination: checking dependencies, triaging results, reviewing gate
+coordination: checking dependencies, triaging results, reviewing conformance
 output, and dispatching follow-up work.
 
 **How to dispatch a translation agent:**
@@ -103,7 +103,7 @@ prior conversation. Include:
 1. The routine name and what it does (one line)
 2. Commands to run: `python bin/signature.py`, `python bin/fortran_body.py`
 3. The full translation checklist steps (scaffold → implement → test →
-   lint → gate)
+   lint → conformance)
 4. Key conventions for this routine type (string mappings, complex number
    rules for z-prefix, etc.)
 5. Context efficiency rules (pipe through `tail -20`, never `npm test`)
@@ -127,19 +127,19 @@ dispatching the next wave.
 Use these skills for translation and review workflows:
 
 - `/blahpack-translate <routine>` — Full end-to-end translation checklist
-  with all conventions, pitfalls, string tables, and quality gates.
+  with all conventions, pitfalls, string tables, and conformance checks.
   This is the primary workflow for translating a new routine.
 
 - `/blahpack-review [module-path]` — Review a module (or full codebase)
   for convention violations, scaffolding remnants, and quality issues.
-  Runs `node bin/gate.js` and applies the full review checklist.
+  Runs `node bin/conformance.js` and applies the full review checklist.
 
 - `/blahpack-validate <routine>` — Rigorously validate a routine's
   correctness with the property-based harness (`test/harness/`). Fixed,
   repeatable procedure: classify the routine, pick generator/scheme/property
   from tables, sweep sizes + flags, fuzz storage layouts (bit-exact), and
-  record a validation level (L0–L4). Use this to prove correctness — the gate
-  and lint check conformance, not correctness.
+  record a validation level (L0–L4). Use this to prove correctness — the
+  conformance check and lint check conformance, not correctness.
 
 - `/blahpack-scaffold <package> <routine>` — Generate module scaffold
 - `/blahpack-signature <routine>` — Generate stdlib-js call signature

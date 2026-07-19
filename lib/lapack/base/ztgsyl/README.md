@@ -30,7 +30,7 @@ limitations under the License.
 var ztgsyl = require( '@stdlib/lapack/base/ztgsyl' );
 ```
 
-#### ztgsyl( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, dif, WORK, strideWORK, lwork, IWORK, strideIWORK )
+#### ztgsyl( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, dif, WORK, strideWORK, IWORK, strideIWORK )
 
 Solves the generalized Sylvester equation using a level-3 blocked algorithm.
 
@@ -75,11 +75,10 @@ The function has the following parameters:
 -   **dif**: `dif`.
 -   **WORK**: input array `WORK`.
 -   **strideWORK**: stride length for `WORK`.
--   **lwork**: `lwork`.
 -   **IWORK**: input array `IWORK`.
 -   **strideIWORK**: stride length for `IWORK`.
 
-#### ztgsyl.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, dif, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
+#### ztgsyl.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, dif, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 
 Solves the generalized Sylvester equation using a level-3 blocked algorithm, using alternative indexing semantics.
 

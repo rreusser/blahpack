@@ -62,7 +62,7 @@ The function has the following parameters:
 -   **WORK**: input array `WORK`.
 -   **strideWORK**: stride length for `WORK`.
 
-#### dormql.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK, lwork )
+#### dormql.ndarray( side, trans, M, N, K, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, C, strideC1, strideC2, offsetC, WORK, strideWORK, offsetWORK )
 
 Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QL factorization,, using alternative indexing semantics.
 
@@ -88,7 +88,6 @@ The function has the following additional parameters:
 -   **strideC2**: stride of dimension 2 of `C`.
 -   **offsetC**: starting index for `C`.
 -   **offsetWORK**: starting index for `WORK`.
--   **lwork**: `lwork`.
 
 </section>
 

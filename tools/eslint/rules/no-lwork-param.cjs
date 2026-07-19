@@ -22,10 +22,19 @@
 // This rule forbids the PARAMETER only. A local variable computed from the array
 // (`var lwork = WORK.length - offsetWork;`) is fine and encouraged.
 
-// Matches a workspace-length parameter: an `l` prefix + optional element-type
-// letter + `work` (lwork, liwork, lrwork, lswork, ...). Does NOT match the WORK
-// array parameter itself (`work`, `iwork`, `rwork`) — those are legitimate.
-var LWORK_PARAM_RE = /^l(?:i|r|s|d|c|z)?work$/i;
+// Matches a workspace-LENGTH parameter: an `l` prefix + optional element-type
+// letter + `work` (lwork, liwork, lrwork, lswork, lcwork, lzwork). Does NOT
+// match the WORK array parameter itself (`work`, `iwork`, `rwork`) — those are
+// legitimate.
+//
+// The `d` alternative is deliberately EXCLUDED: `LD` is LAPACK's universal
+// leading-dimension prefix (LDA, LDB, LDV, LDT, LDC), so `LDWORK` is the
+// *leading dimension* of a 2D workspace matrix (e.g. DLARFB/DTPRFB), not a
+// length. A flat typed array carries its `.length` but not its 2D leading
+// dimension, so `LDWORK` is a genuine shape parameter kept by the layout
+// wrapper exactly like LDV/LDT/LDC — not a redundant length. (There is no
+// "length of double WORK" param in LAPACK; work lengths are just `LWORK`.)
+var LWORK_PARAM_RE = /^l(?:i|r|s|c|z)?work$/i;
 
 
 // RULE //

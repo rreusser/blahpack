@@ -39,4 +39,4 @@
 
 - ESLint OOMs when invoked on the full module directory (README.md triggers
   the remark-based JSDoc rules). Individual subdirectories lint cleanly.
-  A `lint.eslint-pass` exception is registered in `gate.config.json`.
+  A `lint.eslint-pass` exception is registered in `conformance.config.json`.

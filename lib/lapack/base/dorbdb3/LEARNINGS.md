@@ -11,7 +11,7 @@
   contiguous M-by-Q buffer with `LD = max(P, M-P)` and slices both blocks
   out of it). The JS translation mirrors the Fortran exactly so test
   fixtures match the reference; the divergence is documented as an
-  inline TODO at the call site, and a `gate.config.json` exemption for
+  inline TODO at the call site, and a `conformance.config.json` exemption for
   `scaffolding.no-todo-base` records the reason. Compare dorbdb1 line 121:
   it correctly uses `LDX21` for the X21 stride. Future translators of
   similar routines should diff sister routines for "obvious" stride
@@ -79,7 +79,7 @@
   blindly mirroring, diff the sister routines (dorbdb1/2/3/4 share
   similar calls). If a stride looks "off", document explicitly whether
   you are reproducing the Fortran behavior or correcting it. The
-  `gate.config.json` exemption pattern (with a mandatory `reason`) is
+  `conformance.config.json` exemption pattern (with a mandatory `reason`) is
   the right place to record reproductions.
 - **Scaffold's `dorbdb3.js` had the same defects as dorbdb1's** —
   undefined `N` variable in LD validation, wrong LD bound for

@@ -2,9 +2,9 @@
 'use strict';
 
 var path = require( 'path' );
-var util = require( './gate/util.js' );
-var gate = require( './gate/index.js' );
-var format = require( './gate/format.js' );
+var util = require( './conformance/util.js' );
+var conformance = require( './conformance/index.js' );
+var format = require( './conformance/format.js' );
 
 // Parse CLI arguments
 var args = process.argv.slice( 2 );
@@ -56,7 +56,7 @@ for ( i = 0; i < args.length; i++ ) {
 }
 
 function printUsage() {
-	console.log( 'Usage: node bin/gate.js [options] [module-paths...]' );
+	console.log( 'Usage: node bin/conformance.js [options] [module-paths...]' );
 	console.log( '' );
 	console.log( 'Options:' );
 	console.log( '  --all              Check all modules' );
@@ -70,12 +70,12 @@ function printUsage() {
 	console.log( '  -h, --help         Show this help' );
 	console.log( '' );
 	console.log( 'Examples:' );
-	console.log( '  node bin/gate.js lib/blas/base/ddot        # Single module' );
-	console.log( '  node bin/gate.js --all                     # All modules' );
-	console.log( '  node bin/gate.js --all --fast              # Fast file checks only' );
-	console.log( '  node bin/gate.js --all --failing           # Show only failures' );
-	console.log( '  node bin/gate.js --all --json              # JSON output' );
-	console.log( '  node bin/gate.js --all --category scaffold # Filter by status' );
+	console.log( '  node bin/conformance.js lib/blas/base/ddot        # Single module' );
+	console.log( '  node bin/conformance.js --all                     # All modules' );
+	console.log( '  node bin/conformance.js --all --fast              # Fast file checks only' );
+	console.log( '  node bin/conformance.js --all --failing           # Show only failures' );
+	console.log( '  node bin/conformance.js --all --json              # JSON output' );
+	console.log( '  node bin/conformance.js --all --category scaffold # Filter by status' );
 }
 
 // Resolve modules
@@ -104,7 +104,7 @@ if ( opts.all ) {
 }
 
 // Run
-var results = gate.runGate( modules, opts );
+var results = conformance.runConformance( modules, opts );
 
 // Output
 if ( opts.json ) {

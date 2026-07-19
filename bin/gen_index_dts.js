@@ -15,7 +15,7 @@
 
 var fs = require( 'fs' );
 var path = require( 'path' );
-var util = require( './gate/util.js' );
+var util = require( './conformance/util.js' );
 
 var LICENSE = [
 	'/*',

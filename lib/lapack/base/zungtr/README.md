@@ -56,7 +56,7 @@ The function has the following parameters:
 -   **WORK**: input array `WORK`.
 -   **strideWORK**: stride length for `WORK`.
 
-#### zungtr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK, lwork )
+#### zungtr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 
 Generates a complex unitary matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by ZHETRD: if UPLO = 'U', Q = H(n-1), using alternative indexing semantics.
 
@@ -78,7 +78,6 @@ The function has the following additional parameters:
 -   **offsetA**: starting index for `A`.
 -   **offsetTAU**: starting index for `TAU`.
 -   **offsetWORK**: starting index for `WORK`.
--   **lwork**: `lwork`.
 
 </section>
 

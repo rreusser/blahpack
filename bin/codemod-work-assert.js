@@ -1,7 +1,7 @@
 /**
  * Insert a canonical WORK-size assertion into ndarray.js wrappers that
  * document an UNCONDITIONAL minimum workspace length but lack the runtime
- * check (gate: work-assert).
+ * check (conformance: work-assert).
  *
  * Source of truth: the module's own `@param {...} WORK - ... length ... EXPR`
  * JSDoc, i.e. the contract the translator already declared. The inserted
@@ -90,7 +90,7 @@ function extractWorkSpec( src ) {
 	for ( const line of lines ) {
 		// Only the primary WORK array — RWORK/IWORK secondary workspaces in
 		// complex routines need their own (often multi-workspace) treatment,
-		// and the gate credits a `WORK` assertion specifically.
+		// and the conformance check credits a `WORK` assertion specifically.
 		const pm = line.match( /@param\s+\{[^}]*\}\s+(WORK)\b(.*)$/ );
 		if ( !pm ) continue;
 		const workName = pm[ 1 ];

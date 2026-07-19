@@ -18,7 +18,7 @@
  * present in the routine's JS function signature. Accepts both UPPERCASE and
  * camelCase naming (WORK/work, IWORK/iwork, RWORK/rwork).
  *
- * Genuine exceptions go in gate.config.json with a mandatory reason.
+ * Genuine exceptions go in conformance.config.json with a mandatory reason.
  */
 
 var path = require( 'path' );

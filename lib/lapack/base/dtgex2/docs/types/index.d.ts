@@ -46,10 +46,9 @@ interface Routine {
 	* @param n2 - n2
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number ): Float64Array;
 
 	/**
 	* Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair., using alternative indexing semantics.
@@ -79,10 +78,9 @@ interface Routine {
 	* @param WORK - output array
 	* @param strideWORK - stride length for `WORK`
 	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
 	* @returns result
 	*/
-	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
 }
 
 /**

@@ -90,5 +90,5 @@
   pathological state sequences (NOPROG→WORKING recovery via an
   improved `dxrat`, z-state UNSTABLE→WORKING→UNSTABLE flip-flops).
   Coverage reaches ~95% lines / ~86% branches with the included tests;
-  the remainder is documented in `gate.config.json` exceptions only if
+  the remainder is documented in `conformance.config.json` exceptions only if
   required and not applied here.

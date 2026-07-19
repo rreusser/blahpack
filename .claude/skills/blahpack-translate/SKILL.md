@@ -51,7 +51,7 @@ unused/                        # Deprecated experiments and old files
 python                          # Use venv python (NOT python3)
 gfortran                       # GNU Fortran compiler (Homebrew)
 node                            # Node.js v24+ (node:test built-in)
-node bin/gate.js lib/<pkg>/base/<routine>  # THE quality gate (all checks)
+node bin/conformance.js lib/<pkg>/base/<routine>  # THE conformance check (all checks)
 bin/lint-fix.sh lib/<pkg>/base/<routine>  # Auto-fix (codemods + eslint + verify)
 bin/lint.sh lib/<pkg>/base/<routine>      # Lint only
 # DO NOT run `npm test` or `npm run check` — only run the module's own tests
@@ -91,9 +91,9 @@ actual translation work. Follow these rules strictly:
   # Lint — ALWAYS use tail:
   bin/lint-fix.sh lib/<pkg>/base/<routine> 2>&1 | tail -20
   ```
-- The gate is compact (~40 lines) — run directly:
+- The conformance check is compact (~40 lines) — run directly:
   ```bash
-  node bin/gate.js lib/<pkg>/base/<routine>
+  node bin/conformance.js lib/<pkg>/base/<routine>
   ```
 - When a command fails, read only the relevant error lines, not the full output.
 - If you accidentally run a verbose command, DO NOT repeat it. Extract what you
@@ -129,7 +129,7 @@ project.
 ## Checklist: Translating a New Routine
 
 This is the end-to-end process for translating a Fortran routine to JavaScript.
-Follow these steps in order. Each step has a verification gate.
+Follow these steps in order. Each step has a verification check.
 
 ### Step 0: Check dependencies and generate the expected signature
 
@@ -560,19 +560,19 @@ sessions to avoid repeating mistakes.
 ### Step 9: Verify conformance
 
 ```bash
-node bin/gate.js lib/<package>/base/<routine>    # THE quality gate — all checks
+node bin/conformance.js lib/<package>/base/<routine>    # THE conformance check — all checks
 ```
 
-The gate checks everything in one command: file structure, scaffolding
+The conformance check covers everything in one command: file structure, scaffolding
 remnants, implementation completeness (ndarray validation, @private),
 string conventions, complex number conventions, test quality, lint,
 eslint-disable whitelist, and JSDoc.
 
-A module is **complete** only when the gate reports category `complete`.
+A module is **complete** only when the conformance check reports category `complete`.
 Do not declare a translation done until this passes.
 
-**This is the MANDATORY final gate.** Do not declare a translation complete
-until `node bin/gate.js` shows all checks passing.
+**This is the MANDATORY final conformance check.** Do not declare a translation complete
+until `node bin/conformance.js` shows all checks passing.
 
 **Do NOT run `npm test` or `npm run check`** — they dump 12,000+ lines.
 If you need to check for regressions in dependent modules, use:
@@ -819,7 +819,7 @@ results. The Fortran operation order is load-bearing — preserve it exactly.
 
 **WORK is a caller-provided strided-array parameter, never internally
 allocated.** This follows the LAPACKE convention and is enforced by the
-`workspace.no-internal-alloc` gate check on `lib/base.js` and
+`workspace.no-internal-alloc` conformance check on `lib/base.js` and
 `lib/ndarray.js`. Reasons:
 
 - Avoids JS allocation churn — mirrors how C/Fortran callers pre-size buffers.
@@ -852,7 +852,7 @@ allocated.** This follows the LAPACKE convention and is enforced by the
    non-overlapping offsets.
 
 **WORK as ndarray-style parameter:** Expose `work, strideWork, offsetWork`
-(snake-cased like other stdlib strided params). The gate also warns on
+(snake-cased like other stdlib strided params). The conformance check also warns on
 the uppercase Fortran-style `strideWORK`/`offsetWORK` form — fix those
 to `strideWork`/`offsetWork`.
 
@@ -1181,7 +1181,7 @@ word may be ambiguous when paired with an analogous flag like jobvt).
 
 The scaffold leaves predictable artifacts that have shown up in nearly
 every translated module. None of these get caught by tests, so check by
-hand or by gate:
+hand or by the conformance check:
 
 - **Description trailing comma+period: `"...matrix A,."`** — sed-fixable.
 - **`@returns {*} result`** in `<routine>.js` — replace with the real type
@@ -1192,7 +1192,7 @@ hand or by gate:
 - **Stray `// Copyright (c) 2025 Ricky Reusser. Apache-2.0 License.`**
   comment beneath the proper Apache-2.0 license block. Delete it.
 - **`examples/index.js` and `benchmark/*.js` using single-char Fortran
-  flags** (`'A'`, `'N'`, `'T'`) — these get past the gate because they're
+  flags** (`'A'`, `'N'`, `'T'`) — these get past the conformance check because they're
   not in `lib/base.js` but they DO break example execution under the new
   validators. Convert to the long-form strings the validator accepts.
 - **`test.ndarray.js` requiring `lib/base.js`** — bypasses the validator.

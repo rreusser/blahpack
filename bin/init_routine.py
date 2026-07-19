@@ -146,7 +146,7 @@ def main():
         if result.returncode == 0:
             # gen_test.py emits ndarray-targeted tests (require '../lib/ndarray.js').
             # Write to test.ndarray.js — overwriting scaffold.py's stub there is
-            # intended. Do NOT clobber test.js (export-checks file the gate expects).
+            # intended. Do NOT clobber test.js (export-checks file the conformance check expects).
             with open(test_ndarray_js, 'w') as f:
                 f.write(result.stdout)
             print(f'  Written: {test_ndarray_js}', file=sys.stderr)

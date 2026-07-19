@@ -19,8 +19,8 @@
 * and forces per-call allocation. This check flags every module that still
 * does it so remediation can be focused rather than ad hoc.
 *
-* Genuine, justified exceptions go in gate.config.json with a mandatory
-* reason (the standard gate exception mechanism applies to these ids).
+* Genuine, justified exceptions go in conformance.config.json with a mandatory
+* reason (the standard conformance exception mechanism applies to these ids).
 */
 
 var path = require( 'path' );

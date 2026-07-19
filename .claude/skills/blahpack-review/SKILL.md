@@ -10,11 +10,11 @@ Review `$ARGUMENTS` for convention violations. Fix all errors found.
 
 ## Quick start
 
-Run the quality gate — it checks everything (file structure, scaffolding,
+Run the conformance check — it checks everything (file structure, scaffolding,
 implementation, string conventions, complex number conventions, tests, lint,
 and JSDoc):
 ```bash
-node bin/gate.js $ARGUMENTS
+node bin/conformance.js $ARGUMENTS
 ```
 
 Auto-fix lint issues:
@@ -26,7 +26,7 @@ bin/lint-fix.sh $ARGUMENTS
 
 | Tool | Purpose |
 |------|---------|
-| `node bin/gate.js <module>` | **The quality gate** — all checks in one command |
+| `node bin/conformance.js <module>` | **The conformance check** — all checks in one command |
 | `bin/lint.sh` | ESLint with stdlib + blahpack conformance rules |
 | `bin/lint-fix.sh` | Full fix pipeline (codemods + eslint + test verify) |
 | `bin/fix_wrapper_docs.py` | Propagate base.js @param to ndarray.js/wrapper files |
@@ -107,10 +107,10 @@ Float64 indexing internally.
 
 ## 4. Validation layers (routine.js, ndarray.js)
 
-The gate's **conventions** check validates the full call chain:
+The conformance check's **conventions** check validates the full call chain:
 
 ```bash
-node bin/gate.js lib/<pkg>/base/<routine> --check conventions
+node bin/conformance.js lib/<pkg>/base/<routine> --check conventions
 ```
 
 **`<routine>.js` (layout wrapper) must validate:**
@@ -212,8 +212,8 @@ grep "strideA0\|strideB0\|strideC0" lib/<pkg>/base/<routine>/lib/base.js
 ### 5a. Workspace (LAPACKE convention)
 
 WORK is a caller-provided strided ndarray parameter on **both** `base.js`
-and `ndarray.js`. Never allocated internally. The gate's
-`bin/gate/checks/workspace.js` runs four checks the reviewer should
+and `ndarray.js`. Never allocated internally. The conformance check's
+`bin/conformance/checks/workspace.js` runs four checks the reviewer should
 verify by hand:
 
 1. **`workspace.caller-provided`** — Every Fortran `WORK`/`RWORK`/`IWORK`/
@@ -227,7 +227,7 @@ verify by hand:
    caller-provided workspace params and does not allocate.
 
 If you find `new Float64Array(nb*nb)` or similar inside `base.js`, that's
-the wrong fix even if the gate happens to skip it — flag it. Partition
+the wrong fix even if the conformance check happens to skip it — flag it. Partition
 the caller's WORK buffer at a documented offset instead. See the
 "Workspace Convention" section of `/blahpack-translate` for the rule.
 
@@ -238,8 +238,8 @@ allocate WORK as a documented convenience when the caller passes
 Run the audit with:
 
 ```bash
-node bin/gate.js --all --fast --json > /tmp/gate.json
-node -e "const d=require('/tmp/gate.json'); const g={}; for (const m of d.modules) for (const c of m.checks||[]) if (c.status==='fail' && c.id?.startsWith('workspace.')) (g[c.id] = g[c.id]||[]).push(m.module); for (const [k,v] of Object.entries(g)) console.log(k+': '+v.length); "
+node bin/conformance.js --all --fast --json > /tmp/conformance.json
+node -e "const d=require('/tmp/conformance.json'); const g={}; for (const m of d.modules) for (const c of m.checks||[]) if (c.status==='fail' && c.id?.startsWith('workspace.')) (g[c.id] = g[c.id]||[]).push(m.module); for (const [k,v] of Object.entries(g)) console.log(k+': '+v.length); "
 ```
 
 ---
@@ -390,8 +390,8 @@ node --test lib/<pkg>/base/<routine>/test/test.js lib/<pkg>/base/<routine>/test/
 # Check for regressions across the full suite (shows ONLY summary + failures):
 bin/test-failures.sh
 
-# Fast gate on all modules (file checks only, manageable output):
-node bin/gate.js --all --fast 2>&1 | tail -30
+# Fast conformance on all modules (file checks only, manageable output):
+node bin/conformance.js --all --fast 2>&1 | tail -30
 ```
 
 ---

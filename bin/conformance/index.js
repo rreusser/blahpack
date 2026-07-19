@@ -39,10 +39,10 @@ var ALL_CHECKS = [
 ];
 
 /**
- * Load exception config from gate.config.json.
+ * Load exception config from conformance.config.json.
  */
 function loadConfig() {
-	var configPath = path.join( util.ROOT, 'gate.config.json' );
+	var configPath = path.join( util.ROOT, 'conformance.config.json' );
 	try {
 		return JSON.parse( fs.readFileSync( configPath, 'utf8' ) );
 	} catch ( e ) {
@@ -51,7 +51,7 @@ function loadConfig() {
 }
 
 /**
- * Apply exceptions from gate.config.json.
+ * Apply exceptions from conformance.config.json.
  * Converts matching 'fail' results to 'skip' with reason.
  */
 function applyExceptions( moduleKey, results, config ) {
@@ -60,7 +60,7 @@ function applyExceptions( moduleKey, results, config ) {
 		return results;
 	}
 	var skipSet = new Set( entry.skip );
-	var reason = entry.reason || 'exception in gate.config.json';
+	var reason = entry.reason || 'exception in conformance.config.json';
 	var i;
 
 	for ( i = 0; i < results.length; i++ ) {
@@ -118,12 +118,12 @@ function checkModule( mod, opts ) {
 }
 
 /**
- * Run gate checks across all modules (or a subset).
+ * Run conformance checks across all modules (or a subset).
  *
  * @param {Object} opts - { all, coverage, lint, fast, check, category, failing }
  * @returns {Array} array of module results
  */
-function runGate( modules, opts ) {
+function runConformance( modules, opts ) {
 	opts = opts || {};
 	var allResults = [];
 	var i;
@@ -146,5 +146,5 @@ function runGate( modules, opts ) {
 
 module.exports = {
 	checkModule: checkModule,
-	runGate: runGate
+	runConformance: runConformance
 };

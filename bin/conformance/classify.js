@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Classify a module based on gate check results.
+ * Classify a module based on conformance check results.
  *
  * Categories:
  *   scaffold    — base.js has TODOs/stubs, OR tests are stub-only, OR wrappers throw "not yet implemented"

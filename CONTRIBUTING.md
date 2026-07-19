@@ -10,7 +10,7 @@ npm run fetch-reference    # BLAS/LAPACK reference Fortran sources into data/
 `npm run fetch-reference` downloads the reference BLAS 3.12.0, LAPACK
 3.12.0, and arpack-ng 3.9.1 sources (gitignored, upstream-owned) into
 `data/`. They are required to regenerate test fixtures and to run the
-gate's workspace-family checks; without them those checks skip.
+conformance check's workspace-family checks; without them those checks skip.
 
 ### Python tooling
 
@@ -25,9 +25,11 @@ pip install -r requirements.txt
 ## Everyday commands
 
 ```bash
-npm test                          # full suite (exits non-zero on failure)
-node bin/gate.js <module-path>    # quality gate for one module
-node bin/gate.js --all --fast     # fast gate over all modules
+npm test                          # unit tests + lint (exits non-zero on failure)
+npm run test:unit                 # unit tests only
+npm run test:lint                 # lint only
+node bin/conformance.js <module-path>    # conformance check for one module
+node bin/conformance.js --all --fast     # fast conformance over all modules
 npm run lint                      # eslint (stdlib + local rules)
 npm run gen-exports               # regenerate index.js + package.json (run after adding a module)
 ```

@@ -52,7 +52,7 @@
     layer over `zgemqrt` and `ztpmqrt` (which themselves do the
     reinterpret), this base.js never touches Float64 views. The `z-prefix
     uses reinterpret()` gate check warns but does not fail; document this
-    in `gate.config.json` if needed.
+    in `conformance.config.json` if needed.
 
 -   **trans='transpose' is rejected.** Both `zlamtsqr.js` (wrapper) and
     `ndarray.js` explicitly throw on `'transpose'` because Q is unitary

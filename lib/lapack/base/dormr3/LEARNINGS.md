@@ -33,7 +33,7 @@
 ## Gate/lint gotchas
 
 - `bin/lint-fix.sh` skips lint errors in benchmark/test files if base.js
-  and ndarray.js pass — but `bin/gate.js` runs ESLint over the whole
+  and ndarray.js pass — but `bin/conformance.js` runs ESLint over the whole
   module directory, so any error anywhere blocks the gate.
 - ESLint `--fix` can hoist `var` declarations above their initializers
   in ways that create `no-use-before-define` errors. Pre-declare all

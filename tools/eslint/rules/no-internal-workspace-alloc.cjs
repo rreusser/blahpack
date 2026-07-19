@@ -20,7 +20,7 @@
 // shouldn't either. (b) Batching reuses one workspace, so allocation must live
 // above the per-invocation routines. This rule enforces the base+ndarray half.
 //
-// Exemptions (mirroring the workspace gate's `internalAllocs`):
+// Exemptions (mirroring the workspace conformance check's `internalAllocs`):
 //   - scalar temporaries: a bare numeric size <= 8 (e.g. `new Float64Array( 2 )`
 //     for a complex scalar / a `DUM(1)` placeholder);
 //   - the block-reflector T factor (`T`, `T1`, `T2`, ...), which is a genuine

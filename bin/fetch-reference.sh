@@ -3,8 +3,8 @@
 # Fetch the reference BLAS and LAPACK Fortran sources into data/.
 #
 # These sources are the inputs to fixture generation
-# (test/generate_fixtures.sh) and to the gate's workspace-family checks
-# (bin/gate/util.js expects data/BLAS-3.12.0/*.f and
+# (test/generate_fixtures.sh) and to the conformance check's workspace-family checks
+# (bin/conformance/util.js expects data/BLAS-3.12.0/*.f and
 # data/lapack-3.12.0/SRC/*.f). They are gitignored because they are large
 # and upstream-owned; run this once after cloning to make fixtures
 # regenerable and the workspace checks active.

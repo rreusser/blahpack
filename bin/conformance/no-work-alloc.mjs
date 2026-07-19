@@ -14,12 +14,12 @@
  *   - Is NOT a `var` declaration for A, B, C, or other data matrices
  *     (only flagged when the LHS looks like WORK/work/RWORK/rwork/IWORK/iwork)
  *
- * Usage (called by gate.js):
- *   import { check } from './gate/no-work-alloc.js';
+ * Usage (called by conformance.js):
+ *   import { check } from './conformance/no-work-alloc.js';
  *   const violations = check( modulePath );  // returns array of { file, line, text }
  *
  * Standalone:
- *   node bin/gate/no-work-alloc.js [path-filter]
+ *   node bin/conformance/no-work-alloc.js [path-filter]
  */
 
 import { readFileSync, readdirSync } from 'node:fs';

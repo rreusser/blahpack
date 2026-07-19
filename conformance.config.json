@@ -895,7 +895,7 @@
       "conventions.routine-string-validation",
       "conventions.ndarray-no-order"
     ],
-    "reason": "dlarrd's `order` parameter means `'block'`/`'entire'` eigenvalue ordering mode (sibling routine to dstebz), NOT the standard stdlib row/column-major layout. The gate's hardcoded STRING_VALIDATORS['order'] = 'is-layout' mapping is a false positive for this routine; ndarray.js validates `range` ('all'/'value'/'index') and `order` ('block'/'entire') explicitly."
+    "reason": "dlarrd's `order` parameter means `'block'`/`'entire'` eigenvalue ordering mode (sibling routine to dstebz), NOT the standard stdlib row/column-major layout. The conformance check's hardcoded STRING_VALIDATORS['order'] = 'is-layout' mapping is a false positive for this routine; ndarray.js validates `range` ('all'/'value'/'index') and `order` ('block'/'entire') explicitly."
   },
   "lib/lapack/base/dstebz": {
     "skip": [
@@ -954,13 +954,13 @@
     "skip": [
       "workspace.no-internal-alloc"
     ],
-    "reason": "HL (49x49) and workl (49 elements) are genuinely algorithm-internal temporaries that mirror the reference Fortran local array declarations HL(NL,NL) and WORKL(NL) with NL=49 (a fixed compile-time constant). They are used only in the rare fallback path where N < NL=49 and dlahqr fails to converge: HL is the scratch embedding matrix and workl is the matching 49-element buffer passed to dlaqr0 for that embedded call. All other dlaqr0 invocations use the caller-provided work, so base.js never allocates problem-scaled workspace. These two allocations use bare literal sizes (2401 and 49), which the ESLint no-internal-workspace-alloc rule correctly treats as fixed-size bookkeeping (exempt) \u2014 base.js and ndarray.js pass ESLint with zero errors. This gate exception remains only because the gate's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
+    "reason": "HL (49x49) and workl (49 elements) are genuinely algorithm-internal temporaries that mirror the reference Fortran local array declarations HL(NL,NL) and WORKL(NL) with NL=49 (a fixed compile-time constant). They are used only in the rare fallback path where N < NL=49 and dlahqr fails to converge: HL is the scratch embedding matrix and workl is the matching 49-element buffer passed to dlaqr0 for that embedded call. All other dlaqr0 invocations use the caller-provided work, so base.js never allocates problem-scaled workspace. These two allocations use bare literal sizes (2401 and 49), which the ESLint no-internal-workspace-alloc rule correctly treats as fixed-size bookkeeping (exempt) \u2014 base.js and ndarray.js pass ESLint with zero errors. This conformance exception remains only because the conformance check's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
   },
   "lib/lapack/base/dtgsy2": {
     "skip": [
       "workspace.no-internal-alloc"
     ],
-    "reason": "The only problem-scaling workspace, IWORK (M+N+2), is caller-owned: it is a parameter of base.js/ndarray.js and is allocated only in the dtgsy2.js wrapper when null. The base.js allocations flagged by this check are Z (LDZ*LDZ = 64), RHS (LDZ = 8), IPIV (LDZ = 8) and JPIV (LDZ = 8) \u2014 the fixed-size scratch for the (at most 8x8) Kronecker-product linear solve, mirroring the reference Fortran locals Z(LDZ,LDZ), RHS(LDZ), IPIV(LDZ), JPIV(LDZ) with LDZ=8 (a compile-time constant). These do NOT scale with M or N. Written as bare literals, the ESLint no-internal-workspace-alloc rule correctly treats all four as fixed-size bookkeeping (base.js passes ESLint with zero errors). Only the Z allocation trips this gate check, and solely because the gate's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
+    "reason": "The only problem-scaling workspace, IWORK (M+N+2), is caller-owned: it is a parameter of base.js/ndarray.js and is allocated only in the dtgsy2.js wrapper when null. The base.js allocations flagged by this check are Z (LDZ*LDZ = 64), RHS (LDZ = 8), IPIV (LDZ = 8) and JPIV (LDZ = 8) \u2014 the fixed-size scratch for the (at most 8x8) Kronecker-product linear solve, mirroring the reference Fortran locals Z(LDZ,LDZ), RHS(LDZ), IPIV(LDZ), JPIV(LDZ) with LDZ=8 (a compile-time constant). These do NOT scale with M or N. Written as bare literals, the ESLint no-internal-workspace-alloc rule correctly treats all four as fixed-size bookkeeping (base.js passes ESLint with zero errors). Only the Z allocation trips this conformance check, and solely because the conformance check's size heuristic flags any numeric literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
   },
   "lib/lapack/base/dgeqrf": {
     "skip": [
@@ -1059,5 +1059,11 @@
       "lint.eslint-pass"
     ],
     "reason": "Pre-existing ESLint sourceType mismatch \u2014 all .js files use ESM import/export but .eslintrc has sourceType: script. Affects lib/, test/, benchmark/, and examples/. No changes made to ESLint config or test scaffolding in this PR."
+  },
+  "lib/lapack/base/zhseqr": {
+    "skip": [
+      "workspace.no-internal-alloc"
+    ],
+    "reason": "The problem-scaling workspace is caller-owned: base.js/ndarray.js take WORK (strideWork, offsetWork) and thread it directly into zlaqr0 for the N>=NL QR paths (LWORK>=max(1,N) guarantees sufficiency). The only remaining base.js allocations are the rare N<NL=49 fallback locals HL (2401=NL*NL) and WORKL (49=NL), which mirror the reference Fortran locals HL(NL,NL) and WORKL(NL) with NL=49 a compile-time constant: when N<49 the caller's WORK (sized for N) is too small for the NL-embedded problem, so a fixed-size local buffer is required (exactly as in reference ZHSEQR). Written as bare numeric literals, the ESLint no-internal-workspace-alloc rule correctly treats both as fixed-size bookkeeping (base.js passes ESLint with zero errors); only the conformance size-heuristic flags them because it rejects any literal greater than SCALAR_MAX=8 regardless of whether it is fixed or problem-scaled."
   }
 }

@@ -1,4 +1,4 @@
-{{alias}}( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, dif, WORK, strideWORK, lwork, IWORK, strideIWORK )
+{{alias}}( trans, ijob, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, scale, dif, WORK, strideWORK, IWORK, strideIWORK )
     Solves the generalized Sylvester equation using a level-3 blocked
     algorithm.
 
@@ -64,9 +64,6 @@
     strideWORK: integer
         stride length for `WORK`.
 
-    lwork: integer
-        `lwork`.
-
     IWORK: Int32Array
         `IWORK`.
 
@@ -83,7 +80,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, dif, WORK, strideWORK, offsetWORK, lwork, IWORK, strideIWORK, offsetIWORK )
+{{alias}}.ndarray( trans, ijob, M, N, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, C, strideC1, strideC2, offsetC, D, strideD1, strideD2, offsetD, E, strideE1, strideE2, offsetE, F, strideF1, strideF2, offsetF, scale, dif, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
     Solves the generalized Sylvester equation using a level-3 blocked
     algorithm using alternative indexing semantics.
 
@@ -187,9 +184,6 @@
 
     offsetWORK: integer
         starting index for `WORK`.
-
-    lwork: integer
-        `lwork`.
 
     IWORK: Int32Array
         `IWORK`.

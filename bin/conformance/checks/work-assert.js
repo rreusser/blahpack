@@ -16,7 +16,7 @@
  *   2. `if ( WORK.length < ...` (older style)
  *
  * Genuine exceptions (routines that handle WORK sizing inside base.js for
- * architectural reasons) go in gate.config.json with a mandatory reason.
+ * architectural reasons) go in conformance.config.json with a mandatory reason.
  */
 
 var path = require( 'path' );

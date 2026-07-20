@@ -35,9 +35,26 @@ var zhsein = require( '@stdlib/lapack/base/zhsein' );
 Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix
 
 ```javascript
+var Complex128Array = require( '@stdlib/array/complex128' );
 var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var Uint8Array = require( '@stdlib/array/uint8' );
 
-// TODO: Add usage example
+// Upper-triangular complex Hessenberg H with eigenvalues 1 and 2:
+var H = new Complex128Array([ 1.0, 0.0, 0.0, 0.0, 0.5, 0.0, 2.0, 0.0 ]);
+var w = new Complex128Array([ 1.0, 0.0, 2.0, 0.0 ]);
+var SELECT = new Uint8Array([ 1, 1 ]);
+var VL = new Complex128Array( 4 );
+var VR = new Complex128Array( 4 );
+var WORK = new Complex128Array( 4 );
+var RWORK = new Float64Array( 2 );
+var IFAILL = new Int32Array( 2 );
+var IFAILR = new Int32Array( 2 );
+var M = new Int32Array([ 0 ]);
+
+// ndarray form: explicit strides/offsets, no `order` argument:
+var out = zhsein( 'right', 'no', 'no', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
+// out => { 'info': 0, 'm': 2, ... }; VR holds the right eigenvectors
 ```
 
 The function has the following parameters:
@@ -75,9 +92,25 @@ The function has the following parameters:
 Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix, using alternative indexing semantics.
 
 ```javascript
+var Complex128Array = require( '@stdlib/array/complex128' );
 var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var Uint8Array = require( '@stdlib/array/uint8' );
 
-// TODO: Add usage example
+var H = new Complex128Array([ 1.0, 0.0, 0.0, 0.0, 0.5, 0.0, 2.0, 0.0 ]);
+var w = new Complex128Array([ 1.0, 0.0, 2.0, 0.0 ]);
+var SELECT = new Uint8Array([ 1, 1 ]);
+var VL = new Complex128Array( 4 );
+var VR = new Complex128Array( 4 );
+var WORK = new Complex128Array( 4 );
+var RWORK = new Float64Array( 2 );
+var IFAILL = new Int32Array( 2 );
+var IFAILR = new Int32Array( 2 );
+var M = new Int32Array([ 0 ]);
+
+// ndarray form: explicit strides/offsets, no `order` argument:
+var out = zhsein( 'right', 'no', 'no', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
+// out => { 'info': 0, 'm': 2, ... }
 ```
 
 The function has the following additional parameters:
@@ -127,7 +160,10 @@ The function has the following additional parameters:
 
 ## Notes
 
--   TODO: Add notes.
+-   `w` supplies the eigenvalues (e.g. from `zhseqr`) whose eigenvectors are wanted.
+    `SELECT[j]` chooses which eigenvectors to compute; `M` returns how many.
+-   `H` must be upper Hessenberg. Eigenvectors are found by inverse iteration and
+    `IFAILL`/`IFAILR` flag any that failed to converge.
 
 </section>
 
@@ -138,7 +174,27 @@ The function has the following additional parameters:
 ## Examples
 
 ```javascript
-// TODO: Add examples
+var Complex128Array = require( '@stdlib/array/complex128' );
+var Float64Array = require( '@stdlib/array/float64' );
+var Int32Array = require( '@stdlib/array/int32' );
+var Uint8Array = require( '@stdlib/array/uint8' );
+
+// Upper-triangular complex Hessenberg H with eigenvalues 1 and 2:
+var H = new Complex128Array([ 1.0, 0.0, 0.0, 0.0, 0.5, 0.0, 2.0, 0.0 ]);
+var w = new Complex128Array([ 1.0, 0.0, 2.0, 0.0 ]);
+var SELECT = new Uint8Array([ 1, 1 ]);
+var VL = new Complex128Array( 4 );
+var VR = new Complex128Array( 4 );
+var WORK = new Complex128Array( 4 );
+var RWORK = new Float64Array( 2 );
+var IFAILL = new Int32Array( 2 );
+var IFAILR = new Int32Array( 2 );
+var M = new Int32Array([ 0 ]);
+
+var out = zhsein( 'column-major', 'right', 'no', 'no', SELECT, 1, 2, H, 2, w, 1, VL, 2, VR, 2, 2, M, WORK, 1, RWORK, 1, IFAILL, 1, 0, IFAILR, 1, 0 );
+// out => { 'info': 0, 'm': 2, ... }; VR holds the right eigenvectors
+
+console.log( out.info, out.m );
 ```
 
 </section>

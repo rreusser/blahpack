@@ -56,17 +56,46 @@ function extractParams( content ) {
 }
 
 /**
+* Whether a routine's `order` param is a storage-layout selector
+* (`'row-major'`/`'column-major'`) rather than a domain mode. A few routines
+* (e.g. DSTEBZ/DLARRD) name a parameter `order` that selects an eigenvalue
+* ORDERING (`'block'`/`'entire'`) and has nothing to do with memory layout;
+* such an `order` is a normal string mode — it does not use `is-layout`, and it
+* legitimately appears on the ndarray signature.
+*
+* @private
+* @param {string} baseContent - base.js source
+* @returns {boolean} true if `order` denotes a storage layout
+*/
+function isLayoutOrder( baseContent ) {
+	if ( !baseContent ) {
+		return true;
+	}
+	var m = baseContent.match( /@param\s*\{string\}\s+order\b[^\n]*/i );
+	if ( !m ) {
+		return true;
+	}
+	return !/block|entire/i.test( m[ 0 ] );
+}
+
+/**
 * Detect which string params a signature has.
 *
 * @private
 * @param {Array} params - parameter names
+* @param {string} [baseContent] - base.js source (to classify an `order` param)
 * @returns {Array} array of { name, validator } objects
 */
-function detectStringParams( params ) {
+function detectStringParams( params, baseContent ) {
 	var result = [];
 	var i, lower;
 	for ( i = 0; i < params.length; i++ ) {
 		lower = params[ i ].toLowerCase();
+		// A domain-mode `order` (block/entire ordering) is not a layout param
+		// and does not use the is-layout validator.
+		if ( lower === 'order' && !isLayoutOrder( baseContent ) ) {
+			continue;
+		}
 		if ( STRING_VALIDATORS[ lower ] ) {
 			result.push({
 				name: params[ i ],
@@ -250,7 +279,7 @@ function check( mod ) {
 		}
 
 		// String param validation
-		var routineStrings = detectStringParams( routineParams );
+		var routineStrings = detectStringParams( routineParams, baseContent );
 		if ( routineStrings.length > 0 ) {
 			var missingRoutineValidators = [];
 			var i;
@@ -336,7 +365,7 @@ function check( mod ) {
 		}
 
 		// String param validation in ndarray.js
-		var ndarrayStrings = detectStringParams( ndarrayParams );
+		var ndarrayStrings = detectStringParams( ndarrayParams, baseContent );
 		if ( ndarrayStrings.length > 0 ) {
 			var missingNdarrayValidators = [];
 			var j;
@@ -379,7 +408,7 @@ function check( mod ) {
 		}
 
 		// ndarray.js should NOT validate order (that's routine.js's job)
-		if ( ndarrayParams.some( function( p ) { return p.toLowerCase() === 'order'; }) ) {
+		if ( isLayoutOrder( baseContent ) && ndarrayParams.some( function( p ) { return p.toLowerCase() === 'order'; }) ) {
 			results.push( util.fail(
 				ID + '.ndarray-no-order',
 				'ndarray.js does not have order param',

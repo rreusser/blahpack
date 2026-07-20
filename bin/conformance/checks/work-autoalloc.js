@@ -18,7 +18,8 @@
  * present in the routine's JS function signature. Accepts both UPPERCASE and
  * camelCase naming (WORK/work, IWORK/iwork, RWORK/rwork).
  *
- * Genuine exceptions go in conformance.config.json with a mandatory reason.
+ * There is no exception/skip mechanism: a flagged module is fixed, never
+ * suppressed.
  */
 
 var path = require( 'path' );

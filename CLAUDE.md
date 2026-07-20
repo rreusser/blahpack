@@ -51,7 +51,6 @@ docs/                          # Reference documentation
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
 bench/                         # Performance benchmarks
 archive/bin/                   # Archived one-time migration scripts
-conformance.config.json        # Per-module conformance exceptions (with mandatory reasons)
 ```
 
 ## Commands

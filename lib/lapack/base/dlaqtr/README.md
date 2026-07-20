@@ -37,7 +37,16 @@ Solves a real quasi-triangular system of equations, or a complex quasi-triangula
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
 
-// TODO: Add usage example
+// Upper quasi-triangular T (4-by-4, column-major); leading 3-by-3 used:
+var T = new Float64Array([ 2.0, 0.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 3.0, -1.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var b = new Float64Array( 4 );
+
+// Right-hand side on entry; solution on exit:
+var x = new Float64Array([ 10.0, 5.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var WORK = new Float64Array( 8 );
+
+var out = dlaqtr( 'column-major', false, true, 3, T, 4, b, 1, 0.0, x, 1, WORK, 1 );
+// out => { 'info': 0, 'scale': 1 }; x[ 0..2 ] holds the solution
 ```
 
 The function has the following parameters:
@@ -64,7 +73,14 @@ Solves a real quasi-triangular system of equations, or a complex quasi-triangula
 ```javascript
 var Float64Array = require( '@stdlib/array/float64' );
 
-// TODO: Add usage example
+var T = new Float64Array([ 2.0, 0.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 3.0, -1.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var b = new Float64Array( 4 );
+var x = new Float64Array([ 10.0, 5.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var WORK = new Float64Array( 8 );
+
+// Solve using explicit strides and offsets (no `order` argument):
+var out = dlaqtr( false, true, 3, T, 1, 4, 0, b, 1, 0, 0.0, x, 1, 0, WORK, 1, 0 );
+// out => { 'info': 0, 'scale': 1 }
 ```
 
 The function has the following additional parameters:
@@ -96,7 +112,10 @@ The function has the following additional parameters:
 
 ## Notes
 
--   TODO: Add notes.
+-   The right-hand side is supplied in `x` (real part) and `b` (imaginary part) and
+    is overwritten by the solution. `scale` (0 < scale <= 1) is returned to avoid
+    overflow; the computed solution solves the scaled system.
+-   `dlaqtr` is an internal auxiliary of the eigenvector-condition routines (e.g. `dtrsna`).
 
 </section>
 
@@ -107,7 +126,20 @@ The function has the following additional parameters:
 ## Examples
 
 ```javascript
-// TODO: Add examples
+var Float64Array = require( '@stdlib/array/float64' );
+
+// Upper quasi-triangular T (4-by-4, column-major); leading 3-by-3 used:
+var T = new Float64Array([ 2.0, 0.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 3.0, -1.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var b = new Float64Array( 4 );
+
+// Right-hand side on entry; solution on exit:
+var x = new Float64Array([ 10.0, 5.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]);
+var WORK = new Float64Array( 8 );
+
+var out = dlaqtr( 'column-major', false, true, 3, T, 4, b, 1, 0.0, x, 1, WORK, 1 );
+// out => { 'info': 0, 'scale': 1 }; x[ 0..2 ] holds the solution
+
+console.log( out.info, Array.prototype.slice.call( x, 0, 3 ) );
 ```
 
 </section>

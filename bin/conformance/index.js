@@ -1,6 +1,5 @@
 'use strict';
 
-var fs = require( 'fs' );
 var path = require( 'path' );
 var util = require( './util.js' );
 var classify = require( './classify.js' );
@@ -20,6 +19,7 @@ var checkWorkspace = require( './checks/workspace.js' );
 var checkWorkAssert = require( './checks/work-assert.js' );
 var checkWorkAutoalloc = require( './checks/work-autoalloc.js' );
 var checkSyntax = require( './checks/syntax.js' );
+var checkBaseArity = require( './checks/base-arity.js' );
 
 var ALL_CHECKS = [
 	{ name: 'file-structure', fn: checkFileStructure },
@@ -35,44 +35,15 @@ var ALL_CHECKS = [
 	{ name: 'work-assert', fn: checkWorkAssert },
 	{ name: 'work-autoalloc', fn: checkWorkAutoalloc },
 	{ name: 'syntax', fn: checkSyntax },
+	{ name: 'base-arity', fn: checkBaseArity },
 	{ name: 'lint', fn: checkLint }
 ];
 
 /**
- * Load exception config from conformance.config.json.
- */
-function loadConfig() {
-	var configPath = path.join( util.ROOT, 'conformance.config.json' );
-	try {
-		return JSON.parse( fs.readFileSync( configPath, 'utf8' ) );
-	} catch ( e ) {
-		return {};
-	}
-}
-
-/**
- * Apply exceptions from conformance.config.json.
- * Converts matching 'fail' results to 'skip' with reason.
- */
-function applyExceptions( moduleKey, results, config ) {
-	var entry = config[ moduleKey ];
-	if ( !entry || !entry.skip ) {
-		return results;
-	}
-	var skipSet = new Set( entry.skip );
-	var reason = entry.reason || 'exception in conformance.config.json';
-	var i;
-
-	for ( i = 0; i < results.length; i++ ) {
-		if ( skipSet.has( results[ i ].id ) && ( results[ i ].status === 'fail' || results[ i ].status === 'warn' ) ) {
-			results[ i ] = util.skip( results[ i ].id, results[ i ].name + ' [EXCEPTION: ' + reason + ']' );
-		}
-	}
-	return results;
-}
-
-/**
  * Run all checks for a single module.
+ *
+ * There is deliberately no per-module exception/skip mechanism: a failing check
+ * is fixed in the code (or the check itself is corrected) — never suppressed.
  *
  * @param {Object} mod - { dir, pkg, routine }
  * @param {Object} opts - { coverage: bool, lint: bool, check: string|null }
@@ -80,7 +51,6 @@ function applyExceptions( moduleKey, results, config ) {
  */
 function checkModule( mod, opts ) {
 	opts = opts || {};
-	var config = loadConfig();
 	var results = [];
 	var moduleKey = path.relative( util.ROOT, mod.dir );
 	var i;
@@ -96,9 +66,6 @@ function checkModule( mod, opts ) {
 		checkResults = ALL_CHECKS[ i ].fn( mod, opts );
 		results = results.concat( checkResults );
 	}
-
-	// Apply exceptions
-	results = applyExceptions( moduleKey, results, config );
 
 	var category = classify( results );
 

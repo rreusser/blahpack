@@ -1864,4 +1864,114 @@ Keep entries short. Newest first.
   (`NTINY=15`, `NL=49`, `NMIN=75`); fixtures MUST span a routine's size-based
   dispatch cutoffs. Added a large-N regression test.
 
+## 2026-07-19 — dtrsna: vestigial `M` param shifted the workspace args (SEP path crash) [FIXED]
+
+- **What**: `dtrsna` (eigenvalue/eigenvector condition numbers) crashed (or
+  silently corrupted results) whenever the eigenvector-condition path ran —
+  `job = 'eigenvectors'` or `'both'`. A caller using the *documented* wrapper
+  signature got `TypeError: Cannot create property 'NaN' on number` from inside
+  `dlacpy`/`dlacn2`.
+- **Repro**: `dtrsna( 'column-major', 'both', 'all', SELECT, 1, 3, T, 3, VL, 3,
+  VR, 3, s, 1, SEP, 1, 3, /*M*/3, WORK, 3, IWORK, 1, 0 )` on any `N>=1`. Crashes
+  on the `SEP` (`dtrexc`/`dtrsyl`) workspace use.
+- **Root cause**: `base.js` returns the output count `m` in its result object
+  and has **no `M` parameter** (32 params). But `ndarray.js` and the layout
+  wrapper `dtrsna.js` both carried a vestigial `M` *input* param and passed it
+  to `base()` — 33 args to a 32-param function — so `base`'s `WORK` received the
+  `M` value, `strideWork1` received the `WORK` array, and every workspace arg
+  shifted by one. Harmless for `job='eigenvalues'` (WORK unused); fatal for the
+  SEP path. The wrapper also wrongly validated `LDT/LDVL/LDVR/LDWORK` against
+  `max(1, M)` (an uninitialized output) instead of `max(1, N)`.
+- **Why it hid**: **two compensating bugs.** Every existing test helper AND the
+  only real caller (`dgeevx`, which imports `base.js` directly) *omitted* `M`
+  from the call — that −1 shift exactly canceled the +1 shift `ndarray.js` added,
+  so `base` received correct args and the fixture tests passed. Nothing exercised
+  the actual documented signature.
+- **Fix**: removed the `M` param from `ndarray.js` and `dtrsna.js` (signature +
+  the `base()` call + the obsolete `M < 0` check); corrected the column-major
+  `LD*` validations to use `N`. Now all three layers agree on 32 base params.
+  Verified: `job='both'` on `diag(1,2,3)` yields `s=[1,1,1]` and `SEP=[1,1,1]`
+  (both correct); dtrsna + dgeevx suites green.
+- **Bug class**: `signature-drift` / `off-by-one-argument` / `untested-code-path`.
+- **Generalization**: an output-only scalar (LAPACK `M`, `INFO`, ...) must be
+  *returned*, never carried as a positional param that the wrapper forwards —
+  a forwarded output param silently shifts everything after it. Audit any
+  routine whose base returns a value the wrapper also lists as a param
+  (grep `mm, M,` / `, INFO,` in `<routine>.js`/`ndarray.js`). Compensating
+  caller bugs mean fixture tests are NOT enough — test the documented signature.
+
+## 2026-07-19 — Systematic sweep of the forwarded-output-param class (15 siblings)
+
+- **Trigger**: the dtrsna entry above prescribed auditing "any routine whose
+  `base` returns a value that the wrapper also lists as a param." Ran that audit
+  across all LAPACK modules (compare `base.js` param count vs. the args passed in
+  `ndarray.js`'s `base()` call; any extra ndarray param is a forwarded output).
+- **Found 15 siblings, two severities:**
+  - **Interior shift → CRASH (6, same failure mode as dtrsna):** `dlaqps` (`kb`),
+    `zgesvx` (`rcond`), `dgebal` + `zgebal` (`ilo, ihi`), `zlahef` (`kb`), plus
+    `dtrsna` itself. The vestigial output sat *before* real trailing args
+    (WORK/strides), so forwarding it shifted them by one → out-of-bounds /
+    wrong-array workspace use on the documented signature.
+  - **Trailing forward → silent, no crash (10):** `dlaqge`/`zlaqge`/`dlaqsy`/
+    `zlaqhe` (`equed`), `dgeequ`/`zgeequ` (`rowcnd, colcnd, amax`), `dpoequ`/
+    `zpoequ` (`scond, amax`), `dlags2` (`csu…snq`), `dlaln2` (`scale, xnorm`).
+    The extra params were *last*, so `base` (fewer params) simply ignored them —
+    no shift, no crash. But the docs advertised these as writable out-params
+    while `base` actually returns them in its result object, so a caller
+    following the docs would read never-written arrays. Dual-API inconsistency,
+    not a crash.
+- **Fix**: removed every vestigial output param from the affected `ndarray.js`
+  (and `dtrsna.js`/`dgebal.js`-style wrappers), so all layers pass exactly
+  `base.length` args. Outputs are surfaced only via the result object. All 16
+  modules: tests + lint + conformance green; callers (`dgeevx`, `dgeqp3`,
+  `zgehrd`, …, which import `base.js` directly) unaffected.
+- **Bug class**: `signature-drift` / `off-by-one-argument`. Interior = crash;
+  trailing = silent doc/impl divergence.
+- **Prevention**: the reliable detector is a direct **`base.js` param-count vs.
+  `ndarray.js` `base()` arg-count** comparison — any surplus arg is a forwarded
+  output. The `signature-conformance` ESLint rule did NOT catch these: its
+  flexible achievable-counts model (outputs may be present or absent) happened to
+  admit the inflated counts. A dedicated conformance check that asserts
+  `ndarray`/wrapper pass exactly `base.length` args to `base()` would close this
+  gap deterministically; the linter's fuzzy count model cannot.
+
+## 2026-07-19 — base-arity check exposed 24 unimplemented layout wrappers
+
+- **Trigger**: added a deterministic `base-arity` conformance check
+  (`bin/conformance/checks/base-arity.js`) — asserts every `base(...)` call in
+  `ndarray.js` and the layout wrapper `<routine>.js` passes exactly
+  `base.length` args (the invariant the forwarded-output-param class violated).
+- **Unexpected find**: beyond the 16 forwarded-output modules, the check flagged
+  **24 modules whose layout wrapper is an un-implemented scaffold stub** —
+  `function dlantr( a, b ) { return base( a, b ); }` with `@param a - a`
+  placeholders — passing 2 args to a 12–41-param kernel. The `base.js` and
+  `ndarray.js` layers are fully implemented; only the public layout wrapper
+  (the default export used by `require('@stdlib/lapack/base/<r>')`) is a stub.
+  Affected: `dlantr`, `dlaqr0`, `dlaqr5`, `zgbcon`, `zgecon`, `zgeequ`,
+  `zgerfs`, `zgttrf`, `zhetrs`, `zhetrs2`, `zlahef`, `zlahqr`, `zlaqr0`,
+  `zlaqr1`, `zlaqr4`, `zlaqr5`, `zlatbs`, `zlatrs`, `zpbcon`, `zpocon`,
+  `zporfs`, `ztbrfs`, `ztrcon`, `ztrevc3`.
+- **Why it hid**: all were marked `[complete]`. The wrapper's own test
+  (`test.<routine>.js`) asserts ONLY `typeof === 'function'` and
+  `.length === 2` — both satisfied by the stub. No check compared the wrapper's
+  `base()` call to the kernel arity, so a non-functional public entry point read
+  as done. Classic "tests that assert nothing meaningful inflate coverage."
+- **Bug class**: `unimplemented-wrapper` / `vacuous-test`. Detector is the
+  `base-arity` check; the corrected count is 857 complete / 42 in-progress
+  (was mis-reported as 881/18).
+- **Prevention**: `base-arity` demotes any such module to `in-progress` until
+  the wrapper is genuinely implemented (order/`LD*` → stride derivation +
+  validation + WORK auto-alloc). The vacuous wrapper tests are replaced with
+  real round-trip assertions against the ndarray form.
+- **Resolution (2026-07-19)**: all 24 wrappers were implemented one at a time,
+  each mirroring a completed real/complex sibling (`dgecon`→`zgecon`,
+  `zgetrs`→`zhetrs`, `dlaqr4`→`zlaqr0`/`zlaqr4`/`dlaqr0`, etc.) and verified
+  green (tests + lint + base-arity + conformance). Two incidental correctness
+  improvements over the siblings were made rather than propagated: banded LD
+  checks use the correct `kd+1` / `2*kl+ku+1` bounds (several real siblings used
+  a loose `max(1,N)`), and eigenvector wrappers validate `LD*` against `N` not
+  the output count `M`. Count restored to 881 complete / 18 in-progress — now
+  honest; the 18 remaining are the workspace-tier refactor (incl. `dporfs`,
+  `zhetrf`), the only two modules `base-arity` still flags.
+
 <!-- Add new entries above this line. -->

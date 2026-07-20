@@ -15,8 +15,8 @@
  *   1. `if ( !WORK || ( WORK.length - offsetWORK ) < minWork )` (new style)
  *   2. `if ( WORK.length < ...` (older style)
  *
- * Genuine exceptions (routines that handle WORK sizing inside base.js for
- * architectural reasons) go in conformance.config.json with a mandatory reason.
+ * There is no exception/skip mechanism: a flagged module is fixed, never
+ * suppressed.
  */
 
 var path = require( 'path' );

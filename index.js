@@ -192,7 +192,7 @@ export { default as dlahr2, ndarray as dlahr2Ndarray } from './lib/lapack/base/d
 export { default as dlaic1 } from './lib/lapack/base/dlaic1/lib/index.js';
 export { default as dlaisnan, ndarray as dlaisnanNdarray } from './lib/lapack/base/dlaisnan/lib/index.js';
 export { default as dlaln2, ndarray as dlaln2Ndarray } from './lib/lapack/base/dlaln2/lib/index.js';
-export { default as dlamch } from './lib/lapack/base/dlamch/lib/index.js';
+export { default as dlamch, ndarray as dlamchNdarray } from './lib/lapack/base/dlamch/lib/index.js';
 export { default as dlamrg, ndarray as dlamrgNdarray } from './lib/lapack/base/dlamrg/lib/index.js';
 export { default as dlamswlq } from './lib/lapack/base/dlamswlq/lib/index.js';
 export { default as dlamtsqr } from './lib/lapack/base/dlamtsqr/lib/index.js';

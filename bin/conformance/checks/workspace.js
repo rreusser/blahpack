@@ -19,8 +19,8 @@
 * and forces per-call allocation. This check flags every module that still
 * does it so remediation can be focused rather than ad hoc.
 *
-* Genuine, justified exceptions go in conformance.config.json with a mandatory
-* reason (the standard conformance exception mechanism applies to these ids).
+* There is no exception/skip mechanism: a flagged module is fixed (thread a
+* caller-provided workspace) or the heuristic is corrected — never suppressed.
 */
 
 var path = require( 'path' );
@@ -35,12 +35,6 @@ var LEN_ARGS = [ 'LWORK', 'LRWORK', 'LIWORK', 'LWORK1', 'LWORK2' ];
 
 // Numeric typed-array constructors that may indicate an internal allocation:
 var ALLOC_RE = /new\s+(Float64Array|Float32Array|Int32Array|Uint8Array|Uint32Array|Complex128Array|Complex64Array)\s*\(([^)]*)\)/;
-
-// A bare numeric allocation no larger than this is treated as a scalar
-// temporary (e.g. `new Float64Array( 2 )` for a complex scalar, DUM(1)),
-// not a workspace buffer:
-var SCALAR_MAX = 8;
-
 
 // HELPERS //
 
@@ -94,9 +88,14 @@ function internalAllocs( content, file ) {
 		if ( size.charAt( 0 ) === '[' ) {
 			continue;
 		}
-		// Variable-sized (references an identifier) OR a large numeric
-		// literal => workspace. Small bare numbers => scalar temporary.
-		if ( /[A-Za-z_]/.test( size ) || ( /^\d+$/.test( size ) && Number( size ) > SCALAR_MAX ) ) {
+		// A caller-owned workspace buffer SCALES with the problem, so its size
+		// references a dimension identifier (`N`, `ldwork*nb`, `2*N*N`, ...). A
+		// purely numeric size — of ANY magnitude — is fixed-size internal
+		// bookkeeping (a Fortran local: a 4x4 block-swap scratch, an NL-by-NL
+		// embedding buffer, a small pivot array), NOT caller-owned workspace.
+		// This mirrors the ESLint `no-internal-workspace-alloc` rule, which
+		// exempts bare-literal sizes regardless of magnitude.
+		if ( /[A-Za-z_]/.test( size ) ) {
 			hits.push({
 				line: i + 1,
 				text: file + ':' + ( i + 1 ) + '  ' + trimmed

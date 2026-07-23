@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the reciprocal pivot growth factor norm(A)/norm(U).
 	*
 	* @param N - number of columns
 	* @param ncols - `ncols`
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, ncols: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the reciprocal pivot growth factor norm(A)/norm(U) using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ncols - `ncols`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the reciprocal pivot growth factor norm(A)/norm(U).
 */
 declare var dla_gerpvgrw: Routine;
 

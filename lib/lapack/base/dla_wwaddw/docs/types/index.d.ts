@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Adds a vector `W` to a doubled-single precision accumulator `(X, Y)` in place.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, w: Float64Array, strideW: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Adds a vector `W` to a doubled-single precision accumulator `(X, Y)` in place using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Adds a vector `W` to a doubled-single precision accumulator `(X, Y)` in place.
 */
 declare var dla_wwaddw: Routine;
 

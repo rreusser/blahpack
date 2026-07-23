@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -37,7 +37,7 @@ interface Routine {
 	( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): { snu: number; csv: number; snv: number; csq: number; snq: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true: using alternative indexing semantics.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
 */
 declare var dlags2: Routine;
 

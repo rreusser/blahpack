@@ -28,7 +28,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the Hermitian packed matrix-vector operation `y := alpha*A*x + beta*y`.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the Hermitian packed matrix-vector operation `y := alpha*A*x + beta*y` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the Hermitian packed matrix-vector operation `y := alpha*A*x + beta*y`.
 */
 declare var zhpmv: Routine;
 

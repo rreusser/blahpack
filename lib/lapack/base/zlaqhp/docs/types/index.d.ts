@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Equilibrates a Hermitian matrix A in packed storage using the scaling factors in the vector S.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -41,7 +41,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: Float64Array, S: Float64Array, strideS: number, scond: number, amax: number ): string;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Equilibrates a Hermitian matrix A in packed storage using the scaling factors in the vector S using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Equilibrates a Hermitian matrix A in packed storage using the scaling factors in the vector S.
 */
 declare var zlaqhp: Routine;
 

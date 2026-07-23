@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Takes the sum of the absolute values of a complex vector and returns a.
 	*
 	* @param N - number of columns
 	* @param CX - `CX`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, CX: Float64Array, strideCX: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Takes the sum of the absolute values of a complex vector and returns a using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param CX - `CX`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Takes the sum of the absolute values of a complex vector and returns a.
 */
 declare var dzsum1: Routine;
 

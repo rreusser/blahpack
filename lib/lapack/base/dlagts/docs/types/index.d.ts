@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( job: string, N: number, a: Float64Array, strideA: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number, y: Float64Array, strideY: number, tol: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
 */
 declare var dlagts: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Forms the right or left eigenvectors of a real generalized eigenvalue problem by backward transformation on the computed eigenvectors of the balanced matrix output by DGGBAL.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, M: number, V: Float64Array, LDV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Forms the right or left eigenvectors of a real generalized eigenvalue problem by backward transformation on the computed eigenvectors of the balanced matrix output by DGGBAL using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Forms the right or left eigenvectors of a real generalized eigenvalue problem by backward transformation on the computed eigenvectors of the balanced matrix output by DGGBAL.
 */
 declare var dggbak: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a system of linear equations A.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a system of linear equations A using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param kl - number of subdiagonals
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a system of linear equations A.
 */
 declare var dgbsv: Routine;
 

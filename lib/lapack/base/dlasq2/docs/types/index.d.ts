@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all the eigenvalues of the symmetric positive definite tridiagonal.
 	*
 	* @param N - number of columns
 	* @param z - `z`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, z: number, stride: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all the eigenvalues of the symmetric positive definite tridiagonal using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param z - `z`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all the eigenvalues of the symmetric positive definite tridiagonal.
 */
 declare var dlasq2: Routine;
 

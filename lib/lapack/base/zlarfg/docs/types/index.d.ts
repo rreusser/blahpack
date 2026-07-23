@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generate a complex elementary reflector H of order N, such that.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, tau: number, offsetTau: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generate a complex elementary reflector H of order N, such that using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generate a complex elementary reflector H of order N, such that.
 */
 declare var zlarfg: Routine;
 

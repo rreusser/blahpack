@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a real orthogonal matrix `Q` (or its transpose) obtained from a triangular-pentagonal compact-WY block reflector — the output of `dtpqrt` — to a stacked matrix `C` formed by two blocks `A` and `B`.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -52,7 +52,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, l: number, nb: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a real orthogonal matrix `Q` (or its transpose) obtained from a triangular-pentagonal compact-WY block reflector — the output of `dtpqrt` — to a stacked matrix `C` formed by two blocks `A` and `B` using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -86,7 +86,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a real orthogonal matrix `Q` (or its transpose) obtained from a triangular-pentagonal compact-WY block reflector — the output of `dtpqrt` — to a stacked matrix `C` formed by two blocks `A` and `B`.
 */
 declare var dtpmqrt: Routine;
 

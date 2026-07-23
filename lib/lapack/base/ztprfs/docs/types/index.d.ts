@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Provides error bounds and backward error estimates for the solution to a system of linear equations with a packed complex triangular coefficient matrix.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -52,7 +52,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, AP: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Provides error bounds and backward error estimates for the solution to a system of linear equations with a packed complex triangular coefficient matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -88,7 +88,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Provides error bounds and backward error estimates for the solution to a system of linear equations with a packed complex triangular coefficient matrix.
 */
 declare var ztprfs: Routine;
 

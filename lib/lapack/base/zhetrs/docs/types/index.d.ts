@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Perform complex division, storing result in module-level cdR and cdI.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Perform complex division, storing result in module-level cdR and cdI using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Perform complex division, storing result in module-level cdR and cdI.
 */
 declare var zhetrs: Routine;
 

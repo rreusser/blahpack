@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.
 	*
 	* @param i - `i`
 	* @param D - `D`
@@ -41,7 +41,7 @@ interface Routine {
 	( i: number, D: Float64Array, strideD: number, Z: Float64Array, strideZ: number, DELTA: Float64Array, strideDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix using alternative indexing semantics.
 	*
 	* @param i - `i`
 	* @param d - `d`
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.
 */
 declare var dlasd5: Routine;
 

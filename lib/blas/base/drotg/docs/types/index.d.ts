@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Constructs a Givens plane rotation.
 	*
 	* @param ab - `ab`
 	* @param strideAB - stride of `AB`
@@ -34,7 +34,7 @@ interface Routine {
 	( ab: Float64Array, strideAB: number, cs: Float64Array, strideCS: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Constructs a Givens plane rotation using alternative indexing semantics.
 	*
 	* @param ab - `ab`
 	* @param strideAB - stride of `AB`
@@ -48,7 +48,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Constructs a Givens plane rotation.
 */
 declare var drotg: Routine;
 

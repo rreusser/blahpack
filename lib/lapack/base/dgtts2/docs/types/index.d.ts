@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves one of the systems of equations A_X = B or A^T_X = B with a.
 	*
 	* @param itrans - `itrans`
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( itrans: number, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves one of the systems of equations A_X = B or A^T_X = B with a using alternative indexing semantics.
 	*
 	* @param itrans - `itrans`
 	* @param N - number of columns
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves one of the systems of equations A_X = B or A^T_X = B with a.
 */
 declare var dgtts2: Routine;
 

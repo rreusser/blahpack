@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -45,7 +45,7 @@ interface Routine {
 	( jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors using alternative indexing semantics.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
 */
 declare var dgeev: Routine;
 

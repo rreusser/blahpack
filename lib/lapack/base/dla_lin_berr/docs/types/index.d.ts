@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes component-wise relative backward error.
 	*
 	* @param N - number of columns
 	* @param nz - `nz`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, nz: number, nrhs: number, res: Float64Array, LDRES: number, ayb: Float64Array, LDAYB: number, berr: Float64Array ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes component-wise relative backward error using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nz - `nz`
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes component-wise relative backward error.
 */
 declare var dla_lin_berr: Routine;
 

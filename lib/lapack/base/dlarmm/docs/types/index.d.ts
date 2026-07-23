@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute a safe BLAS-style constant for scaling matrix norms.
 	*
 	* @param anorm - `anorm`
 	* @param bnorm - `bnorm`
@@ -33,7 +33,7 @@ interface Routine {
 	( anorm: number, bnorm: number, cnorm: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute a safe BLAS-style constant for scaling matrix norms using alternative indexing semantics.
 	*
 	* @param anorm - `anorm`
 	* @param bnorm - `bnorm`
@@ -44,7 +44,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute a safe BLAS-style constant for scaling matrix norms.
 */
 declare var dlarmm: Routine;
 

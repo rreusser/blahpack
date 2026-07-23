@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Equilibrates a complex general M-by-N matrix A using the row and column.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -41,7 +41,7 @@ interface Routine {
 	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): string;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Equilibrates a complex general M-by-N matrix A using the row and column using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Equilibrates a complex general M-by-N matrix A using the row and column.
 */
 declare var zlaqge: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the solution to a real system of linear equations `A * X = B` where `A` is an N-by-N matrix, using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the solution to a real system of linear equations `A * X = B` where `A` is an N-by-N matrix, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the solution to a real system of linear equations `A * X = B` where `A` is an N-by-N matrix, using alternative indexing semantics.
 */
 declare var dgesv: Routine;
 

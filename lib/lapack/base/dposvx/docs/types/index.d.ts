@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Expert driver for solving a real symmetric positive definite system of.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -57,7 +57,7 @@ interface Routine {
 	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, equed: string, s: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): { info: number; equed: number; rcond: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Expert driver for solving a real symmetric positive definite system of using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -102,7 +102,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Expert driver for solving a real symmetric positive definite system of.
 */
 declare var dposvx: Routine;
 

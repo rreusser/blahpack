@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Perform diagonal scaling on a matrix.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, d: Float64Array, X: Float64Array, LDX: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Perform diagonal scaling on a matrix using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Perform diagonal scaling on a matrix.
 */
 declare var dlascl2: Routine;
 

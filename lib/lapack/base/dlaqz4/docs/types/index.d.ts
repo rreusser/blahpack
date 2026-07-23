@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Executes a single multishift QZ sweep on the matrix pencil `(A, B)`.
 	*
 	* @param order - storage layout
 	* @param ilschur - `ilschur`
@@ -63,7 +63,7 @@ interface Routine {
 	( order: Layout, ilschur: number, ilq: number, ilz: number, N: number, ilo: number, ihi: number, nshifts: number, nblockDesired: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, SS: Float64Array, strideSS: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, QC: Float64Array, LDQC: number, ZC: Float64Array, LDZC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Executes a single multishift QZ sweep on the matrix pencil `(A, B)` using alternative indexing semantics.
 	*
 	* @param ilschur - `ilschur`
 	* @param ilq - `ilq`
@@ -115,7 +115,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Executes a single multishift QZ sweep on the matrix pencil `(A, B)`.
 */
 declare var dlaqz4: Routine;
 

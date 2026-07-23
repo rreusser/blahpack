@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD when reducing a real matrix to bidiagonal form `A = Q*B*P^T`.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, vect: string, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD when reducing a real matrix to bidiagonal form `A = Q*B*P^T` using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param M - number of rows
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD when reducing a real matrix to bidiagonal form `A = Q*B*P^T`.
 */
 declare var dorgbr: Routine;
 

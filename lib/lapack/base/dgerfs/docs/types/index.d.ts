@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a system of linear equations and provides.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -55,7 +55,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, work: Float64Array, strideWork: number, iwork: Float64Array, strideIwork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a system of linear equations and provides using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a system of linear equations and provides.
 */
 declare var dgerfs: Routine;
 

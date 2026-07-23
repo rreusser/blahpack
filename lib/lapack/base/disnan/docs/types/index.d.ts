@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Tests whether a double-precision floating-point number is NaN.
 	*
 	* @param din - `din`
 	* @returns result
@@ -31,7 +31,7 @@ interface Routine {
 	( din: number ): boolean;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Tests whether a double-precision floating-point number is NaN using alternative indexing semantics.
 	*
 	* @param din - `din`
 	* @returns result
@@ -40,7 +40,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Tests whether a double-precision floating-point number is NaN.
 */
 declare var disnan: Routine;
 

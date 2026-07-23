@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Scans a complex matrix for its last non-zero row.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -39,7 +39,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Scans a complex matrix for its last non-zero row using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Scans a complex matrix for its last non-zero row.
 */
 declare var ilazlr: Routine;
 

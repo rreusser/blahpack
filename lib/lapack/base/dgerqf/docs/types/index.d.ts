@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an RQ factorization of a real M-by-N matrix A = R * Q.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an RQ factorization of a real M-by-N matrix A = R * Q using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an RQ factorization of a real M-by-N matrix A = R * Q.
 */
 declare var dgerqf: Routine;
 

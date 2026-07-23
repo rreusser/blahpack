@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a pair of real matrices (A, B) to generalized upper Hessenberg.
 	*
 	* @param order - storage layout
 	* @param compq - `compq`
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, compq: string, compz: string, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a pair of real matrices (A, B) to generalized upper Hessenberg using alternative indexing semantics.
 	*
 	* @param compq - `compq`
 	* @param compz - `compz`
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a pair of real matrices (A, B) to generalized upper Hessenberg.
 */
 declare var dgghrd: Routine;
 

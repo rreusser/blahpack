@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes row and column scalings to equilibrate a complex Hermitian positive definite band matrix and reduce its condition number.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -41,7 +41,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, s: Float64Array, strideS: number ): { info: number; scond: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes row and column scalings to equilibrate a complex Hermitian positive definite band matrix and reduce its condition number using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes row and column scalings to equilibrate a complex Hermitian positive definite band matrix and reduce its condition number.
 */
 declare var zpbequ: Routine;
 

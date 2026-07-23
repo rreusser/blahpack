@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Merge two sets of singular values in bidiagonal SVD divide and conquer.
 	*
 	* @param order - storage layout
 	* @param NL - `NL`
@@ -57,7 +57,7 @@ interface Routine {
 	( order: Layout, NL: number, NR: number, SQRE: number, K: number, D: Float64Array, Z: Float64Array, ALPHA: number, BETA: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, DSIGMA: Float64Array, U2: Float64Array, LDU2: number, VT2: Float64Array, LDVT2: number, IDXP: Int32Array, IDX: Int32Array, IDXC: Int32Array, IDXQ: Int32Array, COLTYP: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Merge two sets of singular values in bidiagonal SVD divide and conquer using alternative indexing semantics.
 	*
 	* @param nl - `nl`
 	* @param nr - `nr`
@@ -111,7 +111,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Merge two sets of singular values in bidiagonal SVD divide and conquer.
 */
 declare var dlasd2: Routine;
 

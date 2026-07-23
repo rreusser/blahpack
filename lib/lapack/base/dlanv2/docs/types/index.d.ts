@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standard form.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -34,7 +34,7 @@ interface Routine {
 	( a: number, b: number, c: number, d: number ): { B: number; C: number; rt1r: number; rt1i: number; rt2r: number; cs: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standard form using alternative indexing semantics.
 	*
 	* @param A - `A`
 	* @param B - `B`
@@ -46,7 +46,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standard form.
 */
 declare var dlanv2: Routine;
 

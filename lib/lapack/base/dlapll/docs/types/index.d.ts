@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Measures the linear dependence of two vectors X and Y by computing the.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, ssmin: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Measures the linear dependence of two vectors X and Y by computing the using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Measures the linear dependence of two vectors X and Y by computing the.
 */
 declare var dlapll: Routine;
 

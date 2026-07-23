@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Refine eigenvalue approximations using bisection given initial intervals.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -49,7 +49,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, E2: number, strideE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, pivmin: number, spdiam: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Refine eigenvalue approximations using bisection given initial intervals using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -82,7 +82,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Refine eigenvalue approximations using bisection given initial intervals.
 */
 declare var dlarrj: Routine;
 

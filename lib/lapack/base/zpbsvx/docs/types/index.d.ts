@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a complex Hermitian positive definite banded system A*X = B, with optional equilibration, condition estimation, and error bounds.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -59,7 +59,7 @@ interface Routine {
 	( fact: string, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, equed: string, S: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a complex Hermitian positive definite banded system A*X = B, with optional equilibration, condition estimation, and error bounds using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -105,7 +105,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a complex Hermitian positive definite banded system A*X = B, with optional equilibration, condition estimation, and error bounds.
 */
 declare var zpbsvx: Routine;
 

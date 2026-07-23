@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -48,7 +48,7 @@ interface Routine {
 	( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
 */
 declare var zlahr2: Routine;
 

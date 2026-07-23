@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of A complex triangular matrix in Rectangular Full Packed format.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,7 +39,7 @@ interface Routine {
 	( transr: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of A complex triangular matrix in Rectangular Full Packed format using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of A complex triangular matrix in Rectangular Full Packed format.
 */
 declare var ztftri: Routine;
 

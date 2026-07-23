@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -62,7 +62,7 @@ interface Routine {
 	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, GERS: Float64Array, strideGERS: number, reltol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, pivmin: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, IBLOCK: Int32Array, strideIBLOCK: number, INDEXW: Float64Array, strideINDEXW: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy using alternative indexing semantics.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -107,7 +107,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 */
 declare var dlarrd: Routine;
 

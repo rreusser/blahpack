@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle, OperationSide, TransposeOperation } from 
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format.
 	*
 	* @param transr - `transr`
 	* @param side - specifies the side of the operation
@@ -45,7 +45,7 @@ interface Routine {
 	( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, B: Float64Array, LDB: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param side - specifies the side of the operation
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format.
 */
 declare var dtfsm: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the solution to a complex system of linear equations `A * X = B`.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the solution to a complex system of linear equations `A * X = B` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the solution to a complex system of linear equations `A * X = B`.
 */
 declare var zppsv: Routine;
 

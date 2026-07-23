@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates a complex unitary matrix Q which is defined as the product of N-1.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates a complex unitary matrix Q which is defined as the product of N-1 using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates a complex unitary matrix Q which is defined as the product of N-1.
 */
 declare var zungtr: Routine;
 

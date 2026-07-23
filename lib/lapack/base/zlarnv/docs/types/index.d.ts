@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns a vector of complex random numbers from a uniform or normal distribution.
 	*
 	* @param idist - `idist`
 	* @param iseed - `iseed`
@@ -36,7 +36,7 @@ interface Routine {
 	( idist: number, iseed: Float64Array, strideISEED: number, N: number, x: number, stride: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns a vector of complex random numbers from a uniform or normal distribution using alternative indexing semantics.
 	*
 	* @param idist - `idist`
 	* @param iseed - `iseed`
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns a vector of complex random numbers from a uniform or normal distribution.
 */
 declare var zlarnv: Routine;
 

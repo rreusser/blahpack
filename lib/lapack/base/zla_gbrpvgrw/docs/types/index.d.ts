@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, N: number, kl: number, ku: number, ncols: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param kl - number of subdiagonals
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix.
 */
 declare var zla_gbrpvgrw: Routine;
 

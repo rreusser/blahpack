@@ -28,7 +28,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x` where `A` is an `N` by `N` upper or lower triangular complex matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x` where `A` is an `N` by `N` upper or lower triangular complex matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x` where `A` is an `N` by `N` upper or lower triangular complex matrix.
 */
 declare var ztrmv: Routine;
 

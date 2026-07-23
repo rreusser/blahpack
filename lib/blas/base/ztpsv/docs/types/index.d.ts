@@ -28,7 +28,7 @@ import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves one of the systems of equations `A*x = b`, `A**T*x = b`, or `A**H*x = b`.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves one of the systems of equations `A*x = b`, `A**T*x = b`, or `A**H*x = b` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves one of the systems of equations `A*x = b`, `A**T*x = b`, or `A**H*x = b`.
 */
 declare var ztpsv: Routine;
 

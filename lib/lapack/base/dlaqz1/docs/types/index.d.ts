@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Sets `v` to a scalar multiple of the first column of the QZ shift product.
 	*
 	* @param order - storage layout
 	* @param A - `A`
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, A: Float64Array, LDA: number, B: Float64Array, LDB: number, sr1: number, sr2: number, si: number, beta1: number, beta2: number, v: Float64Array, strideV: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Sets `v` to a scalar multiple of the first column of the QZ shift product using alternative indexing semantics.
 	*
 	* @param A - `A`
 	* @param strideA1 - stride of `A`
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Sets `v` to a scalar multiple of the first column of the QZ shift product.
 */
 declare var dlaqz1: Routine;
 

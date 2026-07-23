@@ -28,7 +28,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a complex elementary reflector `H`, defined by the `RZ` factorization, to a complex M-by-N matrix `C`, from either the left or the right.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, M: number, N: number, l: number, v: Float64Array, strideV: number, tau: number, offsetTau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a complex elementary reflector `H`, defined by the `RZ` factorization, to a complex M-by-N matrix `C`, from either the left or the right using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param M - number of rows
@@ -72,7 +72,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a complex elementary reflector `H`, defined by the `RZ` factorization, to a complex M-by-N matrix `C`, from either the left or the right.
 */
 declare var zlarz: Routine;
 

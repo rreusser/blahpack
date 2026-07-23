@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a real Householder block reflector to a triangular-pentagonal matrix.
 	*
 	* @param order - storage layout
 	* @param ident - `ident`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, ident: number, M: number, N: number, K: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, LDWORK: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a real Householder block reflector to a triangular-pentagonal matrix using alternative indexing semantics.
 	*
 	* @param ident - `ident`
 	* @param M - number of rows
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a real Householder block reflector to a triangular-pentagonal matrix.
 */
 declare var dlarfb_gett: Routine;
 

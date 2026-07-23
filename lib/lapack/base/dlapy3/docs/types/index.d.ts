@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -33,7 +33,7 @@ interface Routine {
 	( x: number, y: number, z: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow using alternative indexing semantics.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -44,7 +44,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes sqrt(x^2 + y^2 + z^2) safely, avoiding unnecessary overflow.
 */
 declare var dlapy3: Routine;
 

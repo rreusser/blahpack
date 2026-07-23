@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Implements one level of recursion for DLAQR0. It is a complete implementation.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -47,7 +47,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Implements one level of recursion for DLAQR0. It is a complete implementation using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -79,7 +79,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Implements one level of recursion for DLAQR0. It is a complete implementation.
 */
 declare var dlaqr4: Routine;
 

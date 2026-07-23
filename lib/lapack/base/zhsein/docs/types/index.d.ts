@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -61,7 +61,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, eigsrc: number, initv: number, SELECT: Int32Array, strideSELECT: number, N: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, IFAILL: Float64Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Float64Array, strideIFAILR: number, offsetIFAILR: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param eigsrc - `eigsrc`
@@ -105,7 +105,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix.
 */
 declare var zhsein: Routine;
 

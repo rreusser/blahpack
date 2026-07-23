@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the L_D_L^H factorization of a complex Hermitian positive definite tridiagonal matrix.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the L_D_L^H factorization of a complex Hermitian positive definite tridiagonal matrix using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the L_D_L^H factorization of a complex Hermitian positive definite tridiagonal matrix.
 */
 declare var zpttrf: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns the value of the one norm, Frobenius norm, infinity norm, or.
 	*
 	* @param order - storage layout
 	* @param norm - `norm`
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, norm: string, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns the value of the one norm, Frobenius norm, infinity norm, or using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns the value of the one norm, Frobenius norm, infinity norm, or.
 */
 declare var zlanhs: Routine;
 

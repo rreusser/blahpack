@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal of the condition number (in the 1-norm) of a real.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -46,7 +46,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal of the condition number (in the 1-norm) of a real using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal of the condition number (in the 1-norm) of a real.
 */
 declare var dsycon: Routine;
 

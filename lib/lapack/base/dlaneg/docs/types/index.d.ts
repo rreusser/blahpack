@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Sturm count of a symmetric tridiagonal matrix with a shift.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, LLD: Float64Array, strideLLD: number, sigma: number, pivmin: number, r: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Sturm count of a symmetric tridiagonal matrix with a shift using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -56,7 +56,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Sturm count of a symmetric tridiagonal matrix with a shift.
 */
 declare var dlaneg: Routine;
 

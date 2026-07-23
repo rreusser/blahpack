@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal condition number of a complex triangular matrix in packed storage.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,7 +42,7 @@ interface Routine {
 	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, RCOND: number, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal condition number of a complex triangular matrix in packed storage using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal condition number of a complex triangular matrix in packed storage.
 */
 declare var ztpcon: Routine;
 

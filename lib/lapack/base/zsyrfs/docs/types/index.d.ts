@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a complex system of linear equations with a.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -55,7 +55,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a complex system of linear equations with a using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a complex system of linear equations with a.
 */
 declare var zsyrfs: Routine;
 

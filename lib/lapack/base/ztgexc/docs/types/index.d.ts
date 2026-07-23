@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reorders the generalized Schur decomposition of a complex matrix pair.
 	*
 	* @param order - storage layout
 	* @param wantq - `wantq`
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, ifst: number, ilst: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reorders the generalized Schur decomposition of a complex matrix pair using alternative indexing semantics.
 	*
 	* @param wantq - `wantq`
 	* @param wantz - `wantz`
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reorders the generalized Schur decomposition of a complex matrix pair.
 */
 declare var ztgexc: Routine;
 

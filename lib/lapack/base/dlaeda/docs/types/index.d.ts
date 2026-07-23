@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 	( order: Layout, N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Float64Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Float64Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number, q: Float64Array, strideQ: number, QPTR: Float64Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, ZTEMP: Float64Array, strideZTEMP: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param tlvls - `tlvls`
@@ -104,7 +104,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
 */
 declare var dlaeda: Routine;
 

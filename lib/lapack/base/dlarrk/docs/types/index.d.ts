@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy.
 	*
 	* @param N - number of columns
 	* @param iw - `iw`
@@ -42,7 +42,7 @@ interface Routine {
 	( N: number, iw: number, gl: number, gu: number, d: Float64Array, strideD: number, E2: number, strideE2: number, pivmin: number, reltol: number, w: number, werr: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param iw - `iw`
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy.
 */
 declare var dlarrk: Routine;
 

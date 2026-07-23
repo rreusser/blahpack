@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Updates a sum of squares represented in scaled form.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, x: number, stride: number, scale: number, sumsq: number ): { scl: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Updates a sum of squares represented in scaled form using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -49,7 +49,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Updates a sum of squares represented in scaled form.
 */
 declare var zlassq: Routine;
 

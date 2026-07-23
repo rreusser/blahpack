@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates a real elementary reflector `H` of order `N` with non-negative `beta`.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, tau: number, offsetTau: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates a real elementary reflector `H` of order `N` with non-negative `beta` using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates a real elementary reflector `H` of order `N` with non-negative `beta`.
 */
 declare var dlarfgp: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an LU factorization of the matrix (T - lambda_I), where T is an.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -43,7 +43,7 @@ interface Routine {
 	( N: number, a: Float64Array, strideA: number, lambda: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, tol: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an LU factorization of the matrix (T - lambda_I), where T is an using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an LU factorization of the matrix (T - lambda_I), where T is an.
 */
 declare var dlagtf: Routine;
 

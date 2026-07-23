@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues of a real symmetric tridiagonal matrix using the.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues of a real symmetric tridiagonal matrix using the using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues of a real symmetric tridiagonal matrix using the.
 */
 declare var dsterf: Routine;
 

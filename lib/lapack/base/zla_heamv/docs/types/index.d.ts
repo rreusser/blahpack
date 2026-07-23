@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a matrix-vector product `y := alpha*|A|*|x| + beta*|y|` using a Hermitian indefinite matrix to calculate error bounds.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a matrix-vector product `y := alpha*|A|*|x| + beta*|y|` using a Hermitian indefinite matrix to calculate error bounds using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a matrix-vector product `y := alpha*|A|*|x| + beta*|y|` using a Hermitian indefinite matrix to calculate error bounds.
 */
 declare var zla_heamv: Routine;
 

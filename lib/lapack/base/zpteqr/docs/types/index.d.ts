@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
 	*
 	* @param order - storage layout
 	* @param compz - `compz`
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, compz: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian using alternative indexing semantics.
 	*
 	* @param compz - `compz`
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
 */
 declare var zpteqr: Routine;
 

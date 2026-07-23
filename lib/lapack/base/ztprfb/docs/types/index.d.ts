@@ -28,7 +28,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a complex triangular-pentagonal block reflector to a matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -54,7 +54,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, direct: string, storev: string, M: number, N: number, K: number, l: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, LDWORK: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a complex triangular-pentagonal block reflector to a matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -90,7 +90,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a complex triangular-pentagonal block reflector to a matrix.
 */
 declare var ztprfb: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a modified Givens plane rotation.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, param: Float64Array ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a modified Givens plane rotation using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a modified Givens plane rotation.
 */
 declare var drotm: Routine;
 

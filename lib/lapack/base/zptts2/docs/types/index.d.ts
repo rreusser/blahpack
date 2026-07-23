@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a complex Hermitian positive definite tridiagonal system of the form.
 	*
 	* @param iuplo - `iuplo`
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( iuplo: number, N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a complex Hermitian positive definite tridiagonal system of the form using alternative indexing semantics.
 	*
 	* @param iuplo - `iuplo`
 	* @param N - number of columns
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a complex Hermitian positive definite tridiagonal system of the form.
 */
 declare var zptts2: Routine;
 

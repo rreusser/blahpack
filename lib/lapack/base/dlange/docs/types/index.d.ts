@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the value of the one norm, Frobenius norm, infinity norm, or largest absolute value of a real matrix.
 	*
 	* @param order - storage layout
 	* @param norm - `norm`
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, norm: string, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the value of the one norm, Frobenius norm, infinity norm, or largest absolute value of a real matrix using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param M - number of rows
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the value of the one norm, Frobenius norm, infinity norm, or largest absolute value of a real matrix.
 */
 declare var dlange: Routine;
 

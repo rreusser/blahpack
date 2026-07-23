@@ -27,7 +27,7 @@ import { MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Overwrites a general matrix with a transformation from the orthogonal matrix Q returned by dsptrd.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, AP: Float64Array, TAU: Float64Array, C: Float64Array, LDC: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Overwrites a general matrix with a transformation from the orthogonal matrix Q returned by dsptrd using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Overwrites a general matrix with a transformation from the orthogonal matrix Q returned by dsptrd.
 */
 declare var dopmtr: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -47,7 +47,7 @@ interface Routine {
 	( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, LDAB: number, BB: Float64Array, LDBB: number, X: Float64Array, LDX: number, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -78,7 +78,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form.
 */
 declare var zhbgst: Routine;
 

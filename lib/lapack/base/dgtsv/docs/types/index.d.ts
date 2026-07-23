@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a general real tridiagonal system of linear equations A * X = B.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -40,7 +40,7 @@ interface Routine {
 	( N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a general real tridiagonal system of linear equations A * X = B using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a general real tridiagonal system of linear equations A * X = B.
 */
 declare var dgtsv: Routine;
 

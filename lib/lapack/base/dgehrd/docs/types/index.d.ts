@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduce a general matrix to upper Hessenberg form (blocked).
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduce a general matrix to upper Hessenberg form (blocked) using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduce a general matrix to upper Hessenberg form (blocked).
 */
 declare var dgehrd: Routine;
 

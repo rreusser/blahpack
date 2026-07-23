@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates an M-by-N real orthogonal matrix Q with orthonormal columns.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates an M-by-N real orthogonal matrix Q with orthonormal columns using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates an M-by-N real orthogonal matrix Q with orthonormal columns.
 */
 declare var dorgql: Routine;
 

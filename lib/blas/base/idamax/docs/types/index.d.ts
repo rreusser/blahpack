@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Finds the index of the first element having the maximum absolute value.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Finds the index of the first element having the maximum absolute value using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Finds the index of the first element having the maximum absolute value.
 */
 declare var idamax: Routine;
 

@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns the minimum of two values.
 	*
 	* @param order - storage layout
 	* @param norm - `norm`
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, norm: string, uplo: MatrixTriangle, diag: DiagonalType, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns the minimum of two values using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns the minimum of two values.
 */
 declare var dlantr: Routine;
 

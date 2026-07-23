@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Uses inverse iteration to find a right or left eigenvector of a real upper Hessenberg matrix.
 	*
 	* @param order - storage layout
 	* @param rightv - `rightv`
@@ -53,7 +53,7 @@ interface Routine {
 	( order: Layout, rightv: number, noinit: number, N: number, H: Float64Array, LDH: number, wr: number, wi: number, VR: Float64Array, strideVR: number, VI: Float64Array, strideVI: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number, eps3: number, smlnum: number, bignum: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Uses inverse iteration to find a right or left eigenvector of a real upper Hessenberg matrix using alternative indexing semantics.
 	*
 	* @param rightv - `rightv`
 	* @param noinit - `noinit`
@@ -86,7 +86,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Uses inverse iteration to find a right or left eigenvector of a real upper Hessenberg matrix.
 */
 declare var dlaein: Routine;
 

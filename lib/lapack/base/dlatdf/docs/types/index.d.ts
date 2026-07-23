@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
 	*
 	* @param ijob - `ijob`
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( ijob: number, N: number, Z: Float64Array, LDZ: number, RHS: Float64Array, strideRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): { rdsum: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2 using alternative indexing semantics.
 	*
 	* @param ijob - `ijob`
 	* @param N - number of columns
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
 */
 declare var dlatdf: Routine;
 

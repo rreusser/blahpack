@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -47,7 +47,7 @@ interface Routine {
 	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, W: Float64Array, strideW: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, BWORK: Int32Array, strideBWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues using alternative indexing semantics.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -80,7 +80,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
 */
 declare var zgees: Routine;
 

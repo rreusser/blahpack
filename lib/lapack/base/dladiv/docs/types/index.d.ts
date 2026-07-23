@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs complex division in real arithmetic:.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -35,7 +35,7 @@ interface Routine {
 	( a: number, b: number, c: number, d: number, out: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs complex division in real arithmetic: using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -48,7 +48,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs complex division in real arithmetic:.
 */
 declare var dladiv: Routine;
 

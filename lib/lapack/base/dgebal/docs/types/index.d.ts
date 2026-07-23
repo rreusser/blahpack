@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Balances a general real matrix A.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -36,7 +36,7 @@ interface Routine {
 	( job: string, N: number, A: Float64Array, LDA: number, SCALE: Float64Array, strideSCALE: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Balances a general real matrix A using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Balances a general real matrix A.
 */
 declare var dgebal: Routine;
 

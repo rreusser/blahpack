@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Factors the M-by-(M+l) real upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of orthogonal transformations.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Factors the M-by-(M+l) real upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of orthogonal transformations using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Factors the M-by-(M+l) real upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of orthogonal transformations.
 */
 declare var dlatrz: Routine;
 

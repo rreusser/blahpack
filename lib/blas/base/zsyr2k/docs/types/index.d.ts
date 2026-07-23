@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices.
 */
 declare var zsyr2k: Routine;
 

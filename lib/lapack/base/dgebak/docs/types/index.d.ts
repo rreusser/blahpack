@@ -27,7 +27,7 @@ import { OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Back-transforms eigenvectors after balancing by dgebal.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -44,7 +44,7 @@ interface Routine {
 	( job: string, side: OperationSide, N: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, M: number, V: Float64Array, LDV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Back-transforms eigenvectors after balancing by dgebal using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Back-transforms eigenvectors after balancing by dgebal.
 */
 declare var dgebak: Routine;
 

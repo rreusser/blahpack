@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvectors of a real symmetric tridiagonal matrix T.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -50,7 +50,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, IFAIL: Float64Array, strideIFAIL: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvectors of a real symmetric tridiagonal matrix T using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -88,7 +88,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvectors of a real symmetric tridiagonal matrix T.
 */
 declare var dstein: Routine;
 

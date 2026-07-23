@@ -27,7 +27,7 @@ import { OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Overwrites the general real M-by-N matrix C with.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -48,7 +48,7 @@ interface Routine {
 	( side: OperationSide, trans: TransposeOperation, M: number, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Overwrites the general real M-by-N matrix C with using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -76,7 +76,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Overwrites the general real M-by-N matrix C with.
 */
 declare var dormhr: Routine;
 

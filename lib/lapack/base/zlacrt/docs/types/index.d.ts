@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a plane rotation to two complex vectors where both the cosine and sine of the rotation are complex.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -41,7 +41,7 @@ interface Routine {
 	( N: number, cx: number, strideX: number, cy: number, strideY: number, c: number, s: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a plane rotation to two complex vectors where both the cosine and sine of the rotation are complex using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a plane rotation to two complex vectors where both the cosine and sine of the rotation are complex.
 */
 declare var zlacrt: Routine;
 

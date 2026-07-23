@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates the complex unitary matrix Q which is defined as the product.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates the complex unitary matrix Q which is defined as the product using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates the complex unitary matrix Q which is defined as the product.
 */
 declare var zunghr: Routine;
 

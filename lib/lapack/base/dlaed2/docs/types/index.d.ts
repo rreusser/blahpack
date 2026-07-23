@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem.
 	*
 	* @param N - number of columns
 	* @param n1 - `n1`
@@ -45,7 +45,7 @@ interface Routine {
 	( N: number, n1: number, d: Float64Array, Q: Float64Array, LDQ: number, INDXQ: Float64Array, rho: number, z: Float64Array, DLAMBDA: Float64Array, w: Float64Array, Q2: Float64Array, INDX: Float64Array, INDXC: Float64Array, INDXP: Float64Array, COLTYP: Float64Array ): { info: number; K: number; rho: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param n1 - `n1`
@@ -90,7 +90,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem.
 */
 declare var dlaed2: Routine;
 

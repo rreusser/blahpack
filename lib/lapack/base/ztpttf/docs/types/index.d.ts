@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Copy a triangular matrix from standard packed format (TP) to rectangular full packed format (RFP), complex version.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,7 +39,7 @@ interface Routine {
 	( transr: string, uplo: MatrixTriangle, N: number, AP: Float64Array, ARF: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Copy a triangular matrix from standard packed format (TP) to rectangular full packed format (RFP), complex version using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -56,7 +56,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Copy a triangular matrix from standard packed format (TP) to rectangular full packed format (RFP), complex version.
 */
 declare var ztpttf: Routine;
 

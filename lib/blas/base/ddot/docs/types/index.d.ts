@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the dot product of two double-precision floating-point vectors.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the dot product of two double-precision floating-point vectors using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the dot product of two double-precision floating-point vectors.
 */
 declare var ddot: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Form the triangular factor T of a complex block reflector H of order N.
 	*
 	* @param order - storage layout
 	* @param direct - `direct`
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, direct: string, storev: string, N: number, K: number, V: Float64Array, LDV: number, TAU: Float64Array, strideTAU: number, T: Float64Array, LDT: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Form the triangular factor T of a complex block reflector H of order N using alternative indexing semantics.
 	*
 	* @param direct - `direct`
 	* @param storev - `storev`
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Form the triangular factor T of a complex block reflector H of order N.
 */
 declare var zlarft: Routine;
 

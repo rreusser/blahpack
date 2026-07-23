@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs aggressive early deflation on an upper Hessenberg matrix.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -56,7 +56,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, V: Float64Array, LDV: number, nh: number, T: Float64Array, LDT: number, nv: number, WV: Float64Array, LDWV: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs aggressive early deflation on an upper Hessenberg matrix using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -103,7 +103,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs aggressive early deflation on an upper Hessenberg matrix.
 */
 declare var dlaqr3: Routine;
 

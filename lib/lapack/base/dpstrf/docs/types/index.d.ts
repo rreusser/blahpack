@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Cholesky factorization with complete pivoting of a real symmetric positive semi-definite matrix (blocked algorithm).
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, PIV: Float64Array, RANK: number, tol: number, WORK: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Cholesky factorization with complete pivoting of a real symmetric positive semi-definite matrix (blocked algorithm) using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Cholesky factorization with complete pivoting of a real symmetric positive semi-definite matrix (blocked algorithm).
 */
 declare var dpstrf: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes selected eigenvalues and, optionally, eigenvectors of a real generalized symmetric-definite eigenproblem in packed storage.
 	*
 	* @param order - storage layout
 	* @param itype - `itype`
@@ -54,7 +54,7 @@ interface Routine {
 	( order: Layout, itype: number, jobz: string, range: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array, IWORK: Int32Array, IFAIL: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes selected eigenvalues and, optionally, eigenvectors of a real generalized symmetric-definite eigenproblem in packed storage using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -95,7 +95,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes selected eigenvalues and, optionally, eigenvectors of a real generalized symmetric-definite eigenproblem in packed storage.
 */
 declare var dspgvx: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues of a complex upper Hessenberg matrix H, and.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -43,7 +43,7 @@ interface Routine {
 	( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues of a complex upper Hessenberg matrix H, and using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues of a complex upper Hessenberg matrix H, and.
 */
 declare var zhseqr: Routine;
 

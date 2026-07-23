@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all the eigenvalues, and optionally, the eigenvectors of a complex.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -48,7 +48,7 @@ interface Routine {
 	( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all the eigenvalues, and optionally, the eigenvectors of a complex using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all the eigenvalues, and optionally, the eigenvectors of a complex.
 */
 declare var zhegv: Routine;
 

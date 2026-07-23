@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a partial factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method, producing `_rk` format output.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, e: Float64Array, IPIV: Int32Array, W: Float64Array, LDW: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a partial factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method, producing `_rk` format output using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a partial factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method, producing `_rk` format output.
 */
 declare var zlahef_rk: Routine;
 

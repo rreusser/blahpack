@@ -28,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a complex Householder block reflector `H^H` from the left to a complex `(K+M)`-by-`N` triangular-pentagonal matrix.
 	*
 	* @param order - storage layout
 	* @param ident - `ident`
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, ident: number, M: number, N: number, K: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, LDWORK: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a complex Householder block reflector `H^H` from the left to a complex `(K+M)`-by-`N` triangular-pentagonal matrix using alternative indexing semantics.
 	*
 	* @param ident - `ident`
 	* @param M - number of rows
@@ -76,7 +76,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a complex Householder block reflector `H^H` from the left to a complex `(K+M)`-by-`N` triangular-pentagonal matrix.
 */
 declare var zlarfb_gett: Routine;
 

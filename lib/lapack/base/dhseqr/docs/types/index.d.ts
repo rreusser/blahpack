@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues of a real upper Hessenberg matrix H, and.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -45,7 +45,7 @@ interface Routine {
 	( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, Z: Float64Array, LDZ: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues of a real upper Hessenberg matrix H, and using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues of a real upper Hessenberg matrix H, and.
 */
 declare var dhseqr: Routine;
 

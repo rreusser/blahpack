@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the 1-norm of a square matrix using reverse communication.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -41,7 +41,7 @@ interface Routine {
 	( N: number, v: Float64Array, strideV: number, x: Float64Array, strideX: number, ISGN: Float64Array, strideISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the 1-norm of a square matrix using reverse communication using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the 1-norm of a square matrix using reverse communication.
 */
 declare var dlacn2: Routine;
 

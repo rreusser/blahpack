@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution using extra-precise iterative refinement for Hermitian indefinite matrices.
 	*
 	* @param order - storage layout
 	* @param precType - `precType`
@@ -65,7 +65,7 @@ interface Routine {
 	( order: Layout, precType: number, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, colequ: number, c: Float64Array, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, berrOut: number, nNorms: number, errBndsNorm: number, ldErrBndsNorm: number, errBndsComp: number, ldErrBndsComp: number, RES: Float64Array, AYB: Float64Array, DY: Float64Array, yTail: number, rcond: number, ithresh: number, rthresh: number, dzUb: number, ignoreCwise: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution using extra-precise iterative refinement for Hermitian indefinite matrices using alternative indexing semantics.
 	*
 	* @param precType - `precType`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -129,7 +129,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution using extra-precise iterative refinement for Hermitian indefinite matrices.
 */
 declare var zla_herfsx_extended: Routine;
 

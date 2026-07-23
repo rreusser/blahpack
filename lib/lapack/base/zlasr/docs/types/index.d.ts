@@ -28,7 +28,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a sequence of real plane rotations to a complex general matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number, A: Float64Array, LDA: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a sequence of real plane rotations to a complex general matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param pivot - `pivot`
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a sequence of real plane rotations to a complex general matrix.
 */
 declare var zlasr: Routine;
 

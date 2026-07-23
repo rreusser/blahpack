@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1: |re(z)| + |im(z)|.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array, LDA: number, RCOND: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1: |re(z)| + |im(z)|.
 */
 declare var ztrcon: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal of the condition number of a complex general.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -46,7 +46,7 @@ interface Routine {
 	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal of the condition number of a complex general using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -76,7 +76,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal of the condition number of a complex general.
 */
 declare var zgtcon: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a real symmetric positive definite.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -50,7 +50,7 @@ interface Routine {
 	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, DF: Float64Array, strideDF: number, EF: Float64Array, strideEF: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a real symmetric positive definite using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -89,7 +89,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a real symmetric positive definite.
 */
 declare var dptrfs: Routine;
 

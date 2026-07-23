@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solve a triangular system of equations with a triangular matrix stored in packed format.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, AP: Float64Array, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solve a triangular system of equations with a triangular matrix stored in packed format using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solve a triangular system of equations with a triangular matrix stored in packed format.
 */
 declare var dtptrs: Routine;
 

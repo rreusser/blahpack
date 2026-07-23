@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the sum of absolute values of a double-precision floating-point vector.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, x: number, stride: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the sum of absolute values of a double-precision floating-point vector using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the sum of absolute values of a double-precision floating-point vector.
 */
 declare var dasum: Routine;
 

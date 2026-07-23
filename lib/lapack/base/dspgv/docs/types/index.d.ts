@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues and, optionally, the eigenvectors of a real.
 	*
 	* @param order - storage layout
 	* @param itype - `itype`
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, itype: number, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues and, optionally, the eigenvectors of a real using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues and, optionally, the eigenvectors of a real.
 */
 declare var dspgv: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the Skeel condition number for a general matrix.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -52,7 +52,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the Skeel condition number for a general matrix using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -83,7 +83,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the Skeel condition number for a general matrix.
 */
 declare var dla_gercond: Routine;
 

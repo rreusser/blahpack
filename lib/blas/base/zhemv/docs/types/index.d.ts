@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the matrix-vector operation `y = alpha*A*x + beta*y` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` and `beta` are complex scalars.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the matrix-vector operation `y = alpha*A*x + beta*y` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` and `beta` are complex scalars using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the matrix-vector operation `y = alpha*A*x + beta*y` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` and `beta` are complex scalars.
 */
 declare var zhemv: Routine;
 

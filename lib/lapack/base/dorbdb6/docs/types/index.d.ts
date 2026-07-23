@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Orthogonalizes the column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`.
 	*
 	* @param order - storage layout
 	* @param m1 - `m1`
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, m1: number, m2: number, N: number, X1: number, strideX1: number, X2: number, strideX2: number, Q1: Float64Array, LDQ1: number, Q2: Float64Array, LDQ2: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Orthogonalizes the column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]` using alternative indexing semantics.
 	*
 	* @param m1 - `m1`
 	* @param m2 - `m2`
@@ -76,7 +76,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Orthogonalizes the column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`.
 */
 declare var dorbdb6: Routine;
 

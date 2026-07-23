@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Rearrange columns of a complex matrix as specified by a permutation vector.
 	*
 	* @param forwrd - `forwrd`
 	* @param M - number of rows
@@ -37,7 +37,7 @@ interface Routine {
 	( forwrd: boolean, M: number, N: number, X: Float64Array, LDX: number, k: Float64Array, strideK: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Rearrange columns of a complex matrix as specified by a permutation vector using alternative indexing semantics.
 	*
 	* @param forwrd - `forwrd`
 	* @param M - number of rows
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Rearrange columns of a complex matrix as specified by a permutation vector.
 */
 declare var zlapmt: Routine;
 

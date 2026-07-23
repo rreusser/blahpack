@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an approximation TAU to the smallest eigenvalue using values of d.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -45,7 +45,7 @@ interface Routine {
 	( i0: number, n0: number, z: number, stride: number, pp: number, n0in: number, dmin: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, tau: number, ttype: number, g: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an approximation TAU to the smallest eigenvalue using values of d using alternative indexing semantics.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an approximation TAU to the smallest eigenvalue using values of d.
 */
 declare var dlasq4: Routine;
 

@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a triangular banded system with scaling to prevent overflow.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -47,7 +47,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, kd: number, AB: Float64Array, LDAB: number, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a triangular banded system with scaling to prevent overflow using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -72,7 +72,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a triangular banded system with scaling to prevent overflow.
 */
 declare var dlatbs: Routine;
 

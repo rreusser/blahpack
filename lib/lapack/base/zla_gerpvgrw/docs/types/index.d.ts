@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general matrix.
 	*
 	* @param N - number of columns
 	* @param ncols - `ncols`
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, ncols: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general matrix using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ncols - `ncols`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general matrix.
 */
 declare var zla_gerpvgrw: Routine;
 

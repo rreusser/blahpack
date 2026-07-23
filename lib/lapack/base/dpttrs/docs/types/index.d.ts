@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a real symmetric positive definite tridiagonal system A_X = B.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a real symmetric positive definite tridiagonal system A_X = B using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a real symmetric positive definite tridiagonal system A_X = B.
 */
 declare var dpttrs: Routine;
 

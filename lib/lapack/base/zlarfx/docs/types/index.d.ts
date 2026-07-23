@@ -27,7 +27,7 @@ import { OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies an elementary reflector H to a complex M-by-N matrix C, from either the left or the right.
 	*
 	* @param side - specifies the side of the operation
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( side: OperationSide, M: number, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies an elementary reflector H to a complex M-by-N matrix C, from either the left or the right using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param M - number of rows
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies an elementary reflector H to a complex M-by-N matrix C, from either the left or the right.
 */
 declare var zlarfx: Routine;
 

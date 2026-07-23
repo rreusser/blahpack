@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Copies a complex triangular matrix from full format (TR) to standard packed format (TP).
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AP: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Copies a complex triangular matrix from full format (TR) to standard packed format (TP) using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Copies a complex triangular matrix from full format (TR) to standard packed format (TP).
 */
 declare var ztrttp: Routine;
 

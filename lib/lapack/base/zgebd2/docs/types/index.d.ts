@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -49,7 +49,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -78,7 +78,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
 */
 declare var zgebd2: Routine;
 

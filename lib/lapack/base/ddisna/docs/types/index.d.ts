@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix.
 	*
 	* @param job - `job`
 	* @param M - number of rows
@@ -37,7 +37,7 @@ interface Routine {
 	( job: string, M: number, N: number, d: Float64Array, strideD: number, SEP: Float64Array, strideSEP: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param M - number of rows
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix.
 */
 declare var ddisna: Routine;
 

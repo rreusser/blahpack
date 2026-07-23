@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Uses the LU factorization to compute the solution to a complex system of.
 	*
 	* @param fact - `fact`
 	* @param trans - specifies whether the matrix should be transposed
@@ -67,7 +67,7 @@ interface Routine {
 	( fact: string, trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DLF: Float64Array, strideDLF: number, DF: Float64Array, strideDF: number, DUF: Float64Array, strideDUF: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Uses the LU factorization to compute the solution to a complex system of using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param trans - specifies whether the matrix should be transposed
@@ -124,7 +124,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Uses the LU factorization to compute the solution to a complex system of.
 */
 declare var zgtsvx: Routine;
 

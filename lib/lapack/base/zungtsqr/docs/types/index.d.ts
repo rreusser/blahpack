@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-Skinny QR factorization (output of `zlatsqr`).
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-Skinny QR factorization (output of `zlatsqr`) using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-Skinny QR factorization (output of `zlatsqr`).
 */
 declare var zungtsqr: Routine;
 

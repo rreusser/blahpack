@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Factorizes a Hermitian matrix A using the bounded Bunch-Kaufman (rook) diagonal pivoting method (_rk format).
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Factorizes a Hermitian matrix A using the bounded Bunch-Kaufman (rook) diagonal pivoting method (_rk format) using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Factorizes a Hermitian matrix A using the bounded Bunch-Kaufman (rook) diagonal pivoting method (_rk format).
 */
 declare var zhetf2_rk: Routine;
 

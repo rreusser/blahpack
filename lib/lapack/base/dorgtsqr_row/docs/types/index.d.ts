@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates an M-by-N real matrix Q with orthonormal columns from the output of DLATSQR using a row-block (GETT) sweep.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates an M-by-N real matrix Q with orthonormal columns from the output of DLATSQR using a row-block (GETT) sweep using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates an M-by-N real matrix Q with orthonormal columns from the output of DLATSQR using a row-block (GETT) sweep.
 */
 declare var dorgtsqr_row: Routine;
 

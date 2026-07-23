@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Finds a new relatively robust representation (RRR) for a tridiagonal cluster.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -56,7 +56,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, ld: Float64Array, strideLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, wgap: Float64Array, strideWGAP: number, werr: Float64Array, strideWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, dplus: Float64Array, strideDPLUS: number, lplus: Float64Array, strideLPLUS: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Finds a new relatively robust representation (RRR) for a tridiagonal cluster using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -99,7 +99,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Finds a new relatively robust representation (RRR) for a tridiagonal cluster.
 */
 declare var dlarrf: Routine;
 

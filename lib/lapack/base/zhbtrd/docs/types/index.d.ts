@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, vect: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, d: Float64Array, e: Float64Array, Q: Float64Array, LDQ: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation.
 */
 declare var zhbtrd: Routine;
 

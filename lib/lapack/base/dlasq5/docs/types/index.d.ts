@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes one dqds transform in ping-pong form with a shift.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -39,7 +39,7 @@ interface Routine {
 	( i0: number, n0: number, z: number, stride: number, pp: number, tau: number, sigma: number, ieee: number, eps: number ): { dmin1: number; dmin2: number; dn: number; dnm1: number; dnm2: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes one dqds transform in ping-pong form with a shift using alternative indexing semantics.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes one dqds transform in ping-pong form with a shift.
 */
 declare var dlasq5: Routine;
 

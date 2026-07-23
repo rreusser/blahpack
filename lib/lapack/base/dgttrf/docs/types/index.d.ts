@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an LU factorization of a real tridiagonal matrix A using.
 	*
 	* @param N - number of columns
 	* @param DL - `DL`
@@ -41,7 +41,7 @@ interface Routine {
 	( N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an LU factorization of a real tridiagonal matrix A using using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param DL - `DL`
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an LU factorization of a real tridiagonal matrix A using.
 */
 declare var dgttrf: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the solution to a complex system of linear equations A * X = B.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the solution to a complex system of linear equations A * X = B using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the solution to a complex system of linear equations A * X = B.
 */
 declare var zgesv: Routine;
 

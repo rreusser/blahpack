@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the sum of the absolute values of the real and imaginary parts of a double-precision complex number.
 	*
 	* @param z - `z`
 	* @returns result
@@ -31,7 +31,7 @@ interface Routine {
 	( z: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the sum of the absolute values of the real and imaginary parts of a double-precision complex number using alternative indexing semantics.
 	*
 	* @param z - `z`
 	* @returns result
@@ -40,7 +40,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the sum of the absolute values of the real and imaginary parts of a double-precision complex number.
 */
 declare var dcabs1: Routine;
 

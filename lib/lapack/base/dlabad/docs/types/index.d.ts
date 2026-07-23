@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Takes the square root of the overflow and underflow thresholds if the.
 	*
 	* @param small - `small`
 	* @param large - `large`
@@ -32,7 +32,7 @@ interface Routine {
 	( small: number, large: number ): { small: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Takes the square root of the overflow and underflow thresholds if the using alternative indexing semantics.
 	*
 	* @param small - `small`
 	* @param large - `large`
@@ -42,7 +42,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Takes the square root of the overflow and underflow thresholds if the.
 */
 declare var dlabad: Routine;
 

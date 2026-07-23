@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a generalized QR factorization of an N-by-M matrix A and an.
 	*
 	* @param N - number of columns
 	* @param M - number of rows
@@ -43,7 +43,7 @@ interface Routine {
 	( N: number, M: number, p: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a generalized QR factorization of an N-by-M matrix A and an using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param M - number of rows
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a generalized QR factorization of an N-by-M matrix A and an.
 */
 declare var dggqrf: Routine;
 

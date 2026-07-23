@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Scale a complex double-precision vector by a double-precision constant.
 	*
 	* @param N - number of columns
 	* @param da - `da`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, da: number, zx: number, strideX: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Scale a complex double-precision vector by a double-precision constant using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param da - `da`
@@ -51,7 +51,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Scale a complex double-precision vector by a double-precision constant.
 */
 declare var zdscal: Routine;
 

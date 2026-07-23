@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Overwrites the M-by-N matrix C with Q\*C, Q^H\*C, C\*Q, or C\*Q^H.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Overwrites the M-by-N matrix C with Q\*C, Q^H\*C, C\*Q, or C\*Q^H using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Overwrites the M-by-N matrix C with Q\*C, Q^H\*C, C\*Q, or C\*Q^H.
 */
 declare var zunmql: Routine;
 

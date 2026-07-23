@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a plane rotation.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: number, s: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a plane rotation using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a plane rotation.
 */
 declare var drot: Routine;
 

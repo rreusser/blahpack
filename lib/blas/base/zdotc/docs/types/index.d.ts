@@ -27,7 +27,7 @@ import { Complex128 } from '@stdlib/types/complex';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the conjugate dot product of two complex vectors:.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Complex128;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the conjugate dot product of two complex vectors: using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the conjugate dot product of two complex vectors:.
 */
 declare var zdotc: Routine;
 

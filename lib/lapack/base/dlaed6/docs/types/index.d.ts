@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the positive or negative root (closest to the origin) of the secular equation.
 	*
 	* @param kniter - `kniter`
 	* @param orgati - `orgati`
@@ -37,7 +37,7 @@ interface Routine {
 	( kniter: number, orgati: number, rho: number, d: Float64Array, z: Float64Array, finit: number, tau: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the positive or negative root (closest to the origin) of the secular equation using alternative indexing semantics.
 	*
 	* @param kniter - `kniter`
 	* @param orgati - `orgati`
@@ -56,7 +56,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the positive or negative root (closest to the origin) of the secular equation.
 */
 declare var dlaed6: Routine;
 

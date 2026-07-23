@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Back-transform eigenvectors of a balanced pair of general real matrices.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, M: number, V: Float64Array, LDV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Back-transform eigenvectors of a balanced pair of general real matrices using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Back-transform eigenvectors of a balanced pair of general real matrices.
 */
 declare var zggbak: Routine;
 

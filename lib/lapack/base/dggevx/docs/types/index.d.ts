@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes for a pair of N-by-N real nonsymmetric matrices (A,B) the generalized eigenvalues, and optionally, the left and/or right generalized eigenvectors.
 	*
 	* @param order - storage layout
 	* @param balanc - `balanc`
@@ -65,7 +65,7 @@ interface Routine {
 	( order: Layout, balanc: number, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, RCONDE: Float64Array, strideRCONDE: number, RCONDV: Float64Array, strideRCONDV: number, work: Float64Array, iwork: Float64Array, bwork: Float64Array ): { info: number; ilo: number; ihi: number; abnrm: number; bbnrm: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes for a pair of N-by-N real nonsymmetric matrices (A,B) the generalized eigenvalues, and optionally, the left and/or right generalized eigenvectors using alternative indexing semantics.
 	*
 	* @param balanc - `balanc`
 	* @param jobvl - `jobvl`
@@ -124,7 +124,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes for a pair of N-by-N real nonsymmetric matrices (A,B) the generalized eigenvalues, and optionally, the left and/or right generalized eigenvectors.
 */
 declare var dggevx: Routine;
 

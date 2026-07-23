@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a complex triangular system of the form `A * X = B`, `A**T * X = B`, or `A**H * X = B` where `A` is a triangular matrix of order `N` and `B` is an `N`-by-`NRHS` matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a complex triangular system of the form `A * X = B`, `A**T * X = B`, or `A**H * X = B` where `A` is a triangular matrix of order `N` and `B` is an `N`-by-`NRHS` matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a complex triangular system of the form `A * X = B`, `A**T * X = B`, or `A**H * X = B` where `A` is a triangular matrix of order `N` and `B` is an `N`-by-`NRHS` matrix.
 */
 declare var ztrtrs: Routine;
 

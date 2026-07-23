@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Apply a vector of complex plane rotations with real cosines to two complex vectors.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, s: Float64Array, strideCS: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Apply a vector of complex plane rotations with real cosines to two complex vectors using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Apply a vector of complex plane rotations with real cosines to two complex vectors.
 */
 declare var zlartv: Routine;
 

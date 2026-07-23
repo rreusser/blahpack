@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Accesses a 2D array element (1-based row i, column j).
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -57,7 +57,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, V: Float64Array, LDV: number, U: Float64Array, LDU: number, nv: number, WV: Float64Array, LDWV: number, nh: number, WH: Float64Array, LDWH: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Accesses a 2D array element (1-based row i, column j) using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -106,7 +106,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Accesses a 2D array element (1-based row i, column j).
 */
 declare var dlaqr5: Routine;
 

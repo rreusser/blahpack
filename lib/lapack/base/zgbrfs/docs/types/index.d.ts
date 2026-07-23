@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a complex system of linear equations and provides error bounds and backward error estimates for the solution.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -52,7 +52,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a complex system of linear equations and provides error bounds and backward error estimates for the solution using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -96,7 +96,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a complex system of linear equations and provides error bounds and backward error estimates for the solution.
 */
 declare var zgbrfs: Routine;
 

@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Adds a complex vector W into a doubled-single accumulation vector (X, Y).
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -41,7 +41,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, w: Float64Array, strideW: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Adds a complex vector W into a doubled-single accumulation vector (X, Y) using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Adds a complex vector W into a doubled-single accumulation vector (X, Y).
 */
 declare var zla_wwaddw: Routine;
 

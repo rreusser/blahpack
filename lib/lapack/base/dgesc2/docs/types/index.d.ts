@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a system of linear equations A _ X = scale _ RHS with a general.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -40,7 +40,7 @@ interface Routine {
 	( N: number, A: Float64Array, LDA: number, RHS: Float64Array, strideRHS: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number, scale: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a system of linear equations A _ X = scale _ RHS with a general using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a system of linear equations A _ X = scale _ RHS with a general.
 */
 declare var dgesc2: Routine;
 

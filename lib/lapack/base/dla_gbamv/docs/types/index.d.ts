@@ -27,7 +27,7 @@ import { Layout, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a general band matrix to calculate error bounds.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, M: number, N: number, kl: number, ku: number, alpha: number, AB: Float64Array, LDAB: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a general band matrix to calculate error bounds using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a general band matrix to calculate error bounds.
 */
 declare var dla_gbamv: Routine;
 

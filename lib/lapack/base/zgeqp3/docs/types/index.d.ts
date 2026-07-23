@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a QR factorization with column pivoting of an M-by-N matrix:.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a QR factorization with column pivoting of an M-by-N matrix: using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a QR factorization with column pivoting of an M-by-N matrix:.
 */
 declare var zgeqp3: Routine;
 

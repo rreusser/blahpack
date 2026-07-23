@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem.
 	*
 	* @param icompq - `icompq`
 	* @param nl - `nl`
@@ -52,7 +52,7 @@ interface Routine {
 	( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, z: Float64Array, ZW: Float64Array, VF: Float64Array, VFW: Float64Array, VL: Float64Array, VLW: Float64Array, alpha: number, beta: number, DSIGMA: Float64Array, IDX: Int32Array, IDXP: Int32Array, IDXQ: Int32Array, PERM: Int32Array, GIVCOL: Int32Array, LDGCOL: number, GIVNUM: Float64Array, LDGNUM: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem using alternative indexing semantics.
 	*
 	* @param icompq - `icompq`
 	* @param nl - `nl`
@@ -110,7 +110,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem.
 */
 declare var dlasd7: Routine;
 

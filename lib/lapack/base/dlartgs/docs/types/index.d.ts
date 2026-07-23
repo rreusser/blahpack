@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -33,7 +33,7 @@ interface Routine {
 	( x: number, y: number, sigma: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem using alternative indexing semantics.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 */
 declare var dlartgs: Routine;
 

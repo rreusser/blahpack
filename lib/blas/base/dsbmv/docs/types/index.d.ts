@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the matrix-vector operation `y := alpha*A*x + beta*y`.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, K: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the matrix-vector operation `y := alpha*A*x + beta*y` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the matrix-vector operation `y := alpha*A*x + beta*y`.
 */
 declare var dsbmv: Routine;
 

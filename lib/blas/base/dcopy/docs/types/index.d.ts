@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Copies a vector x to a vector y.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Copies a vector x to a vector y using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Copies a vector x to a vector y.
 */
 declare var dcopy: Routine;
 

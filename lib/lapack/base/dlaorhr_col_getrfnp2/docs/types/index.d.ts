@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the modified LU factorization without pivoting of a real general M-by-N matrix `A` (recursive kernel).
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the modified LU factorization without pivoting of a real general M-by-N matrix `A` (recursive kernel) using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the modified LU factorization without pivoting of a real general M-by-N matrix `A` (recursive kernel).
 */
 declare var dlaorhr_col_getrfnp2: Routine;
 

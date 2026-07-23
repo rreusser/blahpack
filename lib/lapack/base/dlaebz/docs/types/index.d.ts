@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
 	*
 	* @param ijob - `ijob`
 	* @param nitmax - `nitmax`
@@ -58,7 +58,7 @@ interface Routine {
 	( ijob: number, nitmax: number, N: number, mmax: number, minp: number, nbmin: number, abstol: number, reltol: number, pivmin: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, NVAL: Float64Array, strideNVAL: number, AB: Float64Array, LDAB: number, c: Float64Array, strideC: number, mout: number, NAB: Float64Array, LDNAB: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the number of eigenvalues of a symmetric tridiagonal matrix T using alternative indexing semantics.
 	*
 	* @param ijob - `ijob`
 	* @param nitmax - `nitmax`
@@ -105,7 +105,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
 */
 declare var dlaebz: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal of the condition number of a symmetric positive.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal of the condition number of a symmetric positive using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal of the condition number of a symmetric positive.
 */
 declare var dpocon: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes row and column scalings intended to equilibrate a complex Hermitian positive definite matrix in packed storage and reduce its condition number.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: Float64Array, s: Float64Array ): { info: number; scond: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes row and column scalings intended to equilibrate a complex Hermitian positive definite matrix in packed storage and reduce its condition number using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes row and column scalings intended to equilibrate a complex Hermitian positive definite matrix in packed storage and reduce its condition number.
 */
 declare var zppequ: Routine;
 

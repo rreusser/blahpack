@@ -27,7 +27,7 @@ import { Layout, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a system of linear equations `A * X = B` or `A^T * X = B` with a general N-by-N matrix `A` using the LU factorization computed by dgetrf, using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a system of linear equations `A * X = B` or `A^T * X = B` with a general N-by-N matrix `A` using the LU factorization computed by dgetrf, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a system of linear equations `A * X = B` or `A^T * X = B` with a general N-by-N matrix `A` using the LU factorization computed by dgetrf, using alternative indexing semantics.
 */
 declare var dgetrs: Routine;
 

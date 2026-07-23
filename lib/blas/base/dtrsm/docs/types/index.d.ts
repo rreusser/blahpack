@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, OperationSide, TransposeOperation
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves one of the matrix equations op(A)_X = alpha_B or X_op(A) = alpha_B, where A is a triangular matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves one of the matrix equations op(A)_X = alpha_B or X_op(A) = alpha_B, where A is a triangular matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves one of the matrix equations op(A)_X = alpha_B or X_op(A) = alpha_B, where A is a triangular matrix.
 */
 declare var dtrsm: Routine;
 

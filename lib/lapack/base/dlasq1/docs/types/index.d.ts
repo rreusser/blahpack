@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all the singular values of a real upper bidiagonal matrix of.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all the singular values of a real upper bidiagonal matrix of using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all the singular values of a real upper bidiagonal matrix of.
 */
 declare var dlasq1: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reconstructs the Householder vectors and block reflectors of a compact-WY TSQR factorization.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, d: Float64Array, strideD: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reconstructs the Householder vectors and block reflectors of a compact-WY TSQR factorization using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reconstructs the Householder vectors and block reflectors of a compact-WY TSQR factorization.
 */
 declare var dorhr_col: Routine;
 

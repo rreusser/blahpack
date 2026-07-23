@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real symmetric matrix stored in Rectangular Full Packed (RFP) format.
 	*
 	* @param norm - `norm`
 	* @param transr - `transr`
@@ -40,7 +40,7 @@ interface Routine {
 	( norm: string, transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real symmetric matrix stored in Rectangular Full Packed (RFP) format using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param transr - `transr`
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real symmetric matrix stored in Rectangular Full Packed (RFP) format.
 */
 declare var dlansf: Routine;
 

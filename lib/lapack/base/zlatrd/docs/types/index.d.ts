@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, TAU: Float64Array, strideTAU: number, W: Float64Array, LDW: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces NB rows and columns of a complex Hermitian matrix A to Hermitian.
 */
 declare var zlatrd: Routine;
 

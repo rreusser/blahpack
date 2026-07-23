@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates a vector of complex plane rotations with real cosines and complex sines.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, strideC: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates a vector of complex plane rotations with real cosines and complex sines using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates a vector of complex plane rotations with real cosines and complex sines.
 */
 declare var zlargv: Routine;
 

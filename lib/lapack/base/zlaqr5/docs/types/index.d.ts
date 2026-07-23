@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Complex multi-shift QR sweep.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -55,7 +55,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, s: Float64Array, strideS: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, V: Float64Array, LDV: number, U: Float64Array, LDU: number, nv: number, WV: Float64Array, LDWV: number, nh: number, WH: Float64Array, LDWH: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Complex multi-shift QR sweep using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -101,7 +101,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Complex multi-shift QR sweep.
 */
 declare var zlaqr5: Routine;
 

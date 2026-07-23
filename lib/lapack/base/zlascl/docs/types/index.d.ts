@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow.
 	*
 	* @param order - storage layout
 	* @param type - `type`
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, type: number, kl: number, ku: number, cfrom: number, cto: number, M: number, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow using alternative indexing semantics.
 	*
 	* @param type - `type`
 	* @param kl - number of subdiagonals
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a complex matrix by a real scalar CTO/CFROM, handling overflow.
 */
 declare var zlascl: Routine;
 

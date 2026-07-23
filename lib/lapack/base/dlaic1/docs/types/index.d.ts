@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies one step of incremental condition estimation.
 	*
 	* @param job - `job`
 	* @param J - `J`
@@ -39,7 +39,7 @@ interface Routine {
 	( job: string, J: number, x: Float64Array, strideX: number, sest: number, w: Float64Array, strideW: number, gamma: number, out: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies one step of incremental condition estimation using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param J - `J`
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies one step of incremental condition estimation.
 */
 declare var dlaic1: Routine;
 

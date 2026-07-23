@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies one step of incremental condition estimation for complex matrices.
 	*
 	* @param job - `job`
 	* @param j - `j`
@@ -41,7 +41,7 @@ interface Routine {
 	( job: string, j: number, x: Float64Array, strideX: number, sest: number, w: Float64Array, strideW: number, gamma: number, sestpr: number, s: number, c: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies one step of incremental condition estimation for complex matrices using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param j - `j`
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies one step of incremental condition estimation for complex matrices.
 */
 declare var zlaic1: Routine;
 

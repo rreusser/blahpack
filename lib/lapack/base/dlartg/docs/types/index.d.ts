@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Generates a plane rotation so that:.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -32,7 +32,7 @@ interface Routine {
 	( f: number, g: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Generates a plane rotation so that: using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -43,7 +43,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Generates a plane rotation so that:.
 */
 declare var dlartg: Routine;
 

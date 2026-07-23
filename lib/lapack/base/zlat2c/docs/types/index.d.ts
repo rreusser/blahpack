@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Converts a double-complex triangular matrix to a single-complex triangular matrix with overflow checking.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, SA: Float64Array, LDSA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Converts a double-complex triangular matrix to a single-complex triangular matrix with overflow checking using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Converts a double-complex triangular matrix to a single-complex triangular matrix with overflow checking.
 */
 declare var zlat2c: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a complex general band matrix to real upper bidiagonal form.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -57,7 +57,7 @@ interface Routine {
 	( order: Layout, vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, LDAB: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Q: Float64Array, LDQ: number, PT: Float64Array, LDPT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a complex general band matrix to real upper bidiagonal form using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param M - number of rows
@@ -99,7 +99,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a complex general band matrix to real upper bidiagonal form.
 */
 declare var zgbbrd: Routine;
 

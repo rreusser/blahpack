@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a QL factorization of a real general matrix.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a QL factorization of a real general matrix using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a QL factorization of a real general matrix.
 */
 declare var dgeqlf: Routine;
 

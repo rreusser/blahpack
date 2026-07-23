@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves for the N1-by-N2 matrix X in:.
 	*
 	* @param ltranl - `ltranl`
 	* @param ltranr - `ltranr`
@@ -45,7 +45,7 @@ interface Routine {
 	( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, LDTL: number, TR: Float64Array, LDTR: number, B: Float64Array, LDB: number, scale: number, X: Float64Array, LDX: number, xnorm: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves for the N1-by-N2 matrix X in: using alternative indexing semantics.
 	*
 	* @param ltranl - `ltranl`
 	* @param ltranr - `ltranr`
@@ -76,7 +76,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves for the N1-by-N2 matrix X in:.
 */
 declare var dlasy2: Routine;
 

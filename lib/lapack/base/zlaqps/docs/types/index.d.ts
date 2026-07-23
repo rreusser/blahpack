@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a step of QR factorization with column pivoting using a.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -53,7 +53,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, offset: number, nb: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, AUXV: Float64Array, strideAUXV: number, F: Float64Array, LDF: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a step of QR factorization with column pivoting using a using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -88,7 +88,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a step of QR factorization with column pivoting using a.
 */
 declare var zlaqps: Routine;
 

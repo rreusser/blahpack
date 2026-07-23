@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Apply a complex block reflector H or its conjugate-transpose H^H to a.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -50,7 +50,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, direct: string, storev: string, M: number, N: number, K: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, LDWORK: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Apply a complex block reflector H or its conjugate-transpose H^H to a using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -81,7 +81,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Apply a complex block reflector H or its conjugate-transpose H^H to a.
 */
 declare var zlarfb: Routine;
 

@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Conjugate a complex vector in-place.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, x: number, stride: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Conjugate a complex vector in-place using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -49,7 +49,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Conjugate a complex vector in-place.
 */
 declare var zlacgv: Routine;
 

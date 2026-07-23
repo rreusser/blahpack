@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes row and column scalings to equilibrate a real general band matrix.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -40,7 +40,7 @@ interface Routine {
 	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): { info: number; rowcnd: number; colcnd: number; amax: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes row and column scalings to equilibrate a real general band matrix using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes row and column scalings to equilibrate a real general band matrix.
 */
 declare var dgbequ: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute a QL factorization of a complex M-by-N matrix.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute a QL factorization of a complex M-by-N matrix using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute a QL factorization of a complex M-by-N matrix.
 */
 declare var zgeql2: Routine;
 

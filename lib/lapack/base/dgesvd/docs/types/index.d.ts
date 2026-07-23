@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the singular value decomposition (SVD) of a real M-by-N matrix.
 	*
 	* @param order - storage layout
 	* @param jobu - `jobu`
@@ -49,7 +49,7 @@ interface Routine {
 	( order: Layout, jobu: string, jobvt: string, M: number, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the singular value decomposition (SVD) of a real M-by-N matrix using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobvt - `jobvt`
@@ -79,7 +79,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the singular value decomposition (SVD) of a real M-by-N matrix.
 */
 declare var dgesvd: Routine;
 

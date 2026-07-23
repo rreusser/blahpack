@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies the matrix C by Q or P^T (or their transposes), where Q and P^T are the orthogonal matrices determined by DGEBRD.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -49,7 +49,7 @@ interface Routine {
 	( order: Layout, vect: string, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies the matrix C by Q or P^T (or their transposes), where Q and P^T are the orthogonal matrices determined by DGEBRD using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param side - specifies the side of the operation
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies the matrix C by Q or P^T (or their transposes), where Q and P^T are the orthogonal matrices determined by DGEBRD.
 */
 declare var dormbr: Routine;
 

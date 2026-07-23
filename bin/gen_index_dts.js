@@ -80,10 +80,34 @@ function getDescription( content ) {
 	if ( !content ) {
 		return '';
 	}
-	// Extract the first JSDoc description line
-	var m = content.match( /\/\*\*\s*\n\s*\*\s*([^@\n][^\n]+)/ );
-	if ( m ) {
-		return m[ 1 ].trim().replace( /\.$/, '' );
+	// Use the JSDoc block attached to the exported function (the last block
+	// before its declaration), NOT the file's `@license` header block.
+	var name = returnType.exportedName( content );
+	var head = content;
+	if ( name ) {
+		var idx = content.search( new RegExp( 'function\\s+' + name + '\\s*\\(' ) );
+		if ( idx >= 0 ) {
+			head = content.slice( 0, idx );
+		}
+	}
+	var blocks = head.match( /\/\*\*[\s\S]*?\*\//g );
+	if ( !blocks || blocks.length === 0 ) {
+		return '';
+	}
+	var lines = blocks[ blocks.length - 1 ].split( '\n' );
+	var i;
+	var line;
+	for ( i = 0; i < lines.length; i++ ) {
+		// Strip the JSDoc framing (`/**`, ` * `, `*/`).
+		line = lines[ i ].replace( /^\s*\/?\*+\/?/, '' ).trim();
+		if ( !line || line.charAt( 0 ) === '@' ) {
+			continue;
+		}
+		// Skip license-header prose in case a block lacks a real summary.
+		if ( /^(Copyright|Licensed|Derived|See |Unless|WITHOUT|distributed|you may|http)/i.test( line ) ) {
+			continue;
+		}
+		return line.replace( /\.$/, '' );
 	}
 	return '';
 }

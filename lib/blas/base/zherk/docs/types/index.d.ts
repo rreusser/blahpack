@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the Hermitian rank-k update C := alpha_A_A^H + beta_C or C := alpha_A^H_A + beta_C (complex double-precision).
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the Hermitian rank-k update C := alpha_A_A^H + beta_C or C := alpha_A^H_A + beta_C (complex double-precision) using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the Hermitian rank-k update C := alpha_A_A^H + beta_C or C := alpha_A^H_A + beta_C (complex double-precision).
 */
 declare var zherk: Routine;
 

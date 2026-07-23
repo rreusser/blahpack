@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Perform a matrix-vector product of the form C := alpha_A_B + beta*C where A is a complex tridiagonal matrix.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -49,7 +49,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, nrhs: number, alpha: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, X: Float64Array, LDX: number, beta: number, B: Float64Array, LDB: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Perform a matrix-vector product of the form C := alpha_A_B + beta*C where A is a complex tridiagonal matrix using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -79,7 +79,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Perform a matrix-vector product of the form C := alpha_A_B + beta*C where A is a complex tridiagonal matrix.
 */
 declare var zlagtm: Routine;
 

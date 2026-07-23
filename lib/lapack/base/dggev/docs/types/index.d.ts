@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the generalized eigenvalues and, optionally, the left and/or right.
 	*
 	* @param order - storage layout
 	* @param jobvl - `jobvl`
@@ -51,7 +51,7 @@ interface Routine {
 	( order: Layout, jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, ALPHAI: Float64Array, BETA: Float64Array, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the generalized eigenvalues and, optionally, the left and/or right using alternative indexing semantics.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -90,7 +90,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the generalized eigenvalues and, optionally, the left and/or right.
 */
 declare var dggev: Routine;
 

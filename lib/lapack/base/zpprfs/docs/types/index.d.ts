@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a complex system A * X = B where A is Hermitian positive definite in packed storage and provides error bounds.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -47,7 +47,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, AFP: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a complex system A * X = B where A is Hermitian positive definite in packed storage and provides error bounds using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -84,7 +84,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a complex system A * X = B where A is Hermitian positive definite in packed storage and provides error bounds.
 */
 declare var zpprfs: Routine;
 

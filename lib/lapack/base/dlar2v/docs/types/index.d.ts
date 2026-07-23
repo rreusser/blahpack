@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a vector of real plane rotations from both sides to a sequence of 2-by-2 symmetric matrices.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, x: Float64Array, y: Float64Array, z: Float64Array, strideXYZ: number, c: Float64Array, s: Float64Array, strideCS: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a vector of real plane rotations from both sides to a sequence of 2-by-2 symmetric matrices using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a vector of real plane rotations from both sides to a sequence of 2-by-2 symmetric matrices.
 */
 declare var dlar2v: Routine;
 

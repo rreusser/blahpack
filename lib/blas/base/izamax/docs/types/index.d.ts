@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Finds the index of the element having the maximum sum of absolute values of.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, zx: number, strideX: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Finds the index of the element having the maximum sum of absolute values of using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Finds the index of the element having the maximum sum of absolute values of.
 */
 declare var izamax: Routine;
 

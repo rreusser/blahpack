@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution `Y` to a complex general system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds.
 	*
 	* @param order - storage layout
 	* @param prec_type - `prec_type`
@@ -65,7 +65,7 @@ interface Routine {
 	( order: Layout, prec_type: number, trans_type: number, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, colequ: number, c: Float64Array, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, BERR_OUT: Float64Array, n_norms: number, ERRS_N: Float64Array, LDERRS_N: number, ERRS_C: Float64Array, LDERRS_C: number, RES: Float64Array, AYB: Float64Array, DY: Float64Array, Y_TAIL: Float64Array, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution `Y` to a complex general system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds using alternative indexing semantics.
 	*
 	* @param prec_type - `prec_type`
 	* @param trans_type - `trans_type`
@@ -129,7 +129,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution `Y` to a complex general system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds.
 */
 declare var zla_gerfsx_extended: Routine;
 

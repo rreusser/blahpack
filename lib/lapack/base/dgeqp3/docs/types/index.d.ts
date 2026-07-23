@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a QR factorization with column pivoting of a real M-by-N matrix:.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -40,7 +40,7 @@ interface Routine {
 	( M: number, N: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a QR factorization with column pivoting of a real M-by-N matrix: using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a QR factorization with column pivoting of a real M-by-N matrix:.
 */
 declare var dgeqp3: Routine;
 

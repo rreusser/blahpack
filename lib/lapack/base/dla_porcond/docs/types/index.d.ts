@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the Skeel condition number for a symmetric positive-definite matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -49,7 +49,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the Skeel condition number for a symmetric positive-definite matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the Skeel condition number for a symmetric positive-definite matrix.
 */
 declare var dla_porcond: Routine;
 

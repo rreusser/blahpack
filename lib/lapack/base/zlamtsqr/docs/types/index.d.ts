@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the complex unitary matrix from a Tall-Skinny QR factorization (`zlatsqr`).
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -50,7 +50,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the complex unitary matrix from a Tall-Skinny QR factorization (`zlatsqr`) using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -80,7 +80,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the complex unitary matrix from a Tall-Skinny QR factorization (`zlatsqr`).
 */
 declare var zlamtsqr: Routine;
 

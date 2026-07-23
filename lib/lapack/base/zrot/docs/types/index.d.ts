@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a plane rotation, where the cos (C) is real and the sin (S) is.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -41,7 +41,7 @@ interface Routine {
 	( N: number, cx: number, strideX: number, cy: number, strideY: number, c: number, s: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a plane rotation, where the cos (C) is real and the sin (S) is using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a plane rotation, where the cos (C) is real and the sin (S) is.
 */
 declare var zrot: Routine;
 

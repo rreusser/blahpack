@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`, using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, incx: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`, using alternative indexing semantics.
 */
 declare var dlaswp: Routine;
 

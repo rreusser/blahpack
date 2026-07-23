@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a general matrix by a banded orthogonal matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, n1: number, n2: number, Q: Float64Array, LDQ: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a general matrix by a banded orthogonal matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -72,7 +72,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a general matrix by a banded orthogonal matrix.
 */
 declare var dorm22: Routine;
 

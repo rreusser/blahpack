@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a blocked QR factorization of a real `M`-by-`N` matrix `A` using the compact `WY` representation of `Q`.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a blocked QR factorization of a real `M`-by-`N` matrix `A` using the compact `WY` representation of `Q` using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a blocked QR factorization of a real `M`-by-`N` matrix `A` using the compact `WY` representation of `Q`.
 */
 declare var dgeqrt: Routine;
 

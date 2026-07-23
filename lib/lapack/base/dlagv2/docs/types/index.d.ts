@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.
 	*
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
@@ -37,7 +37,7 @@ interface Routine {
 	( A: Float64Array, LDA: number, B: Float64Array, LDB: number, alphar: Float64Array, alphai: Float64Array, beta: Float64Array ): { SNL: number; CSR: number; SNR: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular using alternative indexing semantics.
 	*
 	* @param A - `A`
 	* @param strideA1 - stride of `A`
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.
 */
 declare var dlagv2: Routine;
 

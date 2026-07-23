@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues of a real matrix pair (H,T) where H is upper Hessenberg and T is upper triangular, using the QZ method.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -57,7 +57,7 @@ interface Routine {
 	( order: Layout, job: string, compq: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, T: Float64Array, LDT: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues of a real matrix pair (H,T) where H is upper Hessenberg and T is upper triangular, using the QZ method using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -99,7 +99,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues of a real matrix pair (H,T) where H is upper Hessenberg and T is upper triangular, using the QZ method.
 */
 declare var dhgeqz: Routine;
 

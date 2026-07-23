@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a triangular system of equations with the scale factors set to prevent overflow.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -51,7 +51,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, nrhs: number, A: Float64Array, LDA: number, X: Float64Array, LDX: number, SCALE: Float64Array, strideSCALE: number, CNORM: Float64Array, strideCNORM: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a triangular system of equations with the scale factors set to prevent overflow using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -82,7 +82,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a triangular system of equations with the scale factors set to prevent overflow.
 */
 declare var dlatrs3: Routine;
 

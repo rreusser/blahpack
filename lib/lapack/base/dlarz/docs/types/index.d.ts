@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies an elementary reflector from RZ factorization to a general matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, M: number, N: number, l: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies an elementary reflector from RZ factorization to a general matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param M - number of rows
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies an elementary reflector from RZ factorization to a general matrix.
 */
 declare var dlarz: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -52,7 +52,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param howmny - `howmny`
@@ -86,7 +86,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes some or all of the right and/or left eigenvectors of a complex upper triangular matrix.
 */
 declare var ztrevc: Routine;
 

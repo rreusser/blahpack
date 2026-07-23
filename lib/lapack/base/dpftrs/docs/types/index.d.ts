@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a system of linear equations `A * X = B` with a symmetric positive definite matrix in Rectangular Full Packed format.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,7 +41,7 @@ interface Routine {
 	( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a system of linear equations `A * X = B` with a symmetric positive definite matrix in Rectangular Full Packed format using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a system of linear equations `A * X = B` with a symmetric positive definite matrix in Rectangular Full Packed format.
 */
 declare var dpftrs: Routine;
 

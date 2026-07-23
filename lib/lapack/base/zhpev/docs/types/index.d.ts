@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues and optionally eigenvectors of a complex Hermitian matrix in packed storage.
 	*
 	* @param order - storage layout
 	* @param jobz - `jobz`
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues and optionally eigenvectors of a complex Hermitian matrix in packed storage using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues and optionally eigenvectors of a complex Hermitian matrix in packed storage.
 */
 declare var zhpev: Routine;
 

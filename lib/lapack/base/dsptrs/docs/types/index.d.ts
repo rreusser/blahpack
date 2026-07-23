@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a system of linear equations with a real symmetric matrix in packed storage using the factorization computed by dsptrf.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -41,7 +41,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, IPIV: Int32Array, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a system of linear equations with a real symmetric matrix in packed storage using the factorization computed by dsptrf using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a system of linear equations with a real symmetric matrix in packed storage using the factorization computed by dsptrf.
 */
 declare var dsptrs: Routine;
 

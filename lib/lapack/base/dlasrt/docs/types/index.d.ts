@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Sort an array of doubles in increasing or decreasing order using quicksort.
 	*
 	* @param id - `id`
 	* @param N - number of columns
@@ -34,7 +34,7 @@ interface Routine {
 	( id: number, N: number, d: number, stride: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Sort an array of doubles in increasing or decreasing order using quicksort using alternative indexing semantics.
 	*
 	* @param id - `id`
 	* @param N - number of columns
@@ -47,7 +47,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Sort an array of doubles in increasing or decreasing order using quicksort.
 */
 declare var dlasrt: Routine;
 

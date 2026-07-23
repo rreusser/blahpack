@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the symmetric matrix-matrix operation `C := α*A*B + β*C` or `C := α*B*A + β*C` where α and β are complex scalars, A is a symmetric matrix, and B and C are M-by-N matrices.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the symmetric matrix-matrix operation `C := α*A*B + β*C` or `C := α*B*A + β*C` where α and β are complex scalars, A is a symmetric matrix, and B and C are M-by-N matrices using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the symmetric matrix-matrix operation `C := α*A*B + β*C` or `C := α*B*A + β*C` where α and β are complex scalars, A is a symmetric matrix, and B and C are M-by-N matrices.
 */
 declare var zsymm: Routine;
 

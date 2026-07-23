@@ -27,7 +27,7 @@ import { Layout, OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes some or all of the right and/or left eigenvectors of a pair of real matrices.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -52,7 +52,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, S: Float64Array, LDS: number, P: Float64Array, LDP: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes some or all of the right and/or left eigenvectors of a pair of real matrices using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param howmny - `howmny`
@@ -87,7 +87,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes some or all of the right and/or left eigenvectors of a pair of real matrices.
 */
 declare var dtgevc: Routine;
 

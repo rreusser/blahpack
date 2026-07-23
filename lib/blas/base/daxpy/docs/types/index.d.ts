@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a vector `x` by a constant `alpha` and adds the result to `y`.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a vector `x` by a constant `alpha` and adds the result to `y` using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a vector `x` by a constant `alpha` and adds the result to `y`.
 */
 declare var daxpy: Routine;
 

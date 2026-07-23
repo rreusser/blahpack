@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the value of a matrix norm for a complex triangular or trapezoidal matrix.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,7 +43,7 @@ interface Routine {
 	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the value of a matrix norm for a complex triangular or trapezoidal matrix using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the value of a matrix norm for a complex triangular or trapezoidal matrix.
 */
 declare var zlantr: Routine;
 

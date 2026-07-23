@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a real quasi-triangular system of equations.
 	*
 	* @param order - storage layout
 	* @param ltran - `ltran`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, ltran: number, lreal: number, N: number, T: Float64Array, LDT: number, b: Float64Array, strideB: number, w: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWork: number ): { scale: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a real quasi-triangular system of equations using alternative indexing semantics.
 	*
 	* @param ltran - `ltran`
 	* @param lreal - `lreal`
@@ -72,7 +72,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a real quasi-triangular system of equations.
 */
 declare var dlaqtr: Routine;
 

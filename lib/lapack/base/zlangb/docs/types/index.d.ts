@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns the norm of a complex general band matrix.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( norm: string, N: number, KL: number, KU: number, AB: Float64Array, LDAB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns the norm of a complex general band matrix using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns the norm of a complex general band matrix.
 */
 declare var zlangb: Routine;
 

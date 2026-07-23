@@ -27,7 +27,7 @@ import { MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -47,7 +47,7 @@ interface Routine {
 	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
 */
 declare var dormtr: Routine;
 

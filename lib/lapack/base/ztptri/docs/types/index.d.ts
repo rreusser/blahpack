@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a complex triangular matrix in packed storage.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param diag - specifies whether the matrix is unit triangular
@@ -38,7 +38,7 @@ interface Routine {
 	( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a complex triangular matrix in packed storage using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param diag - specifies whether the matrix is unit triangular
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a complex triangular matrix in packed storage.
 */
 declare var ztptri: Routine;
 

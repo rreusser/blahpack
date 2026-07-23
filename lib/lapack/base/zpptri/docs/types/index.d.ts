@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a complex Hermitian positive definite matrix in packed storage using the Cholesky factorization.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -37,7 +37,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a complex Hermitian positive definite matrix in packed storage using the Cholesky factorization using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a complex Hermitian positive definite matrix in packed storage using the Cholesky factorization.
 */
 declare var zpptri: Routine;
 

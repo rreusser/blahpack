@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a complex vector by the reciprocal of a complex scalar.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, a: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a complex vector by the reciprocal of a complex scalar using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -51,7 +51,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a complex vector by the reciprocal of a complex scalar.
 */
 declare var zrscl: Routine;
 

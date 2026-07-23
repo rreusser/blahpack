@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution using extra-precise iterative refinement for Hermitian positive-definite matrices.
 	*
 	* @param order - storage layout
 	* @param prec_type - `prec_type`
@@ -70,7 +70,7 @@ interface Routine {
 	( order: Layout, prec_type: number, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, colequ: number, c: Float64Array, strideC: number, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, BERR_OUT: Float64Array, strideBERR_OUT: number, n_norms: number, ERR_BNDS_NORM: Float64Array, LDERR_BNDS_NORM: number, ERR_BNDS_COMP: Float64Array, LDERR_BNDS_COMP: number, RES: Float64Array, strideRES: number, AYB: Float64Array, strideAYB: number, DY: Float64Array, strideDY: number, Y_TAIL: Float64Array, strideY_TAIL: number, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution using extra-precise iterative refinement for Hermitian positive-definite matrices using alternative indexing semantics.
 	*
 	* @param prec_type - `prec_type`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -131,7 +131,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution using extra-precise iterative refinement for Hermitian positive-definite matrices.
 */
 declare var zla_porfsx_extended: Routine;
 

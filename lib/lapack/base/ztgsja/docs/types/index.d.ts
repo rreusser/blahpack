@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the generalized singular value decomposition (GSVD) of two complex.
 	*
 	* @param jobu - `jobu`
 	* @param jobv - `jobv`
@@ -54,7 +54,7 @@ interface Routine {
 	( jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, K: number, l: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, ALPHA: Float64Array, BETA: Float64Array, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, WORK: Float64Array, ncycle: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the generalized singular value decomposition (GSVD) of two complex using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobv - `jobv`
@@ -102,7 +102,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the generalized singular value decomposition (GSVD) of two complex.
 */
 declare var ztgsja: Routine;
 

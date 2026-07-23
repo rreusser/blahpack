@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a real symmetric indefinite matrix using the factorization produced by `dsytrf` (dispatches between `dsytri` and `dsytri2x` based on `N`), using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a real symmetric indefinite matrix using the factorization produced by `dsytrf` (dispatches between `dsytri` and `dsytri2x` based on `N`), using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a real symmetric indefinite matrix using the factorization produced by `dsytrf` (dispatches between `dsytri` and `dsytri2x` based on `N`), using alternative indexing semantics.
 */
 declare var dsytri2: Routine;
 

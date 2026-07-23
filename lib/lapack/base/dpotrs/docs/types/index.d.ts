@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a symmetric positive definite system of linear equations `A*X = B` using the Cholesky factorization computed by dpotrf.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a symmetric positive definite system of linear equations `A*X = B` using the Cholesky factorization computed by dpotrf using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a symmetric positive definite system of linear equations `A*X = B` using the Cholesky factorization computed by dpotrf.
 */
 declare var dpotrs: Routine;
 

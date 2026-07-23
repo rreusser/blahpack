@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes eigenvalues and, optionally, the left and/or right eigenvectors of a real N-by-N nonsymmetric matrix A, plus optionally a balancing transformation, reciprocal condition numbers of eigenvalues, and reciprocal condition numbers of right eigenvectors.
 	*
 	* @param balanc - `balanc`
 	* @param jobvl - `jobvl`
@@ -52,7 +52,7 @@ interface Routine {
 	( balanc: number, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, LDA: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, SCALE: Float64Array, RCONDE: Float64Array, RCONDV: Float64Array, work: Float64Array, strideWork: number, iwork: Float64Array, strideIwork: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes eigenvalues and, optionally, the left and/or right eigenvectors of a real N-by-N nonsymmetric matrix A, plus optionally a balancing transformation, reciprocal condition numbers of eigenvalues, and reciprocal condition numbers of right eigenvectors using alternative indexing semantics.
 	*
 	* @param balanc - `balanc`
 	* @param jobvl - `jobvl`
@@ -98,7 +98,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes eigenvalues and, optionally, the left and/or right eigenvectors of a real N-by-N nonsymmetric matrix A, plus optionally a balancing transformation, reciprocal condition numbers of eigenvalues, and reciprocal condition numbers of right eigenvectors.
 */
 declare var dgeevx: Routine;
 

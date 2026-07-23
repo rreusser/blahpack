@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the singular value decomposition of a 2-by-2 triangular matrix:.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -33,7 +33,7 @@ interface Routine {
 	( f: number, g: number, h: number ): { ssmax: number; snr: number; csr: number; snl: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the singular value decomposition of a 2-by-2 triangular matrix: using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -44,7 +44,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the singular value decomposition of a 2-by-2 triangular matrix:.
 */
 declare var dlasv2: Routine;
 

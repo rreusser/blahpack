@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the splitting points with threshold based on the representation.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -42,7 +42,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the splitting points with threshold based on the representation using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the splitting points with threshold based on the representation.
 */
 declare var dlarra: Routine;
 

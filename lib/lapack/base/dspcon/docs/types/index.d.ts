@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal condition number of a real symmetric packed matrix.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array, anorm: number, rcond: number, WORK: Float64Array, IWORK: Int32Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal condition number of a real symmetric packed matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal condition number of a real symmetric packed matrix.
 */
 declare var dspcon: Routine;
 

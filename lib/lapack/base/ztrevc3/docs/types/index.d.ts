@@ -27,7 +27,7 @@ import { OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1: |re(z)| + |im(z)|.
 	*
 	* @param side - specifies the side of the operation
 	* @param howmny - `howmny`
@@ -51,7 +51,7 @@ interface Routine {
 	( side: OperationSide, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param howmny - `howmny`
@@ -85,7 +85,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1: |re(z)| + |im(z)|.
 */
 declare var ztrevc3: Routine;
 

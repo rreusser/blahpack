@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution `Y` to a banded system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds.
 	*
 	* @param order - storage layout
 	* @param prec_type - `prec_type`
@@ -75,7 +75,7 @@ interface Routine {
 	( order: Layout, prec_type: number, trans_type: number, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, colequ: number, c: Float64Array, strideC: number, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, BERR_OUT: Float64Array, strideBERR_OUT: number, n_norms: number, ERR_BNDS_NORM: Float64Array, LDERR_BNDS_NORM: number, ERR_BNDS_COMP: Float64Array, LDERR_BNDS_COMP: number, RES: Float64Array, strideRES: number, AYB: Float64Array, strideAYB: number, DY: Float64Array, strideDY: number, Y_TAIL: Float64Array, strideY_TAIL: number, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution `Y` to a banded system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds using alternative indexing semantics.
 	*
 	* @param prec_type - `prec_type`
 	* @param trans_type - `trans_type`
@@ -141,7 +141,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution `Y` to a banded system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds.
 */
 declare var dla_gbrfsx_extended: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Pre-processor for `zgesvj` applying Jacobi rotations to off-diagonal block pivots.
 	*
 	* @param order - storage layout
 	* @param jobv - `jobv`
@@ -54,7 +54,7 @@ interface Routine {
 	( order: Layout, jobv: string, M: number, N: number, n1: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Pre-processor for `zgesvj` applying Jacobi rotations to off-diagonal block pivots using alternative indexing semantics.
 	*
 	* @param jobv - `jobv`
 	* @param M - number of rows
@@ -88,7 +88,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Pre-processor for `zgesvj` applying Jacobi rotations to off-diagonal block pivots.
 */
 declare var zgsvj1: Routine;
 

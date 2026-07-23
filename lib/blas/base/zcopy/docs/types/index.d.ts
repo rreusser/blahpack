@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Copy a complex double-precision vector.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, zx: number, strideX: number, zy: number, strideY: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Copy a complex double-precision vector using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Copy a complex double-precision vector.
 */
 declare var zcopy: Routine;
 

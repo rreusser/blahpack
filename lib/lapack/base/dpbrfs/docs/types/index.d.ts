@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a real system A * X = B where A is symmetric positive definite band and provides error bounds.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -50,7 +50,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, IWORK: Int32Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a real system A * X = B where A is symmetric positive definite band and provides error bounds using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -90,7 +90,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a real system A * X = B where A is symmetric positive definite band and provides error bounds.
 */
 declare var dpbrfs: Routine;
 

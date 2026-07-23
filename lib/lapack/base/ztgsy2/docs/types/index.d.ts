@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves the generalized Sylvester matrix equation for small subsystems.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -53,7 +53,7 @@ interface Routine {
 	( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, D: Float64Array, LDD: number, E: Float64Array, LDE: number, F: Float64Array, LDF: number, scale: number, rdsum: number, rdscal: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves the generalized Sylvester matrix equation for small subsystems using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -92,7 +92,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves the generalized Sylvester matrix equation for small subsystems.
 */
 declare var ztgsy2: Routine;
 

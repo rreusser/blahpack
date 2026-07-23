@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
 	*
 	* @param wantq - `wantq`
 	* @param N - number of columns
@@ -41,7 +41,7 @@ interface Routine {
 	( wantq: boolean, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper using alternative indexing semantics.
 	*
 	* @param wantq - `wantq`
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
 */
 declare var dlaexc: Routine;
 

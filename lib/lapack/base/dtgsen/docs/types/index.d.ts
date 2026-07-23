@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reorders the generalized real Schur decomposition of a real matrix pair.
 	*
 	* @param order - storage layout
 	* @param ijob - `ijob`
@@ -65,7 +65,7 @@ interface Routine {
 	( order: Layout, ijob: number, wantq: boolean, wantz: boolean, SELECT: Int32Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reorders the generalized real Schur decomposition of a real matrix pair using alternative indexing semantics.
 	*
 	* @param ijob - `ijob`
 	* @param wantq - `wantq`
@@ -117,7 +117,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reorders the generalized real Schur decomposition of a real matrix pair.
 */
 declare var dtgsen: Routine;
 

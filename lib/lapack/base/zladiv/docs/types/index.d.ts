@@ -27,7 +27,7 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs complex division: out = X / Y, where X and Y are complex.
 	*
 	* @param x - `x`
 	* @param offsetX - starting index for `X`
@@ -40,7 +40,7 @@ interface Routine {
 	( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs complex division: out = X / Y, where X and Y are complex using alternative indexing semantics.
 	*
 	* @param x - `x`
 	* @param offsetX - starting index for `X`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs complex division: out = X / Y, where X and Y are complex.
 */
 declare var zladiv: Routine;
 

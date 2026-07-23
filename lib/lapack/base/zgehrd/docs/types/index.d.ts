@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a complex general matrix to upper Hessenberg form using blocked algorithm.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -43,7 +43,7 @@ interface Routine {
 	( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a complex general matrix to upper Hessenberg form using blocked algorithm using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a complex general matrix to upper Hessenberg form using blocked algorithm.
 */
 declare var zgehrd: Routine;
 

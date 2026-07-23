@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves one of the systems of equations `A*x = b` or `A**T*x = b` where `A` is an `N` by `N` upper or lower triangular matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves one of the systems of equations `A*x = b` or `A**T*x = b` where `A` is an `N` by `N` upper or lower triangular matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves one of the systems of equations `A*x = b` or `A**T*x = b` where `A` is an `N` by `N` upper or lower triangular matrix.
 */
 declare var dtrsv: Routine;
 

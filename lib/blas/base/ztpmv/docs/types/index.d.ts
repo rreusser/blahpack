@@ -28,7 +28,7 @@ import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x`.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x`.
 */
 declare var ztpmv: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the reciprocal of the condition number of a general band matrix A.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -44,7 +44,7 @@ interface Routine {
 	( norm: string, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the reciprocal of the condition number of a general band matrix A using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the reciprocal of the condition number of a general band matrix A.
 */
 declare var dgbcon: Routine;
 

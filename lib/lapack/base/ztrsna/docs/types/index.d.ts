@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex triangular matrix.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -56,7 +56,7 @@ interface Routine {
 	( order: Layout, job: string, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, s: Float64Array, strideS: number, SEP: Float64Array, strideSEP: number, mm: number, M: number, WORK: Float64Array, LDWORK: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex triangular matrix using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param howmny - `howmny`
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex triangular matrix.
 */
 declare var ztrsna: Routine;
 

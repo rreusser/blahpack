@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Converts a double precision matrix `A` to a single precision matrix `SA`.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, SA: Float64Array, LDSA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Converts a double precision matrix `A` to a single precision matrix `SA` using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Converts a double precision matrix `A` to a single precision matrix `SA`.
 */
 declare var dlag2s: Routine;
 

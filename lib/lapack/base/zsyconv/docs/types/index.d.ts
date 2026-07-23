@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param way - `way`
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, E: Float64Array, strideE: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param way - `way`
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
 */
 declare var zsyconv: Routine;
 

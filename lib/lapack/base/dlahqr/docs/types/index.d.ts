@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigenvalues and optionally the Schur factorization of an upper.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -45,7 +45,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigenvalues and optionally the Schur factorization of an upper using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigenvalues and optionally the Schur factorization of an upper.
 */
 declare var dlahqr: Routine;
 

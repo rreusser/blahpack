@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the minimum norm solution to a real linear least squares problem:.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -33,7 +33,7 @@ interface Routine {
 	( M: number, N: number, nrhs: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the minimum norm solution to a real linear least squares problem: using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the minimum norm solution to a real linear least squares problem:.
 */
 declare var dgelss: Routine;
 

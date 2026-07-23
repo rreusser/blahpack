@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an LU factorization of a real M-by-N band matrix A using partial.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an LU factorization of a real M-by-N band matrix A using partial using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an LU factorization of a real M-by-N band matrix A using partial.
 */
 declare var dgbtrf: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a matrix using the LU factorization computed by zgetrf.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a matrix using the LU factorization computed by zgetrf using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a matrix using the LU factorization computed by zgetrf.
 */
 declare var zgetri: Routine;
 

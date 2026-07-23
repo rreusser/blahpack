@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
 	*
 	* @param order - storage layout
 	* @param norm - `norm`
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the value of the one-norm, Frobenius norm, infinity-norm, or the using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the value of the one-norm, Frobenius norm, infinity-norm, or the.
 */
 declare var dlansy: Routine;
 

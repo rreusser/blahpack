@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues and optionally eigenvectors of a real symmetric band matrix.
 	*
 	* @param order - storage layout
 	* @param jobz - `jobz`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues and optionally eigenvectors of a real symmetric band matrix using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues and optionally eigenvectors of a real symmetric band matrix.
 */
 declare var dsbev: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies an elementary permutation to a symmetric matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, i1: number, i2: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies an elementary permutation to a symmetric matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies an elementary permutation to a symmetric matrix.
 */
 declare var dsyswapr: Routine;
 

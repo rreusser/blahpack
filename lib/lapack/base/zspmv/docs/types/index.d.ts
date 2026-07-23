@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Perform the symmetric packed matrix-vector operation y := alpha_A_x + beta*y where A is a complex symmetric matrix stored in packed format.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -44,7 +44,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Perform the symmetric packed matrix-vector operation y := alpha_A_x + beta*y where A is a complex symmetric matrix stored in packed format using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Perform the symmetric packed matrix-vector operation y := alpha_A_x + beta*y where A is a complex symmetric matrix stored in packed format.
 */
 declare var zspmv: Routine;
 

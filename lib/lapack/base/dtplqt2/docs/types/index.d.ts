@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an LQ factorization of a real triangular-pentagonal matrix `C = [A, B]` using the compact WY representation for `Q`.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an LQ factorization of a real triangular-pentagonal matrix `C = [A, B]` using the compact WY representation for `Q` using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an LQ factorization of a real triangular-pentagonal matrix `C = [A, B]` using the compact WY representation for `Q`.
 */
 declare var dtplqt2: Routine;
 

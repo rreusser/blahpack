@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the symmetric rank-2k update C := alpha_A_B^T + alpha_B_A^T + beta_C or C := alpha_A^T_B + alpha_B^T_A + beta_C.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the symmetric rank-2k update C := alpha_A_B^T + alpha_B_A^T + beta_C or C := alpha_A^T_B + alpha_B^T_A + beta_C using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the symmetric rank-2k update C := alpha_A_B^T + alpha_B_A^T + beta_C or C := alpha_A^T_B + alpha_B^T_A + beta_C.
 */
 declare var dsyr2k: Routine;
 

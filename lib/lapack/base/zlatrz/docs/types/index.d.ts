@@ -28,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Factors the M-by-(M+l) complex upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of unitary transformations.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, work: Float64Array, strideWork: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Factors the M-by-(M+l) complex upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of unitary transformations using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Factors the M-by-(M+l) complex upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0:M-1) A(0:M-1,N-l:N-1) ]` as `( R  0 ) * Z` by means of unitary transformations.
 */
 declare var zlatrz: Routine;
 

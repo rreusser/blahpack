@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Chases a 2-by-2 shift bulge in a matrix pencil `(A,B)` down a single position.
 	*
 	* @param order - storage layout
 	* @param ilq - `ilq`
@@ -53,7 +53,7 @@ interface Routine {
 	( order: Layout, ilq: number, ilz: number, k: number, istartm: number, istopm: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, nq: number, qstart: number, Q: Float64Array, LDQ: number, nz: number, zstart: number, Z: Float64Array, LDZ: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Chases a 2-by-2 shift bulge in a matrix pencil `(A,B)` down a single position using alternative indexing semantics.
 	*
 	* @param ilq - `ilq`
 	* @param ilz - `ilz`
@@ -87,7 +87,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Chases a 2-by-2 shift bulge in a matrix pencil `(A,B)` down a single position.
 */
 declare var dlaqz2: Routine;
 

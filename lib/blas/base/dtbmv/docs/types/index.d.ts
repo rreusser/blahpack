@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdli
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs one of the matrix-vector operations `x := A*x` or `x := A**T*x`.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, K: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs one of the matrix-vector operations `x := A*x` or `x := A**T*x` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -64,7 +64,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs one of the matrix-vector operations `x := A*x` or `x := A**T*x`.
 */
 declare var dtbmv: Routine;
 

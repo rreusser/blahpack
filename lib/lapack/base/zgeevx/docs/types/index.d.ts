@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes eigenvalues and, optionally, eigenvectors with optional balancing and reciprocal condition numbers for a complex nonsymmetric matrix, using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param balanc - `balanc`
@@ -61,7 +61,7 @@ interface Routine {
 	( order: Layout, balanc: number, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, abnrm: number, RCONDE: Float64Array, strideRCONDE: number, RCONDV: Float64Array, strideRCONDV: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes eigenvalues and, optionally, eigenvectors with optional balancing and reciprocal condition numbers for a complex nonsymmetric matrix, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param balanc - `balanc`
 	* @param jobvl - `jobvl`
@@ -107,7 +107,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes eigenvalues and, optionally, eigenvectors with optional balancing and reciprocal condition numbers for a complex nonsymmetric matrix, using alternative indexing semantics.
 */
 declare var zgeevx: Routine;
 

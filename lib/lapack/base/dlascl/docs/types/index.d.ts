@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a real M-by-N matrix by the real scalar CTO/CFROM, doing the multiplication safely with respect to overflow and underflow via iterative scaling.
 	*
 	* @param order - storage layout
 	* @param type - `type`
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, type: number, kl: number, ku: number, cfrom: number, cto: number, M: number, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a real M-by-N matrix by the real scalar CTO/CFROM, doing the multiplication safely with respect to overflow and underflow via iterative scaling using alternative indexing semantics.
 	*
 	* @param type - `type`
 	* @param kl - number of subdiagonals
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a real M-by-N matrix by the real scalar CTO/CFROM, doing the multiplication safely with respect to overflow and underflow via iterative scaling.
 */
 declare var dlascl: Routine;
 

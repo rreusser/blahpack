@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Scans a real matrix for its last non-zero column.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -39,7 +39,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Scans a real matrix for its last non-zero column using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Scans a real matrix for its last non-zero column.
 */
 declare var iladlc: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, M: number, N: number, alpha: number, beta: number, A: Float64Array, LDA: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param M - number of rows
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
 */
 declare var dlaset: Routine;
 

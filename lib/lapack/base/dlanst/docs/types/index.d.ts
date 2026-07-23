@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the value of the one norm, or the Frobenius norm, or the infinity.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -36,7 +36,7 @@ interface Routine {
 	( norm: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the value of the one norm, or the Frobenius norm, or the infinity using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the value of the one norm, or the Frobenius norm, or the infinity.
 */
 declare var dlanst: Routine;
 

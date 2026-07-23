@@ -28,7 +28,7 @@ import { Layout, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs one of the matrix-vector operations `y := alpha*op(A)*x + beta*y`.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -49,7 +49,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, M: number, N: number, kl: number, ku: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs one of the matrix-vector operations `y := alpha*op(A)*x + beta*y` using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs one of the matrix-vector operations `y := alpha*op(A)*x + beta*y`.
 */
 declare var zgbmv: Routine;
 

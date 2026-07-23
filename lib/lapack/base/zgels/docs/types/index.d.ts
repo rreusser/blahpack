@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves overdetermined or underdetermined complex linear systems involving an.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves overdetermined or underdetermined complex linear systems involving an using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves overdetermined or underdetermined complex linear systems involving an.
 */
 declare var zgels: Routine;
 

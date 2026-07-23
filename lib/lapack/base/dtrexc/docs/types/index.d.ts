@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -40,7 +40,7 @@ interface Routine {
 	( compq: string, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, ifst: number, ilst: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that using alternative indexing semantics.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
 */
 declare var dtrexc: Routine;
 

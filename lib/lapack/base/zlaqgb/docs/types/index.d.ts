@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Equilibrates a complex general band matrix using row and column scaling factors.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): string;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Equilibrates a complex general band matrix using row and column scaling factors using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Equilibrates a complex general band matrix using row and column scaling factors.
 */
 declare var zlaqgb: Routine;
 

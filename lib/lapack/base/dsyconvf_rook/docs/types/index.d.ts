@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Converts the factorization output format used in dsytrf_rook.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, way: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Converts the factorization output format used in dsytrf_rook using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param way - `way`
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Converts the factorization output format used in dsytrf_rook.
 */
 declare var dsyconvf_rook: Routine;
 

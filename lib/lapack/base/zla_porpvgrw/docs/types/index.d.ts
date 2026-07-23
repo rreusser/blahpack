@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param ncols - `ncols`
@@ -41,7 +41,7 @@ interface Routine {
 	( uplo: MatrixTriangle, ncols: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param ncols - `ncols`
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix.
 */
 declare var zla_porpvgrw: Routine;
 

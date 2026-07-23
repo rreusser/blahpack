@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal of the condition number (in the 1-norm) of a real.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal of the condition number (in the 1-norm) of a real using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal of the condition number (in the 1-norm) of a real.
 */
 declare var dptcon: Routine;
 

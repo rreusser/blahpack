@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a real symmetric matrix in packed storage to tridiagonal form.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -40,7 +40,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: Float64Array, d: Float64Array, e: Float64Array, TAU: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a real symmetric matrix in packed storage to tridiagonal form using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,7 +62,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a real symmetric matrix in packed storage to tridiagonal form.
 */
 declare var dsptrd: Routine;
 

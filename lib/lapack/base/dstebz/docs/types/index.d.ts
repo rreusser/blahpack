@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -58,7 +58,7 @@ interface Routine {
 	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, abstol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, nsplit: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes selected eigenvalues of a real symmetric tridiagonal matrix T using alternative indexing semantics.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
 */
 declare var dstebz: Routine;
 

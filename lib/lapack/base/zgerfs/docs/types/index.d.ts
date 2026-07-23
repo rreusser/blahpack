@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1: |re(z)| + |im(z)|.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -50,7 +50,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -92,7 +92,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1: |re(z)| + |im(z)|.
 */
 declare var zgerfs: Routine;
 

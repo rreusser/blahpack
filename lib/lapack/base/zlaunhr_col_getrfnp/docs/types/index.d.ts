@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the modified LU factorization without pivoting of a complex general M-by-N matrix `A` (blocked driver).
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the modified LU factorization without pivoting of a complex general M-by-N matrix `A` (blocked driver) using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the modified LU factorization without pivoting of a complex general M-by-N matrix `A` (blocked driver).
 */
 declare var zlaunhr_col_getrfnp: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex symmetric indefinite matrix.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, info: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex symmetric indefinite matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex symmetric indefinite matrix.
 */
 declare var zla_syrpvgrw: Routine;
 

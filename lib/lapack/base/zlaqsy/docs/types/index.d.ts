@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Equilibrates a symmetric matrix A using the scaling factors in the vector S.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -42,7 +42,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, scond: number, amax: number ): string;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Equilibrates a symmetric matrix A using the scaling factors in the vector S using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Equilibrates a symmetric matrix A using the scaling factors in the vector S.
 */
 declare var zlaqsy: Routine;
 

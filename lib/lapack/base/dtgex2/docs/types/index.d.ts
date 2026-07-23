@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair.
 	*
 	* @param order - storage layout
 	* @param wantq - `wantq`
@@ -51,7 +51,7 @@ interface Routine {
 	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair using alternative indexing semantics.
 	*
 	* @param wantq - `wantq`
 	* @param wantz - `wantz`
@@ -84,7 +84,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair.
 */
 declare var dtgex2: Routine;
 

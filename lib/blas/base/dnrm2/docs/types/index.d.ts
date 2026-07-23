@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Euclidean norm of a real double-precision vector.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, x: number, stride: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Euclidean norm of a real double-precision vector using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Euclidean norm of a real double-precision vector.
 */
 declare var dnrm2: Routine;
 

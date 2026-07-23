@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the number of simultaneous shifts (ISPEC=15) per iparmq.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -47,7 +47,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the number of simultaneous shifts (ISPEC=15) per iparmq using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -79,7 +79,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the number of simultaneous shifts (ISPEC=15) per iparmq.
 */
 declare var dlaqr0: Routine;
 

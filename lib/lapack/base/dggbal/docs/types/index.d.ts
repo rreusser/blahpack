@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Balances a pair of general real matrices (A, B).
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, job: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Balances a pair of general real matrices (A, B) using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Balances a pair of general real matrices (A, B).
 */
 declare var dggbal: Routine;
 

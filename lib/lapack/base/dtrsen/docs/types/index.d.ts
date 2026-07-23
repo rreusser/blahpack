@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -50,7 +50,7 @@ interface Routine {
 	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -87,7 +87,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
 */
 declare var dtrsen: Routine;
 

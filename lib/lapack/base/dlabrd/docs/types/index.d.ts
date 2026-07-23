@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces the first NB rows and columns of a real general M-by-N matrix A.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -52,7 +52,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, X: Float64Array, LDX: number, Y: Float64Array, LDY: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces the first NB rows and columns of a real general M-by-N matrix A using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -87,7 +87,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces the first NB rows and columns of a real general M-by-N matrix A.
 */
 declare var dlabrd: Routine;
 

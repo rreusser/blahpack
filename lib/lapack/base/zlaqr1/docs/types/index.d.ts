@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1 = |Re(z)| + |Im(z)|.
 	*
 	* @param N - number of columns
 	* @param H - `H`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, H: Float64Array, LDH: number, s1: number, s2: number, v: Float64Array, strideV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1 = |Re(z)| + |Im(z)| using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param H - `H`
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1 = |Re(z)| + |Im(z)|.
 */
 declare var zlaqr1: Routine;
 

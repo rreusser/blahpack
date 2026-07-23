@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Improves the computed solution to a complex tridiagonal system and provides error bounds.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DLF: Float64Array, strideDLF: number, DF: Float64Array, strideDF: number, DUF: Float64Array, strideDUF: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Improves the computed solution to a complex tridiagonal system and provides error bounds using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -120,7 +120,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Improves the computed solution to a complex tridiagonal system and provides error bounds.
 */
 declare var zgtrfs: Routine;
 

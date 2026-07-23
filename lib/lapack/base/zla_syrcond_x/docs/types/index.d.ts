@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the infinity norm condition number for a complex symmetric indefinite matrix with x scaling.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -50,7 +50,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the infinity norm condition number for a complex symmetric indefinite matrix with x scaling using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -80,7 +80,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the infinity norm condition number for a complex symmetric indefinite matrix with x scaling.
 */
 declare var zla_syrcond_x: Routine;
 

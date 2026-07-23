@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes unitary matrices U, V, and Q such that A and B have triangular form suitable for GSVD.
 	*
 	* @param order - storage layout
 	* @param jobu - `jobu`
@@ -64,7 +64,7 @@ interface Routine {
 	( order: Layout, jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, RWORK: Float64Array, strideRWork: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes unitary matrices U, V, and Q such that A and B have triangular form suitable for GSVD using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobv - `jobv`
@@ -114,7 +114,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes unitary matrices U, V, and Q such that A and B have triangular form suitable for GSVD.
 */
 declare var zggsvp3: Routine;
 

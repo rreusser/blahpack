@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Tests for NaN by comparing two arguments for inequality.
 	*
 	* @param din1 - `din1`
 	* @param din2 - `din2`
@@ -32,7 +32,7 @@ interface Routine {
 	( din1: number, din2: number ): boolean;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Tests for NaN by comparing two arguments for inequality using alternative indexing semantics.
 	*
 	* @param din1 - `din1`
 	* @param din2 - `din2`
@@ -42,7 +42,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Tests for NaN by comparing two arguments for inequality.
 */
 declare var dlaisnan: Routine;
 

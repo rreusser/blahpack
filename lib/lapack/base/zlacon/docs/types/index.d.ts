@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the 1-norm of a square complex matrix A using reverse communication.
 	*
 	* @param N - number of columns
 	* @param V - `V`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, V: Float64Array, strideV: number, X: Float64Array, strideX: number, EST: number, KASE: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the 1-norm of a square complex matrix A using reverse communication using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param V - `V`
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the 1-norm of a square complex matrix A using reverse communication.
 */
 declare var zlacon: Routine;
 

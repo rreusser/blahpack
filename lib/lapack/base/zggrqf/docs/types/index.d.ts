@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a generalized RQ factorization of an M-by-N complex matrix A and a P-by-N complex matrix B.
 	*
 	* @param M - number of rows
 	* @param p - `p`
@@ -43,7 +43,7 @@ interface Routine {
 	( M: number, p: number, N: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a generalized RQ factorization of an M-by-N complex matrix A and a P-by-N complex matrix B using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param p - `p`
@@ -71,7 +71,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a generalized RQ factorization of an M-by-N complex matrix A and a P-by-N complex matrix B.
 */
 declare var zggrqf: Routine;
 

@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Cholesky factorization of a complex Hermitian positive definite matrix `A`.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,7 +39,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Cholesky factorization of a complex Hermitian positive definite matrix `A` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -53,7 +53,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Cholesky factorization of a complex Hermitian positive definite matrix `A`.
 */
 declare var zpotrf: Routine;
 

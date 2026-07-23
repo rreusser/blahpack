@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the factorization of a complex Hermitian matrix `A` using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm).
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,7 +43,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the factorization of a complex Hermitian matrix `A` using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm) using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the factorization of a complex Hermitian matrix `A` using the bounded Bunch-Kaufman ("rook") diagonal pivoting method (blocked algorithm).
 */
 declare var zhetrf_rook: Routine;
 

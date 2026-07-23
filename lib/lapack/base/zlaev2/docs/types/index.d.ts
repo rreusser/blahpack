@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigendecomposition of a 2-by-2 Hermitian matrix.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -33,7 +33,7 @@ interface Routine {
 	( a: number, b: number, c: number ): { rt1: number; rt2: number; cs1: number; sn1r: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigendecomposition of a 2-by-2 Hermitian matrix using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -44,7 +44,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigendecomposition of a 2-by-2 Hermitian matrix.
 */
 declare var zlaev2: Routine;
 

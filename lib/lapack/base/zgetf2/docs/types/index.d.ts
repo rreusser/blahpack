@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes an LU factorization of a general M-by-N complex matrix using partial pivoting with row interchanges (unblocked algorithm).
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -41,7 +41,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes an LU factorization of a general M-by-N complex matrix using partial pivoting with row interchanges (unblocked algorithm) using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes an LU factorization of a general M-by-N complex matrix using partial pivoting with row interchanges (unblocked algorithm).
 */
 declare var zgetf2: Routine;
 

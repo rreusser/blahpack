@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a real symmetric-definite generalized eigenproblem to standard form.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,7 +41,7 @@ interface Routine {
 	( itype: number, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a real symmetric-definite generalized eigenproblem to standard form using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a real symmetric-definite generalized eigenproblem to standard form.
 */
 declare var dsygs2: Routine;
 

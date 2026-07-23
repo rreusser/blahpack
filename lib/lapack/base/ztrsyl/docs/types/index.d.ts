@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves the complex Sylvester matrix equation:.
 	*
 	* @param trana - `trana`
 	* @param tranb - `tranb`
@@ -42,7 +42,7 @@ interface Routine {
 	( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, scale: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves the complex Sylvester matrix equation: using alternative indexing semantics.
 	*
 	* @param trana - `trana`
 	* @param tranb - `tranb`
@@ -68,7 +68,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves the complex Sylvester matrix equation:.
 */
 declare var ztrsyl: Routine;
 

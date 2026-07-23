@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns the norm of a complex general tridiagonal matrix A.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns the norm of a complex general tridiagonal matrix A using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns the norm of a complex general tridiagonal matrix A.
 */
 declare var zlangt: Routine;
 

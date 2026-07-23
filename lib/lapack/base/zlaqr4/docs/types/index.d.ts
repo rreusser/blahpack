@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Complex multishift QR with aggressive early deflation (non-recursive).
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -45,7 +45,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Complex multishift QR with aggressive early deflation (non-recursive) using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Complex multishift QR with aggressive early deflation (non-recursive).
 */
 declare var zlaqr4: Routine;
 

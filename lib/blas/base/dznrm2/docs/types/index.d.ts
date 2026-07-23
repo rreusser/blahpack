@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Euclidean norm of a complex double-precision floating-point vector.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, zx: number, strideX: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Euclidean norm of a complex double-precision floating-point vector using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Euclidean norm of a complex double-precision floating-point vector.
 */
 declare var dznrm2: Routine;
 

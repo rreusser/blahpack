@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
 */
 declare var zsytrf: Routine;
 

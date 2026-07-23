@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the Hermitian rank 2 operation `A = alpha*x*conj(y)^T + conj(alpha)*y*conj(x)^T + A` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` is a complex scalar.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the Hermitian rank 2 operation `A = alpha*x*conj(y)^T + conj(alpha)*y*conj(x)^T + A` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` is a complex scalar using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the Hermitian rank 2 operation `A = alpha*x*conj(y)^T + conj(alpha)*y*conj(x)^T + A` where `A` is an `N` by `N` Hermitian matrix, `x` and `y` are `N` element complex vectors, and `alpha` is a complex scalar.
 */
 declare var zher2: Routine;
 

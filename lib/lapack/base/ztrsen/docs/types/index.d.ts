@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reorders the Schur factorization of a complex matrix A = Q_T_Q**H so that a.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -46,7 +46,7 @@ interface Routine {
 	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, W: Float64Array, strideW: number, M: number, s: number, sep: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reorders the Schur factorization of a complex matrix A = Q_T_Q**H so that a using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -77,7 +77,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reorders the Schur factorization of a complex matrix A = Q_T_Q**H so that a.
 */
 declare var ztrsen: Routine;
 

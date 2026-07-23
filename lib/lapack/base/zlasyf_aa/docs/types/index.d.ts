@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Factorize a panel of a complex symmetric matrix using Aasen's algorithm.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, j1: number, M: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, H: Float64Array, LDH: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Factorize a panel of a complex symmetric matrix using Aasen's algorithm using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param j1 - `j1`
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Factorize a panel of a complex symmetric matrix using Aasen's algorithm.
 */
 declare var zlasyf_aa: Routine;
 

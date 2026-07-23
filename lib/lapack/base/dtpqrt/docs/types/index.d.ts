@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a blocked QR factorization of a real triangular-pentagonal matrix `C = [ A; B ]` using the compact WY representation for `Q`.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, l: number, nb: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number, WORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a blocked QR factorization of a real triangular-pentagonal matrix `C = [ A; B ]` using the compact WY representation for `Q` using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a blocked QR factorization of a real triangular-pentagonal matrix `C = [ A; B ]` using the compact WY representation for `Q`.
 */
 declare var dtpqrt: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduce NB columns of a general matrix in Hessenberg form.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, N: number, K: number, nb: number, A: Float64Array, LDA: number, tau: Float64Array, strideTAU: number, t: Float64Array, strideT1: number, strideT2: number, y: Float64Array, strideY1: number, strideY2: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduce NB columns of a general matrix in Hessenberg form using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduce NB columns of a general matrix in Hessenberg form.
 */
 declare var dlahr2: Routine;
 

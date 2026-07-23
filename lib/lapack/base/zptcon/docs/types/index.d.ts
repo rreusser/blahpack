@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the reciprocal of the condition number (in the 1-norm) of a complex.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, anorm: number, rcond: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the reciprocal of the condition number (in the 1-norm) of a complex using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the reciprocal of the condition number (in the 1-norm) of a complex.
 */
 declare var zptcon: Routine;
 

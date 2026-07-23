@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a QR factorization with column pivoting of the block.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( M: number, N: number, offset: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a QR factorization with column pivoting of the block using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a QR factorization with column pivoting of the block.
 */
 declare var dlaqp2: Routine;
 

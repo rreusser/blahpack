@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1` through `bn` of the tridiagonal matrix `L*D*L^T - lambda*I`.
 	*
 	* @param N - number of columns
 	* @param b1 - `b1`
@@ -58,7 +58,7 @@ interface Routine {
 	( N: number, b1: number, bn: number, lambda: number, D: Float64Array, strideD: number, L: Float64Array, strideL: number, LD: Float64Array, strideLD: number, LLD: Float64Array, strideLLD: number, pivmin: number, gaptol: number, Z: Float64Array, strideZ: number, wantnc: number, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1` through `bn` of the tridiagonal matrix `L*D*L^T - lambda*I` using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param b1 - `b1`
@@ -101,7 +101,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1` through `bn` of the tridiagonal matrix `L*D*L^T - lambda*I`.
 */
 declare var dlar1v: Routine;
 

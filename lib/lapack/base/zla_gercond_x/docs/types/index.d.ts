@@ -27,7 +27,7 @@ import { Layout, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates the infinity norm condition number for a general complex matrix with x scaling.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -50,7 +50,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates the infinity norm condition number for a general complex matrix with x scaling using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -80,7 +80,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates the infinity norm condition number for a general complex matrix with x scaling.
 */
 declare var zla_gercond_x: Routine;
 

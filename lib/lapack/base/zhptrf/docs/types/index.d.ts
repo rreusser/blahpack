@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the Bunch-Kaufman factorization of a complex Hermitian matrix in packed storage.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the Bunch-Kaufman factorization of a complex Hermitian matrix in packed storage using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -54,7 +54,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the Bunch-Kaufman factorization of a complex Hermitian matrix in packed storage.
 */
 declare var zhptrf: Routine;
 

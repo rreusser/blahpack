@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix `[X11; X21]` with orthonormal columns (CSD-prep variant 4 — widest `M1`/`M2` partition).
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -56,7 +56,7 @@ interface Routine {
 	( order: Layout, M: number, P: number, Q: number, X11: Float64Array, LDX11: number, X21: Float64Array, LDX21: number, THETA: Float64Array, strideTHETA: number, PHI: Float64Array, stridePHI: number, TAUP1: number, strideTAUP1: number, TAUP2: number, strideTAUP2: number, TAUQ1: number, strideTAUQ1: number, PHANTOM: Float64Array, stridePHANTOM: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix `[X11; X21]` with orthonormal columns (CSD-prep variant 4 — widest `M1`/`M2` partition) using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param P - `P`
@@ -96,7 +96,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix `[X11; X21]` with orthonormal columns (CSD-prep variant 4 — widest `M1`/`M2` partition).
 */
 declare var zunbdb4: Routine;
 

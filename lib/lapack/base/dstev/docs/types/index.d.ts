@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
 	*
 	* @param jobz - `jobz`
 	* @param N - number of columns
@@ -40,7 +40,7 @@ interface Routine {
 	( jobz: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
 */
 declare var dstev: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1: |re(z)| + |im(z)|.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -38,7 +38,7 @@ interface Routine {
 	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1: |re(z)| + |im(z)|.
 */
 declare var zgeequ: Routine;
 

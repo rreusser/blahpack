@@ -27,7 +27,7 @@ import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Provides error bounds for the solution to a system with a real triangular matrix in packed storage.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -52,7 +52,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, AP: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Provides error bounds for the solution to a system with a real triangular matrix in packed storage using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -88,7 +88,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Provides error bounds for the solution to a system with a real triangular matrix in packed storage.
 */
 declare var dtprfs: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a complex symmetric indefinite system of linear equations A_X = B where A is stored in packed format, using the diagonal pivoting factorization A = U_D_U^T or A = L_D_L^T, and provides an estimate of the condition number and error bounds on the solution.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -55,7 +55,7 @@ interface Routine {
 	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, AFP: Float64Array, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a complex symmetric indefinite system of linear equations A_X = B where A is stored in packed format, using the diagonal pivoting factorization A = U_D_U^T or A = L_D_L^T, and provides an estimate of the condition number and error bounds on the solution using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a complex symmetric indefinite system of linear equations A_X = B where A is stored in packed format, using the diagonal pivoting factorization A = U_D_U^T or A = L_D_L^T, and provides an estimate of the condition number and error bounds on the solution.
 */
 declare var zspsvx: Routine;
 

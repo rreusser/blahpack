@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy.
 */
 declare var dlarrr: Routine;
 

@@ -28,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs a series of row interchanges on a complex double-precision matrix `A`.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, incx: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs a series of row interchanges on a complex double-precision matrix `A` using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs a series of row interchanges on a complex double-precision matrix `A`.
 */
 declare var zlaswp: Routine;
 

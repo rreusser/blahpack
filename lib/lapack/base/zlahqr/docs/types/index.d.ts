@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* CABS1(z) = |Re(z)| + |Im(z)|.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -43,7 +43,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, W: Float64Array, strideW: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* CABS1(z) = |Re(z)| + |Im(z)| using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* CABS1(z) = |Re(z)| + |Im(z)|.
 */
 declare var zlahqr: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs LU factorization with complete pivoting of a general N-by-N matrix.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -37,7 +37,7 @@ interface Routine {
 	( N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs LU factorization with complete pivoting of a general N-by-N matrix using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -56,7 +56,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs LU factorization with complete pivoting of a general N-by-N matrix.
 */
 declare var dgetc2: Routine;
 

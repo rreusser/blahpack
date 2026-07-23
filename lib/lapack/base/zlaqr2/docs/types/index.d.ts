@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Complex aggressive early deflation (non-recursive).
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -56,7 +56,7 @@ interface Routine {
 	( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, ns: number, nd: number, SH: Float64Array, strideSH: number, V: Float64Array, LDV: number, nhp: number, T: Float64Array, LDT: number, nvp: number, WV: Float64Array, LDWV: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Complex aggressive early deflation (non-recursive) using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -102,7 +102,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Complex aggressive early deflation (non-recursive).
 */
 declare var zlaqr2: Routine;
 

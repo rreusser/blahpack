@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute the eigenvalues of a complex matrix pair (H, T), where H is.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -57,7 +57,7 @@ interface Routine {
 	( order: Layout, job: string, compq: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, T: Float64Array, LDT: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute the eigenvalues of a complex matrix pair (H, T), where H is using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -99,7 +99,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute the eigenvalues of a complex matrix pair (H, T), where H is.
 */
 declare var zhgeqz: Routine;
 

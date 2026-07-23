@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Constructs a complex Givens plane rotation. On exit, `a` is overwritten with the rotated value `r`, `c` holds the real cosine, and `s` holds the complex sine.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -34,7 +34,7 @@ interface Routine {
 	( a: number, b: number, c: number, s: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Constructs a complex Givens plane rotation. On exit, `a` is overwritten with the rotated value `r`, `c` holds the real cosine, and `s` holds the complex sine using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param offsetA - starting index for `A`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Constructs a complex Givens plane rotation. On exit, `a` is overwritten with the rotated value `r`, `c` holds the real cosine, and `s` holds the complex sine.
 */
 declare var zrotg: Routine;
 

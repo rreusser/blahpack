@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Determines double-precision machine parameters.
 	*
 	* @param cmach - `cmach`
 	* @returns result
@@ -31,7 +31,7 @@ interface Routine {
 	( cmach: string ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Determines double-precision machine parameters using alternative indexing semantics.
 	*
 	* @param cmach - `cmach`
 	* @returns result
@@ -40,7 +40,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Determines double-precision machine parameters.
 */
 declare var dlamch: Routine;
 

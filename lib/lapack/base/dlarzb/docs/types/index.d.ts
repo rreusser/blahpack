@@ -27,7 +27,7 @@ import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a real block reflector from an RZ factorization to a real M-by-N matrix C, from either the left or the right.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -51,7 +51,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, trans: TransposeOperation, direct: string, storev: string, M: number, N: number, K: number, l: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, LDWORK: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a real block reflector from an RZ factorization to a real M-by-N matrix C, from either the left or the right using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -83,7 +83,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a real block reflector from an RZ factorization to a real M-by-N matrix C, from either the left or the right.
 */
 declare var dlarzb: Routine;
 

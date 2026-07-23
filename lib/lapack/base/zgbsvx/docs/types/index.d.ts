@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Expert driver for solving a complex system of linear equations A*X = B.
 	*
 	* @param fact - `fact`
 	* @param trans - specifies whether the matrix should be transposed
@@ -63,7 +63,7 @@ interface Routine {
 	( fact: string, trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, equed: string, r: Float64Array, strideR: number, c: Float64Array, strideC: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): { info: number; equed: number; rcond: number; rpvgrw: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Expert driver for solving a complex system of linear equations A*X = B using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param trans - specifies whether the matrix should be transposed
@@ -115,7 +115,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Expert driver for solving a complex system of linear equations A*X = B.
 */
 declare var zgbsvx: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Checks for deflation, computes a shift (TAU) and calls dqds. In case of.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -51,7 +51,7 @@ interface Routine {
 	( i0: number, n0: number, z: number, stride: number, pp: number, dmin: number, sigma: number, desig: number, qmax: number, nfail: number, iter: number, ndiv: number, ieee: number, ttype: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, g: number, tau: number ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Checks for deflation, computes a shift (TAU) and calls dqds. In case of using alternative indexing semantics.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -81,7 +81,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Checks for deflation, computes a shift (TAU) and calls dqds. In case of.
 */
 declare var dlasq3: Routine;
 

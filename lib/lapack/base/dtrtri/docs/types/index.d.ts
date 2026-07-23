@@ -27,7 +27,7 @@ import { DiagonalType, Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a real upper or lower triangular matrix.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array, LDA: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a real upper or lower triangular matrix using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param diag - specifies whether the matrix is unit triangular
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a real upper or lower triangular matrix.
 */
 declare var dtrtri: Routine;
 

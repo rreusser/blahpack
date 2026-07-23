@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -49,7 +49,7 @@ interface Routine {
 	( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -79,7 +79,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
 */
 declare var zgttrs: Routine;
 

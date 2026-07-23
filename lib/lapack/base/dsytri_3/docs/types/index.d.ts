@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the inverse of a real symmetric indefinite matrix `A` using the factorization from `dsytrf_rk`. Blocked driver that picks a block size and forwards to `dsytri_3x`, using alternative indexing semantics.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the inverse of a real symmetric indefinite matrix `A` using the factorization from `dsytrf_rk`. Blocked driver that picks a block size and forwards to `dsytri_3x`, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the inverse of a real symmetric indefinite matrix `A` using the factorization from `dsytrf_rk`. Blocked driver that picks a block size and forwards to `dsytri_3x`, using alternative indexing semantics.
 */
 declare var dsytri_3: Routine;
 

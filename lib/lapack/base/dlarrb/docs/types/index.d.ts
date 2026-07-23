@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Provides limited bisection to locate eigenvalues for more accuracy.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -54,7 +54,7 @@ interface Routine {
 	( N: number, d: Float64Array, strideD: number, LLD: Float64Array, strideLLD: number, ifirst: number, ilast: number, rtol1: number, rtol2: number, offset: number, w: Float64Array, strideW: number, WGAP: Float64Array, strideWGAP: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, pivmin: number, spdiam: number, twist: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Provides limited bisection to locate eigenvalues for more accuracy using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -92,7 +92,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Provides limited bisection to locate eigenvalues for more accuracy.
 */
 declare var dlarrb: Routine;
 

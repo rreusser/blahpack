@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Compute |re|^2 + |im|^2.
 	*
 	* @param f - `f`
 	* @param offsetF - starting index for `F`
@@ -40,7 +40,7 @@ interface Routine {
 	( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Compute |re|^2 + |im|^2 using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param offsetF - starting index for `F`
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Compute |re|^2 + |im|^2.
 */
 declare var zlartg: Routine;
 

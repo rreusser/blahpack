@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the generalized singular value decomposition (GSVD) of an M-by-N complex matrix A and a P-by-N complex matrix B, using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobv - `jobv`
@@ -58,7 +58,7 @@ interface Routine {
 	( jobu: string, jobv: string, jobq: string, M: number, N: number, p: number, K: number, l: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the generalized singular value decomposition (GSVD) of an M-by-N complex matrix A and a P-by-N complex matrix B, using alternative indexing semantics using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobv - `jobv`
@@ -109,7 +109,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the generalized singular value decomposition (GSVD) of an M-by-N complex matrix A and a P-by-N complex matrix B, using alternative indexing semantics.
 */
 declare var zggsvd3: Routine;
 

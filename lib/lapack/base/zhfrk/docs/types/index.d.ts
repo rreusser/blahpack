@@ -28,7 +28,7 @@ import { MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -67,7 +67,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.
 */
 declare var zhfrk: Routine;
 

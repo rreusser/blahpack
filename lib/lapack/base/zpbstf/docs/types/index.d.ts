@@ -27,7 +27,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes a split Cholesky factorization of a complex Hermitian positive.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes a split Cholesky factorization of a complex Hermitian positive using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -55,7 +55,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes a split Cholesky factorization of a complex Hermitian positive.
 */
 declare var zpbstf: Routine;
 

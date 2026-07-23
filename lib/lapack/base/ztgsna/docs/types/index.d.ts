@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex generalized Schur form.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -59,7 +59,7 @@ interface Routine {
 	( order: Layout, job: string, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, s: Float64Array, strideS: number, DIF: Float64Array, strideDIF: number, mm: number, M: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): { m: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex generalized Schur form using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param howmny - `howmny`
@@ -103,7 +103,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex generalized Schur form.
 */
 declare var ztgsna: Routine;
 

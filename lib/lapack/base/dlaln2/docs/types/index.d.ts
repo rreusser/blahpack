@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a 1-by-1 or 2-by-2 linear system of the form:.
 	*
 	* @param ltrans - `ltrans`
 	* @param na - `na`
@@ -45,7 +45,7 @@ interface Routine {
 	( ltrans: boolean, na: number, nw: number, smin: number, ca: number, A: Float64Array, LDA: number, d1: number, d2: number, B: Float64Array, LDB: number, wr: number, wi: number, X: Float64Array, LDX: number ): { scale: number; xnorm: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a 1-by-1 or 2-by-2 linear system of the form: using alternative indexing semantics.
 	*
 	* @param ltrans - `ltrans`
 	* @param na - `na`
@@ -74,7 +74,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a 1-by-1 or 2-by-2 linear system of the form:.
 */
 declare var dlaln2: Routine;
 

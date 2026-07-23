@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Solves a complex Hermitian positive definite tridiagonal system A*X = B, and provides an estimate of the condition number and error bounds on the solution.
 	*
 	* @param fact - `fact`
 	* @param N - number of columns
@@ -46,7 +46,7 @@ interface Routine {
 	( fact: string, N: number, nrhs: number, d: Float64Array, e: Float64Array, DF: Float64Array, EF: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Solves a complex Hermitian positive definite tridiagonal system A*X = B, and provides an estimate of the condition number and error bounds on the solution using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param N - number of columns
@@ -90,7 +90,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Solves a complex Hermitian positive definite tridiagonal system A*X = B, and provides an estimate of the condition number and error bounds on the solution.
 */
 declare var zptsvx: Routine;
 

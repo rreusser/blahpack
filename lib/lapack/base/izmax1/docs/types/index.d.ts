@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Finds the index of the first vector element of maximum absolute value.
 	*
 	* @param N - number of columns
 	* @param ZX - `ZX`
@@ -33,7 +33,7 @@ interface Routine {
 	( N: number, ZX: Float64Array, strideZX: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Finds the index of the first vector element of maximum absolute value using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ZX - `ZX`
@@ -45,7 +45,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Finds the index of the first vector element of maximum absolute value.
 */
 declare var izmax1: Routine;
 

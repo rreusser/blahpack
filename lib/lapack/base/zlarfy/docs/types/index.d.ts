@@ -28,7 +28,7 @@ import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies an elementary reflector, or Householder matrix, `H`, to an N-by-N Hermitian matrix `C`, from both the left and the right.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies an elementary reflector, or Householder matrix, `H`, to an N-by-N Hermitian matrix `C`, from both the left and the right using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies an elementary reflector, or Householder matrix, `H`, to an N-by-N Hermitian matrix `C`, from both the left and the right.
 */
 declare var zlarfy: Routine;
 

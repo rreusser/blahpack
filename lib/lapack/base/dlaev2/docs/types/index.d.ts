@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the eigendecomposition of a 2-by-2 symmetric matrix.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -33,7 +33,7 @@ interface Routine {
 	( a: number, b: number, c: number ): { rt1: number; rt2: number; cs1: number };
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the eigendecomposition of a 2-by-2 symmetric matrix using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -44,7 +44,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the eigendecomposition of a 2-by-2 symmetric matrix.
 */
 declare var dlaev2: Routine;
 

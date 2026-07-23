@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Returns a vector of n random real numbers from a uniform (0,1) distribution.
 	*
 	* @param iseed - `iseed`
 	* @param strideISEED - stride of `ISEED`
@@ -35,7 +35,7 @@ interface Routine {
 	( iseed: Float64Array, strideISEED: number, N: number, x: Float64Array, strideX: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Returns a vector of n random real numbers from a uniform (0,1) distribution using alternative indexing semantics.
 	*
 	* @param iseed - `iseed`
 	* @param strideISEED - stride of `ISEED`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Returns a vector of n random real numbers from a uniform (0,1) distribution.
 */
 declare var dlaruv: Routine;
 

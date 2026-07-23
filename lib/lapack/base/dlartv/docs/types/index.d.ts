@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Applies a vector of real plane rotations to elements of two real vectors.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, s: Float64Array, strideCS: number ): void;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Applies a vector of real plane rotations to elements of two real vectors using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Applies a vector of real plane rotations to elements of two real vectors.
 */
 declare var dlartv: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Reduces a real symmetric-definite generalized eigenproblem to standard form using packed storage.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,7 +39,7 @@ interface Routine {
 	( itype: number, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Reduces a real symmetric-definite generalized eigenproblem to standard form using packed storage using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -56,7 +56,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Reduces a real symmetric-definite generalized eigenproblem to standard form using packed storage.
 */
 declare var dspgst: Routine;
 

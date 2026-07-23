@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the generalized eigenvalues, the generalized real Schur form (S,T).
 	*
 	* @param order - storage layout
 	* @param jobvsl - `jobvsl`
@@ -53,7 +53,7 @@ interface Routine {
 	( order: Layout, jobvsl: number, jobvsr: number, sort: string, selctg: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, ALPHAI: Float64Array, BETA: Float64Array, VSL: Float64Array, LDVSL: number, VSR: Float64Array, LDVSR: number, WORK: Float64Array, BWORK: Int32Array ): Record<string, unknown>;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the generalized eigenvalues, the generalized real Schur form (S,T) using alternative indexing semantics.
 	*
 	* @param jobvsl - `jobvsl`
 	* @param jobvsr - `jobvsr`
@@ -97,7 +97,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the generalized eigenvalues, the generalized real Schur form (S,T).
 */
 declare var dgges: Routine;
 

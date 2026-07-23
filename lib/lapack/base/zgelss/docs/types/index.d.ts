@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Computes the minimum norm solution to a complex linear least squares problem:.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -45,7 +45,7 @@ interface Routine {
 	( M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Computes the minimum norm solution to a complex linear least squares problem: using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Computes the minimum norm solution to a complex linear least squares problem:.
 */
 declare var zgelss: Routine;
 

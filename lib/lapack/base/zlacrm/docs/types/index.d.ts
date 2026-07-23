@@ -28,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Multiplies a complex M-by-N matrix `A` by a real N-by-N matrix `B` and stores the result in a complex M-by-N matrix `C`.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -45,7 +45,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, RWORK: Float64Array ): Complex128Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Multiplies a complex M-by-N matrix `A` by a real N-by-N matrix `B` and stores the result in a complex M-by-N matrix `C` using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Multiplies a complex M-by-N matrix `A` by a real N-by-N matrix `B` and stores the result in a complex M-by-N matrix `C`.
 */
 declare var zlacrm: Routine;
 

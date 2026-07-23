@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license MIT.
+	* Performs the symmetric rank-2 operation `A := alpha*x*y^T + alpha*y*x^T + A`.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -43,7 +43,7 @@ interface Routine {
 	( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, AP: Float64Array, strideAP: number ): Float64Array;
 
 	/**
-	* @license MIT using alternative indexing semantics.
+	* Performs the symmetric rank-2 operation `A := alpha*x*y^T + alpha*y*x^T + A` using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -63,7 +63,7 @@ interface Routine {
 }
 
 /**
-* @license MIT.
+* Performs the symmetric rank-2 operation `A := alpha*x*y^T + alpha*y*x^T + A`.
 */
 declare var dspr2: Routine;
 

@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zaxpy`.
 */
 interface Routine {
 	/**
-	* Scales a complex double-precision vector by a complex constant and adds.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param za - `za`
@@ -33,10 +37,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( N: number, za: number, zx: number, strideX: number, zy: number, strideY: number ): Float64Array;
+	( N: number, za: number, zx: number, strideX: number, zy: number, strideY: number ): Complex128Array;
 
 	/**
-	* Scales a complex double-precision vector by a complex constant and adds using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param za - `za`
@@ -48,11 +52,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, za: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Float64Array;
+	ndarray( N: number, za: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Complex128Array;
 }
 
 /**
-* Scales a complex double-precision vector by a complex constant and adds.
+* @license MIT.
 */
 declare var zaxpy: Routine;
 

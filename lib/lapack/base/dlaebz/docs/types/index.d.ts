@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
+	* @license MIT.
 	*
 	* @param ijob - `ijob`
 	* @param nitmax - `nitmax`
@@ -50,15 +50,15 @@ interface Routine {
 	* @param NAB - `NAB`
 	* @param LDNAB - leading dimension of `NAB`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( ijob: number, nitmax: number, N: number, mmax: number, minp: number, nbmin: number, abstol: number, reltol: number, pivmin: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, NVAL: Float64Array, strideNVAL: number, AB: Float64Array, LDAB: number, c: Float64Array, strideC: number, mout: number, NAB: Float64Array, LDNAB: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( ijob: number, nitmax: number, N: number, mmax: number, minp: number, nbmin: number, abstol: number, reltol: number, pivmin: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, NVAL: Float64Array, strideNVAL: number, AB: Float64Array, LDAB: number, c: Float64Array, strideC: number, mout: number, NAB: Float64Array, LDNAB: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* Computes the number of eigenvalues of a symmetric tridiagonal matrix T using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param ijob - `ijob`
 	* @param nitmax - `nitmax`
@@ -94,18 +94,18 @@ interface Routine {
 	* @param strideNAB2 - stride of `NAB`
 	* @param offsetNAB - starting index for `NAB`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( ijob: number, nitmax: number, N: number, mmax: number, minp: number, nbmin: number, abstol: number, reltol: number, pivmin: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, NVAL: Float64Array, strideNVAL: number, offsetNVAL: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, c: Float64Array, strideC: number, offsetC: number, mout: number, NAB: Float64Array, strideNAB1: number, strideNAB2: number, offsetNAB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( ijob: number, nitmax: number, N: number, mmax: number, minp: number, nbmin: number, abstol: number, reltol: number, pivmin: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, NVAL: Float64Array, strideNVAL: number, offsetNVAL: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, c: Float64Array, strideC: number, offsetC: number, mout: number, NAB: Float64Array, strideNAB1: number, strideNAB2: number, offsetNAB: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Computes the number of eigenvalues of a symmetric tridiagonal matrix T.
+* @license MIT.
 */
 declare var dlaebz: Routine;
 

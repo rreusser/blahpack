@@ -20,28 +20,35 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlahef`.
 */
 interface Routine {
 	/**
-	* CABS1: |re(z)| + |im(z)|.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param order - storage layout
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param N - number of columns
+	* @param nb - `nb`
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
+	* @param W - `W`
+	* @param LDW - leading dimension of `W`
 	* @returns result
 	*/
-	( v: number, idx: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, W: Float64Array, LDW: number ): number;
 
 	/**
-	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
 	* @param nb - `nb`
-	* @param kb - `kb`
 	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
@@ -55,11 +62,11 @@ interface Routine {
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nb: number, kb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): number;
 }
 
 /**
-* CABS1: |re(z)| + |im(z)|.
+* @license MIT.
 */
 declare var zlahef: Routine;
 

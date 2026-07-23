@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the sum of the absolute values of the real and imaginary components of a complex vector.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -31,10 +31,10 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number, offsetX: number ): Float64Array;
+	( N: number, zx: number, strideX: number, offsetX: number ): number;
 
 	/**
-	* Computes the sum of the absolute values of the real and imaginary components of a complex vector using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -42,11 +42,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, zx: number, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number ): number;
 }
 
 /**
-* Computes the sum of the absolute values of the real and imaginary components of a complex vector.
+* @license MIT.
 */
 declare var dzasum: Routine;
 

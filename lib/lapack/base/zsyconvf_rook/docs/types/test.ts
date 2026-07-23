@@ -21,22 +21,131 @@ import zsyconvf_rook = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zsyconvf_rook( 'row-major', 'upper', 2, 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2, 2, 2, 2 ); // $ExpectType Float64Array
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zsyconvf_rook( 10, 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( true, 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( null, 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( undefined, 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( [], 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( {}, 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 10, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', true, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', null, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', undefined, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', [], 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', {}, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, '10', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), false, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [], 10 ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eleventh argument of invalid type...
+{
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, '10' ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, true ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, false ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, null ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, undefined ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, [] ); // $ExpectError
+	zsyconvf_rook( 'row-major', 'upper', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zsyconvf_rook(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	zsyconvf_rook.ndarray( 'upper', 2, 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	zsyconvf_rook.ndarray(); // $ExpectError
+	zsyconvf_rook( 'row-major' ); // $ExpectError
 }

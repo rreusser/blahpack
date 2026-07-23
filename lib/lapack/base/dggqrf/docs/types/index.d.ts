@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes a generalized QR factorization of an N-by-M matrix A and an.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param M - number of rows
@@ -37,13 +37,13 @@ interface Routine {
 	* @param TAUB - `TAUB`
 	* @param strideTAUB - stride of `TAUB`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( N: number, M: number, p: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, M: number, p: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes a generalized QR factorization of an N-by-M matrix A and an using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param M - number of rows
@@ -63,15 +63,15 @@ interface Routine {
 	* @param strideTAUB - stride of `TAUB`
 	* @param offsetTAUB - starting index for `TAUB`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, M: number, p: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, M: number, p: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a generalized QR factorization of an N-by-M matrix A and an.
+* @license MIT.
 */
 declare var dggqrf: Routine;
 

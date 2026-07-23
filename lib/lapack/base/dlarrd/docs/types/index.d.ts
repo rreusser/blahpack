@@ -27,107 +27,87 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes eigenvalues of a symmetric tridiagonal matrix to suitable accuracy
+	* @license MIT.
 	*
-	* @param range - specifies the operation type
+	* @param range - `range`
 	* @param order - storage layout
 	* @param N - number of columns
-	* @param vl - vl
-	* @param vu - vu
-	* @param il - il
-	* @param iu - iu
-	* @param GERS - input array
-	* @param strideGERS - stride length for `GERS`
-	* @param reltol - reltol
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param E2 - input array
-	* @param strideE2 - stride length for `E2`
-	* @param pivmin - pivmin
-	* @param nsplit - nsplit
-	* @param ISPLIT - input array
-	* @param strideISPLIT - stride length for `ISPLIT`
-	* @param offsetISPLIT - starting index for `ISPLIT`
-	* @param M - number of rows
-	* @param w - input array
-	* @param strideW - stride length for `w`
-	* @param WERR - input array
-	* @param strideWERR - stride length for `WERR`
-	* @param wl - wl
-	* @param wu - wu
-	* @param IBLOCK - input array
-	* @param strideIBLOCK - stride length for `IBLOCK`
-	* @param offsetIBLOCK - starting index for `IBLOCK`
-	* @param INDEXW - input array
-	* @param strideINDEXW - stride length for `INDEXW`
-	* @param offsetINDEXW - starting index for `INDEXW`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param vl - `vl`
+	* @param vu - `vu`
+	* @param il - `il`
+	* @param iu - `iu`
+	* @param GERS - `GERS`
+	* @param strideGERS - stride of `GERS`
+	* @param reltol - `reltol`
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param E2 - `E2`
+	* @param strideE2 - stride of `E`
+	* @param pivmin - `pivmin`
+	* @param nsplit - `nsplit`
+	* @param ISPLIT - `ISPLIT`
+	* @param strideISPLIT - stride of `ISPLIT`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param WERR - `WERR`
+	* @param strideWERR - stride of `WERR`
+	* @param IBLOCK - `IBLOCK`
+	* @param strideIBLOCK - stride of `IBLOCK`
+	* @param INDEXW - `INDEXW`
+	* @param strideINDEXW - stride of `INDEXW`
 	* @returns result
 	*/
-	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, GERS: Float64Array, strideGERS: number, reltol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: Float64Array, strideE2: number, pivmin: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, M: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, wl: number, wu: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, INDEXW: Int32Array, strideINDEXW: number, offsetINDEXW: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, GERS: Float64Array, strideGERS: number, reltol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, pivmin: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, IBLOCK: Int32Array, strideIBLOCK: number, INDEXW: Float64Array, strideINDEXW: number ): Record<string, unknown>;
 
 	/**
-	* Computes eigenvalues of a symmetric tridiagonal matrix to suitable accuracy, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param range - specifies the operation type
-	* @param order - specifies the operation type
+	* @param range - `range`
+	* @param order - storage layout
 	* @param N - number of columns
-	* @param vl - vl
-	* @param vu - vu
-	* @param il - il
-	* @param iu - iu
-	* @param GERS - input array
-	* @param strideGERS - stride length for `GERS`
+	* @param vl - `vl`
+	* @param vu - `vu`
+	* @param il - `il`
+	* @param iu - `iu`
+	* @param GERS - `GERS`
+	* @param strideGERS - stride of `GERS`
 	* @param offsetGERS - starting index for `GERS`
-	* @param reltol - reltol
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param reltol - `reltol`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param E2 - input array
+	* @param E2 - `E2`
 	* @param strideE2 - stride of `E`
 	* @param offsetE2 - starting index for `E2`
-	* @param pivmin - pivmin
-	* @param nsplit - nsplit
-	* @param ISPLIT - input array
-	* @param strideISPLIT - stride length for `ISPLIT`
+	* @param pivmin - `pivmin`
+	* @param nsplit - `nsplit`
+	* @param ISPLIT - `ISPLIT`
+	* @param strideISPLIT - stride of `ISPLIT`
 	* @param offsetISPLIT - starting index for `ISPLIT`
-	* @param M - number of rows
-	* @param w - input array
-	* @param strideW - stride length for `w`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
-	* @param WERR - input array
-	* @param strideWERR - stride length for `WERR`
+	* @param WERR - `WERR`
+	* @param strideWERR - stride of `WERR`
 	* @param offsetWERR - starting index for `WERR`
-	* @param wl - wl
-	* @param wu - wu
-	* @param IBLOCK - input array
-	* @param strideIBLOCK - stride length for `IBLOCK`
+	* @param IBLOCK - `IBLOCK`
+	* @param strideIBLOCK - stride of `IBLOCK`
 	* @param offsetIBLOCK - starting index for `IBLOCK`
-	* @param INDEXW - input array
-	* @param strideINDEXW - stride length for `INDEXW`
+	* @param INDEXW - `INDEXW`
+	* @param strideINDEXW - stride of `INDEXW`
 	* @param offsetINDEXW - starting index for `INDEXW`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
 	* @returns result
 	*/
-	ndarray( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, GERS: Float64Array, strideGERS: number, offsetGERS: number, reltol: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: Float64Array, strideE2: number, offsetE2: number, pivmin: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, M: number, w: Float64Array, strideW: number, offsetW: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, wl: number, wu: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, INDEXW: Int32Array, strideINDEXW: number, offsetINDEXW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, GERS: Float64Array, strideGERS: number, offsetGERS: number, reltol: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, pivmin: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, w: Float64Array, strideW: number, offsetW: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, INDEXW: Float64Array, strideINDEXW: number, offsetINDEXW: number ): Record<string, unknown>;
 }
 
 /**
-* Computes eigenvalues of a symmetric tridiagonal matrix to suitable accuracy
+* @license MIT.
 */
 declare var dlarrd: Routine;
 

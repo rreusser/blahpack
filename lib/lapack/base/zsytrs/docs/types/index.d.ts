@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Perform complex division, storing result in module-level cdR and cdI.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -45,10 +45,10 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): void;
 
 	/**
-	* Perform complex division, storing result in module-level cdR and cdI using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -66,11 +66,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): void;
 }
 
 /**
-* Perform complex division, storing result in module-level cdR and cdI.
+* @license MIT.
 */
 declare var zsytrs: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a complex Hermitian matrix stored in packed form to real symmetric tridiagonal form.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -37,10 +37,10 @@ interface Routine {
 	* @param TAU - `TAU`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, d: Float64Array, e: Float64Array, TAU: Float64Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array, d: Float64Array, e: Float64Array, TAU: Float64Array ): number;
 
 	/**
-	* Reduces a complex Hermitian matrix stored in packed form to real symmetric tridiagonal form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -58,11 +58,11 @@ interface Routine {
 	* @param offsetTAU - starting index for `TAU`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number ): number;
 }
 
 /**
-* Reduces a complex Hermitian matrix stored in packed form to real symmetric tridiagonal form.
+* @license MIT.
 */
 declare var zhptrd: Routine;
 

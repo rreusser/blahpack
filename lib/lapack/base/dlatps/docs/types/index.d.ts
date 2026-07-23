@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlatps`.
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -42,10 +42,10 @@ interface Routine {
 	* @param strideCNORM - stride of `CNORM`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, AP: Float64Array, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): Float64Array;
+	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, AP: Float64Array, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -64,11 +64,11 @@ interface Routine {
 	* @param offsetCNORM - starting index for `CNORM`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlatps: Routine;
 

@@ -23,17 +23,17 @@
 */
 interface Routine {
 	/**
-	* Finds the index of the first vector element of maximum absolute value.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param ZX - `ZX`
 	* @param strideZX - stride of `ZX`
 	* @returns result
 	*/
-	( N: number, ZX: Float64Array, strideZX: number ): Float64Array;
+	( N: number, ZX: Float64Array, strideZX: number ): number;
 
 	/**
-	* Finds the index of the first vector element of maximum absolute value using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ZX - `ZX`
@@ -41,11 +41,11 @@ interface Routine {
 	* @param offsetZX - starting index for `ZX`
 	* @returns result
 	*/
-	ndarray( N: number, ZX: Float64Array, strideZX: number, offsetZX: number ): Float64Array;
+	ndarray( N: number, ZX: Float64Array, strideZX: number, offsetZX: number ): number;
 }
 
 /**
-* Finds the index of the first vector element of maximum absolute value.
+* @license MIT.
 */
 declare var izmax1: Routine;
 

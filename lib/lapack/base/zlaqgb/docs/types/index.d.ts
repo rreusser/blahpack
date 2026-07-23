@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Equilibrates a complex general band matrix using row and column scaling factors.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -40,10 +40,10 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): Float64Array;
+	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): string;
 
 	/**
-	* Equilibrates a complex general band matrix using row and column scaling factors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -64,11 +64,11 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number ): Float64Array;
+	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number ): string;
 }
 
 /**
-* Equilibrates a complex general band matrix using row and column scaling factors.
+* @license MIT.
 */
 declare var zlaqgb: Routine;
 

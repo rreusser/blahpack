@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves a 1-by-1 or 2-by-2 linear system of the form:.
+	* @license MIT.
 	*
 	* @param ltrans - `ltrans`
 	* @param na - `na`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param LDX - leading dimension of `X`
 	* @returns result
 	*/
-	( ltrans: boolean, na: number, nw: number, smin: number, ca: number, A: Float64Array, LDA: number, d1: number, d2: number, B: Float64Array, LDB: number, wr: number, wi: number, X: Float64Array, LDX: number ): Float64Array;
+	( ltrans: boolean, na: number, nw: number, smin: number, ca: number, A: Float64Array, LDA: number, d1: number, d2: number, B: Float64Array, LDB: number, wr: number, wi: number, X: Float64Array, LDX: number ): { scale: number; xnorm: number };
 
 	/**
-	* Solves a 1-by-1 or 2-by-2 linear system of the form: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param ltrans - `ltrans`
 	* @param na - `na`
@@ -68,15 +68,13 @@ interface Routine {
 	* @param strideX1 - stride of `X`
 	* @param strideX2 - stride of `X`
 	* @param offsetX - starting index for `X`
-	* @param scale - `scale`
-	* @param xnorm - `xnorm`
 	* @returns result
 	*/
-	ndarray( ltrans: boolean, na: number, nw: number, smin: number, ca: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d1: number, d2: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, wr: number, wi: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, scale: number, xnorm: number ): Float64Array;
+	ndarray( ltrans: boolean, na: number, nw: number, smin: number, ca: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d1: number, d2: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, wr: number, wi: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number ): { scale: number; xnorm: number };
 }
 
 /**
-* Solves a 1-by-1 or 2-by-2 linear system of the form:.
+* @license MIT.
 */
 declare var dlaln2: Routine;
 

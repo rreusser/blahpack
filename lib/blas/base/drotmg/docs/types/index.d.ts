@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Constructs a modified Givens plane rotation.
+	* @license MIT.
 	*
 	* @param D - `D`
 	* @param x1 - `x1`
@@ -31,10 +31,10 @@ interface Routine {
 	* @param param - `param`
 	* @returns result
 	*/
-	( D: Float64Array, x1: number, dy1: number, param: Float64Array ): Float64Array;
+	( D: Float64Array, x1: number, dy1: number, param: Float64Array ): void;
 
 	/**
-	* Constructs a modified Givens plane rotation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param D - `D`
 	* @param strideD - stride of `D`
@@ -48,11 +48,11 @@ interface Routine {
 	* @param offsetParam - starting index for `Param`
 	* @returns result
 	*/
-	ndarray( D: Float64Array, strideD: number, offsetD: number, x1: number, strideX1: number, offsetX1: number, dy1: number, param: Float64Array, strideParam: number, offsetParam: number ): Float64Array;
+	ndarray( D: Float64Array, strideD: number, offsetD: number, x1: number, strideX1: number, offsetX1: number, dy1: number, param: Float64Array, strideParam: number, offsetParam: number ): void;
 }
 
 /**
-* Constructs a modified Givens plane rotation.
+* @license MIT.
 */
 declare var drotmg: Routine;
 

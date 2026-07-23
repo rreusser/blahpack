@@ -20,53 +20,53 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsyconvf`.
 */
 interface Routine {
 	/**
-	* Converts the factorization output format used in dsytrf
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
-	* @param way - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param way - `way`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param IPIV - output array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param E - `E`
+	* @param strideE - stride of `E`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, way: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, way: string, N: number, A: Float64Array, LDA: number, E: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 
 	/**
-	* Converts the factorization output format used in dsytrf, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
-	* @param way - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param way - `way`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param E - `E`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param IPIV - output array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( uplo: string, way: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, E: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Converts the factorization output format used in dsytrf
+* @license MIT.
 */
 declare var dsyconvf: Routine;
 

@@ -27,49 +27,49 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a column-blocked QR factorization of a real `M`-by-`N` matrix `A` (with `M >= N`) via TSQR followed by Householder reconstruction.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param M - number of rows of `A` (`M >= N`)
-	* @param N - number of columns of `A`
-	* @param mb1 - TSQR row block size (`mb1 > N`)
-	* @param nb1 - TSQR column block size (`nb1 >= 1`)
-	* @param nb2 - HRT (output) block size (`nb2 >= 1`)
-	* @param A - input/output matrix
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param mb1 - `mb1`
+	* @param nb1 - `nb1`
+	* @param nb2 - `nb2`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param T - output matrix of upper triangular block reflectors
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param WORK - workspace array
-	* @returns status code (`0` = success)
+	* @param WORK - `WORK`
+	* @returns result
 	*/
 	( order: Layout, M: number, N: number, mb1: number, nb1: number, nb2: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array ): number;
 
 	/**
-	* Computes a column-blocked QR factorization of a real `M`-by-`N` matrix `A` (with `M >= N`) via TSQR followed by Householder reconstruction, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param M - number of rows of `A` (`M >= N`)
-	* @param N - number of columns of `A`
-	* @param mb1 - TSQR row block size (`mb1 > N`)
-	* @param nb1 - TSQR column block size (`nb1 >= 1`)
-	* @param nb2 - HRT (output) block size (`nb2 >= 1`)
-	* @param A - input/output matrix
-	* @param strideA1 - stride of the first dimension of `A`
-	* @param strideA2 - stride of the second dimension of `A`
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param mb1 - `mb1`
+	* @param nb1 - `nb1`
+	* @param nb2 - `nb2`
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param T - output matrix of upper triangular block reflectors
-	* @param strideT1 - stride of the first dimension of `T`
-	* @param strideT2 - stride of the second dimension of `T`
+	* @param T - `T`
+	* @param strideT1 - stride of `T`
+	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param WORK - workspace array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @returns status code (`0` = success)
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( M: number, N: number, mb1: number, nb1: number, nb2: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): number;
+	ndarray( M: number, N: number, mb1: number, nb1: number, nb2: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a column-blocked QR factorization of a real `M`-by-`N` matrix `A` (with `M >= N`) via TSQR followed by Householder reconstruction.
+* @license MIT.
 */
 declare var dgetsqrhrt: Routine;
 

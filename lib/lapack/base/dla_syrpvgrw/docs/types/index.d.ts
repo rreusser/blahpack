@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a symmetric indefinite matrix.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -40,10 +40,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, info: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, WORK: Float64Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, info: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, WORK: Float64Array ): number;
 
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a symmetric indefinite matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -60,15 +60,15 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, info: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, info: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a symmetric indefinite matrix.
+* @license MIT.
 */
 declare var dla_syrpvgrw: Routine;
 

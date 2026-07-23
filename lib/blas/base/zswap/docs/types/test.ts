@@ -16,28 +16,79 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zswap = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zswap( 10 ); // $ExpectType Float64Array
+	zswap( 10, 10, 10, 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zswap( '10' ); // $ExpectError
-	zswap( true ); // $ExpectError
-	zswap( false ); // $ExpectError
-	zswap( null ); // $ExpectError
-	zswap( undefined ); // $ExpectError
-	zswap( [] ); // $ExpectError
-	zswap( {} ); // $ExpectError
+	zswap( '10', 10, 10, 10, 10 ); // $ExpectError
+	zswap( true, 10, 10, 10, 10 ); // $ExpectError
+	zswap( false, 10, 10, 10, 10 ); // $ExpectError
+	zswap( null, 10, 10, 10, 10 ); // $ExpectError
+	zswap( undefined, 10, 10, 10, 10 ); // $ExpectError
+	zswap( [], 10, 10, 10, 10 ); // $ExpectError
+	zswap( {}, 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zswap( 10, '10', 10, 10, 10 ); // $ExpectError
+	zswap( 10, true, 10, 10, 10 ); // $ExpectError
+	zswap( 10, false, 10, 10, 10 ); // $ExpectError
+	zswap( 10, null, 10, 10, 10 ); // $ExpectError
+	zswap( 10, undefined, 10, 10, 10 ); // $ExpectError
+	zswap( 10, [], 10, 10, 10 ); // $ExpectError
+	zswap( 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zswap( 10, 10, '10', 10, 10 ); // $ExpectError
+	zswap( 10, 10, true, 10, 10 ); // $ExpectError
+	zswap( 10, 10, false, 10, 10 ); // $ExpectError
+	zswap( 10, 10, null, 10, 10 ); // $ExpectError
+	zswap( 10, 10, undefined, 10, 10 ); // $ExpectError
+	zswap( 10, 10, [], 10, 10 ); // $ExpectError
+	zswap( 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zswap( 10, 10, 10, '10', 10 ); // $ExpectError
+	zswap( 10, 10, 10, true, 10 ); // $ExpectError
+	zswap( 10, 10, 10, false, 10 ); // $ExpectError
+	zswap( 10, 10, 10, null, 10 ); // $ExpectError
+	zswap( 10, 10, 10, undefined, 10 ); // $ExpectError
+	zswap( 10, 10, 10, [], 10 ); // $ExpectError
+	zswap( 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zswap( 10, 10, 10, 10, '10' ); // $ExpectError
+	zswap( 10, 10, 10, 10, true ); // $ExpectError
+	zswap( 10, 10, 10, 10, false ); // $ExpectError
+	zswap( 10, 10, 10, 10, null ); // $ExpectError
+	zswap( 10, 10, 10, 10, undefined ); // $ExpectError
+	zswap( 10, 10, 10, 10, [] ); // $ExpectError
+	zswap( 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zswap(); // $ExpectError
+	zswap( 10 ); // $ExpectError
 }

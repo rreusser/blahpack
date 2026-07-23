@@ -20,64 +20,64 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zunmr3`.
 */
 interface Routine {
 	/**
-	* multiplies a general matrix by the unitary matrix Q from an RZ factorization
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param side - specifies the operation type
-	* @param trans - specifies the operation type
+	* @param side - specifies the side of the operation
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param A - input matrix
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param C - input matrix
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* multiplies a general matrix by the unitary matrix Q from an RZ factorization, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param side - specifies the operation type
-	* @param trans - specifies the operation type
+	* @param side - specifies the side of the operation
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param A - input matrix
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: string, trans: TransposeOperation, M: number, N: number, K: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* multiplies a general matrix by the unitary matrix Q from an RZ factorization
+* @license MIT.
 */
 declare var zunmr3: Routine;
 

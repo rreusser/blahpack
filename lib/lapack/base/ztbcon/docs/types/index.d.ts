@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztbcon`.
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal condition number of a complex triangular band matrix.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -38,15 +38,15 @@ interface Routine {
 	* @param LDAB - leading dimension of `AB`
 	* @param RCOND - `RCOND`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, LDAB: number, RCOND: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, LDAB: number, RCOND: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Estimates the reciprocal condition number of a complex triangular band matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -59,18 +59,18 @@ interface Routine {
 	* @param offsetAB - starting index for `AB`
 	* @param RCOND - `RCOND`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, RCOND: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, RCOND: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal condition number of a complex triangular band matrix.
+* @license MIT.
 */
 declare var ztbcon: Routine;
 

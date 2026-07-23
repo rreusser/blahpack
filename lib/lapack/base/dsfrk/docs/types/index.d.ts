@@ -27,7 +27,7 @@ import { MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs a symmetric rank-k operation for a matrix in Rectangular Full Packed format.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,7 +44,7 @@ interface Routine {
 	( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array ): Float64Array;
 
 	/**
-	* Performs a symmetric rank-k operation for a matrix in Rectangular Full Packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -66,7 +66,7 @@ interface Routine {
 }
 
 /**
-* Performs a symmetric rank-k operation for a matrix in Rectangular Full Packed format.
+* @license MIT.
 */
 declare var dsfrk: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
+	* @license MIT.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -50,15 +50,15 @@ interface Routine {
 	* @param ISPLIT - `ISPLIT`
 	* @param strideISPLIT - stride of `ISPLIT`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, abstol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, nsplit: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, abstol: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, nsplit: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* Computes selected eigenvalues of a real symmetric tridiagonal matrix T using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param range - `range`
 	* @param order - storage layout
@@ -86,18 +86,18 @@ interface Routine {
 	* @param strideISPLIT - stride of `ISPLIT`
 	* @param offsetISPLIT - starting index for `ISPLIT`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, abstol: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, M: number, nsplit: number, w: Float64Array, strideW: number, offsetW: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( range: string, order: Layout, N: number, vl: number, vu: number, il: number, iu: number, abstol: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, M: number, nsplit: number, w: Float64Array, strideW: number, offsetW: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
+* @license MIT.
 */
 declare var dstebz: Routine;
 

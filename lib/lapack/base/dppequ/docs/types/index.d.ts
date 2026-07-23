@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive definite matrix in packed storage and reduce its condition number.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -35,10 +35,10 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, s: Float64Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array, s: Float64Array ): { info: number; scond: number };
 
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive definite matrix in packed storage and reduce its condition number using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -50,11 +50,11 @@ interface Routine {
 	* @param offsetS - starting index for `S`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, s: Float64Array, strideS: number, offsetS: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, s: Float64Array, strideS: number, offsetS: number ): { info: number; scond: number };
 }
 
 /**
-* Computes row and column scalings intended to equilibrate a symmetric positive definite matrix in packed storage and reduce its condition number.
+* @license MIT.
 */
 declare var dppequ: Routine;
 

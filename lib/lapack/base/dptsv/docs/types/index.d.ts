@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves a real symmetric positive definite tridiagonal system of linear.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -35,10 +35,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Float64Array;
+	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves a real symmetric positive definite tridiagonal system of linear using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -54,11 +54,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves a real symmetric positive definite tridiagonal system of linear.
+* @license MIT.
 */
 declare var dptsv: Routine;
 

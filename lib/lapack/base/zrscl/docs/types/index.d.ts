@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zrscl`.
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -31,10 +35,10 @@ interface Routine {
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( N: number, a: number, x: Float64Array, strideX: number ): Float64Array;
+	( N: number, a: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -43,11 +47,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, a: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, a: number, x: Float64Array, strideX: number, offsetX: number ): Complex128Array;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zrscl: Routine;
 

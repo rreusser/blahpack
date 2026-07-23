@@ -21,12 +21,111 @@ import dgbtrf = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dgbtrf( 0 ); // $ExpectType Float64Array
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dgbtrf( 10, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( true, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( null, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( undefined, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( [], 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( {}, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dgbtrf( 'row-major', '10', 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', true, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', false, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', null, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', undefined, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', [], 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', {}, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, '10', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, true, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, false, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, null, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, undefined, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, [], 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, {}, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, '10', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, false, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, 10, '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, true, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, false, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, null, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, [], new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, 10, 10, '10', 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, true, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, null, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, undefined, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, [], 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, {}, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), false, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10' ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), false ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [] ); // $ExpectError
+	dgbtrf( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dgbtrf(); // $ExpectError
+	dgbtrf( 'row-major' ); // $ExpectError
 }

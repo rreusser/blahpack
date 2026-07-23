@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+	* @license MIT.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -37,15 +37,15 @@ interface Routine {
 	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -66,18 +66,18 @@ interface Routine {
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+* @license MIT.
 */
 declare var zgeev: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param transr - `transr`
@@ -37,10 +37,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( norm: string, transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, WORK: Float64Array ): Float64Array;
+	( norm: string, transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, WORK: Float64Array ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param transr - `transr`
@@ -50,15 +50,15 @@ interface Routine {
 	* @param strideA - stride of `A`
 	* @param offsetA - starting index for `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA: number, offsetA: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA: number, offsetA: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zlanhf: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the singular value decomposition (SVD) of a complex M-by-N matrix A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param jobu - `jobu`
@@ -43,16 +43,15 @@ interface Routine {
 	* @param VT - `VT`
 	* @param LDVT - leading dimension of `VT`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, jobu: string, jobvt: string, M: number, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, jobu: string, jobvt: string, M: number, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Computes the singular value decomposition (SVD) of a complex M-by-N matrix A, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobu - `jobu`
 	* @param jobvt - `jobvt`
@@ -74,19 +73,18 @@ interface Routine {
 	* @param strideVT2 - stride of `VT`
 	* @param offsetVT - starting index for `VT`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( jobu: string, jobvt: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( jobu: string, jobvt: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Computes the singular value decomposition (SVD) of a complex M-by-N matrix A.
+* @license MIT.
 */
 declare var zgesvd: Routine;
 

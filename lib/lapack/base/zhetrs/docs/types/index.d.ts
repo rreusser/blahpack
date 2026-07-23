@@ -20,25 +20,31 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhetrs`.
 */
 interface Routine {
 	/**
-	* Perform complex division, storing result in module-level cdR and cdI.
+	* @license MIT.
 	*
-	* @param ar - `ar`
-	* @param ai - `ai`
-	* @param br - `br`
-	* @param bi - `bi`
+	* @param order - storage layout
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param N - number of columns
+	* @param nrhs - number of right-hand sides
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
+	* @param B - `B`
+	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( ar: number, ai: number, br: number, bi: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): void;
 
 	/**
-	* Perform complex division, storing result in module-level cdR and cdI using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -56,11 +62,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): void;
 }
 
 /**
-* Perform complex division, storing result in module-level cdR and cdI.
+* @license MIT.
 */
 declare var zhetrs: Routine;
 

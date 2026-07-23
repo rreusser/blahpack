@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Improves the computed solution to a system of linear equations and provides.
+	* @license MIT.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -46,12 +46,16 @@ interface Routine {
 	* @param strideFERR - stride of `FERR`
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param iwork - `iwork`
+	* @param strideIwork - stride of `Iwork`
 	* @returns result
 	*/
-	( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number ): Float64Array;
+	( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, work: Float64Array, strideWork: number, iwork: Float64Array, strideIwork: number ): number;
 
 	/**
-	* Improves the computed solution to a system of linear equations and provides using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -81,13 +85,19 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param iwork - `iwork`
+	* @param strideIwork - stride of `Iwork`
+	* @param offsetIwork - starting index for `Iwork`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, work: Float64Array, strideWork: number, offsetWork: number, iwork: Float64Array, strideIwork: number, offsetIwork: number ): number;
 }
 
 /**
-* Improves the computed solution to a system of linear equations and provides.
+* @license MIT.
 */
 declare var dgerfs: Routine;
 

@@ -21,23 +21,55 @@ import dpftrf = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dpftrf( 'no-transpose' ); // $ExpectType Float64Array
+	dpftrf( 'no-transpose', 'upper', 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dpftrf( 10 ); // $ExpectError
-	dpftrf( true ); // $ExpectError
-	dpftrf( false ); // $ExpectError
-	dpftrf( null ); // $ExpectError
-	dpftrf( undefined ); // $ExpectError
-	dpftrf( [] ); // $ExpectError
-	dpftrf( {} ); // $ExpectError
+	dpftrf( 10, 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( true, 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( null, 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( undefined, 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( [], 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( {}, 'upper', 10, new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dpftrf( 'no-transpose', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', true, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', null, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', [], 10, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dpftrf( 'no-transpose', 'upper', '10', new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', true, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', false, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', null, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', undefined, new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', [], new Float64Array( 25 ) ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dpftrf( 'no-transpose', 'upper', 10, '10' ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, 10 ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, true ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, null ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, undefined ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, [] ); // $ExpectError
+	dpftrf( 'no-transpose', 'upper', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dpftrf(); // $ExpectError
+	dpftrf( 'no-transpose' ); // $ExpectError
 }

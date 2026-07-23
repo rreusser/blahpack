@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtpcon`.
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal of the condition number of a real triangular matrix in packed storage, in either the 1-norm or the infinity-norm.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,10 +39,10 @@ interface Routine {
 	* @param IWORK - `IWORK`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, rcond: number, WORK: Float64Array, IWORK: Int32Array ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, rcond: number, WORK: Float64Array, IWORK: Int32Array ): number;
 
 	/**
-	* Estimates the reciprocal of the condition number of a real triangular matrix in packed storage, in either the 1-norm or the infinity-norm using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -53,18 +53,18 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @param RCOND - `RCOND`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, RCOND: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, RCOND: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal of the condition number of a real triangular matrix in packed storage, in either the 1-norm or the infinity-norm.
+* @license MIT.
 */
 declare var dtpcon: Routine;
 

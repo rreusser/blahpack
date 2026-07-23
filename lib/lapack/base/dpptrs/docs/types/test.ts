@@ -21,12 +21,88 @@ import dpptrs = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dpptrs( 0 ); // $ExpectType Float64Array
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dpptrs( 10, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( true, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( null, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( undefined, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( [], 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( {}, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dpptrs( 'row-major', 10, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', true, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', null, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', undefined, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', [], 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', {}, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dpptrs( 'row-major', 'upper', '10', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', true, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', false, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', null, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', [], 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dpptrs( 'row-major', 'upper', 10, '10', new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, true, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, false, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, null, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, [], new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, {}, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dpptrs( 'row-major', 'upper', 10, 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), '10', 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), true, 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), null, 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), undefined, 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), [], 10 ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), false ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	dpptrs( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dpptrs(); // $ExpectError
+	dpptrs( 'row-major' ); // $ExpectError
 }

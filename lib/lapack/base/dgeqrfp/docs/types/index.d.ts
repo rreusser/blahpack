@@ -27,43 +27,43 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a QR factorization of a real M-by-N matrix A = Q * R with non-negative diagonal elements of R.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param TAU - output array of scalar factors
+	* @param TAU - `TAU`
 	* @param strideTAU - stride of `TAU`
-	* @param WORK - workspace array
-	* @param strideWORK - stride of `WORK`
-	* @returns status code
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): number;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes a QR factorization of a real M-by-N matrix A = Q * R with non-negative diagonal elements of R, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
-	* @param strideA1 - stride of the first dimension of `A`
-	* @param strideA2 - stride of the second dimension of `A`
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param TAU - output array of scalar factors
+	* @param TAU - `TAU`
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - workspace array
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @returns status code
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): number;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a QR factorization of a real M-by-N matrix A = Q * R with non-negative diagonal elements of R.
+* @license MIT.
 */
 declare var dgeqrfp: Routine;
 

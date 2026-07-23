@@ -21,23 +21,67 @@ import dspgst = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dspgst( 10 ); // $ExpectType Float64Array
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dspgst( '10' ); // $ExpectError
-	dspgst( true ); // $ExpectError
-	dspgst( false ); // $ExpectError
-	dspgst( null ); // $ExpectError
-	dspgst( undefined ); // $ExpectError
-	dspgst( [] ); // $ExpectError
-	dspgst( {} ); // $ExpectError
+	dspgst( '10', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( true, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( false, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( null, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( undefined, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( [], 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( {}, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dspgst( 10, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, true, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, null, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, [], 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, {}, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dspgst( 10, 'upper', '10', new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', true, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', false, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', null, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', undefined, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', [], new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', {}, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dspgst( 10, 'upper', 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, true, new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, null, new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, [], new Float64Array( 25 ) ); // $ExpectError
+	dspgst( 10, 'upper', 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), true ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), null ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dspgst( 10, 'upper', 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dspgst(); // $ExpectError
+	dspgst( 10 ); // $ExpectError
 }

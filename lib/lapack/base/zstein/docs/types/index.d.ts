@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the eigenvectors of a real symmetric tridiagonal matrix T.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -40,17 +40,17 @@ interface Routine {
 	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @param IFAIL - `IFAIL`
 	* @param strideIFAIL - stride of `IFAIL`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, IFAIL: Float64Array, strideIFAIL: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, M: number, w: Float64Array, strideW: number, IBLOCK: Int32Array, strideIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, IFAIL: Float64Array, strideIFAIL: number ): number;
 
 	/**
-	* Computes the eigenvectors of a real symmetric tridiagonal matrix T using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -74,21 +74,21 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @param IFAIL - `IFAIL`
 	* @param strideIFAIL - stride of `IFAIL`
 	* @param offsetIFAIL - starting index for `IFAIL`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, M: number, w: Float64Array, strideW: number, offsetW: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, M: number, w: Float64Array, strideW: number, offsetW: number, IBLOCK: Int32Array, strideIBLOCK: number, offsetIBLOCK: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): number;
 }
 
 /**
-* Computes the eigenvectors of a real symmetric tridiagonal matrix T.
+* @license MIT.
 */
 declare var zstein: Routine;
 

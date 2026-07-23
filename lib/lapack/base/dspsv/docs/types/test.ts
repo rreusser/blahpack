@@ -21,12 +21,89 @@ import dspsv = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dspsv( 0 ); // $ExpectType Float64Array
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dspsv( 10, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( true, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( null, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( undefined, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( [], 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( {}, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dspsv( 'upper', '10', 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', true, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', false, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', null, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', undefined, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', [], 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', {}, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dspsv( 'upper', 10, '10', new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, true, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, false, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, null, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, undefined, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, [], new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, {}, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dspsv( 'upper', 10, 10, '10', new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, true, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, null, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, undefined, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, [], new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, {}, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), true, 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), null, 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), [], 10 ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), false ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	dspsv( 'upper', 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dspsv(); // $ExpectError
+	dspsv( 'upper' ); // $ExpectError
 }

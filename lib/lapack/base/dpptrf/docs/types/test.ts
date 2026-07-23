@@ -21,12 +21,45 @@ import dpptrf = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dpptrf( 0 ); // $ExpectType Float64Array
+	dpptrf( 'upper', 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dpptrf( 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( true, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( null, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( [], 10, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dpptrf( 'upper', '10', new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', true, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', false, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', null, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', undefined, new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', [], new Float64Array( 25 ) ); // $ExpectError
+	dpptrf( 'upper', {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dpptrf( 'upper', 10, '10' ); // $ExpectError
+	dpptrf( 'upper', 10, 10 ); // $ExpectError
+	dpptrf( 'upper', 10, true ); // $ExpectError
+	dpptrf( 'upper', 10, null ); // $ExpectError
+	dpptrf( 'upper', 10, undefined ); // $ExpectError
+	dpptrf( 'upper', 10, [] ); // $ExpectError
+	dpptrf( 'upper', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dpptrf(); // $ExpectError
+	dpptrf( 'upper' ); // $ExpectError
 }

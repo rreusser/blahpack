@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Returns sqrt(x**2 + y**2), taking care not to cause unnecessary.
+	* @license MIT.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -32,7 +32,7 @@ interface Routine {
 	( x: number, y: number ): number;
 
 	/**
-	* Returns sqrt(x**2 + y**2), taking care not to cause unnecessary using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param x - `x`
 	* @param y - `y`
@@ -42,7 +42,7 @@ interface Routine {
 }
 
 /**
-* Returns sqrt(x**2 + y**2), taking care not to cause unnecessary.
+* @license MIT.
 */
 declare var dlapy2: Routine;
 

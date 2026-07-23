@@ -20,23 +20,31 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlantr`.
 */
 interface Routine {
 	/**
-	* Returns the minimum of two values.
+	* @license MIT.
 	*
-	* @param a - `a`
-	* @param b - `b`
+	* @param order - storage layout
+	* @param norm - `norm`
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param diag - specifies whether the matrix is unit triangular
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( a: Float64Array, b: number ): Float64Array;
+	( order: Layout, norm: string, uplo: MatrixTriangle, diag: DiagonalType, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Returns the minimum of two values using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -48,15 +56,15 @@ interface Routine {
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Returns the minimum of two values.
+* @license MIT.
 */
 declare var dlantr: Routine;
 

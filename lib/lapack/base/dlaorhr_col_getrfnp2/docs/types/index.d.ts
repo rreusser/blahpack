@@ -27,38 +27,38 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param d - output array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number ): number;
 
 	/**
-	* Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel)., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param d - output array
-	* @param strideD - stride length for `d`
+	* @param D - `D`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, D: Float64Array, strideD: number, offsetD: number ): number;
 }
 
 /**
-* Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel).
+* @license MIT.
 */
 declare var dlaorhr_col_getrfnp2: Routine;
 

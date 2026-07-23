@@ -23,17 +23,17 @@
 */
 interface Routine {
 	/**
-	* Finds the index of the first element having the maximum absolute value.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number ): number;
 
 	/**
-	* Finds the index of the first element having the maximum absolute value using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -41,11 +41,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number ): number;
 }
 
 /**
-* Finds the index of the first element having the maximum absolute value.
+* @license MIT.
 */
 declare var idamax: Routine;
 

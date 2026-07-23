@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Form the triangular factor T of a complex block reflector H of order N.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param direct - `direct`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param LDT - leading dimension of `T`
 	* @returns result
 	*/
-	( order: Layout, direct: string, storev: string, N: number, K: number, V: Float64Array, LDV: number, TAU: Float64Array, strideTAU: number, T: Float64Array, LDT: number ): Float64Array;
+	( order: Layout, direct: string, storev: string, N: number, K: number, V: Float64Array, LDV: number, TAU: Float64Array, strideTAU: number, T: Float64Array, LDT: number ): void;
 
 	/**
-	* Form the triangular factor T of a complex block reflector H of order N, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param direct - `direct`
 	* @param storev - `storev`
@@ -64,11 +64,11 @@ interface Routine {
 	* @param offsetT - starting index for `T`
 	* @returns result
 	*/
-	ndarray( direct: string, storev: string, N: number, K: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): Float64Array;
+	ndarray( direct: string, storev: string, N: number, K: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): void;
 }
 
 /**
-* Form the triangular factor T of a complex block reflector H of order N.
+* @license MIT.
 */
 declare var zlarft: Routine;
 

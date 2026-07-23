@@ -956,6 +956,8 @@
     "conformance": "node bin/conformance.js --all",
     "conformance:full": "node bin/conformance.js --all --coverage",
     "conformance:fast": "node bin/conformance.js --all --fast",
+    "typecheck": "node bin/typecheck.js --all",
+    "typegen": "node bin/gen_index_dts.js --all && node bin/gen_test_ts.js --all",
     "audit": "bash bin/audit.sh",
     "check": "npm test && npm run conformance",
     "fetch-reference": "bash bin/fetch-reference.sh",
@@ -986,6 +988,7 @@
     "doctrine": "^3.0.0",
     "eslint": "^8.57.1",
     "eslint-plugin-node": "^11.1.0",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "typescript": "^5.9.3"
   }
 }

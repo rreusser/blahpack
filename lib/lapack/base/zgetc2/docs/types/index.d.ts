@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes an LU factorization with complete pivoting of a general N-by-N complex matrix.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param strideJPIV - stride of `JPIV`
 	* @returns result
 	*/
-	( N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): Float64Array;
+	( N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): number;
 
 	/**
-	* Computes an LU factorization with complete pivoting of a general N-by-N complex matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -52,11 +52,11 @@ interface Routine {
 	* @param offsetJPIV - starting index for `JPIV`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): Float64Array;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): number;
 }
 
 /**
-* Computes an LU factorization with complete pivoting of a general N-by-N complex matrix.
+* @license MIT.
 */
 declare var zgetc2: Routine;
 

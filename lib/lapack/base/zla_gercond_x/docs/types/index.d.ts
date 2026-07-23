@@ -20,67 +20,67 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zla_gercond_x`.
 */
 interface Routine {
 	/**
-	* Estimates the infinity norm condition number for a general complex matrix with x scaling
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param LDAF - leading dimension of `AF`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param x - input array
-	* @param strideX - stride length for `x`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Estimates the infinity norm condition number for a general complex matrix with x scaling, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param strideAF1 - stride of `AF`
 	* @param strideAF2 - stride of `AF`
 	* @param offsetAF - starting index for `AF`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, offsetX: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, x: Float64Array, strideX: number, offsetX: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Estimates the infinity norm condition number for a general complex matrix with x scaling
+* @license MIT.
 */
 declare var zla_gercond_x: Routine;
 

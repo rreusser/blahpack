@@ -23,10 +23,98 @@ import dlaswp = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dlaswp( 0 ); // $ExpectType Float64Array
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlaswp( 10, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( true, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( null, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( undefined, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( [], 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( {}, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlaswp( 'row-major', '10', new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', true, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', false, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', null, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', undefined, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', [], new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', {}, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlaswp( 'row-major', 10, '10', 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, 10, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, true, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, null, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, undefined, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, [], 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, {}, 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), '10', 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), true, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), false, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), null, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), undefined, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), [], 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), {}, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, false, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, '10', new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, true, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, false, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, null, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, undefined, new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, [], new Int32Array( 25 ), 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, {}, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, '10', 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, 10, 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, true, 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, null, 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, undefined, 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, [], 10 ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), '10' ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), true ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), false ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), null ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), undefined ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), [] ); // $ExpectError
+	dlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlaswp(); // $ExpectError
+	dlaswp( 'row-major' ); // $ExpectError
 }

@@ -27,115 +27,109 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Improves the computed solution using extra-precise iterative refinement for complex general matrices
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param prec_type - prec_type
-	* @param trans_type - trans_type
+	* @param prec_type - `prec_type`
+	* @param trans_type - `trans_type`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param nrhs - number of right-hand sides
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param LDAF - leading dimension of `AF`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param colequ - colequ
-	* @param c - input array
-	* @param strideC - stride length for `c`
-	* @param B - input matrix
+	* @param IPIV - `IPIV`
+	* @param colequ - `colequ`
+	* @param c - `c`
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param Y - input matrix
+	* @param Y - `Y`
 	* @param LDY - leading dimension of `Y`
-	* @param BERR_OUT - input array
-	* @param strideBERR_OUT - stride length for `BERR_OUT`
-	* @param n_norms - n_norms
-	* @param ERRS_N - input matrix
-	* @param LDERRS_N - leading dimension of `ERRS_N`
-	* @param ERRS_C - input matrix
-	* @param LDERRS_C - leading dimension of `ERRS_C`
-	* @param RES - input array
-	* @param strideRES - stride length for `RES`
-	* @param AYB - input array
-	* @param strideAYB - stride length for `AYB`
-	* @param y - input array
-	* @param strideY - stride length for `y`
-	* @param Y_TAIL - output array
-	* @param strideY_TAIL - stride length for `Y_TAIL`
-	* @param rcond - rcond
-	* @param ithresh - ithresh
-	* @param rthresh - rthresh
-	* @param dz_ub - dz_ub
-	* @param ignore_cwise - ignore_cwise
+	* @param BERR_OUT - `BERR_OUT`
+	* @param n_norms - `n_norms`
+	* @param ERRS_N - `ERRS_N`
+	* @param LDERRS_N - `LDERRS_N`
+	* @param ERRS_C - `ERRS_C`
+	* @param LDERRS_C - `LDERRS_C`
+	* @param RES - `RES`
+	* @param AYB - `AYB`
+	* @param DY - `DY`
+	* @param Y_TAIL - `Y_TAIL`
+	* @param rcond - `rcond`
+	* @param ithresh - `ithresh`
+	* @param rthresh - `rthresh`
+	* @param dz_ub - `dz_ub`
+	* @param ignore_cwise - `ignore_cwise`
 	* @returns result
 	*/
-	( order: Layout, prec_type: number, trans_type: number, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, colequ: boolean, c: Float64Array, strideC: number, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, BERR_OUT: Float64Array, strideBERR_OUT: number, n_norms: number, ERRS_N: Float64Array, LDERRS_N: number, ERRS_C: Float64Array, LDERRS_C: number, RES: Float64Array, strideRES: number, AYB: Float64Array, strideAYB: number, y: Float64Array, strideY: number, Y_TAIL: Float64Array, strideY_TAIL: number, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: boolean ): Float64Array;
+	( order: Layout, prec_type: number, trans_type: number, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, IPIV: Int32Array, colequ: number, c: Float64Array, B: Float64Array, LDB: number, Y: Float64Array, LDY: number, BERR_OUT: Float64Array, n_norms: number, ERRS_N: Float64Array, LDERRS_N: number, ERRS_C: Float64Array, LDERRS_C: number, RES: Float64Array, AYB: Float64Array, DY: Float64Array, Y_TAIL: Float64Array, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: number ): number;
 
 	/**
-	* Improves the computed solution using extra-precise iterative refinement for complex general matrices, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param prec_type - prec_type
-	* @param trans_type - trans_type
+	* @param prec_type - `prec_type`
+	* @param trans_type - `trans_type`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param nrhs - number of right-hand sides
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param strideAF1 - stride of `AF`
 	* @param strideAF2 - stride of `AF`
 	* @param offsetAF - starting index for `AF`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param colequ - colequ
-	* @param c - input array
-	* @param strideC - stride length for `c`
+	* @param colequ - `colequ`
+	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param Y - input matrix
+	* @param Y - `Y`
 	* @param strideY1 - stride of `Y`
 	* @param strideY2 - stride of `Y`
 	* @param offsetY - starting index for `Y`
-	* @param BERR_OUT - input array
-	* @param strideBERR_OUT - stride length for `BERR_OUT`
+	* @param BERR_OUT - `BERR_OUT`
+	* @param strideBERR_OUT - stride of `BERR_OUT`
 	* @param offsetBERR_OUT - starting index for `BERR_OUT`
-	* @param n_norms - n_norms
-	* @param ERRS_N - input matrix
+	* @param n_norms - `n_norms`
+	* @param ERRS_N - `ERRS_N`
 	* @param strideERRS_N1 - stride of `ERRS_N`
 	* @param strideERRS_N2 - stride of `ERRS_N`
 	* @param offsetERRS_N - starting index for `ERRS_N`
-	* @param ERRS_C - input matrix
+	* @param ERRS_C - `ERRS_C`
 	* @param strideERRS_C1 - stride of `ERRS_C`
 	* @param strideERRS_C2 - stride of `ERRS_C`
 	* @param offsetERRS_C - starting index for `ERRS_C`
-	* @param RES - input array
-	* @param strideRES - stride length for `RES`
+	* @param RES - `RES`
+	* @param strideRES - stride of `RES`
 	* @param offsetRES - starting index for `RES`
-	* @param AYB - input array
-	* @param strideAYB - stride length for `AYB`
+	* @param AYB - `AYB`
+	* @param strideAYB - stride of `AYB`
 	* @param offsetAYB - starting index for `AYB`
-	* @param y - input array
-	* @param strideY - stride length for `y`
-	* @param offsetY - starting index for `Y`
-	* @param Y_TAIL - output array
-	* @param strideY_TAIL - stride length for `Y_TAIL`
+	* @param DY - `DY`
+	* @param strideDY - stride of `DY`
+	* @param offsetDY - starting index for `DY`
+	* @param Y_TAIL - `Y_TAIL`
+	* @param strideY_TAIL - stride of `Y_TAIL`
 	* @param offsetY_TAIL - starting index for `Y_TAIL`
-	* @param rcond - rcond
-	* @param ithresh - ithresh
-	* @param rthresh - rthresh
-	* @param dz_ub - dz_ub
-	* @param ignore_cwise - ignore_cwise
+	* @param rcond - `rcond`
+	* @param ithresh - `ithresh`
+	* @param rthresh - `rthresh`
+	* @param dz_ub - `dz_ub`
+	* @param ignore_cwise - `ignore_cwise`
 	* @returns result
 	*/
-	ndarray( prec_type: number, trans_type: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, colequ: boolean, c: Float64Array, strideC: number, offsetC: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number, BERR_OUT: Float64Array, strideBERR_OUT: number, offsetBERR_OUT: number, n_norms: number, ERRS_N: Float64Array, strideERRS_N1: number, strideERRS_N2: number, offsetERRS_N: number, ERRS_C: Float64Array, strideERRS_C1: number, strideERRS_C2: number, offsetERRS_C: number, RES: Float64Array, strideRES: number, offsetRES: number, AYB: Float64Array, strideAYB: number, offsetAYB: number, y: Float64Array, strideY: number, offsetY: number, Y_TAIL: Float64Array, strideY_TAIL: number, offsetY_TAIL: number, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: boolean ): Float64Array;
+	ndarray( prec_type: number, trans_type: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, colequ: number, c: Float64Array, strideC: number, offsetC: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number, BERR_OUT: Float64Array, strideBERR_OUT: number, offsetBERR_OUT: number, n_norms: number, ERRS_N: Float64Array, strideERRS_N1: number, strideERRS_N2: number, offsetERRS_N: number, ERRS_C: Float64Array, strideERRS_C1: number, strideERRS_C2: number, offsetERRS_C: number, RES: Float64Array, strideRES: number, offsetRES: number, AYB: Float64Array, strideAYB: number, offsetAYB: number, DY: Float64Array, strideDY: number, offsetDY: number, Y_TAIL: Float64Array, strideY_TAIL: number, offsetY_TAIL: number, rcond: number, ithresh: number, rthresh: number, dz_ub: number, ignore_cwise: number ): number;
 }
 
 /**
-* Improves the computed solution using extra-precise iterative refinement for complex general matrices
+* @license MIT.
 */
 declare var zla_gerfsx_extended: Routine;
 

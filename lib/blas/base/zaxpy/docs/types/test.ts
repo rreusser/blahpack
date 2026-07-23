@@ -16,28 +16,90 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zaxpy = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zaxpy( 10 ); // $ExpectType Float64Array
+	zaxpy( 10, 10, 10, 10, 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zaxpy( '10' ); // $ExpectError
-	zaxpy( true ); // $ExpectError
-	zaxpy( false ); // $ExpectError
-	zaxpy( null ); // $ExpectError
-	zaxpy( undefined ); // $ExpectError
-	zaxpy( [] ); // $ExpectError
-	zaxpy( {} ); // $ExpectError
+	zaxpy( '10', 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( true, 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( false, 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( null, 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( undefined, 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( [], 10, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( {}, 10, 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zaxpy( 10, '10', 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, true, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, false, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, null, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, undefined, 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, [], 10, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, {}, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zaxpy( 10, 10, '10', 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, true, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, false, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, null, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, undefined, 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, [], 10, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zaxpy( 10, 10, 10, '10', 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, true, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, false, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, null, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, undefined, 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, [], 10, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zaxpy( 10, 10, 10, 10, '10', 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, true, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, false, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, null, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, undefined, 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, [], 10 ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zaxpy( 10, 10, 10, 10, 10, '10' ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, true ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, false ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, null ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, undefined ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, [] ); // $ExpectError
+	zaxpy( 10, 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zaxpy(); // $ExpectError
+	zaxpy( 10 ); // $ExpectError
 }

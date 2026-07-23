@@ -21,23 +21,68 @@ import zpoequ = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	zpoequ( 10 ); // $ExpectType Float64Array
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zpoequ( '10' ); // $ExpectError
-	zpoequ( true ); // $ExpectError
-	zpoequ( false ); // $ExpectError
-	zpoequ( null ); // $ExpectError
-	zpoequ( undefined ); // $ExpectError
-	zpoequ( [] ); // $ExpectError
-	zpoequ( {} ); // $ExpectError
+	zpoequ( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zpoequ( 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zpoequ( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zpoequ( 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	zpoequ( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zpoequ(); // $ExpectError
+	zpoequ( 10 ); // $ExpectError
 }

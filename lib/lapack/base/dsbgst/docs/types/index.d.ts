@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a real symmetric-definite banded generalized eigenproblem to standard form.
+	* @license MIT.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,10 +43,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, LDAB: number, BB: Float64Array, LDBB: number, X: Float64Array, LDX: number, WORK: Float64Array ): Float64Array;
+	( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, LDAB: number, BB: Float64Array, LDBB: number, X: Float64Array, LDX: number, WORK: Float64Array ): number;
 
 	/**
-	* Reduces a real symmetric-definite banded generalized eigenproblem to standard form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -66,15 +66,15 @@ interface Routine {
 	* @param strideX2 - stride of `X`
 	* @param offsetX - starting index for `X`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, BB: Float64Array, strideBB1: number, strideBB2: number, offsetBB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, BB: Float64Array, strideBB1: number, strideBB2: number, offsetBB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a real symmetric-definite banded generalized eigenproblem to standard form.
+* @license MIT.
 */
 declare var dsbgst: Routine;
 

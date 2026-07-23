@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -45,10 +45,10 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): Float64Array;
+	( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): void;
 
 	/**
-	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -70,11 +70,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): Float64Array;
+	ndarray( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): void;
 }
 
 /**
-* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
+* @license MIT.
 */
 declare var zlahr2: Routine;
 

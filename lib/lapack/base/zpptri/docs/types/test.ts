@@ -21,12 +21,45 @@ import zpptri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zpptri( 0 ); // $ExpectType Float64Array
+	zpptri( 'upper', 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zpptri( 10, 10, 10 ); // $ExpectError
+	zpptri( true, 10, 10 ); // $ExpectError
+	zpptri( null, 10, 10 ); // $ExpectError
+	zpptri( undefined, 10, 10 ); // $ExpectError
+	zpptri( [], 10, 10 ); // $ExpectError
+	zpptri( {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zpptri( 'upper', '10', 10 ); // $ExpectError
+	zpptri( 'upper', true, 10 ); // $ExpectError
+	zpptri( 'upper', false, 10 ); // $ExpectError
+	zpptri( 'upper', null, 10 ); // $ExpectError
+	zpptri( 'upper', undefined, 10 ); // $ExpectError
+	zpptri( 'upper', [], 10 ); // $ExpectError
+	zpptri( 'upper', {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zpptri( 'upper', 10, '10' ); // $ExpectError
+	zpptri( 'upper', 10, true ); // $ExpectError
+	zpptri( 'upper', 10, false ); // $ExpectError
+	zpptri( 'upper', 10, null ); // $ExpectError
+	zpptri( 'upper', 10, undefined ); // $ExpectError
+	zpptri( 'upper', 10, [] ); // $ExpectError
+	zpptri( 'upper', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zpptri(); // $ExpectError
+	zpptri( 'upper' ); // $ExpectError
 }

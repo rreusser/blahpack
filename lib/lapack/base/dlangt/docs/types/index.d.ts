@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the norm of a real general tridiagonal matrix A.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -35,10 +35,10 @@ interface Routine {
 	* @param strideDU - stride of `DU`
 	* @returns result
 	*/
-	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number ): Float64Array;
+	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number ): number;
 
 	/**
-	* Computes the norm of a real general tridiagonal matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -53,11 +53,11 @@ interface Routine {
 	* @param offsetDU - starting index for `DU`
 	* @returns result
 	*/
-	ndarray( norm: string, N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number ): Float64Array;
+	ndarray( norm: string, N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number ): number;
 }
 
 /**
-* Computes the norm of a real general tridiagonal matrix A.
+* @license MIT.
 */
 declare var dlangt: Routine;
 

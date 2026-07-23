@@ -20,46 +20,46 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zsytf2_rook`.
 */
 interface Routine {
 	/**
-	* Bounded Bunch-Kaufman (rook) factorization of a complex symmetric indefinite matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - output array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 
 	/**
-	* Bounded Bunch-Kaufman (rook) factorization of a complex symmetric indefinite matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param IPIV - output array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Bounded Bunch-Kaufman (rook) factorization of a complex symmetric indefinite matrix
+* @license MIT.
 */
 declare var zsytf2_rook: Routine;
 

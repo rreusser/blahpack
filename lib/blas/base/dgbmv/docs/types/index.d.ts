@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dgbmv`.
 */
 interface Routine {
 	/**
-	* Performs the matrix-vector operation `y := alpha*op(A)*x + beta*y`.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, M: number, N: number, kl: number, ku: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* Performs the matrix-vector operation `y := alpha*op(A)*x + beta*y` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* Performs the matrix-vector operation `y := alpha*op(A)*x + beta*y`.
+* @license MIT.
 */
 declare var dgbmv: Routine;
 

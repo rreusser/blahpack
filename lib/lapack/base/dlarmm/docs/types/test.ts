@@ -23,20 +23,44 @@ import dlarmm = require( './index' );
 
 // The function returns a number...
 {
-	dlarmm( 2, 2, 2 ); // $ExpectType number
+	dlarmm( 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlarmm( '10', 10, 10 ); // $ExpectError
+	dlarmm( true, 10, 10 ); // $ExpectError
+	dlarmm( false, 10, 10 ); // $ExpectError
+	dlarmm( null, 10, 10 ); // $ExpectError
+	dlarmm( undefined, 10, 10 ); // $ExpectError
+	dlarmm( [], 10, 10 ); // $ExpectError
+	dlarmm( {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlarmm( 10, '10', 10 ); // $ExpectError
+	dlarmm( 10, true, 10 ); // $ExpectError
+	dlarmm( 10, false, 10 ); // $ExpectError
+	dlarmm( 10, null, 10 ); // $ExpectError
+	dlarmm( 10, undefined, 10 ); // $ExpectError
+	dlarmm( 10, [], 10 ); // $ExpectError
+	dlarmm( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlarmm( 10, 10, '10' ); // $ExpectError
+	dlarmm( 10, 10, true ); // $ExpectError
+	dlarmm( 10, 10, false ); // $ExpectError
+	dlarmm( 10, 10, null ); // $ExpectError
+	dlarmm( 10, 10, undefined ); // $ExpectError
+	dlarmm( 10, 10, [] ); // $ExpectError
+	dlarmm( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlarmm(); // $ExpectError
-}
-
-// The ndarray method returns a number...
-{
-	dlarmm.ndarray( 2, 2, 2 ); // $ExpectType number
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlarmm.ndarray(); // $ExpectError
+	dlarmm( 10 ); // $ExpectError
 }

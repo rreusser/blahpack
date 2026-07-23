@@ -27,67 +27,67 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* chases a 2x2 shift bulge in a matrix pencil down a single position
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param ilq - ilq
-	* @param ilz - ilz
-	* @param K - number of superdiagonals
-	* @param istartm - istartm
-	* @param istopm - istopm
-	* @param ihi - ihi
-	* @param A - input matrix
+	* @param ilq - `ilq`
+	* @param ilz - `ilz`
+	* @param k - `k`
+	* @param istartm - `istartm`
+	* @param istopm - `istopm`
+	* @param ihi - upper index
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param nq - nq
-	* @param qstart - qstart
-	* @param Q - input matrix
+	* @param nq - `nq`
+	* @param qstart - `qstart`
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param nz - nz
-	* @param zstart - zstart
-	* @param Z - output matrix
+	* @param nz - `nz`
+	* @param zstart - `zstart`
+	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @returns result
 	*/
-	( order: Layout, ilq: boolean, ilz: boolean, K: number, istartm: number, istopm: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, nq: number, qstart: number, Q: Float64Array, LDQ: number, nz: number, zstart: number, Z: Float64Array, LDZ: number ): Float64Array;
+	( order: Layout, ilq: number, ilz: number, k: number, istartm: number, istopm: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, nq: number, qstart: number, Q: Float64Array, LDQ: number, nz: number, zstart: number, Z: Float64Array, LDZ: number ): Float64Array;
 
 	/**
-	* chases a 2x2 shift bulge in a matrix pencil down a single position, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param ilq - ilq
-	* @param ilz - ilz
-	* @param K - number of superdiagonals
-	* @param istartm - istartm
-	* @param istopm - istopm
-	* @param ihi - ihi
-	* @param A - input matrix
+	* @param ilq - `ilq`
+	* @param ilz - `ilz`
+	* @param k - `k`
+	* @param istartm - `istartm`
+	* @param istopm - `istopm`
+	* @param ihi - upper index
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param nq - nq
-	* @param qstart - qstart
-	* @param Q - input matrix
+	* @param nq - `nq`
+	* @param qstart - `qstart`
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param nz - nz
-	* @param zstart - zstart
-	* @param Z - output matrix
+	* @param nz - `nz`
+	* @param zstart - `zstart`
+	* @param Z - `Z`
 	* @param strideZ1 - stride of `Z`
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @returns result
 	*/
-	ndarray( ilq: boolean, ilz: boolean, K: number, istartm: number, istopm: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, nq: number, qstart: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, nz: number, zstart: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
+	ndarray( ilq: number, ilz: number, k: number, istartm: number, istopm: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, nq: number, qstart: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, nz: number, zstart: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
 }
 
 /**
-* chases a 2x2 shift bulge in a matrix pencil down a single position
+* @license MIT.
 */
 declare var dlaqz2: Routine;
 

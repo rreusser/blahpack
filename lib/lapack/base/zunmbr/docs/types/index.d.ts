@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zunmbr`.
 */
 interface Routine {
 	/**
-	* If VECT = 'Q', overwrite the matrix C with one of:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -43,13 +43,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, vect: string, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, vect: string, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* If VECT = 'Q', overwrite the matrix C with one of: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param side - specifies the side of the operation
@@ -69,15 +69,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( vect: string, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( vect: string, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* If VECT = 'Q', overwrite the matrix C with one of:.
+* @license MIT.
 */
 declare var zunmbr: Routine;
 

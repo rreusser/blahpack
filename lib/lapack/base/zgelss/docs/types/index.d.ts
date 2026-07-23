@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the minimum norm solution to a complex linear least squares problem:.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -37,16 +37,15 @@ interface Routine {
 	* @param rcond - `rcond`
 	* @param rank - `rank`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Computes the minimum norm solution to a complex linear least squares problem: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -65,19 +64,18 @@ interface Routine {
 	* @param rcond - `rcond`
 	* @param rank - `rank`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, S: Float64Array, strideS: number, offsetS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, S: Float64Array, strideS: number, offsetS: number, rcond: number, rank: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Computes the minimum norm solution to a complex linear least squares problem:.
+* @license MIT.
 */
 declare var zgelss: Routine;
 

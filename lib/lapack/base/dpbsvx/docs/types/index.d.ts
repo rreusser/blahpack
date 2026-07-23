@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -51,15 +51,15 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( fact: string, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, equed: string, S: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( fact: string, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, equed: string, S: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -94,18 +94,18 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( fact: string, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, equed: string, S: Float64Array, strideS: number, offsetS: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( fact: string, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, equed: string, S: Float64Array, strideS: number, offsetS: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dpbsvx: Routine;
 

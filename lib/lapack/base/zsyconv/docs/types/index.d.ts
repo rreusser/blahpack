@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param way - `way`
@@ -40,10 +40,10 @@ interface Routine {
 	* @param strideE - stride of `E`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, E: Float64Array, strideE: number ): Float64Array;
+	( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, E: Float64Array, strideE: number ): number;
 
 	/**
-	* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param way - `way`
@@ -60,11 +60,11 @@ interface Routine {
 	* @param offsetE - starting index for `E`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, E: Float64Array, strideE: number, offsetE: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, way: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, E: Float64Array, strideE: number, offsetE: number ): number;
 }
 
 /**
-* Converts a complex symmetric matrix given by `zsytrf` (Bunch-Kaufman.
+* @license MIT.
 */
 declare var zsyconv: Routine;
 

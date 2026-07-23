@@ -18,43 +18,39 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlarrr`.
 */
 interface Routine {
 	/**
-	* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param e - output array
-	* @param strideE - stride length for `e`
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param e - output array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): number;
 }
 
 /**
-* Tests whether a symmetric tridiagonal matrix warrants expensive computations for high relative accuracy
+* @license MIT.
 */
 declare var dlarrr: Routine;
 

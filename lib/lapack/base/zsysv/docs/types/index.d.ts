@@ -21,14 +21,13 @@
 /// <reference types="@stdlib/types"/>
 
 import { MatrixTriangle } from '@stdlib/types/blas';
-import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zsysv`.
 */
 interface Routine {
 	/**
-	* Solves a complex symmetric indefinite system of linear equations A * X = B.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -39,14 +38,14 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param WORK - caller-provided workspace (length `>= N` when `N > 0` and `nrhs > 0`); `null` requests internal allocation
-	* @param strideWork - stride of `WORK`
-	* @returns `info` status code (0 on success; k>0 if D(k-1,k-1) is exactly zero)
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Complex128Array, LDB: number, WORK: Complex128Array | null, strideWork: number ): number;
+	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Solves a complex symmetric indefinite system of linear equations A * X = B using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,16 +61,16 @@ interface Routine {
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param WORK - caller-owned workspace (length `>= N` when `N > 0` and `nrhs > 0`; unused otherwise)
-	* @param strideWork - stride of `WORK`
-	* @param offsetWork - starting index for `WORK`
-	* @returns `info` status code (0 on success; k>0 if D(k-1,k-1) is exactly zero)
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Complex128Array, strideB1: number, strideB2: number, offsetB: number, WORK: Complex128Array, strideWork: number, offsetWork: number ): number;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Solves a complex symmetric indefinite system of linear equations A * X = B.
+* @license MIT.
 */
 declare var zsysv: Routine;
 

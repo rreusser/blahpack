@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
+import { MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zupmtr`.
 */
 interface Routine {
 	/**
-	* Overwrites a general complex matrix with a transformation from the unitary matrix Q returned by zhptrd.
+	* @license MIT.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,10 +41,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, AP: Float64Array, TAU: Float64Array, C: Float64Array, LDC: number, WORK: Float64Array ): Float64Array;
+	( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, AP: Float64Array, TAU: Float64Array, C: Float64Array, LDC: number, WORK: Float64Array ): number;
 
 	/**
-	* Overwrites a general complex matrix with a transformation from the unitary matrix Q returned by zhptrd using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -62,15 +62,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, AP: Float64Array, strideAP: number, offsetAP: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, M: number, N: number, AP: Float64Array, strideAP: number, offsetAP: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Overwrites a general complex matrix with a transformation from the unitary matrix Q returned by zhptrd.
+* @license MIT.
 */
 declare var zupmtr: Routine;
 

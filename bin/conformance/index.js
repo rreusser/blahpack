@@ -20,6 +20,7 @@ var checkWorkAssert = require( './checks/work-assert.js' );
 var checkWorkAutoalloc = require( './checks/work-autoalloc.js' );
 var checkSyntax = require( './checks/syntax.js' );
 var checkBaseArity = require( './checks/base-arity.js' );
+var checkTypes = require( './checks/types.js' );
 
 var ALL_CHECKS = [
 	{ name: 'file-structure', fn: checkFileStructure },
@@ -36,6 +37,7 @@ var ALL_CHECKS = [
 	{ name: 'work-autoalloc', fn: checkWorkAutoalloc },
 	{ name: 'syntax', fn: checkSyntax },
 	{ name: 'base-arity', fn: checkBaseArity },
+	{ name: 'types', fn: checkTypes },
 	{ name: 'lint', fn: checkLint }
 ];
 

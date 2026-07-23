@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs the rank 1 operation A := alpha_x_y**T + A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,7 +44,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Float64Array;
 
 	/**
-	* Performs the rank 1 operation A := alpha_x_y**T + A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -65,7 +65,7 @@ interface Routine {
 }
 
 /**
-* Performs the rank 1 operation A := alpha_x_y**T + A.
+* @license MIT.
 */
 declare var dger: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Copy a triangular matrix from Rectangular Full Packed (RFP) format to standard packed format (TP).
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -36,10 +36,10 @@ interface Routine {
 	* @param AP - `AP`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, AP: Float64Array ): Float64Array;
+	( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, AP: Float64Array ): number;
 
 	/**
-	* Copy a triangular matrix from Rectangular Full Packed (RFP) format to standard packed format (TP) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -52,11 +52,11 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, strideARF: number, offsetARF: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, strideARF: number, offsetARF: number, AP: Float64Array, strideAP: number, offsetAP: number ): number;
 }
 
 /**
-* Copy a triangular matrix from Rectangular Full Packed (RFP) format to standard packed format (TP).
+* @license MIT.
 */
 declare var dtfttp: Routine;
 

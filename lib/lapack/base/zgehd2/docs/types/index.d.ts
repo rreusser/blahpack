@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Reduces a complex general matrix to upper Hessenberg form using unblocked algorithm.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -36,14 +36,14 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 
 	/**
-	* Reduces a complex general matrix to upper Hessenberg form using unblocked algorithm using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -56,15 +56,15 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a complex general matrix to upper Hessenberg form using unblocked algorithm.
+* @license MIT.
 */
 declare var zgehd2: Routine;
 

@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlatrd`.
 */
 interface Routine {
 	/**
-	* Reduces NB rows and columns of a real symmetric matrix A to symmetric.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -43,10 +43,10 @@ interface Routine {
 	* @param LDW - leading dimension of `W`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, TAU: Float64Array, strideTAU: number, W: Float64Array, LDW: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, TAU: Float64Array, strideTAU: number, W: Float64Array, LDW: number ): void;
 
 	/**
-	* Reduces NB rows and columns of a real symmetric matrix A to symmetric using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -67,11 +67,11 @@ interface Routine {
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): void;
 }
 
 /**
-* Reduces NB rows and columns of a real symmetric matrix A to symmetric.
+* @license MIT.
 */
 declare var dlatrd: Routine;
 

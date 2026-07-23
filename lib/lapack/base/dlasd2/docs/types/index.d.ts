@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Merge two sets of singular values in bidiagonal SVD divide and conquer.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param NL - `NL`
@@ -54,10 +54,10 @@ interface Routine {
 	* @param COLTYP - `COLTYP`
 	* @returns result
 	*/
-	( order: Layout, NL: number, NR: number, SQRE: number, K: number, D: Float64Array, Z: Float64Array, ALPHA: number, BETA: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, DSIGMA: Float64Array, U2: Float64Array, LDU2: number, VT2: Float64Array, LDVT2: number, IDXP: Int32Array, IDX: Int32Array, IDXC: Int32Array, IDXQ: Int32Array, COLTYP: Float64Array ): Float64Array;
+	( order: Layout, NL: number, NR: number, SQRE: number, K: number, D: Float64Array, Z: Float64Array, ALPHA: number, BETA: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, DSIGMA: Float64Array, U2: Float64Array, LDU2: number, VT2: Float64Array, LDVT2: number, IDXP: Int32Array, IDX: Int32Array, IDXC: Int32Array, IDXQ: Int32Array, COLTYP: Float64Array ): number;
 
 	/**
-	* Merge two sets of singular values in bidiagonal SVD divide and conquer using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param nl - `nl`
 	* @param nr - `nr`
@@ -107,11 +107,11 @@ interface Routine {
 	* @param offsetCOLTYP - starting index for `COLTYP`
 	* @returns result
 	*/
-	ndarray( nl: number, nr: number, sqre: number, K: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, alpha: number, beta: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, DSIGMA: Float64Array, strideDSIGMA: number, offsetDSIGMA: number, U2: Float64Array, strideU21: number, strideU22: number, offsetU2: number, VT2: Float64Array, strideVT21: number, strideVT22: number, offsetVT2: number, IDXP: Int32Array, strideIDXP: number, offsetIDXP: number, IDX: Int32Array, strideIDX: number, offsetIDX: number, IDXC: Int32Array, strideIDXC: number, offsetIDXC: number, IDXQ: Int32Array, strideIDXQ: number, offsetIDXQ: number, COLTYP: Float64Array, strideCOLTYP: number, offsetCOLTYP: number ): Float64Array;
+	ndarray( nl: number, nr: number, sqre: number, K: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, alpha: number, beta: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, DSIGMA: Float64Array, strideDSIGMA: number, offsetDSIGMA: number, U2: Float64Array, strideU21: number, strideU22: number, offsetU2: number, VT2: Float64Array, strideVT21: number, strideVT22: number, offsetVT2: number, IDXP: Int32Array, strideIDXP: number, offsetIDXP: number, IDX: Int32Array, strideIDX: number, offsetIDX: number, IDXC: Int32Array, strideIDXC: number, offsetIDXC: number, IDXQ: Int32Array, strideIDXQ: number, offsetIDXQ: number, COLTYP: Float64Array, strideCOLTYP: number, offsetCOLTYP: number ): number;
 }
 
 /**
-* Merge two sets of singular values in bidiagonal SVD divide and conquer.
+* @license MIT.
 */
 declare var dlasd2: Routine;
 

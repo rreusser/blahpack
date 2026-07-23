@@ -27,45 +27,45 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Factors an upper trapezoidal matrix by means of orthogonal transformations.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param A - input matrix
+	* @param l - `l`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): Float64Array;
 
 	/**
-	* Factors an upper trapezoidal matrix by means of orthogonal transformations., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param A - input matrix
+	* @param l - `l`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Float64Array;
 }
 
 /**
-* Factors an upper trapezoidal matrix by means of orthogonal transformations.
+* @license MIT.
 */
 declare var dlatrz: Routine;
 

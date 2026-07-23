@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
+	* @license MIT.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param b3 - `b3`
 	* @returns result
 	*/
-	( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): void;
+	( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): { snu: number; csv: number; snv: number; csq: number; snq: number };
 
 	/**
-	* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -46,19 +46,13 @@ interface Routine {
 	* @param b1 - `b1`
 	* @param b2 - `b2`
 	* @param b3 - `b3`
-	* @param csu - `csu`
-	* @param snu - `snu`
-	* @param csv - `csv`
-	* @param snv - `snv`
-	* @param csq - `csq`
-	* @param snq - `snq`
 	* @returns result
 	*/
-	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number, csu: number, snu: number, csv: number, snv: number, csq: number, snq: number ): void;
+	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): { snu: number; csv: number; snv: number; csq: number; snq: number };
 }
 
 /**
-* Computes 2-by-2 orthogonal matrices U, V, and Q, such that if UPPER is true:.
+* @license MIT.
 */
 declare var dlags2: Routine;
 

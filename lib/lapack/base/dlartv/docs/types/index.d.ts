@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Applies a vector of real plane rotations to elements of two real vectors.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -35,10 +35,10 @@ interface Routine {
 	* @param strideCS - stride of `CS`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, s: Float64Array, strideCS: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, s: Float64Array, strideCS: number ): void;
 
 	/**
-	* Applies a vector of real plane rotations to elements of two real vectors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetS - starting index for `S`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: Float64Array, strideC: number, offsetC: number, s: Float64Array, strideS: number, offsetS: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: Float64Array, strideC: number, offsetC: number, s: Float64Array, strideS: number, offsetS: number ): void;
 }
 
 /**
-* Applies a vector of real plane rotations to elements of two real vectors.
+* @license MIT.
 */
 declare var dlartv: Routine;
 

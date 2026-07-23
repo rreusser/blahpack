@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztrsv`.
 */
 interface Routine {
 	/**
-	* Solve one of the systems of equations.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,10 +41,10 @@ interface Routine {
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* Solve one of the systems of equations using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -58,11 +59,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number ): Complex128Array;
 }
 
 /**
-* Solve one of the systems of equations.
+* @license MIT.
 */
 declare var ztrsv: Routine;
 

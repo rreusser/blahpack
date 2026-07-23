@@ -21,12 +21,66 @@ import dlauum = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dlauum( 0 ); // $ExpectType Float64Array
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlauum( 10, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( true, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( null, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( undefined, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( [], 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( {}, 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlauum( 'row-major', 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlauum( 'row-major', 'upper', '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlauum( 'row-major', 'upper', 10, '10', 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, 10, 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, true, 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, null, 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, undefined, 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, [], 10 ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), true ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), false ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), null ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dlauum( 'row-major', 'upper', 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlauum(); // $ExpectError
+	dlauum( 'row-major' ); // $ExpectError
 }

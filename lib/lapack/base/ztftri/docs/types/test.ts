@@ -21,23 +21,65 @@ import ztftri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	ztftri( 'no-transpose' ); // $ExpectType Float64Array
+	ztftri( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	ztftri( 10 ); // $ExpectError
-	ztftri( true ); // $ExpectError
-	ztftri( false ); // $ExpectError
-	ztftri( null ); // $ExpectError
-	ztftri( undefined ); // $ExpectError
-	ztftri( [] ); // $ExpectError
-	ztftri( {} ); // $ExpectError
+	ztftri( 10, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( true, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( null, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( undefined, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( [], 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( {}, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	ztftri( 'no-transpose', 10, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', true, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', null, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', undefined, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', [], 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', {}, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	ztftri( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', true, 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', null, 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', [], 10, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	ztftri( 'no-transpose', 'upper', 'unit', '10', new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', true, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', false, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', null, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', undefined, new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', [], new Float64Array( 25 ) ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	ztftri( 'no-transpose', 'upper', 'unit', 10, '10' ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, 10 ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, true ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, null ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, undefined ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, [] ); // $ExpectError
+	ztftri( 'no-transpose', 'upper', 'unit', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	ztftri(); // $ExpectError
+	ztftri( 'no-transpose' ); // $ExpectError
 }

@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dpbtrs`.
 */
 interface Routine {
 	/**
-	* Solves a system of linear equations A_X = B with a symmetric positive.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,10 +40,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, B: Float64Array, LDB: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, LDAB: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves a system of linear equations A_X = B with a symmetric positive using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,11 +59,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, kd: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves a system of linear equations A_X = B with a symmetric positive.
+* @license MIT.
 */
 declare var dpbtrs: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Merges two sorted integer sublists into a single sorted list.
+	* @license MIT.
 	*
 	* @param n1 - `n1`
 	* @param n2 - `n2`
@@ -35,10 +35,10 @@ interface Routine {
 	* @param strideINDEX - stride of `INDEX`
 	* @returns result
 	*/
-	( n1: number, n2: number, a: Float64Array, strideA: number, dtrd1: number, dtrd2: number, INDEX: Float64Array, strideINDEX: number ): Float64Array;
+	( n1: number, n2: number, a: Float64Array, strideA: number, dtrd1: number, dtrd2: number, INDEX: Float64Array, strideINDEX: number ): void;
 
 	/**
-	* Merges two sorted integer sublists into a single sorted list using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param n1 - `n1`
 	* @param n2 - `n2`
@@ -52,11 +52,11 @@ interface Routine {
 	* @param offsetINDEX - starting index for `INDEX`
 	* @returns result
 	*/
-	ndarray( n1: number, n2: number, a: Float64Array, strideA: number, offsetA: number, dtrd1: number, dtrd2: number, INDEX: Float64Array, strideINDEX: number, offsetINDEX: number ): Float64Array;
+	ndarray( n1: number, n2: number, a: Float64Array, strideA: number, offsetA: number, dtrd1: number, dtrd2: number, INDEX: Float64Array, strideINDEX: number, offsetINDEX: number ): void;
 }
 
 /**
-* Merges two sorted integer sublists into a single sorted list.
+* @license MIT.
 */
 declare var dlamrg: Routine;
 

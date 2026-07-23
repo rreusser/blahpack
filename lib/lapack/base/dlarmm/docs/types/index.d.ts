@@ -18,37 +18,33 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlarmm`.
 */
 interface Routine {
 	/**
-	* Compute a safe BLAS-style constant for scaling matrix norms
+	* @license MIT.
 	*
-	* @param anorm - anorm
-	* @param bnorm - bnorm
-	* @param cnorm - cnorm
+	* @param anorm - `anorm`
+	* @param bnorm - `bnorm`
+	* @param cnorm - `cnorm`
 	* @returns result
 	*/
 	( anorm: number, bnorm: number, cnorm: number ): number;
 
 	/**
-	* Compute a safe BLAS-style constant for scaling matrix norms, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param anorm - anorm
-	* @param bnorm - bnorm
-	* @param cnorm - cnorm
+	* @param anorm - `anorm`
+	* @param bnorm - `bnorm`
+	* @param cnorm - `cnorm`
 	* @returns result
 	*/
 	ndarray( anorm: number, bnorm: number, cnorm: number ): number;
 }
 
 /**
-* Compute a safe BLAS-style constant for scaling matrix norms
+* @license MIT.
 */
 declare var dlarmm: Routine;
 

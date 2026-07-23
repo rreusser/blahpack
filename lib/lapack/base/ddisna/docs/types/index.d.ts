@@ -18,47 +18,43 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `ddisna`.
 */
 interface Routine {
 	/**
-	* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix
+	* @license MIT.
 	*
-	* @param job - specifies the operation type
+	* @param job - `job`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param SEP - output array
-	* @param strideSEP - stride length for `SEP`
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param SEP - `SEP`
+	* @param strideSEP - stride of `SEP`
 	* @returns result
 	*/
-	( job: string, M: number, N: number, d: Float64Array, strideD: number, SEP: Float64Array, strideSEP: number ): Float64Array;
+	( job: string, M: number, N: number, d: Float64Array, strideD: number, SEP: Float64Array, strideSEP: number ): number;
 
 	/**
-	* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param job - specifies the operation type
+	* @param job - `job`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param SEP - output array
-	* @param strideSEP - stride length for `SEP`
+	* @param SEP - `SEP`
+	* @param strideSEP - stride of `SEP`
 	* @param offsetSEP - starting index for `SEP`
 	* @returns result
 	*/
-	ndarray( job: string, M: number, N: number, d: Float64Array, strideD: number, offsetD: number, SEP: Float64Array, strideSEP: number, offsetSEP: number ): Float64Array;
+	ndarray( job: string, M: number, N: number, d: Float64Array, strideD: number, offsetD: number, SEP: Float64Array, strideSEP: number, offsetSEP: number ): number;
 }
 
 /**
-* Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix
+* @license MIT.
 */
 declare var ddisna: Routine;
 

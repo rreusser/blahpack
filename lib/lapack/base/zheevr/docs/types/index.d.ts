@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes selected eigenvalues and, optionally, eigenvectors of a complex.
+	* @license MIT.
 	*
 	* @param jobz - `jobz`
 	* @param range - `range`
@@ -48,20 +48,17 @@ interface Routine {
 	* @param ISUPPZ - `ISUPPZ`
 	* @param strideISUPPZ - stride of `ISUPPZ`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param lrwork - `lrwork`
+	* @param strideRWork - stride of `RWork`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param liwork - `liwork`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( jobz: string, range: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, lrwork: number, IWORK: Int32Array, strideIWORK: number, liwork: number ): Float64Array;
+	( jobz: string, range: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* Computes selected eigenvalues and, optionally, eigenvectors of a complex using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param range - `range`
@@ -88,24 +85,21 @@ interface Routine {
 	* @param strideISUPPZ - stride of `ISUPPZ`
 	* @param offsetISUPPZ - starting index for `ISUPPZ`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
-	* @param lrwork - `lrwork`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
-	* @param liwork - `liwork`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( jobz: string, range: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, lrwork: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, liwork: number ): Float64Array;
+	ndarray( jobz: string, range: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Computes selected eigenvalues and, optionally, eigenvectors of a complex.
+* @license MIT.
 */
 declare var zheevr: Routine;
 

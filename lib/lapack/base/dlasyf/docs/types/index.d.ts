@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlasyf`.
 */
 interface Routine {
 	/**
-	* Computes a partial factorization of a real symmetric matrix A using the.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,10 +41,10 @@ interface Routine {
 	* @param LDW - leading dimension of `W`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, W: Float64Array, LDW: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, W: Float64Array, LDW: number ): Record<string, unknown>;
 
 	/**
-	* Computes a partial factorization of a real symmetric matrix A using the using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,11 +62,11 @@ interface Routine {
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Record<string, unknown>;
 }
 
 /**
-* Computes a partial factorization of a real symmetric matrix A using the.
+* @license MIT.
 */
 declare var dlasyf: Routine;
 

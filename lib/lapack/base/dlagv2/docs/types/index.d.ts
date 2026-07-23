@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.
+	* @license MIT.
 	*
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param beta - scalar constant
 	* @returns result
 	*/
-	( A: Float64Array, LDA: number, B: Float64Array, LDB: number, alphar: Float64Array, alphai: Float64Array, beta: Float64Array ): Float64Array;
+	( A: Float64Array, LDA: number, B: Float64Array, LDB: number, alphar: Float64Array, alphai: Float64Array, beta: Float64Array ): { SNL: number; CSR: number; SNR: number };
 
 	/**
-	* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param A - `A`
 	* @param strideA1 - stride of `A`
@@ -58,11 +58,11 @@ interface Routine {
 	* @param offsetBETA - starting index for `BETA`
 	* @returns result
 	*/
-	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, alphar: Float64Array, strideALPHAR: number, offsetALPHAR: number, alphai: Float64Array, strideALPHAI: number, offsetALPHAI: number, beta: Float64Array, strideBETA: number, offsetBETA: number ): Float64Array;
+	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, alphar: Float64Array, strideALPHAR: number, offsetALPHAR: number, alphai: Float64Array, strideALPHAI: number, offsetALPHAI: number, beta: Float64Array, strideBETA: number, offsetBETA: number ): { SNL: number; CSR: number; SNR: number };
 }
 
 /**
-* Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.
+* @license MIT.
 */
 declare var dlagv2: Routine;
 

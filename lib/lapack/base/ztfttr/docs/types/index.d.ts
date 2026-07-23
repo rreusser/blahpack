@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztfttr`.
 */
 interface Routine {
 	/**
-	* Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard full format (TR).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param transr - `transr`
@@ -38,10 +38,10 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @returns result
 	*/
-	( order: Layout, transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, A: Float64Array, LDA: number ): Float64Array;
+	( order: Layout, transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, A: Float64Array, LDA: number ): number;
 
 	/**
-	* Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard full format (TR) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, strideARF: number, offsetARF: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, N: number, ARF: Float64Array, strideARF: number, offsetARF: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): number;
 }
 
 /**
-* Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard full format (TR).
+* @license MIT.
 */
 declare var ztfttr: Routine;
 

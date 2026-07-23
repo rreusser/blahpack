@@ -21,23 +21,123 @@ import dgesc2 = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	dgesc2( 10 ); // $ExpectType Float64Array
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dgesc2( '10' ); // $ExpectError
-	dgesc2( true ); // $ExpectError
-	dgesc2( false ); // $ExpectError
-	dgesc2( null ); // $ExpectError
-	dgesc2( undefined ); // $ExpectError
-	dgesc2( [] ); // $ExpectError
-	dgesc2( {} ); // $ExpectError
+	dgesc2( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dgesc2( 10, '10', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10', new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), false, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [], new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {}, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, '10', 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, true, 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, null, 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, undefined, 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, [], 10, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), true, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), false, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), null, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), [], 10 ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, '10' ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, true ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, false ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, null ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, undefined ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, [] ); // $ExpectError
+	dgesc2( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Int32Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dgesc2(); // $ExpectError
+	dgesc2( 10 ); // $ExpectError
 }

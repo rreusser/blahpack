@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zrot`.
 */
 interface Routine {
 	/**
-	* Applies a plane rotation, where the cos (C) is real and the sin (S) is.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -34,10 +38,10 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	( N: number, cx: number, strideX: number, cy: number, strideY: number, c: number, s: number ): Float64Array;
+	( N: number, cx: number, strideX: number, cy: number, strideY: number, c: number, s: number ): Complex128Array;
 
 	/**
-	* Applies a plane rotation, where the cos (C) is real and the sin (S) is using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param cx - `cx`
@@ -50,11 +54,11 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	ndarray( N: number, cx: number, strideX: number, offsetX: number, cy: number, strideY: number, offsetY: number, c: number, s: number ): Float64Array;
+	ndarray( N: number, cx: number, strideX: number, offsetX: number, cy: number, strideY: number, offsetY: number, c: number, s: number ): Complex128Array;
 }
 
 /**
-* Applies a plane rotation, where the cos (C) is real and the sin (S) is.
+* @license MIT.
 */
 declare var zrot: Routine;
 

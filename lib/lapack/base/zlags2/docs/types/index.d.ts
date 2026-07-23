@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form.
+	* @license MIT.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param b3 - `b3`
 	* @returns result
 	*/
-	( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): void;
+	( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): { snuR: number; snuI: number; csv: number; snvR: number; snvI: number; csq: number; snqR: number; snqI: number };
 
 	/**
-	* Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param upper - `upper`
 	* @param a1 - `a1`
@@ -48,11 +48,11 @@ interface Routine {
 	* @param b3 - `b3`
 	* @returns result
 	*/
-	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): void;
+	ndarray( upper: boolean, a1: number, a2: number, a3: number, b1: number, b2: number, b3: number ): { snuR: number; snuI: number; csv: number; snvR: number; snvI: number; csq: number; snqR: number; snqI: number };
 }
 
 /**
-* Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form.
+* @license MIT.
 */
 declare var zlags2: Routine;
 

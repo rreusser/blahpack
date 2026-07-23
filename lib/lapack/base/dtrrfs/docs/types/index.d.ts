@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtrrfs`.
 */
 interface Routine {
 	/**
-	* Provides error bounds and backward error estimates for the solution to a.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -45,15 +45,15 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* Provides error bounds and backward error estimates for the solution to a using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -79,18 +79,18 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Provides error bounds and backward error estimates for the solution to a.
+* @license MIT.
 */
 declare var dtrrfs: Routine;
 

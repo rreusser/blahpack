@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Implements one level of recursion for DLAQR0. It is a complete implementation.
+	* @license MIT.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -41,13 +41,13 @@ interface Routine {
 	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Implements one level of recursion for DLAQR0. It is a complete implementation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -71,15 +71,15 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Implements one level of recursion for DLAQR0. It is a complete implementation.
+* @license MIT.
 */
 declare var dlaqr4: Routine;
 

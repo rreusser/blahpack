@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, TransposeOperation, DiagonalType, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { DiagonalType, Layout, MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztrmm`.
 */
 interface Routine {
 	/**
-	* Perform one of the matrix-matrix operations.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -43,10 +44,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( order: Layout, side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
+	( order: Layout, side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Complex128Array;
 
 	/**
-	* Perform one of the matrix-matrix operations using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -65,11 +66,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Complex128Array;
 }
 
 /**
-* Perform one of the matrix-matrix operations.
+* @license MIT.
 */
 declare var ztrmm: Routine;
 

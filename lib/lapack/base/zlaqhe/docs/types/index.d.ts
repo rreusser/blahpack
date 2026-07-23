@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Equilibrates a Hermitian matrix A using the scaling factors in the vector S.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -39,10 +39,10 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, scond: number, amax: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, scond: number, amax: number ): string;
 
 	/**
-	* Equilibrates a Hermitian matrix A using the scaling factors in the vector S using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -55,14 +55,13 @@ interface Routine {
 	* @param offsetS - starting index for `S`
 	* @param scond - `scond`
 	* @param amax - `amax`
-	* @param equed - `equed`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, scond: number, amax: number, equed: string ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): string;
 }
 
 /**
-* Equilibrates a Hermitian matrix A using the scaling factors in the vector S.
+* @license MIT.
 */
 declare var zlaqhe: Routine;
 

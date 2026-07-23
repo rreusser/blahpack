@@ -21,12 +21,88 @@ import zppsv = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zppsv( 0 ); // $ExpectType Float64Array
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zppsv( 10, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( true, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( null, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( undefined, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( [], 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( {}, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zppsv( 'row-major', 10, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', true, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', null, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', undefined, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', [], 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', {}, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zppsv( 'row-major', 'upper', '10', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', true, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', false, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', null, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', [], 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zppsv( 'row-major', 'upper', 10, '10', new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, true, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, false, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, null, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, [], new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, {}, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zppsv( 'row-major', 'upper', 10, 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), '10', 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), true, 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), null, 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), undefined, 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), [], 10 ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), false ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	zppsv( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zppsv(); // $ExpectError
+	zppsv( 'row-major' ); // $ExpectError
 }

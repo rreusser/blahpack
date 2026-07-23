@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128 } from '@stdlib/types/complex';
+
 /**
 * Interface describing `zdotu`.
 */
 interface Routine {
 	/**
-	* Computes the unconjugated dot product of two complex vectors:.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -32,10 +36,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Complex128;
 
 	/**
-	* Computes the unconjugated dot product of two complex vectors: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -46,11 +50,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): Complex128;
 }
 
 /**
-* Computes the unconjugated dot product of two complex vectors:.
+* @license MIT.
 */
 declare var zdotu: Routine;
 

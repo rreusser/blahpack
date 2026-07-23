@@ -23,17 +23,17 @@
 */
 interface Routine {
 	/**
-	* Computes the Euclidean norm of a real double-precision vector.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
 	* @param stride - stride of ``
 	* @returns result
 	*/
-	( N: number, x: number, stride: number ): Float64Array;
+	( N: number, x: number, stride: number ): number;
 
 	/**
-	* Computes the Euclidean norm of a real double-precision vector using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -41,11 +41,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( N: number, x: number, stride: number, offset: number ): Float64Array;
+	ndarray( N: number, x: number, stride: number, offset: number ): number;
 }
 
 /**
-* Computes the Euclidean norm of a real double-precision vector.
+* @license MIT.
 */
 declare var dnrm2: Routine;
 

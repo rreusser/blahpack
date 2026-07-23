@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dgemm`.
 */
 interface Routine {
 	/**
-	* Performs one of the matrix-matrix operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param transa - specifies the operation for matrix `A`
@@ -48,7 +48,7 @@ interface Routine {
 	( order: Layout, transa: TransposeOperation, transb: TransposeOperation, M: number, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
 
 	/**
-	* Performs one of the matrix-matrix operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transa - specifies the operation for matrix `A`
 	* @param transb - specifies the operation for matrix `B`
@@ -75,7 +75,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the matrix-matrix operations:.
+* @license MIT.
 */
 declare var dgemm: Routine;
 

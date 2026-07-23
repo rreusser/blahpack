@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Compute |re|^2 + |im|^2.
+	* @license MIT.
 	*
 	* @param f - `f`
 	* @param offsetF - starting index for `F`
@@ -37,10 +37,10 @@ interface Routine {
 	* @param offsetR - starting index for `R`
 	* @returns result
 	*/
-	( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): void;
+	( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): number;
 
 	/**
-	* Compute |re|^2 + |im|^2 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param offsetF - starting index for `F`
@@ -54,11 +54,11 @@ interface Routine {
 	* @param offsetR - starting index for `R`
 	* @returns result
 	*/
-	ndarray( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): void;
+	ndarray( f: number, offsetF: number, g: number, offsetG: number, c: number, offsetC: number, s: number, offsetS: number, r: number, offsetR: number ): number;
 }
 
 /**
-* Compute |re|^2 + |im|^2.
+* @license MIT.
 */
 declare var zlartg: Routine;
 

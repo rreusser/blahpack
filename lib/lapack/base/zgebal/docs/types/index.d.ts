@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Balances a general complex matrix A.
+	* @license MIT.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -33,10 +33,10 @@ interface Routine {
 	* @param strideSCALE - stride of `SCALE`
 	* @returns result
 	*/
-	( job: string, N: number, A: Float64Array, LDA: number, SCALE: Float64Array, strideSCALE: number ): Float64Array;
+	( job: string, N: number, A: Float64Array, LDA: number, SCALE: Float64Array, strideSCALE: number ): Record<string, unknown>;
 
 	/**
-	* Balances a general complex matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -44,18 +44,16 @@ interface Routine {
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param ilo - lower index
-	* @param ihi - upper index
 	* @param SCALE - `SCALE`
 	* @param strideSCALE - stride of `SCALE`
 	* @param offsetSCALE - starting index for `SCALE`
 	* @returns result
 	*/
-	ndarray( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number ): Float64Array;
+	ndarray( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number ): Record<string, unknown>;
 }
 
 /**
-* Balances a general complex matrix A.
+* @license MIT.
 */
 declare var zgebal: Routine;
 

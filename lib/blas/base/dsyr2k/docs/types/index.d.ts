@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsyr2k`.
 */
 interface Routine {
 	/**
-	* Performs one of the symmetric rank-2k operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
 
 	/**
-	* Performs one of the symmetric rank-2k operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the symmetric rank-2k operations:.
+* @license MIT.
 */
 declare var dsyr2k: Routine;
 

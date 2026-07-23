@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Sets a scalar multiple of the first column of the product.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param H - `H`
@@ -36,10 +36,10 @@ interface Routine {
 	* @param strideV - stride of `V`
 	* @returns result
 	*/
-	( N: number, H: Float64Array, LDH: number, sr1: number, si1: number, sr2: number, si2: number, v: Float64Array, strideV: number ): Float64Array;
+	( N: number, H: Float64Array, LDH: number, sr1: number, si1: number, sr2: number, si2: number, v: Float64Array, strideV: number ): void;
 
 	/**
-	* Sets a scalar multiple of the first column of the product using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param H - `H`
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetV - starting index for `V`
 	* @returns result
 	*/
-	ndarray( N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, sr1: number, si1: number, sr2: number, si2: number, v: Float64Array, strideV: number, offsetV: number ): Float64Array;
+	ndarray( N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, sr1: number, si1: number, sr2: number, si2: number, v: Float64Array, strideV: number, offsetV: number ): void;
 }
 
 /**
-* Sets a scalar multiple of the first column of the product.
+* @license MIT.
 */
 declare var dlaqr1: Routine;
 

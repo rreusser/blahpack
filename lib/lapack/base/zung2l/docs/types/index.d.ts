@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -33,13 +33,13 @@ interface Routine {
 	* @param TAU - `TAU`
 	* @param strideTAU - stride of `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Generate an M-by-N complex unitary matrix Q with orthonormal columns, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -52,15 +52,15 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Generate an M-by-N complex unitary matrix Q with orthonormal columns.
+* @license MIT.
 */
 declare var zung2l: Routine;
 

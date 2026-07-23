@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zgbtrs`.
 */
 interface Routine {
 	/**
-	* Solves a system of linear equations `A*X = B`, `A^T*X = B`, or `A^H*X = B`.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -43,10 +43,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves a system of linear equations `A*X = B`, `A^T*X = B`, or `A^H*X = B` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -66,11 +66,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, nrhs: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves a system of linear equations `A*X = B`, `A^T*X = B`, or `A^H*X = B`.
+* @license MIT.
 */
 declare var zgbtrs: Routine;
 

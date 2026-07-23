@@ -18,49 +18,45 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlaneg`.
 */
 interface Routine {
 	/**
-	* Computes the Sturm count
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param LLD - output array
-	* @param strideLLD - stride length for `LLD`
-	* @param sigma - sigma
-	* @param pivmin - pivmin
-	* @param r - r
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param LLD - `LLD`
+	* @param strideLLD - stride of `LLD`
+	* @param sigma - `sigma`
+	* @param pivmin - `pivmin`
+	* @param r - `r`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, LLD: Float64Array, strideLLD: number, sigma: number, pivmin: number, r: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, LLD: Float64Array, strideLLD: number, sigma: number, pivmin: number, r: number ): number;
 
 	/**
-	* Computes the Sturm count, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param LLD - output array
-	* @param strideLLD - stride length for `LLD`
+	* @param LLD - `LLD`
+	* @param strideLLD - stride of `LLD`
 	* @param offsetLLD - starting index for `LLD`
-	* @param sigma - sigma
-	* @param pivmin - pivmin
-	* @param r - r
+	* @param sigma - `sigma`
+	* @param pivmin - `pivmin`
+	* @param r - `r`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, sigma: number, pivmin: number, r: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, sigma: number, pivmin: number, r: number ): number;
 }
 
 /**
-* Computes the Sturm count
+* @license MIT.
 */
 declare var dlaneg: Routine;
 

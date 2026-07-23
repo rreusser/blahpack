@@ -20,56 +20,56 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlarz`.
 */
 interface Routine {
 	/**
-	* Applies an elementary reflector from RZ factorization to a general matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param side - specifies the operation type
+	* @param side - specifies the side of the operation
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param v - input array
-	* @param strideV - stride length for `v`
-	* @param tau - tau
-	* @param C - input matrix
+	* @param l - `l`
+	* @param v - `v`
+	* @param strideV - stride of `V`
+	* @param tau - `tau`
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, side: string, M: number, N: number, l: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: OperationSide, M: number, N: number, l: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): Float64Array;
 
 	/**
-	* Applies an elementary reflector from RZ factorization to a general matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param side - specifies the operation type
+	* @param side - specifies the side of the operation
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param v - input array
-	* @param strideV - stride length for `v`
+	* @param l - `l`
+	* @param v - `v`
+	* @param strideV - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param tau - tau
-	* @param C - input matrix
+	* @param tau - `tau`
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: string, M: number, N: number, l: number, v: Float64Array, strideV: number, offsetV: number, tau: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, M: number, N: number, l: number, v: Float64Array, strideV: number, offsetV: number, tau: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Float64Array;
 }
 
 /**
-* Applies an elementary reflector from RZ factorization to a general matrix
+* @license MIT.
 */
 declare var dlarz: Routine;
 

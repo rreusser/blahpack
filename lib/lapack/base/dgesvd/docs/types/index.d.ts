@@ -23,68 +23,63 @@
 import { Layout } from '@stdlib/types/blas';
 
 /**
-* Job specifier for the left singular vectors.
-*/
-type JobU = 'all-columns' | 'economy' | 'overwrite' | 'none';
-
-/**
-* Job specifier for the right singular vectors.
-*/
-type JobVT = 'all-rows' | 'economy' | 'overwrite' | 'none';
-
-/**
 * Interface describing `dgesvd`.
 */
 interface Routine {
 	/**
-	* Computes the singular value decomposition (SVD) of a real M-by-N matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param jobu - left singular vector job specifier
-	* @param jobvt - right singular vector job specifier
-	* @param M - number of rows of `A`
-	* @param N - number of columns of `A`
-	* @param A - input/output matrix
+	* @param jobu - `jobu`
+	* @param jobvt - `jobvt`
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param s - output array of singular values
-	* @param strideS - stride length for `s`
-	* @param U - output matrix for the left singular vectors
+	* @param s - `s`
+	* @param strideS - stride of `S`
+	* @param U - `U`
 	* @param LDU - leading dimension of `U`
-	* @param VT - output matrix for the right singular vectors (V^T)
+	* @param VT - `VT`
 	* @param LDVT - leading dimension of `VT`
-	* @returns info status code
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, jobu: JobU, jobvt: JobVT, M: number, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number ): number;
+	( order: Layout, jobu: string, jobvt: string, M: number, N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number, U: Float64Array, LDU: number, VT: Float64Array, LDVT: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the singular value decomposition (SVD) of a real M-by-N matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param jobu - left singular vector job specifier
-	* @param jobvt - right singular vector job specifier
-	* @param M - number of rows of `A`
-	* @param N - number of columns of `A`
-	* @param A - input/output matrix
-	* @param strideA1 - stride of dimension 1 of `A`
-	* @param strideA2 - stride of dimension 2 of `A`
+	* @param jobu - `jobu`
+	* @param jobvt - `jobvt`
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param s - output array of singular values
-	* @param strideS - stride length for `s`
-	* @param offsetS - starting index for `s`
-	* @param U - output matrix for the left singular vectors
-	* @param strideU1 - stride of dimension 1 of `U`
-	* @param strideU2 - stride of dimension 2 of `U`
+	* @param s - `s`
+	* @param strideS - stride of `S`
+	* @param offsetS - starting index for `S`
+	* @param U - `U`
+	* @param strideU1 - stride of `U`
+	* @param strideU2 - stride of `U`
 	* @param offsetU - starting index for `U`
-	* @param VT - output matrix for the right singular vectors (V^T)
-	* @param strideVT1 - stride of dimension 1 of `VT`
-	* @param strideVT2 - stride of dimension 2 of `VT`
+	* @param VT - `VT`
+	* @param strideVT1 - stride of `VT`
+	* @param strideVT2 - stride of `VT`
 	* @param offsetVT - starting index for `VT`
-	* @returns info status code
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( jobu: JobU, jobvt: JobVT, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number ): number;
+	ndarray( jobu: string, jobvt: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the singular value decomposition (SVD) of a real M-by-N matrix.
+* @license MIT.
 */
 declare var dgesvd: Routine;
 

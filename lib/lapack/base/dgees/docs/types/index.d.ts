@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real.
+	* @license MIT.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -39,15 +39,15 @@ interface Routine {
 	* @param VS - `VS`
 	* @param LDVS - leading dimension of `VS`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param BWORK - `BWORK`
-	* @param strideBWORK - stride of `BWORK`
+	* @param strideBWork - stride of `BWork`
 	* @returns result
 	*/
-	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWORK: number, BWORK: Int32Array, strideBWORK: number ): Float64Array;
+	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWork: number, BWORK: Int32Array, strideBWork: number ): number;
 
 	/**
-	* Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -69,18 +69,18 @@ interface Routine {
 	* @param strideVS2 - stride of `VS`
 	* @param offsetVS - starting index for `VS`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param BWORK - `BWORK`
-	* @param strideBWORK - stride of `BWORK`
-	* @param offsetBWORK - starting index for `BWORK`
+	* @param strideBWork - stride of `BWork`
+	* @param offsetBWork - starting index for `BWork`
 	* @returns result
 	*/
-	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, BWORK: Int32Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
+	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWork: number, offsetWork: number, BWORK: Int32Array, strideBWork: number, offsetBWork: number ): number;
 }
 
 /**
-* Computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real.
+* @license MIT.
 */
 declare var dgees: Routine;
 

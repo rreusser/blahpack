@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dspgv`.
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param itype - `itype`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( order: Layout, itype: number, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array ): Float64Array;
+	( order: Layout, itype: number, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -65,15 +65,15 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, BP: Float64Array, strideBP: number, offsetBP: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, BP: Float64Array, strideBP: number, offsetBP: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dspgv: Routine;
 

@@ -27,47 +27,47 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes LQ factorization of a complex triangular-pentagonal matrix using compact WY representation (unblocked)
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param A - input matrix
+	* @param l - `l`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param T - output matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number ): Float64Array;
+	( order: Layout, M: number, N: number, l: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number ): number;
 
 	/**
-	* Computes LQ factorization of a complex triangular-pentagonal matrix using compact WY representation (unblocked), using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param A - input matrix
+	* @param l - `l`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param T - output matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): Float64Array;
+	ndarray( M: number, N: number, l: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): number;
 }
 
 /**
-* Computes LQ factorization of a complex triangular-pentagonal matrix using compact WY representation (unblocked)
+* @license MIT.
 */
 declare var ztplqt2: Routine;
 

@@ -27,7 +27,7 @@ import { OperationSide } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Back-transforms eigenvectors after balancing by dgebal.
+	* @license MIT.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -41,10 +41,10 @@ interface Routine {
 	* @param LDV - leading dimension of `V`
 	* @returns result
 	*/
-	( job: string, side: OperationSide, N: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, M: number, V: Float64Array, LDV: number ): Float64Array;
+	( job: string, side: OperationSide, N: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, M: number, V: Float64Array, LDV: number ): number;
 
 	/**
-	* Back-transforms eigenvectors after balancing by dgebal using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -61,11 +61,11 @@ interface Routine {
 	* @param offsetV - starting index for `V`
 	* @returns result
 	*/
-	ndarray( job: string, side: OperationSide, N: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, M: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number ): Float64Array;
+	ndarray( job: string, side: OperationSide, N: number, ilo: number, ihi: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, M: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number ): number;
 }
 
 /**
-* Back-transforms eigenvectors after balancing by dgebal.
+* @license MIT.
 */
 declare var dgebak: Routine;
 

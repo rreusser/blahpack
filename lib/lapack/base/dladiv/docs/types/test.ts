@@ -21,23 +21,68 @@ import dladiv = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function returns a Float64Array...
 {
-	dladiv( 10 ); // $ExpectType void
+	dladiv( 10, 10, 10, 10, 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dladiv( '10' ); // $ExpectError
-	dladiv( true ); // $ExpectError
-	dladiv( false ); // $ExpectError
-	dladiv( null ); // $ExpectError
-	dladiv( undefined ); // $ExpectError
-	dladiv( [] ); // $ExpectError
-	dladiv( {} ); // $ExpectError
+	dladiv( '10', 10, 10, 10, 10 ); // $ExpectError
+	dladiv( true, 10, 10, 10, 10 ); // $ExpectError
+	dladiv( false, 10, 10, 10, 10 ); // $ExpectError
+	dladiv( null, 10, 10, 10, 10 ); // $ExpectError
+	dladiv( undefined, 10, 10, 10, 10 ); // $ExpectError
+	dladiv( [], 10, 10, 10, 10 ); // $ExpectError
+	dladiv( {}, 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dladiv( 10, '10', 10, 10, 10 ); // $ExpectError
+	dladiv( 10, true, 10, 10, 10 ); // $ExpectError
+	dladiv( 10, false, 10, 10, 10 ); // $ExpectError
+	dladiv( 10, null, 10, 10, 10 ); // $ExpectError
+	dladiv( 10, undefined, 10, 10, 10 ); // $ExpectError
+	dladiv( 10, [], 10, 10, 10 ); // $ExpectError
+	dladiv( 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dladiv( 10, 10, '10', 10, 10 ); // $ExpectError
+	dladiv( 10, 10, true, 10, 10 ); // $ExpectError
+	dladiv( 10, 10, false, 10, 10 ); // $ExpectError
+	dladiv( 10, 10, null, 10, 10 ); // $ExpectError
+	dladiv( 10, 10, undefined, 10, 10 ); // $ExpectError
+	dladiv( 10, 10, [], 10, 10 ); // $ExpectError
+	dladiv( 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dladiv( 10, 10, 10, '10', 10 ); // $ExpectError
+	dladiv( 10, 10, 10, true, 10 ); // $ExpectError
+	dladiv( 10, 10, 10, false, 10 ); // $ExpectError
+	dladiv( 10, 10, 10, null, 10 ); // $ExpectError
+	dladiv( 10, 10, 10, undefined, 10 ); // $ExpectError
+	dladiv( 10, 10, 10, [], 10 ); // $ExpectError
+	dladiv( 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dladiv( 10, 10, 10, 10, '10' ); // $ExpectError
+	dladiv( 10, 10, 10, 10, true ); // $ExpectError
+	dladiv( 10, 10, 10, 10, false ); // $ExpectError
+	dladiv( 10, 10, 10, 10, null ); // $ExpectError
+	dladiv( 10, 10, 10, 10, undefined ); // $ExpectError
+	dladiv( 10, 10, 10, 10, [] ); // $ExpectError
+	dladiv( 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dladiv(); // $ExpectError
+	dladiv( 10 ); // $ExpectError
 }

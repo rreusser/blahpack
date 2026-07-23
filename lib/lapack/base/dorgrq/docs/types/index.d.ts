@@ -27,47 +27,45 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* generates an M-by-N real matrix Q with orthonormal rows from elementary reflectors returned by DGERQF (blocked algorithm)
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param A - input matrix
+	* @param K - inner dimension
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* generates an M-by-N real matrix Q with orthonormal rows from elementary reflectors returned by DGERQF (blocked algorithm), using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param A - input matrix
+	* @param K - inner dimension
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* generates an M-by-N real matrix Q with orthonormal rows from elementary reflectors returned by DGERQF (blocked algorithm)
+* @license MIT.
 */
 declare var dorgrq: Routine;
 

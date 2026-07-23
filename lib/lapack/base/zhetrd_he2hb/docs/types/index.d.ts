@@ -20,58 +20,58 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhetrd_he2hb`.
 */
 interface Routine {
 	/**
-	* Reduce a complex Hermitian matrix A to complex Hermitian band-diagonal form AB by a unitary similarity transformation: Q^H * A * Q = AB.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param kd - kd
-	* @param A - input matrix
+	* @param kd - `kd`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param AB - input matrix
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, kd: number, A: Float64Array, LDA: number, AB: Float64Array, LDAB: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, A: Float64Array, LDA: number, AB: Float64Array, LDAB: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Reduce a complex Hermitian matrix A to complex Hermitian band-diagonal form AB by a unitary similarity transformation: Q^H * A * Q = AB., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param kd - kd
-	* @param A - input matrix
+	* @param kd - `kd`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param AB - input matrix
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, kd: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, kd: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduce a complex Hermitian matrix A to complex Hermitian band-diagonal form AB by a unitary similarity transformation: Q^H * A * Q = AB.
+* @license MIT.
 */
 declare var zhetrd_he2hb: Routine;
 

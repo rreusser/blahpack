@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes row and column scalings intended to equilibrate an M-by-N complex band matrix A and reduce its condition number.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -37,10 +37,10 @@ interface Routine {
 	* @param strideC - stride of `C`
 	* @returns result
 	*/
-	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): Float64Array;
+	( M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): { info: number; rowcnd: number; colcnd: number; amax: number };
 
 	/**
-	* Computes row and column scalings intended to equilibrate an M-by-N complex band matrix A and reduce its condition number using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,11 +58,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number ): Float64Array;
+	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number ): { info: number; rowcnd: number; colcnd: number; amax: number };
 }
 
 /**
-* Computes row and column scalings intended to equilibrate an M-by-N complex band matrix A and reduce its condition number.
+* @license MIT.
 */
 declare var zgbequ: Routine;
 

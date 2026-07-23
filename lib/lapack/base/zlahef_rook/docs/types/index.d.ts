@@ -20,56 +20,52 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlahef_rook`.
 */
 interface Routine {
 	/**
-	* Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param nb - nb
-	* @param kb - kb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param W - output matrix
+	* @param IPIV - `IPIV`
+	* @param W - `W`
 	* @param LDW - leading dimension of `W`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, nb: number, kb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, LDW: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, W: Float64Array, LDW: number ): Record<string, unknown>;
 
 	/**
-	* Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param nb - nb
-	* @param kb - kb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param W - output matrix
+	* @param W - `W`
 	* @param strideW1 - stride of `W`
 	* @param strideW2 - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, nb: number, kb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Record<string, unknown>;
 }
 
 /**
-* Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method.
+* @license MIT.
 */
 declare var zlahef_rook: Routine;
 

@@ -21,24 +21,57 @@ import drotmg = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	drotmg( new Float64Array( 25 ) ); // $ExpectType Float64Array
+	drotmg( new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a Float64Array...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	drotmg( '10' ); // $ExpectError
-	drotmg( 10 ); // $ExpectError
-	drotmg( true ); // $ExpectError
-	drotmg( false ); // $ExpectError
-	drotmg( null ); // $ExpectError
-	drotmg( undefined ); // $ExpectError
-	drotmg( [] ); // $ExpectError
-	drotmg( {} ); // $ExpectError
+	drotmg( '10', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( 10, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( true, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( null, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( undefined, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( [], 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( {}, 10, 10, new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	drotmg( new Float64Array( 25 ), '10', 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), true, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), false, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), null, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), [], 10, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	drotmg( new Float64Array( 25 ), 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, true, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, false, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, null, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, [], new Float64Array( 25 ) ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	drotmg( new Float64Array( 25 ), 10, 10, '10' ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, true ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, null ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, undefined ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, [] ); // $ExpectError
+	drotmg( new Float64Array( 25 ), 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	drotmg(); // $ExpectError
+	drotmg( new Float64Array( 25 ) ); // $ExpectError
 }

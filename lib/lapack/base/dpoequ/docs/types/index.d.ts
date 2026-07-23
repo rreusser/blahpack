@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param strideS - stride of `S`
 	* @returns result
 	*/
-	( N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number ): Float64Array;
+	( N: number, A: Float64Array, LDA: number, s: Float64Array, strideS: number ): { info: number; scond: number; amax: number };
 
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -45,15 +45,13 @@ interface Routine {
 	* @param s - `s`
 	* @param strideS - stride of `S`
 	* @param offsetS - starting index for `S`
-	* @param scond - `scond`
-	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): Float64Array;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, s: Float64Array, strideS: number, offsetS: number ): { info: number; scond: number; amax: number };
 }
 
 /**
-* Computes row and column scalings intended to equilibrate a symmetric positive.
+* @license MIT.
 */
 declare var dpoequ: Routine;
 

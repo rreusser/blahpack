@@ -27,7 +27,7 @@ import { OperationSide, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
+	* @license MIT.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -41,13 +41,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -66,15 +66,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Overwrites the M-by-N matrix C with Q_C, Q^T_C, C_Q, or C_Q^T.
+* @license MIT.
 */
 declare var dormr2: Routine;
 

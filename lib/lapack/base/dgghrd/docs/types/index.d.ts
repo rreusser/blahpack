@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param compq - `compq`
@@ -45,10 +45,10 @@ interface Routine {
 	* @param LDZ - leading dimension of `Z`
 	* @returns result
 	*/
-	( order: Layout, compq: string, compz: string, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number ): Float64Array;
+	( order: Layout, compq: string, compz: string, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param compq - `compq`
 	* @param compz - `compz`
@@ -73,11 +73,11 @@ interface Routine {
 	* @param offsetZ - starting index for `Z`
 	* @returns result
 	*/
-	ndarray( compq: string, compz: string, N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
+	ndarray( compq: string, compz: string, N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dgghrd: Routine;
 

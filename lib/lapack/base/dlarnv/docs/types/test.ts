@@ -21,23 +21,79 @@ import dlarnv = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	dlarnv( 10 ); // $ExpectType Float64Array
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlarnv( '10' ); // $ExpectError
-	dlarnv( true ); // $ExpectError
-	dlarnv( false ); // $ExpectError
-	dlarnv( null ); // $ExpectError
-	dlarnv( undefined ); // $ExpectError
-	dlarnv( [] ); // $ExpectError
-	dlarnv( {} ); // $ExpectError
+	dlarnv( '10', new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( true, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( false, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( null, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( undefined, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( [], new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( {}, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlarnv( 10, '10', 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, true, 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, null, 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, undefined, 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, [], 10, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, {}, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlarnv( 10, new Float64Array( 25 ), '10', 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), true, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), false, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), null, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), undefined, 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), [], 10, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlarnv( 10, new Float64Array( 25 ), 10, '10', 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, true, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, false, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, null, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, undefined, 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, [], 10, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, '10', 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, true, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, false, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, null, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, undefined, 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, [], 10 ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, '10' ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, true ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, false ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, null ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, undefined ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, [] ); // $ExpectError
+	dlarnv( 10, new Float64Array( 25 ), 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlarnv(); // $ExpectError
+	dlarnv( 10 ); // $ExpectError
 }

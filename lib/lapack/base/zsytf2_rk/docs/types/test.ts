@@ -21,22 +21,121 @@ import zsytf2_rk = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zsytf2_rk( 'row-major', 'upper', 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2, 2, 2, 2 ); // $ExpectType Float64Array
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zsytf2_rk( 10, 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( true, 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( null, 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( undefined, 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( [], 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( {}, 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, '10', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), false, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [], 10 ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, '10' ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, true ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, false ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, null ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, undefined ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, [] ); // $ExpectError
+	zsytf2_rk( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zsytf2_rk(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	zsytf2_rk.ndarray( 'upper', 2, new Float64Array( 4 ), 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	zsytf2_rk.ndarray(); // $ExpectError
+	zsytf2_rk( 'row-major' ); // $ExpectError
 }

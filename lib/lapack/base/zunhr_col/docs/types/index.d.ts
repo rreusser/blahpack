@@ -27,46 +27,46 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* TODO: Add description for ZUNHR_COL.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param nb - nb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param d - output array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, d: Float64Array, strideD: number ): Float64Array;
+	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, d: Float64Array, strideD: number ): number;
 
 	/**
-	* TODO: Add description for ZUNHR_COL., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param nb - nb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param d - output array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, d: Float64Array, strideD: number, offsetD: number ): Float64Array;
+	ndarray( M: number, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, d: Float64Array, strideD: number, offsetD: number ): number;
 }
 
 /**
-* TODO: Add description for ZUNHR_COL.
+* @license MIT.
 */
 declare var zunhr_col: Routine;
 

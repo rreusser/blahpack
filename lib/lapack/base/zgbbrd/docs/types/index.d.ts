@@ -27,79 +27,79 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a complex general band matrix to real upper bidiagonal form
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param vect - specifies the operation type
+	* @param vect - `vect`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param ncc - ncc
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param ncc - `ncc`
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param Q - input matrix
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param PT - input matrix
+	* @param PT - `PT`
 	* @param LDPT - leading dimension of `PT`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, LDAB: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Q: Float64Array, LDQ: number, PT: Float64Array, LDPT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, LDAB: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Q: Float64Array, LDQ: number, PT: Float64Array, LDPT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Reduces a complex general band matrix to real upper bidiagonal form, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param vect - specifies the operation type
+	* @param vect - `vect`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param ncc - ncc
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param ncc - `ncc`
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param PT - input matrix
+	* @param PT - `PT`
 	* @param stridePT1 - stride of `PT`
 	* @param stridePT2 - stride of `PT`
 	* @param offsetPT - starting index for `PT`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, PT: Float64Array, stridePT1: number, stridePT2: number, offsetPT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, PT: Float64Array, stridePT1: number, stridePT2: number, offsetPT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Reduces a complex general band matrix to real upper bidiagonal form
+* @license MIT.
 */
 declare var zgbbrd: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param n1 - `n1`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param COLTYP - `COLTYP`
 	* @returns result
 	*/
-	( N: number, n1: number, d: Float64Array, Q: Float64Array, LDQ: number, INDXQ: Float64Array, rho: number, z: Float64Array, DLAMBDA: Float64Array, w: Float64Array, Q2: Float64Array, INDX: Float64Array, INDXC: Float64Array, INDXP: Float64Array, COLTYP: Float64Array ): Float64Array;
+	( N: number, n1: number, d: Float64Array, Q: Float64Array, LDQ: number, INDXQ: Float64Array, rho: number, z: Float64Array, DLAMBDA: Float64Array, w: Float64Array, Q2: Float64Array, INDX: Float64Array, INDXC: Float64Array, INDXP: Float64Array, COLTYP: Float64Array ): { info: number; K: number; rho: number };
 
 	/**
-	* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param n1 - `n1`
@@ -86,11 +86,11 @@ interface Routine {
 	* @param offsetCOLTYP - starting index for `COLTYP`
 	* @returns result
 	*/
-	ndarray( N: number, n1: number, d: Float64Array, strideD: number, offsetD: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, INDXQ: Float64Array, strideINDXQ: number, offsetINDXQ: number, rho: number, z: Float64Array, strideZ: number, offsetZ: number, DLAMBDA: Float64Array, strideDLAMBDA: number, offsetDLAMBDA: number, w: Float64Array, strideW: number, offsetW: number, Q2: Float64Array, strideQ21: number, offsetQ2: number, INDX: Float64Array, strideINDX: number, offsetINDX: number, INDXC: Float64Array, strideINDXC: number, offsetINDXC: number, INDXP: Float64Array, strideINDXP: number, offsetINDXP: number, COLTYP: Float64Array, strideCOLTYP: number, offsetCOLTYP: number ): Float64Array;
+	ndarray( N: number, n1: number, d: Float64Array, strideD: number, offsetD: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, INDXQ: Float64Array, strideINDXQ: number, offsetINDXQ: number, rho: number, z: Float64Array, strideZ: number, offsetZ: number, DLAMBDA: Float64Array, strideDLAMBDA: number, offsetDLAMBDA: number, w: Float64Array, strideW: number, offsetW: number, Q2: Float64Array, strideQ21: number, offsetQ2: number, INDX: Float64Array, strideINDX: number, offsetINDX: number, INDXC: Float64Array, strideINDXC: number, offsetINDXC: number, INDXP: Float64Array, strideINDXP: number, offsetINDXP: number, COLTYP: Float64Array, strideCOLTYP: number, offsetCOLTYP: number ): { info: number; K: number; rho: number };
 }
 
 /**
-* Merges the two sets of eigenvalues together into a single sorted set, then tries to deflate the size of the problem.
+* @license MIT.
 */
 declare var dlaed2: Routine;
 

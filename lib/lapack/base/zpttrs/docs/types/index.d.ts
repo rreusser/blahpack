@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves a complex Hermitian positive definite tridiagonal system A*X = B.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -40,10 +40,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves a complex Hermitian positive definite tridiagonal system A*X = B using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -60,11 +60,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves a complex Hermitian positive definite tridiagonal system A*X = B.
+* @license MIT.
 */
 declare var zpttrs: Routine;
 

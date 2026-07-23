@@ -21,22 +21,110 @@ import dlasyf_rook = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	dlasyf_rook( 'row-major', 'upper', 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, new Float64Array( 4 ), 2 ); // $ExpectType Float64Array
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 );
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlasyf_rook( 10, 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( true, 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( null, 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( undefined, 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( [], 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( {}, 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 10, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', true, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', null, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', undefined, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', [], 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', {}, 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', '10', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', false, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, true, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, false, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, null, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, [], new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, 10, '10', 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, 10, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, true, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, null, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, undefined, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, [], 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, {}, 10, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), true, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), false, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), null, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), [], new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true, 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null, 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [], 10 ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), false ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	dlasyf_rook( 'row-major', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlasyf_rook(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	dlasyf_rook.ndarray( 'upper', 2, 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlasyf_rook.ndarray(); // $ExpectError
+	dlasyf_rook( 'row-major' ); // $ExpectError
 }

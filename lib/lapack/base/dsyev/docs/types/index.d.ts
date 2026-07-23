@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsyev`.
 */
 interface Routine {
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param jobz - `jobz`
@@ -38,13 +38,13 @@ interface Routine {
 	* @param w - `w`
 	* @param strideW - stride of `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -57,15 +57,15 @@ interface Routine {
 	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+* @license MIT.
 */
 declare var dsyev: Routine;
 

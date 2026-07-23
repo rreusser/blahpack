@@ -20,15 +20,16 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, TransposeOperation } from '@stdlib/types/blas';
+import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zunmql`.
 */
 interface Routine {
 	/**
-	* Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+	* @license MIT.
 	*
+	* @param order - storage layout
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -41,14 +42,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param trans - specifies whether the matrix should be transposed
@@ -67,16 +67,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Overwrites the M-by-N matrix C with Q*C, Q^H*C, C*Q, or C*Q^H.
+* @license MIT.
 */
 declare var zunmql: Routine;
 

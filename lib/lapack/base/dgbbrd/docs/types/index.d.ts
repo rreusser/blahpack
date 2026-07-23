@@ -27,74 +27,74 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a real general band matrix to upper bidiagonal form
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param vect - specifies the operation type
+	* @param vect - `vect`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param ncc - ncc
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param ncc - `ncc`
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param Q - input matrix
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param PT - input matrix
+	* @param PT - `PT`
 	* @param LDPT - leading dimension of `PT`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, LDAB: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Q: Float64Array, LDQ: number, PT: Float64Array, LDPT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, LDAB: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Q: Float64Array, LDQ: number, PT: Float64Array, LDPT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Reduces a real general band matrix to upper bidiagonal form, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param vect - specifies the operation type
+	* @param vect - `vect`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param ncc - ncc
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param ncc - `ncc`
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param PT - input matrix
+	* @param PT - `PT`
 	* @param stridePT1 - stride of `PT`
 	* @param stridePT2 - stride of `PT`
 	* @param offsetPT - starting index for `PT`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, PT: Float64Array, stridePT1: number, stridePT2: number, offsetPT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( vect: string, M: number, N: number, ncc: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, PT: Float64Array, stridePT1: number, stridePT2: number, offsetPT: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a real general band matrix to upper bidiagonal form
+* @license MIT.
 */
 declare var dgbbrd: Routine;
 

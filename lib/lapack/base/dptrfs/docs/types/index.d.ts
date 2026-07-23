@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Improves the computed solution to a real symmetric positive definite.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -44,13 +44,13 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, DF: Float64Array, strideDF: number, EF: Float64Array, strideEF: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, DF: Float64Array, strideDF: number, EF: Float64Array, strideEF: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Improves the computed solution to a real symmetric positive definite using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -81,15 +81,15 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, DF: Float64Array, strideDF: number, offsetDF: number, EF: Float64Array, strideEF: number, offsetEF: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, DF: Float64Array, strideDF: number, offsetDF: number, EF: Float64Array, strideEF: number, offsetEF: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Improves the computed solution to a real symmetric positive definite.
+* @license MIT.
 */
 declare var dptrfs: Routine;
 

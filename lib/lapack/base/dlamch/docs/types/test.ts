@@ -21,23 +21,22 @@ import dlamch = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dlamch( 'no-transpose' ); // $ExpectType Float64Array
+	dlamch( 'no-transpose' ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
 	dlamch( 10 ); // $ExpectError
 	dlamch( true ); // $ExpectError
-	dlamch( false ); // $ExpectError
 	dlamch( null ); // $ExpectError
 	dlamch( undefined ); // $ExpectError
 	dlamch( [] ); // $ExpectError
 	dlamch( {} ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlamch(); // $ExpectError
 }

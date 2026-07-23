@@ -21,22 +21,90 @@ import zlarfgp = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	zlarfgp( 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zlarfgp( '10', 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( true, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( false, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( null, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( undefined, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( [], 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( {}, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlarfgp( 10, '10', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, true, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, false, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, null, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, undefined, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, [], 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, {}, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlarfgp( 10, 10, '10', new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, true, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, false, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, null, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, undefined, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, [], new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, {}, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlarfgp( 10, 10, 10, '10', 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, true, 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, null, 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, undefined, 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, [], 10, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), '10', 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), true, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), false, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), null, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), undefined, 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), [], 10, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, false, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, '10' ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, true ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, false ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, null ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, undefined ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, [] ); // $ExpectError
+	zlarfgp( 10, 10, 10, new Float64Array( 25 ), 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlarfgp(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	zlarfgp.ndarray( 2, 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	zlarfgp.ndarray(); // $ExpectError
+	zlarfgp( 10 ); // $ExpectError
 }

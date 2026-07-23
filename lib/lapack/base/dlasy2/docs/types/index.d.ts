@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves for the N1-by-N2 matrix X in:.
+	* @license MIT.
 	*
 	* @param ltranl - `ltranl`
 	* @param ltranr - `ltranr`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param xnorm - `xnorm`
 	* @returns result
 	*/
-	( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, LDTL: number, TR: Float64Array, LDTR: number, B: Float64Array, LDB: number, scale: number, X: Float64Array, LDX: number, xnorm: number ): Float64Array;
+	( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, LDTL: number, TR: Float64Array, LDTR: number, B: Float64Array, LDB: number, scale: number, X: Float64Array, LDX: number, xnorm: number ): number;
 
 	/**
-	* Solves for the N1-by-N2 matrix X in: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param ltranl - `ltranl`
 	* @param ltranr - `ltranr`
@@ -72,11 +72,11 @@ interface Routine {
 	* @param xnorm - `xnorm`
 	* @returns result
 	*/
-	ndarray( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, strideTL1: number, strideTL2: number, offsetTL: number, TR: Float64Array, strideTR1: number, strideTR2: number, offsetTR: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, scale: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, xnorm: number ): Float64Array;
+	ndarray( ltranl: boolean, ltranr: boolean, isgn: string, n1: number, n2: number, TL: Float64Array, strideTL1: number, strideTL2: number, offsetTL: number, TR: Float64Array, strideTR1: number, strideTR2: number, offsetTR: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, scale: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, xnorm: number ): number;
 }
 
 /**
-* Solves for the N1-by-N2 matrix X in:.
+* @license MIT.
 */
 declare var dlasy2: Routine;
 

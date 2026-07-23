@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* ABS1: |re| + |im| (cheap complex absolute value).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param jobvl - `jobvl`
@@ -47,10 +47,10 @@ interface Routine {
 	* @param LDVR - leading dimension of `VR`
 	* @returns result
 	*/
-	( order: Layout, jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number ): Float64Array;
+	( order: Layout, jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number ): number;
 
 	/**
-	* ABS1: |re| + |im| (cheap complex absolute value) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -79,11 +79,11 @@ interface Routine {
 	* @param offsetVR - starting index for `VR`
 	* @returns result
 	*/
-	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number ): Float64Array;
+	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number ): number;
 }
 
 /**
-* ABS1: |re| + |im| (cheap complex absolute value).
+* @license MIT.
 */
 declare var zggev: Routine;
 

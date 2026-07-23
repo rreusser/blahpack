@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes all the singular values of a real upper bidiagonal matrix of.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -31,13 +31,13 @@ interface Routine {
 	* @param e - `e`
 	* @param strideE - stride of `E`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes all the singular values of a real upper bidiagonal matrix of using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -47,15 +47,15 @@ interface Routine {
 	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes all the singular values of a real upper bidiagonal matrix of.
+* @license MIT.
 */
 declare var dlasq1: Routine;
 

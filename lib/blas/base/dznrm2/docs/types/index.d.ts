@@ -23,7 +23,17 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
+	*
+	* @param N - number of columns
+	* @param zx - `zx`
+	* @param strideX - stride of `X`
+	* @returns result
+	*/
+	( N: number, zx: number, strideX: number ): number;
+
+	/**
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -31,11 +41,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dznrm2: Routine;
 

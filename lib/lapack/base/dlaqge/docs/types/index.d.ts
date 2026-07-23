@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Equilibrates a general M-by-N matrix A using the row and column scaling.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -38,10 +38,10 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): Float64Array;
+	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number, rowcnd: number, colcnd: number, amax: number ): string;
 
 	/**
-	* Equilibrates a general M-by-N matrix A using the row and column scaling using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,14 +58,13 @@ interface Routine {
 	* @param rowcnd - `rowcnd`
 	* @param colcnd - `colcnd`
 	* @param amax - `amax`
-	* @param equed - `equed`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number, equed: string ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number ): string;
 }
 
 /**
-* Equilibrates a general M-by-N matrix A using the row and column scaling.
+* @license MIT.
 */
 declare var dlaqge: Routine;
 

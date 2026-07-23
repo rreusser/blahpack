@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Scales a vector by the reciprocal of a scalar, performing the scaling.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param sa - `sa`
@@ -34,7 +34,7 @@ interface Routine {
 	( N: number, sa: number, x: Float64Array, strideX: number ): Float64Array;
 
 	/**
-	* Scales a vector by the reciprocal of a scalar, performing the scaling using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param sa - `sa`
@@ -47,7 +47,7 @@ interface Routine {
 }
 
 /**
-* Scales a vector by the reciprocal of a scalar, performing the scaling.
+* @license MIT.
 */
 declare var drscl: Routine;
 

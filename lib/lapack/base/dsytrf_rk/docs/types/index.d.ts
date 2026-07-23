@@ -20,54 +20,59 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
-* Interface describing `dsytrfRk`.
+* Interface describing `dsytrf_rk`.
 */
 interface Routine {
 	/**
-	* Computes the bounded Bunch-Kaufman (rook) factorization of a real symmetric indefinite matrix in `_rk` storage format.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies which triangle of `A` is referenced
-	* @param N - order of the matrix `A`
-	* @param A - input/output symmetric matrix
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param N - number of columns
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param e - output vector containing the off-diagonal entries of `D`
-	* @param strideE - stride length for `e`
-	* @param IPIV - output pivot index array
-	* @param strideIPIV - stride length for `IPIV`
-	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array | null, strideWork: number ): number;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the bounded Bunch-Kaufman (rook) factorization of a real symmetric indefinite matrix in `_rk` storage format, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies which triangle of `A` is referenced
-	* @param N - order of the matrix `A`
-	* @param A - input/output symmetric matrix
-	* @param strideA1 - stride of dimension 1 of `A`
-	* @param strideA2 - stride of dimension 2 of `A`
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param N - number of columns
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param e - output vector containing the off-diagonal entries of `D`
-	* @param strideE - stride length for `e`
-	* @param offsetE - starting index for `e`
-	* @param IPIV - output pivot index array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param offsetE - starting index for `E`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the bounded Bunch-Kaufman (rook) factorization of a real symmetric indefinite matrix in `_rk` storage format (blocked algorithm).
+* @license MIT.
 */
-declare var dsytrfRk: Routine;
+declare var dsytrf_rk: Routine;
 
 
 // EXPORTS //
 
-export = dsytrfRk;
+export = dsytrf_rk;

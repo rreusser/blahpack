@@ -27,97 +27,97 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reorders the generalized real Schur decomposition of a real matrix pair
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param ijob - ijob
-	* @param wantq - wantq
-	* @param wantz - wantz
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param ijob - `ijob`
+	* @param wantq - `wantq`
+	* @param wantz - `wantz`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
-	* @param Q - input matrix
+	* @param ALPHAR - `ALPHAR`
+	* @param strideALPHAR - stride of `ALPHAR`
+	* @param ALPHAI - `ALPHAI`
+	* @param strideALPHAI - stride of `ALPHAI`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param Z - input matrix
+	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @param M - number of rows
-	* @param pl - pl
-	* @param pr - pr
-	* @param DIF - input array
-	* @param strideDIF - stride length for `DIF`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param pl - `pl`
+	* @param pr - `pr`
+	* @param DIF - `DIF`
+	* @param strideDIF - stride of `DIF`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	( order: Layout, ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( order: Layout, ijob: number, wantq: boolean, wantz: boolean, SELECT: Int32Array, strideSELECT: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* Reorders the generalized real Schur decomposition of a real matrix pair, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param ijob - ijob
-	* @param wantq - wantq
-	* @param wantz - wantz
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param ijob - `ijob`
+	* @param wantq - `wantq`
+	* @param wantz - `wantz`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param offsetSELECT - starting index for `SELECT`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
+	* @param ALPHAR - `ALPHAR`
+	* @param strideALPHAR - stride of `ALPHAR`
 	* @param offsetALPHAR - starting index for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
+	* @param ALPHAI - `ALPHAI`
+	* @param strideALPHAI - stride of `ALPHAI`
 	* @param offsetALPHAI - starting index for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
 	* @param offsetBETA - starting index for `BETA`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param Z - input matrix
+	* @param Z - `Z`
 	* @param strideZ1 - stride of `Z`
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param M - number of rows
-	* @param pl - pl
-	* @param pr - pr
-	* @param DIF - input array
-	* @param strideDIF - stride length for `DIF`
+	* @param pl - `pl`
+	* @param pr - `pr`
+	* @param DIF - `DIF`
+	* @param strideDIF - stride of `DIF`
 	* @param offsetDIF - starting index for `DIF`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( ijob: number, wantq: boolean, wantz: boolean, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( ijob: number, wantq: boolean, wantz: boolean, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, M: number, pl: number, pr: number, DIF: Float64Array, strideDIF: number, offsetDIF: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Reorders the generalized real Schur decomposition of a real matrix pair
+* @license MIT.
 */
 declare var dtgsen: Routine;
 

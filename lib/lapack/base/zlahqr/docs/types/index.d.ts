@@ -23,16 +23,27 @@
 */
 interface Routine {
 	/**
-	* CABS1(z) = |Re(z)| + |Im(z)|.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param wantt - `wantt`
+	* @param wantz - `wantz`
+	* @param N - number of columns
+	* @param ilo - lower index
+	* @param ihi - upper index
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param W - `W`
+	* @param strideW - stride of `W`
+	* @param iloz - `iloz`
+	* @param ihiz - `ihiz`
+	* @param Z - `Z`
+	* @param LDZ - leading dimension of `Z`
 	* @returns result
 	*/
-	( v: number, idx: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, W: Float64Array, strideW: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* CABS1(z) = |Re(z)| + |Im(z)| using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -54,11 +65,11 @@ interface Routine {
 	* @param offsetZ - starting index for `Z`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, W: Float64Array, strideW: number, offsetW: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, W: Float64Array, strideW: number, offsetW: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): number;
 }
 
 /**
-* CABS1(z) = |Re(z)| + |Im(z)|.
+* @license MIT.
 */
 declare var zlahqr: Routine;
 

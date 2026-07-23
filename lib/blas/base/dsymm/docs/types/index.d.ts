@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsymm`.
 */
 interface Routine {
 	/**
-	* Performs one of the symmetric matrix-matrix operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -47,7 +47,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
 
 	/**
-	* Performs one of the symmetric matrix-matrix operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the symmetric matrix-matrix operations:.
+* @license MIT.
 */
 declare var dsymm: Routine;
 

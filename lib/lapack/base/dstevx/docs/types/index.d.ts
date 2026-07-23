@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes selected eigenvalues and, optionally, eigenvectors of a real.
+	* @license MIT.
 	*
 	* @param jobz - `jobz`
 	* @param range - `range`
@@ -43,17 +43,17 @@ interface Routine {
 	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @param IFAIL - `IFAIL`
 	* @param strideIFAIL - stride of `IFAIL`
 	* @returns result
 	*/
-	( jobz: string, range: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, vl: number, vu: number, il: number, iu: number, abstol: number, M: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, IFAIL: Float64Array, strideIFAIL: number ): Float64Array;
+	( jobz: string, range: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, vl: number, vu: number, il: number, iu: number, abstol: number, M: number, w: Float64Array, strideW: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, IFAIL: Float64Array, strideIFAIL: number ): number;
 
 	/**
-	* Computes selected eigenvalues and, optionally, eigenvectors of a real using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param range - `range`
@@ -78,21 +78,21 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @param IFAIL - `IFAIL`
 	* @param strideIFAIL - stride of `IFAIL`
 	* @param offsetIFAIL - starting index for `IFAIL`
 	* @returns result
 	*/
-	ndarray( jobz: string, range: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, vl: number, vu: number, il: number, iu: number, abstol: number, M: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): Float64Array;
+	ndarray( jobz: string, range: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, vl: number, vu: number, il: number, iu: number, abstol: number, M: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): number;
 }
 
 /**
-* Computes selected eigenvalues and, optionally, eigenvectors of a real.
+* @license MIT.
 */
 declare var dstevx: Routine;
 

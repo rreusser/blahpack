@@ -21,23 +21,46 @@ import izmax1 = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	izmax1( 10 ); // $ExpectType Float64Array
+	izmax1( 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	izmax1( '10' ); // $ExpectError
-	izmax1( true ); // $ExpectError
-	izmax1( false ); // $ExpectError
-	izmax1( null ); // $ExpectError
-	izmax1( undefined ); // $ExpectError
-	izmax1( [] ); // $ExpectError
-	izmax1( {} ); // $ExpectError
+	izmax1( '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( true, new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( false, new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( null, new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( [], new Float64Array( 25 ), 10 ); // $ExpectError
+	izmax1( {}, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	izmax1( 10, '10', 10 ); // $ExpectError
+	izmax1( 10, 10, 10 ); // $ExpectError
+	izmax1( 10, true, 10 ); // $ExpectError
+	izmax1( 10, null, 10 ); // $ExpectError
+	izmax1( 10, undefined, 10 ); // $ExpectError
+	izmax1( 10, [], 10 ); // $ExpectError
+	izmax1( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	izmax1( 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), true ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), false ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), null ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), [] ); // $ExpectError
+	izmax1( 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	izmax1(); // $ExpectError
+	izmax1( 10 ); // $ExpectError
 }

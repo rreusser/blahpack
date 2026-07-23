@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zdrot`.
 */
 interface Routine {
 	/**
-	* Applies a real plane rotation to a pair of complex double-precision vectors:.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -34,10 +38,10 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number, zy: number, strideY: number, c: number, s: number ): Float64Array;
+	( N: number, zx: number, strideX: number, zy: number, strideY: number, c: number, s: number ): Complex128Array;
 
 	/**
-	* Applies a real plane rotation to a pair of complex double-precision vectors: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -50,11 +54,11 @@ interface Routine {
 	* @param s - `s`
 	* @returns result
 	*/
-	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number, c: number, s: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number, c: number, s: number ): Complex128Array;
 }
 
 /**
-* Applies a real plane rotation to a pair of complex double-precision vectors:.
+* @license MIT.
 */
 declare var zdrot: Routine;
 

@@ -21,12 +21,78 @@ import zhetf2 = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zhetf2( 0 ); // $ExpectType Float64Array
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zhetf2( 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zhetf2( 'upper', '10', new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', true, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', false, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', null, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', [], new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', {}, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zhetf2( 'upper', 10, '10', 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, 10, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, true, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, null, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, undefined, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, [], 10, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, {}, 10, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zhetf2( 'upper', 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), false, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), '10' ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), true ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), false ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), null ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), undefined ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), [] ); // $ExpectError
+	zhetf2( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zhetf2(); // $ExpectError
+	zhetf2( 'upper' ); // $ExpectError
 }

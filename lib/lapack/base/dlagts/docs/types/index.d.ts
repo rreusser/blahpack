@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
+	* @license MIT.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -42,10 +42,10 @@ interface Routine {
 	* @param tol - `tol`
 	* @returns result
 	*/
-	( job: string, N: number, a: Float64Array, strideA: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number, y: Float64Array, strideY: number, tol: number ): Float64Array;
+	( job: string, N: number, a: Float64Array, strideA: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number, y: Float64Array, strideY: number, tol: number ): number;
 
 	/**
-	* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -70,11 +70,11 @@ interface Routine {
 	* @param tol - `tol`
 	* @returns result
 	*/
-	ndarray( job: string, N: number, a: Float64Array, strideA: number, offsetA: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number, y: Float64Array, strideY: number, offsetY: number, tol: number ): Float64Array;
+	ndarray( job: string, N: number, a: Float64Array, strideA: number, offsetA: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number, y: Float64Array, strideY: number, offsetY: number, tol: number ): number;
 }
 
 /**
-* Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
+* @license MIT.
 */
 declare var dlagts: Routine;
 

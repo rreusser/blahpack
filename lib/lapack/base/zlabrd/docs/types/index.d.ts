@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces the first NB rows and columns of a complex general M-by-N matrix A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -49,10 +49,10 @@ interface Routine {
 	* @param LDY - leading dimension of `Y`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, X: Float64Array, LDX: number, Y: Float64Array, LDY: number ): Float64Array;
+	( order: Layout, M: number, N: number, nb: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, X: Float64Array, LDX: number, Y: Float64Array, LDY: number ): void;
 
 	/**
-	* Reduces the first NB rows and columns of a complex general M-by-N matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -83,11 +83,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): Float64Array;
+	ndarray( M: number, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): void;
 }
 
 /**
-* Reduces the first NB rows and columns of a complex general M-by-N matrix A.
+* @license MIT.
 */
 declare var zlabrd: Routine;
 

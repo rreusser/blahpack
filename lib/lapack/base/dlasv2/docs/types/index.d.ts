@@ -23,28 +23,28 @@
 */
 interface Routine {
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+	* @license MIT.
 	*
 	* @param f - `f`
 	* @param g - `g`
 	* @param h - `h`
 	* @returns result
 	*/
-	( f: number, g: number, h: number ): void;
+	( f: number, g: number, h: number ): { ssmax: number; snr: number; csr: number; snl: number };
 
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param g - `g`
 	* @param h - `h`
 	* @returns result
 	*/
-	ndarray( f: number, g: number, h: number ): void;
+	ndarray( f: number, g: number, h: number ): { ssmax: number; snr: number; csr: number; snl: number };
 }
 
 /**
-* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+* @license MIT.
 */
 declare var dlasv2: Routine;
 

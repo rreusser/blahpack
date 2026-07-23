@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlacpy`.
 */
 interface Routine {
 	/**
-	* Copies all or part of a complex matrix `A` to another complex matrix `B`.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,10 +40,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Complex128Array;
 
 	/**
-	* Copies all or part of a complex matrix `A` to another complex matrix `B` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param M - number of rows
@@ -57,11 +58,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Complex128Array;
 }
 
 /**
-* Copies all or part of a complex matrix `A` to another complex matrix `B`.
+* @license MIT.
 */
 declare var zlacpy: Routine;
 

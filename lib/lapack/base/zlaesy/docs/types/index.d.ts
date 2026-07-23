@@ -23,28 +23,28 @@
 */
 interface Routine {
 	/**
-	* Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix.
+	* @license MIT.
 	*
 	* @param a - `a`
 	* @param b - `b`
 	* @param c - `c`
 	* @returns result
 	*/
-	( a: number, b: number, c: number ): void;
+	( a: number, b: number, c: number ): { rt1i: number; rt2r: number; rt2i: number; evscalr: number; evscali: number; cs1r: number; cs1i: number; sn1r: number; sn1i: number };
 
 	/**
-	* Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
 	* @param c - `c`
 	* @returns result
 	*/
-	ndarray( a: number, b: number, c: number ): void;
+	ndarray( a: number, b: number, c: number ): { rt1i: number; rt2r: number; rt2i: number; evscalr: number; evscali: number; cs1r: number; cs1i: number; sn1r: number; sn1i: number };
 }
 
 /**
-* Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix.
+* @license MIT.
 */
 declare var zlaesy: Routine;
 

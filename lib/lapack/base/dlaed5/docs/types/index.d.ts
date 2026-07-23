@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves the 2-by-2 secular equation.
+	* @license MIT.
 	*
 	* @param i - `i`
 	* @param D - `D`
@@ -33,10 +33,10 @@ interface Routine {
 	* @param dlam - `dlam`
 	* @returns result
 	*/
-	( i: number, D: Float64Array, Z: Float64Array, DELTA: Float64Array, rho: number, dlam: number ): Float64Array;
+	( i: number, D: Float64Array, Z: Float64Array, DELTA: Float64Array, rho: number, dlam: number ): void;
 
 	/**
-	* Solves the 2-by-2 secular equation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param i - `i`
 	* @param D - `D`
@@ -52,11 +52,11 @@ interface Routine {
 	* @param dlam - `dlam`
 	* @returns result
 	*/
-	ndarray( i: number, D: Float64Array, strideD: number, offsetD: number, Z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dlam: number ): Float64Array;
+	ndarray( i: number, D: Float64Array, strideD: number, offsetD: number, Z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dlam: number ): void;
 }
 
 /**
-* Solves the 2-by-2 secular equation.
+* @license MIT.
 */
 declare var dlaed5: Routine;
 

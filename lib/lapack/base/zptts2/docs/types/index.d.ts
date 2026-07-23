@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zptts2`.
 */
 interface Routine {
 	/**
-	* Solves a complex Hermitian positive definite tridiagonal system of the form.
+	* @license MIT.
 	*
 	* @param iuplo - `iuplo`
 	* @param N - number of columns
@@ -36,10 +40,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( iuplo: number, N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Float64Array;
+	( iuplo: number, N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Complex128Array;
 
 	/**
-	* Solves a complex Hermitian positive definite tridiagonal system of the form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param iuplo - `iuplo`
 	* @param N - number of columns
@@ -56,11 +60,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( iuplo: number, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( iuplo: number, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Complex128Array;
 }
 
 /**
-* Solves a complex Hermitian positive definite tridiagonal system of the form.
+* @license MIT.
 */
 declare var zptts2: Routine;
 

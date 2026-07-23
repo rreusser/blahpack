@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves a tridiagonal system of the form A _ X = B using the L_D*L^T.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -38,7 +38,7 @@ interface Routine {
 	( N: number, nrhs: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, B: Float64Array, LDB: number ): Float64Array;
 
 	/**
-	* Solves a tridiagonal system of the form A _ X = B using the L_D*L^T using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -58,7 +58,7 @@ interface Routine {
 }
 
 /**
-* Solves a tridiagonal system of the form A _ X = B using the L_D*L^T.
+* @license MIT.
 */
 declare var dptts2: Routine;
 

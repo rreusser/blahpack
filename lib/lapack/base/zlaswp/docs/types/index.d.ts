@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { Layout } from '@stdlib/types/blas';
 
 /**
@@ -27,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs a series of row interchanges on a complex double-precision matrix `A`.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -40,10 +41,10 @@ interface Routine {
 	* @param incx - `incx`
 	* @returns result
 	*/
-	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, incx: number ): any;
+	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, incx: number ): Complex128Array;
 
 	/**
-	* Performs a series of row interchanges on a complex double-precision matrix `A` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -58,11 +59,11 @@ interface Routine {
 	* @param incx - `incx`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, incx: number ): any;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, incx: number ): Complex128Array;
 }
 
 /**
-* Performs a series of row interchanges on a complex double-precision matrix `A`.
+* @license MIT.
 */
 declare var zlaswp: Routine;
 

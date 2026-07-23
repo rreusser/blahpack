@@ -21,23 +21,244 @@ import dlasq3 = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	dlasq3( 10 ); // $ExpectType Float64Array
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlasq3( '10' ); // $ExpectError
-	dlasq3( true ); // $ExpectError
-	dlasq3( false ); // $ExpectError
-	dlasq3( null ); // $ExpectError
-	dlasq3( undefined ); // $ExpectError
-	dlasq3( [] ); // $ExpectError
-	dlasq3( {} ); // $ExpectError
+	dlasq3( '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlasq3( 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlasq3( 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eleventh argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a twelfth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a thirteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventeenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a nineteenth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a twentieth argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10', 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined, 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [], 10 ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a 21th argument of invalid type...
+{
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, '10' ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, true ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, false ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, undefined ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, [] ); // $ExpectError
+	dlasq3( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlasq3(); // $ExpectError
+	dlasq3( 10 ); // $ExpectError
 }

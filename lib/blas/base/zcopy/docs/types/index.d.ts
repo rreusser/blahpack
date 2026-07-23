@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zcopy`.
 */
 interface Routine {
 	/**
-	* Copy a complex double-precision vector.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -32,10 +36,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number, zy: number, strideY: number ): Float64Array;
+	( N: number, zx: number, strideX: number, zy: number, strideY: number ): Complex128Array;
 
 	/**
-	* Copy a complex double-precision vector using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -46,11 +50,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Complex128Array;
 }
 
 /**
-* Copy a complex double-precision vector.
+* @license MIT.
 */
 declare var zcopy: Routine;
 

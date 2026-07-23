@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -33,10 +33,10 @@ interface Routine {
 	* @param ssmin - `ssmin`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, ssmin: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, ssmin: number ): void;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -48,11 +48,11 @@ interface Routine {
 	* @param ssmin - `ssmin`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, ssmin: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, ssmin: number ): void;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zlapll: Routine;
 

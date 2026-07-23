@@ -23,17 +23,17 @@
 */
 interface Routine {
 	/**
-	* Computes all the eigenvalues of the symmetric positive definite tridiagonal.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param z - `z`
 	* @param stride - stride of ``
 	* @returns result
 	*/
-	( N: number, z: number, stride: number ): Float64Array;
+	( N: number, z: number, stride: number ): number;
 
 	/**
-	* Computes all the eigenvalues of the symmetric positive definite tridiagonal using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param z - `z`
@@ -41,11 +41,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( N: number, z: number, stride: number, offset: number ): Float64Array;
+	ndarray( N: number, z: number, stride: number, offset: number ): number;
 }
 
 /**
-* Computes all the eigenvalues of the symmetric positive definite tridiagonal.
+* @license MIT.
 */
 declare var dlasq2: Routine;
 

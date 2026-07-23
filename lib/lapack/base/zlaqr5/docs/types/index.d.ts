@@ -23,16 +23,39 @@
 */
 interface Routine {
 	/**
-	* Complex multi-shift QR sweep.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param wantt - `wantt`
+	* @param wantz - `wantz`
+	* @param kacc22 - `kacc22`
+	* @param N - number of columns
+	* @param ktop - `ktop`
+	* @param kbot - `kbot`
+	* @param nshfts - `nshfts`
+	* @param s - `s`
+	* @param strideS - stride of `S`
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param iloz - `iloz`
+	* @param ihiz - `ihiz`
+	* @param Z - `Z`
+	* @param LDZ - leading dimension of `Z`
+	* @param V - `V`
+	* @param LDV - leading dimension of `V`
+	* @param U - `U`
+	* @param LDU - leading dimension of `U`
+	* @param nv - `nv`
+	* @param WV - `WV`
+	* @param LDWV - leading dimension of `WV`
+	* @param nh - `nh`
+	* @param WH - `WH`
+	* @param LDWH - leading dimension of `WH`
 	* @returns result
 	*/
-	( v: Float64Array, idx: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, s: Float64Array, strideS: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, V: Float64Array, LDV: number, U: Float64Array, LDU: number, nv: number, WV: Float64Array, LDWV: number, nh: number, WH: Float64Array, LDWH: number ): void;
 
 	/**
-	* Complex multi-shift QR sweep using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -74,11 +97,11 @@ interface Routine {
 	* @param offsetWH - starting index for `WH`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, s: Float64Array, strideS: number, offsetS: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, nh: number, WH: Float64Array, strideWH1: number, strideWH2: number, offsetWH: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, kacc22: number, N: number, ktop: number, kbot: number, nshfts: number, s: Float64Array, strideS: number, offsetS: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, nh: number, WH: Float64Array, strideWH1: number, strideWH2: number, offsetWH: number ): void;
 }
 
 /**
-* Complex multi-shift QR sweep.
+* @license MIT.
 */
 declare var zlaqr5: Routine;
 

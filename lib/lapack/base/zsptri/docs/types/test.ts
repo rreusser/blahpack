@@ -21,12 +21,67 @@ import zsptri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zsptri( 0 ); // $ExpectType Float64Array
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zsptri( 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( true, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( null, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( undefined, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( [], 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( {}, 10, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zsptri( 'upper', '10', new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', true, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', false, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', null, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', undefined, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', [], new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', {}, new Float64Array( 25 ), new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zsptri( 'upper', 10, '10', new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, 10, new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, true, new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, null, new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, undefined, new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, [], new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, {}, new Int32Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zsptri( 'upper', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), true, new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), null, new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), [], new Float64Array( 25 ) ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), '10' ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), 10 ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), true ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), null ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), undefined ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), [] ); // $ExpectError
+	zsptri( 'upper', 10, new Float64Array( 25 ), new Int32Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zsptri(); // $ExpectError
+	zsptri( 'upper' ); // $ExpectError
 }

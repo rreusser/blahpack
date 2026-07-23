@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -36,7 +36,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, ssmin: number ): void;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -52,7 +52,7 @@ interface Routine {
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlapll: Routine;
 

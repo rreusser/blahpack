@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Expert driver for solving a complex Hermitian positive definite system of.
+	* @license MIT.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -50,15 +50,15 @@ interface Routine {
 	* @param BERR - `BERR`
 	* @param strideBERR - stride of `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, equed: string, s: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, equed: string, s: Float64Array, strideS: number, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, strideFERR: number, BERR: Float64Array, strideBERR: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): { info: number; equed: number; rcond: number };
 
 	/**
-	* Expert driver for solving a complex Hermitian positive definite system of using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -92,18 +92,18 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, equed: string, s: Float64Array, strideS: number, offsetS: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( fact: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, equed: string, s: Float64Array, strideS: number, offsetS: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): { info: number; equed: number; rcond: number };
 }
 
 /**
-* Expert driver for solving a complex Hermitian positive definite system of.
+* @license MIT.
 */
 declare var zposvx: Routine;
 

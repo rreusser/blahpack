@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dgels`.
 */
 interface Routine {
 	/**
-	* Solves overdetermined or underdetermined real linear systems involving an.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -38,12 +38,14 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @param B - `B`
 	* @param LDB - leading dimension of `B`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Solves overdetermined or underdetermined real linear systems involving an using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -57,13 +59,16 @@ interface Routine {
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Solves overdetermined or underdetermined real linear systems involving an.
+* @license MIT.
 */
 declare var dgels: Routine;
 

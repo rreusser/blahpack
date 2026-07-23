@@ -20,61 +20,61 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsycon_rook`.
 */
 interface Routine {
 	/**
-	* Estimate reciprocal condition number of a real symmetric matrix using rook-pivoted factorization
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param anorm - anorm
-	* @param rcond - rcond
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param anorm - `anorm`
+	* @param rcond - `rcond`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* Estimate reciprocal condition number of a real symmetric matrix using rook-pivoted factorization, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param anorm - anorm
-	* @param rcond - rcond
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param anorm - `anorm`
+	* @param rcond - `rcond`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Estimate reciprocal condition number of a real symmetric matrix using rook-pivoted factorization
+* @license MIT.
 */
 declare var dsycon_rook: Routine;
 

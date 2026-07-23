@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtpmv`.
 */
 interface Routine {
 	/**
-	* Performs one of the matrix-vector operations `x := A*x` or `x := A^T*x`.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -42,7 +42,7 @@ interface Routine {
 	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number ): Float64Array;
 
 	/**
-	* Performs one of the matrix-vector operations `x := A*x` or `x := A^T*x` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the matrix-vector operations `x := A*x` or `x := A^T*x`.
+* @license MIT.
 */
 declare var dtpmv: Routine;
 

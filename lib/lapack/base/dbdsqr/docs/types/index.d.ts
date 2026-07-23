@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dbdsqr`.
 */
 interface Routine {
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,13 +46,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -78,15 +78,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+* @license MIT.
 */
 declare var dbdsqr: Routine;
 

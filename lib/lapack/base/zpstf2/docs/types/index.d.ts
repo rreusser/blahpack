@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zpstf2`.
 */
 interface Routine {
 	/**
-	* Computes the Cholesky factorization with complete pivoting of a complex Hermitian positive semi-definite matrix (unblocked algorithm).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -40,10 +40,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, PIV: Float64Array, RANK: number, tol: number, WORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, PIV: Float64Array, RANK: number, tol: number, WORK: number ): number;
 
 	/**
-	* Computes the Cholesky factorization with complete pivoting of a complex Hermitian positive semi-definite matrix (unblocked algorithm) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -59,11 +59,11 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, PIV: Float64Array, stridePIV: number, offsetPIV: number, RANK: number, tol: number, WORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, PIV: Float64Array, stridePIV: number, offsetPIV: number, RANK: number, tol: number, WORK: number ): number;
 }
 
 /**
-* Computes the Cholesky factorization with complete pivoting of a complex Hermitian positive semi-definite matrix (unblocked algorithm).
+* @license MIT.
 */
 declare var zpstf2: Routine;
 

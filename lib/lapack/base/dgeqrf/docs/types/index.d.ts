@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a QR factorization of a real M-by-N matrix A = Q * R.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -37,13 +37,13 @@ interface Routine {
 	* @param TAU - `TAU`
 	* @param strideTAU - stride of `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes a QR factorization of a real M-by-N matrix A = Q * R using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -55,15 +55,15 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a QR factorization of a real M-by-N matrix A = Q * R.
+* @license MIT.
 */
 declare var dgeqrf: Routine;
 

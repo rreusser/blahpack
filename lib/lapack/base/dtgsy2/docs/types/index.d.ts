@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves the generalized Sylvester equation (unblocked):.
+	* @license MIT.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -49,14 +49,14 @@ interface Routine {
 	* @param rdsum - `rdsum`
 	* @param rdscal - `rdscal`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @param pq - `pq`
 	* @returns result
 	*/
-	( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, D: Float64Array, LDD: number, E: Float64Array, LDE: number, F: Float64Array, LDF: number, scale: number, rdsum: number, rdscal: number, IWORK: Int32Array, strideIWORK: number, pq: number ): Float64Array;
+	( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, D: Float64Array, LDD: number, E: Float64Array, LDE: number, F: Float64Array, LDF: number, scale: number, rdsum: number, rdscal: number, IWORK: Int32Array, strideIWork: number, pq: number ): number;
 
 	/**
-	* Solves the generalized Sylvester equation (unblocked): using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -90,16 +90,16 @@ interface Routine {
 	* @param rdsum - `rdsum`
 	* @param rdscal - `rdscal`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @param pq - `pq`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, rdsum: number, rdscal: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, pq: number ): Float64Array;
+	ndarray( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, rdsum: number, rdscal: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, pq: number ): number;
 }
 
 /**
-* Solves the generalized Sylvester equation (unblocked):.
+* @license MIT.
 */
 declare var dtgsy2: Routine;
 

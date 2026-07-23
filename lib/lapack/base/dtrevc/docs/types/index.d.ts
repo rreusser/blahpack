@@ -20,68 +20,68 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtrevc`.
 */
 interface Routine {
 	/**
-	* Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param side - specifies the operation type
-	* @param howmny - specifies the operation type
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param side - specifies the side of the operation
+	* @param howmny - `howmny`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param N - number of columns
-	* @param T - input matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param VL - input matrix
+	* @param VL - `VL`
 	* @param LDVL - leading dimension of `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
-	* @param mm - mm
+	* @param mm - `mm`
 	* @param M - number of rows
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, side: string, howmny: string, SELECT: Float64Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: OperationSide, howmny: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param side - specifies the operation type
-	* @param howmny - specifies the operation type
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param side - specifies the side of the operation
+	* @param howmny - `howmny`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param offsetSELECT - starting index for `SELECT`
 	* @param N - number of columns
-	* @param T - input matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param VL - input matrix
+	* @param VL - `VL`
 	* @param strideVL1 - stride of `VL`
 	* @param strideVL2 - stride of `VL`
 	* @param offsetVL - starting index for `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param strideVR1 - stride of `VR`
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
-	* @param mm - mm
+	* @param mm - `mm`
 	* @param M - number of rows
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: string, howmny: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, howmny: string, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix.
+* @license MIT.
 */
 declare var dtrevc: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Internal helper: DLADIV2.
+	* @license MIT.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param out - `out`
 	* @returns result
 	*/
-	( a: number, b: number, c: number, d: number, out: number ): void;
+	( a: number, b: number, c: number, d: number, out: number ): Float64Array;
 
 	/**
-	* Internal helper: DLADIV2 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
@@ -44,11 +44,11 @@ interface Routine {
 	* @param out - `out`
 	* @returns result
 	*/
-	ndarray( a: number, b: number, c: number, d: number, out: number ): void;
+	ndarray( a: number, b: number, c: number, d: number, out: number ): Float64Array;
 }
 
 /**
-* Internal helper: DLADIV2.
+* @license MIT.
 */
 declare var dladiv: Routine;
 

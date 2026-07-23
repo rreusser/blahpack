@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves one of the systems of equations A_X = B or A^T_X = B with a.
+	* @license MIT.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -46,10 +46,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): Float64Array;
+	( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves one of the systems of equations A_X = B or A^T_X = B with a using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
@@ -75,11 +75,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves one of the systems of equations A_X = B or A^T_X = B with a.
+* @license MIT.
 */
 declare var dgttrs: Routine;
 

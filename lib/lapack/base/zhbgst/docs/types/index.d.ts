@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form.
+	* @license MIT.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,10 +44,10 @@ interface Routine {
 	* @param RWORK - `RWORK`
 	* @returns result
 	*/
-	( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, LDAB: number, BB: Float64Array, LDBB: number, X: Float64Array, LDX: number, WORK: Float64Array, RWORK: Float64Array ): Float64Array;
+	( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, LDAB: number, BB: Float64Array, LDBB: number, X: Float64Array, LDX: number, WORK: Float64Array, RWORK: Float64Array ): number;
 
 	/**
-	* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -67,18 +67,18 @@ interface Routine {
 	* @param strideX2 - stride of `X`
 	* @param offsetX - starting index for `X`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, BB: Float64Array, strideBB1: number, strideBB2: number, offsetBB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( vect: string, uplo: MatrixTriangle, N: number, ka: number, kb: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, BB: Float64Array, strideBB1: number, strideBB2: number, offsetBB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form.
+* @license MIT.
 */
 declare var zhbgst: Routine;
 

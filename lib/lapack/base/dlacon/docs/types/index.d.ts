@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -39,7 +39,7 @@ interface Routine {
 	( N: number, v: Float64Array, strideV: number, x: Float64Array, strideX: number, ISGN: Float64Array, strideISGN: number, EST: number, KASE: number ): void;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlacon: Routine;
 

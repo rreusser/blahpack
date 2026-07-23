@@ -20,46 +20,46 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlat2s`.
 */
 interface Routine {
 	/**
-	* Converts a double-precision triangular matrix to a single-precision triangular matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param A - output matrix
-	* @param LDA - leading dimension of `A`
+	* @param SA - `SA`
+	* @param LDSA - leading dimension of `SA`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, A: Float32Array, LDA: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, SA: Float64Array, LDSA: number ): number;
 
 	/**
-	* Converts a double-precision triangular matrix to a single-precision triangular matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param A - output matrix
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
+	* @param SA - `SA`
+	* @param strideSA1 - stride of `SA`
+	* @param strideSA2 - stride of `SA`
+	* @param offsetSA - starting index for `SA`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, A: Float32Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, SA: Float64Array, strideSA1: number, strideSA2: number, offsetSA: number ): number;
 }
 
 /**
-* Converts a double-precision triangular matrix to a single-precision triangular matrix
+* @license MIT.
 */
 declare var dlat2s: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves a system of linear equations A*X = B with a complex symmetric matrix A.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -39,13 +39,13 @@ interface Routine {
 	* @param B - `B`
 	* @param LDB - leading dimension of `B`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Solves a system of linear equations A*X = B with a complex symmetric matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -62,15 +62,15 @@ interface Routine {
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Solves a system of linear equations A*X = B with a complex symmetric matrix A.
+* @license MIT.
 */
 declare var zsytrs2: Routine;
 

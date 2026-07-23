@@ -21,23 +21,68 @@ import zdotc = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	zdotc( 10 ); // $ExpectType Float64Array
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zdotc( '10' ); // $ExpectError
-	zdotc( true ); // $ExpectError
-	zdotc( false ); // $ExpectError
-	zdotc( null ); // $ExpectError
-	zdotc( undefined ); // $ExpectError
-	zdotc( [] ); // $ExpectError
-	zdotc( {} ); // $ExpectError
+	zdotc( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zdotc( 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zdotc( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zdotc( 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	zdotc( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zdotc(); // $ExpectError
+	zdotc( 10 ); // $ExpectError
 }

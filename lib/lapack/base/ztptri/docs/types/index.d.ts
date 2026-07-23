@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztptri`.
 */
 interface Routine {
 	/**
-	* Computes the inverse of a complex triangular matrix in packed storage.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param diag - specifies whether the matrix is unit triangular
@@ -35,10 +35,10 @@ interface Routine {
 	* @param AP - `AP`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number ): Float64Array;
+	( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number ): number;
 
 	/**
-	* Computes the inverse of a complex triangular matrix in packed storage using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param diag - specifies whether the matrix is unit triangular
@@ -48,11 +48,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number, stride: number, offset: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: number, stride: number, offset: number ): number;
 }
 
 /**
-* Computes the inverse of a complex triangular matrix in packed storage.
+* @license MIT.
 */
 declare var ztptri: Routine;
 

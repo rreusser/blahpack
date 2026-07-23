@@ -21,12 +21,56 @@ import dppequ = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	dppequ( 0 ); // $ExpectType Float64Array
+	dppequ( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) );
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dppequ( 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( true, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( null, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( [], 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( {}, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dppequ( 'upper', '10', new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', true, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', false, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', null, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', undefined, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', [], new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', {}, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dppequ( 'upper', 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, true, new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, null, new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, [], new Float64Array( 25 ) ); // $ExpectError
+	dppequ( 'upper', 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dppequ( 'upper', 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), true ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), null ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dppequ( 'upper', 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dppequ(); // $ExpectError
+	dppequ( 'upper' ); // $ExpectError
 }

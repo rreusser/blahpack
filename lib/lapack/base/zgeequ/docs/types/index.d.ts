@@ -23,16 +23,22 @@
 */
 interface Routine {
 	/**
-	* CABS1: |re(z)| + |im(z)|.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param r - `r`
+	* @param strideR - stride of `R`
+	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @returns result
 	*/
-	( v: number, idx: number ): Float64Array;
+	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): number;
 
 	/**
-	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -46,16 +52,13 @@ interface Routine {
 	* @param c - `c`
 	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param rowcnd - `rowcnd`
-	* @param colcnd - `colcnd`
-	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number ): number;
 }
 
 /**
-* CABS1: |re(z)| + |im(z)|.
+* @license MIT.
 */
 declare var zgeequ: Routine;
 

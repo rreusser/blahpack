@@ -21,23 +21,57 @@ import dlasrt = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dlasrt( 10 ); // $ExpectType Float64Array
+	dlasrt( 10, 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlasrt( '10' ); // $ExpectError
-	dlasrt( true ); // $ExpectError
-	dlasrt( false ); // $ExpectError
-	dlasrt( null ); // $ExpectError
-	dlasrt( undefined ); // $ExpectError
-	dlasrt( [] ); // $ExpectError
-	dlasrt( {} ); // $ExpectError
+	dlasrt( '10', 10, 10, 10 ); // $ExpectError
+	dlasrt( true, 10, 10, 10 ); // $ExpectError
+	dlasrt( false, 10, 10, 10 ); // $ExpectError
+	dlasrt( null, 10, 10, 10 ); // $ExpectError
+	dlasrt( undefined, 10, 10, 10 ); // $ExpectError
+	dlasrt( [], 10, 10, 10 ); // $ExpectError
+	dlasrt( {}, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlasrt( 10, '10', 10, 10 ); // $ExpectError
+	dlasrt( 10, true, 10, 10 ); // $ExpectError
+	dlasrt( 10, false, 10, 10 ); // $ExpectError
+	dlasrt( 10, null, 10, 10 ); // $ExpectError
+	dlasrt( 10, undefined, 10, 10 ); // $ExpectError
+	dlasrt( 10, [], 10, 10 ); // $ExpectError
+	dlasrt( 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlasrt( 10, 10, '10', 10 ); // $ExpectError
+	dlasrt( 10, 10, true, 10 ); // $ExpectError
+	dlasrt( 10, 10, false, 10 ); // $ExpectError
+	dlasrt( 10, 10, null, 10 ); // $ExpectError
+	dlasrt( 10, 10, undefined, 10 ); // $ExpectError
+	dlasrt( 10, 10, [], 10 ); // $ExpectError
+	dlasrt( 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlasrt( 10, 10, 10, '10' ); // $ExpectError
+	dlasrt( 10, 10, 10, true ); // $ExpectError
+	dlasrt( 10, 10, 10, false ); // $ExpectError
+	dlasrt( 10, 10, 10, null ); // $ExpectError
+	dlasrt( 10, 10, 10, undefined ); // $ExpectError
+	dlasrt( 10, 10, 10, [] ); // $ExpectError
+	dlasrt( 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlasrt(); // $ExpectError
+	dlasrt( 10 ); // $ExpectError
 }

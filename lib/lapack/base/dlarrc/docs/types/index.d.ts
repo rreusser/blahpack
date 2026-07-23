@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Counts the number of eigenvalues of a symmetric tridiagonal matrix in an interval.
+	* @license MIT.
 	*
 	* @param jobt - `jobt`
 	* @param N - number of columns
@@ -34,10 +34,10 @@ interface Routine {
 	* @param pivmin - `pivmin`
 	* @returns result
 	*/
-	( jobt: string, N: number, vl: number, vu: number, D: Float64Array, E: Float64Array, pivmin: number ): Float64Array;
+	( jobt: string, N: number, vl: number, vu: number, D: Float64Array, E: Float64Array, pivmin: number ): { info: number; eigcnt: number; lcnt: number };
 
 	/**
-	* Counts the number of eigenvalues of a symmetric tridiagonal matrix in an interval using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobt - `jobt`
 	* @param N - number of columns
@@ -52,11 +52,11 @@ interface Routine {
 	* @param pivmin - `pivmin`
 	* @returns result
 	*/
-	ndarray( jobt: string, N: number, vl: number, vu: number, D: Float64Array, strideD: number, offsetD: number, E: Float64Array, strideE: number, offsetE: number, pivmin: number ): Float64Array;
+	ndarray( jobt: string, N: number, vl: number, vu: number, D: Float64Array, strideD: number, offsetD: number, E: Float64Array, strideE: number, offsetE: number, pivmin: number ): { info: number; eigcnt: number; lcnt: number };
 }
 
 /**
-* Counts the number of eigenvalues of a symmetric tridiagonal matrix in an interval.
+* @license MIT.
 */
 declare var dlarrc: Routine;
 

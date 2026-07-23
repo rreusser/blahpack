@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlarf`.
 */
 interface Routine {
 	/**
-	* Applies a real elementary reflector H to a real M-by-N matrix C.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -39,13 +39,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, side: OperationSide, M: number, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: OperationSide, M: number, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* Applies a real elementary reflector H to a real M-by-N matrix C, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param M - number of rows
@@ -59,15 +59,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, M: number, N: number, v: Float64Array, strideV: number, offsetV: number, tau: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, M: number, N: number, v: Float64Array, strideV: number, offsetV: number, tau: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): void;
 }
 
 /**
-* Applies a real elementary reflector H to a real M-by-N matrix C.
+* @license MIT.
 */
 declare var dlarf: Routine;
 

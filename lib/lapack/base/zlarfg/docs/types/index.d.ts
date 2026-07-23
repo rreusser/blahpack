@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Generate a complex elementary reflector H of order N, such that.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -34,10 +34,10 @@ interface Routine {
 	* @param offsetTau - starting index for `Tau`
 	* @returns result
 	*/
-	( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, tau: number, offsetTau: number ): Float64Array;
+	( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, tau: number, offsetTau: number ): void;
 
 	/**
-	* Generate a complex elementary reflector H of order N, such that using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
@@ -49,11 +49,11 @@ interface Routine {
 	* @param offsetTau - starting index for `Tau`
 	* @returns result
 	*/
-	ndarray( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, offsetX: number, tau: number, offsetTau: number ): Float64Array;
+	ndarray( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, offsetX: number, tau: number, offsetTau: number ): void;
 }
 
 /**
-* Generate a complex elementary reflector H of order N, such that.
+* @license MIT.
 */
 declare var zlarfg: Routine;
 

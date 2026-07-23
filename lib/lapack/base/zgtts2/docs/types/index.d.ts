@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
+	* @license MIT.
 	*
 	* @param itrans - `itrans`
 	* @param N - number of columns
@@ -42,10 +42,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( itrans: number, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): Float64Array;
+	( itrans: number, N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): void;
 
 	/**
-	* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param itrans - `itrans`
 	* @param N - number of columns
@@ -71,11 +71,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( itrans: number, N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( itrans: number, N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): void;
 }
 
 /**
-* Solves one of the systems of equations A_X = B, A^T_X = B, or A^H*X = B.
+* @license MIT.
 */
 declare var zgtts2: Routine;
 

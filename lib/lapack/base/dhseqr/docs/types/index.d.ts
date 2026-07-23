@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the eigenvalues of a real upper Hessenberg matrix H, and.
+	* @license MIT.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -38,12 +38,14 @@ interface Routine {
 	* @param strideWI - stride of `WI`
 	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, Z: Float64Array, LDZ: number ): Float64Array;
+	( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, Z: Float64Array, LDZ: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the eigenvalues of a real upper Hessenberg matrix H, and using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compz - `compz`
@@ -64,17 +66,16 @@ interface Routine {
 	* @param strideZ1 - stride of `Z`
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( job: string, compz: string, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the eigenvalues of a real upper Hessenberg matrix H, and.
+* @license MIT.
 */
 declare var dhseqr: Routine;
 

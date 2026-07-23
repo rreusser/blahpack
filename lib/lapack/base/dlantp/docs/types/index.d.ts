@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlantp`.
 */
 interface Routine {
 	/**
-	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real triangular matrix supplied in packed form.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -37,10 +37,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, WORK: Float64Array ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, WORK: Float64Array ): number;
 
 	/**
-	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real triangular matrix supplied in packed form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -50,15 +50,15 @@ interface Routine {
 	* @param strideAP - stride of `AP`
 	* @param offsetAP - starting index for `AP`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real triangular matrix supplied in packed form.
+* @license MIT.
 */
 declare var dlantp: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
+	* @license MIT.
 	*
 	* @param ijob - `ijob`
 	* @param N - number of columns
@@ -39,10 +39,10 @@ interface Routine {
 	* @param strideJPIV - stride of `JPIV`
 	* @returns result
 	*/
-	( ijob: number, N: number, Z: Float64Array, LDZ: number, RHS: Float64Array, strideRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): Float64Array;
+	( ijob: number, N: number, Z: Float64Array, LDZ: number, RHS: Float64Array, strideRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number ): { rdsum: number };
 
 	/**
-	* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param ijob - `ijob`
 	* @param N - number of columns
@@ -63,11 +63,11 @@ interface Routine {
 	* @param offsetJPIV - starting index for `JPIV`
 	* @returns result
 	*/
-	ndarray( ijob: number, N: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): Float64Array;
+	ndarray( ijob: number, N: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, rdsum: number, rdscal: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number ): { rdsum: number };
 }
 
 /**
-* Uses the LU factorization of the n-by-n matrix Z computed by dgetc2.
+* @license MIT.
 */
 declare var dlatdf: Routine;
 

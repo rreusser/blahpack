@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs reciprocal diagonal scaling on a matrix: `X = D^{-1} * X` where `D` is a diagonal matrix stored as a vector.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -40,7 +40,7 @@ interface Routine {
 	( order: Layout, M: number, N: number, d: Float64Array, X: Float64Array, LDX: number ): Float64Array;
 
 	/**
-	* Performs reciprocal diagonal scaling on a matrix: `X = D^{-1} * X` where `D` is a diagonal matrix stored as a vector using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -57,7 +57,7 @@ interface Routine {
 }
 
 /**
-* Performs reciprocal diagonal scaling on a matrix: `X = D^{-1} * X` where `D` is a diagonal matrix stored as a vector.
+* @license MIT.
 */
 declare var dlarscl2: Routine;
 

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -41,13 +41,13 @@ interface Routine {
 	* @param RSCALE - `RSCALE`
 	* @param strideRSCALE - stride of `RSCALE`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, job: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, job: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param N - number of columns
@@ -66,15 +66,15 @@ interface Routine {
 	* @param strideRSCALE - stride of `RSCALE`
 	* @param offsetRSCALE - starting index for `RSCALE`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( job: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Record<string, unknown>;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dggbal: Routine;
 

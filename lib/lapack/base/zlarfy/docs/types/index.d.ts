@@ -20,52 +20,53 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlarfy`.
 */
 interface Routine {
 	/**
-	* Applies an elementary reflector to a Hermitian matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param v - input array
-	* @param strideV - stride length for `v`
-	* @param tau - tau
-	* @param C - input matrix
+	* @param v - `v`
+	* @param strideV - stride of `V`
+	* @param tau - `tau`
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, v: Float64Array, strideV: number, tau: any, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWork: number ): Complex128Array;
 
 	/**
-	* Applies an elementary reflector to a Hermitian matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param v - input array
-	* @param strideV - stride length for `v`
+	* @param v - `v`
+	* @param strideV - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param tau - tau
-	* @param C - input matrix
+	* @param tau - `tau`
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, v: Float64Array, strideV: number, offsetV: number, tau: any, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, v: Float64Array, strideV: number, offsetV: number, tau: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Complex128Array;
 }
 
 /**
-* Applies an elementary reflector to a Hermitian matrix
+* @license MIT.
 */
 declare var zlarfy: Routine;
 

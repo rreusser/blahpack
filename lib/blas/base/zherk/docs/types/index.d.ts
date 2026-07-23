@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zherk`.
 */
 interface Routine {
 	/**
-	* Performs one of the Hermitian rank-k operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,10 +43,10 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* Performs one of the Hermitian rank-k operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -63,11 +64,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Complex128Array;
 }
 
 /**
-* Performs one of the Hermitian rank-k operations:.
+* @license MIT.
 */
 declare var zherk: Routine;
 

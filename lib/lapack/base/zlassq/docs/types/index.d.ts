@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Updates a sum of squares represented in scaled form.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param sumsq - `sumsq`
 	* @returns result
 	*/
-	( N: number, x: number, stride: number, scale: number, sumsq: number ): Float64Array;
+	( N: number, x: number, stride: number, scale: number, sumsq: number ): { scl: number };
 
 	/**
-	* Updates a sum of squares represented in scaled form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -45,11 +45,11 @@ interface Routine {
 	* @param sumsq - `sumsq`
 	* @returns result
 	*/
-	ndarray( N: number, x: number, stride: number, offset: number, scale: number, sumsq: number ): Float64Array;
+	ndarray( N: number, x: number, stride: number, offset: number, scale: number, sumsq: number ): { scl: number };
 }
 
 /**
-* Updates a sum of squares represented in scaled form.
+* @license MIT.
 */
 declare var zlassq: Routine;
 

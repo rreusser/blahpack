@@ -27,118 +27,87 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of complex matrices
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param balanc - specifies the operation type
-	* @param jobvl - specifies the operation type
-	* @param jobvr - specifies the operation type
-	* @param sense - specifies the operation type
+	* @param balanc - `balanc`
+	* @param jobvl - `jobvl`
+	* @param jobvr - `jobvr`
+	* @param sense - `sense`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param ALPHA - input array
-	* @param strideALPHA - stride length for `ALPHA`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
-	* @param VL - input matrix
+	* @param ALPHA - `ALPHA`
+	* @param strideALPHA - stride of `ALPHA`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
+	* @param VL - `VL`
 	* @param LDVL - leading dimension of `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
-	* @param ilo - ilo
-	* @param ihi - ihi
-	* @param LSCALE - input array
-	* @param strideLSCALE - stride length for `LSCALE`
-	* @param RSCALE - input array
-	* @param strideRSCALE - stride length for `RSCALE`
-	* @param abnrm - abnrm
-	* @param bbnrm - bbnrm
-	* @param RCONDE - input array
-	* @param strideRCONDE - stride length for `RCONDE`
-	* @param RCONDV - input array
-	* @param strideRCONDV - stride length for `RCONDV`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param IWORK - input array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
-	* @param BWORK - output array
-	* @param strideBWORK - stride length for `BWORK`
+	* @param LSCALE - `LSCALE`
+	* @param strideLSCALE - stride of `LSCALE`
+	* @param RSCALE - `RSCALE`
+	* @param strideRSCALE - stride of `RSCALE`
+	* @param RCONDE - `RCONDE`
+	* @param strideRCONDE - stride of `RCONDE`
+	* @param RCONDV - `RCONDV`
+	* @param strideRCONDV - stride of `RCONDV`
 	* @returns result
 	*/
-	( order: Layout, balanc: string, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, abnrm: number, bbnrm: number, RCONDE: Float64Array, strideRCONDE: number, RCONDV: Float64Array, strideRCONDV: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, BWORK: Float64Array, strideBWORK: number ): Float64Array;
+	( order: Layout, balanc: number, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHA: Float64Array, strideALPHA: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, RCONDE: Float64Array, strideRCONDE: number, RCONDV: Float64Array, strideRCONDV: number ): { ilo: number; ihi: number; abnrm: number; bbnrm: number };
 
 	/**
-	* Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of complex matrices, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param balanc - specifies the operation type
-	* @param jobvl - specifies the operation type
-	* @param jobvr - specifies the operation type
-	* @param sense - specifies the operation type
+	* @param balanc - `balanc`
+	* @param jobvl - `jobvl`
+	* @param jobvr - `jobvr`
+	* @param sense - `sense`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param ALPHA - input array
-	* @param strideALPHA - stride length for `ALPHA`
+	* @param ALPHA - `ALPHA`
+	* @param strideALPHA - stride of `ALPHA`
 	* @param offsetALPHA - starting index for `ALPHA`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
 	* @param offsetBETA - starting index for `BETA`
-	* @param VL - input matrix
+	* @param VL - `VL`
 	* @param strideVL1 - stride of `VL`
 	* @param strideVL2 - stride of `VL`
 	* @param offsetVL - starting index for `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param strideVR1 - stride of `VR`
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
-	* @param ilo - ilo
-	* @param ihi - ihi
-	* @param LSCALE - input array
-	* @param strideLSCALE - stride length for `LSCALE`
+	* @param LSCALE - `LSCALE`
+	* @param strideLSCALE - stride of `LSCALE`
 	* @param offsetLSCALE - starting index for `LSCALE`
-	* @param RSCALE - input array
-	* @param strideRSCALE - stride length for `RSCALE`
+	* @param RSCALE - `RSCALE`
+	* @param strideRSCALE - stride of `RSCALE`
 	* @param offsetRSCALE - starting index for `RSCALE`
-	* @param abnrm - abnrm
-	* @param bbnrm - bbnrm
-	* @param RCONDE - input array
-	* @param strideRCONDE - stride length for `RCONDE`
+	* @param RCONDE - `RCONDE`
+	* @param strideRCONDE - stride of `RCONDE`
 	* @param offsetRCONDE - starting index for `RCONDE`
-	* @param RCONDV - input array
-	* @param strideRCONDV - stride length for `RCONDV`
+	* @param RCONDV - `RCONDV`
+	* @param strideRCONDV - stride of `RCONDV`
 	* @param offsetRCONDV - starting index for `RCONDV`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
-	* @param IWORK - input array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
-	* @param BWORK - output array
-	* @param strideBWORK - stride length for `BWORK`
-	* @param offsetBWORK - starting index for `BWORK`
 	* @returns result
 	*/
-	ndarray( balanc: string, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, abnrm: number, bbnrm: number, RCONDE: Float64Array, strideRCONDE: number, offsetRCONDE: number, RCONDV: Float64Array, strideRCONDV: number, offsetRCONDV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, BWORK: Float64Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
+	ndarray( balanc: number, jobvl: string, jobvr: string, sense: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHA: Float64Array, strideALPHA: number, offsetALPHA: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, RCONDE: Float64Array, strideRCONDE: number, offsetRCONDE: number, RCONDV: Float64Array, strideRCONDV: number, offsetRCONDV: number ): { ilo: number; ihi: number; abnrm: number; bbnrm: number };
 }
 
 /**
-* Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of complex matrices
+* @license MIT.
 */
 declare var zggevx: Routine;
 

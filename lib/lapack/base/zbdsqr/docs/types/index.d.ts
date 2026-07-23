@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zbdsqr`.
 */
 interface Routine {
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -46,13 +46,13 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Returns |a| with the sign of b (Fortran SIGN intrinsic) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -78,15 +78,15 @@ interface Routine {
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, VT: Float64Array, strideVT1: number, strideVT2: number, offsetVT: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Returns |a| with the sign of b (Fortran SIGN intrinsic).
+* @license MIT.
 */
 declare var zbdsqr: Routine;
 

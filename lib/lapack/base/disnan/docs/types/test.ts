@@ -21,12 +21,12 @@ import disnan = require( './index' );
 
 // TESTS //
 
-// The function returns a number...
+// The function returns a boolean...
 {
-	disnan( 10 ); // $ExpectType number
+	disnan( 10 ); // $ExpectType boolean
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
 	disnan( '10' ); // $ExpectError
 	disnan( true ); // $ExpectError
@@ -37,7 +37,7 @@ import disnan = require( './index' );
 	disnan( {} ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	disnan(); // $ExpectError
 }

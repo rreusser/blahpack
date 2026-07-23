@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes an LU factorization of a real tridiagonal matrix A using.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param DL - `DL`
@@ -38,10 +38,10 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @returns result
 	*/
-	( N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number ): Float64Array;
+	( N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* Computes an LU factorization of a real tridiagonal matrix A using using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param DL - `DL`
@@ -61,11 +61,11 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Computes an LU factorization of a real tridiagonal matrix A using.
+* @license MIT.
 */
 declare var dgttrf: Routine;
 

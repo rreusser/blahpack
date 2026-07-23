@@ -23,16 +23,24 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param cmach - `cmach`
 	* @returns result
 	*/
-	( cmach: string ): Float64Array;
+	( cmach: string ): number;
+
+	/**
+	* @license MIT using alternative indexing semantics.
+	*
+	* @param cmach - `cmach`
+	* @returns result
+	*/
+	ndarray( cmach: string ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlamch: Routine;
 

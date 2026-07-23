@@ -27,86 +27,77 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes generalized eigenvalues and real Schur form for a pair of real nonsymmetric matrices
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param jobvsl - specifies the operation type
-	* @param jobvsr - specifies the operation type
-	* @param sort - specifies the operation type
-	* @param selctg - selctg
+	* @param jobvsl - `jobvsl`
+	* @param jobvsr - `jobvsr`
+	* @param sort - `sort`
+	* @param selctg - `selctg`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param sdim - sdim
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
-	* @param VSL - input matrix
+	* @param ALPHAR - `ALPHAR`
+	* @param ALPHAI - `ALPHAI`
+	* @param BETA - `BETA`
+	* @param VSL - `VSL`
 	* @param LDVSL - leading dimension of `VSL`
-	* @param VSR - input matrix
+	* @param VSR - `VSR`
 	* @param LDVSR - leading dimension of `VSR`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
-	* @param BWORK - output array
-	* @param strideBWORK - stride length for `BWORK`
+	* @param WORK - `WORK`
+	* @param BWORK - `BWORK`
 	* @returns result
 	*/
-	( order: Layout, jobvsl: string, jobvsr: string, sort: string, selctg: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, sdim: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, VSL: Float64Array, LDVSL: number, VSR: Float64Array, LDVSR: number, WORK: Float64Array, strideWORK: number, lwork: number, BWORK: Float64Array, strideBWORK: number ): Float64Array;
+	( order: Layout, jobvsl: number, jobvsr: number, sort: string, selctg: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, ALPHAI: Float64Array, BETA: Float64Array, VSL: Float64Array, LDVSL: number, VSR: Float64Array, LDVSR: number, WORK: Float64Array, BWORK: Int32Array ): Record<string, unknown>;
 
 	/**
-	* Computes generalized eigenvalues and real Schur form for a pair of real nonsymmetric matrices, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param jobvsl - specifies the operation type
-	* @param jobvsr - specifies the operation type
-	* @param sort - specifies the operation type
-	* @param selctg - selctg
+	* @param jobvsl - `jobvsl`
+	* @param jobvsr - `jobvsr`
+	* @param sort - `sort`
+	* @param selctg - `selctg`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param sdim - sdim
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
+	* @param ALPHAR - `ALPHAR`
+	* @param strideALPHAR - stride of `ALPHAR`
 	* @param offsetALPHAR - starting index for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
+	* @param ALPHAI - `ALPHAI`
+	* @param strideALPHAI - stride of `ALPHAI`
 	* @param offsetALPHAI - starting index for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
 	* @param offsetBETA - starting index for `BETA`
-	* @param VSL - input matrix
+	* @param VSL - `VSL`
 	* @param strideVSL1 - stride of `VSL`
 	* @param strideVSL2 - stride of `VSL`
 	* @param offsetVSL - starting index for `VSL`
-	* @param VSR - input matrix
+	* @param VSR - `VSR`
 	* @param strideVSR1 - stride of `VSR`
 	* @param strideVSR2 - stride of `VSR`
 	* @param offsetVSR - starting index for `VSR`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
-	* @param BWORK - output array
-	* @param strideBWORK - stride length for `BWORK`
-	* @param offsetBWORK - starting index for `BWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param BWORK - `BWORK`
+	* @param strideBwork - stride of `Bwork`
+	* @param offsetBwork - starting index for `Bwork`
 	* @returns result
 	*/
-	ndarray( jobvsl: string, jobvsr: string, sort: string, selctg: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, sdim: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VSL: Float64Array, strideVSL1: number, strideVSL2: number, offsetVSL: number, VSR: Float64Array, strideVSR1: number, strideVSR2: number, offsetVSR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number, BWORK: Float64Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
+	ndarray( jobvsl: number, jobvsr: number, sort: string, selctg: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VSL: Float64Array, strideVSL1: number, strideVSL2: number, offsetVSL: number, VSR: Float64Array, strideVSR1: number, strideVSR2: number, offsetVSR: number, WORK: Float64Array, strideWork: number, offsetWork: number, BWORK: Int32Array, strideBwork: number, offsetBwork: number ): Record<string, unknown>;
 }
 
 /**
-* Computes generalized eigenvalues and real Schur form for a pair of real nonsymmetric matrices
+* @license MIT.
 */
 declare var dgges: Routine;
 

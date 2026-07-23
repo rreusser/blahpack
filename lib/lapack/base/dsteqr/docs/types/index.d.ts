@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param compz - `compz`
@@ -39,13 +39,13 @@ interface Routine {
 	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, compz: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, compz: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param compz - `compz`
 	* @param N - number of columns
@@ -60,15 +60,15 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( compz: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( compz: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes all eigenvalues and, optionally, eigenvectors of a real symmetric.
+* @license MIT.
 */
 declare var dsteqr: Routine;
 

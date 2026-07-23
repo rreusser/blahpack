@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param fact - `fact`
 	* @param N - number of columns
@@ -42,10 +42,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( fact: string, N: number, nrhs: number, d: Float64Array, e: Float64Array, DF: Float64Array, EF: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array ): Float64Array;
+	( fact: string, N: number, nrhs: number, d: Float64Array, e: Float64Array, DF: Float64Array, EF: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, rcond: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param fact - `fact`
 	* @param N - number of columns
@@ -78,15 +78,15 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( fact: string, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, DF: Float64Array, strideDF: number, offsetDF: number, EF: Float64Array, strideEF: number, offsetEF: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( fact: string, N: number, nrhs: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, DF: Float64Array, strideDF: number, offsetDF: number, EF: Float64Array, strideEF: number, offsetEF: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, rcond: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dptsvx: Routine;
 

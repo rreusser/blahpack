@@ -23,10 +23,96 @@ import dtpmv = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dtpmv( 0 ); // $ExpectType Float64Array
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dtpmv( 10, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( true, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( null, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( undefined, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( [], 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( {}, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dtpmv( 'upper', 10, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', true, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', null, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', undefined, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', [], 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', {}, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 'unit', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dtpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dtpmv(); // $ExpectError
+	dtpmv( 'upper' ); // $ExpectError
 }

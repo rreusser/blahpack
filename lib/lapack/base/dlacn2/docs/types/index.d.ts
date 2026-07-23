@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Estimates the 1-norm of a square matrix using reverse communication.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -38,10 +38,10 @@ interface Routine {
 	* @param strideISAVE - stride of `ISAVE`
 	* @returns result
 	*/
-	( N: number, v: Float64Array, strideV: number, x: Float64Array, strideX: number, ISGN: Float64Array, strideISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number ): Float64Array;
+	( N: number, v: Float64Array, strideV: number, x: Float64Array, strideX: number, ISGN: Float64Array, strideISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number ): void;
 
 	/**
-	* Estimates the 1-norm of a square matrix using reverse communication using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param v - `v`
@@ -60,11 +60,11 @@ interface Routine {
 	* @param offsetISAVE - starting index for `ISAVE`
 	* @returns result
 	*/
-	ndarray( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number, offsetISAVE: number ): Float64Array;
+	ndarray( N: number, v: Float64Array, strideV: number, offsetV: number, x: Float64Array, strideX: number, offsetX: number, ISGN: Float64Array, strideISGN: number, offsetISGN: number, EST: number, KASE: number, ISAVE: Float64Array, strideISAVE: number, offsetISAVE: number ): void;
 }
 
 /**
-* Estimates the 1-norm of a square matrix using reverse communication.
+* @license MIT.
 */
 declare var dlacn2: Routine;
 

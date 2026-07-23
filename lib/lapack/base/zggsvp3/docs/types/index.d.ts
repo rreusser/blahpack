@@ -27,94 +27,94 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param jobu - specifies the operation type
-	* @param jobv - specifies the operation type
-	* @param jobq - specifies the operation type
+	* @param jobu - `jobu`
+	* @param jobv - `jobv`
+	* @param jobq - `jobq`
 	* @param M - number of rows
-	* @param p - p
+	* @param p - `p`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param tola - tola
-	* @param tolb - tolb
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param U - input matrix
+	* @param tola - `tola`
+	* @param tolb - `tolb`
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param U - `U`
 	* @param LDU - leading dimension of `U`
-	* @param V - input matrix
+	* @param V - `V`
 	* @param LDV - leading dimension of `V`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param IWORK - input array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, LDU: number, V: Float64Array, LDV: number, Q: Float64Array, LDQ: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, RWORK: Float64Array, strideRWork: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param jobu - specifies the operation type
-	* @param jobv - specifies the operation type
-	* @param jobq - specifies the operation type
+	* @param jobu - `jobu`
+	* @param jobv - `jobv`
+	* @param jobq - `jobq`
 	* @param M - number of rows
-	* @param p - p
+	* @param p - `p`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param tola - tola
-	* @param tolb - tolb
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param U - input matrix
+	* @param tola - `tola`
+	* @param tolb - `tolb`
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param U - `U`
 	* @param strideU1 - stride of `U`
 	* @param strideU2 - stride of `U`
 	* @param offsetU - starting index for `U`
-	* @param V - input matrix
+	* @param V - `V`
 	* @param strideV1 - stride of `V`
 	* @param strideV2 - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param IWORK - input array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( jobu: string, jobv: string, jobq: string, M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, tola: number, tolb: number, K: number, l: number, U: Float64Array, strideU1: number, strideU2: number, offsetU: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair
+* @license MIT.
 */
 declare var zggsvp3: Routine;
 

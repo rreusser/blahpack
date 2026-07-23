@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the L_D_L^T factorization of a real symmetric positive definite tridiagonal matrix A.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param strideE - stride of `E`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* Computes the L_D_L^T factorization of a real symmetric positive definite tridiagonal matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -46,11 +46,11 @@ interface Routine {
 	* @param offsetE - starting index for `E`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): number;
 }
 
 /**
-* Computes the L_D_L^T factorization of a real symmetric positive definite tridiagonal matrix A.
+* @license MIT.
 */
 declare var dpttrf: Routine;
 

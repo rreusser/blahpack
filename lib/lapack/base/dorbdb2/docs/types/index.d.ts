@@ -27,71 +27,71 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Simultaneously bidiagonalize the blocks of a tall and skinny matrix [X11; X21] with orthonormal columns (variant 2: P = min(P, M-P, Q, M-Q)).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
-	* @param p - p
-	* @param q - q
-	* @param X11 - input matrix
-	* @param LDX11 - leading dimension of `X11`
-	* @param X21 - input matrix
-	* @param LDX21 - leading dimension of `X21`
-	* @param THETA - input array
-	* @param strideTHETA - stride length for `THETA`
-	* @param PHI - input array
-	* @param stridePHI - stride length for `PHI`
-	* @param TAUP1 - input array
-	* @param strideTAUP1 - stride length for `TAUP1`
-	* @param TAUP2 - input array
-	* @param strideTAUP2 - stride length for `TAUP2`
-	* @param TAUQ1 - input array
-	* @param strideTAUQ1 - stride length for `TAUQ1`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param P - `P`
+	* @param Q - `Q`
+	* @param X11 - `X11`
+	* @param LDX11 - `LDX11`
+	* @param X21 - `X21`
+	* @param LDX21 - `LDX21`
+	* @param THETA - `THETA`
+	* @param strideTHETA - stride of `THETA`
+	* @param PHI - `PHI`
+	* @param stridePHI - stride of `PHI`
+	* @param TAUP1 - `TAUP1`
+	* @param strideTAUP1 - stride of `TAUP`
+	* @param TAUP2 - `TAUP2`
+	* @param strideTAUP2 - stride of `TAUP`
+	* @param TAUQ1 - `TAUQ1`
+	* @param strideTAUQ1 - stride of `TAUQ`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, p: number, q: number, X11: Float64Array, LDX11: number, X21: Float64Array, LDX21: number, THETA: Float64Array, strideTHETA: number, PHI: Float64Array, stridePHI: number, TAUP1: Float64Array, strideTAUP1: number, TAUP2: Float64Array, strideTAUP2: number, TAUQ1: Float64Array, strideTAUQ1: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, P: number, Q: number, X11: Float64Array, LDX11: number, X21: Float64Array, LDX21: number, THETA: Float64Array, strideTHETA: number, PHI: Float64Array, stridePHI: number, TAUP1: number, strideTAUP1: number, TAUP2: number, strideTAUP2: number, TAUQ1: number, strideTAUQ1: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Simultaneously bidiagonalize the blocks of a tall and skinny matrix [X11; X21] with orthonormal columns (variant 2: P = min(P, M-P, Q, M-Q))., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
-	* @param p - p
-	* @param q - q
-	* @param X11 - input matrix
+	* @param P - `P`
+	* @param Q - `Q`
+	* @param X11 - `X11`
 	* @param strideX111 - stride of `X11`
 	* @param strideX112 - stride of `X11`
 	* @param offsetX11 - starting index for `X11`
-	* @param X21 - input matrix
+	* @param X21 - `X21`
 	* @param strideX211 - stride of `X21`
 	* @param strideX212 - stride of `X21`
 	* @param offsetX21 - starting index for `X21`
-	* @param THETA - input array
-	* @param strideTHETA - stride length for `THETA`
+	* @param THETA - `THETA`
+	* @param strideTHETA - stride of `THETA`
 	* @param offsetTHETA - starting index for `THETA`
-	* @param PHI - input array
-	* @param stridePHI - stride length for `PHI`
+	* @param PHI - `PHI`
+	* @param stridePHI - stride of `PHI`
 	* @param offsetPHI - starting index for `PHI`
-	* @param TAUP1 - input array
+	* @param TAUP1 - `TAUP1`
 	* @param strideTAUP1 - stride of `TAUP`
 	* @param offsetTAUP1 - starting index for `TAUP1`
-	* @param TAUP2 - input array
+	* @param TAUP2 - `TAUP2`
 	* @param strideTAUP2 - stride of `TAUP`
 	* @param offsetTAUP2 - starting index for `TAUP2`
-	* @param TAUQ1 - input array
+	* @param TAUQ1 - `TAUQ1`
 	* @param strideTAUQ1 - stride of `TAUQ`
 	* @param offsetTAUQ1 - starting index for `TAUQ1`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, p: number, q: number, X11: Float64Array, strideX111: number, strideX112: number, offsetX11: number, X21: Float64Array, strideX211: number, strideX212: number, offsetX21: number, THETA: Float64Array, strideTHETA: number, offsetTHETA: number, PHI: Float64Array, stridePHI: number, offsetPHI: number, TAUP1: Float64Array, strideTAUP1: number, offsetTAUP1: number, TAUP2: Float64Array, strideTAUP2: number, offsetTAUP2: number, TAUQ1: Float64Array, strideTAUQ1: number, offsetTAUQ1: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, P: number, Q: number, X11: Float64Array, strideX111: number, strideX112: number, offsetX11: number, X21: Float64Array, strideX211: number, strideX212: number, offsetX21: number, THETA: Float64Array, strideTHETA: number, offsetTHETA: number, PHI: Float64Array, stridePHI: number, offsetPHI: number, TAUP1: number, strideTAUP1: number, offsetTAUP1: number, TAUP2: number, strideTAUP2: number, offsetTAUP2: number, TAUQ1: number, strideTAUQ1: number, offsetTAUQ1: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Simultaneously bidiagonalize the blocks of a tall and skinny matrix [X11; X21] with orthonormal columns (variant 2: P = min(P, M-P, Q, M-Q)).
+* @license MIT.
 */
 declare var dorbdb2: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+	* @license MIT.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -38,12 +38,14 @@ interface Routine {
 	* @param LDVL - leading dimension of `VL`
 	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number ): Float64Array;
+	( jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the eigenvalues and, optionally, the left and/or right eigenvectors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobvl - `jobvl`
 	* @param jobvr - `jobvr`
@@ -66,17 +68,16 @@ interface Routine {
 	* @param strideVR1 - stride of `VR`
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the eigenvalues and, optionally, the left and/or right eigenvectors.
+* @license MIT.
 */
 declare var dgeev: Routine;
 

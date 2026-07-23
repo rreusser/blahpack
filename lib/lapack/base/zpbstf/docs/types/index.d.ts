@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zpbstf`.
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -37,10 +37,10 @@ interface Routine {
 	* @param LDAB - leading dimension of `AB`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -51,11 +51,11 @@ interface Routine {
 	* @param offsetAB - starting index for `AB`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zpbstf: Routine;
 

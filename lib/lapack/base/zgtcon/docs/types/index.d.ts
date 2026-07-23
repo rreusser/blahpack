@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal of the condition number of a complex general.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -40,13 +40,13 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( norm: string, N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Estimates the reciprocal of the condition number of a complex general using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -68,15 +68,15 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal of the condition number of a complex general.
+* @license MIT.
 */
 declare var zgtcon: Routine;
 

@@ -16,7 +16,6 @@
 * limitations under the License.
 */
 
-import Complex128Array = require( '@stdlib/array/complex128' );
 import zlatsqr = require( './index' );
 
 
@@ -24,20 +23,120 @@ import zlatsqr = require( './index' );
 
 // The function returns a number...
 {
-	zlatsqr( 'row-major', 4, 2, 8, 2, new Complex128Array( 8 ), 2, new Complex128Array( 4 ), 2, new Complex128Array( 4 ) ); // $ExpectType number
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zlatsqr( 10, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( true, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( null, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( undefined, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( [], 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( {}, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlatsqr( 'row-major', '10', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', true, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', false, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', null, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', undefined, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', [], 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', {}, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, '10', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, true, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, false, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, null, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, undefined, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, [], 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, {}, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, false, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, 10, '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, '10', 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, true, 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, null, 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, [], 10, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Float64Array( 25 ) ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10' ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [] ); // $ExpectError
+	zlatsqr( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlatsqr(); // $ExpectError
-}
-
-// The ndarray method returns a number...
-{
-	zlatsqr.ndarray( 4, 2, 8, 2, new Complex128Array( 8 ), 1, 4, 0, new Complex128Array( 4 ), 1, 2, 0, new Complex128Array( 4 ), 1, 0 ); // $ExpectType number
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	zlatsqr.ndarray(); // $ExpectError
+	zlatsqr( 'row-major' ); // $ExpectError
 }

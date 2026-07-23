@@ -23,16 +23,25 @@
 */
 interface Routine {
 	/**
-	* CABS1: |re(z)| + |im(z)|.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param N - number of columns
+	* @param DL - `DL`
+	* @param strideDL - stride of `DL`
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param DU - `DU`
+	* @param strideDU - stride of `DU`
+	* @param DU2 - `DU2`
+	* @param strideDU2 - stride of `DU`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @returns result
 	*/
-	( v: number, idx: number ): Float64Array;
+	( N: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, DU2: number, strideDU2: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* CABS1: |re(z)| + |im(z)| using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param DL - `DL`
@@ -52,11 +61,11 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( N: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, DU2: number, strideDU2: number, offsetDU2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* CABS1: |re(z)| + |im(z)|.
+* @license MIT.
 */
 declare var zgttrf: Routine;
 

@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType, Layout } from '@stdlib/types/blas';
+import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlatrs`.
 */
 interface Routine {
 	/**
-	* Solves a triangular system with scaling to prevent overflow.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,10 +44,10 @@ interface Routine {
 	* @param strideCNORM - stride of `CNORM`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): number;
 
 	/**
-	* Solves a triangular system with scaling to prevent overflow using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -67,11 +67,11 @@ interface Routine {
 	* @param offsetCNORM - starting index for `CNORM`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): number;
 }
 
 /**
-* Solves a triangular system with scaling to prevent overflow.
+* @license MIT.
 */
 declare var dlatrs: Routine;
 

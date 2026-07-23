@@ -21,23 +21,57 @@ import dzasum = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dzasum( 10 ); // $ExpectType Float64Array
+	dzasum( 10, 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dzasum( '10' ); // $ExpectError
-	dzasum( true ); // $ExpectError
-	dzasum( false ); // $ExpectError
-	dzasum( null ); // $ExpectError
-	dzasum( undefined ); // $ExpectError
-	dzasum( [] ); // $ExpectError
-	dzasum( {} ); // $ExpectError
+	dzasum( '10', 10, 10, 10 ); // $ExpectError
+	dzasum( true, 10, 10, 10 ); // $ExpectError
+	dzasum( false, 10, 10, 10 ); // $ExpectError
+	dzasum( null, 10, 10, 10 ); // $ExpectError
+	dzasum( undefined, 10, 10, 10 ); // $ExpectError
+	dzasum( [], 10, 10, 10 ); // $ExpectError
+	dzasum( {}, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dzasum( 10, '10', 10, 10 ); // $ExpectError
+	dzasum( 10, true, 10, 10 ); // $ExpectError
+	dzasum( 10, false, 10, 10 ); // $ExpectError
+	dzasum( 10, null, 10, 10 ); // $ExpectError
+	dzasum( 10, undefined, 10, 10 ); // $ExpectError
+	dzasum( 10, [], 10, 10 ); // $ExpectError
+	dzasum( 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dzasum( 10, 10, '10', 10 ); // $ExpectError
+	dzasum( 10, 10, true, 10 ); // $ExpectError
+	dzasum( 10, 10, false, 10 ); // $ExpectError
+	dzasum( 10, 10, null, 10 ); // $ExpectError
+	dzasum( 10, 10, undefined, 10 ); // $ExpectError
+	dzasum( 10, 10, [], 10 ); // $ExpectError
+	dzasum( 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dzasum( 10, 10, 10, '10' ); // $ExpectError
+	dzasum( 10, 10, 10, true ); // $ExpectError
+	dzasum( 10, 10, 10, false ); // $ExpectError
+	dzasum( 10, 10, 10, null ); // $ExpectError
+	dzasum( 10, 10, 10, undefined ); // $ExpectError
+	dzasum( 10, 10, 10, [] ); // $ExpectError
+	dzasum( 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dzasum(); // $ExpectError
+	dzasum( 10 ); // $ExpectError
 }

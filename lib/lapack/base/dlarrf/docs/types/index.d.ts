@@ -18,92 +18,88 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlarrf`.
 */
 interface Routine {
 	/**
-	* Finds a new relatively robust representation for eigenvalues
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param l - input array
-	* @param strideL - stride length for `l`
-	* @param LD - leading dimension of ``
-	* @param strideLD - stride length for `LD`
-	* @param clstrt - clstrt
-	* @param clend - clend
-	* @param w - input array
-	* @param strideW - stride length for `w`
-	* @param WGAP - input array
-	* @param strideWGAP - stride length for `WGAP`
-	* @param WERR - input array
-	* @param strideWERR - stride length for `WERR`
-	* @param spdiam - spdiam
-	* @param clgapl - clgapl
-	* @param clgapr - clgapr
-	* @param pivmin - pivmin
-	* @param sigma - sigma
-	* @param DPLUS - input array
-	* @param strideDPLUS - stride length for `DPLUS`
-	* @param LPLUS - input array
-	* @param strideLPLUS - stride length for `LPLUS`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param l - `l`
+	* @param strideL - stride of `L`
+	* @param ld - `ld`
+	* @param strideLD - stride of `LD`
+	* @param clstrt - `clstrt`
+	* @param clend - `clend`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param wgap - `wgap`
+	* @param strideWGAP - stride of `WGAP`
+	* @param werr - `werr`
+	* @param strideWERR - stride of `WERR`
+	* @param spdiam - `spdiam`
+	* @param clgapl - `clgapl`
+	* @param clgapr - `clgapr`
+	* @param pivmin - `pivmin`
+	* @param sigma - `sigma`
+	* @param dplus - `dplus`
+	* @param strideDPLUS - stride of `DPLUS`
+	* @param lplus - `lplus`
+	* @param strideLPLUS - stride of `LPLUS`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, WGAP: Float64Array, strideWGAP: number, WERR: Float64Array, strideWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, DPLUS: Float64Array, strideDPLUS: number, LPLUS: Float64Array, strideLPLUS: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, ld: Float64Array, strideLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, wgap: Float64Array, strideWGAP: number, werr: Float64Array, strideWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, dplus: Float64Array, strideDPLUS: number, lplus: Float64Array, strideLPLUS: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Finds a new relatively robust representation for eigenvalues, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param l - input array
-	* @param strideL - stride length for `l`
+	* @param l - `l`
+	* @param strideL - stride of `L`
 	* @param offsetL - starting index for `L`
-	* @param LD - input array
-	* @param strideLD - stride length for `LD`
+	* @param ld - `ld`
+	* @param strideLD - stride of `LD`
 	* @param offsetLD - starting index for `LD`
-	* @param clstrt - clstrt
-	* @param clend - clend
-	* @param w - input array
-	* @param strideW - stride length for `w`
+	* @param clstrt - `clstrt`
+	* @param clend - `clend`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
-	* @param WGAP - input array
-	* @param strideWGAP - stride length for `WGAP`
+	* @param wgap - `wgap`
+	* @param strideWGAP - stride of `WGAP`
 	* @param offsetWGAP - starting index for `WGAP`
-	* @param WERR - input array
-	* @param strideWERR - stride length for `WERR`
+	* @param werr - `werr`
+	* @param strideWERR - stride of `WERR`
 	* @param offsetWERR - starting index for `WERR`
-	* @param spdiam - spdiam
-	* @param clgapl - clgapl
-	* @param clgapr - clgapr
-	* @param pivmin - pivmin
-	* @param sigma - sigma
-	* @param DPLUS - input array
-	* @param strideDPLUS - stride length for `DPLUS`
+	* @param spdiam - `spdiam`
+	* @param clgapl - `clgapl`
+	* @param clgapr - `clgapr`
+	* @param pivmin - `pivmin`
+	* @param sigma - `sigma`
+	* @param dplus - `dplus`
+	* @param strideDPLUS - stride of `DPLUS`
 	* @param offsetDPLUS - starting index for `DPLUS`
-	* @param LPLUS - input array
-	* @param strideLPLUS - stride length for `LPLUS`
+	* @param lplus - `lplus`
+	* @param strideLPLUS - stride of `LPLUS`
 	* @param offsetLPLUS - starting index for `LPLUS`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, l: Float64Array, strideL: number, offsetL: number, LD: Float64Array, strideLD: number, offsetLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, offsetW: number, WGAP: Float64Array, strideWGAP: number, offsetWGAP: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, DPLUS: Float64Array, strideDPLUS: number, offsetDPLUS: number, LPLUS: Float64Array, strideLPLUS: number, offsetLPLUS: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, l: Float64Array, strideL: number, offsetL: number, ld: Float64Array, strideLD: number, offsetLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, offsetW: number, wgap: Float64Array, strideWGAP: number, offsetWGAP: number, werr: Float64Array, strideWERR: number, offsetWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, dplus: Float64Array, strideDPLUS: number, offsetDPLUS: number, lplus: Float64Array, strideLPLUS: number, offsetLPLUS: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Finds a new relatively robust representation for eigenvalues
+* @license MIT.
 */
 declare var dlarrf: Routine;
 

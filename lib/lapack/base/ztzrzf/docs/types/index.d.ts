@@ -21,50 +21,49 @@
 /// <reference types="@stdlib/types"/>
 
 import { Layout } from '@stdlib/types/blas';
-import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `ztzrzf`.
 */
 interface Routine {
 	/**
-	* Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via the unitary RZ factorization (blocked driver).
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param M - number of rows of `A`
-	* @param N - number of columns of `A` (must satisfy `N >= M`)
-	* @param A - input/output matrix
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param TAU - output array of scalar factors of the elementary reflectors (length `M`)
-	* @param strideTAU - stride length for `TAU`
-	* @param WORK - workspace array
-	* @param strideWORK - stride length for `WORK`
-	* @returns status code (`0` = success)
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Complex128Array, LDA: number, TAU: Complex128Array, strideTAU: number, WORK: Complex128Array, strideWORK: number ): number;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via the unitary RZ factorization (blocked driver), using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param M - number of rows of `A`
-	* @param N - number of columns of `A`
-	* @param A - input/output matrix
-	* @param strideA1 - stride of the first dimension of `A` (in complex elements)
-	* @param strideA2 - stride of the second dimension of `A` (in complex elements)
-	* @param offsetA - starting index for `A` (in complex elements)
-	* @param TAU - output array of scalar factors of the elementary reflectors
-	* @param strideTAU - stride length for `TAU` (in complex elements)
-	* @param offsetTAU - starting index for `TAU` (in complex elements)
-	* @param WORK - workspace array
-	* @param strideWORK - stride length for `WORK` (in complex elements)
-	* @param offsetWORK - starting index for `WORK` (in complex elements)
-	* @returns status code (`0` = success)
+	* @param M - number of rows
+	* @param N - number of columns
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
+	* @param offsetA - starting index for `A`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param offsetTAU - starting index for `TAU`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Complex128Array, strideA1: number, strideA2: number, offsetA: number, TAU: Complex128Array, strideTAU: number, offsetTAU: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via the unitary RZ factorization (blocked driver).
+* @license MIT.
 */
 declare var ztzrzf: Routine;
 

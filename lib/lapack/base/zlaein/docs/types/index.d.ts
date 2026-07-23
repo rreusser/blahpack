@@ -27,57 +27,57 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Uses inverse iteration to find an eigenvector of a complex upper Hessenberg matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param rightv - rightv
-	* @param noinit - noinit
+	* @param rightv - `rightv`
+	* @param noinit - `noinit`
 	* @param N - number of columns
-	* @param H - input matrix
+	* @param H - `H`
 	* @param LDH - leading dimension of `H`
-	* @param w - w
-	* @param v - input array
-	* @param strideV - stride length for `v`
-	* @param B - input matrix
+	* @param w - `w`
+	* @param v - `v`
+	* @param strideV - stride of `V`
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param eps3 - eps3
-	* @param smlnum - smlnum
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param eps3 - `eps3`
+	* @param smlnum - `smlnum`
 	* @returns result
 	*/
-	( order: Layout, rightv: boolean, noinit: boolean, N: number, H: Float64Array, LDH: number, w: any, v: Float64Array, strideV: number, B: Float64Array, LDB: number, RWORK: Float64Array, strideRWORK: number, eps3: number, smlnum: number ): Float64Array;
+	( order: Layout, rightv: number, noinit: number, N: number, H: Float64Array, LDH: number, w: number, v: Float64Array, strideV: number, B: Float64Array, LDB: number, RWORK: Float64Array, strideRWork: number, eps3: number, smlnum: number ): number;
 
 	/**
-	* Uses inverse iteration to find an eigenvector of a complex upper Hessenberg matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param rightv - rightv
-	* @param noinit - noinit
+	* @param rightv - `rightv`
+	* @param noinit - `noinit`
 	* @param N - number of columns
-	* @param H - input matrix
+	* @param H - `H`
 	* @param strideH1 - stride of `H`
 	* @param strideH2 - stride of `H`
 	* @param offsetH - starting index for `H`
-	* @param w - w
-	* @param v - input array
-	* @param strideV - stride length for `v`
+	* @param w - `w`
+	* @param v - `v`
+	* @param strideV - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
-	* @param eps3 - eps3
-	* @param smlnum - smlnum
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
+	* @param eps3 - `eps3`
+	* @param smlnum - `smlnum`
 	* @returns result
 	*/
-	ndarray( rightv: boolean, noinit: boolean, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: any, v: Float64Array, strideV: number, offsetV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, eps3: number, smlnum: number ): Float64Array;
+	ndarray( rightv: number, noinit: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: number, v: Float64Array, strideV: number, offsetV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, eps3: number, smlnum: number ): number;
 }
 
 /**
-* Uses inverse iteration to find an eigenvector of a complex upper Hessenberg matrix
+* @license MIT.
 */
 declare var zlaein: Routine;
 

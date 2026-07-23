@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Create a tree of subproblems for bidiagonal divide and conquer.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param lvl - `lvl`
@@ -40,7 +40,7 @@ interface Routine {
 	( N: number, lvl: number, nd: number, INODE: Float64Array, strideINODE: number, NDIML: Float64Array, strideNDIML: number, NDIMR: Float64Array, strideNDIMR: number, msub: number ): void;
 
 	/**
-	* Create a tree of subproblems for bidiagonal divide and conquer using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param lvl - `lvl`
@@ -61,7 +61,7 @@ interface Routine {
 }
 
 /**
-* Create a tree of subproblems for bidiagonal divide and conquer.
+* @license MIT.
 */
 declare var dlasdt: Routine;
 

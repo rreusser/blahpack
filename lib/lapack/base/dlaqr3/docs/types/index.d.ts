@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Performs aggressive early deflation on an upper Hessenberg matrix.
+	* @license MIT.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -50,13 +50,13 @@ interface Routine {
 	* @param WV - `WV`
 	* @param LDWV - leading dimension of `WV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, V: Float64Array, LDV: number, nh: number, T: Float64Array, LDT: number, nv: number, WV: Float64Array, LDWV: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, V: Float64Array, LDV: number, nh: number, T: Float64Array, LDT: number, nv: number, WV: Float64Array, LDWV: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* Performs aggressive early deflation on an upper Hessenberg matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -74,8 +74,6 @@ interface Routine {
 	* @param strideZ1 - stride of `Z`
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
-	* @param ns - `ns`
-	* @param nd - `nd`
 	* @param SR - `SR`
 	* @param strideSR - stride of `SR`
 	* @param offsetSR - starting index for `SR`
@@ -97,15 +95,15 @@ interface Routine {
 	* @param strideWV2 - stride of `WV`
 	* @param offsetWV - starting index for `WV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ns: number, nd: number, SR: Float64Array, strideSR: number, offsetSR: number, SI: Float64Array, strideSI: number, offsetSI: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, nh: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, SR: Float64Array, strideSR: number, offsetSR: number, SI: Float64Array, strideSI: number, offsetSI: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, nh: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, nv: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Record<string, unknown>;
 }
 
 /**
-* Performs aggressive early deflation on an upper Hessenberg matrix.
+* @license MIT.
 */
 declare var dlaqr3: Routine;
 

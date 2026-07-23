@@ -21,23 +21,101 @@ import zlar2v = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	zlar2v( 10 ); // $ExpectType Float64Array
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zlar2v( '10' ); // $ExpectError
-	zlar2v( true ); // $ExpectError
-	zlar2v( false ); // $ExpectError
-	zlar2v( null ); // $ExpectError
-	zlar2v( undefined ); // $ExpectError
-	zlar2v( [] ); // $ExpectError
-	zlar2v( {} ); // $ExpectError
+	zlar2v( '10', new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( true, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( false, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( null, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( undefined, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( [], new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( {}, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlar2v( 10, '10', new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, true, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, null, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, [], new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, {}, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), '10', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), true, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), null, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), [], 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), '10', new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), true, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), false, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), null, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), undefined, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), [], new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), {}, new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), true, 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), null, 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), [], 10 ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), false ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	zlar2v( 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlar2v(); // $ExpectError
+	zlar2v( 10 ); // $ExpectError
 }

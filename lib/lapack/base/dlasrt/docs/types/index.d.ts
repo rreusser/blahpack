@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Sort an array of doubles in increasing or decreasing order using quicksort.
+	* @license MIT.
 	*
 	* @param id - `id`
 	* @param N - number of columns
@@ -31,10 +31,10 @@ interface Routine {
 	* @param stride - stride of ``
 	* @returns result
 	*/
-	( id: number, N: number, d: number, stride: number ): Float64Array;
+	( id: number, N: number, d: number, stride: number ): number;
 
 	/**
-	* Sort an array of doubles in increasing or decreasing order using quicksort using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param id - `id`
 	* @param N - number of columns
@@ -43,11 +43,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( id: number, N: number, d: number, stride: number, offset: number ): Float64Array;
+	ndarray( id: number, N: number, d: number, stride: number, offset: number ): number;
 }
 
 /**
-* Sort an array of doubles in increasing or decreasing order using quicksort.
+* @license MIT.
 */
 declare var dlasrt: Routine;
 

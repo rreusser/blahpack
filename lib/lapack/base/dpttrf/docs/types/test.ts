@@ -21,23 +21,68 @@ import dpttrf = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dpttrf( 10 ); // $ExpectType Float64Array
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dpttrf( '10' ); // $ExpectError
-	dpttrf( true ); // $ExpectError
-	dpttrf( false ); // $ExpectError
-	dpttrf( null ); // $ExpectError
-	dpttrf( undefined ); // $ExpectError
-	dpttrf( [] ); // $ExpectError
-	dpttrf( {} ); // $ExpectError
+	dpttrf( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dpttrf( 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dpttrf( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dpttrf( 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dpttrf( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dpttrf(); // $ExpectError
+	dpttrf( 10 ); // $ExpectError
 }

@@ -21,12 +21,55 @@ import ztptri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	ztptri( 0 ); // $ExpectType Float64Array
+	ztptri( 'upper', 'unit', 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	ztptri( 10, 'unit', 10, 10 ); // $ExpectError
+	ztptri( true, 'unit', 10, 10 ); // $ExpectError
+	ztptri( null, 'unit', 10, 10 ); // $ExpectError
+	ztptri( undefined, 'unit', 10, 10 ); // $ExpectError
+	ztptri( [], 'unit', 10, 10 ); // $ExpectError
+	ztptri( {}, 'unit', 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	ztptri( 'upper', 10, 10, 10 ); // $ExpectError
+	ztptri( 'upper', true, 10, 10 ); // $ExpectError
+	ztptri( 'upper', null, 10, 10 ); // $ExpectError
+	ztptri( 'upper', undefined, 10, 10 ); // $ExpectError
+	ztptri( 'upper', [], 10, 10 ); // $ExpectError
+	ztptri( 'upper', {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	ztptri( 'upper', 'unit', '10', 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', true, 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', false, 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', null, 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', undefined, 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', [], 10 ); // $ExpectError
+	ztptri( 'upper', 'unit', {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	ztptri( 'upper', 'unit', 10, '10' ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, true ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, false ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, null ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, undefined ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, [] ); // $ExpectError
+	ztptri( 'upper', 'unit', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	ztptri(); // $ExpectError
+	ztptri( 'upper' ); // $ExpectError
 }

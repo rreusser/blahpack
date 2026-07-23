@@ -16,28 +16,101 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zlacrt = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zlacrt( 10 ); // $ExpectType Float64Array
+	zlacrt( 10, 10, 10, 10, 10, 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zlacrt( '10' ); // $ExpectError
-	zlacrt( true ); // $ExpectError
-	zlacrt( false ); // $ExpectError
-	zlacrt( null ); // $ExpectError
-	zlacrt( undefined ); // $ExpectError
-	zlacrt( [] ); // $ExpectError
-	zlacrt( {} ); // $ExpectError
+	zlacrt( '10', 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( true, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( false, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( null, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( undefined, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( [], 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( {}, 10, 10, 10, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlacrt( 10, '10', 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, true, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, false, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, null, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, undefined, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, [], 10, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, {}, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlacrt( 10, 10, '10', 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, true, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, false, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, null, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, undefined, 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, [], 10, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, {}, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlacrt( 10, 10, 10, '10', 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, true, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, false, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, null, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, undefined, 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, [], 10, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlacrt( 10, 10, 10, 10, '10', 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, true, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, false, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, null, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, undefined, 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, [], 10, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlacrt( 10, 10, 10, 10, 10, '10', 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, true, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, false, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, null, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, undefined, 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, [], 10 ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlacrt( 10, 10, 10, 10, 10, 10, '10' ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, true ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, false ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, null ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, undefined ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, [] ); // $ExpectError
+	zlacrt( 10, 10, 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlacrt(); // $ExpectError
+	zlacrt( 10 ); // $ExpectError
 }

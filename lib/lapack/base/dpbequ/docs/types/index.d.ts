@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive definite band matrix and reduce its condition number.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,10 +38,10 @@ interface Routine {
 	* @param strideS - stride of `S`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, s: Float64Array, strideS: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, s: Float64Array, strideS: number ): { info: number; scond: number };
 
 	/**
-	* Computes row and column scalings intended to equilibrate a symmetric positive definite band matrix and reduce its condition number using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetS - starting index for `S`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, s: Float64Array, strideS: number, offsetS: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, s: Float64Array, strideS: number, offsetS: number ): { info: number; scond: number };
 }
 
 /**
-* Computes row and column scalings intended to equilibrate a symmetric positive definite band matrix and reduce its condition number.
+* @license MIT.
 */
 declare var dpbequ: Routine;
 

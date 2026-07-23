@@ -23,16 +23,18 @@
 */
 interface Routine {
 	/**
-	* Computes the parameters for a Givens rotation.
+	* @license MIT.
 	*
-	* @param re - `re`
-	* @param im - `im`
+	* @param a - `a`
+	* @param b - `b`
+	* @param c - `c`
+	* @param s - `s`
 	* @returns result
 	*/
-	( re: number, im: number ): void;
+	( a: number, b: number, c: number, s: number ): void;
 
 	/**
-	* Computes the parameters for a Givens rotation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param offsetA - starting index for `A`
@@ -48,7 +50,7 @@ interface Routine {
 }
 
 /**
-* Computes the parameters for a Givens rotation.
+* @license MIT.
 */
 declare var zrotg: Routine;
 

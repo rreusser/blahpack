@@ -27,17 +27,17 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Compute the Cholesky factorization of a real symmetric positive definite matrix stored in packed format.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
 	* @param AP - `AP`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array ): number;
 
 	/**
-	* Compute the Cholesky factorization of a real symmetric positive definite matrix stored in packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -46,11 +46,11 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number ): number;
 }
 
 /**
-* Compute the Cholesky factorization of a real symmetric positive definite matrix stored in packed format.
+* @license MIT.
 */
 declare var dpptrf: Routine;
 

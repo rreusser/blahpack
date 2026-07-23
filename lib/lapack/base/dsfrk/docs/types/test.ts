@@ -23,21 +23,118 @@ import dsfrk = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dsfrk( 'no-transpose' ); // $ExpectType Float64Array
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dsfrk( 10 ); // $ExpectError
-	dsfrk( true ); // $ExpectError
-	dsfrk( false ); // $ExpectError
-	dsfrk( null ); // $ExpectError
-	dsfrk( undefined ); // $ExpectError
-	dsfrk( [] ); // $ExpectError
-	dsfrk( {} ); // $ExpectError
+	dsfrk( 10, 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( true, 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( null, 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( undefined, 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( [], 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( {}, 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dsfrk( 'no-transpose', 10, 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', true, 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', null, 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', undefined, 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', [], 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', {}, 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', true, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', null, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', undefined, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', [], 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', {}, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', '10', 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', true, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', false, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', null, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', undefined, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', [], 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', {}, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, '10', 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, true, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, false, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, null, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, undefined, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, [], 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, {}, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, '10', new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, true, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, false, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, null, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, undefined, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, [], new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, {}, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, '10', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, 10, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, true, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, null, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, undefined, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, [], 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, {}, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), '10', 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), true, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), false, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), null, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), [], 10, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, true, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, false, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, null, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, [], new Float64Array( 25 ) ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, '10' ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, true ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, null ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, undefined ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, [] ); // $ExpectError
+	dsfrk( 'no-transpose', 'upper', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dsfrk(); // $ExpectError
+	dsfrk( 'no-transpose' ); // $ExpectError
 }

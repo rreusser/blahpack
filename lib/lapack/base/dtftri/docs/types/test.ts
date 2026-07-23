@@ -21,23 +21,65 @@ import dtftri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dtftri( 'no-transpose' ); // $ExpectType Float64Array
+	dtftri( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dtftri( 10 ); // $ExpectError
-	dtftri( true ); // $ExpectError
-	dtftri( false ); // $ExpectError
-	dtftri( null ); // $ExpectError
-	dtftri( undefined ); // $ExpectError
-	dtftri( [] ); // $ExpectError
-	dtftri( {} ); // $ExpectError
+	dtftri( 10, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( true, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( null, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( undefined, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( [], 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( {}, 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dtftri( 'no-transpose', 10, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', true, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', null, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', undefined, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', [], 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', {}, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dtftri( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', true, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', null, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', [], 10, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dtftri( 'no-transpose', 'upper', 'unit', '10', new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', true, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', false, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', null, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', undefined, new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', [], new Float64Array( 25 ) ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dtftri( 'no-transpose', 'upper', 'unit', 10, '10' ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, 10 ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, true ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, null ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, undefined ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, [] ); // $ExpectError
+	dtftri( 'no-transpose', 'upper', 'unit', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dtftri(); // $ExpectError
+	dtftri( 'no-transpose' ); // $ExpectError
 }

@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlasr`.
 */
 interface Routine {
 	/**
-	* Applies a sequence of real plane rotations to a complex general matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -43,10 +44,10 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @returns result
 	*/
-	( order: Layout, side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number, A: Float64Array, LDA: number ): Float64Array;
+	( order: Layout, side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number, A: Float64Array, LDA: number ): Complex128Array;
 
 	/**
-	* Applies a sequence of real plane rotations to a complex general matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param pivot - `pivot`
@@ -65,11 +66,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, offsetC: number, s: Float64Array, strideS: number, offsetS: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, offsetC: number, s: Float64Array, strideS: number, offsetS: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Complex128Array;
 }
 
 /**
-* Applies a sequence of real plane rotations to a complex general matrix.
+* @license MIT.
 */
 declare var zlasr: Routine;
 

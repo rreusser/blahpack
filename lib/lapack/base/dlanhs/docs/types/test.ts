@@ -23,10 +23,86 @@ import dlanhs = require( './index' );
 
 // The function returns a number...
 {
-	dlanhs( 0 ); // $ExpectType number
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlanhs( 10, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( true, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( null, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( undefined, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( [], 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( {}, 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlanhs( 'row-major', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlanhs( 'row-major', 'no-transpose', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlanhs( 'row-major', 'no-transpose', 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dlanhs( 'row-major', 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlanhs(); // $ExpectError
+	dlanhs( 'row-major' ); // $ExpectError
 }

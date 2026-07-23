@@ -23,26 +23,26 @@
 */
 interface Routine {
 	/**
-	* Tests for NaN by comparing two arguments for inequality.
+	* @license MIT.
 	*
 	* @param din1 - `din1`
 	* @param din2 - `din2`
 	* @returns result
 	*/
-	( din1: number, din2: number ): number;
+	( din1: number, din2: number ): boolean;
 
 	/**
-	* Tests for NaN by comparing two arguments for inequality using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param din1 - `din1`
 	* @param din2 - `din2`
 	* @returns result
 	*/
-	ndarray( din1: number, din2: number ): number;
+	ndarray( din1: number, din2: number ): boolean;
 }
 
 /**
-* Tests for NaN by comparing two arguments for inequality.
+* @license MIT.
 */
 declare var dlaisnan: Routine;
 

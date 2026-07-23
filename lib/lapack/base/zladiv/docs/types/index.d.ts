@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zladiv`.
 */
 interface Routine {
 	/**
-	* Performs complex division: out = X / Y, where X and Y are complex.
+	* @license MIT.
 	*
 	* @param x - `x`
 	* @param offsetX - starting index for `X`
@@ -33,10 +37,10 @@ interface Routine {
 	* @param offsetOut - starting index for `Out`
 	* @returns result
 	*/
-	( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): number;
+	( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): Complex128Array;
 
 	/**
-	* Performs complex division: out = X / Y, where X and Y are complex using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param x - `x`
 	* @param offsetX - starting index for `X`
@@ -46,11 +50,11 @@ interface Routine {
 	* @param offsetOut - starting index for `Out`
 	* @returns result
 	*/
-	ndarray( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): number;
+	ndarray( x: number, offsetX: number, y: number, offsetY: number, out: number, offsetOut: number ): Complex128Array;
 }
 
 /**
-* Performs complex division: out = X / Y, where X and Y are complex.
+* @license MIT.
 */
 declare var zladiv: Routine;
 

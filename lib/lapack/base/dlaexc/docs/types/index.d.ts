@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
+	* @license MIT.
 	*
 	* @param wantq - `wantq`
 	* @param N - number of columns
@@ -35,13 +35,13 @@ interface Routine {
 	* @param n1 - `n1`
 	* @param n2 - `n2`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( wantq: boolean, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( wantq: boolean, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantq - `wantq`
 	* @param N - number of columns
@@ -57,15 +57,15 @@ interface Routine {
 	* @param n1 - `n1`
 	* @param n2 - `n2`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantq: boolean, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantq: boolean, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, j1: number, n1: number, n2: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in an upper.
+* @license MIT.
 */
 declare var dlaexc: Routine;
 

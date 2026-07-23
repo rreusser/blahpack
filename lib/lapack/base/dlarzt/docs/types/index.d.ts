@@ -27,48 +27,48 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Forms the triangular factor T of a block reflector
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param direct - specifies the operation type
-	* @param storev - specifies the operation type
+	* @param direct - `direct`
+	* @param storev - `storev`
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param V - input matrix
+	* @param K - inner dimension
+	* @param V - `V`
 	* @param LDV - leading dimension of `V`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
-	* @param T - output matrix
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
 	* @returns result
 	*/
-	( order: Layout, direct: string, storev: string, N: number, K: number, V: Float64Array, LDV: number, TAU: Float64Array, strideTAU: number, T: Float64Array, LDT: number ): Float64Array;
+	( order: Layout, direct: string, storev: string, N: number, K: number, V: Float64Array, LDV: number, TAU: Float64Array, strideTAU: number, T: Float64Array, LDT: number ): void;
 
 	/**
-	* Forms the triangular factor T of a block reflector, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param direct - specifies the operation type
-	* @param storev - specifies the operation type
+	* @param direct - `direct`
+	* @param storev - `storev`
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param V - input matrix
+	* @param K - inner dimension
+	* @param V - `V`
 	* @param strideV1 - stride of `V`
 	* @param strideV2 - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param TAU - input array
-	* @param strideTAU - stride length for `TAU`
+	* @param TAU - `TAU`
+	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
-	* @param T - output matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
 	* @returns result
 	*/
-	ndarray( direct: string, storev: string, N: number, K: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): Float64Array;
+	ndarray( direct: string, storev: string, N: number, K: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): void;
 }
 
 /**
-* Forms the triangular factor T of a block reflector
+* @license MIT.
 */
 declare var dlarzt: Routine;
 

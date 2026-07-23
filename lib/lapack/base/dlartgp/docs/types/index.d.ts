@@ -18,39 +18,32 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlartgp`.
 */
 interface Routine {
 	/**
-	* Generates a plane rotation with non-negative diagonal
+	* @license MIT.
 	*
-	* @param f - f
-	* @param g - g
-	* @param cs - cs
-	* @param sn - sn
-	* @param r - r
+	* @param f - `f`
+	* @param g - `g`
+	* @returns result
 	*/
-	( f: number, g: number, cs: number, sn: number, r: number ): void;
+	( f: number, g: number ): Float64Array;
 
 	/**
-	* Generates a plane rotation with non-negative diagonal, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param f - f
-	* @param g - g
-	* @param cs - cs
-	* @param sn - sn
-	* @param r - r
+	* @param f - `f`
+	* @param g - `g`
+	* @param out - `out`
+	* @returns result
 	*/
-	ndarray( f: number, g: number, cs: number, sn: number, r: number ): void;
+	ndarray( f: number, g: number, out: number ): Float64Array;
 }
 
 /**
-* Generates a plane rotation with non-negative diagonal
+* @license MIT.
 */
 declare var dlartgp: Routine;
 

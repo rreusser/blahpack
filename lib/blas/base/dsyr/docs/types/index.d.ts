@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsyr`.
 */
 interface Routine {
 	/**
-	* Performs the symmetric rank 1 operation:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, A: Float64Array, LDA: number ): Float64Array;
 
 	/**
-	* Performs the symmetric rank 1 operation: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -60,7 +60,7 @@ interface Routine {
 }
 
 /**
-* Performs the symmetric rank 1 operation:.
+* @license MIT.
 */
 declare var dsyr: Routine;
 

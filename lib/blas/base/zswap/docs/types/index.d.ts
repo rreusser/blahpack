@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zswap`.
 */
 interface Routine {
 	/**
-	* Interchange two complex double-precision vectors.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -32,10 +36,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number, zy: number, strideY: number ): Float64Array;
+	( N: number, zx: number, strideX: number, zy: number, strideY: number ): Complex128Array;
 
 	/**
-	* Interchange two complex double-precision vectors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -46,11 +50,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number, zy: number, strideY: number, offsetY: number ): Complex128Array;
 }
 
 /**
-* Interchange two complex double-precision vectors.
+* @license MIT.
 */
 declare var zswap: Routine;
 

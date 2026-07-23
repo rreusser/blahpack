@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { Layout } from '@stdlib/types/blas';
 
 /**
@@ -27,7 +28,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Perform the rank 1 operation A := alpha_x_y**H + A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -41,10 +42,10 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Float64Array;
+	( order: Layout, M: number, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Complex128Array;
 
 	/**
-	* Perform the rank 1 operation A := alpha_x_y**H + A, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -61,11 +62,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( M: number, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Complex128Array;
 }
 
 /**
-* Perform the rank 1 operation A := alpha_x_y**H + A.
+* @license MIT.
 */
 declare var zgerc: Routine;
 

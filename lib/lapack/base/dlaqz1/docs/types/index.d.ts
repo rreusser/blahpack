@@ -27,42 +27,42 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Sets v to a scalar multiple of the first column of a product (real QZ shift)
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param sr1 - sr1
-	* @param sr2 - sr2
-	* @param si - si
-	* @param beta1 - beta1
-	* @param beta2 - beta2
-	* @param v - output array
-	* @param strideV - stride length for `v`
+	* @param sr1 - `sr1`
+	* @param sr2 - `sr2`
+	* @param si - `si`
+	* @param beta1 - `beta1`
+	* @param beta2 - `beta2`
+	* @param v - `v`
+	* @param strideV - stride of `V`
 	* @returns result
 	*/
 	( order: Layout, A: Float64Array, LDA: number, B: Float64Array, LDB: number, sr1: number, sr2: number, si: number, beta1: number, beta2: number, v: Float64Array, strideV: number ): Float64Array;
 
 	/**
-	* Sets v to a scalar multiple of the first column of a product (real QZ shift), using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param sr1 - sr1
-	* @param sr2 - sr2
-	* @param si - si
-	* @param beta1 - beta1
-	* @param beta2 - beta2
-	* @param v - output array
-	* @param strideV - stride length for `v`
+	* @param sr1 - `sr1`
+	* @param sr2 - `sr2`
+	* @param si - `si`
+	* @param beta1 - `beta1`
+	* @param beta2 - `beta2`
+	* @param v - `v`
+	* @param strideV - stride of `V`
 	* @param offsetV - starting index for `V`
 	* @returns result
 	*/
@@ -70,7 +70,7 @@ interface Routine {
 }
 
 /**
-* Sets v to a scalar multiple of the first column of a product (real QZ shift)
+* @license MIT.
 */
 declare var dlaqz1: Routine;
 

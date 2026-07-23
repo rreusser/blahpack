@@ -16,17 +16,109 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import ztpmv = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	ztpmv( 0 ); // $ExpectType Float64Array
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	ztpmv( 10, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( true, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( null, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( undefined, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( [], 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( {}, 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	ztpmv( 'upper', 10, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', true, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', null, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', undefined, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', [], 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', {}, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 'unit', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	ztpmv( 'upper', 'no-transpose', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	ztpmv(); // $ExpectError
+	ztpmv( 'upper' ); // $ExpectError
 }

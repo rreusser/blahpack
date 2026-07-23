@@ -16,28 +16,68 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zdscal = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zdscal( 10 ); // $ExpectType Float64Array
+	zdscal( 10, 10, 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zdscal( '10' ); // $ExpectError
-	zdscal( true ); // $ExpectError
-	zdscal( false ); // $ExpectError
-	zdscal( null ); // $ExpectError
-	zdscal( undefined ); // $ExpectError
-	zdscal( [] ); // $ExpectError
-	zdscal( {} ); // $ExpectError
+	zdscal( '10', 10, 10, 10 ); // $ExpectError
+	zdscal( true, 10, 10, 10 ); // $ExpectError
+	zdscal( false, 10, 10, 10 ); // $ExpectError
+	zdscal( null, 10, 10, 10 ); // $ExpectError
+	zdscal( undefined, 10, 10, 10 ); // $ExpectError
+	zdscal( [], 10, 10, 10 ); // $ExpectError
+	zdscal( {}, 10, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zdscal( 10, '10', 10, 10 ); // $ExpectError
+	zdscal( 10, true, 10, 10 ); // $ExpectError
+	zdscal( 10, false, 10, 10 ); // $ExpectError
+	zdscal( 10, null, 10, 10 ); // $ExpectError
+	zdscal( 10, undefined, 10, 10 ); // $ExpectError
+	zdscal( 10, [], 10, 10 ); // $ExpectError
+	zdscal( 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zdscal( 10, 10, '10', 10 ); // $ExpectError
+	zdscal( 10, 10, true, 10 ); // $ExpectError
+	zdscal( 10, 10, false, 10 ); // $ExpectError
+	zdscal( 10, 10, null, 10 ); // $ExpectError
+	zdscal( 10, 10, undefined, 10 ); // $ExpectError
+	zdscal( 10, 10, [], 10 ); // $ExpectError
+	zdscal( 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zdscal( 10, 10, 10, '10' ); // $ExpectError
+	zdscal( 10, 10, 10, true ); // $ExpectError
+	zdscal( 10, 10, 10, false ); // $ExpectError
+	zdscal( 10, 10, 10, null ); // $ExpectError
+	zdscal( 10, 10, 10, undefined ); // $ExpectError
+	zdscal( 10, 10, 10, [] ); // $ExpectError
+	zdscal( 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zdscal(); // $ExpectError
+	zdscal( 10 ); // $ExpectError
 }

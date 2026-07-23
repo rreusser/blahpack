@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlantb`.
 */
 interface Routine {
 	/**
-	* Returns the norm of a real triangular band matrix.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -39,10 +39,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, K: number, AB: Float64Array, LDAB: number, WORK: Float64Array ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, K: number, AB: Float64Array, LDAB: number, WORK: Float64Array ): number;
 
 	/**
-	* Returns the norm of a real triangular band matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -54,15 +54,15 @@ interface Routine {
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, K: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, K: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Returns the norm of a real triangular band matrix.
+* @license MIT.
 */
 declare var dlantb: Routine;
 

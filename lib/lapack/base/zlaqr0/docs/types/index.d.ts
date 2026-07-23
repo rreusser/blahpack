@@ -23,16 +23,29 @@
 */
 interface Routine {
 	/**
-	* Complex multishift QR top-level driver.
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param wantt - `wantt`
+	* @param wantz - `wantz`
+	* @param N - number of columns
+	* @param ilo - lower index
+	* @param ihi - upper index
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param iloz - `iloz`
+	* @param ihiz - `ihiz`
+	* @param Z - `Z`
+	* @param LDZ - leading dimension of `Z`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( v: number, idx: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Complex multishift QR top-level driver using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -53,15 +66,15 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: Float64Array, strideW: number, offsetW: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: Float64Array, strideW: number, offsetW: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Complex multishift QR top-level driver.
+* @license MIT.
 */
 declare var zlaqr0: Routine;
 

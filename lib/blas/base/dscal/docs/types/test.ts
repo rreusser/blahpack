@@ -23,21 +23,55 @@ import dscal = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dscal( 10 ); // $ExpectType Float64Array
+	dscal( 10, 10, new Float64Array( 25 ), 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dscal( '10' ); // $ExpectError
-	dscal( true ); // $ExpectError
-	dscal( false ); // $ExpectError
-	dscal( null ); // $ExpectError
-	dscal( undefined ); // $ExpectError
-	dscal( [] ); // $ExpectError
-	dscal( {} ); // $ExpectError
+	dscal( '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( false, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dscal( 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dscal( 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dscal( 10, 10, '10', 10 ); // $ExpectError
+	dscal( 10, 10, 10, 10 ); // $ExpectError
+	dscal( 10, 10, true, 10 ); // $ExpectError
+	dscal( 10, 10, null, 10 ); // $ExpectError
+	dscal( 10, 10, undefined, 10 ); // $ExpectError
+	dscal( 10, 10, [], 10 ); // $ExpectError
+	dscal( 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dscal( 10, 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), true ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), false ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), null ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dscal( 10, 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dscal(); // $ExpectError
+	dscal( 10 ); // $ExpectError
 }

@@ -21,12 +21,55 @@ import dtptri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dtptri( 0 ); // $ExpectType Float64Array
+	dtptri( 'upper', 'unit', 10, new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dtptri( 10, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( true, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( null, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( undefined, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( [], 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( {}, 'unit', 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dtptri( 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', true, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', null, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', undefined, 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', [], 10, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', {}, 10, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dtptri( 'upper', 'unit', '10', new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', true, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', false, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', null, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', undefined, new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', [], new Float64Array( 25 ) ); // $ExpectError
+	dtptri( 'upper', 'unit', {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dtptri( 'upper', 'unit', 10, '10' ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, 10 ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, true ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, null ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, undefined ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, [] ); // $ExpectError
+	dtptri( 'upper', 'unit', 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dtptri(); // $ExpectError
+	dtptri( 'upper' ); // $ExpectError
 }

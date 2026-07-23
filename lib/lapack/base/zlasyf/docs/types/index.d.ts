@@ -20,14 +20,31 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlasyf`.
 */
 interface Routine {
 	/**
-	* CABS1: |re(z)| + |im(z)| — used for pivot selection.
+	* @license MIT.
+	*
+	* @param order - storage layout
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param N - number of columns
+	* @param nb - `nb`
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
+	* @param W - `W`
+	* @param LDW - leading dimension of `W`
+	* @returns result
+	*/
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, W: Float64Array, LDW: number ): Record<string, unknown>;
+
+	/**
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -45,11 +62,11 @@ interface Routine {
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Record<string, unknown>;
 }
 
 /**
-* CABS1: |re(z)| + |im(z)| — used for pivot selection.
+* @license MIT.
 */
 declare var zlasyf: Routine;
 

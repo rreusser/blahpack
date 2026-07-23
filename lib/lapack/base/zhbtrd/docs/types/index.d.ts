@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhbtrd`.
 */
 interface Routine {
 	/**
-	* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param vect - `vect`
@@ -43,10 +43,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( order: Layout, vect: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, d: Float64Array, e: Float64Array, Q: Float64Array, LDQ: number, WORK: Float64Array ): Float64Array;
+	( order: Layout, vect: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, LDAB: number, d: Float64Array, e: Float64Array, Q: Float64Array, LDQ: number, WORK: Float64Array ): number;
 
 	/**
-	* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param vect - `vect`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -67,15 +67,15 @@ interface Routine {
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( vect: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( vect: string, uplo: MatrixTriangle, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation.
+* @license MIT.
 */
 declare var zhbtrd: Routine;
 

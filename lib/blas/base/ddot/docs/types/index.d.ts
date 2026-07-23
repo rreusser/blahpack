@@ -23,7 +23,19 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
+	*
+	* @param N - number of columns
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
+	* @returns result
+	*/
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): number;
+
+	/**
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -34,11 +46,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var ddot: Routine;
 

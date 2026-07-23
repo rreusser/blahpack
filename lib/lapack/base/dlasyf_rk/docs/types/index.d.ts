@@ -20,61 +20,56 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlasyf_rk`.
 */
 interface Routine {
 	/**
-	* DLASYF_RK computes a partial factorization of a real symmetric indefinite matrix using bounded Bunch-Kaufman (rook) diagonal pivoting method, producing _rk format output
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param nb - nb
-	* @param kb - kb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param W - output matrix
+	* @param e - `e`
+	* @param IPIV - `IPIV`
+	* @param W - `W`
 	* @param LDW - leading dimension of `W`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, nb: number, kb: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, LDW: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, LDA: number, e: Float64Array, IPIV: Int32Array, W: Float64Array, LDW: number ): Record<string, unknown>;
 
 	/**
-	* DLASYF_RK computes a partial factorization of a real symmetric indefinite matrix using bounded Bunch-Kaufman (rook) diagonal pivoting method, producing _rk format output, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param nb - nb
-	* @param kb - kb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param W - output matrix
+	* @param W - `W`
 	* @param strideW1 - stride of `W`
 	* @param strideW2 - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, nb: number, kb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, W: Float64Array, strideW1: number, strideW2: number, offsetW: number ): Record<string, unknown>;
 }
 
 /**
-* DLASYF_RK computes a partial factorization of a real symmetric indefinite matrix using bounded Bunch-Kaufman (rook) diagonal pivoting method, producing _rk format output
+* @license MIT.
 */
 declare var dlasyf_rk: Routine;
 

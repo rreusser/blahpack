@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhemm`.
 */
 interface Routine {
 	/**
-	* Performs one of the Hermitian matrix-matrix operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -44,10 +45,10 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @returns result
 	*/
-	( order: Layout, side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
+	( order: Layout, side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* Performs one of the Hermitian matrix-matrix operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -69,11 +70,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Float64Array;
+	ndarray( side: OperationSide, uplo: MatrixTriangle, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Complex128Array;
 }
 
 /**
-* Performs one of the Hermitian matrix-matrix operations:.
+* @license MIT.
 */
 declare var zhemm: Routine;
 

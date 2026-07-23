@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -36,14 +36,13 @@ interface Routine {
 	* @param k1 - `k1`
 	* @param k2 - `k2`
 	* @param IPIV - `IPIV`
-	* @param strideIPIV - stride of `IPIV`
 	* @param incx - `incx`
 	* @returns result
 	*/
-	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, incx: number ): Float64Array;
+	( order: Layout, N: number, A: Float64Array, LDA: number, k1: number, k2: number, IPIV: Int32Array, incx: number ): Float64Array;
 
 	/**
-	* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -52,17 +51,17 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @param k1 - `k1`
 	* @param k2 - `k2`
+	* @param inck - `inck`
 	* @param IPIV - `IPIV`
 	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param incx - `incx`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, incx: number ): Float64Array;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, k1: number, k2: number, inck: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
 }
 
 /**
-* Performs a series of row interchanges on a matrix `A` using pivot indices stored in `IPIV`.
+* @license MIT.
 */
 declare var dlaswp: Routine;
 

@@ -20,73 +20,73 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtpmlqt`.
 */
 interface Routine {
 	/**
-	* applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param side - specifies the operation type
-	* @param trans - specifies the operation type
+	* @param side - specifies the side of the operation
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param mb - mb
-	* @param V - input matrix
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param mb - `mb`
+	* @param V - `V`
 	* @param LDV - leading dimension of `V`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, l: number, mb: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, l: number, mb: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param side - specifies the operation type
-	* @param trans - specifies the operation type
+	* @param side - specifies the side of the operation
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param l - l
-	* @param mb - mb
-	* @param V - input matrix
+	* @param K - inner dimension
+	* @param l - `l`
+	* @param mb - `mb`
+	* @param V - `V`
 	* @param strideV1 - stride of `V`
 	* @param strideV2 - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( side: string, trans: TransposeOperation, M: number, N: number, K: number, l: number, mb: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( side: OperationSide, trans: TransposeOperation, M: number, N: number, K: number, l: number, mb: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B
+* @license MIT.
 */
 declare var dtpmlqt: Routine;
 

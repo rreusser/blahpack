@@ -21,23 +21,121 @@ import dgebak = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dgebak( 'no-transpose' ); // $ExpectType Float64Array
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dgebak( 10 ); // $ExpectError
-	dgebak( true ); // $ExpectError
-	dgebak( false ); // $ExpectError
-	dgebak( null ); // $ExpectError
-	dgebak( undefined ); // $ExpectError
-	dgebak( [] ); // $ExpectError
-	dgebak( {} ); // $ExpectError
+	dgebak( 10, 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( true, 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( null, 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( undefined, 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( [], 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( {}, 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dgebak( 'no-transpose', 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', true, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', null, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', undefined, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', [], 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', {}, 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', '10', 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', true, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', false, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', null, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', undefined, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', [], 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', {}, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, '10', 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, true, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, false, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, null, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, undefined, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, [], 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, {}, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, '10', new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, true, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, false, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, null, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, undefined, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, [], new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, {}, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, 10, '10', 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, true, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, null, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, undefined, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, [], 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, {}, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), false, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, '10', 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, true, 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, null, 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, undefined, 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, [], 10 ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), true ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), false ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), null ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dgebak( 'no-transpose', 'left', 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dgebak(); // $ExpectError
+	dgebak( 'no-transpose' ); // $ExpectError
 }

@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtfsm`.
 */
 interface Routine {
 	/**
-	* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param side - specifies the side of the operation
@@ -42,10 +42,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, B: Float64Array, LDB: number ): Float64Array;
+	( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, B: Float64Array, LDB: number ): void;
 
 	/**
-	* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param side - specifies the side of the operation
@@ -64,11 +64,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, strideA: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, strideA: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): void;
 }
 
 /**
-* Solves a matrix equation with a triangular matrix in Rectangular Full Packed format.
+* @license MIT.
 */
 declare var dtfsm: Routine;
 

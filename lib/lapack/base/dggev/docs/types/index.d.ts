@@ -27,75 +27,70 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes generalized eigenvalues and eigenvectors for a pair of real nonsymmetric matrices
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param jobvl - specifies the operation type
-	* @param jobvr - specifies the operation type
+	* @param jobvl - `jobvl`
+	* @param jobvr - `jobvr`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
-	* @param VL - input matrix
+	* @param ALPHAR - `ALPHAR`
+	* @param ALPHAI - `ALPHAI`
+	* @param BETA - `BETA`
+	* @param VL - `VL`
 	* @param LDVL - leading dimension of `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param lwork - lwork
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, strideALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, BETA: Float64Array, strideBETA: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, jobvl: string, jobvr: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, ALPHAR: Float64Array, ALPHAI: Float64Array, BETA: Float64Array, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes generalized eigenvalues and eigenvectors for a pair of real nonsymmetric matrices, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param jobvl - specifies the operation type
-	* @param jobvr - specifies the operation type
+	* @param jobvl - `jobvl`
+	* @param jobvr - `jobvr`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param ALPHAR - input array
-	* @param strideALPHAR - stride length for `ALPHAR`
+	* @param ALPHAR - `ALPHAR`
+	* @param strideALPHAR - stride of `ALPHAR`
 	* @param offsetALPHAR - starting index for `ALPHAR`
-	* @param ALPHAI - input array
-	* @param strideALPHAI - stride length for `ALPHAI`
+	* @param ALPHAI - `ALPHAI`
+	* @param strideALPHAI - stride of `ALPHAI`
 	* @param offsetALPHAI - starting index for `ALPHAI`
-	* @param BETA - input array
-	* @param strideBETA - stride length for `BETA`
+	* @param BETA - `BETA`
+	* @param strideBETA - stride of `BETA`
 	* @param offsetBETA - starting index for `BETA`
-	* @param VL - input matrix
+	* @param VL - `VL`
 	* @param strideVL1 - stride of `VL`
 	* @param strideVL2 - stride of `VL`
 	* @param offsetVL - starting index for `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param strideVR1 - stride of `VR`
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - lwork
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( jobvl: string, jobvr: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, ALPHAR: Float64Array, strideALPHAR: number, offsetALPHAR: number, ALPHAI: Float64Array, strideALPHAI: number, offsetALPHAI: number, BETA: Float64Array, strideBETA: number, offsetBETA: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes generalized eigenvalues and eigenvectors for a pair of real nonsymmetric matrices
+* @license MIT.
 */
 declare var dggev: Routine;
 

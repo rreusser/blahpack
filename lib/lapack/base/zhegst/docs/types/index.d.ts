@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a complex Hermitian-definite generalized eigenproblem to standard form.
+	* @license MIT.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -38,10 +38,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( itype: number, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
+	( itype: number, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Reduces a complex Hermitian-definite generalized eigenproblem to standard form using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -56,11 +56,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( itype: number, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( itype: number, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Reduces a complex Hermitian-definite generalized eigenproblem to standard form.
+* @license MIT.
 */
 declare var zhegst: Routine;
 

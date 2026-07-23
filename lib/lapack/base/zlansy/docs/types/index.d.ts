@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -35,13 +35,13 @@ interface Routine {
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -51,15 +51,15 @@ interface Routine {
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the.
+* @license MIT.
 */
 declare var zlansy: Routine;
 

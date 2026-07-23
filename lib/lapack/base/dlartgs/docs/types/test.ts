@@ -21,22 +21,46 @@ import dlartgs = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function returns a Float64Array...
 {
-	dlartgs( 2, 2, 2, 2, 2 ); // $ExpectType void
+	dlartgs( 10, 10, 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlartgs( '10', 10, 10 ); // $ExpectError
+	dlartgs( true, 10, 10 ); // $ExpectError
+	dlartgs( false, 10, 10 ); // $ExpectError
+	dlartgs( null, 10, 10 ); // $ExpectError
+	dlartgs( undefined, 10, 10 ); // $ExpectError
+	dlartgs( [], 10, 10 ); // $ExpectError
+	dlartgs( {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlartgs( 10, '10', 10 ); // $ExpectError
+	dlartgs( 10, true, 10 ); // $ExpectError
+	dlartgs( 10, false, 10 ); // $ExpectError
+	dlartgs( 10, null, 10 ); // $ExpectError
+	dlartgs( 10, undefined, 10 ); // $ExpectError
+	dlartgs( 10, [], 10 ); // $ExpectError
+	dlartgs( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlartgs( 10, 10, '10' ); // $ExpectError
+	dlartgs( 10, 10, true ); // $ExpectError
+	dlartgs( 10, 10, false ); // $ExpectError
+	dlartgs( 10, 10, null ); // $ExpectError
+	dlartgs( 10, 10, undefined ); // $ExpectError
+	dlartgs( 10, 10, [] ); // $ExpectError
+	dlartgs( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlartgs(); // $ExpectError
-}
-
-// The ndarray method returns a void...
-{
-	dlartgs.ndarray( 2, 2, 2, 2, 2 ); // $ExpectType void
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlartgs.ndarray(); // $ExpectError
+	dlartgs( 10 ); // $ExpectError
 }

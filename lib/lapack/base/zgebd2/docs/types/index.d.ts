@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -43,13 +43,13 @@ interface Routine {
 	* @param TAUP - `TAUP`
 	* @param strideTAUP - stride of `TAUP`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -70,15 +70,15 @@ interface Routine {
 	* @param strideTAUP - stride of `TAUP`
 	* @param offsetTAUP - starting index for `TAUP`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAUQ: Float64Array, strideTAUQ: number, offsetTAUQ: number, TAUP: Float64Array, strideTAUP: number, offsetTAUP: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a complex M-by-N matrix A to upper or lower real bidiagonal form B.
+* @license MIT.
 */
 declare var zgebd2: Routine;
 

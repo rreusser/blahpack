@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { Layout } from '@stdlib/types/blas';
 
 /**
@@ -27,50 +28,49 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* TODO: Add description for ZLACRM.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param LDC - leading dimension of `C`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
+	* @param RWORK - `RWORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, RWORK: Float64Array ): Complex128Array;
 
 	/**
-	* TODO: Add description for ZLACRM., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param C - input matrix
+	* @param C - `C`
 	* @param strideC1 - stride of `C`
 	* @param strideC2 - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): Complex128Array;
 }
 
 /**
-* TODO: Add description for ZLACRM.
+* @license MIT.
 */
 declare var zlacrm: Routine;
 

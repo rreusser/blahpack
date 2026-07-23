@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztrttp`.
 */
 interface Routine {
 	/**
-	* Copies a complex triangular matrix from full format (TR) to standard packed format (TP).
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -37,10 +37,10 @@ interface Routine {
 	* @param AP - `AP`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AP: Float64Array ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AP: Float64Array ): number;
 
 	/**
-	* Copies a complex triangular matrix from full format (TR) to standard packed format (TP) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -53,11 +53,11 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AP: Float64Array, strideAP: number, offsetAP: number ): number;
 }
 
 /**
-* Copies a complex triangular matrix from full format (TR) to standard packed format (TP).
+* @license MIT.
 */
 declare var ztrttp: Routine;
 

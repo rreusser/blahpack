@@ -16,17 +16,122 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zlaswp = require( './index' );
 
 
 // TESTS //
 
-// The function returns a any...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zlaswp( 0 ); // $ExpectType any
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zlaswp( 10, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( true, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( null, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( undefined, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( [], 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( {}, 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlaswp( 'row-major', '10', new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', true, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', false, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', null, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', undefined, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', [], new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', {}, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlaswp( 'row-major', 10, '10', 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, 10, 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, true, 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, null, 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, undefined, 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, [], 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, {}, 10, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), '10', 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), true, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), false, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), null, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), undefined, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), [], 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), {}, 10, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, '10', 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, true, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, false, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, null, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, undefined, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, [], 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, {}, 10, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, '10', new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, true, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, false, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, null, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, undefined, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, [], new Int32Array( 25 ), 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, {}, new Int32Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, '10', 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, true, 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, null, 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, undefined, 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, [], 10, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), '10', 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), true, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), false, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), null, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), undefined, 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), [], 10 ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, '10' ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, true ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, false ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, null ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, undefined ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, [] ); // $ExpectError
+	zlaswp( 'row-major', 10, new Float64Array( 25 ), 10, 10, 10, new Int32Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlaswp(); // $ExpectError
+	zlaswp( 'row-major' ); // $ExpectError
 }

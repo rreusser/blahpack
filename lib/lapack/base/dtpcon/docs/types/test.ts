@@ -21,23 +21,98 @@ import dtpcon = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dtpcon( 'no-transpose' ); // $ExpectType Float64Array
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dtpcon( 10 ); // $ExpectError
-	dtpcon( true ); // $ExpectError
-	dtpcon( false ); // $ExpectError
-	dtpcon( null ); // $ExpectError
-	dtpcon( undefined ); // $ExpectError
-	dtpcon( [] ); // $ExpectError
-	dtpcon( {} ); // $ExpectError
+	dtpcon( 10, 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( true, 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( null, 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( undefined, 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( [], 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( {}, 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dtpcon( 'no-transpose', 10, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', true, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', null, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', undefined, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', [], 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', {}, 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 'unit', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, '10', 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, true, 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, null, 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, undefined, 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, [], 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, {}, 10, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, '10', new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, 10, new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, true, new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, null, new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, undefined, new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, [], new Int32Array( 25 ) ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, {}, new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dtpcon( 'no-transpose', 'upper', 'unit', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dtpcon(); // $ExpectError
+	dtpcon( 'no-transpose' ); // $ExpectError
 }

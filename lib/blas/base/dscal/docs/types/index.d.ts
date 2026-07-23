@@ -23,20 +23,31 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param da - `da`
+	* @param alpha - scalar constant
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @returns result
+	*/
+	( N: number, alpha: number, x: Float64Array, strideX: number ): Float64Array;
+
+	/**
+	* @license MIT using alternative indexing semantics.
+	*
+	* @param N - number of columns
+	* @param alpha - scalar constant
 	* @param x - `x`
 	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	( N: number, da: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dscal: Routine;
 

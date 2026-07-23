@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dgemv`.
 */
 interface Routine {
 	/**
-	* Performs one of the matrix-vector operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, trans: TransposeOperation, M: number, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* Performs one of the matrix-vector operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the matrix-vector operations:.
+* @license MIT.
 */
 declare var dgemv: Routine;
 

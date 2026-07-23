@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem `A - w B`, with scaling as necessary to avoid over-/underflow.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param A - `A`
@@ -37,10 +37,10 @@ interface Routine {
 	* @param safmin - `safmin`
 	* @returns result
 	*/
-	( order: Layout, A: Float64Array, LDA: number, B: Float64Array, LDB: number, safmin: number ): Float64Array;
+	( order: Layout, A: Float64Array, LDA: number, B: Float64Array, LDB: number, safmin: number ): { scale2: number; wr1: number; wr2: number; wi: number };
 
 	/**
-	* Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem `A - w B`, with scaling as necessary to avoid over-/underflow using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param A - `A`
 	* @param strideA1 - stride of `A`
@@ -53,11 +53,11 @@ interface Routine {
 	* @param safmin - `safmin`
 	* @returns result
 	*/
-	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, safmin: number ): Float64Array;
+	ndarray( A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, safmin: number ): { scale2: number; wr1: number; wr2: number; wi: number };
 }
 
 /**
-* Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem `A - w B`, with scaling as necessary to avoid over-/underflow.
+* @license MIT.
 */
 declare var dlag2: Routine;
 

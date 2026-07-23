@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the positive or negative root (closest to the origin) of the secular equation.
+	* @license MIT.
 	*
 	* @param kniter - `kniter`
 	* @param orgati - `orgati`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param tau - `tau`
 	* @returns result
 	*/
-	( kniter: number, orgati: number, rho: number, d: Float64Array, z: Float64Array, finit: number, tau: number ): Float64Array;
+	( kniter: number, orgati: number, rho: number, d: Float64Array, z: Float64Array, finit: number, tau: number ): number;
 
 	/**
-	* Computes the positive or negative root (closest to the origin) of the secular equation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param kniter - `kniter`
 	* @param orgati - `orgati`
@@ -52,11 +52,11 @@ interface Routine {
 	* @param tau - `tau`
 	* @returns result
 	*/
-	ndarray( kniter: number, orgati: number, rho: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, finit: number, tau: number ): Float64Array;
+	ndarray( kniter: number, orgati: number, rho: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, finit: number, tau: number ): number;
 }
 
 /**
-* Computes the positive or negative root (closest to the origin) of the secular equation.
+* @license MIT.
 */
 declare var dlaed6: Routine;
 

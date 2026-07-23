@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,10 +38,10 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, S: Float64Array, strideS: number, scond: number, amax: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array, S: Float64Array, strideS: number, scond: number, amax: number ): string;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -55,11 +55,11 @@ interface Routine {
 	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, S: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, S: Float64Array, strideS: number, offsetS: number, scond: number, amax: number ): string;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlaqsp: Routine;
 

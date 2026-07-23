@@ -27,39 +27,39 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Converts a double precision matrix to a single precision matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param A - output matrix
-	* @param LDA - leading dimension of `A`
+	* @param SA - `SA`
+	* @param LDSA - leading dimension of `SA`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, A: Float32Array, LDA: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, SA: Float64Array, LDSA: number ): number;
 
 	/**
-	* Converts a double precision matrix to a single precision matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param A - output matrix
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
+	* @param SA - `SA`
+	* @param strideSA1 - stride of `SA`
+	* @param strideSA2 - stride of `SA`
+	* @param offsetSA - starting index for `SA`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, A: Float32Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, SA: Float64Array, strideSA1: number, strideSA2: number, offsetSA: number ): number;
 }
 
 /**
-* Converts a double precision matrix to a single precision matrix
+* @license MIT.
 */
 declare var dlag2s: Routine;
 

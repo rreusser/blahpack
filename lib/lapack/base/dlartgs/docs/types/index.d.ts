@@ -18,39 +18,34 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlartgs`.
 */
 interface Routine {
 	/**
-	* Generates a plane rotation for the bidiagonal SVD implicit QR iteration
+	* @license MIT.
 	*
-	* @param x - x
-	* @param y - y
-	* @param sigma - sigma
-	* @param cs - cs
-	* @param sn - sn
+	* @param x - `x`
+	* @param y - `y`
+	* @param sigma - `sigma`
+	* @returns result
 	*/
-	( x: number, y: number, sigma: number, cs: number, sn: number ): void;
+	( x: number, y: number, sigma: number ): Float64Array;
 
 	/**
-	* Generates a plane rotation for the bidiagonal SVD implicit QR iteration, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param x - x
-	* @param y - y
-	* @param sigma - sigma
-	* @param cs - cs
-	* @param sn - sn
+	* @param x - `x`
+	* @param y - `y`
+	* @param sigma - `sigma`
+	* @param out - `out`
+	* @returns result
 	*/
-	ndarray( x: number, y: number, sigma: number, cs: number, sn: number ): void;
+	ndarray( x: number, y: number, sigma: number, out: number ): Float64Array;
 }
 
 /**
-* Generates a plane rotation for the bidiagonal SVD implicit QR iteration
+* @license MIT.
 */
 declare var dlartgs: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.
+	* @license MIT.
 	*
 	* @param i - `i`
 	* @param D - `D`
@@ -35,13 +35,13 @@ interface Routine {
 	* @param rho - `rho`
 	* @param dsigma - `dsigma`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( i: number, D: Float64Array, strideD: number, Z: Float64Array, strideZ: number, DELTA: Float64Array, strideDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( i: number, D: Float64Array, strideD: number, Z: Float64Array, strideZ: number, DELTA: Float64Array, strideDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param i - `i`
 	* @param d - `d`
@@ -56,15 +56,15 @@ interface Routine {
 	* @param rho - `rho`
 	* @param dsigma - `dsigma`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( i: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( i: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, DELTA: Float64Array, strideDELTA: number, offsetDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWork: number, offsetWork: number ): void;
 }
 
 /**
-* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.
+* @license MIT.
 */
 declare var dlasd5: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param ncols - `ncols`
@@ -38,10 +38,10 @@ interface Routine {
 	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, ncols: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, WORK: Float64Array ): Float64Array;
+	( uplo: MatrixTriangle, ncols: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, WORK: Float64Array ): number;
 
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param ncols - `ncols`
@@ -54,15 +54,15 @@ interface Routine {
 	* @param strideAF2 - stride of `AF`
 	* @param offsetAF - starting index for `AF`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, ncols: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, ncols: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex Hermitian positive-definite matrix.
+* @license MIT.
 */
 declare var zla_porpvgrw: Routine;
 

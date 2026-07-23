@@ -18,37 +18,22 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-import { Layout } from '@stdlib/types/blas';
-
 /**
 * Interface describing `dgelss`.
 */
 interface Routine {
 	/**
-	* Computes the minimum norm solution to a real linear least squares problem:.
+	* @license MIT.
 	*
-	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
-	* @param A - `A`
-	* @param LDA - leading dimension of `A`
-	* @param B - `B`
-	* @param LDB - leading dimension of `B`
-	* @param S - `S`
-	* @param strideS - stride of `S`
-	* @param rcond - `rcond`
-	* @param rank - `rank`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( M: number, N: number, nrhs: number ): number;
 
 	/**
-	* Computes the minimum norm solution to a real linear least squares problem: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -67,15 +52,15 @@ interface Routine {
 	* @param rcond - `rcond`
 	* @param rank - `rank`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, S: Float64Array, strideS: number, offsetS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, S: Float64Array, strideS: number, offsetS: number, rcond: number, rank: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the minimum norm solution to a real linear least squares problem:.
+* @license MIT.
 */
 declare var dgelss: Routine;
 

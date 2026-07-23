@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Returns a vector of n random real numbers from a uniform or normal distribution.
+	* @license MIT.
 	*
 	* @param idist - `idist`
 	* @param iseed - `iseed`
@@ -33,10 +33,10 @@ interface Routine {
 	* @param stride - stride of ``
 	* @returns result
 	*/
-	( idist: number, iseed: Float64Array, strideISEED: number, N: number, x: number, stride: number ): Float64Array;
+	( idist: number, iseed: Float64Array, strideISEED: number, N: number, x: number, stride: number ): void;
 
 	/**
-	* Returns a vector of n random real numbers from a uniform or normal distribution using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param idist - `idist`
 	* @param iseed - `iseed`
@@ -48,11 +48,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( idist: number, iseed: Float64Array, strideISEED: number, offsetISEED: number, N: number, x: number, stride: number, offset: number ): Float64Array;
+	ndarray( idist: number, iseed: Float64Array, strideISEED: number, offsetISEED: number, N: number, x: number, stride: number, offset: number ): void;
 }
 
 /**
-* Returns a vector of n random real numbers from a uniform or normal distribution.
+* @license MIT.
 */
 declare var dlarnv: Routine;
 

@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves overdetermined or underdetermined complex linear systems involving an.
+	* @license MIT.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -38,14 +38,13 @@ interface Routine {
 	* @param B - `B`
 	* @param LDB - leading dimension of `B`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Solves overdetermined or underdetermined complex linear systems involving an using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -60,16 +59,15 @@ interface Routine {
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param lwork - workspace size
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, lwork: number ): Float64Array;
+	ndarray( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Solves overdetermined or underdetermined complex linear systems involving an.
+* @license MIT.
 */
 declare var zgels: Routine;
 

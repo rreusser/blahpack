@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlaset`.
 */
 interface Routine {
 	/**
-	* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,7 +42,7 @@ interface Routine {
 	( order: Layout, uplo: MatrixTriangle, M: number, N: number, alpha: number, beta: number, A: Float64Array, LDA: number ): Float64Array;
 
 	/**
-	* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param M - number of rows
@@ -59,7 +59,7 @@ interface Routine {
 }
 
 /**
-* Initializes an M-by-N matrix A to BETA on the diagonal and ALPHA on the.
+* @license MIT.
 */
 declare var dlaset: Routine;
 

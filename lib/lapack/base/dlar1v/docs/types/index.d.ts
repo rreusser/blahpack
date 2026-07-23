@@ -18,95 +18,90 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlar1v`.
 */
 interface Routine {
 	/**
-	* TODO: Add description for DLAR1V.
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param b1 - b1
-	* @param bn - bn
-	* @param lambda - lambda
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param l - input array
-	* @param strideL - stride length for `l`
-	* @param LD - leading dimension of ``
-	* @param strideLD - stride length for `LD`
-	* @param LLD - input array
-	* @param strideLLD - stride length for `LLD`
-	* @param pivmin - pivmin
-	* @param gaptol - gaptol
-	* @param z - input array
-	* @param strideZ - stride length for `z`
-	* @param wantnc - wantnc
-	* @param negcnt - negcnt
-	* @param ztz - ztz
-	* @param mingma - mingma
-	* @param r - r
-	* @param ISUPPZ - input array
-	* @param strideISUPPZ - stride length for `ISUPPZ`
-	* @param offsetISUPPZ - starting index for `ISUPPZ`
-	* @param nrminv - nrminv
-	* @param resid - resid
-	* @param rqcorr - rqcorr
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param b1 - `b1`
+	* @param bn - `bn`
+	* @param lambda - `lambda`
+	* @param D - `D`
+	* @param strideD - stride of `D`
+	* @param L - `L`
+	* @param strideL - stride of `L`
+	* @param LD - `LD`
+	* @param strideLD - stride of `LD`
+	* @param LLD - `LLD`
+	* @param strideLLD - stride of `LLD`
+	* @param pivmin - `pivmin`
+	* @param gaptol - `gaptol`
+	* @param Z - `Z`
+	* @param strideZ - stride of `Z`
+	* @param wantnc - `wantnc`
+	* @param negcnt - `negcnt`
+	* @param ztz - `ztz`
+	* @param mingma - `mingma`
+	* @param r - `r`
+	* @param ISUPPZ - `ISUPPZ`
+	* @param strideISUPPZ - stride of `ISUPPZ`
+	* @param nrminv - `nrminv`
+	* @param resid - `resid`
+	* @param rqcorr - `rqcorr`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, LLD: Float64Array, strideLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, b1: number, bn: number, lambda: number, D: Float64Array, strideD: number, L: Float64Array, strideL: number, LD: Float64Array, strideLD: number, LLD: Float64Array, strideLLD: number, pivmin: number, gaptol: number, Z: Float64Array, strideZ: number, wantnc: number, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* TODO: Add description for DLAR1V., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param b1 - b1
-	* @param bn - bn
-	* @param lambda - lambda
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param b1 - `b1`
+	* @param bn - `bn`
+	* @param lambda - `lambda`
+	* @param D - `D`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param l - input array
-	* @param strideL - stride length for `l`
+	* @param L - `L`
+	* @param strideL - stride of `L`
 	* @param offsetL - starting index for `L`
-	* @param LD - input array
-	* @param strideLD - stride length for `LD`
+	* @param LD - `LD`
+	* @param strideLD - stride of `LD`
 	* @param offsetLD - starting index for `LD`
-	* @param LLD - input array
-	* @param strideLLD - stride length for `LLD`
+	* @param LLD - `LLD`
+	* @param strideLLD - stride of `LLD`
 	* @param offsetLLD - starting index for `LLD`
-	* @param pivmin - pivmin
-	* @param gaptol - gaptol
-	* @param z - input array
-	* @param strideZ - stride length for `z`
+	* @param pivmin - `pivmin`
+	* @param gaptol - `gaptol`
+	* @param Z - `Z`
+	* @param strideZ - stride of `Z`
 	* @param offsetZ - starting index for `Z`
-	* @param wantnc - wantnc
-	* @param negcnt - negcnt
-	* @param ztz - ztz
-	* @param mingma - mingma
-	* @param r - r
-	* @param ISUPPZ - input array
-	* @param strideISUPPZ - stride length for `ISUPPZ`
+	* @param wantnc - `wantnc`
+	* @param negcnt - `negcnt`
+	* @param ztz - `ztz`
+	* @param mingma - `mingma`
+	* @param r - `r`
+	* @param ISUPPZ - `ISUPPZ`
+	* @param strideISUPPZ - stride of `ISUPPZ`
 	* @param offsetISUPPZ - starting index for `ISUPPZ`
-	* @param nrminv - nrminv
-	* @param resid - resid
-	* @param rqcorr - rqcorr
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param nrminv - `nrminv`
+	* @param resid - `resid`
+	* @param rqcorr - `rqcorr`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, offsetD: number, l: Float64Array, strideL: number, offsetL: number, LD: Float64Array, strideLD: number, offsetLD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, offsetZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, b1: number, bn: number, lambda: number, D: Float64Array, strideD: number, offsetD: number, L: Float64Array, strideL: number, offsetL: number, LD: Float64Array, strideLD: number, offsetLD: number, LLD: Float64Array, strideLLD: number, offsetLLD: number, pivmin: number, gaptol: number, Z: Float64Array, strideZ: number, offsetZ: number, wantnc: number, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWork: number, offsetWork: number ): void;
 }
 
 /**
-* TODO: Add description for DLAR1V.
+* @license MIT.
 */
 declare var dlar1v: Routine;
 

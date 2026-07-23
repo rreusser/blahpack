@@ -23,16 +23,40 @@
 */
 interface Routine {
 	/**
-	* Complex aggressive early deflation (non-recursive).
+	* @license MIT.
 	*
-	* @param v - `v`
-	* @param idx - `idx`
+	* @param wantt - `wantt`
+	* @param wantz - `wantz`
+	* @param N - number of columns
+	* @param ktop - `ktop`
+	* @param kbot - `kbot`
+	* @param nw - `nw`
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param iloz - `iloz`
+	* @param ihiz - `ihiz`
+	* @param Z - `Z`
+	* @param LDZ - leading dimension of `Z`
+	* @param ns - `ns`
+	* @param nd - `nd`
+	* @param SH - `SH`
+	* @param strideSH - stride of `SH`
+	* @param V - `V`
+	* @param LDV - leading dimension of `V`
+	* @param nhp - `nhp`
+	* @param T - `T`
+	* @param LDT - leading dimension of `T`
+	* @param nvp - `nvp`
+	* @param WV - `WV`
+	* @param LDWV - leading dimension of `WV`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( v: Float64Array, idx: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, LDH: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, ns: number, nd: number, SH: Float64Array, strideSH: number, V: Float64Array, LDV: number, nhp: number, T: Float64Array, LDT: number, nvp: number, WV: Float64Array, LDWV: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* Complex aggressive early deflation (non-recursive) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -70,15 +94,15 @@ interface Routine {
 	* @param strideWV2 - stride of `WV`
 	* @param offsetWV - starting index for `WV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ns: number, nd: number, SH: Float64Array, strideSH: number, offsetSH: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, nhp: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, nvp: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ktop: number, kbot: number, nw: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ns: number, nd: number, SH: Float64Array, strideSH: number, offsetSH: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, nhp: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, nvp: number, WV: Float64Array, strideWV1: number, strideWV2: number, offsetWV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): void;
 }
 
 /**
-* Complex aggressive early deflation (non-recursive).
+* @license MIT.
 */
 declare var zlaqr2: Routine;
 

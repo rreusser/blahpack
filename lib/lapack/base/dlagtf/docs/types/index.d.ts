@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes an LU factorization of the matrix (T - lambda_I), where T is an.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -40,10 +40,10 @@ interface Routine {
 	* @param strideIN - stride of `IN`
 	* @returns result
 	*/
-	( N: number, a: Float64Array, strideA: number, lambda: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, tol: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number ): Float64Array;
+	( N: number, a: Float64Array, strideA: number, lambda: number, b: Float64Array, strideB: number, c: Float64Array, strideC: number, tol: number, d: Float64Array, strideD: number, IN: Float64Array, strideIN: number ): number;
 
 	/**
-	* Computes an LU factorization of the matrix (T - lambda_I), where T is an using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param a - `a`
@@ -65,11 +65,11 @@ interface Routine {
 	* @param offsetIN - starting index for `IN`
 	* @returns result
 	*/
-	ndarray( N: number, a: Float64Array, strideA: number, offsetA: number, lambda: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, tol: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number ): Float64Array;
+	ndarray( N: number, a: Float64Array, strideA: number, offsetA: number, lambda: number, b: Float64Array, strideB: number, offsetB: number, c: Float64Array, strideC: number, offsetC: number, tol: number, d: Float64Array, strideD: number, offsetD: number, IN: Float64Array, strideIN: number, offsetIN: number ): number;
 }
 
 /**
-* Computes an LU factorization of the matrix (T - lambda_I), where T is an.
+* @license MIT.
 */
 declare var dlagtf: Routine;
 

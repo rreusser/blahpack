@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zheev`.
 */
 interface Routine {
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param jobz - `jobz`
@@ -38,15 +38,15 @@ interface Routine {
 	* @param w - `w`
 	* @param strideW - stride of `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobz - `jobz`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -59,18 +59,18 @@ interface Routine {
 	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Computes all eigenvalues and, optionally, eigenvectors of a complex Hermitian.
+* @license MIT.
 */
 declare var zheev: Routine;
 

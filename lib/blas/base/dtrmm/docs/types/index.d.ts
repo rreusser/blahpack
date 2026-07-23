@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, TransposeOperation, DiagonalType, Layout } from '@stdlib/types/blas';
+import { DiagonalType, Layout, MatrixTriangle, OperationSide, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtrmm`.
 */
 interface Routine {
 	/**
-	* Performs one of the matrix-matrix operations.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, uplo: MatrixTriangle, transa: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number ): Float64Array;
 
 	/**
-	* Performs one of the matrix-matrix operations using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* Performs one of the matrix-matrix operations.
+* @license MIT.
 */
 declare var dtrmm: Routine;
 

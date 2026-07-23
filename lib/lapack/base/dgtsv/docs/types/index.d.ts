@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves a general real tridiagonal system of linear equations A * X = B.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -37,10 +37,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, B: Float64Array, LDB: number ): Float64Array;
+	( N: number, nrhs: number, DL: Float64Array, strideDL: number, d: Float64Array, strideD: number, DU: Float64Array, strideDU: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Solves a general real tridiagonal system of linear equations A * X = B using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -59,11 +59,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( N: number, nrhs: number, DL: Float64Array, strideDL: number, offsetDL: number, d: Float64Array, strideD: number, offsetD: number, DU: Float64Array, strideDU: number, offsetDU: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Solves a general real tridiagonal system of linear equations A * X = B.
+* @license MIT.
 */
 declare var dgtsv: Routine;
 

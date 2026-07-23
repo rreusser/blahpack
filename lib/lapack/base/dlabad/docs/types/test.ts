@@ -21,23 +21,35 @@ import dlabad = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function is callable with the documented arguments...
 {
-	dlabad( 10 ); // $ExpectType void
+	dlabad( 10, 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlabad( '10' ); // $ExpectError
-	dlabad( true ); // $ExpectError
-	dlabad( false ); // $ExpectError
-	dlabad( null ); // $ExpectError
-	dlabad( undefined ); // $ExpectError
-	dlabad( [] ); // $ExpectError
-	dlabad( {} ); // $ExpectError
+	dlabad( '10', 10 ); // $ExpectError
+	dlabad( true, 10 ); // $ExpectError
+	dlabad( false, 10 ); // $ExpectError
+	dlabad( null, 10 ); // $ExpectError
+	dlabad( undefined, 10 ); // $ExpectError
+	dlabad( [], 10 ); // $ExpectError
+	dlabad( {}, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlabad( 10, '10' ); // $ExpectError
+	dlabad( 10, true ); // $ExpectError
+	dlabad( 10, false ); // $ExpectError
+	dlabad( 10, null ); // $ExpectError
+	dlabad( 10, undefined ); // $ExpectError
+	dlabad( 10, [] ); // $ExpectError
+	dlabad( 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlabad(); // $ExpectError
+	dlabad( 10 ); // $ExpectError
 }

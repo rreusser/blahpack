@@ -27,48 +27,47 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* generates a real M-by-N matrix Q with orthonormal columns from a Tall-Skinny QR factorization
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param mb - mb
-	* @param nb - nb
-	* @param A - input matrix
+	* @param mb - `mb`
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, mb: number, nb: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array ): number;
 
 	/**
-	* generates a real M-by-N matrix Q with orthonormal columns from a Tall-Skinny QR factorization, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param mb - mb
-	* @param nb - nb
-	* @param A - input matrix
+	* @param mb - `mb`
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, mb: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, mb: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* generates a real M-by-N matrix Q with orthonormal columns from a Tall-Skinny QR factorization
+* @license MIT.
 */
 declare var dorgtsqr: Routine;
 

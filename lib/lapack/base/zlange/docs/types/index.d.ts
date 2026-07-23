@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the value of a matrix norm for a complex matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param norm - `norm`
@@ -36,13 +36,13 @@ interface Routine {
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, norm: string, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, norm: string, M: number, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the value of a matrix norm for a complex matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param M - number of rows
@@ -52,15 +52,15 @@ interface Routine {
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( norm: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( norm: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the value of a matrix norm for a complex matrix.
+* @license MIT.
 */
 declare var zlange: Routine;
 

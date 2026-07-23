@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlatbs`.
 */
 interface Routine {
 	/**
-	* Solves a triangular banded system with scaling to prevent overflow.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -44,10 +44,10 @@ interface Routine {
 	* @param strideCNORM - stride of `CNORM`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, kd: number, AB: Float64Array, LDAB: number, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): Float64Array;
+	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, kd: number, AB: Float64Array, LDAB: number, x: Float64Array, strideX: number, scale: number, CNORM: Float64Array, strideCNORM: number ): number;
 
 	/**
-	* Solves a triangular banded system with scaling to prevent overflow using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -68,11 +68,11 @@ interface Routine {
 	* @param offsetCNORM - starting index for `CNORM`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, x: Float64Array, strideX: number, offsetX: number, scale: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number ): number;
 }
 
 /**
-* Solves a triangular banded system with scaling to prevent overflow.
+* @license MIT.
 */
 declare var dlatbs: Routine;
 

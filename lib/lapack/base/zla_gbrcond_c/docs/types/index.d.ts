@@ -20,73 +20,73 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zla_gbrcond_c`.
 */
 interface Routine {
 	/**
-	* Estimates the infinity norm condition number for a complex general banded matrix with inverse-c scaling
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param AFB - input matrix
+	* @param AFB - `AFB`
 	* @param LDAFB - leading dimension of `AFB`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param c - input array
-	* @param strideC - stride length for `c`
-	* @param capply - capply
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
+	* @param c - `c`
+	* @param strideC - stride of `C`
+	* @param capply - `capply`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, c: Float64Array, strideC: number, capply: boolean, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, c: Float64Array, strideC: number, capply: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Estimates the infinity norm condition number for a complex general banded matrix with inverse-c scaling, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param AFB - input matrix
+	* @param AFB - `AFB`
 	* @param strideAFB1 - stride of `AFB`
 	* @param strideAFB2 - stride of `AFB`
 	* @param offsetAFB - starting index for `AFB`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param c - input array
-	* @param strideC - stride length for `c`
+	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param capply - capply
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param RWORK - output array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param capply - `capply`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, c: Float64Array, strideC: number, offsetC: number, capply: boolean, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, c: Float64Array, strideC: number, offsetC: number, capply: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Estimates the infinity norm condition number for a complex general banded matrix with inverse-c scaling
+* @license MIT.
 */
 declare var zla_gbrcond_c: Routine;
 

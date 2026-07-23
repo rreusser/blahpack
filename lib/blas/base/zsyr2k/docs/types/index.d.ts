@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zsyr2k`.
 */
 interface Routine {
 	/**
-	* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -44,10 +45,10 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -69,11 +70,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Complex128Array;
 }
 
 /**
-* Performs one of the symmetric rank-2k operations `C := alpha*A*B**T + alpha*B*A**T + beta*C` or `C := alpha*A**T*B + alpha*B**T*A + beta*C` where alpha and beta are complex scalars, C is an N-by-N symmetric matrix, and A and B are N-by-K or K-by-N matrices.
+* @license MIT.
 */
 declare var zsyr2k: Routine;
 

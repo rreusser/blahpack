@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { MatrixTriangle } from '@stdlib/types/blas';
 
 /**
@@ -27,7 +28,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs the Hermitian packed rank-1 update `A := alpha*x*x**H + A`.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,10 +39,10 @@ interface Routine {
 	* @param strideAP - stride of `AP`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, AP: Float64Array, strideAP: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, AP: Float64Array, strideAP: number ): Complex128Array;
 
 	/**
-	* Performs the Hermitian packed rank-1 update `A := alpha*x*x**H + A` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -54,11 +55,11 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, AP: Float64Array, strideAP: number, offsetAP: number ): Complex128Array;
 }
 
 /**
-* Performs the Hermitian packed rank-1 update `A := alpha*x*x**H + A`.
+* @license MIT.
 */
 declare var zhpr: Routine;
 

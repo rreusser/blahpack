@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the reciprocal of the condition number (in the 1-norm) of a complex.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -33,13 +33,13 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, anorm: number, rcond: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, anorm: number, rcond: number, RWORK: Float64Array, strideRWork: number ): number;
 
 	/**
-	* Computes the reciprocal of the condition number (in the 1-norm) of a complex using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -51,15 +51,15 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, anorm: number, rcond: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, anorm: number, rcond: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number ): number;
 }
 
 /**
-* Computes the reciprocal of the condition number (in the 1-norm) of a complex.
+* @license MIT.
 */
 declare var zptcon: Routine;
 

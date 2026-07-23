@@ -20,60 +20,59 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhecon_3`.
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal of the 1-norm condition number of a complex Hermitian matrix using the factorization computed by zhetrf_rk
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param anorm - anorm
-	* @param rcond - rcond
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param e - `e`
+	* @param strideE - stride of `E`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
+	* @param anorm - `anorm`
+	* @param rcond - `rcond`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, e: Float64Array, strideE: number, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Estimates the reciprocal of the 1-norm condition number of a complex Hermitian matrix using the factorization computed by zhetrf_rk, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param e - input array
-	* @param strideE - stride length for `e`
+	* @param e - `e`
+	* @param strideE - stride of `E`
 	* @param offsetE - starting index for `E`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param anorm - anorm
-	* @param rcond - rcond
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param anorm - `anorm`
+	* @param rcond - `rcond`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, e: Float64Array, strideE: number, offsetE: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal of the 1-norm condition number of a complex Hermitian matrix using the factorization computed by zhetrf_rk
+* @license MIT.
 */
 declare var zhecon_3: Routine;
 

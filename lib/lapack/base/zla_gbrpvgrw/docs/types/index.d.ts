@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -40,10 +40,10 @@ interface Routine {
 	* @param LDAFB - leading dimension of `AFB`
 	* @returns result
 	*/
-	( order: Layout, N: number, kl: number, ku: number, ncols: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number ): Float64Array;
+	( order: Layout, N: number, kl: number, ku: number, ncols: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number ): number;
 
 	/**
-	* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param kl - number of subdiagonals
@@ -59,11 +59,11 @@ interface Routine {
 	* @param offsetAFB - starting index for `AFB`
 	* @returns result
 	*/
-	ndarray( N: number, kl: number, ku: number, ncols: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number ): Float64Array;
+	ndarray( N: number, kl: number, ku: number, ncols: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number ): number;
 }
 
 /**
-* Computes the reciprocal pivot growth factor `norm(A)/norm(U)` for a complex general banded matrix.
+* @license MIT.
 */
 declare var zla_gbrpvgrw: Routine;
 

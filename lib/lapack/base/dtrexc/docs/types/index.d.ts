@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
+	* @license MIT.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -34,13 +34,13 @@ interface Routine {
 	* @param ifst - `ifst`
 	* @param ilst - `ilst`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( compq: string, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( compq: string, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, ifst: number, ilst: number, WORK: Float64Array, strideWork: number ): Record<string, unknown>;
 
 	/**
-	* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -55,15 +55,15 @@ interface Routine {
 	* @param ifst - `ifst`
 	* @param ilst - `ilst`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( compq: string, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, ifst: number, ilst: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( compq: string, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, ifst: number, ilst: number, WORK: Float64Array, strideWork: number, offsetWork: number ): Record<string, unknown>;
 }
 
 /**
-* Reorders the real Schur factorization of a real matrix A = Q_T_Q^T, so that.
+* @license MIT.
 */
 declare var dtrexc: Routine;
 

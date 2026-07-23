@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhpgvx`.
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param itype - `itype`
@@ -52,10 +52,10 @@ interface Routine {
 	* @param IFAIL - `IFAIL`
 	* @returns result
 	*/
-	( order: Layout, itype: number, jobz: string, range: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array, RWORK: Float64Array, IWORK: Int32Array, IFAIL: Float64Array ): Float64Array;
+	( order: Layout, itype: number, jobz: string, range: string, uplo: MatrixTriangle, N: number, AP: Float64Array, BP: Float64Array, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, Z: Float64Array, LDZ: number, WORK: Float64Array, RWORK: Float64Array, IWORK: Int32Array, IFAIL: Float64Array ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -82,24 +82,24 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @param IFAIL - `IFAIL`
 	* @param strideIFAIL - stride of `IFAIL`
 	* @param offsetIFAIL - starting index for `IFAIL`
 	* @returns result
 	*/
-	ndarray( itype: number, jobz: string, range: string, uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, BP: Float64Array, strideBP: number, offsetBP: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): Float64Array;
+	ndarray( itype: number, jobz: string, range: string, uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, BP: Float64Array, strideBP: number, offsetBP: number, vl: number, vu: number, il: number, iu: number, abstol: number, out: number, w: Float64Array, strideW: number, offsetW: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, IFAIL: Float64Array, strideIFAIL: number, offsetIFAIL: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zhpgvx: Routine;
 

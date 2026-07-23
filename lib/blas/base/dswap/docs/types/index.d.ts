@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Interchange two double-precision floating-point vectors.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -35,7 +35,7 @@ interface Routine {
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* Interchange two double-precision floating-point vectors using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -50,7 +50,7 @@ interface Routine {
 }
 
 /**
-* Interchange two double-precision floating-point vectors.
+* @license MIT.
 */
 declare var dswap: Routine;
 

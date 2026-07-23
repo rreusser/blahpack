@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
+	* @license MIT.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -42,15 +42,15 @@ interface Routine {
 	* @param s - `s`
 	* @param sep - `sep`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @returns result
 	*/
-	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number ): number;
 
 	/**
-	* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param compq - `compq`
@@ -76,18 +76,18 @@ interface Routine {
 	* @param s - `s`
 	* @param sep - `sep`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( job: string, compq: string, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, M: number, s: number, sep: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Reorders the real Schur factorization of a real matrix A = Q_T_Q**T.
+* @license MIT.
 */
 declare var dtrsen: Routine;
 

@@ -23,21 +23,33 @@ import dlapy2 = require( './index' );
 
 // The function returns a number...
 {
-	dlapy2( 10 ); // $ExpectType number
+	dlapy2( 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlapy2( '10' ); // $ExpectError
-	dlapy2( true ); // $ExpectError
-	dlapy2( false ); // $ExpectError
-	dlapy2( null ); // $ExpectError
-	dlapy2( undefined ); // $ExpectError
-	dlapy2( [] ); // $ExpectError
-	dlapy2( {} ); // $ExpectError
+	dlapy2( '10', 10 ); // $ExpectError
+	dlapy2( true, 10 ); // $ExpectError
+	dlapy2( false, 10 ); // $ExpectError
+	dlapy2( null, 10 ); // $ExpectError
+	dlapy2( undefined, 10 ); // $ExpectError
+	dlapy2( [], 10 ); // $ExpectError
+	dlapy2( {}, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlapy2( 10, '10' ); // $ExpectError
+	dlapy2( 10, true ); // $ExpectError
+	dlapy2( 10, false ); // $ExpectError
+	dlapy2( 10, null ); // $ExpectError
+	dlapy2( 10, undefined ); // $ExpectError
+	dlapy2( 10, [] ); // $ExpectError
+	dlapy2( 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlapy2(); // $ExpectError
+	dlapy2( 10 ); // $ExpectError
 }

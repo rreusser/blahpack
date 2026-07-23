@@ -18,22 +18,26 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zlacgv`.
 */
 interface Routine {
 	/**
-	* Conjugate a complex vector in-place.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
 	* @param stride - stride of ``
 	* @returns result
 	*/
-	( N: number, x: number, stride: number ): Float64Array;
+	( N: number, x: number, stride: number ): Complex128Array;
 
 	/**
-	* Conjugate a complex vector in-place using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -41,11 +45,11 @@ interface Routine {
 	* @param offset - starting index for ``
 	* @returns result
 	*/
-	ndarray( N: number, x: number, stride: number, offset: number ): Float64Array;
+	ndarray( N: number, x: number, stride: number, offset: number ): Complex128Array;
 }
 
 /**
-* Conjugate a complex vector in-place.
+* @license MIT.
 */
 declare var zlacgv: Routine;
 

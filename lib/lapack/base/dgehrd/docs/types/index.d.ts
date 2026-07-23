@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces a real general matrix to upper Hessenberg form using blocked algorithm.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -38,13 +38,13 @@ interface Routine {
 	* @param TAU - `TAU`
 	* @param strideTAU - stride of `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, N: number, ilo: number, ihi: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Reduces a real general matrix to upper Hessenberg form using blocked algorithm using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param ilo - lower index
@@ -57,15 +57,15 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Reduces a real general matrix to upper Hessenberg form using blocked algorithm.
+* @license MIT.
 */
 declare var dgehrd: Routine;
 

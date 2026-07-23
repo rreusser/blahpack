@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zgemm`.
 */
 interface Routine {
 	/**
-	* Perform one of the complex matrix-matrix operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param transa - specifies the operation for matrix `A`
@@ -45,10 +46,10 @@ interface Routine {
 	* @param LDC - leading dimension of `C`
 	* @returns result
 	*/
-	( order: Layout, transa: TransposeOperation, transb: TransposeOperation, M: number, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Float64Array;
+	( order: Layout, transa: TransposeOperation, transb: TransposeOperation, M: number, N: number, K: number, alpha: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, beta: number, C: Float64Array, LDC: number ): Complex128Array;
 
 	/**
-	* Perform one of the complex matrix-matrix operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transa - specifies the operation for matrix `A`
 	* @param transb - specifies the operation for matrix `B`
@@ -71,11 +72,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( transa: TransposeOperation, transb: TransposeOperation, M: number, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Float64Array;
+	ndarray( transa: TransposeOperation, transb: TransposeOperation, M: number, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, beta: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number ): Complex128Array;
 }
 
 /**
-* Perform one of the complex matrix-matrix operations:.
+* @license MIT.
 */
 declare var zgemm: Routine;
 

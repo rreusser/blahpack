@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the dot product of two vectors with extended precision accumulation.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): Float32Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number ): number;
 
 	/**
-	* Computes the dot product of two vectors with extended precision accumulation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -46,11 +46,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): Float32Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number ): number;
 }
 
 /**
-* Computes the dot product of two vectors with extended precision accumulation.
+* @license MIT.
 */
 declare var dsdot: Routine;
 

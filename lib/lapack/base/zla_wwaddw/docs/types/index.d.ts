@@ -27,39 +27,39 @@ import { Complex128Array } from '@stdlib/types/array';
 */
 interface Routine {
 	/**
-	* Adds a complex vector `W` into a doubled-single accumulation vector `(X, Y)`.
+	* @license MIT.
 	*
-	* @param N - number of elements
-	* @param x - high-order part of the doubled-single accumulation vector
-	* @param strideX - stride length for `x`
-	* @param y - low-order part of the doubled-single accumulation vector
-	* @param strideY - stride length for `y`
-	* @param w - vector to be added
-	* @param strideW - stride length for `w`
-	* @returns `x`
+	* @param N - number of columns
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @returns result
 	*/
-	( N: number, x: Complex128Array, strideX: number, y: Complex128Array, strideY: number, w: Complex128Array, strideW: number ): Complex128Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, w: Float64Array, strideW: number ): Complex128Array;
 
 	/**
-	* Adds a complex vector `W` into a doubled-single accumulation vector `(X, Y)` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param N - number of elements
-	* @param x - high-order part of the doubled-single accumulation vector
-	* @param strideX - stride length for `x`
-	* @param offsetX - starting index for `x`
-	* @param y - low-order part of the doubled-single accumulation vector
-	* @param strideY - stride length for `y`
-	* @param offsetY - starting index for `y`
-	* @param w - vector to be added
-	* @param strideW - stride length for `w`
-	* @param offsetW - starting index for `w`
-	* @returns `x`
+	* @param N - number of columns
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param offsetX - starting index for `X`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
+	* @param offsetY - starting index for `Y`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param offsetW - starting index for `W`
+	* @returns result
 	*/
-	ndarray( N: number, x: Complex128Array, strideX: number, offsetX: number, y: Complex128Array, strideY: number, offsetY: number, w: Complex128Array, strideW: number, offsetW: number ): Complex128Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, w: Float64Array, strideW: number, offsetW: number ): Complex128Array;
 }
 
 /**
-* Adds a complex vector `W` into a doubled-single accumulation vector `(X, Y)`.
+* @license MIT.
 */
 declare var zla_wwaddw: Routine;
 

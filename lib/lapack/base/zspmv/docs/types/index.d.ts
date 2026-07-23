@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Perform the symmetric packed matrix-vector operation y := alpha*A*x + beta*y where A is a complex symmetric matrix stored in packed format.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -41,10 +41,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): void;
 
 	/**
-	* Perform the symmetric packed matrix-vector operation y := alpha*A*x + beta*y where A is a complex symmetric matrix stored in packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -61,11 +61,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, alpha: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): void;
 }
 
 /**
-* Perform the symmetric packed matrix-vector operation y := alpha*A*x + beta*y where A is a complex symmetric matrix stored in packed format.
+* @license MIT.
 */
 declare var zspmv: Routine;
 

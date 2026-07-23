@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zher2`.
 */
 interface Routine {
 	/**
-	* Perform Hermitian rank-2 update:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,10 +42,10 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, A: Float64Array, LDA: number ): Complex128Array;
 
 	/**
-	* Perform Hermitian rank-2 update: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -61,11 +62,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number ): Complex128Array;
 }
 
 /**
-* Perform Hermitian rank-2 update:.
+* @license MIT.
 */
 declare var zher2: Routine;
 

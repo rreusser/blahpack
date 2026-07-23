@@ -23,26 +23,26 @@
 */
 interface Routine {
 	/**
-	* Adjusts the underflow and overflow thresholds if the exponent range is very large (no-op on IEEE-754 machines).
+	* @license MIT.
 	*
 	* @param small - `small`
 	* @param large - `large`
 	* @returns result
 	*/
-	( small: number, large: number ): void;
+	( small: number, large: number ): { small: number };
 
 	/**
-	* Adjusts the underflow and overflow thresholds if the exponent range is very large (no-op on IEEE-754 machines) using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param small - `small`
 	* @param large - `large`
 	* @returns result
 	*/
-	ndarray( small: number, large: number ): void;
+	ndarray( small: number, large: number ): { small: number };
 }
 
 /**
-* Adjusts the underflow and overflow thresholds if the exponent range is very large (no-op on IEEE-754 machines).
+* @license MIT.
 */
 declare var dlabad: Routine;
 

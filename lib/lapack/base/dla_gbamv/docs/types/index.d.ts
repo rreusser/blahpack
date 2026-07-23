@@ -20,52 +20,52 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dla_gbamv`.
 */
 interface Routine {
 	/**
-	* Performs a matrix-vector operation to calculate error bounds on banded matrices
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param trans - trans
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
 	* @param alpha - scalar constant
-	* @param AB - input matrix
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param beta - scalar constant
-	* @param y - output array
-	* @param strideY - stride length for `y`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @returns result
 	*/
 	( order: Layout, trans: TransposeOperation, M: number, N: number, kl: number, ku: number, alpha: number, AB: Float64Array, LDAB: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* Performs a matrix-vector operation to calculate error bounds on banded matrices, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param trans - trans
+	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
 	* @param alpha - scalar constant
-	* @param AB - input matrix
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
 	* @param beta - scalar constant
-	* @param y - output array
-	* @param strideY - stride length for `y`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
@@ -73,7 +73,7 @@ interface Routine {
 }
 
 /**
-* Performs a matrix-vector operation to calculate error bounds on banded matrices
+* @license MIT.
 */
 declare var dla_gbamv: Routine;
 

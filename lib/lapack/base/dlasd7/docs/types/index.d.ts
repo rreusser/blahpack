@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param icompq - `icompq`
 	* @param nl - `nl`
@@ -49,10 +49,10 @@ interface Routine {
 	* @param LDGNUM - leading dimension of `GNUM`
 	* @returns result
 	*/
-	( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, z: Float64Array, ZW: Float64Array, VF: Float64Array, VFW: Float64Array, VL: Float64Array, VLW: Float64Array, alpha: number, beta: number, DSIGMA: Float64Array, IDX: Int32Array, IDXP: Int32Array, IDXQ: Int32Array, PERM: Int32Array, GIVCOL: Int32Array, LDGCOL: number, GIVNUM: Float64Array, LDGNUM: number ): Float64Array;
+	( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, z: Float64Array, ZW: Float64Array, VF: Float64Array, VFW: Float64Array, VL: Float64Array, VLW: Float64Array, alpha: number, beta: number, DSIGMA: Float64Array, IDX: Int32Array, IDXP: Int32Array, IDXQ: Int32Array, PERM: Int32Array, GIVCOL: Int32Array, LDGCOL: number, GIVNUM: Float64Array, LDGNUM: number ): Record<string, unknown>;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param icompq - `icompq`
 	* @param nl - `nl`
@@ -106,11 +106,11 @@ interface Routine {
 	* @param offsetGIVNUM - starting index for `GIVNUM`
 	* @returns result
 	*/
-	ndarray( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, ZW: Float64Array, strideZW: number, offsetZW: number, VF: Float64Array, strideVF: number, offsetVF: number, VFW: Float64Array, strideVFW: number, offsetVFW: number, VL: Float64Array, strideVL: number, offsetVL: number, VLW: Float64Array, strideVLW: number, offsetVLW: number, alpha: number, beta: number, DSIGMA: Float64Array, strideDSIGMA: number, offsetDSIGMA: number, IDX: Int32Array, strideIDX: number, offsetIDX: number, IDXP: Int32Array, strideIDXP: number, offsetIDXP: number, IDXQ: Int32Array, strideIDXQ: number, offsetIDXQ: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number ): Float64Array;
+	ndarray( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, strideD: number, offsetD: number, z: Float64Array, strideZ: number, offsetZ: number, ZW: Float64Array, strideZW: number, offsetZW: number, VF: Float64Array, strideVF: number, offsetVF: number, VFW: Float64Array, strideVFW: number, offsetVFW: number, VL: Float64Array, strideVL: number, offsetVL: number, VLW: Float64Array, strideVLW: number, offsetVLW: number, alpha: number, beta: number, DSIGMA: Float64Array, strideDSIGMA: number, offsetDSIGMA: number, IDX: Int32Array, strideIDX: number, offsetIDX: number, IDXP: Int32Array, strideIDXP: number, offsetIDXP: number, IDXQ: Int32Array, strideIDXQ: number, offsetIDXQ: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number ): Record<string, unknown>;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlasd7: Routine;
 

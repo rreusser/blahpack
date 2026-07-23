@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the splitting points with threshold based on the representation.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -39,10 +39,10 @@ interface Routine {
 	* @param strideISPLIT - stride of `ISPLIT`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, E2: number, strideE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number ): number;
 
 	/**
-	* Computes the splitting points with threshold based on the representation using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -62,11 +62,11 @@ interface Routine {
 	* @param offsetISPLIT - starting index for `ISPLIT`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, E2: number, strideE2: number, offsetE2: number, spltol: number, tnrm: number, nsplit: number, ISPLIT: Int32Array, strideISPLIT: number, offsetISPLIT: number ): number;
 }
 
 /**
-* Computes the splitting points with threshold based on the representation.
+* @license MIT.
 */
 declare var dlarra: Routine;
 

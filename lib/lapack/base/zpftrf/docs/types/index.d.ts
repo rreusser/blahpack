@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the Cholesky factorization of a complex Hermitian positive definite matrix in Rectangular Full Packed format.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -35,10 +35,10 @@ interface Routine {
 	* @param A - `A`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array ): Float64Array;
+	( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array ): number;
 
 	/**
-	* Computes the Cholesky factorization of a complex Hermitian positive definite matrix in Rectangular Full Packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -48,11 +48,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA: number, offsetA: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA: number, offsetA: number ): number;
 }
 
 /**
-* Computes the Cholesky factorization of a complex Hermitian positive definite matrix in Rectangular Full Packed format.
+* @license MIT.
 */
 declare var zpftrf: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the factorization of a complex Hermitian matrix A using the.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -37,10 +37,10 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* Computes the factorization of a complex Hermitian matrix A using the using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -53,11 +53,11 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Computes the factorization of a complex Hermitian matrix A using the.
+* @license MIT.
 */
 declare var zhetf2: Routine;
 

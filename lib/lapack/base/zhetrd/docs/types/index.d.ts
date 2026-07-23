@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhetrd`.
 */
 interface Routine {
 	/**
-	* Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -42,10 +42,10 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAU: Float64Array, strideTAU: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAU: Float64Array, strideTAU: number ): number;
 
 	/**
-	* Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -64,11 +64,11 @@ interface Routine {
 	* @param offsetTAU - starting index for `TAU`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number, TAU: Float64Array, strideTAU: number, offsetTAU: number ): number;
 }
 
 /**
-* Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T.
+* @license MIT.
 */
 declare var zhetrd: Routine;
 

@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal of the condition number of a complex Hermitian matrix in packed storage.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -37,13 +37,13 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array, strideIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Estimates the reciprocal of the condition number of a complex Hermitian matrix in packed storage using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -56,15 +56,15 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, anorm: number, rcond: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal of the condition number of a complex Hermitian matrix in packed storage.
+* @license MIT.
 */
 declare var zhpcon: Routine;
 

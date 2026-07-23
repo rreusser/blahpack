@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtbcon`.
 */
 interface Routine {
 	/**
-	* Estimates the reciprocal condition number of a real triangular band matrix.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,10 +41,10 @@ interface Routine {
 	* @param IWORK - `IWORK`
 	* @returns result
 	*/
-	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, LDAB: number, rcond: number, WORK: Float64Array, IWORK: Int32Array ): Float64Array;
+	( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, LDAB: number, rcond: number, WORK: Float64Array, IWORK: Int32Array ): number;
 
 	/**
-	* Estimates the reciprocal condition number of a real triangular band matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -57,18 +57,18 @@ interface Routine {
 	* @param offsetAB - starting index for `AB`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, rcond: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( norm: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, kd: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, rcond: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Estimates the reciprocal condition number of a real triangular band matrix.
+* @license MIT.
 */
 declare var dtbcon: Routine;
 

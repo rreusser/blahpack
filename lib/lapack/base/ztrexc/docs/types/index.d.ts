@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that.
+	* @license MIT.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -35,10 +35,10 @@ interface Routine {
 	* @param ilst - `ilst`
 	* @returns result
 	*/
-	( compq: string, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, ifst: number, ilst: number ): Float64Array;
+	( compq: string, N: number, T: Float64Array, LDT: number, Q: Float64Array, LDQ: number, ifst: number, ilst: number ): number;
 
 	/**
-	* Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param compq - `compq`
 	* @param N - number of columns
@@ -54,11 +54,11 @@ interface Routine {
 	* @param ilst - `ilst`
 	* @returns result
 	*/
-	ndarray( compq: string, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, ifst: number, ilst: number ): Float64Array;
+	ndarray( compq: string, N: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, ifst: number, ilst: number ): number;
 }
 
 /**
-* Reorders the Schur factorization of a complex matrix A = Q*T*Q^H, so that.
+* @license MIT.
 */
 declare var ztrexc: Routine;
 

@@ -21,12 +21,89 @@ import zlaqhp = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a string...
 {
-	zlaqhp( 0 ); // $ExpectType Float64Array
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectType string
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zlaqhp( 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( true, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( null, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( [], 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlaqhp( 'upper', '10', new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', true, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', false, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', null, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', undefined, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', [], new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', {}, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlaqhp( 'upper', 10, '10', new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, true, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, null, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, undefined, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, [], new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, {}, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), '10', 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), true, 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), null, 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), undefined, 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), [], 10, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), '10', 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), true, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), false, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), null, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined, 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), [], 10, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, false, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, '10' ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, true ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, false ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, null ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, undefined ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, [] ); // $ExpectError
+	zlaqhp( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlaqhp(); // $ExpectError
+	zlaqhp( 'upper' ); // $ExpectError
 }

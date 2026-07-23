@@ -20,64 +20,64 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dla_porcond`.
 */
 interface Routine {
 	/**
-	* Estimates the Skeel condition number for a symmetric positive-definite matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param LDAF - leading dimension of `AF`
-	* @param cmode - cmode
-	* @param c - input array
-	* @param strideC - stride length for `c`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param cmode - `cmode`
+	* @param c - `c`
+	* @param strideC - stride of `C`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, AF: Float64Array, LDAF: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* Estimates the Skeel condition number for a symmetric positive-definite matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param AF - input matrix
+	* @param AF - `AF`
 	* @param strideAF1 - stride of `AF`
 	* @param strideAF2 - stride of `AF`
 	* @param offsetAF - starting index for `AF`
-	* @param cmode - cmode
-	* @param c - input array
-	* @param strideC - stride length for `c`
+	* @param cmode - `cmode`
+	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, cmode: number, c: Float64Array, strideC: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, AF: Float64Array, strideAF1: number, strideAF2: number, offsetAF: number, cmode: number, c: Float64Array, strideC: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Estimates the Skeel condition number for a symmetric positive-definite matrix
+* @license MIT.
 */
 declare var dla_porcond: Routine;
 

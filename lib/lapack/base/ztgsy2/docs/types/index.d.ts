@@ -27,7 +27,7 @@ import { TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Solves the generalized Sylvester matrix equation for small subsystems.
+	* @license MIT.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -50,10 +50,10 @@ interface Routine {
 	* @param rdscal - `rdscal`
 	* @returns result
 	*/
-	( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, D: Float64Array, LDD: number, E: Float64Array, LDE: number, F: Float64Array, LDF: number, scale: number, rdsum: number, rdscal: number ): Float64Array;
+	( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, D: Float64Array, LDD: number, E: Float64Array, LDE: number, F: Float64Array, LDF: number, scale: number, rdsum: number, rdscal: number ): number;
 
 	/**
-	* Solves the generalized Sylvester matrix equation for small subsystems using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param ijob - `ijob`
@@ -88,11 +88,11 @@ interface Routine {
 	* @param rdscal - `rdscal`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, rdsum: number, rdscal: number ): Float64Array;
+	ndarray( trans: TransposeOperation, ijob: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, D: Float64Array, strideD1: number, strideD2: number, offsetD: number, E: Float64Array, strideE1: number, strideE2: number, offsetE: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number, scale: number, rdsum: number, rdscal: number ): number;
 }
 
 /**
-* Solves the generalized Sylvester matrix equation for small subsystems.
+* @license MIT.
 */
 declare var ztgsy2: Routine;
 

@@ -18,40 +18,36 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dla_wwaddw`.
 */
 interface Routine {
 	/**
-	* Adds a vector in doubled-single precision representation
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param x - input array
-	* @param strideX - stride length for `x`
-	* @param y - input array
-	* @param strideY - stride length for `y`
-	* @param w - output array
-	* @param strideW - stride length for `w`
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @returns result
 	*/
 	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, w: Float64Array, strideW: number ): Float64Array;
 
 	/**
-	* Adds a vector in doubled-single precision representation, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
-	* @param y - input array
-	* @param strideY - stride length for `y`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @param offsetY - starting index for `Y`
-	* @param w - output array
-	* @param strideW - stride length for `w`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @returns result
 	*/
@@ -59,7 +55,7 @@ interface Routine {
 }
 
 /**
-* Adds a vector in doubled-single precision representation
+* @license MIT.
 */
 declare var dla_wwaddw: Routine;
 

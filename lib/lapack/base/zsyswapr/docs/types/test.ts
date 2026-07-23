@@ -16,27 +16,99 @@
 * limitations under the License.
 */
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 import zsyswapr = require( './index' );
 
 
 // TESTS //
 
-// The function returns a Float64Array...
+const zx = null as unknown as Complex128Array;
+
+// The function returns a Complex128Array...
 {
-	zsyswapr( 'row-major', 'upper', 2, new Float64Array( 4 ), 2, 2, 2 ); // $ExpectType Float64Array
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectType Complex128Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zsyswapr( 10, 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( true, 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( null, 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( undefined, 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( [], 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( {}, 'upper', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zsyswapr( 'row-major', 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', true, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', null, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', undefined, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', [], 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', {}, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zsyswapr( 'row-major', 'upper', '10', new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', true, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', false, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', null, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', undefined, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', [], new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', {}, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zsyswapr( 'row-major', 'upper', 10, '10', 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, 10, 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, true, 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, null, 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, undefined, 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, [], 10, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), '10', 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), true, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), false, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), null, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), undefined, 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), [], 10, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, false, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, '10' ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, true ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, false ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, null ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, undefined ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, [] ); // $ExpectError
+	zsyswapr( 'row-major', 'upper', 10, new Float64Array( 25 ), 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zsyswapr(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	zsyswapr.ndarray( 'upper', 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	zsyswapr.ndarray(); // $ExpectError
+	zsyswapr( 'row-major' ); // $ExpectError
 }

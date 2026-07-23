@@ -27,39 +27,39 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param T - output matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number ): number;
 
 	/**
-	* Computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param T - output matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number ): number;
 }
 
 /**
-* Computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q.
+* @license MIT.
 */
 declare var zgeqrt2: Routine;
 

@@ -18,52 +18,49 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dla_lin_berr`.
 */
 interface Routine {
 	/**
-	* Computes a component-wise relative backward error
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param nz - nz
-	* @param nrhs - nrhs
-	* @param res - input array
-	* @param strideRES - stride length for `res`
-	* @param ayb - input array
-	* @param strideAYB - stride length for `ayb`
-	* @param berr - input array
-	* @param strideBERR - stride length for `berr`
+	* @param nz - `nz`
+	* @param nrhs - number of right-hand sides
+	* @param res - `res`
+	* @param LDRES - leading dimension of `RES`
+	* @param ayb - `ayb`
+	* @param LDAYB - leading dimension of `AYB`
+	* @param berr - `berr`
 	* @returns result
 	*/
-	( N: number, nz: number, nrhs: number, res: Float64Array, strideRES: number, ayb: Float64Array, strideAYB: number, berr: Float64Array, strideBERR: number ): Float64Array;
+	( N: number, nz: number, nrhs: number, res: Float64Array, LDRES: number, ayb: Float64Array, LDAYB: number, berr: Float64Array ): Float64Array;
 
 	/**
-	* Computes a component-wise relative backward error, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param nz - nz
-	* @param nrhs - nrhs
-	* @param res - input array
-	* @param strideRES - stride length for `res`
+	* @param nz - `nz`
+	* @param nrhs - number of right-hand sides
+	* @param res - `res`
+	* @param strideRES1 - stride of `RES`
+	* @param strideRES2 - stride of `RES`
 	* @param offsetRES - starting index for `RES`
-	* @param ayb - input array
-	* @param strideAYB - stride length for `ayb`
+	* @param ayb - `ayb`
+	* @param strideAYB1 - stride of `AYB`
+	* @param strideAYB2 - stride of `AYB`
 	* @param offsetAYB - starting index for `AYB`
-	* @param berr - input array
-	* @param strideBERR - stride length for `berr`
+	* @param berr - `berr`
+	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @returns result
 	*/
-	ndarray( N: number, nz: number, nrhs: number, res: Float64Array, strideRES: number, offsetRES: number, ayb: Float64Array, strideAYB: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
+	ndarray( N: number, nz: number, nrhs: number, res: Float64Array, strideRES1: number, strideRES2: number, offsetRES: number, ayb: Float64Array, strideAYB1: number, strideAYB2: number, offsetAYB: number, berr: Float64Array, strideBERR: number, offsetBERR: number ): Float64Array;
 }
 
 /**
-* Computes a component-wise relative backward error
+* @license MIT.
 */
 declare var dla_lin_berr: Routine;
 

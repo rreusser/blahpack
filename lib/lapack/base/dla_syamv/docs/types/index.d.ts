@@ -20,54 +20,54 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dla_syamv`.
 */
 interface Routine {
 	/**
-	* Computes a matrix-vector product using a symmetric indefinite matrix to calculate error bounds
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - uplo
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
 	* @param alpha - scalar constant
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param beta - scalar constant
-	* @param y - output array
-	* @param strideY - stride length for `y`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
 
 	/**
-	* Computes a matrix-vector product using a symmetric indefinite matrix to calculate error bounds, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - uplo
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
 	* @param alpha - scalar constant
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
 	* @param beta - scalar constant
-	* @param y - output array
-	* @param strideY - stride length for `y`
+	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
 }
 
 /**
-* Computes a matrix-vector product using a symmetric indefinite matrix to calculate error bounds
+* @license MIT.
 */
 declare var dla_syamv: Routine;
 

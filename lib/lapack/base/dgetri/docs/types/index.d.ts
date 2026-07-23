@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the inverse of a matrix using the LU factorization computed by dgetrf.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -36,13 +36,13 @@ interface Routine {
 	* @param IPIV - `IPIV`
 	* @param strideIPIV - stride of `IPIV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the inverse of a matrix using the LU factorization computed by dgetrf using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -53,15 +53,15 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the inverse of a matrix using the LU factorization computed by dgetrf.
+* @license MIT.
 */
 declare var dgetri: Routine;
 

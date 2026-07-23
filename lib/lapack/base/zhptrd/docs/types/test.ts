@@ -21,12 +21,78 @@ import zhptrd = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zhptrd( 0 ); // $ExpectType Float64Array
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zhptrd( 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( true, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( null, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( [], 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zhptrd( 'upper', '10', new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', true, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', false, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', null, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', undefined, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', [], new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', {}, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zhptrd( 'upper', 10, '10', new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, true, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, null, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, [], new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, {}, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zhptrd( 'upper', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), '10', new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), true, new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), null, new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined, new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), [], new Float64Array( 25 ) ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), '10' ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), 10 ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), true ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), null ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), undefined ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), [] ); // $ExpectError
+	zhptrd( 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zhptrd(); // $ExpectError
+	zhptrd( 'upper' ); // $ExpectError
 }

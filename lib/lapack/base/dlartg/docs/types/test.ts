@@ -21,23 +21,35 @@ import dlartg = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function returns a Float64Array...
 {
-	dlartg( 10 ); // $ExpectType void
+	dlartg( 10, 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlartg( '10' ); // $ExpectError
-	dlartg( true ); // $ExpectError
-	dlartg( false ); // $ExpectError
-	dlartg( null ); // $ExpectError
-	dlartg( undefined ); // $ExpectError
-	dlartg( [] ); // $ExpectError
-	dlartg( {} ); // $ExpectError
+	dlartg( '10', 10 ); // $ExpectError
+	dlartg( true, 10 ); // $ExpectError
+	dlartg( false, 10 ); // $ExpectError
+	dlartg( null, 10 ); // $ExpectError
+	dlartg( undefined, 10 ); // $ExpectError
+	dlartg( [], 10 ); // $ExpectError
+	dlartg( {}, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlartg( 10, '10' ); // $ExpectError
+	dlartg( 10, true ); // $ExpectError
+	dlartg( 10, false ); // $ExpectError
+	dlartg( 10, null ); // $ExpectError
+	dlartg( 10, undefined ); // $ExpectError
+	dlartg( 10, [] ); // $ExpectError
+	dlartg( 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlartg(); // $ExpectError
+	dlartg( 10 ); // $ExpectError
 }

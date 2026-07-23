@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a QR factorization with column pivoting of the M-by-N matrix A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -44,13 +44,13 @@ interface Routine {
 	* @param VN2 - `VN2`
 	* @param strideVN2 - stride of `VN`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, offset: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, offset: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, WORK: Float64Array, strideWork: number ): void;
 
 	/**
-	* Computes a QR factorization with column pivoting of the M-by-N matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -72,15 +72,15 @@ interface Routine {
 	* @param strideVN2 - stride of `VN`
 	* @param offsetVN2 - starting index for `VN2`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, offset: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, offset: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, WORK: Float64Array, strideWork: number, offsetWork: number ): void;
 }
 
 /**
-* Computes a QR factorization with column pivoting of the M-by-N matrix A.
+* @license MIT.
 */
 declare var zlaqp2: Routine;
 

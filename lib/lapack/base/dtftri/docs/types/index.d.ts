@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, DiagonalType } from '@stdlib/types/blas';
+import { DiagonalType, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dtftri`.
 */
 interface Routine {
 	/**
-	* Computes the inverse of a real triangular matrix in Rectangular Full Packed format.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -36,10 +36,10 @@ interface Routine {
 	* @param A - `A`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array ): Float64Array;
+	( transr: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array ): number;
 
 	/**
-	* Computes the inverse of a real triangular matrix in Rectangular Full Packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -50,11 +50,11 @@ interface Routine {
 	* @param offsetA - starting index for `A`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array, strideA: number, offsetA: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, diag: DiagonalType, N: number, A: Float64Array, strideA: number, offsetA: number ): number;
 }
 
 /**
-* Computes the inverse of a real triangular matrix in Rectangular Full Packed format.
+* @license MIT.
 */
 declare var dtftri: Routine;
 

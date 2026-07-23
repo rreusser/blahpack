@@ -21,23 +21,242 @@ import zspsvx = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zspsvx( 'no-transpose' ); // $ExpectType Float64Array
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zspsvx( 10 ); // $ExpectError
-	zspsvx( true ); // $ExpectError
-	zspsvx( false ); // $ExpectError
-	zspsvx( null ); // $ExpectError
-	zspsvx( undefined ); // $ExpectError
-	zspsvx( [] ); // $ExpectError
-	zspsvx( {} ); // $ExpectError
+	zspsvx( 10, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( true, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( null, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( undefined, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( [], 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( {}, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zspsvx( 'no-transpose', 10, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', true, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', null, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', undefined, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', [], 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', {}, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', '10', 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', true, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', false, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', null, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', [], 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', {}, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, '10', new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, true, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, false, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, null, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, [], new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, {}, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, '10', new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, 10, new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, true, new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, null, new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, undefined, new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, [], new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, {}, new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), '10', new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), true, new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), null, new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), [], new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), {}, new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, '10', 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, 10, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, true, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, null, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, undefined, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, [], 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, {}, 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eleventh argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a twelfth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a thirteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventeenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a nineteenth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a twentieth argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a 21th argument of invalid type...
+{
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	zspsvx( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ), new Int32Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zspsvx(); // $ExpectError
+	zspsvx( 'no-transpose' ); // $ExpectError
 }

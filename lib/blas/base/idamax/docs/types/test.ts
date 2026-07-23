@@ -21,23 +21,46 @@ import idamax = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	idamax( 10 ); // $ExpectType Float64Array
+	idamax( 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	idamax( '10' ); // $ExpectError
-	idamax( true ); // $ExpectError
-	idamax( false ); // $ExpectError
-	idamax( null ); // $ExpectError
-	idamax( undefined ); // $ExpectError
-	idamax( [] ); // $ExpectError
-	idamax( {} ); // $ExpectError
+	idamax( '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( true, new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( false, new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( null, new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( [], new Float64Array( 25 ), 10 ); // $ExpectError
+	idamax( {}, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	idamax( 10, '10', 10 ); // $ExpectError
+	idamax( 10, 10, 10 ); // $ExpectError
+	idamax( 10, true, 10 ); // $ExpectError
+	idamax( 10, null, 10 ); // $ExpectError
+	idamax( 10, undefined, 10 ); // $ExpectError
+	idamax( 10, [], 10 ); // $ExpectError
+	idamax( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	idamax( 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), true ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), false ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), null ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), [] ); // $ExpectError
+	idamax( 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	idamax(); // $ExpectError
+	idamax( 10 ); // $ExpectError
 }

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes one dqds transform in ping-pong form without a shift.
+	* @license MIT.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -32,10 +32,10 @@ interface Routine {
 	* @param pp - `pp`
 	* @returns result
 	*/
-	( i0: number, n0: number, z: number, stride: number, pp: number ): Float64Array;
+	( i0: number, n0: number, z: number, stride: number, pp: number ): { dmin1: number; dmin2: number; dn: number; dnm1: number; dnm2: number };
 
 	/**
-	* Computes one dqds transform in ping-pong form without a shift using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -45,11 +45,11 @@ interface Routine {
 	* @param pp - `pp`
 	* @returns result
 	*/
-	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number ): Float64Array;
+	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number ): { dmin1: number; dmin2: number; dn: number; dnm1: number; dnm2: number };
 }
 
 /**
-* Computes one dqds transform in ping-pong form without a shift.
+* @license MIT.
 */
 declare var dlasq6: Routine;
 

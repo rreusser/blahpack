@@ -20,44 +20,45 @@
 
 /// <reference types="@stdlib/types"/>
 
-
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zheswapr`.
 */
 interface Routine {
 	/**
-	* Applies an elementary permutation to a complex Hermitian matrix
+	* @license MIT.
 	*
-	* @param uplo - specifies the operation type
+	* @param order - storage layout
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param a - input array
-	* @param strideA - stride length for `a`
-	* @param lda - lda
-	* @param i1 - i1
-	* @param i2 - i2
+	* @param A - `A`
+	* @param LDA - leading dimension of `A`
+	* @param i1 - `i1`
+	* @param i2 - `i2`
 	* @returns result
 	*/
-	( uplo: string, N: number, a: Float64Array, strideA: number, lda: number, i1: number, i2: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, i1: number, i2: number ): Complex128Array;
 
 	/**
-	* Applies an elementary permutation to a complex Hermitian matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param a - input array
-	* @param strideA - stride length for `a`
+	* @param A - `A`
+	* @param strideA1 - stride of `A`
+	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param lda - lda
-	* @param i1 - i1
-	* @param i2 - i2
+	* @param i1 - `i1`
+	* @param i2 - `i2`
 	* @returns result
 	*/
-	ndarray( uplo: string, N: number, a: Float64Array, strideA: number, offsetA: number, lda: number, i1: number, i2: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, i1: number, i2: number ): Complex128Array;
 }
 
 /**
-* Applies an elementary permutation to a complex Hermitian matrix
+* @license MIT.
 */
 declare var zheswapr: Routine;
 

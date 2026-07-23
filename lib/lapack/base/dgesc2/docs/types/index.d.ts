@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves a system of linear equations A _ X = scale _ RHS with a general.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -37,10 +37,10 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	( N: number, A: Float64Array, LDA: number, RHS: Float64Array, strideRHS: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number, scale: number ): Float64Array;
+	( N: number, A: Float64Array, LDA: number, RHS: Float64Array, strideRHS: number, IPIV: Int32Array, strideIPIV: number, JPIV: Int32Array, strideJPIV: number, scale: number ): void;
 
 	/**
-	* Solves a system of linear equations A _ X = scale _ RHS with a general using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param A - `A`
@@ -59,11 +59,11 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number, scale: number ): Float64Array;
+	ndarray( N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, RHS: Float64Array, strideRHS: number, offsetRHS: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, JPIV: Int32Array, strideJPIV: number, offsetJPIV: number, scale: number ): void;
 }
 
 /**
-* Solves a system of linear equations A _ X = scale _ RHS with a general.
+* @license MIT.
 */
 declare var dgesc2: Routine;
 

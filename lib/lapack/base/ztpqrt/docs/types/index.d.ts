@@ -27,54 +27,53 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a blocked QR factorization of a complex triangular-pentagonal matrix using the compact WY representation for Q.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param nb - nb
-	* @param A - input matrix
+	* @param l - `l`
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, l: number, nb: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, l: number, nb: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, T: Float64Array, LDT: number, WORK: Float64Array ): number;
 
 	/**
-	* Computes a blocked QR factorization of a complex triangular-pentagonal matrix using the compact WY representation for Q., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param l - l
-	* @param nb - nb
-	* @param A - input matrix
+	* @param l - `l`
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param T - input matrix
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, l: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( M: number, N: number, l: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a blocked QR factorization of a complex triangular-pentagonal matrix using the compact WY representation for Q.
+* @license MIT.
 */
 declare var ztpqrt: Routine;
 

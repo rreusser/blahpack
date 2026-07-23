@@ -21,23 +21,77 @@ import zpftrs = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zpftrs( 'no-transpose' ); // $ExpectType Float64Array
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zpftrs( 10 ); // $ExpectError
-	zpftrs( true ); // $ExpectError
-	zpftrs( false ); // $ExpectError
-	zpftrs( null ); // $ExpectError
-	zpftrs( undefined ); // $ExpectError
-	zpftrs( [] ); // $ExpectError
-	zpftrs( {} ); // $ExpectError
+	zpftrs( 10, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( true, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( null, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( undefined, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( [], 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( {}, 'upper', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zpftrs( 'no-transpose', 10, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', true, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', null, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', undefined, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', [], 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', {}, 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zpftrs( 'no-transpose', 'upper', '10', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', true, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', false, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', null, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', [], 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', {}, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zpftrs( 'no-transpose', 'upper', 10, '10', new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, true, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, false, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, null, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, undefined, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, [], new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, {}, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zpftrs( 'no-transpose', 'upper', 10, 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, true, new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, null, new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, [], new Float64Array( 25 ) ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), true ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), null ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), [] ); // $ExpectError
+	zpftrs( 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zpftrs(); // $ExpectError
+	zpftrs( 'no-transpose' ); // $ExpectError
 }

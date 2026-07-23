@@ -21,23 +21,79 @@ import zlapll = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns void...
 {
-	zlapll( 10 ); // $ExpectType Float64Array
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectType void
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zlapll( '10' ); // $ExpectError
-	zlapll( true ); // $ExpectError
-	zlapll( false ); // $ExpectError
-	zlapll( null ); // $ExpectError
-	zlapll( undefined ); // $ExpectError
-	zlapll( [] ); // $ExpectError
-	zlapll( {} ); // $ExpectError
+	zlapll( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlapll( 10, '10', 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, 10, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, true, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, null, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, undefined, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, [], 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, {}, 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlapll( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlapll( 10, new Float64Array( 25 ), 10, '10', 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, 10, 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, true, 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, null, 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, undefined, 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, [], 10, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10', 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined, 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [], 10 ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, '10' ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, true ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, false ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, null ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, undefined ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, [] ); // $ExpectError
+	zlapll( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlapll(); // $ExpectError
+	zlapll( 10 ); // $ExpectError
 }

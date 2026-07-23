@@ -23,16 +23,21 @@
 */
 interface Routine {
 	/**
-	* CABS1 = |Re(z)| + |Im(z)|.
+	* @license MIT.
 	*
+	* @param N - number of columns
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param s1 - `s1`
+	* @param s2 - `s2`
 	* @param v - `v`
-	* @param idx - `idx`
+	* @param strideV - stride of `V`
 	* @returns result
 	*/
-	( v: Float64Array, idx: number ): Float64Array;
+	( N: number, H: Float64Array, LDH: number, s1: number, s2: number, v: Float64Array, strideV: number ): number;
 
 	/**
-	* CABS1 = |Re(z)| + |Im(z)| using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param H - `H`
@@ -46,11 +51,11 @@ interface Routine {
 	* @param offsetV - starting index for `V`
 	* @returns result
 	*/
-	ndarray( N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, s1: number, s2: number, v: Float64Array, strideV: number, offsetV: number ): Float64Array;
+	ndarray( N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, s1: number, s2: number, v: Float64Array, strideV: number, offsetV: number ): number;
 }
 
 /**
-* CABS1 = |Re(z)| + |Im(z)|.
+* @license MIT.
 */
 declare var zlaqr1: Routine;
 

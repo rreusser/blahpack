@@ -16,6 +16,7 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var util = require( './conformance/util.js' );
+var returnType = require( './return_type.js' );
 
 var LICENSE = [
 	'/*',
@@ -192,17 +193,40 @@ function buildParamList( params, isComplex, hasStrides, knownArrays ) {
 	});
 }
 
-function collectImports( paramList ) {
-	var imports = new Set();
-	var needsRef = false;
+// Collect imports as a map of `@stdlib/types` submodule -> Set of type names.
+function collectImports( paramList, extraImports ) {
+	var byModule = {};
+	function add( name, mod ) {
+		if ( !byModule[ mod ] ) {
+			byModule[ mod ] = new Set();
+		}
+		byModule[ mod ].add( name );
+	}
 	paramList.forEach( function( p ) {
 		var lower = p.name.toLowerCase();
 		if ( TYPED_PARAMS[ lower ] ) {
-			imports.add( TYPED_PARAMS[ lower ].import );
-			needsRef = true;
+			add( TYPED_PARAMS[ lower ].import, '@stdlib/types/blas' );
 		}
 	});
-	return { imports: Array.from( imports ), needsRef: needsRef };
+	( extraImports || [] ).forEach( function( imp ) {
+		add( imp.name, imp.module );
+	});
+	return byModule;
+}
+
+// Emit `/// <reference>` + one grouped import line per submodule.
+function formatImports( byModule ) {
+	var mods = Object.keys( byModule ).sort();
+	if ( mods.length === 0 ) {
+		return [];
+	}
+	var lines = [ '/// <reference types="@stdlib/types"/>', '' ];
+	mods.forEach( function( mod ) {
+		var names = Array.from( byModule[ mod ] ).sort();
+		lines.push( 'import { ' + names.join( ', ' ) + ' } from \'' + mod + '\';' );
+	});
+	lines.push( '' );
+	return lines;
 }
 
 function formatParamListInline( paramList ) {
@@ -288,20 +312,14 @@ function generateIndexDTS( routine, mod ) {
 	}).map( function( p ) { return p.name; });
 	var layoutTyped = layoutParams ? buildParamList( layoutParams, isComplex, false, knownArrayNames ) : null;
 
-	// Determine return type from existing index.d.ts or default
-	var existingDts = path.join( mod.dir, 'docs', 'types', 'index.d.ts' );
-	var returnType = 'Float64Array';
-	if ( fs.existsSync( existingDts ) ) {
-		var existing = fs.readFileSync( existingDts, 'utf8' );
-		var retMatch = existing.match( /\):\s*(\w+)/ );
-		if ( retMatch ) {
-			returnType = retMatch[ 1 ];
-		}
-	}
+	// Determine return type from the implementation JSDoc (single source of
+	// truth), preferring the public ndarray file, then base, then wrapper.
+	var ret = returnType.fromImpl( ndarrayContent || baseContent || routineContent );
+	var retType = ret.ts;
 
-	// Collect imports from all params
+	// Collect imports from all params + the return type.
 	var allParams = ndarrayTyped.concat( layoutTyped || [] );
-	var importInfo = collectImports( allParams );
+	var importsByModule = collectImports( allParams, ret.imports );
 
 	// Build the file
 	var lines = [];
@@ -310,12 +328,9 @@ function generateIndexDTS( routine, mod ) {
 	lines.push( '// TypeScript Version: 4.1' );
 	lines.push( '' );
 
-	if ( importInfo.needsRef ) {
-		lines.push( '/// <reference types="@stdlib/types"/>' );
-		lines.push( '' );
-		lines.push( 'import { ' + importInfo.imports.join( ', ' ) + ' } from \'@stdlib/types/blas\';' );
-		lines.push( '' );
-	}
+	formatImports( importsByModule ).forEach( function push( l ) {
+		lines.push( l );
+	});
 
 	lines.push( '/**' );
 	lines.push( '* Interface describing `' + routine + '`.' );
@@ -330,7 +345,7 @@ function generateIndexDTS( routine, mod ) {
 		lines.push( formatParamDocs( layoutTyped, '\t' ) );
 		lines.push( '\t* @returns result' );
 		lines.push( '\t*/' );
-		lines.push( '\t( ' + formatParamListInline( layoutTyped ) + ' ): ' + returnType + ';' );
+		lines.push( '\t( ' + formatParamListInline( layoutTyped ) + ' ): '  + retType +  ';' );
 		lines.push( '' );
 	}
 
@@ -346,9 +361,9 @@ function generateIndexDTS( routine, mod ) {
 	lines.push( '\t* @returns result' );
 	lines.push( '\t*/' );
 	if ( layoutTyped ) {
-		lines.push( '\tndarray( ' + formatParamListInline( ndarrayTyped ) + ' ): ' + returnType + ';' );
+		lines.push( '\tndarray( ' + formatParamListInline( ndarrayTyped ) + ' ): '  + retType +  ';' );
 	} else {
-		lines.push( '\t( ' + formatParamListInline( ndarrayTyped ) + ' ): ' + returnType + ';' );
+		lines.push( '\t( ' + formatParamListInline( ndarrayTyped ) + ' ): '  + retType +  ';' );
 	}
 
 	lines.push( '}' );

@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes a step of QR factorization with column pivoting using a.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -50,10 +50,10 @@ interface Routine {
 	* @param LDF - leading dimension of `F`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, offset: number, nb: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, AUXV: Float64Array, strideAUXV: number, F: Float64Array, LDF: number ): Float64Array;
+	( order: Layout, M: number, N: number, offset: number, nb: number, A: Float64Array, LDA: number, JPVT: Float64Array, strideJPVT: number, TAU: Float64Array, strideTAU: number, VN1: number, strideVN1: number, VN2: number, strideVN2: number, AUXV: Float64Array, strideAUXV: number, F: Float64Array, LDF: number ): number;
 
 	/**
-	* Computes a step of QR factorization with column pivoting using a using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -84,11 +84,11 @@ interface Routine {
 	* @param offsetF - starting index for `F`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, offset: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, AUXV: Float64Array, strideAUXV: number, offsetAUXV: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number ): Float64Array;
+	ndarray( M: number, N: number, offset: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, JPVT: Float64Array, strideJPVT: number, offsetJPVT: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, VN1: number, strideVN1: number, offsetVN1: number, VN2: number, strideVN2: number, offsetVN2: number, AUXV: Float64Array, strideAUXV: number, offsetAUXV: number, F: Float64Array, strideF1: number, strideF2: number, offsetF: number ): number;
 }
 
 /**
-* Computes a step of QR factorization with column pivoting using a.
+* @license MIT.
 */
 declare var zlaqps: Routine;
 

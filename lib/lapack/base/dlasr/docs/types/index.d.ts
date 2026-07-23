@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlasr`.
 */
 interface Routine {
 	/**
-	* Applies a sequence of real plane rotations to a real general rectangular matrix.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param side - specifies the side of the operation
@@ -46,7 +46,7 @@ interface Routine {
 	( order: Layout, side: OperationSide, pivot: boolean, direct: string, M: number, N: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number, A: Float64Array, LDA: number ): Float64Array;
 
 	/**
-	* Applies a sequence of real plane rotations to a real general rectangular matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param side - specifies the side of the operation
 	* @param pivot - `pivot`
@@ -69,7 +69,7 @@ interface Routine {
 }
 
 /**
-* Applies a sequence of real plane rotations to a real general rectangular matrix.
+* @license MIT.
 */
 declare var dlasr: Routine;
 

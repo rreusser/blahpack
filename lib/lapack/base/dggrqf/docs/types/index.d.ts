@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes a generalized RQ factorization of an M-by-N matrix A and a.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param p - `p`
@@ -36,12 +36,14 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @param TAUB - `TAUB`
 	* @param strideTAUB - stride of `TAUB`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( M: number, p: number, N: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number ): Float64Array;
+	( M: number, p: number, N: number, A: Float64Array, LDA: number, TAUA: Float64Array, strideTAUA: number, B: Float64Array, LDB: number, TAUB: Float64Array, strideTAUB: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes a generalized RQ factorization of an M-by-N matrix A and a using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param p - `p`
@@ -60,13 +62,16 @@ interface Routine {
 	* @param TAUB - `TAUB`
 	* @param strideTAUB - stride of `TAUB`
 	* @param offsetTAUB - starting index for `TAUB`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number ): Float64Array;
+	ndarray( M: number, p: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAUA: Float64Array, strideTAUA: number, offsetTAUA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, TAUB: Float64Array, strideTAUB: number, offsetTAUB: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes a generalized RQ factorization of an M-by-N matrix A and a.
+* @license MIT.
 */
 declare var dggrqf: Routine;
 

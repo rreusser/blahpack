@@ -20,92 +20,92 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zhsein`.
 */
 interface Routine {
 	/**
-	* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param side - specifies the operation type
-	* @param eigsrc - specifies the operation type
-	* @param initv - specifies the operation type
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param side - specifies the side of the operation
+	* @param eigsrc - `eigsrc`
+	* @param initv - `initv`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param N - number of columns
-	* @param H - input matrix
+	* @param H - `H`
 	* @param LDH - leading dimension of `H`
-	* @param w - input array
-	* @param strideW - stride length for `w`
-	* @param VL - input matrix
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param VL - `VL`
 	* @param LDVL - leading dimension of `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param LDVR - leading dimension of `VR`
-	* @param mm - mm
+	* @param mm - `mm`
 	* @param M - number of rows
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param IFAILL - input array
-	* @param strideIFAILL - stride length for `IFAILL`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param IFAILL - `IFAILL`
+	* @param strideIFAILL - stride of `IFAILL`
 	* @param offsetIFAILL - starting index for `IFAILL`
-	* @param IFAILR - output array
-	* @param strideIFAILR - stride length for `IFAILR`
+	* @param IFAILR - `IFAILR`
+	* @param strideIFAILR - stride of `IFAILR`
 	* @param offsetIFAILR - starting index for `IFAILR`
 	* @returns result
 	*/
-	( order: Layout, side: string, eigsrc: string, initv: string, SELECT: Float64Array, strideSELECT: number, N: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number, IFAILL: Int32Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Int32Array, strideIFAILR: number, offsetIFAILR: number ): Float64Array;
+	( order: Layout, side: OperationSide, eigsrc: number, initv: number, SELECT: Int32Array, strideSELECT: number, N: number, H: Float64Array, LDH: number, w: Float64Array, strideW: number, VL: Float64Array, LDVL: number, VR: Float64Array, LDVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, IFAILL: Float64Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Float64Array, strideIFAILR: number, offsetIFAILR: number ): number;
 
 	/**
-	* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param side - specifies the operation type
-	* @param eigsrc - specifies the operation type
-	* @param initv - specifies the operation type
-	* @param SELECT - input array
-	* @param strideSELECT - stride length for `SELECT`
+	* @param side - specifies the side of the operation
+	* @param eigsrc - `eigsrc`
+	* @param initv - `initv`
+	* @param SELECT - `SELECT`
+	* @param strideSELECT - stride of `SELECT`
 	* @param offsetSELECT - starting index for `SELECT`
 	* @param N - number of columns
-	* @param H - input matrix
+	* @param H - `H`
 	* @param strideH1 - stride of `H`
 	* @param strideH2 - stride of `H`
 	* @param offsetH - starting index for `H`
-	* @param w - input array
-	* @param strideW - stride length for `w`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
-	* @param VL - input matrix
+	* @param VL - `VL`
 	* @param strideVL1 - stride of `VL`
 	* @param strideVL2 - stride of `VL`
 	* @param offsetVL - starting index for `VL`
-	* @param VR - input matrix
+	* @param VR - `VR`
 	* @param strideVR1 - stride of `VR`
 	* @param strideVR2 - stride of `VR`
 	* @param offsetVR - starting index for `VR`
-	* @param mm - mm
+	* @param mm - `mm`
 	* @param M - number of rows
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param RWORK - input array
-	* @param strideRWORK - stride length for `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
-	* @param IFAILL - input array
-	* @param strideIFAILL - stride length for `IFAILL`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param RWORK - `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
+	* @param IFAILL - `IFAILL`
+	* @param strideIFAILL - stride of `IFAILL`
 	* @param offsetIFAILL - starting index for `IFAILL`
-	* @param IFAILR - output array
-	* @param strideIFAILR - stride length for `IFAILR`
+	* @param IFAILR - `IFAILR`
+	* @param strideIFAILR - stride of `IFAILR`
 	* @param offsetIFAILR - starting index for `IFAILR`
 	* @returns result
 	*/
-	ndarray( side: string, eigsrc: string, initv: string, SELECT: Float64Array, strideSELECT: number, offsetSELECT: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: Float64Array, strideW: number, offsetW: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, IFAILL: Int32Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Int32Array, strideIFAILR: number, offsetIFAILR: number ): Float64Array;
+	ndarray( side: OperationSide, eigsrc: number, initv: number, SELECT: Int32Array, strideSELECT: number, offsetSELECT: number, N: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, w: Float64Array, strideW: number, offsetW: number, VL: Float64Array, strideVL1: number, strideVL2: number, offsetVL: number, VR: Float64Array, strideVR1: number, strideVR2: number, offsetVR: number, mm: number, M: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, IFAILL: Float64Array, strideIFAILL: number, offsetIFAILL: number, IFAILR: Float64Array, strideIFAILR: number, offsetIFAILR: number ): number;
 }
 
 /**
-* Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix
+* @license MIT.
 */
 declare var zhsein: Routine;
 

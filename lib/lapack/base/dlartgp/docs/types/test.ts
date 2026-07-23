@@ -21,22 +21,35 @@ import dlartgp = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function returns a Float64Array...
 {
-	dlartgp( 2, 2, 2, 2, 2 ); // $ExpectType void
+	dlartgp( 10, 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlartgp( '10', 10 ); // $ExpectError
+	dlartgp( true, 10 ); // $ExpectError
+	dlartgp( false, 10 ); // $ExpectError
+	dlartgp( null, 10 ); // $ExpectError
+	dlartgp( undefined, 10 ); // $ExpectError
+	dlartgp( [], 10 ); // $ExpectError
+	dlartgp( {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlartgp( 10, '10' ); // $ExpectError
+	dlartgp( 10, true ); // $ExpectError
+	dlartgp( 10, false ); // $ExpectError
+	dlartgp( 10, null ); // $ExpectError
+	dlartgp( 10, undefined ); // $ExpectError
+	dlartgp( 10, [] ); // $ExpectError
+	dlartgp( 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlartgp(); // $ExpectError
-}
-
-// The ndarray method returns a void...
-{
-	dlartgp.ndarray( 2, 2, 2, 2, 2 ); // $ExpectType void
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlartgp.ndarray(); // $ExpectError
+	dlartgp( 10 ); // $ExpectError
 }

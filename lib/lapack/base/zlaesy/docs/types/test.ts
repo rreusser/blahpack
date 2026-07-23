@@ -21,23 +21,46 @@ import zlaesy = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function is callable with the documented arguments...
 {
-	zlaesy( 10 ); // $ExpectType void
+	zlaesy( 10, 10, 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zlaesy( '10' ); // $ExpectError
-	zlaesy( true ); // $ExpectError
-	zlaesy( false ); // $ExpectError
-	zlaesy( null ); // $ExpectError
-	zlaesy( undefined ); // $ExpectError
-	zlaesy( [] ); // $ExpectError
-	zlaesy( {} ); // $ExpectError
+	zlaesy( '10', 10, 10 ); // $ExpectError
+	zlaesy( true, 10, 10 ); // $ExpectError
+	zlaesy( false, 10, 10 ); // $ExpectError
+	zlaesy( null, 10, 10 ); // $ExpectError
+	zlaesy( undefined, 10, 10 ); // $ExpectError
+	zlaesy( [], 10, 10 ); // $ExpectError
+	zlaesy( {}, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlaesy( 10, '10', 10 ); // $ExpectError
+	zlaesy( 10, true, 10 ); // $ExpectError
+	zlaesy( 10, false, 10 ); // $ExpectError
+	zlaesy( 10, null, 10 ); // $ExpectError
+	zlaesy( 10, undefined, 10 ); // $ExpectError
+	zlaesy( 10, [], 10 ); // $ExpectError
+	zlaesy( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlaesy( 10, 10, '10' ); // $ExpectError
+	zlaesy( 10, 10, true ); // $ExpectError
+	zlaesy( 10, 10, false ); // $ExpectError
+	zlaesy( 10, 10, null ); // $ExpectError
+	zlaesy( 10, 10, undefined ); // $ExpectError
+	zlaesy( 10, 10, [] ); // $ExpectError
+	zlaesy( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlaesy(); // $ExpectError
+	zlaesy( 10 ); // $ExpectError
 }

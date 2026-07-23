@@ -20,61 +20,61 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zlasyf_aa`.
 */
 interface Routine {
 	/**
-	* Factorize a panel of a complex symmetric matrix using Aasen's algorithm.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
-	* @param j1 - j1
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param j1 - `j1`
 	* @param M - number of rows
-	* @param nb - nb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param H - input matrix
+	* @param H - `H`
 	* @param LDH - leading dimension of `H`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, j1: number, M: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, H: Float64Array, LDH: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, j1: number, M: number, nb: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, H: Float64Array, LDH: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Factorize a panel of a complex symmetric matrix using Aasen's algorithm., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
-	* @param j1 - j1
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param j1 - `j1`
 	* @param M - number of rows
-	* @param nb - nb
-	* @param A - input matrix
+	* @param nb - `nb`
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param H - input matrix
+	* @param H - `H`
 	* @param strideH1 - stride of `H`
 	* @param strideH2 - stride of `H`
 	* @param offsetH - starting index for `H`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: string, j1: number, M: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, j1: number, M: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Factorize a panel of a complex symmetric matrix using Aasen's algorithm.
+* @license MIT.
 */
 declare var zlasyf_aa: Routine;
 

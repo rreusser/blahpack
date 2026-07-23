@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zdrscl`.
 */
 interface Routine {
 	/**
-	* Scales a complex vector by the reciprocal of a real scalar, performing the.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param sa - `sa`
@@ -31,10 +35,10 @@ interface Routine {
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( N: number, sa: number, x: Float64Array, strideX: number ): Float64Array;
+	( N: number, sa: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* Scales a complex vector by the reciprocal of a real scalar, performing the using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param sa - `sa`
@@ -43,11 +47,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, sa: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, sa: number, x: Float64Array, strideX: number, offsetX: number ): Complex128Array;
 }
 
 /**
-* Scales a complex vector by the reciprocal of a real scalar, performing the.
+* @license MIT.
 */
 declare var zdrscl: Routine;
 

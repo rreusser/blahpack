@@ -23,21 +23,66 @@ import dswap = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dswap( 10 ); // $ExpectType Float64Array
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dswap( '10' ); // $ExpectError
-	dswap( true ); // $ExpectError
-	dswap( false ); // $ExpectError
-	dswap( null ); // $ExpectError
-	dswap( undefined ); // $ExpectError
-	dswap( [] ); // $ExpectError
-	dswap( {} ); // $ExpectError
+	dswap( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dswap( 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dswap( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dswap( 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dswap( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dswap(); // $ExpectError
+	dswap( 10 ); // $ExpectError
 }

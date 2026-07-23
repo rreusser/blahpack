@@ -20,49 +20,49 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsytrf_aa`.
 */
 interface Routine {
 	/**
-	* Computes the factorization of a real symmetric matrix using Aasen's algorithm (blocked)
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - input array
-	* @param WORK - caller-provided workspace (`null` requests internal allocation)
-	* @param strideWork - stride length for `WORK`
-	* @returns `info` (always 0)
+	* @param IPIV - `IPIV`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, WORK: Float64Array | null, strideWork: number ): number;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes the factorization of a real symmetric matrix using Aasen's algorithm (blocked), using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param WORK - caller-owned workspace
-	* @param strideWork - stride length for `WORK`
-	* @param offsetWork - starting index for `WORK`
-	* @returns `info` (always 0)
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( uplo: string, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
+	ndarray( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes the factorization of a real symmetric matrix using Aasen's algorithm (blocked)
+* @license MIT.
 */
 declare var dsytrf_aa: Routine;
 

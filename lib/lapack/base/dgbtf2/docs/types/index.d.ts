@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes an LU factorization of a real M-by-N band matrix A using partial.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param M - number of rows
@@ -40,10 +40,10 @@ interface Routine {
 	* @param strideIPIV - stride of `IPIV`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number ): Float64Array;
+	( order: Layout, M: number, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, IPIV: Int32Array, strideIPIV: number ): number;
 
 	/**
-	* Computes an LU factorization of a real M-by-N band matrix A using partial using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -58,11 +58,11 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( M: number, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Computes an LU factorization of a real M-by-N band matrix A using partial.
+* @license MIT.
 */
 declare var dgbtf2: Routine;
 

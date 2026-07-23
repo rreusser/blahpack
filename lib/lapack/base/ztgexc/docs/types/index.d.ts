@@ -27,57 +27,57 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reorders the generalized Schur decomposition of a complex matrix pair
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param wantq - wantq
-	* @param wantz - wantz
+	* @param wantq - `wantq`
+	* @param wantz - `wantz`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param LDQ - leading dimension of `Q`
-	* @param Z - output matrix
+	* @param Z - `Z`
 	* @param LDZ - leading dimension of `Z`
-	* @param ifst - ifst
-	* @param ilst - ilst
+	* @param ifst - `ifst`
+	* @param ilst - `ilst`
 	* @returns result
 	*/
-	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, ifst: number, ilst: number ): Float64Array;
+	( order: Layout, wantq: boolean, wantz: boolean, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, ifst: number, ilst: number ): number;
 
 	/**
-	* Reorders the generalized Schur decomposition of a complex matrix pair, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param wantq - wantq
-	* @param wantz - wantz
+	* @param wantq - `wantq`
+	* @param wantz - `wantz`
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param Q - input matrix
+	* @param Q - `Q`
 	* @param strideQ1 - stride of `Q`
 	* @param strideQ2 - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param Z - output matrix
+	* @param Z - `Z`
 	* @param strideZ1 - stride of `Z`
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
-	* @param ifst - ifst
-	* @param ilst - ilst
+	* @param ifst - `ifst`
+	* @param ilst - `ilst`
 	* @returns result
 	*/
-	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ifst: number, ilst: number ): Float64Array;
+	ndarray( wantq: boolean, wantz: boolean, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, Q: Float64Array, strideQ1: number, strideQ2: number, offsetQ: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, ifst: number, ilst: number ): number;
 }
 
 /**
-* Reorders the generalized Schur decomposition of a complex matrix pair
+* @license MIT.
 */
 declare var ztgexc: Routine;
 

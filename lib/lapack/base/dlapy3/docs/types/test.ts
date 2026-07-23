@@ -23,21 +23,44 @@ import dlapy3 = require( './index' );
 
 // The function returns a number...
 {
-	dlapy3( 10 ); // $ExpectType number
+	dlapy3( 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlapy3( '10' ); // $ExpectError
-	dlapy3( true ); // $ExpectError
-	dlapy3( false ); // $ExpectError
-	dlapy3( null ); // $ExpectError
-	dlapy3( undefined ); // $ExpectError
-	dlapy3( [] ); // $ExpectError
-	dlapy3( {} ); // $ExpectError
+	dlapy3( '10', 10, 10 ); // $ExpectError
+	dlapy3( true, 10, 10 ); // $ExpectError
+	dlapy3( false, 10, 10 ); // $ExpectError
+	dlapy3( null, 10, 10 ); // $ExpectError
+	dlapy3( undefined, 10, 10 ); // $ExpectError
+	dlapy3( [], 10, 10 ); // $ExpectError
+	dlapy3( {}, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlapy3( 10, '10', 10 ); // $ExpectError
+	dlapy3( 10, true, 10 ); // $ExpectError
+	dlapy3( 10, false, 10 ); // $ExpectError
+	dlapy3( 10, null, 10 ); // $ExpectError
+	dlapy3( 10, undefined, 10 ); // $ExpectError
+	dlapy3( 10, [], 10 ); // $ExpectError
+	dlapy3( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlapy3( 10, 10, '10' ); // $ExpectError
+	dlapy3( 10, 10, true ); // $ExpectError
+	dlapy3( 10, 10, false ); // $ExpectError
+	dlapy3( 10, 10, null ); // $ExpectError
+	dlapy3( 10, 10, undefined ); // $ExpectError
+	dlapy3( 10, 10, [] ); // $ExpectError
+	dlapy3( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlapy3(); // $ExpectError
+	dlapy3( 10 ); // $ExpectError
 }

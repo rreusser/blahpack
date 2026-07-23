@@ -21,23 +21,46 @@ import dasum = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dasum( 10 ); // $ExpectType Float64Array
+	dasum( 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dasum( '10' ); // $ExpectError
-	dasum( true ); // $ExpectError
-	dasum( false ); // $ExpectError
-	dasum( null ); // $ExpectError
-	dasum( undefined ); // $ExpectError
-	dasum( [] ); // $ExpectError
-	dasum( {} ); // $ExpectError
+	dasum( '10', 10, 10 ); // $ExpectError
+	dasum( true, 10, 10 ); // $ExpectError
+	dasum( false, 10, 10 ); // $ExpectError
+	dasum( null, 10, 10 ); // $ExpectError
+	dasum( undefined, 10, 10 ); // $ExpectError
+	dasum( [], 10, 10 ); // $ExpectError
+	dasum( {}, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dasum( 10, '10', 10 ); // $ExpectError
+	dasum( 10, true, 10 ); // $ExpectError
+	dasum( 10, false, 10 ); // $ExpectError
+	dasum( 10, null, 10 ); // $ExpectError
+	dasum( 10, undefined, 10 ); // $ExpectError
+	dasum( 10, [], 10 ); // $ExpectError
+	dasum( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dasum( 10, 10, '10' ); // $ExpectError
+	dasum( 10, 10, true ); // $ExpectError
+	dasum( 10, 10, false ); // $ExpectError
+	dasum( 10, 10, null ); // $ExpectError
+	dasum( 10, 10, undefined ); // $ExpectError
+	dasum( 10, 10, [] ); // $ExpectError
+	dasum( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dasum(); // $ExpectError
+	dasum( 10 ); // $ExpectError
 }

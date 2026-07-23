@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Refine eigenvalue approximations using bisection given initial intervals.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -39,17 +39,17 @@ interface Routine {
 	* @param WERR - `WERR`
 	* @param strideWERR - stride of `WERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
+	* @param strideIWork - stride of `IWork`
 	* @param pivmin - `pivmin`
 	* @param spdiam - `spdiam`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, E2: number, strideE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, pivmin: number, spdiam: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, E2: number, strideE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, pivmin: number, spdiam: number ): number;
 
 	/**
-	* Refine eigenvalue approximations using bisection given initial intervals using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param d - `d`
@@ -69,20 +69,20 @@ interface Routine {
 	* @param strideWERR - stride of `WERR`
 	* @param offsetWERR - starting index for `WERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @param pivmin - `pivmin`
 	* @param spdiam - `spdiam`
 	* @returns result
 	*/
-	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, E2: number, strideE2: number, offsetE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, offsetW: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number, pivmin: number, spdiam: number ): Float64Array;
+	ndarray( N: number, d: Float64Array, strideD: number, offsetD: number, E2: number, strideE2: number, offsetE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, offsetW: number, WERR: Float64Array, strideWERR: number, offsetWERR: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number, pivmin: number, spdiam: number ): number;
 }
 
 /**
-* Refine eigenvalue approximations using bisection given initial intervals.
+* @license MIT.
 */
 declare var dlarrj: Routine;
 

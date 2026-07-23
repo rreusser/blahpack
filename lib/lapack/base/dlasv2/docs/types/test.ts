@@ -21,23 +21,46 @@ import dlasv2 = require( './index' );
 
 // TESTS //
 
-// The function returns a void...
+// The function is callable with the documented arguments...
 {
-	dlasv2( 10 ); // $ExpectType void
+	dlasv2( 10, 10, 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dlasv2( '10' ); // $ExpectError
-	dlasv2( true ); // $ExpectError
-	dlasv2( false ); // $ExpectError
-	dlasv2( null ); // $ExpectError
-	dlasv2( undefined ); // $ExpectError
-	dlasv2( [] ); // $ExpectError
-	dlasv2( {} ); // $ExpectError
+	dlasv2( '10', 10, 10 ); // $ExpectError
+	dlasv2( true, 10, 10 ); // $ExpectError
+	dlasv2( false, 10, 10 ); // $ExpectError
+	dlasv2( null, 10, 10 ); // $ExpectError
+	dlasv2( undefined, 10, 10 ); // $ExpectError
+	dlasv2( [], 10, 10 ); // $ExpectError
+	dlasv2( {}, 10, 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlasv2( 10, '10', 10 ); // $ExpectError
+	dlasv2( 10, true, 10 ); // $ExpectError
+	dlasv2( 10, false, 10 ); // $ExpectError
+	dlasv2( 10, null, 10 ); // $ExpectError
+	dlasv2( 10, undefined, 10 ); // $ExpectError
+	dlasv2( 10, [], 10 ); // $ExpectError
+	dlasv2( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlasv2( 10, 10, '10' ); // $ExpectError
+	dlasv2( 10, 10, true ); // $ExpectError
+	dlasv2( 10, 10, false ); // $ExpectError
+	dlasv2( 10, 10, null ); // $ExpectError
+	dlasv2( 10, 10, undefined ); // $ExpectError
+	dlasv2( 10, 10, [] ); // $ExpectError
+	dlasv2( 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlasv2(); // $ExpectError
+	dlasv2( 10 ); // $ExpectError
 }

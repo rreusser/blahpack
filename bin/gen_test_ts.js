@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Generate docs/types/test.ts for each module from its index.d.ts.
+ * Generate docs/types/test.ts for each module.
  *
- * Parses the Routine interface to get parameter names/types and return type,
- * then generates TypeScript compile-time assertion tests.
+ * The parameter shape (names/types) comes from the committed index.d.ts, but
+ * the asserted RETURN type comes from the implementation JSDoc via
+ * return_type.js — independently of index.d.ts. That independence is the whole
+ * point: type-checking the generated test.ts against index.d.ts then asserts
+ * the public declaration's return type actually matches the code.
  *
  * Usage:
  *   node bin/gen_test_ts.js [--all | module-path...]
@@ -15,6 +18,7 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var util = require( './conformance/util.js' );
+var returnType = require( './return_type.js' );
 
 var LICENSE = [
 	'/*',
@@ -36,132 +40,170 @@ var LICENSE = [
 	'*/'
 ].join( '\n' );
 
-// Default values for each type
+// A valid literal for each parameter type.
 var DEFAULTS = {
-	'string': '\'no-transpose\'',
 	'number': '10',
-	'Float64Array': 'new Float64Array( 25 )',
-	'Complex128Array': 'new Float64Array( 50 )',
-	'Int32Array': 'new Int32Array( 25 )',
-	'any': '1.0',
 	'boolean': 'true',
+	'string': '\'no-transpose\'',
+	'Layout': '\'row-major\'',
+	'TransposeOperation': '\'no-transpose\'',
+	'MatrixTriangle': '\'upper\'',
+	'OperationSide': '\'left\'',
+	'DiagonalType': '\'unit\'',
+	'Float64Array': 'new Float64Array( 25 )',
+	'Float32Array': 'new Float32Array( 25 )',
+	'Int32Array': 'new Int32Array( 25 )',
+	'Complex128Array': 'zx',
+	'Complex64Array': 'zx',
 	'Function': '(): boolean => true'
 };
 
-// Wrong-type values for each expected type
-var WRONG_TYPES = {
-	'string': [ '10', 'true', 'false', 'null', 'undefined', '[]', '{}' ],
+// Values that must NOT type-check for each parameter type. For the string-enum
+// types a plain number/boolean/etc. is a reliable negative; we deliberately do
+// not use look-alike strings (an out-of-union string is also an error but adds
+// no signal here).
+var WRONG = {
 	'number': [ '\'10\'', 'true', 'false', 'null', 'undefined', '[]', '{}' ],
-	'Float64Array': [ '\'10\'', '10', 'true', 'false', 'null', 'undefined', '[]', '{}' ],
-	'Complex128Array': [ '\'10\'', '10', 'true', 'false', 'null', 'undefined', '[]', '{}' ],
-	'Int32Array': [ '\'10\'', '10', 'true', 'false', 'null', 'undefined', '[]', '{}' ],
-	'any': [],
 	'boolean': [ '\'10\'', '10', 'null', 'undefined', '[]', '{}' ],
-	'Function': [ '\'10\'', '10', 'true', 'false', 'null', 'undefined', '[]', '{}' ]
+	'string': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Layout': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'TransposeOperation': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'MatrixTriangle': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'OperationSide': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'DiagonalType': [ '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Float64Array': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Float32Array': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Int32Array': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Complex128Array': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Complex64Array': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ],
+	'Function': [ '\'10\'', '10', 'true', 'null', 'undefined', '[]', '{}' ]
 };
 
+// Return types simple enough to assert exactly with `$ExpectType`. Object
+// literals / Record are intentionally excluded (only assert the call
+// type-checks) because their printed form is brittle to match.
+var ASSERTABLE = {
+	'number': true,
+	'boolean': true,
+	'string': true,
+	'void': true,
+	'Float64Array': true,
+	'Float32Array': true,
+	'Int32Array': true,
+	'Complex128Array': true,
+	'Complex64Array': true
+};
+
+
+// HELPERS //
+
 /**
- * Parse an index.d.ts to extract the Routine interface signature.
+ * Parse the primary call signature `( ... ): Ret` from a Routine interface.
+ *
+ * @returns {?Object} { params: [ { name, type } ] } or null
  */
-function parseDeclaration( content ) {
-	// Find the main call signature in the Routine interface
-	var sigMatch = content.match( /interface Routine[\s\S]*?\(\s*([\s\S]*?)\):\s*(\w+)/ );
-	if ( !sigMatch ) {
+function parseSignature( content ) {
+	var m = content.match( /interface Routine\s*\{[\s\S]*?\n\t\(\s*([\s\S]*?)\)\s*:/ );
+	if ( !m ) {
+		// Single-signature form: first `( ... ):` after the interface open.
+		m = content.match( /interface Routine\s*\{[\s\S]*?\(\s*([\s\S]*?)\)\s*:/ );
+	}
+	if ( !m ) {
 		return null;
 	}
-
-	var paramsStr = sigMatch[ 1 ];
-	var returnType = sigMatch[ 2 ];
-
-	// Parse each param line
-	var paramLines = paramsStr.split( '\n' ).filter( function( l ) {
-		return /\w+:\s*\w+/.test( l );
-	});
-
-	var params = paramLines.map( function( line ) {
-		var m = line.match( /(\w+):\s*(\w+)/ );
-		if ( !m ) {
-			return null;
-		}
-		return { name: m[ 1 ], type: m[ 2 ] };
-	}).filter( Boolean );
-
-	return {
-		params: params,
-		returnType: returnType
-	};
+	var params = m[ 1 ]
+		.split( ',' )
+		.map( function pick( chunk ) {
+			var mm = chunk.match( /(\w+)\s*:\s*([A-Za-z0-9_]+)/ );
+			return mm ? { 'name': mm[ 1 ], 'type': mm[ 2 ] } : null;
+		})
+		.filter( Boolean );
+	return params.length ? { 'params': params } : null;
 }
 
-/**
- * Generate a valid call expression.
- */
+function arg( type ) {
+	return DEFAULTS[ type ] || '0';
+}
+
 function validCall( routine, params ) {
-	var args = params.map( function( p ) {
-		return DEFAULTS[ p.type ] || '0';
-	});
+	return routine + '( ' + params.map( function a( p ) { return arg( p.type ); } ).join( ', ' ) + ' )';
+}
+
+function wrongCall( routine, params, idx, value ) {
+	var args = params.map( function a( p, i ) { return i === idx ? value : arg( p.type ); } );
 	return routine + '( ' + args.join( ', ' ) + ' )';
 }
 
-/**
- * Generate a call with one param replaced by a wrong type.
- */
-function invalidCall( routine, params, paramIdx, wrongValue ) {
-	var args = params.map( function( p, i ) {
-		if ( i === paramIdx ) {
-			return wrongValue;
-		}
-		return DEFAULTS[ p.type ] || '0';
-	});
-	return routine + '( ' + args.join( ', ' ) + ' )';
+var ORDINAL = [ '', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth',
+	'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth',
+	'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth',
+	'nineteenth', 'twentieth' ];
+
+function ordinal( n ) {
+	return ORDINAL[ n ] || ( n + 'th' );
 }
 
-/**
- * Generate the test.ts content.
- */
-function generateTestTS( routine, sig ) {
+
+// MAIN //
+
+function generate( routine, params, retTs, needsComplex ) {
 	var lines = [];
 	lines.push( LICENSE );
 	lines.push( '' );
+	if ( needsComplex ) {
+		lines.push( '/// <reference types="@stdlib/types"/>' );
+		lines.push( '' );
+		lines.push( 'import { Complex128Array } from \'@stdlib/types/array\';' );
+		lines.push( '' );
+	}
 	lines.push( 'import ' + routine + ' = require( \'./index\' );' );
 	lines.push( '' );
 	lines.push( '' );
 	lines.push( '// TESTS //' );
 	lines.push( '' );
 
-	// Valid call — return type assertion
-	lines.push( '// The function returns ' + ( sig.returnType === 'number' ? 'a number' : 'a ' + sig.returnType ) + '...' );
-	lines.push( '{' );
-	lines.push( '\t' + validCall( routine, sig.params ) + '; // $ExpectType ' + sig.returnType );
-	lines.push( '}' );
-	lines.push( '' );
-
-	// Invalid type tests for each parameter
-	var i, j, p, wrongs;
-	for ( i = 0; i < sig.params.length; i++ ) {
-		p = sig.params[ i ];
-		wrongs = WRONG_TYPES[ p.type ];
-		if ( !wrongs || wrongs.length === 0 ) {
-			continue;
-		}
-
-		lines.push( '// The compiler throws an error if the function is provided a ' + ordinalWord( i + 1 ) + ' argument which is not ' + articleFor( p.type ) + ' ' + p.type + '...' );
-		lines.push( '{' );
-		for ( j = 0; j < wrongs.length; j++ ) {
-			lines.push( '\t' + invalidCall( routine, sig.params, i, wrongs[ j ] ) + '; // $ExpectError' );
-		}
-		lines.push( '}' );
+	if ( needsComplex ) {
+		lines.push( 'const zx = null as unknown as Complex128Array;' );
 		lines.push( '' );
 	}
 
-	// Unsupported number of arguments
-	lines.push( '// The compiler throws an error if the function is provided an unsupported number of arguments...' );
+	// Valid call. For ASSERTABLE returns, pin the exact return type; for
+	// object-literal / unknown returns just require the call to type-check
+	// (their printed form is too brittle to match on).
+	if ( ASSERTABLE[ retTs ] ) {
+		lines.push( '// The function returns ' + ( retTs === 'number' ? 'a number' : ( retTs === 'void' ? 'void' : 'a ' + retTs ) ) + '...' );
+		lines.push( '{' );
+		lines.push( '\t' + validCall( routine, params ) + '; // $ExpectType ' + retTs );
+		lines.push( '}' );
+	} else {
+		lines.push( '// The function is callable with the documented arguments...' );
+		lines.push( '{' );
+		lines.push( '\t' + validCall( routine, params ) + ';' );
+		lines.push( '}' );
+	}
+	lines.push( '' );
+
+	// Per-parameter wrong-type assertions.
+	params.forEach( function param( p, i ) {
+		var wrongs = WRONG[ p.type ];
+		if ( !wrongs || wrongs.length === 0 ) {
+			return;
+		}
+		lines.push( '// The compiler throws an error if provided a ' + ordinal( i + 1 ) + ' argument of invalid type...' );
+		lines.push( '{' );
+		wrongs.forEach( function w( value ) {
+			lines.push( '\t' + wrongCall( routine, params, i, value ) + '; // $ExpectError' );
+		});
+		lines.push( '}' );
+		lines.push( '' );
+	});
+
+	// Argument-count assertions.
+	lines.push( '// The compiler throws an error if provided an unsupported number of arguments...' );
 	lines.push( '{' );
 	lines.push( '\t' + routine + '(); // $ExpectError' );
-	if ( sig.params.length > 1 ) {
-		var partial = sig.params.slice( 0, 1 ).map( function( p ) {
-			return DEFAULTS[ p.type ] || '0';
-		});
-		lines.push( '\t' + routine + '( ' + partial.join( ', ' ) + ' ); // $ExpectError' );
+	if ( params.length > 1 ) {
+		lines.push( '\t' + routine + '( ' + arg( params[ 0 ].type ) + ' ); // $ExpectError' );
 	}
 	lines.push( '}' );
 	lines.push( '' );
@@ -169,66 +211,57 @@ function generateTestTS( routine, sig ) {
 	return lines.join( '\n' );
 }
 
-function ordinalWord( n ) {
-	var words = [ '', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth',
-		'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth',
-		'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth',
-		'eighteenth', 'nineteenth', 'twentieth' ];
-	return words[ n ] || ( n + 'th' );
-}
-
-function articleFor( type ) {
-	if ( type === 'Int32Array' ) {
-		return 'an';
-	}
-	return 'a';
-}
-
-// ── Main ──
 
 function main() {
 	var args = process.argv.slice( 2 );
 	var all = args.indexOf( '--all' ) >= 0;
-	args = args.filter( function( a ) { return a !== '--all'; });
+	args = args.filter( function keep( a ) { return a !== '--all'; } );
 
 	var modules;
 	if ( all ) {
 		modules = util.discoverModules();
 	} else if ( args.length > 0 ) {
-		modules = args.map( function( a ) { return util.resolveModule( a ); }).filter( Boolean );
+		modules = args.map( function res( a ) { return util.resolveModule( a ); } ).filter( Boolean );
 	} else {
 		console.error( 'Usage: node bin/gen_test_ts.js [--all | module-path...]' );
 		process.exit( 1 );
 	}
 
 	var generated = 0;
-	var skipped = 0;
 	var errors = [];
 
-	modules.forEach( function( mod ) {
+	modules.forEach( function each( mod ) {
 		var dtsPath = path.join( mod.dir, 'docs', 'types', 'index.d.ts' );
 		if ( !fs.existsSync( dtsPath ) ) {
-			skipped++;
+			errors.push( mod.routine + ': missing index.d.ts' );
+			return;
+		}
+		var sig = parseSignature( fs.readFileSync( dtsPath, 'utf8' ) );
+		if ( !sig ) {
+			errors.push( mod.routine + ': could not parse index.d.ts signature' );
 			return;
 		}
 
-		var content = fs.readFileSync( dtsPath, 'utf8' );
-		var sig = parseDeclaration( content );
-		if ( !sig || sig.params.length === 0 ) {
-			errors.push( mod.routine + ': could not parse index.d.ts' );
-			return;
-		}
+		// Return type from the implementation (source of truth).
+		var ndPath = path.join( mod.dir, 'lib', 'ndarray.js' );
+		var basePath = path.join( mod.dir, 'lib', 'base.js' );
+		var impl = fs.existsSync( ndPath ) ? fs.readFileSync( ndPath, 'utf8' ) :
+			( fs.existsSync( basePath ) ? fs.readFileSync( basePath, 'utf8' ) : '' );
+		var retTs = returnType.fromImpl( impl ).ts;
 
-		var testContent = generateTestTS( mod.routine, sig );
-		var testPath = path.join( mod.dir, 'docs', 'types', 'test.ts' );
-		fs.writeFileSync( testPath, testContent );
+		var needsComplex = sig.params.some( function isC( p ) {
+			return p.type === 'Complex128Array' || p.type === 'Complex64Array';
+		}) || retTs === 'Complex128Array' || retTs === 'Complex64Array';
+
+		var out = generate( mod.routine, sig.params, retTs, needsComplex );
+		fs.writeFileSync( path.join( mod.dir, 'docs', 'types', 'test.ts' ), out );
 		generated++;
 	});
 
-	console.log( 'Generated: ' + generated + ', Skipped: ' + skipped );
-	if ( errors.length > 0 ) {
+	console.log( 'Generated: ' + generated );
+	if ( errors.length ) {
 		console.log( 'Errors (' + errors.length + '):' );
-		errors.forEach( function( e ) { console.log( '  ' + e ); });
+		errors.forEach( function e( msg ) { console.log( '  ' + msg ); } );
 	}
 }
 

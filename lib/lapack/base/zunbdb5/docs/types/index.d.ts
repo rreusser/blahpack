@@ -21,63 +21,62 @@
 /// <reference types="@stdlib/types"/>
 
 import { Layout } from '@stdlib/types/blas';
-import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zunbdb5`.
 */
 interface Routine {
 	/**
-	* Orthogonalizes the complex column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`; if the projection collapses to zero, returns a deterministic standard-basis vector from the orthogonal complement.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param m1 - dimension of `X1` and rows of `Q1`
-	* @param m2 - dimension of `X2` and rows of `Q2`
-	* @param N - number of columns in `Q1` and `Q2`
-	* @param X1 - top part of the vector
-	* @param strideX1 - `X1` stride length (in complex elements)
-	* @param X2 - bottom part of the vector
-	* @param strideX2 - `X2` stride length (in complex elements)
-	* @param Q1 - top part of the orthonormal basis matrix
-	* @param LDQ1 - leading dimension of `Q1`
-	* @param Q2 - bottom part of the orthonormal basis matrix
-	* @param LDQ2 - leading dimension of `Q2`
-	* @param WORK - workspace array (length at least `N`)
-	* @param strideWORK - `WORK` stride length (in complex elements)
-	* @returns status code (0 = success)
+	* @param m1 - `m1`
+	* @param m2 - `m2`
+	* @param N - number of columns
+	* @param X1 - `X1`
+	* @param strideX1 - stride of `X`
+	* @param X2 - `X2`
+	* @param strideX2 - stride of `X`
+	* @param Q1 - `Q1`
+	* @param LDQ1 - `LDQ1`
+	* @param Q2 - `Q2`
+	* @param LDQ2 - `LDQ2`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @returns result
 	*/
-	( order: Layout, m1: number, m2: number, N: number, X1: Complex128Array, strideX1: number, X2: Complex128Array, strideX2: number, Q1: Complex128Array, LDQ1: number, Q2: Complex128Array, LDQ2: number, WORK: Complex128Array, strideWORK: number ): number;
+	( order: Layout, m1: number, m2: number, N: number, X1: number, strideX1: number, X2: number, strideX2: number, Q1: Float64Array, LDQ1: number, Q2: Float64Array, LDQ2: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Orthogonalizes the complex column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param m1 - dimension of `X1` and rows of `Q1`
-	* @param m2 - dimension of `X2` and rows of `Q2`
-	* @param N - number of columns in `Q1` and `Q2`
-	* @param X1 - top part of the vector
-	* @param strideX1 - `X1` stride length (in complex elements)
-	* @param offsetX1 - starting index for `X1` (in complex elements)
-	* @param X2 - bottom part of the vector
-	* @param strideX2 - `X2` stride length (in complex elements)
-	* @param offsetX2 - starting index for `X2` (in complex elements)
-	* @param Q1 - top part of the orthonormal basis matrix
-	* @param strideQ11 - stride of dimension 1 of `Q1` (in complex elements)
-	* @param strideQ12 - stride of dimension 2 of `Q1` (in complex elements)
-	* @param offsetQ1 - starting index for `Q1` (in complex elements)
-	* @param Q2 - bottom part of the orthonormal basis matrix
-	* @param strideQ21 - stride of dimension 1 of `Q2` (in complex elements)
-	* @param strideQ22 - stride of dimension 2 of `Q2` (in complex elements)
-	* @param offsetQ2 - starting index for `Q2` (in complex elements)
-	* @param WORK - workspace array (length at least `N`)
-	* @param strideWORK - `WORK` stride length (in complex elements)
-	* @param offsetWORK - starting index for `WORK` (in complex elements)
-	* @returns status code (0 = success)
+	* @param m1 - `m1`
+	* @param m2 - `m2`
+	* @param N - number of columns
+	* @param X1 - `X1`
+	* @param strideX1 - stride of `X`
+	* @param offsetX1 - starting index for `X1`
+	* @param X2 - `X2`
+	* @param strideX2 - stride of `X`
+	* @param offsetX2 - starting index for `X2`
+	* @param Q1 - `Q1`
+	* @param strideQ11 - stride of `Q1`
+	* @param strideQ12 - stride of `Q1`
+	* @param offsetQ1 - starting index for `Q1`
+	* @param Q2 - `Q2`
+	* @param strideQ21 - stride of `Q2`
+	* @param strideQ22 - stride of `Q2`
+	* @param offsetQ2 - starting index for `Q2`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @returns result
 	*/
-	ndarray( m1: number, m2: number, N: number, X1: Complex128Array, strideX1: number, offsetX1: number, X2: Complex128Array, strideX2: number, offsetX2: number, Q1: Complex128Array, strideQ11: number, strideQ12: number, offsetQ1: number, Q2: Complex128Array, strideQ21: number, strideQ22: number, offsetQ2: number, WORK: Complex128Array, strideWORK: number, offsetWORK: number ): number;
+	ndarray( m1: number, m2: number, N: number, X1: number, strideX1: number, offsetX1: number, X2: number, strideX2: number, offsetX2: number, Q1: Float64Array, strideQ11: number, strideQ12: number, offsetQ1: number, Q2: Float64Array, strideQ21: number, strideQ22: number, offsetQ2: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Orthogonalizes the complex column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`.
+* @license MIT.
 */
 declare var zunbdb5: Routine;
 

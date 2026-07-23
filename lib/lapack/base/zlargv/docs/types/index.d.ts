@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Generates a vector of complex plane rotations with real cosines and complex sines.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -34,10 +34,10 @@ interface Routine {
 	* @param strideC - stride of `C`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, strideC: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, strideC: number ): void;
 
 	/**
-	* Generates a vector of complex plane rotations with real cosines and complex sines using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param x - `x`
@@ -51,11 +51,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: Float64Array, strideC: number, offsetC: number ): Float64Array;
+	ndarray( N: number, x: Float64Array, strideX: number, offsetX: number, y: Float64Array, strideY: number, offsetY: number, c: Float64Array, strideC: number, offsetC: number ): void;
 }
 
 /**
-* Generates a vector of complex plane rotations with real cosines and complex sines.
+* @license MIT.
 */
 declare var zlargv: Routine;
 

@@ -20,69 +20,69 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { DiagonalType, Layout, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dlatrs3`.
 */
 interface Routine {
 	/**
-	* solves a triangular system of equations with the scale factors set to prevent overflow.
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param uplo - specifies the operation type
-	* @param trans - specifies the operation type
-	* @param diag - specifies the operation type
-	* @param normin - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param trans - specifies whether the matrix should be transposed
+	* @param diag - specifies whether the matrix is unit triangular
+	* @param normin - `normin`
 	* @param N - number of columns
-	* @param nrhs - nrhs
-	* @param A - input matrix
+	* @param nrhs - number of right-hand sides
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param X - input matrix
+	* @param X - `X`
 	* @param LDX - leading dimension of `X`
-	* @param SCALE - input array
-	* @param strideSCALE - stride length for `SCALE`
-	* @param CNORM - input array
-	* @param strideCNORM - stride length for `CNORM`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
+	* @param SCALE - `SCALE`
+	* @param strideSCALE - stride of `SCALE`
+	* @param CNORM - `CNORM`
+	* @param strideCNORM - stride of `CNORM`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, LDA: number, X: Float64Array, LDX: number, SCALE: Float64Array, strideSCALE: number, CNORM: Float64Array, strideCNORM: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, nrhs: number, A: Float64Array, LDA: number, X: Float64Array, LDX: number, SCALE: Float64Array, strideSCALE: number, CNORM: Float64Array, strideCNORM: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* solves a triangular system of equations with the scale factors set to prevent overflow., using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param uplo - specifies the operation type
-	* @param trans - specifies the operation type
-	* @param diag - specifies the operation type
-	* @param normin - specifies the operation type
+	* @param uplo - specifies whether the upper or lower triangular part is referenced
+	* @param trans - specifies whether the matrix should be transposed
+	* @param diag - specifies whether the matrix is unit triangular
+	* @param normin - `normin`
 	* @param N - number of columns
-	* @param nrhs - nrhs
-	* @param A - input matrix
+	* @param nrhs - number of right-hand sides
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param X - input matrix
+	* @param X - `X`
 	* @param strideX1 - stride of `X`
 	* @param strideX2 - stride of `X`
 	* @param offsetX - starting index for `X`
-	* @param SCALE - input array
-	* @param strideSCALE - stride length for `SCALE`
+	* @param SCALE - `SCALE`
+	* @param strideSCALE - stride of `SCALE`
 	* @param offsetSCALE - starting index for `SCALE`
-	* @param CNORM - input array
-	* @param strideCNORM - stride length for `CNORM`
+	* @param CNORM - `CNORM`
+	* @param strideCNORM - stride of `CNORM`
 	* @param offsetCNORM - starting index for `CNORM`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, normin: string, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, SCALE: Float64Array, strideSCALE: number, offsetSCALE: number, CNORM: Float64Array, strideCNORM: number, offsetCNORM: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* solves a triangular system of equations with the scale factors set to prevent overflow.
+* @license MIT.
 */
 declare var dlatrs3: Routine;
 

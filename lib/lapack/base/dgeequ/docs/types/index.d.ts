@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes row and column scalings intended to equilibrate an M-by-N matrix A.
+	* @license MIT.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -35,10 +35,10 @@ interface Routine {
 	* @param strideC - stride of `C`
 	* @returns result
 	*/
-	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): Float64Array;
+	( M: number, N: number, A: Float64Array, LDA: number, r: Float64Array, strideR: number, c: Float64Array, strideC: number ): { info: number; rowcnd: number; colcnd: number; amax: number };
 
 	/**
-	* Computes row and column scalings intended to equilibrate an M-by-N matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param M - number of rows
 	* @param N - number of columns
@@ -52,16 +52,13 @@ interface Routine {
 	* @param c - `c`
 	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param rowcnd - `rowcnd`
-	* @param colcnd - `colcnd`
-	* @param amax - `amax`
 	* @returns result
 	*/
-	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number, rowcnd: number, colcnd: number, amax: number ): Float64Array;
+	ndarray( M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, r: Float64Array, strideR: number, offsetR: number, c: Float64Array, strideC: number, offsetC: number ): { info: number; rowcnd: number; colcnd: number; amax: number };
 }
 
 /**
-* Computes row and column scalings intended to equilibrate an M-by-N matrix A.
+* @license MIT.
 */
 declare var dgeequ: Routine;
 

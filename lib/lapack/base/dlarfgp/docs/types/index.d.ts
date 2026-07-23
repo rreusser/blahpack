@@ -18,42 +18,42 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlarfgp`.
 */
 interface Routine {
 	/**
-	* Generates an elementary reflector with non-negative beta
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
-	* @param x - input array
-	* @param stride - stride length for `x`
-	* @param tau - tau
+	* @param offsetAlpha - starting index for `Alpha`
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param tau - `tau`
+	* @param offsetTau - starting index for `Tau`
 	* @returns result
 	*/
-	( N: number, alpha: number, x: Float64Array, stride: number, tau: number ): Float64Array;
+	( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, tau: number, offsetTau: number ): void;
 
 	/**
-	* Generates an elementary reflector with non-negative beta, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param alpha - scalar constant
-	* @param x - input array
-	* @param stride - stride length for `x`
-	* @param offset - starting index for ``
-	* @param tau - tau
+	* @param offsetAlpha - starting index for `Alpha`
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param offsetX - starting index for `X`
+	* @param tau - `tau`
+	* @param offsetTau - starting index for `Tau`
 	* @returns result
 	*/
-	ndarray( N: number, alpha: number, x: Float64Array, stride: number, offset: number, tau: number ): Float64Array;
+	ndarray( N: number, alpha: number, offsetAlpha: number, x: Float64Array, strideX: number, offsetX: number, tau: number, offsetTau: number ): void;
 }
 
 /**
-* Generates an elementary reflector with non-negative beta
+* @license MIT.
 */
 declare var dlarfgp: Routine;
 

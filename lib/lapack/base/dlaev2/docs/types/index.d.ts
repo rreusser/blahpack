@@ -23,28 +23,28 @@
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param a - `a`
 	* @param b - `b`
 	* @param c - `c`
 	* @returns result
 	*/
-	( a: number, b: number, c: number ): Dlaev2Result;
+	( a: number, b: number, c: number ): { rt1: number; rt2: number; cs1: number };
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param a - `a`
 	* @param b - `b`
 	* @param c - `c`
 	* @returns result
 	*/
-	ndarray( a: number, b: number, c: number ): Dlaev2Result;
+	ndarray( a: number, b: number, c: number ): { rt1: number; rt2: number; cs1: number };
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var dlaev2: Routine;
 

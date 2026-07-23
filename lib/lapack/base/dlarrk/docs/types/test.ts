@@ -21,22 +21,145 @@ import dlarrk = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dlarrk( 2, 2, 2, 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlarrk( '10', 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( true, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( false, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( null, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( undefined, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( [], 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( {}, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlarrk( 10, '10', 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, true, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, false, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, null, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, undefined, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, [], 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, {}, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlarrk( 10, 10, '10', 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, true, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, false, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, null, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, undefined, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, [], 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, {}, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, '10', new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, true, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, false, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, null, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, undefined, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, [], new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, {}, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, '10', 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, true, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, null, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, undefined, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, [], 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, {}, 10, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), '10', 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), true, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), false, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), null, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), undefined, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), [], 10, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), {}, 10, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, '10', 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, true, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, false, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, null, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, undefined, 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, [], 10, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, {}, 10, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, '10', 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, true, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, false, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, null, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, undefined, 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, [], 10, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, {}, 10, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, '10', 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, true, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, false, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, null, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, undefined, 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, [], 10, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, {}, 10, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a tenth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, '10', 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, true, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, false, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, null, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, undefined, 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, [], 10, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, {}, 10, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eleventh argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, '10', 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, true, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, false, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, null, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, undefined, 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, [], 10 ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a twelfth argument of invalid type...
+{
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, '10' ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, true ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, false ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, null ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, undefined ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, [] ); // $ExpectError
+	dlarrk( 10, 10, 10, 10, new Float64Array( 25 ), 10, 10, 10, 10, 10, 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlarrk(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	dlarrk.ndarray( 2, 2, 2, 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2, 2, 2, 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlarrk.ndarray(); // $ExpectError
+	dlarrk( 10 ); // $ExpectError
 }

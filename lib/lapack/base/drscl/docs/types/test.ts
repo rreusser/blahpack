@@ -23,21 +23,55 @@ import drscl = require( './index' );
 
 // The function returns a Float64Array...
 {
-	drscl( 10 ); // $ExpectType Float64Array
+	drscl( 10, 10, new Float64Array( 25 ), 10 ); // $ExpectType Float64Array
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	drscl( '10' ); // $ExpectError
-	drscl( true ); // $ExpectError
-	drscl( false ); // $ExpectError
-	drscl( null ); // $ExpectError
-	drscl( undefined ); // $ExpectError
-	drscl( [] ); // $ExpectError
-	drscl( {} ); // $ExpectError
+	drscl( '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( false, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	drscl( 10, '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, true, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, false, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, null, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, [], new Float64Array( 25 ), 10 ); // $ExpectError
+	drscl( 10, {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	drscl( 10, 10, '10', 10 ); // $ExpectError
+	drscl( 10, 10, 10, 10 ); // $ExpectError
+	drscl( 10, 10, true, 10 ); // $ExpectError
+	drscl( 10, 10, null, 10 ); // $ExpectError
+	drscl( 10, 10, undefined, 10 ); // $ExpectError
+	drscl( 10, 10, [], 10 ); // $ExpectError
+	drscl( 10, 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	drscl( 10, 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), true ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), false ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), null ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), [] ); // $ExpectError
+	drscl( 10, 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	drscl(); // $ExpectError
+	drscl( 10 ); // $ExpectError
 }

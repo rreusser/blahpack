@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes an approximation TAU to the smallest eigenvalue using values of d.
+	* @license MIT.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param g - `g`
 	* @returns result
 	*/
-	( i0: number, n0: number, z: number, stride: number, pp: number, n0in: number, dmin: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, tau: number, ttype: number, g: number ): Float64Array;
+	( i0: number, n0: number, z: number, stride: number, pp: number, n0in: number, dmin: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, tau: number, ttype: number, g: number ): Record<string, unknown>;
 
 	/**
-	* Computes an approximation TAU to the smallest eigenvalue using values of d using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param i0 - `i0`
 	* @param n0 - `n0`
@@ -65,11 +65,11 @@ interface Routine {
 	* @param g - `g`
 	* @returns result
 	*/
-	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, n0in: number, dmin: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, tau: number, ttype: number, g: number ): Float64Array;
+	ndarray( i0: number, n0: number, z: number, stride: number, offset: number, pp: number, n0in: number, dmin: number, dmin1: number, dmin2: number, dn: number, dn1: number, dn2: number, tau: number, ttype: number, g: number ): Record<string, unknown>;
 }
 
 /**
-* Computes an approximation TAU to the smallest eigenvalue using values of d.
+* @license MIT.
 */
 declare var dlasq4: Routine;
 

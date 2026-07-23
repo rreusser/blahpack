@@ -21,12 +21,110 @@ import dpbsv = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dpbsv( 0 ); // $ExpectType Float64Array
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dpbsv( 10, 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( true, 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( null, 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( undefined, 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( [], 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( {}, 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dpbsv( 'row-major', 10, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', true, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', null, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', undefined, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', [], 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', {}, 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', '10', 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', true, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', false, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', null, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', undefined, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', [], 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', {}, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, '10', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, false, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, 10, '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, 10, 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a seventh argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a eighth argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a ninth argument of invalid type...
+{
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dpbsv( 'row-major', 'upper', 10, 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dpbsv(); // $ExpectError
+	dpbsv( 'row-major' ); // $ExpectError
 }

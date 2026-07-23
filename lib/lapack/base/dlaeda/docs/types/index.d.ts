@@ -27,84 +27,84 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
-	* @param tlvls - tlvls
-	* @param curlvl - curlvl
-	* @param curpbm - curpbm
-	* @param PRMPTR - input array
-	* @param stridePRMPTR - stride length for `PRMPTR`
+	* @param tlvls - `tlvls`
+	* @param curlvl - `curlvl`
+	* @param curpbm - `curpbm`
+	* @param PRMPTR - `PRMPTR`
+	* @param stridePRMPTR - stride of `PRMPTR`
 	* @param offsetPRMPTR - starting index for `PRMPTR`
-	* @param PERM - input array
-	* @param stridePERM - stride length for `PERM`
+	* @param PERM - `PERM`
+	* @param stridePERM - stride of `PERM`
 	* @param offsetPERM - starting index for `PERM`
-	* @param GIVPTR - input array
-	* @param strideGIVPTR - stride length for `GIVPTR`
+	* @param GIVPTR - `GIVPTR`
+	* @param strideGIVPTR - stride of `GIVPTR`
 	* @param offsetGIVPTR - starting index for `GIVPTR`
-	* @param GIVCOL - input matrix
-	* @param strideGIVCOL1 - stride of the first dimension of `GIVCOL`
-	* @param strideGIVCOL2 - stride of the second dimension of `GIVCOL`
-	* @param offsetGIVCOL - starting index for `GIVCOL`
-	* @param GIVNUM - input matrix
-	* @param LDGIVNUM - leading dimension of `GIVNUM`
-	* @param q - input array
-	* @param strideQ - stride length for `q`
-	* @param QPTR - input array
-	* @param strideQPTR - stride length for `QPTR`
-	* @param offsetQPTR - starting index for `QPTR`
-	* @param z - input array
-	* @param strideZ - stride length for `z`
-	* @param ZTEMP - output array
-	* @param strideZTEMP - stride length for `ZTEMP`
-	* @returns result
-	*/
-	( order: Layout, N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Int32Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number, q: Float64Array, strideQ: number, QPTR: Int32Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, ZTEMP: Float64Array, strideZTEMP: number ): Float64Array;
-
-	/**
-	* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC., using alternative indexing semantics.
-	*
-	* @param N - number of columns
-	* @param tlvls - tlvls
-	* @param curlvl - curlvl
-	* @param curpbm - curpbm
-	* @param PRMPTR - input array
-	* @param stridePRMPTR - stride length for `PRMPTR`
-	* @param offsetPRMPTR - starting index for `PRMPTR`
-	* @param PERM - input array
-	* @param stridePERM - stride length for `PERM`
-	* @param offsetPERM - starting index for `PERM`
-	* @param GIVPTR - input array
-	* @param strideGIVPTR - stride length for `GIVPTR`
-	* @param offsetGIVPTR - starting index for `GIVPTR`
-	* @param GIVCOL - input matrix
+	* @param GIVCOL - `GIVCOL`
 	* @param strideGIVCOL1 - stride of `GIVCOL`
 	* @param strideGIVCOL2 - stride of `GIVCOL`
 	* @param offsetGIVCOL - starting index for `GIVCOL`
-	* @param GIVNUM - input matrix
+	* @param GIVNUM - `GIVNUM`
+	* @param LDGIVNUM - leading dimension of `GIVNUM`
+	* @param q - `q`
+	* @param strideQ - stride of `Q`
+	* @param QPTR - `QPTR`
+	* @param strideQPTR - stride of `QPTR`
+	* @param offsetQPTR - starting index for `QPTR`
+	* @param z - `z`
+	* @param strideZ - stride of `Z`
+	* @param ZTEMP - `ZTEMP`
+	* @param strideZTEMP - stride of `ZTEMP`
+	* @returns result
+	*/
+	( order: Layout, N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Float64Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Float64Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number, q: Float64Array, strideQ: number, QPTR: Float64Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, ZTEMP: Float64Array, strideZTEMP: number ): number;
+
+	/**
+	* @license MIT using alternative indexing semantics.
+	*
+	* @param N - number of columns
+	* @param tlvls - `tlvls`
+	* @param curlvl - `curlvl`
+	* @param curpbm - `curpbm`
+	* @param PRMPTR - `PRMPTR`
+	* @param stridePRMPTR - stride of `PRMPTR`
+	* @param offsetPRMPTR - starting index for `PRMPTR`
+	* @param PERM - `PERM`
+	* @param stridePERM - stride of `PERM`
+	* @param offsetPERM - starting index for `PERM`
+	* @param GIVPTR - `GIVPTR`
+	* @param strideGIVPTR - stride of `GIVPTR`
+	* @param offsetGIVPTR - starting index for `GIVPTR`
+	* @param GIVCOL - `GIVCOL`
+	* @param strideGIVCOL1 - stride of `GIVCOL`
+	* @param strideGIVCOL2 - stride of `GIVCOL`
+	* @param offsetGIVCOL - starting index for `GIVCOL`
+	* @param GIVNUM - `GIVNUM`
 	* @param strideGIVNUM1 - stride of `GIVNUM`
 	* @param strideGIVNUM2 - stride of `GIVNUM`
 	* @param offsetGIVNUM - starting index for `GIVNUM`
-	* @param q - input array
-	* @param strideQ - stride length for `q`
+	* @param q - `q`
+	* @param strideQ - stride of `Q`
 	* @param offsetQ - starting index for `Q`
-	* @param QPTR - input array
-	* @param strideQPTR - stride length for `QPTR`
+	* @param QPTR - `QPTR`
+	* @param strideQPTR - stride of `QPTR`
 	* @param offsetQPTR - starting index for `QPTR`
-	* @param z - input array
-	* @param strideZ - stride length for `z`
+	* @param z - `z`
+	* @param strideZ - stride of `Z`
 	* @param offsetZ - starting index for `Z`
-	* @param ZTEMP - output array
-	* @param strideZTEMP - stride length for `ZTEMP`
+	* @param ZTEMP - `ZTEMP`
+	* @param strideZTEMP - stride of `ZTEMP`
 	* @param offsetZTEMP - starting index for `ZTEMP`
 	* @returns result
 	*/
-	ndarray( N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Int32Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number, q: Float64Array, strideQ: number, offsetQ: number, QPTR: Int32Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, offsetZ: number, ZTEMP: Float64Array, strideZTEMP: number, offsetZTEMP: number ): Float64Array;
+	ndarray( N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Float64Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Float64Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, strideGIVNUM1: number, strideGIVNUM2: number, offsetGIVNUM: number, q: Float64Array, strideQ: number, offsetQ: number, QPTR: Float64Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, offsetZ: number, ZTEMP: Float64Array, strideZTEMP: number, offsetZTEMP: number ): number;
 }
 
 /**
-* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
+* @license MIT.
 */
 declare var dlaeda: Routine;
 

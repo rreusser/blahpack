@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Improves the computed solution to a real system A * X = B where A is symmetric positive definite in packed storage and provides error bounds.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -44,10 +44,10 @@ interface Routine {
 	* @param IWORK - `IWORK`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, AFP: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, IWORK: Int32Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, AFP: Float64Array, B: Float64Array, LDB: number, X: Float64Array, LDX: number, FERR: Float64Array, BERR: Float64Array, WORK: Float64Array, IWORK: Int32Array ): number;
 
 	/**
-	* Improves the computed solution to a real system A * X = B where A is symmetric positive definite in packed storage and provides error bounds using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -73,18 +73,18 @@ interface Routine {
 	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, strideAP: number, offsetAP: number, AFP: Float64Array, strideAFP: number, offsetAFP: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, nrhs: number, AP: Float64Array, strideAP: number, offsetAP: number, AFP: Float64Array, strideAFP: number, offsetAFP: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, FERR: Float64Array, strideFERR: number, offsetFERR: number, BERR: Float64Array, strideBERR: number, offsetBERR: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Improves the computed solution to a real system A * X = B where A is symmetric positive definite in packed storage and provides error bounds.
+* @license MIT.
 */
 declare var dpprfs: Routine;
 

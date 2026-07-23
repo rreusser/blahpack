@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the singular values of a 2-by-2 triangular matrix:.
+	* @license MIT.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -31,10 +31,10 @@ interface Routine {
 	* @param out - `out`
 	* @returns result
 	*/
-	( f: number, g: number, h: number, out: number ): void;
+	( f: number, g: number, h: number, out: number ): Float64Array;
 
 	/**
-	* Computes the singular values of a 2-by-2 triangular matrix: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param f - `f`
 	* @param g - `g`
@@ -42,11 +42,11 @@ interface Routine {
 	* @param out - `out`
 	* @returns result
 	*/
-	ndarray( f: number, g: number, h: number, out: number ): void;
+	ndarray( f: number, g: number, h: number, out: number ): Float64Array;
 }
 
 /**
-* Computes the singular values of a 2-by-2 triangular matrix:.
+* @license MIT.
 */
 declare var dlas2: Routine;
 

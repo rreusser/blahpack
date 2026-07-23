@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Perform the symmetric rank-1 update of a complex symmetric packed matrix.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -38,10 +38,10 @@ interface Routine {
 	* @param strideAP - stride of `AP`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, AP: Float64Array, strideAP: number ): Float64Array;
+	( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, AP: Float64Array, strideAP: number ): void;
 
 	/**
-	* Perform the symmetric rank-1 update of a complex symmetric packed matrix using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -54,11 +54,11 @@ interface Routine {
 	* @param offsetAP - starting index for `AP`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, AP: Float64Array, strideAP: number, offsetAP: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, alpha: number, x: Float64Array, strideX: number, offsetX: number, AP: Float64Array, strideAP: number, offsetAP: number ): void;
 }
 
 /**
-* Perform the symmetric rank-1 update of a complex symmetric packed matrix.
+* @license MIT.
 */
 declare var zspr: Routine;
 

@@ -21,12 +21,67 @@ import zsytri = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	zsytri( 0 ); // $ExpectType Float64Array
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	zsytri( 10, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( true, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( null, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( undefined, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( [], 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( {}, 10, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zsytri( 'upper', '10', new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', true, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', false, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', null, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', undefined, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', [], new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', {}, new Float64Array( 25 ), 10, new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zsytri( 'upper', 10, '10', 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, 10, 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, true, 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, null, 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, undefined, 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, [], 10, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, {}, 10, new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zsytri( 'upper', 10, new Float64Array( 25 ), '10', new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), true, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), false, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), null, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), undefined, new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), [], new Int32Array( 25 ) ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), {}, new Int32Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, '10' ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, 10 ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, true ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, null ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, undefined ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, [] ); // $ExpectError
+	zsytri( 'upper', 10, new Float64Array( 25 ), 10, {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zsytri(); // $ExpectError
+	zsytri( 'upper' ); // $ExpectError
 }

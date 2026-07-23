@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the norm of a complex Hermitian tridiagonal matrix A.
+	* @license MIT.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -33,10 +33,10 @@ interface Routine {
 	* @param strideE - stride of `E`
 	* @returns result
 	*/
-	( norm: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): Float64Array;
+	( norm: string, N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number ): number;
 
 	/**
-	* Computes the norm of a complex Hermitian tridiagonal matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param norm - `norm`
 	* @param N - number of columns
@@ -48,11 +48,11 @@ interface Routine {
 	* @param offsetE - starting index for `E`
 	* @returns result
 	*/
-	ndarray( norm: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): Float64Array;
+	ndarray( norm: string, N: number, d: Float64Array, strideD: number, offsetD: number, e: Float64Array, strideE: number, offsetE: number ): number;
 }
 
 /**
-* Computes the norm of a complex Hermitian tridiagonal matrix A.
+* @license MIT.
 */
 declare var zlanht: Routine;
 

@@ -23,17 +23,17 @@
 */
 interface Routine {
 	/**
-	* Finds the index of the element having the maximum sum of absolute values of.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( N: number, zx: number, strideX: number ): Float64Array;
+	( N: number, zx: number, strideX: number ): number;
 
 	/**
-	* Finds the index of the element having the maximum sum of absolute values of using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param zx - `zx`
@@ -41,11 +41,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, zx: number, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, zx: number, strideX: number, offsetX: number ): number;
 }
 
 /**
-* Finds the index of the element having the maximum sum of absolute values of.
+* @license MIT.
 */
 declare var izamax: Routine;
 

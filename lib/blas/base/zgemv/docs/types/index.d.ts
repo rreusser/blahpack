@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zgemv`.
 */
 interface Routine {
 	/**
-	* Perform one of the complex matrix-vector operations:.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param trans - specifies whether the matrix should be transposed
@@ -43,10 +44,10 @@ interface Routine {
 	* @param strideY - stride of `Y`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, M: number, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, M: number, N: number, alpha: number, A: Float64Array, LDA: number, x: Float64Array, strideX: number, beta: number, y: Float64Array, strideY: number ): Complex128Array;
 
 	/**
-	* Perform one of the complex matrix-vector operations: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trans - specifies whether the matrix should be transposed
 	* @param M - number of rows
@@ -65,11 +66,11 @@ interface Routine {
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): Float64Array;
+	ndarray( trans: TransposeOperation, M: number, N: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, x: Float64Array, strideX: number, offsetX: number, beta: number, y: Float64Array, strideY: number, offsetY: number ): Complex128Array;
 }
 
 /**
-* Perform one of the complex matrix-vector operations:.
+* @license MIT.
 */
 declare var zgemv: Routine;
 

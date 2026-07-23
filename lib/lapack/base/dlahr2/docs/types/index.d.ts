@@ -27,7 +27,7 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Reduces NB columns of a real general n-by-(n-k+1) matrix A.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param N - number of columns
@@ -38,17 +38,17 @@ interface Routine {
 	* @param tau - `tau`
 	* @param strideTAU - stride of `TAU`
 	* @param t - `t`
-	* @param strideT1 - stride of dimension 1 of `T`
-	* @param strideT2 - stride of dimension 2 of `T`
+	* @param strideT1 - stride of `T`
+	* @param strideT2 - stride of `T`
 	* @param y - `y`
-	* @param strideY1 - stride of dimension 1 of `Y`
-	* @param strideY2 - stride of dimension 2 of `Y`
+	* @param strideY1 - stride of `Y`
+	* @param strideY2 - stride of `Y`
 	* @returns result
 	*/
-	( order: Layout, N: number, K: number, nb: number, A: Float64Array, LDA: number, tau: Float64Array, strideTAU: number, t: Float64Array, strideT1: number, strideT2: number, y: Float64Array, strideY1: number, strideY2: number ): Float64Array;
+	( order: Layout, N: number, K: number, nb: number, A: Float64Array, LDA: number, tau: Float64Array, strideTAU: number, t: Float64Array, strideT1: number, strideT2: number, y: Float64Array, strideY1: number, strideY2: number ): void;
 
 	/**
-	* Reduces NB columns of a real general n-by-(n-k+1) matrix A using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param K - inner dimension
@@ -61,20 +61,20 @@ interface Routine {
 	* @param strideTAU - stride of `TAU`
 	* @param offsetTAU - starting index for `TAU`
 	* @param T - `T`
-	* @param strideT1 - stride of dimension 1 of `T`
-	* @param strideT2 - stride of dimension 2 of `T`
+	* @param strideT1 - stride of `T`
+	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
 	* @param Y - `Y`
-	* @param strideY1 - stride of dimension 1 of `Y`
-	* @param strideY2 - stride of dimension 2 of `Y`
+	* @param strideY1 - stride of `Y`
+	* @param strideY2 - stride of `Y`
 	* @param offsetY - starting index for `Y`
 	* @returns result
 	*/
-	ndarray( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): Float64Array;
+	ndarray( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): void;
 }
 
 /**
-* Reduces NB columns of a real general n-by-(n-k+1) matrix A.
+* @license MIT.
 */
 declare var dlahr2: Routine;
 

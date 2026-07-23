@@ -27,66 +27,66 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Pre-processor for dgesvj performing Jacobi rotations
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param jobv - jobv
+	* @param jobv - `jobv`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param d - input array
-	* @param strideD - stride length for `d`
-	* @param sva - input array
-	* @param strideSVA - stride length for `sva`
-	* @param mv - mv
-	* @param V - output matrix
+	* @param d - `d`
+	* @param strideD - stride of `D`
+	* @param sva - `sva`
+	* @param strideSVA - stride of `SVA`
+	* @param mv - `mv`
+	* @param V - `V`
 	* @param LDV - leading dimension of `V`
-	* @param eps - eps
-	* @param sfmin - sfmin
-	* @param tol - tol
-	* @param nsweep - nsweep
-	* @param work - input array
-	* @param strideWORK - stride length for `work`
+	* @param eps - `eps`
+	* @param sfmin - `sfmin`
+	* @param tol - `tol`
+	* @param nsweep - `nsweep`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( order: Layout, jobv: number, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, jobv: string, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWork: number ): number;
 
 	/**
-	* Pre-processor for dgesvj performing Jacobi rotations, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param jobv - jobv
+	* @param jobv - `jobv`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param d - input array
-	* @param strideD - stride length for `d`
+	* @param d - `d`
+	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
-	* @param sva - input array
-	* @param strideSVA - stride length for `sva`
+	* @param sva - `sva`
+	* @param strideSVA - stride of `SVA`
 	* @param offsetSVA - starting index for `SVA`
-	* @param mv - mv
-	* @param V - output matrix
+	* @param mv - `mv`
+	* @param V - `V`
 	* @param strideV1 - stride of `V`
 	* @param strideV2 - stride of `V`
 	* @param offsetV - starting index for `V`
-	* @param eps - eps
-	* @param sfmin - sfmin
-	* @param tol - tol
-	* @param nsweep - nsweep
-	* @param work - input array
-	* @param strideWORK - stride length for `work`
-	* @param offsetWORK - starting index for `WORK`
+	* @param eps - `eps`
+	* @param sfmin - `sfmin`
+	* @param tol - `tol`
+	* @param nsweep - `nsweep`
+	* @param work - `work`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( jobv: number, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, sva: Float64Array, strideSVA: number, offsetSVA: number, mv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( jobv: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, d: Float64Array, strideD: number, offsetD: number, sva: Float64Array, strideSVA: number, offsetSVA: number, mv: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Pre-processor for dgesvj performing Jacobi rotations
+* @license MIT.
 */
 declare var dgsvj0: Routine;
 

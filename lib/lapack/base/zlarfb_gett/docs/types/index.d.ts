@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { Layout } from '@stdlib/types/blas';
 
 /**
@@ -27,55 +28,55 @@ import { Layout } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Applies a complex Householder block reflector to a triangular-pentagonal matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param ident - specifies the operation type
+	* @param ident - `ident`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param T - input matrix
+	* @param K - inner dimension
+	* @param T - `T`
 	* @param LDT - leading dimension of `T`
-	* @param A - input matrix
+	* @param A - `A`
 	* @param LDA - leading dimension of `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param LDB - leading dimension of `B`
-	* @param WORK - output matrix
+	* @param WORK - `WORK`
 	* @param LDWORK - leading dimension of `WORK`
 	* @returns result
 	*/
-	( order: Layout, ident: string, M: number, N: number, K: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, LDWORK: number ): Float64Array;
+	( order: Layout, ident: number, M: number, N: number, K: number, T: Float64Array, LDT: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, LDWORK: number ): Complex128Array;
 
 	/**
-	* Applies a complex Householder block reflector to a triangular-pentagonal matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param ident - specifies the operation type
+	* @param ident - `ident`
 	* @param M - number of rows
 	* @param N - number of columns
-	* @param K - number of superdiagonals
-	* @param T - input matrix
+	* @param K - inner dimension
+	* @param T - `T`
 	* @param strideT1 - stride of `T`
 	* @param strideT2 - stride of `T`
 	* @param offsetT - starting index for `T`
-	* @param A - input matrix
+	* @param A - `A`
 	* @param strideA1 - stride of `A`
 	* @param strideA2 - stride of `A`
 	* @param offsetA - starting index for `A`
-	* @param B - input matrix
+	* @param B - `B`
 	* @param strideB1 - stride of `B`
 	* @param strideB2 - stride of `B`
 	* @param offsetB - starting index for `B`
-	* @param WORK - output matrix
-	* @param strideWORK1 - stride of `WORK`
-	* @param strideWORK2 - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param WORK - `WORK`
+	* @param strideWork1 - stride of `Work`
+	* @param strideWork2 - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( ident: string, M: number, N: number, K: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWORK1: number, strideWORK2: number, offsetWORK: number ): Float64Array;
+	ndarray( ident: number, M: number, N: number, K: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, WORK: Float64Array, strideWork1: number, strideWork2: number, offsetWork: number ): Complex128Array;
 }
 
 /**
-* Applies a complex Householder block reflector to a triangular-pentagonal matrix
+* @license MIT.
 */
 declare var zlarfb_gett: Routine;
 

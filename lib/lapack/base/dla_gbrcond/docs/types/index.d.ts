@@ -20,74 +20,74 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation, Layout } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dla_gbrcond`.
 */
 interface Routine {
 	/**
-	* Estimates the Skeel condition number for a general banded matrix
+	* @license MIT.
 	*
 	* @param order - storage layout
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param LDAB - leading dimension of `AB`
-	* @param AFB - input matrix
+	* @param AFB - `AFB`
 	* @param LDAFB - leading dimension of `AFB`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param cmode - cmode
-	* @param c - input array
-	* @param strideC - stride length for `c`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param cmode - `cmode`
+	* @param c - `c`
+	* @param strideC - stride of `C`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, LDAB: number, AFB: Float64Array, LDAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, cmode: number, c: Float64Array, strideC: number, WORK: Float64Array, strideWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 
 	/**
-	* Estimates the Skeel condition number for a general banded matrix, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param trans - specifies the operation type
+	* @param trans - specifies whether the matrix should be transposed
 	* @param N - number of columns
-	* @param kl - kl
-	* @param ku - ku
-	* @param AB - input matrix
+	* @param kl - number of subdiagonals
+	* @param ku - number of superdiagonals
+	* @param AB - `AB`
 	* @param strideAB1 - stride of `AB`
 	* @param strideAB2 - stride of `AB`
 	* @param offsetAB - starting index for `AB`
-	* @param AFB - input matrix
+	* @param AFB - `AFB`
 	* @param strideAFB1 - stride of `AFB`
 	* @param strideAFB2 - stride of `AFB`
 	* @param offsetAFB - starting index for `AFB`
-	* @param IPIV - input array
-	* @param strideIPIV - stride length for `IPIV`
+	* @param IPIV - `IPIV`
+	* @param strideIPIV - stride of `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param cmode - cmode
-	* @param c - input array
-	* @param strideC - stride length for `c`
+	* @param cmode - `cmode`
+	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param offsetC - starting index for `C`
-	* @param WORK - input array
-	* @param strideWORK - stride length for `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @param IWORK - output array
-	* @param strideIWORK - stride length for `IWORK`
-	* @param offsetIWORK - starting index for `IWORK`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
+	* @param IWORK - `IWORK`
+	* @param strideIWork - stride of `IWork`
+	* @param offsetIWork - starting index for `IWork`
 	* @returns result
 	*/
-	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, cmode: number, c: Float64Array, strideC: number, offsetC: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, IWORK: Int32Array, strideIWORK: number, offsetIWORK: number ): Float64Array;
+	ndarray( trans: TransposeOperation, N: number, kl: number, ku: number, AB: Float64Array, strideAB1: number, strideAB2: number, offsetAB: number, AFB: Float64Array, strideAFB1: number, strideAFB2: number, offsetAFB: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, cmode: number, c: Float64Array, strideC: number, offsetC: number, WORK: Float64Array, strideWork: number, offsetWork: number, IWORK: Int32Array, strideIWork: number, offsetIWork: number ): number;
 }
 
 /**
-* Estimates the Skeel condition number for a general banded matrix
+* @license MIT.
 */
 declare var dla_gbrcond: Routine;
 

@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the eigenvalues and optionally the Schur factorization of an upper.
+	* @license MIT.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -42,10 +42,10 @@ interface Routine {
 	* @param LDZ - leading dimension of `Z`
 	* @returns result
 	*/
-	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number ): number;
 
 	/**
-	* Computes the eigenvalues and optionally the Schur factorization of an upper using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -70,11 +70,11 @@ interface Routine {
 	* @param offsetZ - starting index for `Z`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number ): number;
 }
 
 /**
-* Computes the eigenvalues and optionally the Schur factorization of an upper.
+* @license MIT.
 */
 declare var dlahqr: Routine;
 

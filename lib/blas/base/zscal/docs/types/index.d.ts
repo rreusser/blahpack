@@ -18,12 +18,16 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zscal`.
 */
 interface Routine {
 	/**
-	* Scale a complex double-precision vector by a complex constant.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param za - `za`
@@ -31,10 +35,10 @@ interface Routine {
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( N: number, za: number, zx: number, strideX: number ): Float64Array;
+	( N: number, za: number, zx: number, strideX: number ): Complex128Array;
 
 	/**
-	* Scale a complex double-precision vector by a complex constant using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param za - `za`
@@ -43,11 +47,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( N: number, za: number, zx: number, strideX: number, offsetX: number ): Float64Array;
+	ndarray( N: number, za: number, zx: number, strideX: number, offsetX: number ): Complex128Array;
 }
 
 /**
-* Scale a complex double-precision vector by a complex constant.
+* @license MIT.
 */
 declare var zscal: Routine;
 

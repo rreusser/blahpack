@@ -23,21 +23,74 @@ import zlansf = require( './index' );
 
 // The function returns a number...
 {
-	zlansf( 'no-transpose' ); // $ExpectType number
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	zlansf( 10 ); // $ExpectError
-	zlansf( true ); // $ExpectError
-	zlansf( false ); // $ExpectError
-	zlansf( null ); // $ExpectError
-	zlansf( undefined ); // $ExpectError
-	zlansf( [] ); // $ExpectError
-	zlansf( {} ); // $ExpectError
+	zlansf( 10, 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( true, 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( null, 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( undefined, 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( [], 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( {}, 'no-transpose', 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	zlansf( 'no-transpose', 10, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', true, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', null, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', undefined, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', [], 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', {}, 'upper', 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	zlansf( 'no-transpose', 'no-transpose', 10, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', true, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', null, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', undefined, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', [], 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', {}, 10, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	zlansf( 'no-transpose', 'no-transpose', 'upper', '10', new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', true, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', false, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', null, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', undefined, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', [], new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', {}, new Float64Array( 25 ), new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, '10', new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, 10, new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, true, new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, null, new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, undefined, new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, [], new Float64Array( 25 ) ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, {}, new Float64Array( 25 ) ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), true ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), null ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), [] ); // $ExpectError
+	zlansf( 'no-transpose', 'no-transpose', 'upper', 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	zlansf(); // $ExpectError
+	zlansf( 'no-transpose' ); // $ExpectError
 }

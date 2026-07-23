@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Solves the real Sylvester matrix equation:.
+	* @license MIT.
 	*
 	* @param trana - `trana`
 	* @param tranb - `tranb`
@@ -39,10 +39,10 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, scale: number ): Float64Array;
+	( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, C: Float64Array, LDC: number, scale: number ): number;
 
 	/**
-	* Solves the real Sylvester matrix equation: using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param trana - `trana`
 	* @param tranb - `tranb`
@@ -64,11 +64,11 @@ interface Routine {
 	* @param scale - `scale`
 	* @returns result
 	*/
-	ndarray( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, scale: number ): Float64Array;
+	ndarray( trana: string, tranb: string, isgn: string, M: number, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, C: Float64Array, strideC1: number, strideC2: number, offsetC: number, scale: number ): number;
 }
 
 /**
-* Solves the real Sylvester matrix equation:.
+* @license MIT.
 */
 declare var dtrsyl: Routine;
 

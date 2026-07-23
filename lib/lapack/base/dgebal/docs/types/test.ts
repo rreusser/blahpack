@@ -21,23 +21,78 @@ import dgebal = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function is callable with the documented arguments...
 {
-	dgebal( 'no-transpose' ); // $ExpectType Float64Array
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 );
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a string...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dgebal( 10 ); // $ExpectError
-	dgebal( true ); // $ExpectError
-	dgebal( false ); // $ExpectError
-	dgebal( null ); // $ExpectError
-	dgebal( undefined ); // $ExpectError
-	dgebal( [] ); // $ExpectError
-	dgebal( {} ); // $ExpectError
+	dgebal( 10, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( true, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( null, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( undefined, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( [], 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( {}, 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dgebal( 'no-transpose', '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dgebal( 'no-transpose', 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a sixth argument of invalid type...
+{
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dgebal( 'no-transpose', 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dgebal(); // $ExpectError
+	dgebal( 'no-transpose' ); // $ExpectError
 }

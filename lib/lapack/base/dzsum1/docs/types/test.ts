@@ -21,23 +21,46 @@ import dzsum1 = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dzsum1( 10 ); // $ExpectType Float64Array
+	dzsum1( 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
-	dzsum1( '10' ); // $ExpectError
-	dzsum1( true ); // $ExpectError
-	dzsum1( false ); // $ExpectError
-	dzsum1( null ); // $ExpectError
-	dzsum1( undefined ); // $ExpectError
-	dzsum1( [] ); // $ExpectError
-	dzsum1( {} ); // $ExpectError
+	dzsum1( '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dzsum1( {}, new Float64Array( 25 ), 10 ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dzsum1( 10, '10', 10 ); // $ExpectError
+	dzsum1( 10, 10, 10 ); // $ExpectError
+	dzsum1( 10, true, 10 ); // $ExpectError
+	dzsum1( 10, null, 10 ); // $ExpectError
+	dzsum1( 10, undefined, 10 ); // $ExpectError
+	dzsum1( 10, [], 10 ); // $ExpectError
+	dzsum1( 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dzsum1( 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), true ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), false ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), null ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dzsum1( 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dzsum1(); // $ExpectError
+	dzsum1( 10 ); // $ExpectError
 }

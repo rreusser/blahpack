@@ -26,7 +26,7 @@ import dcabs1 = require( './index' );
 	dcabs1( 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if provided a first argument of invalid type...
 {
 	dcabs1( '10' ); // $ExpectError
 	dcabs1( true ); // $ExpectError
@@ -37,7 +37,7 @@ import dcabs1 = require( './index' );
 	dcabs1( {} ); // $ExpectError
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dcabs1(); // $ExpectError
 }

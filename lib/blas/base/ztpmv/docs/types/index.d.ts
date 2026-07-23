@@ -20,14 +20,15 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+import { DiagonalType, MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztpmv`.
 */
 interface Routine {
 	/**
-	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x`.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -39,10 +40,10 @@ interface Routine {
 	* @param strideX - stride of `X`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number ): Float64Array;
+	( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, x: Float64Array, strideX: number ): Complex128Array;
 
 	/**
-	* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x` using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param trans - specifies whether the matrix should be transposed
@@ -56,11 +57,11 @@ interface Routine {
 	* @param offsetX - starting index for `X`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, N: number, AP: Float64Array, strideAP: number, offsetAP: number, x: Float64Array, strideX: number, offsetX: number ): Complex128Array;
 }
 
 /**
-* Performs one of the matrix-vector operations `x := A*x`, `x := A**T*x`, or `x := A**H*x`.
+* @license MIT.
 */
 declare var ztpmv: Routine;
 

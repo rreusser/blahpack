@@ -20,6 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Complex128Array } from '@stdlib/types/array';
 import { MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 
 /**
@@ -27,7 +28,7 @@ import { MatrixTriangle, TransposeOperation } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -41,10 +42,10 @@ interface Routine {
 	* @param C - `C`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array ): Float64Array;
+	( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, LDA: number, beta: number, C: Float64Array ): Complex128Array;
 
 	/**
-	* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -62,11 +63,11 @@ interface Routine {
 	* @param offsetC - starting index for `C`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, beta: number, C: Float64Array, strideC: number, offsetC: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, trans: TransposeOperation, N: number, K: number, alpha: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, beta: number, C: Float64Array, strideC: number, offsetC: number ): Complex128Array;
 }
 
 /**
-* Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.
+* @license MIT.
 */
 declare var zhfrk: Routine;
 

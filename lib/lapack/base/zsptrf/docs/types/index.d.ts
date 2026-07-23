@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes the Bunch-Kaufman factorization of a complex symmetric matrix in packed storage.
+	* @license MIT.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -35,10 +35,10 @@ interface Routine {
 	* @param IPIV - `IPIV`
 	* @returns result
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array ): Float64Array;
+	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array ): number;
 
 	/**
-	* Computes the Bunch-Kaufman factorization of a complex symmetric matrix in packed storage using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
@@ -50,11 +50,11 @@ interface Routine {
 	* @param offsetIPIV - starting index for `IPIV`
 	* @returns result
 	*/
-	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	ndarray( uplo: MatrixTriangle, N: number, AP: Float64Array, strideAP: number, offsetAP: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): number;
 }
 
 /**
-* Computes the Bunch-Kaufman factorization of a complex symmetric matrix in packed storage.
+* @license MIT.
 */
 declare var zsptrf: Routine;
 

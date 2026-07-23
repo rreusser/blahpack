@@ -18,44 +18,41 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `zla_lin_berr`.
 */
 interface Routine {
 	/**
-	* Computes a component-wise relative backward error
+	* @license MIT.
 	*
 	* @param N - number of columns
-	* @param nz - nz
-	* @param nrhs - nrhs
-	* @param res - input array
-	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
-	* @param ayb - input array
-	* @param strideAYB - stride length for `ayb`
-	* @param berr - input array
-	* @param strideBERR - stride length for `berr`
+	* @param nz - `nz`
+	* @param nrhs - number of right-hand sides
+	* @param res - `res`
+	* @param LDRES - leading dimension of `RES`
+	* @param ayb - `ayb`
+	* @param LDAYB - leading dimension of `AYB`
+	* @param berr - `berr`
 	* @returns result
 	*/
 	( N: number, nz: number, nrhs: number, res: Float64Array, LDRES: number, ayb: Float64Array, LDAYB: number, berr: Float64Array ): Float64Array;
 
 	/**
-	* Computes a component-wise relative backward error, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
-	* @param nz - nz
-	* @param nrhs - nrhs
-	* @param res - input array
-	* @param LDRES - leading dimension of `res` (layout API) or strideRES1 (ndarray)
+	* @param nz - `nz`
+	* @param nrhs - number of right-hand sides
+	* @param res - `res`
+	* @param strideRES1 - stride of `RES`
+	* @param strideRES2 - stride of `RES`
 	* @param offsetRES - starting index for `RES`
-	* @param ayb - input array
-	* @param strideAYB - stride length for `ayb`
+	* @param ayb - `ayb`
+	* @param strideAYB1 - stride of `AYB`
+	* @param strideAYB2 - stride of `AYB`
 	* @param offsetAYB - starting index for `AYB`
-	* @param berr - input array
-	* @param strideBERR - stride length for `berr`
+	* @param berr - `berr`
+	* @param strideBERR - stride of `BERR`
 	* @param offsetBERR - starting index for `BERR`
 	* @returns result
 	*/
@@ -63,7 +60,7 @@ interface Routine {
 }
 
 /**
-* Computes a component-wise relative backward error
+* @license MIT.
 */
 declare var zla_lin_berr: Routine;
 

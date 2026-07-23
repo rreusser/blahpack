@@ -23,15 +23,31 @@
 */
 interface Routine {
 	/**
-	* Compute the number of simultaneous shifts (ISPEC=15) per iparmq.
+	* @license MIT.
 	*
-	* @param nh - `nh`
+	* @param wantt - `wantt`
+	* @param wantz - `wantz`
+	* @param N - number of columns
+	* @param ilo - lower index
+	* @param ihi - upper index
+	* @param H - `H`
+	* @param LDH - leading dimension of `H`
+	* @param WR - `WR`
+	* @param strideWR - stride of `WR`
+	* @param WI - `WI`
+	* @param strideWI - stride of `WI`
+	* @param iloz - `iloz`
+	* @param ihiz - `ihiz`
+	* @param Z - `Z`
+	* @param LDZ - leading dimension of `Z`
+	* @param WORK - `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( nh: number ): Float64Array;
+	( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, LDH: number, WR: Float64Array, strideWR: number, WI: Float64Array, strideWI: number, iloz: number, ihiz: number, Z: Float64Array, LDZ: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Compute the number of simultaneous shifts (ISPEC=15) per iparmq using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param wantt - `wantt`
 	* @param wantz - `wantz`
@@ -55,15 +71,15 @@ interface Routine {
 	* @param strideZ2 - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( wantt: boolean, wantz: boolean, N: number, ilo: number, ihi: number, H: Float64Array, strideH1: number, strideH2: number, offsetH: number, WR: Float64Array, strideWR: number, offsetWR: number, WI: Float64Array, strideWI: number, offsetWI: number, iloz: number, ihiz: number, Z: Float64Array, strideZ1: number, strideZ2: number, offsetZ: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Compute the number of simultaneous shifts (ISPEC=15) per iparmq.
+* @license MIT.
 */
 declare var dlaqr0: Routine;
 

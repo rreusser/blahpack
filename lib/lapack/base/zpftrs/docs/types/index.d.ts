@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* @license Apache-2.0.
+	* @license MIT.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -37,10 +37,10 @@ interface Routine {
 	* @param B - `B`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, B: Float64Array ): Float64Array;
+	( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, B: Float64Array ): number;
 
 	/**
-	* @license Apache-2.0 using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* @license Apache-2.0.
+* @license MIT.
 */
 declare var zpftrs: Routine;
 

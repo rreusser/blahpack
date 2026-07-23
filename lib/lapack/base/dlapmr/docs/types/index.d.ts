@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Rearranges the rows of an M-by-N matrix X as specified by a permutation vector.
+	* @license MIT.
 	*
 	* @param forwrd - `forwrd`
 	* @param M - number of rows
@@ -34,10 +34,10 @@ interface Routine {
 	* @param strideK - stride of `K`
 	* @returns result
 	*/
-	( forwrd: boolean, M: number, N: number, X: Float64Array, LDX: number, k: Float64Array, strideK: number ): Float64Array;
+	( forwrd: boolean, M: number, N: number, X: Float64Array, LDX: number, k: Float64Array, strideK: number ): void;
 
 	/**
-	* Rearranges the rows of an M-by-N matrix X as specified by a permutation vector using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param forwrd - `forwrd`
 	* @param M - number of rows
@@ -51,11 +51,11 @@ interface Routine {
 	* @param offsetK - starting index for `K`
 	* @returns result
 	*/
-	ndarray( forwrd: boolean, M: number, N: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, k: Float64Array, strideK: number, offsetK: number ): Float64Array;
+	ndarray( forwrd: boolean, M: number, N: number, X: Float64Array, strideX1: number, strideX2: number, offsetX: number, k: Float64Array, strideK: number, offsetK: number ): void;
 }
 
 /**
-* Rearranges the rows of an M-by-N matrix X as specified by a permutation vector.
+* @license MIT.
 */
 declare var dlapmr: Routine;
 

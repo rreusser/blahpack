@@ -20,14 +20,14 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, Layout } from '@stdlib/types/blas';
+import { Layout, OperationSide } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zggbak`.
 */
 interface Routine {
 	/**
-	* Back-transform eigenvectors of a balanced pair of general real matrices.
+	* @license MIT.
 	*
 	* @param order - storage layout
 	* @param job - `job`
@@ -44,10 +44,10 @@ interface Routine {
 	* @param LDV - leading dimension of `V`
 	* @returns result
 	*/
-	( order: Layout, job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, M: number, V: Float64Array, LDV: number ): Float64Array;
+	( order: Layout, job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, M: number, V: Float64Array, LDV: number ): number;
 
 	/**
-	* Back-transform eigenvectors of a balanced pair of general real matrices using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param job - `job`
 	* @param side - specifies the side of the operation
@@ -67,11 +67,11 @@ interface Routine {
 	* @param offsetV - starting index for `V`
 	* @returns result
 	*/
-	ndarray( job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, M: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number ): Float64Array;
+	ndarray( job: string, side: OperationSide, N: number, ilo: number, ihi: number, LSCALE: Float64Array, strideLSCALE: number, offsetLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, offsetRSCALE: number, M: number, V: Float64Array, strideV1: number, strideV2: number, offsetV: number ): number;
 }
 
 /**
-* Back-transform eigenvectors of a balanced pair of general real matrices.
+* @license MIT.
 */
 declare var zggbak: Routine;
 

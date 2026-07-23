@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes the solution to a complex system of linear equations A * X = B.
+	* @license MIT.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -35,10 +35,10 @@ interface Routine {
 	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): Float64Array;
+	( N: number, nrhs: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Float64Array, LDB: number ): number;
 
 	/**
-	* Computes the solution to a complex system of linear equations A * X = B, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
@@ -55,11 +55,11 @@ interface Routine {
 	* @param offsetB - starting index for `B`
 	* @returns result
 	*/
-	ndarray( N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	ndarray( N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): number;
 }
 
 /**
-* Computes the solution to a complex system of linear equations A * X = B.
+* @license MIT.
 */
 declare var zgesv: Routine;
 

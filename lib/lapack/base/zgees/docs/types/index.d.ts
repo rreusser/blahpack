@@ -23,7 +23,7 @@
 */
 interface Routine {
 	/**
-	* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
+	* @license MIT.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -37,17 +37,17 @@ interface Routine {
 	* @param VS - `VS`
 	* @param LDVS - leading dimension of `VS`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
+	* @param strideRWork - stride of `RWork`
 	* @param BWORK - `BWORK`
-	* @param strideBWORK - stride of `BWORK`
+	* @param strideBWork - stride of `BWork`
 	* @returns result
 	*/
-	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, W: Float64Array, strideW: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWORK: number, RWORK: Float64Array, strideRWORK: number, BWORK: Int32Array, strideBWORK: number ): Float64Array;
+	( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, LDA: number, sdim: number, W: Float64Array, strideW: number, VS: Float64Array, LDVS: number, WORK: Float64Array, strideWork: number, RWORK: Float64Array, strideRWork: number, BWORK: Int32Array, strideBWork: number ): number;
 
 	/**
-	* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param jobvs - `jobvs`
 	* @param sort - `sort`
@@ -66,21 +66,21 @@ interface Routine {
 	* @param strideVS2 - stride of `VS`
 	* @param offsetVS - starting index for `VS`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @param offsetRWORK - starting index for `RWORK`
+	* @param strideRWork - stride of `RWork`
+	* @param offsetRWork - starting index for `RWork`
 	* @param BWORK - `BWORK`
-	* @param strideBWORK - stride of `BWORK`
-	* @param offsetBWORK - starting index for `BWORK`
+	* @param strideBWork - stride of `BWork`
+	* @param offsetBWork - starting index for `BWork`
 	* @returns result
 	*/
-	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, W: Float64Array, strideW: number, offsetW: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWORK: number, offsetWORK: number, RWORK: Float64Array, strideRWORK: number, offsetRWORK: number, BWORK: Int32Array, strideBWORK: number, offsetBWORK: number ): Float64Array;
+	ndarray( jobvs: string, sort: string, select: Function, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, sdim: number, W: Float64Array, strideW: number, offsetW: number, VS: Float64Array, strideVS1: number, strideVS2: number, offsetVS: number, WORK: Float64Array, strideWork: number, offsetWork: number, RWORK: Float64Array, strideRWork: number, offsetRWork: number, BWORK: Int32Array, strideBWork: number, offsetBWork: number ): number;
 }
 
 /**
-* Computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues.
+* @license MIT.
 */
 declare var zgees: Routine;
 

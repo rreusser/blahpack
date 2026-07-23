@@ -61,11 +61,33 @@ gfortran                       # GNU Fortran compiler (Homebrew)
 node                            # Node.js v24+ (node:test built-in)
 node bin/conformance.js <module-path>  # Conformance check for one module (all checks)
 node bin/conformance.js --all --fast   # Fast conformance on all modules (file checks only)
-node bin/conformance.js --all          # Full conformance on all modules (includes lint)
+node bin/conformance.js --all          # Full conformance on all modules (includes lint + types)
 npm run report                  # Generate progress.html with conformance checks
 bin/lint-fix.sh <module-path>   # Auto-fix (codemods + eslint + test verify)
 bin/lint.sh lib/<path>/base.js  # Lint a single file
+npm run typecheck               # Type-check ALL public type declarations (fast, batched)
+node bin/typecheck.js <module-path>    # Type-check one module's docs/types
+npm run typegen                 # Regenerate all docs/types/index.d.ts + test.ts
 ```
+
+## Public type declarations (asserted, not decorative)
+
+Every module ships `docs/types/index.d.ts` (the public interface) plus
+`docs/types/test.ts` (compile-time `$ExpectType`/`$ExpectError` assertions).
+These are **checked** — `node bin/typecheck.js` compiles each test against its
+declaration and fails on drift, and the `types` conformance check runs the same
+gate (skipped only under `--fast`). Do not hand-edit these files.
+
+- **Single source of truth is the implementation.** The declared RETURN type is
+  derived from the impl's `@returns` JSDoc via `bin/return_type.js`, used by
+  BOTH generators, so a wrong `@returns` (or a stale `.d.ts`) fails the check.
+- **Regenerate, don't edit:** after changing a signature or `@returns`, run
+  `npm run typegen` (or target one module: `node bin/gen_index_dts.js <path> &&
+  node bin/gen_test_ts.js <path>`), then `node bin/typecheck.js <path>`.
+- **Known residual:** routines returning `@returns {Object}` become a precise
+  `{ ... }` type only when the JSDoc says "result with a, b and c"; otherwise
+  they fall back to `Record<string, unknown>`. Improving those means enriching
+  the `@returns` description, then regenerating.
 
 ## Context Efficiency
 

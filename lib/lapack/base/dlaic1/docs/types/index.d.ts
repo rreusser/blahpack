@@ -18,55 +18,47 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlaic1`.
 */
 interface Routine {
 	/**
-	* Applies one step of incremental condition estimation
+	* @license MIT.
 	*
-	* @param job - job
-	* @param j - j
-	* @param x - input array
-	* @param strideX - stride length for `x`
-	* @param sest - sest
-	* @param w - input array
-	* @param strideW - stride length for `w`
-	* @param gamma - gamma
-	* @param sestpr - sestpr
-	* @param s - s
-	* @param c - c
+	* @param job - `job`
+	* @param J - `J`
+	* @param x - `x`
+	* @param strideX - stride of `X`
+	* @param sest - `sest`
+	* @param w - `w`
+	* @param strideW - stride of `W`
+	* @param gamma - `gamma`
+	* @param out - `out`
 	* @returns result
 	*/
-	( job: number, j: number, x: Float64Array, strideX: number, sest: number, w: Float64Array, strideW: number, gamma: number, sestpr: number, s: number, c: number ): Float64Array;
+	( job: string, J: number, x: Float64Array, strideX: number, sest: number, w: Float64Array, strideW: number, gamma: number, out: number ): Float64Array;
 
 	/**
-	* Applies one step of incremental condition estimation, using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
-	* @param job - job
-	* @param j - j
-	* @param x - input array
-	* @param strideX - stride length for `x`
+	* @param job - `job`
+	* @param J - `J`
+	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param offsetX - starting index for `X`
-	* @param sest - sest
-	* @param w - input array
-	* @param strideW - stride length for `w`
+	* @param sest - `sest`
+	* @param w - `w`
+	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
-	* @param gamma - gamma
-	* @param sestpr - sestpr
-	* @param s - s
-	* @param c - c
+	* @param gamma - `gamma`
+	* @param out - `out`
 	* @returns result
 	*/
-	ndarray( job: number, j: number, x: Float64Array, strideX: number, offsetX: number, sest: number, w: Float64Array, strideW: number, offsetW: number, gamma: number, sestpr: number, s: number, c: number ): Float64Array;
+	ndarray( job: string, J: number, x: Float64Array, strideX: number, offsetX: number, sest: number, w: Float64Array, strideW: number, offsetW: number, gamma: number, out: number ): Float64Array;
 }
 
 /**
-* Applies one step of incremental condition estimation
+* @license MIT.
 */
 declare var dlaic1: Routine;
 

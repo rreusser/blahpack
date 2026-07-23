@@ -27,7 +27,7 @@ import { MatrixTriangle } from '@stdlib/types/blas';
 */
 interface Routine {
 	/**
-	* Computes all the eigenvalues, and optionally, the eigenvectors of a real.
+	* @license MIT.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -40,13 +40,13 @@ interface Routine {
 	* @param w - `w`
 	* @param strideW - stride of `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
+	* @param strideWork - stride of `Work`
 	* @returns result
 	*/
-	( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, w: Float64Array, strideW: number, WORK: Float64Array, strideWork: number ): number;
 
 	/**
-	* Computes all the eigenvalues, and optionally, the eigenvectors of a real using alternative indexing semantics.
+	* @license MIT using alternative indexing semantics.
 	*
 	* @param itype - `itype`
 	* @param jobz - `jobz`
@@ -64,15 +64,15 @@ interface Routine {
 	* @param strideW - stride of `W`
 	* @param offsetW - starting index for `W`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
+	* @param strideWork - stride of `Work`
+	* @param offsetWork - starting index for `Work`
 	* @returns result
 	*/
-	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	ndarray( itype: number, jobz: string, uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number, w: Float64Array, strideW: number, offsetW: number, WORK: Float64Array, strideWork: number, offsetWork: number ): number;
 }
 
 /**
-* Computes all the eigenvalues, and optionally, the eigenvectors of a real.
+* @license MIT.
 */
 declare var dsygv: Routine;
 

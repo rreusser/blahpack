@@ -21,22 +21,68 @@ import dlarrr = require( './index' );
 
 // TESTS //
 
-// The function returns a Float64Array...
+// The function returns a number...
 {
-	dlarrr( 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2 ); // $ExpectType Float64Array
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided an unsupported number of arguments...
+// The compiler throws an error if provided a first argument of invalid type...
+{
+	dlarrr( '10', new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( true, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( false, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( null, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( undefined, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( [], new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( {}, new Float64Array( 25 ), 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a second argument of invalid type...
+{
+	dlarrr( 10, '10', 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, 10, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, true, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, null, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, undefined, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, [], 10, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, {}, 10, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a third argument of invalid type...
+{
+	dlarrr( 10, new Float64Array( 25 ), '10', new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), true, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), false, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), null, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), undefined, new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), [], new Float64Array( 25 ), 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), {}, new Float64Array( 25 ), 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fourth argument of invalid type...
+{
+	dlarrr( 10, new Float64Array( 25 ), 10, '10', 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, 10, 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, true, 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, null, 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, undefined, 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, [], 10 ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, {}, 10 ); // $ExpectError
+}
+
+// The compiler throws an error if provided a fifth argument of invalid type...
+{
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), '10' ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), true ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), false ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), null ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), undefined ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), [] ); // $ExpectError
+	dlarrr( 10, new Float64Array( 25 ), 10, new Float64Array( 25 ), {} ); // $ExpectError
+}
+
+// The compiler throws an error if provided an unsupported number of arguments...
 {
 	dlarrr(); // $ExpectError
-}
-
-// The ndarray method returns a Float64Array...
-{
-	dlarrr.ndarray( 2, new Float64Array( 4 ), 2, 2, new Float64Array( 4 ), 2, 2 ); // $ExpectType Float64Array
-}
-
-// The compiler throws an error if the ndarray method is provided an unsupported number of arguments...
-{
-	dlarrr.ndarray(); // $ExpectError
+	dlarrr( 10 ); // $ExpectError
 }

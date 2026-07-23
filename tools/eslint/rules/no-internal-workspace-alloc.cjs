@@ -29,6 +29,11 @@
 //     existing allocation rather than creating one.
 
 var path = require( 'path' );
+var util = require( '../../../bin/conformance/util.js' );
+
+// Memoize the "does the reference Fortran declare a workspace array?" lookup so
+// linting `base.js` and `ndarray.js` of the same routine reads the source once.
+var FORTRAN_WS_CACHE = {};
 
 var TYPED_ARRAYS = {
 	'Float64Array': true,
@@ -42,14 +47,69 @@ var TYPED_ARRAYS = {
 };
 
 // A caller-provided workspace parameter: work, iwork, rwork, swork, WORK, ...
-// (optionally suffixed, e.g. work1). Its presence is what makes an internal
-// workspace allocation a contract violation — a routine with no workspace
-// parameter (e.g. a BLAS kernel with an internal register-tiling pack buffer)
-// legitimately owns its scratch and is NOT covered by this policy.
+// (optionally suffixed, e.g. work1).
+//
+// The trigger for this rule is NOT the presence of this parameter — that gate
+// had a hole: a routine that never exposed the parameter and just allocated
+// internally escaped entirely (see the workspace-tier backlog). The ground
+// truth is the REFERENCE FORTRAN: if `<routine>.f` declares a WORK-family array
+// argument, the scratch must be caller-owned, whether or not the JS port has
+// gotten around to exposing it. The JS-parameter check remains a secondary
+// trigger (so a half-refactored routine that exposes `work` but still allocates
+// is caught even if the Fortran source can't be read).
 var WORK_PARAM_RE = /^([irsdcz]?work|l?work)\d*$/i;
 
 
 // HELPERS //
+
+/**
+* Derives the routine name from a `.../base/<routine>/lib/<file>.js` path.
+*
+* @private
+* @param {string} filename - absolute path of the file being linted
+* @returns {string} routine name (matches the reference Fortran filename)
+*/
+function routineFromFile( filename ) {
+	return path.basename( path.dirname( path.dirname( filename ) ) );
+}
+
+/**
+* Whether the reference LAPACK/BLAS Fortran for `routine` declares a
+* caller-provided workspace array argument (`WORK`/`RWORK`/`IWORK`/`SWORK`/
+* `BWORK`). This — not the presence of a JS parameter — is the ground truth for
+* "this routine's scratch must be caller-owned": a routine that ignores (or
+* never even exposes) that contract and allocates internally is the violation.
+* Result is memoized per routine. Reads that fail (no Fortran on disk) return
+* `false`, leaving the JS-parameter check as the fallback trigger.
+*
+* @private
+* @param {string} routine - routine name
+* @returns {boolean}
+*/
+function fortranDeclaresWorkspace( routine ) {
+	var src;
+	var args;
+	var i;
+	if ( Object.prototype.hasOwnProperty.call( FORTRAN_WS_CACHE, routine ) ) {
+		return FORTRAN_WS_CACHE[ routine ];
+	}
+	FORTRAN_WS_CACHE[ routine ] = false;
+	try {
+		src = util.readFortran( routine );
+		if ( src ) {
+			args = util.fortranArgs( src, routine );
+			for ( i = 0; i < args.length; i++ ) {
+				if ( util.FORTRAN_WORK_ARGS.indexOf( args[ i ] ) !== -1 ) {
+					FORTRAN_WS_CACHE[ routine ] = true;
+					break;
+				}
+			}
+		}
+	} catch ( err ) {
+		FORTRAN_WS_CACHE[ routine ] = false;
+	}
+	return FORTRAN_WS_CACHE[ routine ];
+}
 
 /**
 * Whether the NewExpression is assigned to a block-reflector T factor variable
@@ -117,6 +177,7 @@ var rule = {
 		if ( bn !== 'base.js' && bn !== 'ndarray.js' ) {
 			return {};
 		}
+		var fortranHasWorkspace = fortranDeclaresWorkspace( routineFromFile( context.getFilename() ) );
 		var hasWorkParam = false;
 		var candidates = [];
 
@@ -147,14 +208,24 @@ var rule = {
 				candidates.push( node );
 			},
 			'Program:exit': function onExit() {
+				var reason;
 				var i;
-				if ( !hasWorkParam ) {
-					return; // no caller-provided workspace contract => not covered
+
+				// The scratch must be caller-owned when EITHER the reference
+				// Fortran declares a workspace array (the ground truth — this
+				// catches routines that never even exposed the parameter and
+				// allocate internally) OR the JS already exposes a workspace
+				// parameter (the "ignored param + internal alloc" double bug).
+				if ( !fortranHasWorkspace && !hasWorkParam ) {
+					return; // genuinely no caller-provided workspace contract
 				}
+				reason = ( fortranHasWorkspace ) ?
+					'the reference Fortran declares a caller-provided workspace array (WORK/RWORK/IWORK/SWORK/BWORK)' :
+					'this routine exposes a caller-provided workspace parameter';
 				for ( i = 0; i < candidates.length; i++ ) {
 					context.report({
 						'node': candidates[ i ],
-						'message': bn + ' must not allocate a problem-sized workspace array (`new ' + candidates[ i ].callee.name + '(...)`) — this routine has a caller-provided workspace parameter, so base.js and ndarray.js must never allocate (the ndarray layer is where same-size batches reuse ONE workspace). Allocate only in the wrapper (<routine>.js) when `work === null`, and assert the size in ndarray.js. Exemptions: fixed-size bookkeeping arrays and the block-reflector T factor.'
+						'message': bn + ' must not allocate a problem-sized workspace array (`new ' + candidates[ i ].callee.name + '(...)`) — ' + reason + ', so this workspace must be caller-owned. Expose `work, strideWork, offsetWork` (and `iwork`/`rwork` as needed) on base.js + ndarray.js and USE it (per @stdlib/lapack/base/dlarf1f); assert the size in ndarray.js; allocate only in the wrapper (<routine>.js) when `work === null`. base.js/ndarray.js must never allocate — that is what lets same-size batches reuse ONE workspace. Exemptions: fixed-size bookkeeping arrays, buffer views, and the block-reflector T factor.'
 					});
 				}
 			}

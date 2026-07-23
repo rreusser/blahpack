@@ -977,6 +977,7 @@
     "@stdlib/math": "^0.3.3",
     "@stdlib/strided": "^0.3.3",
     "@stdlib/string": "^0.3.3",
+    "@stdlib/types": "^0.5.1",
     "@stdlib/utils": "^0.3.3"
   },
   "devDependencies": {

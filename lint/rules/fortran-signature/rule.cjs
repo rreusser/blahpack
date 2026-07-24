@@ -2,10 +2,12 @@
 
 // ESLint rule: fortran-signature
 //
-// Enforces that a routine's `base.js` parameter list is a faithful expansion of
-// its reference Fortran signature. The expected signature is *computed* from the
-// parsed Fortran arguments (see derive.cjs); this rule compares the actual
-// exported function's parameters against that computed model on two axes:
+// Enforces that a routine's OFFSET-FORM parameter list — declared identically in
+// both `base.js` (the core) and `ndarray.js` (the public ndarray API) — is a
+// faithful expansion of its reference Fortran signature. The expected signature
+// is *computed* from the parsed Fortran arguments (see derive.cjs); this rule
+// compares the actual exported function's parameters against that computed model
+// on two axes:
 //
 //   1. Arity — the parameter count must be one the Fortran expansion can
 //      produce (derive.cjs yields the full set of achievable counts, because
@@ -13,16 +15,22 @@
 //
 //   2. Naming discipline — every stride/offset parameter must refer to a real
 //      array parameter by the `stride<Array>` / `offset<Array>` (and
-//      `stride<Array>1` / `stride<Array>2` for 2D) convention. This is checked
-//      by referential integrity on the actual parameter list, so it holds even
-//      when flexible argument classes make absolute positions ambiguous.
+//      `stride<Array>1` / `stride<Array>2` for 2D) convention (see
+//      lint/lib/naming.cjs). Referential integrity, so it holds even when
+//      flexible argument classes make absolute positions ambiguous.
 //
-// A routine with no ingested Fortran arguments is reported as a coverage gap
-// (messageId 'noData') — a loud, visible failure, never a silent skip.
+// base.js and ndarray.js are both the offset form and both carry offsets, so
+// both are checked with the same model and requireOffset=true. A routine with no
+// ingested Fortran arguments is reported as a coverage gap (messageId 'noData')
+// — a loud, visible failure, never a silent skip.
 
 var path = require( 'path' );
 var fortranData = require( '../../lib/fortran-data.cjs' );
+var naming = require( '../../lib/naming.cjs' );
 var derive = require( './derive.cjs' ).derive;
+
+// The offset-form files this rule validates.
+var OFFSET_FORM_FILES = { 'base.js': true, 'ndarray.js': true };
 
 // Compact rendering of the achievable-count set: a contiguous run as "a-b",
 // otherwise "a or b or c".
@@ -74,94 +82,15 @@ function getParamNames( node ) {
 	});
 }
 
-// Referential-integrity naming check. For every `stride*` parameter, resolve
-// the array it refers to and confirm the array parameter and matching
-// `offset*` parameter both exist under the convention. Position-independent, so
-// flexible argument classes never produce spurious naming errors.
-//
-// An array parameter matches a stride suffix under two accepted relaxations,
-// both real project conventions:
-//
-//   * Precision prefix — a complex vector kept as a reinterpreted typed array
-//     retains its Fortran name (`zx`, `cy`) while its stride/offset use the
-//     logical, prefix-stripped name (`strideX`, `offsetY`). So `zx`, `cx`,
-//     `dx`, `sx` all satisfy suffix `X`.
-//   * Digit-suffixed siblings — `stride<B>1` and `stride<B>2` denote the two
-//     dimensions of a 2D array `B` ONLY when both siblings are present. When a
-//     parameter is literally named `<B>1` (two separate 1D arrays like
-//     `VN1`/`VN2`, `TAUP1`/`TAUP2`), the exact match wins and each is a plain
-//     1D array. Exact match is therefore always tried first.
-function checkNaming( params, node, context ) {
-	var lower = {};
-	params.forEach( function forEach( p ) {
-		lower[ p.toLowerCase() ] = true;
-	});
-
-	function has( name ) {
-		return lower[ String( name ).toLowerCase() ] === true;
-	}
-
-	// An array parameter satisfies `suffix` if it equals it, or equals it with a
-	// single leading precision letter (z/c/d/s).
-	function hasArray( suffix ) {
-		if ( has( suffix ) ) {
-			return true;
-		}
-		return [ 'z', 'c', 'd', 's' ].some( function some( pfx ) {
-			return has( pfx + suffix );
+// Report the shared naming-discipline violations against the rule's own
+// messageIds. Naming logic itself lives in lint/lib/naming.cjs.
+function reportNaming( params, node, context ) {
+	naming.checkNaming( params, { 'requireOffset': true } ).forEach( function forEach( v ) {
+		context.report({
+			'node': node.params[ v.index ] || node,
+			'messageId': v.kind,
+			'data': v.data
 		});
-	}
-
-	params.forEach( function forEach( p, i ) {
-		var m = /^stride(.+)$/i.exec( p );
-		if ( !m ) {
-			return;
-		}
-		var suffix = m[ 1 ];
-		var effSuffix = suffix;
-
-		// Exact (or precision-prefixed) 1D array wins first.
-		if ( !hasArray( suffix ) ) {
-			var dm = /^(.*)([12])$/.exec( suffix );
-			var resolved = false;
-			if ( dm ) {
-				var base = dm[ 1 ];
-				var other = ( dm[ 2 ] === '1' ) ? '2' : '1';
-
-				// (a) 2D array: `stride<B>1` paired with `stride<B>2`.
-				if ( has( 'stride' + base + other ) && hasArray( base ) ) {
-					effSuffix = base;
-					resolved = true;
-
-				// (b) Stride-name collision: a 1D array `B` whose canonical
-				// `stride<B>` name is already claimed by another array's
-				// dimension stride is disambiguated as `stride<B>1` (its sole
-				// dimension), keeping `offset<B>`. Requires the digit `1`, the
-				// array `B`, and the colliding `stride<B>` to all be present, so
-				// it only fires on a real collision. (Motivating case: dlaed2,
-				// where 2D `Q` claims strideQ2 and 1D `Q2` becomes strideQ21.)
-				} else if ( dm[ 2 ] === '1' && hasArray( base ) && has( 'stride' + base ) ) {
-					effSuffix = base;
-					resolved = true;
-				}
-			}
-			if ( !resolved ) {
-				context.report({
-					'node': node.params[ i ],
-					'messageId': 'strideNoArray',
-					'data': { 'stride': p, 'array': suffix }
-				});
-				return;
-			}
-		}
-
-		if ( !has( 'offset' + effSuffix ) ) {
-			context.report({
-				'node': node.params[ i ],
-				'messageId': 'strideNoOffset',
-				'data': { 'stride': p, 'offset': 'offset' + effSuffix }
-			});
-		}
 	});
 }
 
@@ -169,7 +98,7 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'enforce that base.js parameters faithfully expand the reference Fortran signature',
+			'description': 'enforce that base.js/ndarray.js parameters faithfully expand the reference Fortran signature',
 			'recommended': true
 		},
 		'schema': [],
@@ -182,11 +111,11 @@ var rule = {
 	},
 	'create': function create( context ) {
 		var filename = context.filename || ( context.getFilename && context.getFilename() ) || '';
-		if ( path.basename( filename ) !== 'base.js' ) {
+		if ( OFFSET_FORM_FILES[ path.basename( filename ) ] !== true ) {
 			return {};
 		}
 
-		// Routine name from `.../<pkg>/base/<routine>/lib/base.js`.
+		// Routine name from `.../<pkg>/base/<routine>/lib/{base,ndarray}.js`.
 		var parts = filename.split( path.sep );
 		var baseIdx = parts.lastIndexOf( 'base' );
 		if ( baseIdx === -1 || baseIdx + 1 >= parts.length ) {
@@ -254,8 +183,8 @@ var rule = {
 					});
 				}
 
-				// 2. Naming discipline (position-independent).
-				checkNaming( params, node, context );
+				// 2. Naming discipline (position-independent); offset form.
+				reportNaming( params, node, context );
 			}
 		};
 	}

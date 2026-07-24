@@ -1,7 +1,8 @@
 # `fortran-signature`
 
-**Every translated routine's `base.js` parameter list must be a faithful
-expansion of its reference Fortran signature.**
+**Every translated routine's offset-form parameter list — declared identically
+in `base.js` (the core) and `ndarray.js` (the public ndarray API) — must be a
+faithful expansion of its reference Fortran signature.**
 
 The signature is not hand-maintained and it is not asserted against itself — it
 is *computed* from the Fortran, and the actual JavaScript is checked against
@@ -23,8 +24,9 @@ Fortran source ──fparser (bin/extract_metadata.py)──▶ data/routines.js
 
 | File | Role |
 | --- | --- |
-| `rule.cjs` | The ESLint rule. Resolves the routine, computes the model, checks the actual signature. |
+| `rule.cjs` | The ESLint rule. Runs on `base.js` and `ndarray.js`; resolves the routine, computes the model, checks the actual signature. |
 | `derive.cjs` | Pure function: Fortran argument list → expected-signature model. All classification logic lives here and is unit-testable in isolation. |
+| `../../lib/naming.cjs` | Shared stride/offset naming-discipline check (also used by `wrapper-signature`). |
 | `data/supplemental.json` | Reference Fortran signatures for routines not vendored in `data/` (ARPACK family + a few others). |
 | `data/build-supplemental.cjs` | Authoring script that emits `supplemental.json` from transcribed reference signatures. |
 | `fixtures/pass/*.js` | Signatures that must lint clean — one per accommodated subtlety. |

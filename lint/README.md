@@ -38,18 +38,20 @@ scattered across a `bin/` of scripts and a config file.
 lint/
   README.md                    ← this file
   plugin.cjs                   ← assembles rules/*/rule.cjs into an ESLint plugin
-  verify-corpus.cjs            ← runs every rule over all lib/**/base.js (the gate)
+  verify-corpus.cjs            ← runs every rule over all module files (the gate)
   lib/
     fortran-data.cjs           ← loads parsed Fortran argument metadata
+    naming.cjs                 ← shared stride/offset naming-discipline check
     require-eslint.cjs          ← resolves eslint locally or globally
   rules/
-    fortran-signature/         ← rule #1: base.js params must expand the Fortran signature
-      README.md
-      rule.cjs
-      derive.cjs
+    fortran-signature/         ← base.js + ndarray.js params expand the Fortran signature
+      README.md  rule.cjs  derive.cjs
       data/{supplemental.json,build-supplemental.cjs}
-      fixtures/{pass,fail}/*.js
-      test.cjs
+      fixtures/{pass,fail}/*.js  test.cjs
+    wrapper-signature/         ← <routine>.js strided wrapper keeps stride naming discipline
+      README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
+    module-exports/            ← index.js/main.js expose the default + ndarray surface
+      README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
 ```
 
 ## Commands
@@ -69,10 +71,17 @@ the `blahpack/` namespace, so the rules also run as part of normal linting.
 
 ## Rules
 
-| Rule | Enforces |
-| --- | --- |
-| [`fortran-signature`](rules/fortran-signature/) | `base.js` parameter lists faithfully expand the reference Fortran signature (computed from the parsed Fortran, checked against the JS). |
+Together these validate every signature-bearing file of a module — `base.js`,
+`ndarray.js`, `<routine>.js`, `index.js`, `main.js`:
 
-_This is the seed of the library. Existing ad-hoc checks under `bin/conformance`
-and `tools/eslint/rules` are candidates to migrate into this structure, one
-self-contained rule at a time._
+| Rule | Files | Enforces |
+| --- | --- | --- |
+| [`fortran-signature`](rules/fortran-signature/) | `base.js`, `ndarray.js` | The offset-form parameter list faithfully expands the reference Fortran signature (computed from the parsed Fortran, checked against the JS). |
+| [`wrapper-signature`](rules/wrapper-signature/) | `<routine>.js` | The strided wrapper keeps stride/array naming discipline (offsets computed internally; shared strides and Fortran-native `LD*` names accommodated). |
+| [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
+
+The offset-form naming logic is shared between `fortran-signature` and
+`wrapper-signature` via [`lib/naming.cjs`](lib/naming.cjs).
+
+_Existing ad-hoc checks under `bin/conformance` and `tools/eslint/rules` are
+candidates to migrate into this structure, one self-contained rule at a time._

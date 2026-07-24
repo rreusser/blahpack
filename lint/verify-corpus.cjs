@@ -29,21 +29,33 @@ if ( ri !== -1 ) {
 	onlyRule = argv[ ri + 1 ];
 }
 
-// Recursively find every base.js under lib/.
-function findBaseFiles( dir, out ) {
-	fs.readdirSync( dir ).forEach( function forEach( entry ) {
+// Find every module source file the lint rules care about: any directory that
+// contains a base.js is a module `lib/` directory, and we lint all of its
+// signature-bearing files (base.js, ndarray.js, <routine>.js, main.js,
+// index.js). Each rule self-selects by filename, so feeding all of them is
+// correct — a rule ignores files it does not handle.
+function findModuleFiles( dir, out ) {
+	var entries = fs.readdirSync( dir );
+	if ( entries.indexOf( 'base.js' ) !== -1 ) {
+		entries.forEach( function forEach( entry ) {
+			if ( entry.endsWith( '.js' ) ) {
+				out.push( path.join( dir, entry ) );
+			}
+		});
+	}
+	entries.forEach( function forEach( entry ) {
 		var full = path.join( dir, entry );
-		var stat = fs.statSync( full );
-		if ( stat.isDirectory() ) {
-			findBaseFiles( full, out );
-		} else if ( entry === 'base.js' ) {
-			out.push( full );
+		if ( fs.statSync( full ).isDirectory() ) {
+			findModuleFiles( full, out );
 		}
 	});
 	return out;
 }
 
-var files = findBaseFiles( LIB, [] );
+var files = findModuleFiles( LIB, [] );
+var moduleCount = files.filter( function f( x ) {
+	return path.basename( x ) === 'base.js';
+}).length;
 
 var ruleNames = Object.keys( plugin.rules ).filter( function filter( n ) {
 	return !onlyRule || n === onlyRule;
@@ -115,7 +127,7 @@ Object.keys( byMessage ).forEach( function forEach( k ) {
 	totalViolations += byMessage[ k ].length;
 });
 
-console.log( 'Corpus: ' + total + ' base.js files, rules: ' + ruleNames.join( ', ' ) );
+console.log( 'Corpus: ' + moduleCount + ' modules, ' + total + ' files, rules: ' + ruleNames.join( ', ' ) );
 console.log( 'Files with violations: ' + failingFiles.length );
 console.log( 'Total violations: ' + totalViolations );
 if ( fatal.length ) {

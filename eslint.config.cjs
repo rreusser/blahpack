@@ -29,13 +29,19 @@ var localPlugin = {
 // load (e.g. vars-order, which requires stdlib internals) is dropped so
 // ESLint does not error on an undefined rule.
 var DESIRED_RULES = {
-	// Signatures must faithfully expand the reference Fortran signature. This is
-	// the lint/rules/fortran-signature rule: the expected signature is computed
-	// from the parsed Fortran and checked against base.js. It is clean across
-	// the entire corpus (node lint/verify-corpus.cjs), so it blocks. It replaces
-	// the old heuristic `signature-conformance` rule (which also no longer runs
-	// on ESLint 10 — it used the removed context.getFilename API).
+	// Signature rules (lint/rules/). Signatures must faithfully expand the
+	// reference Fortran signature and stay consistent across every file of a
+	// module. All three are clean across the entire corpus
+	// (node lint/verify-corpus.cjs), so they block:
+	//   * fortran-signature — base.js AND ndarray.js (the offset form) vs the
+	//     Fortran-derived model. Replaces the old heuristic signature-conformance
+	//     rule (which also no longer ran on ESLint 10 — removed getFilename API).
+	//   * wrapper-signature — stride/array naming discipline in the strided
+	//     <routine>.js wrapper.
+	//   * module-exports — index.js/main.js expose the default + ndarray surface.
 	'fortran-signature': 'error',
+	'wrapper-signature': 'error',
+	'module-exports': 'error',
 
 	// These catch definite scaffolding/correctness defects and are clean
 	// across the tree, so they block.

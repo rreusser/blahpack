@@ -35,13 +35,16 @@ function routineOf( file ) {
 	return path.basename( file, '.js' ).split( '--' )[ 0 ];
 }
 
-function lintFixture( file ) {
+// The offset form is declared identically in base.js and ndarray.js, and the
+// rule validates both — so a fixture is linted under whichever of those file
+// names is requested (default base.js).
+function lintFixture( file, basename ) {
 	var code = fs.readFileSync( file, 'utf8' );
 	var routine = routineOf( file );
 	// The virtual path must live under the project root: ESLint flat config only
 	// applies a `files`-less config to files within the base path. The file need
 	// not exist — verify() lints the provided source.
-	var virtual = path.join( ROOT, 'lib', 'lapack', 'base', routine, 'lib', 'base.js' );
+	var virtual = path.join( ROOT, 'lib', 'lapack', 'base', routine, 'lib', basename || 'base.js' );
 	return linter.verify( code, config, { 'filename': virtual } ).filter( function filter( m ) {
 		return m.ruleId === RULE_ID;
 	});
@@ -52,16 +55,18 @@ function expectedMessageId( code ) {
 	return m ? m[ 1 ] : null;
 }
 
-test( 'pass fixtures lint clean', function pass( t ) {
+test( 'pass fixtures lint clean (as both base.js and ndarray.js)', function pass( t ) {
 	var dir = path.join( FIXTURES, 'pass' );
 	fs.readdirSync( dir ).filter( function f( n ) {
 		return n.endsWith( '.js' );
 	}).forEach( function forEach( name ) {
 		var file = path.join( dir, name );
-		var messages = lintFixture( file );
-		assert.strictEqual( messages.length, 0, name + ' should be clean, got: ' + JSON.stringify( messages.map( function map( m ) {
-			return m.messageId + ': ' + m.message;
-		}) ) );
+		[ 'base.js', 'ndarray.js' ].forEach( function forEachForm( form ) {
+			var messages = lintFixture( file, form );
+			assert.strictEqual( messages.length, 0, name + ' (' + form + ') should be clean, got: ' + JSON.stringify( messages.map( function map( m ) {
+				return m.messageId + ': ' + m.message;
+			}) ) );
+		});
 	});
 });
 

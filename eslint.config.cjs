@@ -12,19 +12,30 @@
 // scope. (Set STDLIB_ESLINT_DIR and extend this config if you have a stdlib
 // checkout and want the full stdlib rule set.)
 
-var localPlugin = require( './tools/eslint/plugin.cjs' );
+// The blahpack rule set is assembled from two sources, both under the
+// `blahpack/` namespace:
+//   * the new self-contained rule library in lint/ (one directory per rule),
+//   * the legacy rules under tools/eslint/rules (being migrated into lint/).
+// Merging them keeps a single namespace while the migration proceeds; lint/
+// rules win on any name overlap.
+var legacyPlugin = require( './tools/eslint/plugin.cjs' );
+var lintLibrary = require( './lint/plugin.cjs' );
+var localPlugin = {
+	'rules': Object.assign( {}, legacyPlugin.rules, lintLibrary.rules )
+};
 
 // The blahpack-specific rules, keyed under the `blahpack/` namespace.
 // Only reference rules the plugin actually loaded — a rule that failed to
 // load (e.g. vars-order, which requires stdlib internals) is dropped so
 // ESLint does not error on an undefined rule.
 var DESIRED_RULES = {
-	// Heuristic Fortran→JS param-expansion check. It currently flags ~538
-	// modules — a mix of genuine BLIS-expansion gaps and rule limitations
-	// (e.g. routines it can't derive an expected shape for). Kept at 'warn'
-	// so it surfaces signature drift without blocking; promote to 'error'
-	// once the rule is refined and the real deviations are reconciled.
-	'signature-conformance': 'warn',
+	// Signatures must faithfully expand the reference Fortran signature. This is
+	// the lint/rules/fortran-signature rule: the expected signature is computed
+	// from the parsed Fortran and checked against base.js. It is clean across
+	// the entire corpus (node lint/verify-corpus.cjs), so it blocks. It replaces
+	// the old heuristic `signature-conformance` rule (which also no longer runs
+	// on ESLint 10 — it used the removed context.getFilename API).
+	'fortran-signature': 'error',
 
 	// These catch definite scaffolding/correctness defects and are clean
 	// across the tree, so they block.

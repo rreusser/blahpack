@@ -46,8 +46,9 @@ lint/
   rules/
     fortran-signature/         ← base.js + ndarray.js params expand the Fortran signature
       README.md  rule.cjs  derive.cjs
-      data/{supplemental.json,build-supplemental.cjs}
       fixtures/{pass,fail}/*.js  test.cjs
+      (reads data/fortran-signatures.json — the clean cache from
+       bin/gen_fortran_signatures.js; Fortran facts only)
     wrapper-signature/         ← <routine>.js strided wrapper keeps stride naming discipline
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
     module-exports/            ← index.js/main.js expose the default + ndarray surface

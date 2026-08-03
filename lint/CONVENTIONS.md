@@ -16,7 +16,7 @@ A module declares its routine in three places. They are not independent — two 
 them are *exact projections* of the third:
 
 ```
-                 Fortran signature  (data/routines.json + supplemental.json)
+                 Fortran signature  (data/fortran-signatures.json)
                         │  authority
                         ▼
                     base.js          ← the offset form; anchored to Fortran by

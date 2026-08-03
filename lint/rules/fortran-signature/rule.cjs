@@ -106,7 +106,7 @@ var rule = {
 			'arity': 'Signature of {{routine}} has {{actual}} parameter(s); the Fortran expansion of {{fortran}} allows {{expected}}. Expected pattern (? = flexible): {{pattern}}',
 			'strideNoArray': 'Stride parameter "{{stride}}" has no matching array parameter "{{array}}" — stride/offset names must be stride<Array>/offset<Array>.',
 			'strideNoOffset': 'Stride parameter "{{stride}}" has no matching offset parameter "{{offset}}" — every strided array needs stride<Array> and offset<Array>.',
-			'noData': 'No ingested Fortran arguments for "{{routine}}" — cannot compute its signature. Add its reference Fortran signature to lint/rules/fortran-signature/data/supplemental.json (do NOT exempt it).'
+			'noData': 'No ingested Fortran arguments for "{{routine}}" — cannot compute its signature. Add its reference Fortran signature to data/fortran-signatures.supplemental.json and re-run `node bin/gen_fortran_signatures.js` (do NOT exempt it).'
 		}
 	},
 	'create': function create( context ) {

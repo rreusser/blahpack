@@ -99,7 +99,7 @@ function dimensionIs2D( type ) {
 function classifyArg( arg, allArgs ) {
 	var name = String( arg.name ).toUpperCase();
 	var type = arg.type || '';
-	var dir = normDirection( arg.direction );
+	var dir = normDirection( arg.intent || arg.direction );
 	var isArray = isArrayType( type );
 
 	// --- consumed / near-consumed scalars ---------------------------------

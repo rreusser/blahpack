@@ -13,7 +13,8 @@
 // `base.js`, so a wrong transcription surfaces as a mismatch rather than
 // silently passing.
 //
-// Run:  node lint/rules/fortran-signature/data/build-supplemental.cjs
+// Run:  node data/fortran-signatures.supplemental.build.cjs
+//   then: node bin/gen_fortran_signatures.js   (folds this into the cache)
 // Emits: supplemental.json (next to this file).
 
 var fs = require( 'fs' );
@@ -321,6 +322,6 @@ add( routine( 'DSTQRB', 'subroutine',
 		a( 'INFO', 'out', 'int' )
 	] ) );
 
-var out = path.join( __dirname, 'supplemental.json' );
+var out = path.join( __dirname, 'fortran-signatures.supplemental.json' );
 fs.writeFileSync( out, JSON.stringify( routines, null, '\t' ) + '\n' );
 console.log( 'Wrote ' + Object.keys( routines ).length + ' routines to ' + out );

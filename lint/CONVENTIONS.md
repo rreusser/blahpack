@@ -62,49 +62,45 @@ Plus one prepended parameter governed by an **open decision** (see below):
 * **The strided projection is exact** for the array/offset/leading-dim mapping in
   the table above.
 
-## Open decisions
+## Resolved conventions — deferred to stdlib
 
-These cannot be derived from the code because **the code contradicts itself** —
-so they must be ruled on, then enforced. Evidence is from the current corpus.
+The strided-form conventions are **stdlib's**, read from stdlib source
+(`@stdlib/blas/base/*` locally; `@stdlib/lapack/base/*` via the published
+mirrors, e.g. `dlaswp`). Where the current code contradicts itself, stdlib
+breaks the tie; there is no wiggle room.
 
-### D1 — `order` parameter
+The two forms have distinct, principled jobs:
 
-Does the strided `<routine>.js` form take a leading `order` (row/col-major)
-parameter, and for which routines? The current code is inconsistent *within a
-single storage class*:
+* **ndarray form** (`base.js`/`ndarray.js`) — full indexing: every array carries
+  `stride…, offset…`; matrices carry `strideA1, strideA2, offsetA`; **no
+  `order`** (two strides already encode row/col-major). `dlaswp.ndarray`:
+  `N, A, strideA1, strideA2, offsetA, k1, k2, …, IPIV, strideIPIV, offsetIPIV`.
+* **strided form** (`<routine>.js`) — the BLAS/LAPACK-classic API: strides but
+  no offsets (the offset is computed internally via `stride2offset`), and a
+  single `LDA` for matrices with an `order` flag. `dlaswp`:
+  `order, N, A, LDA, k1, k2, IPIV, strideIPIV`.
 
-| storage | has `order` | no `order` |
-| --- | --- | --- |
-| `ge` (general) | 67 | 28 |
-| `sy` (symmetric) | 29 | 23 |
-| `po` (posdef) | 13 | 7 |
-| `pb` (posdef band) | 9 | 9 |
+### D1 — `order` (RESOLVED: stdlib)
 
-Two general-matrix routines with identical storage disagree. There is no rule to
-recover — it is drift.
+`order` appears **only in the strided form**, and only when the routine takes a
+matrix passed by leading dimension (`LDA`). It never appears in the ndarray
+form. (stdlib maintained routines `dgemm`/`dgemv`/`dtrmv` confirm; `dlaswp`
+confirms for LAPACK.)
 
-**Recommendation:** `order` is present iff the routine takes a matrix argument
-(any 2-D, packed, or banded array); absent for pure vector routines. This is the
-stdlib CBLAS/LAPACKE convention. Enforcing it conforms ≈200 wrappers (adding or
-removing `order`), all public-signature changes.
+### D2 — strides in the strided form (RESOLVED: stdlib + workspace ruling)
 
-### D2 — stride retention in the strided form
+In the strided form:
+* data vectors and index arrays → keep a stride (`dlaswp` strides `IPIV`),
+* matrices → `LDA` (no strides),
+* **workspace arrays → no stride** (just the array). stdlib has no work-array
+  routine to defer to, so this is ruled here: a stride on caller-owned scratch
+  is not meaningful.
 
-Does `<routine>.js` keep a stride for every array, or drop strides on some?
-Current code disagrees: `dgeqrf.js` keeps `strideTAU`, `strideWork`; `dgbrfs.js`
-drops strides on `IPIV`, `FERR`, `BERR`, `WORK`, `IWORK`. ~170 wrappers drop at
-least one stride the projection keeps.
+### D3 — offsets in the strided form (RESOLVED: stdlib)
 
-**Recommendation:** keep a stride for every array (the projection above). Drop
-nothing. Conforming restores the dropped `stride*` parameters.
-
-### D3 — offsets in the strided form
-
-44 `<routine>.js` files still carry `offset*` parameters (e.g. `dzasum`,
-`dhsein`). The strided form computes offsets internally and must not expose them.
-
-**Recommendation:** drop all `offset*` from `<routine>.js`. Conforming removes
-them.
+The strided form has **no `offset*` parameters** — the offset is computed
+internally. Offsets are necessary for full ndarray indexing and live in the
+ndarray form, which keeps them.
 
 ### D4 — workspace exposure in `base.js`
 

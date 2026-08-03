@@ -1,0 +1,1014 @@
+{
+	"dsdot": {
+		"name": "DSDOT",
+		"kind": "function",
+		"signature": "DOUBLE PRECISION FUNCTION DSDOT(N,SX,INCX,SY,INCY)",
+		"arguments": [
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "SX",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "INCX",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "SY",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "INCY",
+				"direction": "in",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dlamch": {
+		"name": "DLAMCH",
+		"kind": "function",
+		"signature": "DOUBLE PRECISION FUNCTION DLAMCH( CMACH )",
+		"arguments": [
+			{
+				"name": "CMACH",
+				"direction": "in",
+				"type": "CHARACTER"
+			}
+		]
+	},
+	"zlansf": {
+		"name": "ZLANSF",
+		"kind": "function",
+		"signature": "DOUBLE PRECISION FUNCTION ZLANSF( NORM, TRANSR, UPLO, N, A, WORK )",
+		"arguments": [
+			{
+				"name": "NORM",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "TRANSR",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "UPLO",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "A",
+				"direction": "in",
+				"type": "COMPLEX*16 array, dimension (0:*)"
+			},
+			{
+				"name": "WORK",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			}
+		]
+	},
+	"dgetv0": {
+		"name": "DGETV0",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DGETV0( IDO, BMAT, ITRY, INITV, N, J, V, LDV, RESID, RNORM, IPNTR, WORKD, IERR )",
+		"arguments": [
+			{
+				"name": "IDO",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "ITRY",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "INITV",
+				"direction": "in",
+				"type": "LOGICAL"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "J",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "V",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "RNORM",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "IPNTR",
+				"direction": "out",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "IERR",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsaitr": {
+		"name": "DSAITR",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSAITR( IDO, BMAT, N, K, NP, MODE, RESID, RNORM, V, LDV, H, LDH, IPNTR, WORKD, INFO )",
+		"arguments": [
+			{
+				"name": "IDO",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "K",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "NP",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "MODE",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "RNORM",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "V",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "H",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDH",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IPNTR",
+				"direction": "out",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "INFO",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsapps": {
+		"name": "DSAPPS",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSAPPS( N, KEV, NP, SHIFT, V, LDV, H, LDH, RESID, Q, LDQ, WORKD )",
+		"arguments": [
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "KEV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "NP",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "SHIFT",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "V",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "H",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDH",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "Q",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDQ",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WORKD",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			}
+		]
+	},
+	"dsaup2": {
+		"name": "DSAUP2",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSAUP2( IDO, BMAT, N, WHICH, NEV, NP, TOL, RESID, MODE, IUPD, ISHIFT, MXITER, V, LDV, H, LDH, RITZ, BOUNDS, Q, LDQ, WORKL, IPNTR, WORKD, INFO )",
+		"arguments": [
+			{
+				"name": "IDO",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "NEV",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "NP",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "TOL",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "MODE",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IUPD",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "ISHIFT",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "MXITER",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "V",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "H",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDH",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RITZ",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "BOUNDS",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "Q",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDQ",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WORKL",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "IPNTR",
+				"direction": "out",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "INFO",
+				"direction": "inout",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsaupd": {
+		"name": "DSAUPD",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSAUPD( IDO, BMAT, N, WHICH, NEV, TOL, RESID, NCV, V, LDV, IPARAM, IPNTR, WORKD, WORKL, LWORKL, INFO )",
+		"arguments": [
+			{
+				"name": "IDO",
+				"direction": "inout",
+				"type": "INTEGER"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "NEV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "TOL",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "NCV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "V",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IPARAM",
+				"direction": "inout",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "IPNTR",
+				"direction": "out",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "WORKL",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "LWORKL",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "INFO",
+				"direction": "inout",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsband": {
+		"name": "DSBAND",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSBAND( RVEC, HOWMNY, SELECT, D, Z, LDZ, SIGMA, N, AB, MB, LDA, RFAC, KL, KU, WHICH, BMAT, NEV, TOL, RESID, NCV, V, LDV, IPARAM, WORKD, WORKL, LWORKL, IWORK, INFO )",
+		"arguments": [
+			{
+				"name": "RVEC",
+				"direction": "in",
+				"type": "LOGICAL"
+			},
+			{
+				"name": "HOWMNY",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "SELECT",
+				"direction": "inout",
+				"type": "LOGICAL array, dimension (*)"
+			},
+			{
+				"name": "D",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "Z",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDZ",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "SIGMA",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "AB",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "MB",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDA",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RFAC",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "KL",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "KU",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "NEV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "TOL",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "NCV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "V",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IPARAM",
+				"direction": "inout",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "WORKL",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "LWORKL",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IWORK",
+				"direction": "inout",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "INFO",
+				"direction": "inout",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsconv": {
+		"name": "DSCONV",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSCONV( N, RITZ, BOUNDS, TOL, NCONV )",
+		"arguments": [
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RITZ",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "BOUNDS",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "TOL",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "NCONV",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dseigt": {
+		"name": "DSEIGT",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSEIGT( RNORM, N, H, LDH, EIG, BOUNDS, WORKL, IERR )",
+		"arguments": [
+			{
+				"name": "RNORM",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "H",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDH",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "EIG",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "BOUNDS",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "WORKL",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "IERR",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsesrt": {
+		"name": "DSESRT",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSESRT( WHICH, APPLY, N, X, NA, A, LDA )",
+		"arguments": [
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "APPLY",
+				"direction": "in",
+				"type": "LOGICAL"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "X",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "NA",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "A",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDA",
+				"direction": "in",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dseupd": {
+		"name": "DSEUPD",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSEUPD( RVEC, HOWMNY, SELECT, D, Z, LDZ, SIGMA, BMAT, N, WHICH, NEV, TOL, RESID, NCV, V, LDV, IPARAM, IPNTR, WORKD, WORKL, LWORKL, INFO )",
+		"arguments": [
+			{
+				"name": "RVEC",
+				"direction": "in",
+				"type": "LOGICAL"
+			},
+			{
+				"name": "HOWMNY",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "SELECT",
+				"direction": "inout",
+				"type": "LOGICAL array, dimension (*)"
+			},
+			{
+				"name": "D",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "Z",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDZ",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "SIGMA",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "BMAT",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "NEV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "TOL",
+				"direction": "in",
+				"type": "DOUBLE PRECISION"
+			},
+			{
+				"name": "RESID",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "NCV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "V",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (LD,*)"
+			},
+			{
+				"name": "LDV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "IPARAM",
+				"direction": "in",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "IPNTR",
+				"direction": "inout",
+				"type": "INTEGER array, dimension (*)"
+			},
+			{
+				"name": "WORKD",
+				"direction": "in",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "WORKL",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "LWORKL",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "INFO",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	},
+	"dsgets": {
+		"name": "DSGETS",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSGETS( ISHIFT, WHICH, KEV, NP, RITZ, BOUNDS, SHIFTS )",
+		"arguments": [
+			{
+				"name": "ISHIFT",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "KEV",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "NP",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "RITZ",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "BOUNDS",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "SHIFTS",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			}
+		]
+	},
+	"dsortr": {
+		"name": "DSORTR",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSORTR( WHICH, APPLY, N, X1, X2 )",
+		"arguments": [
+			{
+				"name": "WHICH",
+				"direction": "in",
+				"type": "CHARACTER"
+			},
+			{
+				"name": "APPLY",
+				"direction": "in",
+				"type": "LOGICAL"
+			},
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "X1",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "X2",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			}
+		]
+	},
+	"dstqrb": {
+		"name": "DSTQRB",
+		"kind": "subroutine",
+		"signature": "SUBROUTINE DSTQRB( N, D, E, Z, WORK, INFO )",
+		"arguments": [
+			{
+				"name": "N",
+				"direction": "in",
+				"type": "INTEGER"
+			},
+			{
+				"name": "D",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "E",
+				"direction": "inout",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "Z",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "WORK",
+				"direction": "out",
+				"type": "DOUBLE PRECISION array, dimension (*)"
+			},
+			{
+				"name": "INFO",
+				"direction": "out",
+				"type": "INTEGER"
+			}
+		]
+	}
+}

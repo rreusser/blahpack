@@ -12,19 +12,36 @@
 // scope. (Set STDLIB_ESLINT_DIR and extend this config if you have a stdlib
 // checkout and want the full stdlib rule set.)
 
-var localPlugin = require( './tools/eslint/plugin.cjs' );
+// The blahpack rule set is assembled from two sources, both under the
+// `blahpack/` namespace:
+//   * the new self-contained rule library in lint/ (one directory per rule),
+//   * the legacy rules under tools/eslint/rules (being migrated into lint/).
+// Merging them keeps a single namespace while the migration proceeds; lint/
+// rules win on any name overlap.
+var legacyPlugin = require( './tools/eslint/plugin.cjs' );
+var lintLibrary = require( './lint/plugin.cjs' );
+var localPlugin = {
+	'rules': Object.assign( {}, legacyPlugin.rules, lintLibrary.rules )
+};
 
 // The blahpack-specific rules, keyed under the `blahpack/` namespace.
 // Only reference rules the plugin actually loaded — a rule that failed to
 // load (e.g. vars-order, which requires stdlib internals) is dropped so
 // ESLint does not error on an undefined rule.
 var DESIRED_RULES = {
-	// Heuristic Fortran→JS param-expansion check. It currently flags ~538
-	// modules — a mix of genuine BLIS-expansion gaps and rule limitations
-	// (e.g. routines it can't derive an expected shape for). Kept at 'warn'
-	// so it surfaces signature drift without blocking; promote to 'error'
-	// once the rule is refined and the real deviations are reconciled.
-	'signature-conformance': 'warn',
+	// Signature rules (lint/rules/). Signatures must faithfully expand the
+	// reference Fortran signature and stay consistent across every file of a
+	// module. All three are clean across the entire corpus
+	// (node lint/verify-corpus.cjs), so they block:
+	//   * fortran-signature — base.js AND ndarray.js (the offset form) vs the
+	//     Fortran-derived model. Replaces the old heuristic signature-conformance
+	//     rule (which also no longer ran on ESLint 10 — removed getFilename API).
+	//   * wrapper-signature — stride/array naming discipline in the strided
+	//     <routine>.js wrapper.
+	//   * module-exports — index.js/main.js expose the default + ndarray surface.
+	'fortran-signature': 'error',
+	'wrapper-signature': 'error',
+	'module-exports': 'error',
 
 	// These catch definite scaffolding/correctness defects and are clean
 	// across the tree, so they block.

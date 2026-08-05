@@ -46,10 +46,9 @@ interface Routine {
 	* @param C - `C`
 	* @param LDC - leading dimension of `C`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, ncvt: number, nru: number, ncc: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, VT: Float64Array, LDVT: number, U: Float64Array, LDU: number, C: Float64Array, LDC: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Returns |a| with the sign of b (Fortran SIGN intrinsic) using alternative indexing semantics.

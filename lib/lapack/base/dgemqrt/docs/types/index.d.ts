@@ -43,10 +43,9 @@ interface Routine {
 	* @param C - input matrix
 	* @param LDC - leading dimension of `C`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, nb: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, side: string, trans: TransposeOperation, M: number, N: number, K: number, nb: number, V: Float64Array, LDV: number, T: Float64Array, LDT: number, C: Float64Array, LDC: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Overwrites a real M-by-N matrix C with op(Q)*C or C*op(Q) using a compact WY representation., using alternative indexing semantics.

@@ -39,14 +39,12 @@ interface Routine {
 	* @param WERR - `WERR`
 	* @param strideWERR - stride of `WERR`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
 	* @param pivmin - `pivmin`
 	* @param spdiam - `spdiam`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, E2: number, strideE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number, pivmin: number, spdiam: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, E2: number, strideE2: number, ifirst: number, ilast: number, rtol: number, offset: number, w: Float64Array, strideW: number, WERR: Float64Array, strideWERR: number, WORK: Float64Array, IWORK: Int32Array, pivmin: number, spdiam: number ): Float64Array;
 
 	/**
 	* Refine eigenvalue approximations using bisection given initial intervals using alternative indexing semantics.

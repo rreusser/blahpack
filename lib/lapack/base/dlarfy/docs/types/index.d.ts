@@ -38,10 +38,9 @@ interface Routine {
 	* @param C - input matrix
 	* @param LDC - leading dimension of `C`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: string, N: number, v: Float64Array, strideV: number, tau: number, C: Float64Array, LDC: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Applies an elementary reflector to a symmetric matrix, using alternative indexing semantics.

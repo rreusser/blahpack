@@ -54,10 +54,9 @@ interface Routine {
 	* @param LPLUS - input array
 	* @param strideLPLUS - stride length for `LPLUS`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, WGAP: Float64Array, strideWGAP: number, WERR: Float64Array, strideWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, DPLUS: Float64Array, strideDPLUS: number, LPLUS: Float64Array, strideLPLUS: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, clstrt: number, clend: number, w: Float64Array, strideW: number, WGAP: Float64Array, strideWGAP: number, WERR: Float64Array, strideWERR: number, spdiam: number, clgapl: number, clgapr: number, pivmin: number, sigma: number, DPLUS: Float64Array, strideDPLUS: number, LPLUS: Float64Array, strideLPLUS: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Finds a new relatively robust representation for eigenvalues, using alternative indexing semantics.

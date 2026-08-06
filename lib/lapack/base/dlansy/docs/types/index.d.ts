@@ -36,10 +36,9 @@ interface Routine {
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, norm: string, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Computes the value of the one-norm, Frobenius norm, infinity-norm, or the using alternative indexing semantics.

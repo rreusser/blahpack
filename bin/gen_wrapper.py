@@ -17,32 +17,89 @@ Usage:
 import os
 import re
 import sys
+import json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LICENSE = ""
 
+# --- Ratified strided-form conventions (see lint/CONVENTIONS.md, mirrored in
+# lint/lib/strided-projection.cjs). Keep these in sync with that projection. ---
 
-def parse_base_signature(base_path):
-    """Extract function name and params from base.js."""
+WORKSPACE_RE = re.compile(r'^[a-z]?work[a-z0-9]*$', re.IGNORECASE)
+
+# Packed-matrix storage codes (chars 2-3 of a BLAS/LAPACK routine name).
+PACKED_CODES = {'sp', 'hp', 'tp', 'pp'}
+
+
+def storage_code(routine):
+    """The 2-letter storage code of a routine name (dspmv -> 'sp')."""
+    return routine[1:3].lower()
+
+
+def is_workspace(name):
+    """A workspace array by conventional name (WORK, IWORK, RWORK, ...)."""
+    return bool(WORKSPACE_RE.match(name))
+
+
+def is_packed_matrix(name, routine):
+    """A packed matrix: packed-storage routine + a '...P' matrix name (AP, AFP)."""
+    return storage_code(routine) in PACKED_CODES and bool(re.search(r'p$', name, re.IGNORECASE))
+
+
+def parse_base_signature(base_path, routine=None):
+    """Extract the exported routine's function name, params, and @param types.
+
+    base.js may declare helper functions (e.g. `cabs`) before the exported one,
+    so the exported routine is selected by name (the function named `routine`);
+    only if that is not found do we fall back to the last documented function.
+    Selecting the first @param-documented function would pick a helper.
+    """
     with open(base_path) as f:
         content = f.read()
 
-    # Find the function with @param (skip helpers)
-    blocks = re.findall(r'/\*\*\n(.*?)\*/\s*\nfunction (\w+)\(\s*([^)]+)\s*\)', content, re.DOTALL)
-    for block_body, func_name, params_str in blocks:
-        if '@param' in block_body:
-            params_str = re.sub(r'\s*//.*', '', params_str)
-            params = [p.strip() for p in params_str.split(',') if p.strip()]
-            # Parse @param types
-            param_types = {}
-            for line in block_body.split('\n'):
-                m = re.match(r'\s*\* @param \{([^}]+)\}\s+(\w+)', line)
-                if m:
-                    param_types[m.group(2)] = m.group(1)
-            return func_name, params, param_types
+    def parse_block(block_body, params_str):
+        params_str = re.sub(r'\s*//.*', '', params_str)
+        params = [p.strip() for p in params_str.split(',') if p.strip()]
+        param_types = {}
+        for line in block_body.split('\n'):
+            m = re.match(r'\s*\* @param \{([^}]+)\}\s+(\w+)', line)
+            if m:
+                param_types[m.group(2)] = m.group(1)
+        return params, param_types
 
-    # Fallback: just get function signature
+    blocks = re.findall(r'/\*\*\n(.*?)\*/\s*\nfunction (\w+)\(\s*([^)]+)\s*\)', content, re.DOTALL)
+    documented = [b for b in blocks if '@param' in b[0]]
+
+    # Prefer the function named after the routine.
+    if routine:
+        for block_body, func_name, params_str in documented:
+            if func_name.lower() == routine.lower():
+                params, param_types = parse_block(block_body, params_str)
+                return func_name, params, param_types
+
+        # Direct by-name search — robust to anything (e.g. an eslint-disable
+        # line) sitting between the JSDoc and `function <routine>(`.
+        m = re.search(r'function\s+(' + re.escape(routine) + r')\s*\(\s*([^)]*)\s*\)', content, re.IGNORECASE)
+        if m:
+            params = [p.strip() for p in re.sub(r'\s*//.*', '', m.group(2)).split(',') if p.strip()]
+            # Best-effort @param types from the nearest preceding JSDoc block.
+            param_types = {}
+            pre = content[:m.start()]
+            jd = re.findall(r'/\*\*(.*?)\*/', pre, re.DOTALL)
+            if jd:
+                for line in jd[-1].split('\n'):
+                    mm = re.match(r'\s*\* @param \{([^}]+)\}\s+(\w+)', line)
+                    if mm:
+                        param_types[mm.group(2)] = mm.group(1)
+            return m.group(1), params, param_types
+
+    # Fallback: the LAST documented function (the exported one follows helpers).
+    if documented:
+        block_body, func_name, params_str = documented[-1]
+        params, param_types = parse_block(block_body, params_str)
+        return func_name, params, param_types
+
     m = re.search(r'function (\w+)\(\s*([^)]+)\s*\)', content)
     if m:
         params_str = re.sub(r'\s*//.*', '', m.group(2))
@@ -51,74 +108,59 @@ def parse_base_signature(base_path):
     return None, [], {}
 
 
-def classify_params(params, param_types):
-    """Classify base.js params into wrapper param groups."""
+def _is_stride(x):
+    return bool(re.match(r'stride', x, re.IGNORECASE))
+
+
+def _is_offset(x):
+    return bool(re.match(r'offset', x, re.IGNORECASE))
+
+
+def classify_params(params, param_types, routine=''):
+    """Classify base.js params into wrapper param groups.
+
+    Detection is POSITIONAL (an array is a param followed by its stride/offset),
+    mirroring lint/lib/strided-projection.cjs exactly — not name-matched — so it
+    handles complex vectors whose stride/offset use a prefix-stripped logical
+    name (`zx`, `strideX`, `offsetX`). Keep this in lock-step with that
+    projection; a cross-check test asserts the two agree over the whole corpus.
+    """
     groups = []  # list of (wrapper_params, base_call_args, setup_code)
 
+    n = len(params)
     i = 0
-    while i < len(params):
+    while i < n:
         p = params[i]
         ptype = param_types.get(p, '')
+        n1 = params[i+1] if i+1 < n else ''
+        n2 = params[i+2] if i+2 < n else ''
+        n3 = params[i+3] if i+3 < n else ''
 
-        # String params (uplo, trans, diag, side, etc.) - pass through
-        if ptype == 'string' or p in ('uplo', 'trans', 'transa', 'transb', 'side', 'diag',
-                                       'norm', 'job', 'compq', 'compz', 'jobvl', 'jobvr',
-                                       'jobvs', 'jobu', 'jobvt', 'fact', 'equed', 'direct',
-                                       'storev', 'vect', 'way', 'normin', 'howmny', 'sort',
-                                       'range', 'jobz', 'itype', 'select'):
-            groups.append(('passthrough', p, ptype))
-            i += 1
-            continue
-
-        # Integer/scalar params - pass through
-        if p in ('M', 'N', 'K', 'KL', 'KU', 'nrhs', 'ilo', 'ihi', 'nb', 'mm',
-                 'alpha', 'beta', 'vl', 'vu', 'il', 'iu', 'abstol', 'rcond',
-                 'anorm', 'k1', 'k2', 'inck', 'incx', 'kacc22', 'nshfts',
-                 'iloz', 'ihiz', 'nh', 'nv', 'nw', 'ktop', 'kbot',
-                 'offset', 'wantt', 'wantz', 'ca', 'd1', 'd2', 'wr', 'wi',
-                 'smin', 'ltrans', 'na', 'nw', 'scond', 'amax', 'rowcnd', 'colcnd',
-                 'ncc', 'ncvt', 'nru', 'kd', 'lwork', 'lrwork', 'liwork'):
-            groups.append(('passthrough', p, ptype))
-            i += 1
-            continue
-
-        # 2D matrix: A, strideA1, strideA2, offsetA -> A, LDA
-        if (i + 3 < len(params) and
-            re.match(r'stride' + re.escape(p) + r'1$', params[i+1]) and
-            re.match(r'stride' + re.escape(p) + r'2$', params[i+2]) and
-            re.match(r'offset' + re.escape(p) + r'$', params[i+3])):
-            groups.append(('matrix2d', p, params[i+1], params[i+2], params[i+3]))
+        # 2-D matrix (incl. banded): P, strideP1, strideP2, offsetP -> P, LD<P>
+        if _is_stride(n1) and _is_stride(n2) and _is_offset(n3):
+            groups.append(('matrix2d', p, n1, n2, n3))
             i += 4
             continue
 
-        # 1D vector: x, strideX, offsetX -> x, strideX (offset computed)
-        if (i + 2 < len(params) and
-            re.match(r'stride' + re.escape(p) + r'$', params[i+1], re.IGNORECASE) and
-            re.match(r'offset' + re.escape(p) + r'$', params[i+2], re.IGNORECASE)):
-            groups.append(('vector', p, params[i+1], params[i+2]))
-            i += 3
-            continue
-
-        # Packed array: AP, strideAP, offsetAP -> AP (offset computed)
-        if p == 'AP' and i + 2 < len(params) and 'strideAP' in params[i+1]:
-            groups.append(('vector', p, params[i+1], params[i+2]))
-            i += 3
-            continue
-
-        # Output scalars (Float64Array(1), Int32Array(1)) - pass through
-        if 'Float64Array' in ptype or 'Int32Array' in ptype:
-            if i + 2 < len(params) and 'stride' in params[i+1]:
-                groups.append(('vector', p, params[i+1], params[i+2]))
-                i += 3
-            elif i + 1 < len(params) and 'offset' in params[i+1]:
-                groups.append(('scalar_array', p, params[i+1]))
-                i += 2
+        # 1-D array: P, strideP, offsetP
+        if _is_stride(n1) and _is_offset(n2):
+            if is_workspace(p):
+                groups.append(('workspace', p, n1, n2))     # no stride: scratch
+            elif is_packed_matrix(p, routine):
+                groups.append(('packed', p, n1, n2))        # no stride; takes order
             else:
-                groups.append(('passthrough', p, ptype))
-                i += 1
+                groups.append(('vector', p, n1, n2))        # keep stride, drop offset
+            i += 3
             continue
 
-        # Anything else - pass through
+        # Complex scalar as array: P, offsetP -> P. The offset must be suffixed
+        # (`offsetX`), never a bare `offset` (a standalone scalar parameter).
+        if _is_offset(n1) and n1.lower() != 'offset':
+            groups.append(('scalar_array', p, n1))
+            i += 2
+            continue
+
+        # Plain scalar / dimension / character.
         groups.append(('passthrough', p, ptype))
         i += 1
 
@@ -127,11 +169,11 @@ def classify_params(params, param_types):
 
 def generate_wrapper(routine, pkg, base_path):
     """Generate the <routine>.js wrapper content."""
-    func_name, params, param_types = parse_base_signature(base_path)
+    func_name, params, param_types = parse_base_signature(base_path, routine)
     if not func_name:
         return None
 
-    groups = classify_params(params, param_types)
+    groups = classify_params(params, param_types, routine)
 
     # Build wrapper params, setup code, and base call args
     wrapper_params = []
@@ -140,10 +182,12 @@ def generate_wrapper(routine, pkg, base_path):
     var_decls = set()
     has_matrix = False
     has_vector = False
-    needs_order = False  # BLAS routines need order param
 
-    if pkg == 'blas':
-        needs_order = any(g[0] == 'matrix2d' for g in groups)
+    # The strided form takes `order` iff the routine has a matrix argument — a
+    # 2-D/banded matrix (passed by leading dimension) or a packed matrix. This
+    # holds for both BLAS and LAPACK (e.g. stdlib's dlaswp). Vector-only routines
+    # take no `order`.
+    needs_order = any(g[0] in ('matrix2d', 'packed') for g in groups)
 
     if needs_order:
         wrapper_params.append('order')
@@ -171,6 +215,13 @@ def generate_wrapper(routine, pkg, base_path):
             var_off = 'o' + name.lower()
             var_decls.add(var_off)
             base_args.extend([name, stride_name, var_off])
+        elif g[0] in ('workspace', 'packed'):
+            # No stride and no offset in the strided form: workspace is
+            # contiguous scratch; a packed matrix is a contiguous triangle.
+            # Both are passed to base with stride 1 and offset 0.
+            _, name, stride_name, offset_name = g
+            wrapper_params.append(name)
+            base_args.extend([name, '1', '0'])
         elif g[0] == 'scalar_array':
             _, name, offset_name = g
             wrapper_params.append(name)
@@ -284,7 +335,38 @@ def generate_wrapper(routine, pkg, base_path):
     return '\n'.join(lines)
 
 
+def emit_signatures():
+    """Print JSON { routine: [wrapper params...] } for every blas/lapack routine.
+
+    Used by lint/verify-generator.cjs to assert the generator agrees with the
+    lint projection (lint/lib/strided-projection.cjs) — one convention, two
+    implementations, kept in lock-step.
+    """
+    out = {}
+    for pkg in ['blas', 'lapack']:
+        base_dir = os.path.join(ROOT, 'lib', pkg, 'base')
+        if not os.path.isdir(base_dir):
+            continue
+        for routine in sorted(os.listdir(base_dir)):
+            base_path = os.path.join(base_dir, routine, 'lib', 'base.js')
+            if not os.path.exists(base_path):
+                continue
+            try:
+                res = generate_wrapper(routine, pkg, base_path)
+            except Exception:  # noqa: E722 - a parse failure is reported as a gap
+                continue
+            if not res:
+                continue
+            m = re.search(r'function\s+' + re.escape(routine) + r'\s*\(([^)]*)\)', res)
+            if m:
+                out[routine] = [p.strip() for p in m.group(1).split(',') if p.strip()]
+    json.dump(out, sys.stdout)
+
+
 def main():
+    if '--emit-signatures' in sys.argv:
+        emit_signatures()
+        return
     dry_run = '--dry-run' in sys.argv
     target = None
     for arg in sys.argv[1:]:

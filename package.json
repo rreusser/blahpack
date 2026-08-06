@@ -956,6 +956,7 @@
     "lint:signatures": "node lint/verify-corpus.cjs --rule fortran-signature",
     "lint:corpus": "node lint/verify-corpus.cjs",
     "lint:conformance": "node lint/verify-signatures.cjs",
+    "lint:generator": "node lint/verify-generator.cjs",
     "gen:fortran-signatures": "node bin/gen_fortran_signatures.js",
     "lint:fix": "bash bin/lint-fix.sh",
     "conformance": "node bin/conformance.js --all",

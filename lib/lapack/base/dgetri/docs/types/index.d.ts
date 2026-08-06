@@ -36,10 +36,9 @@ interface Routine {
 	* @param IPIV - `IPIV`
 	* @param strideIPIV - stride of `IPIV`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Computes the inverse of a matrix using the LU factorization computed by dgetrf using alternative indexing semantics.

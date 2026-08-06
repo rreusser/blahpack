@@ -37,10 +37,9 @@ interface Routine {
 	* @param TAU - input array
 	* @param strideTAU - stride length for `TAU`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Computes a QL factorization of a real general matrix, using alternative indexing semantics.

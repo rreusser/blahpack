@@ -35,10 +35,9 @@ interface Routine {
 	* @param A - `A`
 	* @param LDA - leading dimension of `A`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, norm: string, N: number, A: Float64Array, LDA: number, WORK: Float64Array, strideWORK: number ): number;
+	( order: Layout, norm: string, N: number, A: Float64Array, LDA: number, WORK: Float64Array ): number;
 
 	/**
 	* @license Apache-2.0 using alternative indexing semantics.

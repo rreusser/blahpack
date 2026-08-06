@@ -48,10 +48,9 @@ interface Routine {
 	* @param tol - tol
 	* @param nsweep - nsweep
 	* @param work - input array
-	* @param strideWORK - stride length for `work`
 	* @returns result
 	*/
-	( order: Layout, jobv: number, M: number, N: number, n1: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, jobv: number, M: number, N: number, n1: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, sva: Float64Array, strideSVA: number, mv: number, V: Float64Array, LDV: number, eps: number, sfmin: number, tol: number, nsweep: number, work: Float64Array ): Float64Array;
 
 	/**
 	* Pre-processor for dgesvj applying Jacobi rotations to off-diagonal block pivots, using alternative indexing semantics.

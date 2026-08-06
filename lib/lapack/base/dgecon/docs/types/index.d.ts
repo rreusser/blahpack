@@ -37,12 +37,10 @@ interface Routine {
 	* @param anorm - `anorm`
 	* @param rcond - `rcond`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @param IWORK - `IWORK`
-	* @param strideIWORK - stride of `IWORK`
 	* @returns result
 	*/
-	( order: Layout, norm: string, N: number, A: Float64Array, LDA: number, anorm: number, rcond: number, WORK: Float64Array, strideWORK: number, IWORK: Int32Array, strideIWORK: number ): Float64Array;
+	( order: Layout, norm: string, N: number, A: Float64Array, LDA: number, anorm: number, rcond: number, WORK: Float64Array, IWORK: Int32Array ): Float64Array;
 
 	/**
 	* Estimates the reciprocal of the condition number of a general real matrix A, using alternative indexing semantics.

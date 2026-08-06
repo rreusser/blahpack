@@ -45,10 +45,9 @@ interface Routine {
 	* @param CNORM - input array
 	* @param strideCNORM - stride length for `CNORM`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, LDA: number, X: Float64Array, LDX: number, SCALE: Float64Array, strideSCALE: number, CNORM: Float64Array, strideCNORM: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: string, trans: TransposeOperation, diag: string, normin: string, N: number, nrhs: number, A: Float64Array, LDA: number, X: Float64Array, LDX: number, SCALE: Float64Array, strideSCALE: number, CNORM: Float64Array, strideCNORM: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* solves a triangular system of equations with the scale factors set to prevent overflow., using alternative indexing semantics.

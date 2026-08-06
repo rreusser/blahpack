@@ -43,10 +43,9 @@ interface Routine {
 	* @param TAUP - `TAUP`
 	* @param strideTAUP - stride of `TAUP`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, TAUQ: Float64Array, strideTAUQ: number, TAUP: Float64Array, strideTAUP: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Reduces a real M-by-N matrix A to upper or lower bidiagonal form B using alternative indexing semantics.

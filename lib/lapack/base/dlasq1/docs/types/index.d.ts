@@ -31,10 +31,9 @@ interface Routine {
 	* @param e - `e`
 	* @param strideE - stride of `E`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, d: Float64Array, strideD: number, e: Float64Array, strideE: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Computes all the singular values of a real upper bidiagonal matrix of using alternative indexing semantics.

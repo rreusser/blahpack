@@ -37,10 +37,9 @@ interface Routine {
 	* @param TAU - output array of scalar factors
 	* @param strideTAU - stride of `TAU`
 	* @param WORK - workspace array
-	* @param strideWORK - stride of `WORK`
 	* @returns status code
 	*/
-	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array, strideWORK: number ): number;
+	( order: Layout, M: number, N: number, A: Float64Array, LDA: number, TAU: Float64Array, strideTAU: number, WORK: Float64Array ): number;
 
 	/**
 	* Computes a QR factorization of a real M-by-N matrix A = Q * R with non-negative diagonal elements of R, using alternative indexing semantics.

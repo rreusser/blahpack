@@ -42,10 +42,9 @@ interface Routine {
 	* @param x - input array
 	* @param strideX - stride length for `x`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, ltran: boolean, lreal: boolean, N: number, T: Float64Array, LDT: number, b: Float64Array, strideB: number, w: number, scale: number, x: Float64Array, strideX: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, ltran: boolean, lreal: boolean, N: number, T: Float64Array, LDT: number, b: Float64Array, strideB: number, w: number, scale: number, x: Float64Array, strideX: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Solves a real quasi-triangular system of equations, using alternative indexing semantics.

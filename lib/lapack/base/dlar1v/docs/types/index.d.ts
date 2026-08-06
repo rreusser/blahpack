@@ -57,10 +57,9 @@ interface Routine {
 	* @param resid - resid
 	* @param rqcorr - rqcorr
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, LLD: Float64Array, strideLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( N: number, b1: number, bn: number, lambda: number, d: Float64Array, strideD: number, l: Float64Array, strideL: number, LD: Float64Array, strideLD: number, LLD: Float64Array, strideLLD: number, pivmin: number, gaptol: number, z: Float64Array, strideZ: number, wantnc: boolean, negcnt: number, ztz: number, mingma: number, r: number, ISUPPZ: Int32Array, strideISUPPZ: number, offsetISUPPZ: number, nrminv: number, resid: number, rqcorr: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* TODO: Add description for DLAR1V., using alternative indexing semantics.

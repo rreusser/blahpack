@@ -44,13 +44,12 @@ interface Routine {
 	* @param B - input matrix
 	* @param LDB - leading dimension of `B`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @param eps3 - eps3
 	* @param smlnum - smlnum
 	* @param bignum - bignum
 	* @returns result
 	*/
-	( order: Layout, rightv: boolean, noinit: boolean, N: number, H: Float64Array, LDH: number, wr: number, wi: number, VR: Float64Array, strideVR: number, VI: Float64Array, strideVI: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWORK: number, eps3: number, smlnum: number, bignum: number ): Float64Array;
+	( order: Layout, rightv: boolean, noinit: boolean, N: number, H: Float64Array, LDH: number, wr: number, wi: number, VR: Float64Array, strideVR: number, VI: Float64Array, strideVI: number, B: Float64Array, LDB: number, WORK: Float64Array, eps3: number, smlnum: number, bignum: number ): Float64Array;
 
 	/**
 	* Uses inverse iteration to find a right or left eigenvector of a real upper Hessenberg matrix, using alternative indexing semantics.

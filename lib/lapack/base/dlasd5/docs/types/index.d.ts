@@ -35,10 +35,9 @@ interface Routine {
 	* @param rho - `rho`
 	* @param dsigma - `dsigma`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( i: number, D: Float64Array, strideD: number, Z: Float64Array, strideZ: number, DELTA: Float64Array, strideDELTA: number, rho: number, dsigma: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( i: number, D: Float64Array, strideD: number, Z: Float64Array, strideZ: number, DELTA: Float64Array, strideDELTA: number, rho: number, dsigma: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix using alternative indexing semantics.

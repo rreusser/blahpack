@@ -57,10 +57,9 @@ interface Routine {
 	* @param ZC - input matrix
 	* @param LDZC - leading dimension of `ZC`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, ilschur: boolean, ilq: boolean, ilz: boolean, N: number, ilo: number, ihi: number, nshifts: number, nblockDesired: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, SS: Float64Array, strideSS: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, QC: Float64Array, LDQC: number, ZC: Float64Array, LDZC: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, ilschur: boolean, ilq: boolean, ilz: boolean, N: number, ilo: number, ihi: number, nshifts: number, nblockDesired: number, SR: Float64Array, strideSR: number, SI: Float64Array, strideSI: number, SS: Float64Array, strideSS: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, Q: Float64Array, LDQ: number, Z: Float64Array, LDZ: number, QC: Float64Array, LDQC: number, ZC: Float64Array, LDZC: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Executes a single multishift QZ sweep on a matrix pencil., using alternative indexing semantics.

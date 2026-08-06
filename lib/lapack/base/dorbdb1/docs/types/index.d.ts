@@ -48,10 +48,9 @@ interface Routine {
 	* @param TAUQ1 - input array
 	* @param strideTAUQ1 - stride length for `TAUQ1`
 	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, p: number, q: number, X11: Float64Array, LDX11: number, X21: Float64Array, LDX21: number, THETA: Float64Array, strideTHETA: number, PHI: Float64Array, stridePHI: number, TAUP1: Float64Array, strideTAUP1: number, TAUP2: Float64Array, strideTAUP2: number, TAUQ1: Float64Array, strideTAUQ1: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, p: number, q: number, X11: Float64Array, LDX11: number, X21: Float64Array, LDX21: number, THETA: Float64Array, strideTHETA: number, PHI: Float64Array, stridePHI: number, TAUP1: Float64Array, strideTAUP1: number, TAUP2: Float64Array, strideTAUP2: number, TAUQ1: Float64Array, strideTAUQ1: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* simultaneously bidiagonalize the blocks of a tall and skinny matrix with orthonormal columns, using alternative indexing semantics.

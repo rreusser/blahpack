@@ -91,10 +91,17 @@ confirms for LAPACK.)
 
 In the strided form:
 * data vectors and index arrays → keep a stride (`dlaswp` strides `IPIV`),
-* matrices → `LDA` (no strides),
+* 2-D / banded matrices → `LDA` (no strides),
+* **packed matrices → no stride** (just the array — a contiguous triangle),
+  and they still take `order` (`dspmv` → `order, uplo, N, alpha, AP, x,
+  strideX, …`). Identified by packed storage code (`sp`/`hp`/`tp`/`pp`) + a
+  `…P` matrix name.
 * **workspace arrays → no stride** (just the array). stdlib has no work-array
   routine to defer to, so this is ruled here: a stride on caller-owned scratch
   is not meaningful.
+
+The convention is expressed once, in the checker
+(`lib/strided-projection.cjs`), used by `verify-signatures.cjs`.
 
 ### D3 — offsets in the strided form (RESOLVED: stdlib)
 

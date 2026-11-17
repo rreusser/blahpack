@@ -111,7 +111,7 @@ bases.forEach( function forEach( b ) {
 	}
 
 	var name = params( path.join( dir, routine + '.js' ), routine );
-	var proj = projection.project( base ).params;
+	var proj = projection.project( base, { 'routine': routine } ).params;
 	if ( name === null ) {
 		nameMissing += 1;
 	} else if ( eq( name, proj ) ) {

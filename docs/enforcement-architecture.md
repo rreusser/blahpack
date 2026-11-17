@@ -1,7 +1,7 @@
 # Enforcement Architecture: Specs, Not Heuristics
 
 Status: **proposal** (2026-11-17). Prototype measurements are in
-`tools/enforcement/prototype/`; every number below can be reproduced with them.
+`docs/enforcement-architecture/measurements/`; every number below can be reproduced with them.
 
 ## 1. Diagnosis
 
@@ -187,7 +187,7 @@ in total:
 
 ## 4. Layer A: error handling
 
-- **Error catalog** (`tools/enforcement/errors.js`): one message template per
+- **Error catalog** (`lint/lib/errors.cjs`): one message template per
   check `kind`, with the stdlib wording. The 184 shapes collapse to roughly 12.
 - **Generated prologue** between markers in `<routine>.js` and `ndarray.js`:
 
@@ -292,7 +292,7 @@ The two codebases share 45 modules:
 - Strided signatures match exactly in 25.
 - Validation sets match in only 3.
 
-Scripts: `tools/enforcement/prototype/stdlib-{extract,compare,message-db}.mjs`.
+Scripts: `docs/enforcement-architecture/measurements/stdlib-{extract,compare,message-db}.mjs`.
 
 | Finding | stdlib | blahpack |
 |---|---|---|
@@ -633,8 +633,8 @@ lint passes.
 ## Reproducing the numbers
 
 ```bash
-node tools/enforcement/prototype/survey-validation.mjs | tail -60
-node tools/enforcement/prototype/stride-provenance.mjs
-env/bin/python tools/enforcement/prototype/fortran-arg-checks.py
-node tools/enforcement/prototype/stdlib-message-db.mjs   # STDLIB_DIR=<stdlib checkout>
+node docs/enforcement-architecture/measurements/survey-validation.mjs | tail -60
+node docs/enforcement-architecture/measurements/stride-provenance.mjs
+env/bin/python docs/enforcement-architecture/measurements/fortran-arg-checks.py
+node docs/enforcement-architecture/measurements/stdlib-message-db.mjs   # STDLIB_DIR=<stdlib checkout>
 ```

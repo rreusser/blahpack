@@ -1974,4 +1974,35 @@ Keep entries short. Newest first.
   honest; the 18 remaining are the workspace-tier refactor (incl. `dporfs`,
   `zhetrf`), the only two modules `base-arity` still flags.
 
+## 2026-11-17 — ztgevc ignored offsetWork/strideWork (exposed by zggevx caller-owned WORK)
+
+- **Trigger**: migrating `zggevx` to caller-owned WORK with the reference layout
+  (sensitivity loop: left eigenvector at WORK(1:N), right at WORK(N+1:2N),
+  ztgevc/ztgsna scratch at WORK(2N+1)). The `rconde` fixtures for
+  `sense='eigenvalues'`/`'both'` immediately diverged
+  (2.5015 expected vs 2.8753 got, N=4 fixture case `test.ndarray.js:187`).
+- **Reproduce**: `ztgevc( 'both', 'selected', ..., WORK, 1, offsetWork>0, ... )`
+  with any nonzero `offsetWork` — scalar complex, dense, any N >= 1. The
+  regression test is `zggevx: results are bit-identical for any
+  WORK/RWORK/IWORK/BWORK offset` (zggevx `test.ndarray.js`, N=4, PAD=5, all four
+  `sense` values); it fails against the old ztgevc.
+- **Root cause**: `ztgevc/lib/base.js` reinterpreted WORK and indexed it from 0
+  (`WORKv[ jr * 2 ]`, `zgemv(..., WORK, 1, je, ..., WORK, 1, N)`), silently
+  ignoring both `offsetWork` and `strideWork`. Every prior caller (zggev,
+  the old zggevx, dtgevc-style drivers) passed `offsetWork = 0`, so it never
+  showed. With a nonzero offset, ztgevc scribbled over WORK(1:2N) — the
+  eigenvector pair zggevx had stored there — and ztgsna then measured garbage.
+- **Bug class**: `ignored-offset` (a declared offset/stride parameter that the
+  kernel never reads). Fixed: all WORK accesses are now
+  `oW + (k * sW)` with `oW = offsetWork*2`, `sW = strideWork*2`.
+- **Where else it hides**: a scan for base.js files that declare
+  `offsetWork`/`offsetRWork`/`offsetIWork`/`offsetBWork` but never reference it
+  in the body found `zgelss`, `zgesvd` (offsetWork unused — open follow-up) and
+  `zhgeqz` (benign: never touches complex WORK). Several kernels also ignore a
+  workspace STRIDE (e.g. `ztgsna` hardcodes stride 1 for its DIF-path WORK;
+  `dgeqrf`/`zgeqrf` pass `WORK, 1, ldwork` to dlarfb). Offsets matter — they are
+  how a driver sub-allocates one caller WORK among its callees — whereas a
+  stride on opaque scratch has no use case; prefer dropping workspace strides
+  over "fixing" them.
+
 <!-- Add new entries above this line. -->

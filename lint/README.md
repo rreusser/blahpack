@@ -83,6 +83,7 @@ workspace strategy and catch scaffolding/convention defects:
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
+| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js` | A caller-owned workspace that is used must be addressed through its declared offset (drivers sub-allocate by offset). |
 | [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
 | [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
@@ -97,10 +98,14 @@ New rules' tests are one line calling the shared fixture runner,
 path with `// target:` and, for failures, the expected report with `// expect:`.
 (The first three rules predate it and carry their own `test.cjs`.)
 
-**Known worklist:** `no-internal-workspace-alloc` has 23 violations in 8 LAPACK
-modules (`dlarrd`, `dporfs`, `dsytrd`, `dsytrf`, `zggevx`, `zhetrd`, `zhetrf`,
-`zsytrf`). These are unfinished caller-owns-workspace migrations, and fixing
-them means threading `WORK` through `base.js`, which is per-routine work.
+**Open convention decision — workspace strides.** Every caller-owned workspace
+currently carries `strideX` (the stdlib `dlarf1f` shape, required by the
+conformance checks), but ~120 `base.js` files declare `strideWork` and then
+hardcode `1` when addressing or forwarding the array. Opaque scratch has no
+use for a stride, so the consistent end state is either (a) drop workspace
+strides and add a rule rejecting them, or (b) keep them and extend
+`workspace-addressing-honored` to require they be honored. Until decided,
+the rule enforces offsets only.
 
 _The checks under `bin/conformance` are candidates to migrate into this
 structure, one self-contained rule at a time._

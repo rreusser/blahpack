@@ -1,5 +1,16 @@
 # ndarray.js Conformance Criteria
 
+> **Status: being superseded.** These criteria will be replaced by per-routine
+> specs plus `CONVENTIONS.md` (see `docs/enforcement-architecture.md`, Steps
+> 1–3). Several points below are **open rulings** there, so don't treat them
+> as settled:
+> - quick-return placement (§5)
+> - `isMatrixTranspose`-style asserts vs stdlib's newer `*-resolve-str` (§2, §8)
+> - the stride-zero policy (§4)
+> - error-message wording
+>
+> The code examples reflect the current ESM style.
+
 Every `ndarray.js` must satisfy the following requirements, matching stdlib-js
 conventions.
 
@@ -89,9 +100,9 @@ if ( M === 0 || N === 0 || ( alpha === 0.0 && beta === 1.0 ) ) {
 ## 8. Module requires
 
 ```javascript
-var isMatrixTranspose = require( '@stdlib/blas/base/assert/is-transpose-operation' );
-var isMatrixTriangle = require( '@stdlib/blas/base/assert/is-matrix-triangle' );
-var isOperationSide = require( '@stdlib/blas/base/assert/is-operation-side' );
-var isDiagonalType = require( '@stdlib/blas/base/assert/is-diagonal-type' );
-var format = require( '@stdlib/string/format' );
+import isMatrixTranspose from '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js';
+import isMatrixTriangle from '@stdlib/blas/base/assert/is-matrix-triangle/lib/index.js';
+import isOperationSide from '@stdlib/blas/base/assert/is-operation-side/lib/index.js';
+import isDiagonalType from '@stdlib/blas/base/assert/is-diagonal-type/lib/index.js';
+import format from '@stdlib/string/format/lib/index.js';
 ```

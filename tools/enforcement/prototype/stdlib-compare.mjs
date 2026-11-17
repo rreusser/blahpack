@@ -1,0 +1,30 @@
+import fs from 'fs';
+const S=process.argv[2];
+const std=JSON.parse(fs.readFileSync(S+'/std.json')); const bp=JSON.parse(fs.readFileSync(S+'/bp.json'));
+const bpm=new Map(bp.map(m=>[m.pkg+'/'+m.r,m]));
+const L1=new Set('dasum daxpy dcopy ddot dnrm2 drot drotm dscal dsdot dswap idamax dzasum dznrm2 zaxpy zcopy zdotc zdotu zdrot zdscal zscal zswap izamax'.split(' '));
+const row=[];
+let stats={both:0,ndSigEq:0,strSigEq:0,chkEq:0,stdOnly:0};
+for(const s of std){ const k=s.pkg+'/'+s.r; const b=bpm.get(k);
+  const sc=(x)=>x?x.checks.map(c=>c.replace(/:.*/,'')).sort().join(','):'-';
+  if(!b){stats.stdOnly++; continue;}
+  stats.both++;
+  const ndEq=JSON.stringify(s.ndarray?.params)===JSON.stringify(b.ndarray?.params);
+  const stEq=JSON.stringify(s.strided?.params)===JSON.stringify(b.strided?.params);
+  const ckS=(s.ndarray?.checks||[]).join(' '), ckB=(b.ndarray?.checks||[]).join(' ');
+  const ckSS=(s.strided?.checks||[]).join(' '), ckBS=(b.strided?.checks||[]).join(' ');
+  if(ndEq)stats.ndSigEq++; if(stEq)stats.strSigEq++; if(ckS===ckB&&ckSS===ckBS)stats.chkEq++;
+  row.push({k,ndEq,stEq,ndChk:ckS===ckB,stChk:ckSS===ckBS,s,b});
+}
+console.log(stats);
+console.log('\n## ndarray signature mismatches');
+row.filter(x=>!x.ndEq).forEach(x=>console.log(x.k,'\n  std:',x.s.ndarray?.params.join(','),'\n  bp :',x.b.ndarray?.params.join(',')));
+console.log('\n## strided signature mismatches');
+row.filter(x=>!x.stEq).forEach(x=>console.log(x.k,'\n  std:',x.s.strided?.params.join(','),'\n  bp :',x.b.strided?.params.join(',')));
+console.log('\n## ndarray check mismatches');
+row.filter(x=>!x.ndChk).forEach(x=>console.log(x.k,'\n  std:',x.s.ndarray?.checks.join(' '),'| quick',x.s.ndarray?.quick,'\n  bp :',x.b.ndarray?.checks.join(' '),'| quick',x.b.ndarray?.quick));
+console.log('\n## strided check mismatches');
+row.filter(x=>!x.stChk).forEach(x=>console.log(x.k,'\n  std:',x.s.strided?.checks.join(' '),'\n  bp :',x.b.strided?.checks.join(' ')));
+console.log('\n## stdlib validators used'); const v={}; std.forEach(m=>['strided','ndarray'].forEach(f=>(m[f]?.vals||[]).forEach(x=>v[x]=(v[x]||0)+1))); console.log(v);
+console.log('\n## stdlib: L1 BLAS ndarray checks'); std.filter(m=>L1.has(m.r)).forEach(m=>console.log(' ',m.r,'nd:',m.ndarray?.checks.join(' ')||'(none)','| str:',m.strided?.checks.join(' ')||'(none)'));
+console.log('\n## stdlib: quick return location'); let q={ndarray:0,strided:0,base:0}; std.forEach(m=>['ndarray','strided','base'].forEach(f=>{if(m[f]?.quick)q[f]++})); console.log(q);

@@ -27,11 +27,15 @@ bin/                           # Pipeline scripts
   transform.py                 #   Composable code-mod pipeline
   fortran_body.py              #   Strip Fortran to executable body only
   gen_test.py                  #   Generate JS test scaffold from fixtures
-  lint.sh                      #   ESLint wrapper (batch + single)
+  lint.sh                      #   Lint gate: one ESLint run over lib/ (rules from lint/)
   lint-fix.sh                  #   Full fix pipeline (codemods + eslint + test verify)
   codemod-tests.js             #   Test file mechanical fixes
   codemod-index.js             #   Index.js mechanical fixes
-data/                          # Reference Fortran source
+lint/                          # THE rule library: one dir per rule (rule, README, fixtures, test)
+  plugin.cjs                   #   Registers lint/rules/* under `blahpack/` (loaded by eslint.config.cjs)
+  lib/                         #   Shared helpers (fortran-data cache, naming, fixture-test runner)
+  verify-corpus.cjs            #   Per-rule violation summary over the whole corpus
+data/                          # Reference Fortran source + parsed-Fortran cache (fortran-signatures.json)
   BLAS-3.12.0/
   lapack-3.12.0/
 lib/                           # Output: stdlib-js conformant modules
@@ -45,12 +49,12 @@ docs/                          # Reference documentation
   complex-numbers.md           #   Complex128Array patterns, arithmetic rules
   dependency-conventions.md    #   Calling convention gotchas
   review-guidelines.md         #   Review checklist (also in /blahpack-review skill)
-  ndarray-conformance.md       #   ndarray.js validation spec
+  ndarray-conformance.md       #   ndarray.js validation spec (being superseded; see enforcement-architecture.md)
+  enforcement-architecture.md  #   Plan: per-routine specs, CONVENTIONS.md, one tool per job
   goto-patterns.md             #   Fortran GOTO → JS restructuring
   performance-patterns.md      #   Optimization patterns with code examples
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
 bench/                         # Performance benchmarks
-archive/bin/                   # Archived one-time migration scripts
 ```
 
 ## Commands

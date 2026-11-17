@@ -490,6 +490,21 @@ records bugs the harness caught, which is a different kind of record.
 - `bin/lint.sh` skipped `lib/arpack`. The single run covers it, and it's
   clean.
 
+**CI never reads the Fortran sources** (added after PR #16's first CI run):
+- The sources under `data/` are gitignored, so CI doesn't have them. Three
+  checks parsed them anyway: `no-internal-workspace-alloc`, and
+  `bin/conformance`'s `workspace` and `work-autoalloc`. Without the
+  sources those checks silently skipped every routine, so `main`'s CI was
+  green while a local run reported 23 lint errors and 15 failing modules.
+- All three now read the committed `data/fortran-signatures.json`.
+  `util.readFortran`/`fortranArgs` (one more regex parser) are deleted.
+- `lint/no-fortran-source.test.cjs` fails if CI-run code references the
+  source directories again.
+- A checkout with no sources now gives results identical to a local run.
+- The rule going forward: the sources are only an input to the
+  developer-time cache/spec generator (Step 2). Everything downstream reads
+  the generated artifact.
+
 **Deferred, with reasons:**
 - **Untracking `progress.html`:** the Pages deploy serves it, and
   regenerating it takes 7.5 min (`report.js` runs coverage). It moves with the
@@ -499,8 +514,10 @@ records bugs the harness caught, which is a different kind of record.
 - **Linting test files:** needs ESLint ≥ 9 for import attributes.
 - **14 test files with always-passing `assert.ok( true, … )`:** belongs to
   the Step 4 test-quality rules.
-- **The 23 workspace violations:** per-routine semantic work, listed in
-  `lint/README.md`.
+- **The workspace migration:** per-routine semantic work. 23 lint errors in 8
+  modules (listed in `lint/README.md`), plus 7 wrappers
+  missing the `work === null` allocation branch (`dlarfb_gett`, `dlarz`,
+  `dlarzb`, `zlansf`, `zlarcm`, `zlarzb`, `ztprfb`).
 
 *Exit (met):*
 - Nothing deleted that anything references.

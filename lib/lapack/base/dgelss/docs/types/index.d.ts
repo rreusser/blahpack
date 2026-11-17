@@ -42,10 +42,9 @@ interface Routine {
 	* @param rcond - `rcond`
 	* @param rank - `rank`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* Computes the minimum norm solution to a real linear least squares problem: using alternative indexing semantics.

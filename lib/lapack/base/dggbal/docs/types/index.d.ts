@@ -41,10 +41,9 @@ interface Routine {
 	* @param RSCALE - `RSCALE`
 	* @param strideRSCALE - stride of `RSCALE`
 	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
 	* @returns result
 	*/
-	( order: Layout, job: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, job: string, N: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, LSCALE: Float64Array, strideLSCALE: number, RSCALE: Float64Array, strideRSCALE: number, WORK: Float64Array ): Float64Array;
 
 	/**
 	* @license Apache-2.0 using alternative indexing semantics.

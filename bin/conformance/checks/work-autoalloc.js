@@ -61,7 +61,7 @@ function check( mod ) {
 	var results = [];
 	var wrapperPath = path.join( mod.dir, 'lib', mod.routine + '.js' );
 	var wrapperContent = util.readFile( wrapperPath );
-	var fortran = util.readFortran( mod.routine );
+	var fArgsCached = util.fortranArgNames( mod.routine );
 
 	var fArgs;
 	var workArgs;
@@ -76,12 +76,12 @@ function check( mod ) {
 		return results;
 	}
 
-	if ( fortran === null ) {
-		results.push( util.skip( ID, 'Reference Fortran source not found (run: npm run fetch-reference)' ) );
+	if ( fArgsCached === null ) {
+		results.push( util.skip( ID, 'Routine not in data/fortran-signatures.json' ) );
 		return results;
 	}
 
-	fArgs = util.fortranArgs( fortran, mod.routine );
+	fArgs = fArgsCached;
 	workArgs = fArgs.filter( function isWork( a ) {
 		return WORK_ARGS.indexOf( a ) !== -1;
 	});

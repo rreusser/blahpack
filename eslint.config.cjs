@@ -34,7 +34,11 @@ var SOURCE_RULES = {
 	// workspace (the caller owns it), and there is no workspace-length param
 	// (a typed array carries its own `.length`).
 	'no-internal-workspace-alloc': 'error',
-	'no-lwork-param': 'error'
+	'no-lwork-param': 'error',
+
+	// base.js honors the declared offset of each caller-owned workspace it
+	// uses (drivers sub-allocate one buffer among callees by offset).
+	'workspace-addressing-honored': 'error'
 };
 
 // Namespace a rule map, failing loudly on any rule the library does not

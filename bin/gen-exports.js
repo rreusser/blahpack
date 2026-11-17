@@ -139,8 +139,11 @@ pkg.files = [
 	'!lib/**/LEARNINGS.integrated.md'
 ];
 
-// Swap @stdlib/stdlib mega-dep for the 9 actually-used scoped packages.
+// Swap @stdlib/stdlib mega-dep for the actually-used scoped packages.
+// @stdlib/types is versioned separately; it backs the TypeScript declarations
+// (every docs/types/index.d.ts references it).
 const STDLIB_VERSION = '^0.3.3';
+const STDLIB_TYPES_VERSION = '^0.5.1';
 pkg.dependencies = {
 	'@stdlib/array': STDLIB_VERSION,
 	'@stdlib/assert': STDLIB_VERSION,
@@ -150,6 +153,7 @@ pkg.dependencies = {
 	'@stdlib/math': STDLIB_VERSION,
 	'@stdlib/strided': STDLIB_VERSION,
 	'@stdlib/string': STDLIB_VERSION,
+	'@stdlib/types': STDLIB_TYPES_VERSION,
 	'@stdlib/utils': STDLIB_VERSION
 };
 

@@ -21,8 +21,9 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
 
-  # Lint: ESLint (stdlib + blahpack rules) over every module. Hard gate — the
-  # target is zero errors.
+  # Lint: every project rule (lint/, one directory per rule) over every module,
+  # plus each rule's own pass/fail fixture tests. Hard gate — the target is zero
+  # errors.
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -33,6 +34,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Lint rule fixture tests
+        run: npm run test:lint-rules
       - name: Run ESLint
         run: npm run test:lint
 

@@ -43,10 +43,12 @@ integration until every applicable check passes.
 Scaffolded content must be fully replaced with real implementations.
 Every file in the module must work — not just base.js.
 
-These are now enforced by ESLint rules (run `bin/lint.sh`):
-- **`stdlib/no-stub-wrappers`** — flags "not yet implemented" in wrapper files
-- **`stdlib/no-todo-params`** — flags TODO in @param or type annotations
-- **`stdlib/no-scaffold-assertions`** — flags assert.fail('TODO:...') in tests
+These are enforced by lint rules (run `bin/lint.sh`):
+- **`blahpack/no-stub-wrappers`** — flags "not yet implemented" in wrapper files
+- **`blahpack/no-todo-params`** — flags TODO in @param or type annotations
+
+Scaffold `assert.fail('TODO:...')` remnants in tests are caught by
+`node bin/conformance.js` (test files are not linted).
 
 ```bash
 # Lint catches all of the above:
@@ -469,9 +471,9 @@ All dimension parameters (`M`, `N`, `K`, etc.) must be `>= 0`.
 ### Required validator imports
 
 ```javascript
-var isMatrixTranspose = require( '@stdlib/blas/base/assert/is-transpose-operation' );
-var isMatrixTriangle = require( '@stdlib/blas/base/assert/is-matrix-triangle' );
-var isOperationSide = require( '@stdlib/blas/base/assert/is-operation-side' );
-var isDiagonalType = require( '@stdlib/blas/base/assert/is-diagonal-type' );
-var format = require( '@stdlib/string/format' );
+import isMatrixTranspose from '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js';
+import isMatrixTriangle from '@stdlib/blas/base/assert/is-matrix-triangle/lib/index.js';
+import isOperationSide from '@stdlib/blas/base/assert/is-operation-side/lib/index.js';
+import isDiagonalType from '@stdlib/blas/base/assert/is-diagonal-type/lib/index.js';
+import format from '@stdlib/string/format/lib/index.js';
 ```

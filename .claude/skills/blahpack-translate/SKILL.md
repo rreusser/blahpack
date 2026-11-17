@@ -371,8 +371,8 @@ node --test lib/<package>/base/<routine>/test/test.js lib/<package>/base/<routin
 
 **Gate:** All tests pass against Fortran fixtures. The test file MUST have
 more than 2 `assert.*` calls — the scaffolded "is a function" checks do
-NOT count as tests. The `stdlib/no-scaffold-assertions` ESLint rule catches
-scaffold `assert.fail('TODO:...')` remnants automatically during linting.
+NOT count as tests, and neither do assertions that cannot fail
+(`assert.ok( true, ... )`).
 **Do not commit a test file that only has the scaffolded type-check assertions.**
 
 **Use stdlib assertion utilities — don't roll your own tolerance loops.**
@@ -440,74 +440,21 @@ bin/lint-fix.sh lib/<package>/base/<routine> 2>&1 | tail -20
 bin/lint.sh lib/<package>/base/<routine> 2>&1 | tail -20
 ```
 
-`bin/lint-fix.sh` runs the full pipeline: test codemods (var hoisting, Array.from
-→ toArray, require-globals, JSDoc, section headers), then eslint --fix for
-formatting, with automatic test verification and rollback if anything breaks.
+The gate runs every rule in `lint/` (see `/blahpack-lint`) plus core
+correctness rules (`no-unused-vars`, `no-unreachable`, `use-isnan`, ...) over
+`lib/**` source files. Test files are not linted. Every rule is an error.
 
-This runs stdlib ESLint rules plus blahpack conformance rules (scaffold
-remnants, backtick quoting, d-prefix conjugate-transpose, z-prefix reinterpret,
-etc.).
+**Fix the code, don't silence the rule.** There are no per-module exemptions.
+If a rule is wrong for a genuine reason, the rule gets upgraded, not disabled
+in place.
 
-**IMPORTANT: Follow linter rules, do not silence them.** The goal is to write
-code that conforms to stdlib conventions, not to disable rules until lint
-passes. Every `eslint-disable` must be justified — there must be no way to
-satisfy the rule while keeping correct code.
-
-Fix lint errors by actually conforming to the rule:
-
-| Rule | Fix |
-|------|-----|
-| `no-plusplus` | `x++` → `x += 1` |
-| `no-unused-vars` | Delete unused `var` declarations and unused requires |
-| `stdlib/vars-order` | Reorder `var` declarations by name length (longest first) |
-| `stdlib/require-globals` | Add `var Float64Array = require( '@stdlib/array/float64' );` etc. |
-| `indent` | Fix tab indentation to match surrounding code |
-| `no-lonely-if` | `else { if (...) }` → `else if (...)` |
-| `no-negated-condition` | Swap if/else branches |
-| `operator-assignment` | `x = x + y` → `x += y` |
-| `stdlib/empty-line-before-comment` | Add blank line before comment blocks |
-| `no-restricted-syntax` (toUpperCase) | Use `require( '@stdlib/string/base/uppercase' )` |
-| `no-restricted-syntax` (labels) | Replace labeled statements with boolean flags |
-| `node/no-unsupported-features/es-builtins` | Require globals from @stdlib (see `require-globals`) |
-| `no-use-before-define` | Declare all `var` before first use |
-| `func-names` | All functions must be named: `function name()` not `function()` |
-| `require-jsdoc` | All functions need JSDoc (`@private`, `@param`, `@returns`) |
-| `function-paren-newline` | All args on one line; use `eslint-disable-line max-len` if needed |
-| `function-call-argument-newline` | All args on one line |
-| JSDoc rules | Fix formatting per stdlib conventions (see below) |
-
-**JSDoc conventions (stdlib):**
-- Math formulas use backticks: `` `C = α*op(A)*op(B) + β*C` `` (Unicode Greek letters)
-- Emphasis uses `_underscores_`, not `*asterisks*`
-- List items: blank `*` line between multi-line items; tight spacing for single-line items
-- Bracket notation in text: wrap in backticks (`` `A[i,j]` ``) to avoid markdown link parsing
-- All functions need `@private` annotation and `@param`/`@returns` tags
-- Fenced code blocks need a language flag (e.g., ` ```text `)
-- Description must start uppercase and end with period
-
-**Legitimate disables** (only these rules may be disabled at file level):
-- `max-depth`, `max-statements`, `max-lines-per-function`, `max-lines`, `max-params` — complex BLAS/LAPACK routines inherently exceed these thresholds
-- `max-len` — inline `eslint-disable-line` on individual long lines (fixture paths, assertions, etc.)
-
-For complexity rules, add a single eslint-disable comment after `'use strict';`:
-
-```javascript
-/* eslint-disable max-depth, max-statements */
-```
-
-**Test file conventions** — the only file-level disables allowed in tests:
-- `no-restricted-syntax` — `node:test` requires FunctionExpression callbacks
-- `stdlib/first-unit-test` — tape-specific first-test pattern
-
-All other rules must be followed. See `lib/blas/base/daxpy/test/test.js` for
-the reference template. Key patterns:
-- Require all globals: `var Float64Array = require( '@stdlib/array/float64' );`
-- Section headers: `// MODULES //`, `// VARIABLES //`, `// FUNCTIONS //`, `// TESTS //`
-- Helper functions need `@private` JSDoc
-- Declare all vars at function top, longest first (`stdlib/vars-order`)
-- Use `eslint-disable-line max-len` on long assertion lines
-- Use `eslint-disable-line node/no-sync` on `readFileSync` calls
-- Use `toArray()` helper instead of `Array.from()` (node compatibility)
+Code style (ESM, as in every existing module):
+- `import x from '@stdlib/.../lib/index.js';`, never `require()`.
+- `const` / `let`, never `var`.
+- Section headers: `// MODULES //`, `// MAIN //`, `// EXPORTS //`.
+- `export default <routine>;`
+- Tests use `node:test` + `node:assert/strict`, with `function t()` callbacks
+  (see `lib/blas/base/daxpy/test/test.js`).
 
 **Gate:** Zero errors on `bin/lint.sh lib/<pkg>/base/<routine>`.
 

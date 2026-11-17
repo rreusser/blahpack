@@ -173,87 +173,25 @@ function skip( id, name, message ) {
 var FORTRAN_WORK_ARGS = [ 'WORK', 'RWORK', 'IWORK', 'SWORK', 'BWORK' ];
 
 /**
- * Locate the reference Fortran source for a routine.
+ * Uppercase argument names of a routine's reference Fortran signature, read
+ * from the committed parsed-Fortran cache (data/fortran-signatures.json).
+ * Returns null when the routine is not in the cache. Checks must not read the
+ * Fortran sources themselves: they are gitignored, so a check that reads them
+ * silently does less in CI than locally.
  */
-function readFortran( routine ) {
-	var candidates = [
-		path.join( ROOT, 'data', 'lapack-3.12.0', 'SRC', routine + '.f' ),
-		path.join( ROOT, 'data', 'lapack-3.12.0', 'SRC', routine + '.F' ),
-		path.join( ROOT, 'data', 'BLAS-3.12.0', routine + '.f' ),
-		path.join( ROOT, 'data', 'lapack-3.12.0', 'SRC', 'DEPRECATED', routine + '.f' )
-	];
-	var i;
-	var c;
-	for ( i = 0; i < candidates.length; i++ ) {
-		c = readFile( candidates[ i ] );
-		if ( c !== null ) {
-			return c;
-		}
+var FORTRAN_SIGNATURES = null;
+function fortranArgNames( routine ) {
+	var entry;
+	if ( FORTRAN_SIGNATURES === null ) {
+		FORTRAN_SIGNATURES = JSON.parse( fs.readFileSync( path.join( ROOT, 'data', 'fortran-signatures.json' ), 'utf8' ) );
 	}
-	return null;
-}
-
-/**
- * Split a comma-separated argument string into trimmed uppercase identifiers.
- */
-function splitFortranArgs( s ) {
-	return s.split( ',' )
-		.map( function map( a ) {
-			return a.replace( /=.*$/, '' ).trim().toUpperCase();
-		})
-		.filter( function filter( a ) {
-			return a.length > 0;
-		});
-}
-
-/**
- * Extract the uppercase argument list from a fixed-form Fortran declaration.
- * Handles continuation lines and both SUBROUTINE and (typed) FUNCTION forms.
- */
-function fortranArgs( content, routine ) {
-	var lines = content.split( '\n' );
-	var re = new RegExp( '\\b(?:SUBROUTINE|FUNCTION)\\s+' + routine.toUpperCase() + '\\s*\\(', 'i' );
-	var buf = null;
-	var depth = 0;
-	var line;
-	var frag;
-	var i;
-	var j;
-	var ch;
-
-	for ( i = 0; i < lines.length; i++ ) {
-		line = lines[ i ];
-		if ( /^[*cC!]/.test( line ) ) {
-			continue;
-		}
-		if ( buf === null ) {
-			if ( !re.test( line ) ) {
-				continue;
-			}
-			frag = line.slice( line.indexOf( '(' ) );
-		} else {
-			frag = line.slice( 6 );
-		}
-		for ( j = 0; j < frag.length; j++ ) {
-			ch = frag[ j ];
-			if ( ch === '(' ) {
-				depth += 1;
-				if ( depth === 1 ) {
-					buf = '';
-					continue;
-				}
-			} else if ( ch === ')' ) {
-				depth -= 1;
-				if ( depth === 0 ) {
-					return splitFortranArgs( buf );
-				}
-			}
-			if ( buf !== null ) {
-				buf += ch;
-			}
-		}
+	entry = FORTRAN_SIGNATURES[ String( routine ).toLowerCase() ];
+	if ( !entry ) {
+		return null;
 	}
-	return [];
+	return entry.arguments.map( function name( a ) {
+		return String( a.name ).toUpperCase();
+	});
 }
 
 /**
@@ -315,8 +253,7 @@ module.exports = {
 	getPkg: getPkg,
 	discoverModules: discoverModules,
 	resolveModule: resolveModule,
-	readFortran: readFortran,
-	fortranArgs: fortranArgs,
+	fortranArgNames: fortranArgNames,
 	jsParams: jsParams,
 	result: result,
 	pass: pass,

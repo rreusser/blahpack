@@ -36,8 +36,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from signature import generate_signature
 
 YEAR = '2025'
-# License headers omitted during development to reduce context/token cost.
-# Run bin/add_licenses.sh before contributing to stdlib to add them back.
+# License headers are omitted from scaffolded files (no script currently
+# re-adds them; the former bin/add_licenses.sh no longer exists).
 LICENSE_HEADER = ""
 
 STDLIB_VALIDATORS = {

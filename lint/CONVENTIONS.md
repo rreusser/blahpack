@@ -109,8 +109,9 @@ ndarray form, which keeps them.
 `zhetrf` expose `WORK`/`IWORK` in `ndarray.js` and **not** in `base.js`, so
 `base.js` must be allocating internally.
 
-**Isolated — pending decision:** `dporfs`, `zhetrf`. Conforming means threading
-the workspace parameters through `base.js` (semantic, per-routine).
+**Resolved (2026-11-17):** `dporfs` and `zhetrf` (and `dlarrd`, `dsytrd`,
+`dsytrf`, `zggevx`, `zhetrd`, `zsytrf`) now thread caller-owned workspace through
+`base.js`.
 
 ## Conformance status
 

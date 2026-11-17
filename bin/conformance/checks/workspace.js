@@ -38,8 +38,6 @@ var ALLOC_RE = /new\s+(Float64Array|Float32Array|Int32Array|Uint8Array|Uint32Arr
 
 // HELPERS //
 
-var readFortran = util.readFortran;
-var fortranArgs = util.fortranArgs;
 var jsParams = util.jsParams;
 
 /**
@@ -136,7 +134,7 @@ function check( mod ) {
 	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
 	var baseContent = util.readFile( basePath );
 	var ndarrayContent = util.readFile( ndarrayPath );
-	var fortran = readFortran( mod.routine );
+	var fArgsCached = util.fortranArgNames( mod.routine );
 
 	var fArgs;
 	var hasLenArg;
@@ -146,8 +144,8 @@ function check( mod ) {
 	var missing;
 	var i;
 
-	if ( fortran === null ) {
-		results.push( util.skip( ID + '.caller-provided', 'Reference Fortran source not found (run: npm run fetch-reference)' ) );
+	if ( fArgsCached === null ) {
+		results.push( util.skip( ID + '.caller-provided', 'Routine not in data/fortran-signatures.json' ) );
 		return results;
 	}
 	if ( !baseContent ) {
@@ -155,7 +153,7 @@ function check( mod ) {
 		return results;
 	}
 
-	fArgs = fortranArgs( fortran, mod.routine );
+	fArgs = fArgsCached;
 	workArgs = fArgs.filter( function isWork( a ) {
 		return WORK_ARGS.indexOf( a ) !== -1;
 	});

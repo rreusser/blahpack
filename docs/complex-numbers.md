@@ -10,17 +10,17 @@
 
 Reinterpret to Float64Array for efficient element access:
 ```javascript
-var reinterpret = require( '@stdlib/strided/base/reinterpret-complex128' );
-var real = require( '@stdlib/complex/float64/real' );
-var imag = require( '@stdlib/complex/float64/imag' );
+import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
+import real from '@stdlib/complex/float64/real/lib/index.js';
+import imag from '@stdlib/complex/float64/imag/lib/index.js';
 
 function zfoo( N, alpha, x, strideX, offsetX ) {
-    var xv = reinterpret( x, 0 );   // Float64Array view (zero-copy)
-    var re = real( alpha );           // extract scalar parts
-    var im = imag( alpha );
-    var sx = strideX * 2;             // convert complex stride to Float64
-    var ix = offsetX * 2;             // convert complex offset to Float64
-    for ( var i = 0; i < N; i++ ) {
+    const xv = reinterpret( x, 0 );   // Float64Array view (zero-copy)
+    const re = real( alpha );           // extract scalar parts
+    const im = imag( alpha );
+    const sx = strideX * 2;             // convert complex stride to Float64
+    let ix = offsetX * 2;              // convert complex offset to Float64
+    for ( let i = 0; i < N; i++ ) {
         // access: xv[ix] = real, xv[ix+1] = imag
         xv[ ix ] = re * xv[ ix ] - im * xv[ ix + 1 ];
         ix += sx;
@@ -41,11 +41,11 @@ zscal( N, alpha, A, strideA1, offsetA + j * strideA2 );
 ## Workspace and Constants
 
 ```javascript
-var Complex128 = require( '@stdlib/complex/float64/ctor' );
-var CZERO = new Complex128( 0.0, 0.0 );
-var CONE = new Complex128( 1.0, 0.0 );
-var WORK = new Complex128Array( N );      // complex workspace
-var RWORK = new Float64Array( 5 * N );    // real workspace
+import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
+const CZERO = new Complex128( 0.0, 0.0 );
+const CONE = new Complex128( 1.0, 0.0 );
+const WORK = new Complex128Array( N );      // complex workspace
+const RWORK = new Float64Array( 5 * N );    // real workspace
 ```
 
 ## Complex Arithmetic
@@ -54,15 +54,15 @@ Two approaches depending on context:
 
 **1. Scalar ops** (outside hot loops): use stdlib via `lib/cmplx.js`:
 ```javascript
-var cmplx = require( '../../cmplx.js' );
-var z = cmplx.mul( a, b );     // Complex128 * Complex128 → Complex128
-var z = cmplx.div( a, b );     // robust complex division (Baudin-Smith)
-var r = cmplx.abs( a );        // |a| (overflow-safe)
+import cmplx from '../../../../cmplx.js';  // from lib/<pkg>/base/<routine>/lib/
+const z = cmplx.mul( a, b );     // Complex128 * Complex128 → Complex128
+const q = cmplx.div( a, b );     // robust complex division (Baudin-Smith)
+const r = cmplx.abs( a );        // |a| (overflow-safe)
 ```
 
 **2. Indexed ops** (in hot inner loops on Float64 views):
 ```javascript
-var r = cmplx.absAt( view, idx );                      // |view[idx]+view[idx+1]*i|
+const r = cmplx.absAt( view, idx );                      // |view[idx]+view[idx+1]*i|
 cmplx.mulAt( view, outIdx, view, aIdx, view, bIdx );   // view[out] = view[a]*view[b]
 cmplx.divAt( view, outIdx, view, aIdx, view, bIdx );   // robust division at index
 ```
@@ -137,11 +137,11 @@ call print_array('zx', zx_r, 2*n)
 ## JS Test Pattern
 
 ```javascript
-var Complex128Array = require( '@stdlib/array/complex128' );
-var reinterpret = require( '@stdlib/strided/base/reinterpret-complex128' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 
-var x = new Complex128Array( [ 1, 2, 3, 4 ] );  // two complex elements
-var result = zfoo( 2, alpha, x, 1, 0 );
-var view = reinterpret( result, 0 );              // Float64Array for comparison
+const x = new Complex128Array( [ 1, 2, 3, 4 ] );  // two complex elements
+const result = zfoo( 2, alpha, x, 1, 0 );
+const view = reinterpret( result, 0 );              // Float64Array for comparison
 assertArrayClose( Array.from( view ), expected );
 ```

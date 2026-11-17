@@ -5,7 +5,7 @@
 Avoid recomputing offsets in inner loops:
 ```javascript
 // GOOD: incremental (one add per element)
-var ia = offsetA + sa1 * j;
+let ia = offsetA + sa1 * j;
 for ( i = 0; i < M; i++ ) {
     A[ ia ] = ...;
     ia += sa0;
@@ -22,10 +22,10 @@ for ( i = 0; i < M; i++ ) {
 For routines with `uplo` parameter, stdlib remaps strides so the inner
 loop always walks contiguous memory:
 ```javascript
-var isrm = isRowMajor( [ strideA1, strideA2 ] );
+const isrm = isRowMajor( [ strideA1, strideA2 ] );
 // (col-major, upper) ↔ (row-major, lower) are same physical pattern
-var sa0 = isrm ? strideA2 : strideA1;  // fast (inner) stride
-var sa1 = isrm ? strideA1 : strideA2;  // slow (outer) stride
+const sa0 = isrm ? strideA2 : strideA1;  // fast (inner) stride
+const sa1 = isrm ? strideA1 : strideA2;  // slow (outer) stride
 ```
 
 ## 3. Drop Fortran stride-1 specialization
@@ -46,12 +46,12 @@ constant-propagate through this. Move to module-level:
 ```javascript
 // BAD: 3 dlamch calls per invocation × 200K invocations = 600K calls
 function dladiv( a, b, c, d, out ) {
-    var ov = dlamch( 'O' );  // same value every time
+    const ov = dlamch( 'O' );  // same value every time
     ...
 }
 
 // GOOD: computed once at require() time
-var OV = dlamch( 'O' );
+const OV = dlamch( 'O' );
 function dladiv( a, b, c, d, out ) {
     // use OV directly
     ...

@@ -72,17 +72,40 @@ the `blahpack/` namespace, so the rules also run as part of normal linting.
 
 ## Rules
 
-Together these validate every signature-bearing file of a module — `base.js`,
-`ndarray.js`, `<routine>.js`, `index.js`, `main.js`:
+The first three validate every signature-bearing file of a module (`base.js`,
+`ndarray.js`, `<routine>.js`, `index.js`, `main.js`); the rest enforce the
+workspace strategy and catch scaffolding/convention defects:
 
 | Rule | Files | Enforces |
 | --- | --- | --- |
 | [`fortran-signature`](rules/fortran-signature/) | `base.js`, `ndarray.js` | The offset-form parameter list faithfully expands the reference Fortran signature (computed from the parsed Fortran, checked against the JS). |
 | [`wrapper-signature`](rules/wrapper-signature/) | `<routine>.js` | The strided wrapper keeps stride/array naming discipline (offsets computed internally; shared strides and Fortran-native `LD*` names accommodated). |
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
+| [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
+| [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
+| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js` | A caller-owned workspace that is used must be addressed through its declared offset (drivers sub-allocate by offset). |
+| [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
+| [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
+| [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
+| [`no-stub-wrappers`](rules/no-stub-wrappers/) | all but `base.js` | No "not yet implemented" scaffolding stubs. |
+| [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
 
 The offset-form naming logic is shared between `fortran-signature` and
 `wrapper-signature` via [`lib/naming.cjs`](lib/naming.cjs).
 
-_Existing ad-hoc checks under `bin/conformance` and `tools/eslint/rules` are
-candidates to migrate into this structure, one self-contained rule at a time._
+New rules' tests are one line calling the shared fixture runner,
+[`lib/fixture-test.cjs`](lib/fixture-test.cjs): fixtures declare their virtual
+path with `// target:` and, for failures, the expected report with `// expect:`.
+(The first three rules predate it and carry their own `test.cjs`.)
+
+**Open convention decision — workspace strides.** Every caller-owned workspace
+currently carries `strideX` (the stdlib `dlarf1f` shape, required by the
+conformance checks), but ~120 `base.js` files declare `strideWork` and then
+hardcode `1` when addressing or forwarding the array. Opaque scratch has no
+use for a stride, so the consistent end state is either (a) drop workspace
+strides and add a rule rejecting them, or (b) keep them and extend
+`workspace-addressing-honored` to require they be honored. Until decided,
+the rule enforces offsets only.
+
+_The checks under `bin/conformance` are candidates to migrate into this
+structure, one self-contained rule at a time._

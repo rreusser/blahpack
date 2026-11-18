@@ -2296,3 +2296,28 @@ Keep entries short. Newest first.
   stress sweep showed that a negative packed/band stride breaks the CNORM
   computation in the whole family, because `dasum`/`dzasum` return 0 for a
   non-positive stride (tickets/0026).
+
+---
+
+## 2026-11-18 — zgsvj1 convergence test used the REAL variant's `N*TOL` instead of `SQRT(N)*TOL` → could report convergence one sweep early
+
+- **What**: found while triaging `bin/break-mutants.mjs` survivors in the
+  `*gsvj0`/`*gsvj1` family (tickets/0027). `zgsvj1.f:661` stops sweeping when
+  `MXAAPQ < SQRT(DBLE(N))*TOL`; the JS used `mxaapq < N * tol`, the threshold of
+  the real `dgsvj0`/`dgsvj1` (`zgsvj0` was already correct).
+- **Effect**: a looser test than the reference, so `info = 0` could come back a
+  sweep early with less-orthogonalized columns. Easy to trigger: many 4×4
+  inputs with `n1 = 1` give `info = 0` where the reference gives `nsweep - 1`.
+- **Repro**: regression test in `lib/lapack/base/zgsvj1/test/test.ndarray.js`
+  (M=N=4, n1=1, tol=1e-2): after one sweep, the first pair of sweep 2 has
+  |cos| = 2.75·tol, which lies in [√N·tol, N·tol), so the reference keeps going
+  and `nsweep = 2` must return `info = 1`. Fails on the old code with `info = 0`.
+- **Fix (APPLIED)**: `mxaapq < Math.sqrt( N ) * tol`.
+- **Bug class**: `real-complex-constant-drift`: a complex routine translated from
+  (or alongside) its real sibling inherits a constant that differs between the two
+  reference sources. Line coverage cannot see it, and a fixture only catches it if
+  some input lands between the two thresholds.
+- **Generalization**: diff numeric thresholds between each `d`/`z` pair of
+  reference sources where they differ, and check that the JS follows each
+  source, not its sibling. Candidates: `zgesvj`/`zgejsv` and other Jacobi or
+  iterative routines with tolerance tests (tickets/0007 covers d/z contract parity).

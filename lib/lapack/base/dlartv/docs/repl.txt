@@ -1,4 +1,4 @@
-{{alias}}( N, x, strideX, y, strideY, c, s, strideCS )
+{{alias}}( N, x, strideX, y, strideY, c, strideC, s, strideS )
     Applies a vector of real plane rotations to elements of two real
     vectors.
 
@@ -22,11 +22,14 @@
     c: Float64Array
         `c`.
 
+    strideC: integer
+        stride length for `C`.
+
     s: Float64Array
         `s`.
 
-    strideCS: integer
-        stride length for `CS`.
+    strideS: integer
+        stride length for `S`.
 
     Returns
     -------

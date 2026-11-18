@@ -1,5 +1,5 @@
 
-{{alias}}( rvec, howmny, select, d, Z, ldz, sigma, N, AB, MB, lda, RFAC, kl, ku, which, bmat, nev, tol, resid, ncv, V, ldv, iparam, workd, workl, lworkl, iwork, infoIn )
+{{alias}}( order, rvec, howmny, select, strideSelect, d, strideD, Z, LDZ, sigma, N, AB, LDAB, MB, LDMB, RFAC, LDRFAC, kl, ku, which, bmat, nev, tol, resid, strideResid, ncv, V, LDV, iparam, strideIparam, workd, workl, lworkl, iwork, infoIn )
     Computes converged approximations to eigenvalues of the banded symmetric
     generalized eigenproblem A*z = lambda*B*z, and optionally the eigenvectors.
 
@@ -14,6 +14,9 @@
 
     Parameters
     ----------
+        order: string
+            Row-major (C-style) or column-major (Fortran-style) order.
+
         rvec: boolean
             Whether to compute Ritz vectors.
 
@@ -23,13 +26,19 @@
         select: Int32Array
             Selection array (length ncv).
 
+        strideSelect: integer
+            Stride length for `select`.
+
         d: Float64Array
             Ritz values (length nev; out).
 
-        Z: Float64Array
-            Ritz vectors (N-by-nev, column-major; out).
+        strideD: integer
+            Stride length for `d`.
 
-        ldz: integer
+        Z: Float64Array
+            Ritz vectors (N-by-nev; out).
+
+        LDZ: integer
             Leading dimension of `Z`.
 
         sigma: number
@@ -41,14 +50,20 @@
         AB: Float64Array
             Matrix A in LAPACK band storage.
 
+        LDAB: integer
+            Leading dimension of `AB`.
+
         MB: Float64Array
             Matrix M in LAPACK band storage.
 
-        lda: integer
-            Leading dimension of `AB`, `MB`, and `RFAC`.
+        LDMB: integer
+            Leading dimension of `MB`.
 
         RFAC: Float64Array
             Band LU workspace/output.
+
+        LDRFAC: integer
+            Leading dimension of `RFAC`.
 
         kl: integer
             Number of subdiagonals.
@@ -71,17 +86,23 @@
         resid: Float64Array
             Residual vector (length N; in/out).
 
+        strideResid: integer
+            Stride length for `resid`.
+
         ncv: integer
             Number of Lanczos vectors.
 
         V: Float64Array
-            Lanczos basis (N-by-ncv, column-major; out).
+            Lanczos basis (N-by-ncv; out).
 
-        ldv: integer
+        LDV: integer
             Leading dimension of `V`.
 
         iparam: Int32Array
             Input/output parameters (length 11; in/out).
+
+        strideIparam: integer
+            Stride length for `iparam`.
 
         workd: Float64Array
             Reverse-communication workspace (length >= 3*N).

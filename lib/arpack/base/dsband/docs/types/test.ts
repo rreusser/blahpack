@@ -23,7 +23,7 @@ import dsband = require( './index' );
 
 // The function returns a number...
 {
-	dsband( true, 'all', new Int32Array( 6 ), new Float64Array( 6 ), new Float64Array( 48 ), 8, 0.0, 8, new Float64Array( 32 ), new Float64Array( 32 ), 4, new Float64Array( 32 ), 1, 1, 'LM', 'generalized', 2, 0.0, new Float64Array( 8 ), 6, new Float64Array( 48 ), 8, new Int32Array( 11 ), new Float64Array( 24 ), new Float64Array( 84 ), 84, new Int32Array( 8 ), 1 ); // $ExpectType number
+	dsband( 'column-major', true, 'all', new Int32Array( 6 ), 1, new Float64Array( 6 ), 1, new Float64Array( 48 ), 8, 0.0, 8, new Float64Array( 32 ), 4, new Float64Array( 32 ), 4, new Float64Array( 32 ), 4, 1, 1, 'LM', 'generalized', 2, 0.0, new Float64Array( 8 ), 1, 6, new Float64Array( 48 ), 8, new Int32Array( 11 ), 1, new Float64Array( 24 ), new Float64Array( 84 ), 84, new Int32Array( 8 ), 1 ); // $ExpectType number
 }
 
 // The compiler throws an error if the function is provided an unsupported number of arguments...

@@ -18,6 +18,10 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Layout } from '@stdlib/types/blas';
+
 /**
 * Interface describing `dlasd7`.
 */
@@ -25,75 +29,101 @@ interface Routine {
 	/**
 	* @license Apache-2.0.
 	*
+	* @param order - storage layout of `GIVCOL` and `GIVNUM`
 	* @param icompq - `icompq`
 	* @param nl - `nl`
 	* @param nr - `nr`
 	* @param sqre - `sqre`
 	* @param d - `d`
+	* @param strideD - stride length for `d`
 	* @param z - `z`
+	* @param strideZ - stride length for `z`
 	* @param ZW - `ZW`
+	* @param strideZW - stride length for `ZW`
 	* @param VF - `VF`
+	* @param strideVF - stride length for `VF`
 	* @param VFW - `VFW`
+	* @param strideVFW - stride length for `VFW`
 	* @param VL - `VL`
+	* @param strideVL - stride length for `VL`
 	* @param VLW - `VLW`
+	* @param strideVLW - stride length for `VLW`
 	* @param alpha - scalar constant
 	* @param beta - scalar constant
 	* @param DSIGMA - `DSIGMA`
+	* @param strideDSIGMA - stride length for `DSIGMA`
 	* @param IDX - `IDX`
+	* @param strideIDX - stride length for `IDX`
 	* @param IDXP - `IDXP`
+	* @param strideIDXP - stride length for `IDXP`
 	* @param IDXQ - `IDXQ`
+	* @param strideIDXQ - stride length for `IDXQ`
 	* @param PERM - `PERM`
+	* @param stridePERM - stride length for `PERM`
 	* @param GIVCOL - `GIVCOL`
-	* @param LDGCOL - leading dimension of `GCOL`
+	* @param LDGIVCOL - leading dimension of `GIVCOL`
 	* @param GIVNUM - `GIVNUM`
-	* @param LDGNUM - leading dimension of `GNUM`
+	* @param LDGIVNUM - leading dimension of `GIVNUM`
 	* @returns result
 	*/
-	( icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, z: Float64Array, ZW: Float64Array, VF: Float64Array, VFW: Float64Array, VL: Float64Array, VLW: Float64Array, alpha: number, beta: number, DSIGMA: Float64Array, IDX: Int32Array, IDXP: Int32Array, IDXQ: Int32Array, PERM: Int32Array, GIVCOL: Int32Array, LDGCOL: number, GIVNUM: Float64Array, LDGNUM: number ): Float64Array;
+	( order: Layout, icompq: number, nl: number, nr: number, sqre: number, d: Float64Array, strideD: number, z: Float64Array, strideZ: number, ZW: Float64Array, strideZW: number, VF: Float64Array, strideVF: number, VFW: Float64Array, strideVFW: number, VL: Float64Array, strideVL: number, VLW: Float64Array, strideVLW: number, alpha: number, beta: number, DSIGMA: Float64Array, strideDSIGMA: number, IDX: Int32Array, strideIDX: number, IDXP: Int32Array, strideIDXP: number, IDXQ: Int32Array, strideIDXQ: number, PERM: Int32Array, stridePERM: number, GIVCOL: Int32Array, LDGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number ): Float64Array;
 
 	/**
 	* @license Apache-2.0 using alternative indexing semantics.
 	*
+	* @param order - storage layout of `GIVCOL` and `GIVNUM`
 	* @param icompq - `icompq`
 	* @param nl - `nl`
 	* @param nr - `nr`
 	* @param sqre - `sqre`
 	* @param d - `d`
+	* @param strideD - stride length for `d`
 	* @param strideD - stride of `D`
 	* @param offsetD - starting index for `D`
 	* @param z - `z`
+	* @param strideZ - stride length for `z`
 	* @param strideZ - stride of `Z`
 	* @param offsetZ - starting index for `Z`
 	* @param ZW - `ZW`
+	* @param strideZW - stride length for `ZW`
 	* @param strideZW - stride of `ZW`
 	* @param offsetZW - starting index for `ZW`
 	* @param VF - `VF`
+	* @param strideVF - stride length for `VF`
 	* @param strideVF - stride of `VF`
 	* @param offsetVF - starting index for `VF`
 	* @param VFW - `VFW`
+	* @param strideVFW - stride length for `VFW`
 	* @param strideVFW - stride of `VFW`
 	* @param offsetVFW - starting index for `VFW`
 	* @param VL - `VL`
+	* @param strideVL - stride length for `VL`
 	* @param strideVL - stride of `VL`
 	* @param offsetVL - starting index for `VL`
 	* @param VLW - `VLW`
+	* @param strideVLW - stride length for `VLW`
 	* @param strideVLW - stride of `VLW`
 	* @param offsetVLW - starting index for `VLW`
 	* @param alpha - scalar constant
 	* @param beta - scalar constant
 	* @param DSIGMA - `DSIGMA`
+	* @param strideDSIGMA - stride length for `DSIGMA`
 	* @param strideDSIGMA - stride of `DSIGMA`
 	* @param offsetDSIGMA - starting index for `DSIGMA`
 	* @param IDX - `IDX`
+	* @param strideIDX - stride length for `IDX`
 	* @param strideIDX - stride of `IDX`
 	* @param offsetIDX - starting index for `IDX`
 	* @param IDXP - `IDXP`
+	* @param strideIDXP - stride length for `IDXP`
 	* @param strideIDXP - stride of `IDXP`
 	* @param offsetIDXP - starting index for `IDXP`
 	* @param IDXQ - `IDXQ`
+	* @param strideIDXQ - stride length for `IDXQ`
 	* @param strideIDXQ - stride of `IDXQ`
 	* @param offsetIDXQ - starting index for `IDXQ`
 	* @param PERM - `PERM`
+	* @param stridePERM - stride length for `PERM`
 	* @param stridePERM - stride of `PERM`
 	* @param offsetPERM - starting index for `PERM`
 	* @param GIVCOL - `GIVCOL`

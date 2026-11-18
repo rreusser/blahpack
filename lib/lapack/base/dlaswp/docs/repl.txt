@@ -1,4 +1,4 @@
-{{alias}}( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx )
+{{alias}}( order, N, A, LDA, k1, k2, inck, IPIV, strideIPIV )
     Performs a series of row interchanges on a general rectangular matrix.
 
     Parameters
@@ -21,14 +21,15 @@
     k2: number
         `k2`.
 
+    inck: integer
+        Direction in which to apply pivots (-1 to apply pivots in reverse
+        order; otherwise, apply in provided order).
+
     IPIV: Int32Array
         `IPIV`.
 
     strideIPIV: integer
         stride length for `IPIV`.
-
-    incx: number
-        `incx`.
 
     Returns
     -------
@@ -40,7 +41,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, IPIV, strideIPIV, offsetIPIV, incx )
+{{alias}}.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, inck, IPIV, strideIPIV, offsetIPIV )
     Performs a series of row interchanges on a general rectangular matrix,
     using alternative indexing semantics.
 
@@ -67,6 +68,10 @@
     k2: number
         `k2`.
 
+    inck: integer
+        Direction in which to apply pivots (-1 to apply pivots in reverse
+        order; otherwise, apply in provided order).
+
     IPIV: Int32Array
         `IPIV`.
 
@@ -75,9 +80,6 @@
 
     offsetIPIV: integer
         starting index for `IPIV`.
-
-    incx: number
-        `incx`.
 
     Returns
     -------

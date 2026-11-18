@@ -30,7 +30,7 @@ limitations under the License.
 var zlar2v = require( '@stdlib/lapack/base/zlar2v' );
 ```
 
-#### zlar2v( N, x, y, z, strideXYZ, c, s, strideCS )
+#### zlar2v( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS )
 
 Apply a vector of complex plane rotations with real cosines from both sides to a sequence of 2-by-2 complex Hermitian matrices.
 
@@ -51,12 +51,15 @@ The function has the following parameters:
 
 -   **N**: number of columns.
 -   **x**: `x`.
+-   **strideX**: stride length for `X`.
 -   **y**: `y`.
+-   **strideY**: stride length for `Y`.
 -   **z**: `z`.
--   **strideXYZ**: stride length for `XYZ`.
+-   **strideZ**: stride length for `Z`.
 -   **c**: `c`.
+-   **strideC**: stride length for `C`.
 -   **s**: `s`.
--   **strideCS**: stride length for `CS`.
+-   **strideS**: stride length for `S`.
 
 #### zlar2v.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, z, strideZ, offsetZ, c, strideC, offsetC, s, strideS, offsetS )
 

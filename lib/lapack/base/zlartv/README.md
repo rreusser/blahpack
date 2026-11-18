@@ -30,7 +30,7 @@ limitations under the License.
 var zlartv = require( '@stdlib/lapack/base/zlartv' );
 ```
 
-#### zlartv( N, x, strideX, y, strideY, c, s, strideCS )
+#### zlartv( N, x, strideX, y, strideY, c, strideC, s, strideS )
 
 Apply a vector of complex plane rotations with real cosines to two complex vectors.
 
@@ -54,8 +54,9 @@ The function has the following parameters:
 -   **y**: `y`.
 -   **strideY**: stride length for `Y`.
 -   **c**: `c`.
+-   **strideC**: stride length for `C`.
 -   **s**: `s`.
--   **strideCS**: stride length for `CS`.
+-   **strideS**: stride length for `S`.
 
 #### zlartv.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, strideC, offsetC, s, strideS, offsetS )
 

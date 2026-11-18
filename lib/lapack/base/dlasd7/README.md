@@ -30,7 +30,7 @@ limitations under the License.
 var dlasd7 = require( '@stdlib/lapack/base/dlasd7' );
 ```
 
-#### dlasd7( icompq, nl, nr, sqre, d, z, ZW, VF, VFW, VL, VLW, alpha, beta, DSIGMA, IDX, IDXP, IDXQ, PERM, GIVCOL, LDGCOL, GIVNUM, LDGNUM )
+#### dlasd7( order, icompq, nl, nr, sqre, d, strideD, z, strideZ, ZW, strideZW, VF, strideVF, VFW, strideVFW, VL, strideVL, VLW, strideVLW, alpha, beta, DSIGMA, strideDSIGMA, IDX, strideIDX, IDXP, strideIDXP, IDXQ, strideIDXQ, PERM, stridePERM, GIVCOL, LDGIVCOL, GIVNUM, LDGIVNUM )
 
 @license Apache-2.0.
 
@@ -58,28 +58,41 @@ dlasd7.ndarray( 1, 1, 1, 1, d, 1, 0, z, 1, 0, ZW, 1, 0, VF, 1, 0, VFW, 1, 0, VL,
 
 The function has the following parameters:
 
+-   **order**: storage layout of `GIVCOL` and `GIVNUM` (`'row-major'` or `'column-major'`).
 -   **icompq**: `icompq`.
 -   **nl**: `nl`.
 -   **nr**: `nr`.
 -   **sqre**: `sqre`.
 -   **d**: `d`.
+-   **strideD**: stride length for `d`.
 -   **z**: `z`.
+-   **strideZ**: stride length for `z`.
 -   **ZW**: input array `ZW`.
+-   **strideZW**: stride length for `ZW`.
 -   **VF**: input array `VF`.
+-   **strideVF**: stride length for `VF`.
 -   **VFW**: input array `VFW`.
+-   **strideVFW**: stride length for `VFW`.
 -   **VL**: input array `VL`.
+-   **strideVL**: stride length for `VL`.
 -   **VLW**: input array `VLW`.
+-   **strideVLW**: stride length for `VLW`.
 -   **alpha**: scalar constant.
 -   **beta**: scalar constant.
 -   **DSIGMA**: input array `DSIGMA`.
+-   **strideDSIGMA**: stride length for `DSIGMA`.
 -   **IDX**: input array `IDX`.
+-   **strideIDX**: stride length for `IDX`.
 -   **IDXP**: input array `IDXP`.
+-   **strideIDXP**: stride length for `IDXP`.
 -   **IDXQ**: input array `IDXQ`.
+-   **strideIDXQ**: stride length for `IDXQ`.
 -   **PERM**: input array `PERM`.
+-   **stridePERM**: stride length for `PERM`.
 -   **GIVCOL**: input array `GIVCOL`.
--   **LDGCOL**: leading dimension of `GCOL`.
+-   **LDGIVCOL**: leading dimension of `GIVCOL`.
 -   **GIVNUM**: input array `GIVNUM`.
--   **LDGNUM**: leading dimension of `GNUM`.
+-   **LDGIVNUM**: leading dimension of `GIVNUM`.
 
 #### dlasd7.ndarray( icompq, nl, nr, sqre, d, strideD, offsetD, z, strideZ, offsetZ, ZW, strideZW, offsetZW, VF, strideVF, offsetVF, VFW, strideVFW, offsetVFW, VL, strideVL, offsetVL, VLW, strideVLW, offsetVLW, alpha, beta, DSIGMA, strideDSIGMA, offsetDSIGMA, IDX, strideIDX, offsetIDX, IDXP, strideIDXP, offsetIDXP, IDXQ, strideIDXQ, offsetIDXQ, PERM, stridePERM, offsetPERM, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, strideGIVNUM1, strideGIVNUM2, offsetGIVNUM )
 

@@ -36,31 +36,25 @@ interface Routine {
 	* @param curpbm - curpbm
 	* @param PRMPTR - input array
 	* @param stridePRMPTR - stride length for `PRMPTR`
-	* @param offsetPRMPTR - starting index for `PRMPTR`
 	* @param PERM - input array
 	* @param stridePERM - stride length for `PERM`
-	* @param offsetPERM - starting index for `PERM`
 	* @param GIVPTR - input array
 	* @param strideGIVPTR - stride length for `GIVPTR`
-	* @param offsetGIVPTR - starting index for `GIVPTR`
 	* @param GIVCOL - input matrix
-	* @param strideGIVCOL1 - stride of the first dimension of `GIVCOL`
-	* @param strideGIVCOL2 - stride of the second dimension of `GIVCOL`
-	* @param offsetGIVCOL - starting index for `GIVCOL`
+	* @param LDGIVCOL - leading dimension of `GIVCOL`
 	* @param GIVNUM - input matrix
 	* @param LDGIVNUM - leading dimension of `GIVNUM`
 	* @param q - input array
 	* @param strideQ - stride length for `q`
 	* @param QPTR - input array
 	* @param strideQPTR - stride length for `QPTR`
-	* @param offsetQPTR - starting index for `QPTR`
 	* @param z - input array
 	* @param strideZ - stride length for `z`
 	* @param ZTEMP - output array
 	* @param strideZTEMP - stride length for `ZTEMP`
 	* @returns result
 	*/
-	( order: Layout, N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, offsetPRMPTR: number, PERM: Int32Array, stridePERM: number, offsetPERM: number, GIVPTR: Int32Array, strideGIVPTR: number, offsetGIVPTR: number, GIVCOL: Int32Array, strideGIVCOL1: number, strideGIVCOL2: number, offsetGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number, q: Float64Array, strideQ: number, QPTR: Int32Array, strideQPTR: number, offsetQPTR: number, z: Float64Array, strideZ: number, ZTEMP: Float64Array, strideZTEMP: number ): Float64Array;
+	( order: Layout, N: number, tlvls: number, curlvl: number, curpbm: number, PRMPTR: Int32Array, stridePRMPTR: number, PERM: Int32Array, stridePERM: number, GIVPTR: Int32Array, strideGIVPTR: number, GIVCOL: Int32Array, LDGIVCOL: number, GIVNUM: Float64Array, LDGIVNUM: number, q: Float64Array, strideQ: number, QPTR: Int32Array, strideQPTR: number, z: Float64Array, strideZ: number, ZTEMP: Float64Array, strideZTEMP: number ): Float64Array;
 
 	/**
 	* Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC., using alternative indexing semantics.

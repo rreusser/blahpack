@@ -30,7 +30,7 @@ limitations under the License.
 var dlar2v = require( '@stdlib/lapack/base/dlar2v' );
 ```
 
-#### dlar2v( N, x, y, z, strideXYZ, c, s, strideCS )
+#### dlar2v( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS )
 
 Applies a vector of real plane rotations from both sides to a sequence of 2-by-2 symmetric matrices.
 
@@ -51,12 +51,15 @@ The function has the following parameters:
 
 -   **N**: number of columns.
 -   **x**: `x`.
+-   **strideX**: stride length for `X`.
 -   **y**: `y`.
+-   **strideY**: stride length for `Y`.
 -   **z**: `z`.
--   **strideXYZ**: stride length for `XYZ`.
+-   **strideZ**: stride length for `Z`.
 -   **c**: `c`.
+-   **strideC**: stride length for `C`.
 -   **s**: `s`.
--   **strideCS**: stride length for `CS`.
+-   **strideS**: stride length for `S`.
 
 #### dlar2v.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, z, strideZ, offsetZ, c, strideC, offsetC, s, strideS, offsetS )
 

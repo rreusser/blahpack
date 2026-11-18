@@ -15,9 +15,9 @@ Compared against: `@stdlib/lapack/base/dlaswp`
 ## [SIGNATURE] Critical API Differences
 
 ### `dlaswp.js` (layout wrapper)
-- **Ours**: `dlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx )` -- 9 params, includes `strideIPIV`
-- **Stdlib**: `dlaswp( order, N, A, LDA, k1, k2, IPIV, incx )` -- 8 params, no `strideIPIV`
-- The `strideIPIV` parameter is **not part of the stdlib LAPACK-style interface** -- stdlib assumes unit stride for IPIV in the layout wrapper
+- **Ours**: `dlaswp( order, N, A, LDA, k1, k2, inck, IPIV, strideIPIV )` -- 9 params; the strided projection of the ndarray signature
+- **Stdlib**: `dlaswp( order, N, A, LDA, k1, k2, IPIV, incx )` -- 8 params
+- Stdlib's single `incx` both selects direction (sign) and strides `IPIV`. Ours splits it: `inck` selects direction, `strideIPIV` strides `IPIV` (offset from `stride2offset( k2+1, strideIPIV )`; the pivot for row `k` is at `IPIV[ o + k*strideIPIV ]`, matching ndarray). Stdlib `incx = ±1` ≡ ours `inck = ±1, strideIPIV = 1`. Stdlib `incx = 0` is a no-op; ours `inck = 0` applies pivots in order (as ndarray does). For `|incx| > 1`, stdlib reads row `k`'s pivot at `IPIV[ k1 + (k-k1)*|incx| ]` (Fortran convention); ours at `IPIV[ k*strideIPIV ]`.
 - **Stdlib** has `@throws {RangeError}` for LDA validation; ours does not
 - **Stdlib** has `@example` blocks in JSDoc; ours does not
 

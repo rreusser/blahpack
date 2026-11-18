@@ -105,6 +105,12 @@ const INTS = {
 const DEFAULT_INTS = [ 'N', '1', '0', '2', 'N-1', 'N / 2', 'N + 1', '2 * N', '3', '-1' ];
 const NUMBERS = [ '1.0', '0.5', '2.0', '0.0', '-1.0', '10.0' ];
 
+// Plane-rotation cosine/sine (c^2 + s^2 = 1), so repeated in-place rotation stays bounded:
+const NUMS = {
+	'c': [ '0.6', ...NUMBERS ],
+	's': [ '0.8', ...NUMBERS ]
+};
+
 // Array size tiers (expressions in `N`):
 const SIZES_2D = [ 'N * N', '4 * N * N', '16 * N * N' ];
 const WORK_2D = [ '(4 * N * N) + (64 * N)', '(16 * N * N) + (256 * N)', '(64 * N * N) + (1024 * N)' ];
@@ -233,7 +239,7 @@ function buildSpecs( sig, is2d, literals ) {
 			cands = [ 'N', '2 * N', '4 * N', '1' ];
 		} else if ( t === 'number' ) {
 			kind = 'num';
-			cands = NUMBERS;
+			cands = NUMS[ n ] || NUMBERS;
 		} else if ( t === 'Complex128' ) {
 			kind = 'cplx';
 			cands = [ 'new Complex128( 1.0, 0.0 )', 'new Complex128( 0.5, 0.5 )', 'new Complex128( 0.0, 0.0 )' ];

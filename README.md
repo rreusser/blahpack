@@ -1,3 +1,7 @@
+<div align="center">
+  <img width="377px" src="./blahpack.png" alt="BLAHPACK">
+</div>
+
 # blahpack
 
 JavaScript implementations of BLAS and LAPACK routines, translated from the

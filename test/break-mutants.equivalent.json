@@ -23,5 +23,19 @@
 	"lib/lapack/base/zgsvj1/lib/base.js:433:skip-after-break": "The i-loop breaks only right after convergedSweep = true, and info is still 0 from validation (never reassigned in the loop), so skipping 'if ( convergedSweep ) info = 0' leaves info = 0 either way.",
 	"lib/lapack/base/zgsvj1/lib/base.js:406:skip-after-break": "The jbc-loop break needs bailjbc, which is set only under 'i <= swband'; swband is 0 and never changes (its only update needs i < swband with i >= 1, as for Fortran SWBAND), so the break is unreachable.",
 	"lib/lapack/base/zgsvj1/lib/base.js:392:skip-after-break": "This p-loop break needs bailjbc, which is set only under 'i <= swband' with swband stuck at 0, so it never runs.",
-	"lib/lapack/base/zgsvj1/lib/base.js:382:skip-after-break": "This break is guarded by 'i <= swband'; swband is 0 forever (its only update needs i < swband with i >= 1), so it never runs."
+	"lib/lapack/base/zgsvj1/lib/base.js:382:skip-after-break": "This break is guarded by 'i <= swband'; swband is 0 forever (its only update needs i < swband with i >= 1), so it never runs.",
+	"lib/lapack/base/dlahqr/lib/base.js:178:skip-after-break": "The only break out of the ITS loop is immediately preceded by `converged = true` (false before the loop, set nowhere else), so on a break `if ( !converged )` is false and skipping it changes nothing.",
+	"lib/lapack/base/zlahqr/lib/base.js:293:skip-after-break": "The only break out of the ITS loop is immediately preceded by `converged = true` (false before the loop, set nowhere else), so on a break `if ( !converged )` is false and skipping it changes nothing.",
+	"lib/lapack/base/zlahqr/lib/base.js:376:skip-after-break": "The M loop runs m from i-1 down to l+1, so a break leaves m >= l+1 and `if ( m === l )` is false; skipping S on a break changes nothing (matches Fortran GO TO 70 skipping the M=L recompute).",
+	"lib/lapack/base/dlaqr0/lib/base.js:201:skip-after-break": "The only break out of the IT loop happens inside the body with it <= itmax, so `if ( it > itmax )` is false on every break.",
+	"lib/lapack/base/dlaqr0/lib/base.js:207:skip-after-break": "The locate loop breaks only when H(k,k-1) === 0, so the guard `k > ilo && H(k,k-1) !== ZERO` is false on every break.",
+	"lib/lapack/base/dlaqr4/lib/base.js:137:skip-after-break": "The only break out of the IT loop happens inside the body with it <= itmax, so `if ( it > itmax )` is false on every break.",
+	"lib/lapack/base/dlaqr4/lib/base.js:143:skip-after-break": "The locate loop breaks only when H(k,k-1) === 0, so the guard `k > ilo && H(k,k-1) !== ZERO` is false on every break.",
+	"lib/lapack/base/dsteqr/lib/base.js:192:skip-after-break": "The QL search loop only breaks at m <= lend-1, so the guard `m > lend - 1` is false whenever the break is taken.",
+	"lib/lapack/base/dsteqr/lib/base.js:299:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken.",
+	"lib/lapack/base/zsteqr/lib/base.js:192:skip-after-break": "The QL search loop only breaks at m <= lend-1, so the guard `m > lend - 1` is false whenever the break is taken.",
+	"lib/lapack/base/zsteqr/lib/base.js:303:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken.",
+	"lib/arpack/base/dstqrb/lib/base.js:130:skip-after-break": "The split loop only breaks at m <= N-2, so the guard `m > N - 2` is false whenever the break is taken (matching Fortran GO TO 30 skipping `M = N`).",
+	"lib/arpack/base/dstqrb/lib/base.js:187:skip-after-break": "The QL search loop only breaks at m <= lend-1, so the guard `m > lend - 1` is false whenever the break is taken.",
+	"lib/arpack/base/dstqrb/lib/base.js:294:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken."
 }

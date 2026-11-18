@@ -2321,3 +2321,35 @@ Keep entries short. Newest first.
   reference sources where they differ, and check that the JS follows each
   source, not its sibling. Candidates: `zgesvj`/`zgejsv` and other Jacobi or
   iterative routines with tolerance tests (tickets/0007 covers d/z contract parity).
+
+---
+
+## 2026-11-18 — dsterf QR deflation search: a "loop completed" fix-up also fired on a break at `m = lend + 1` → lost a decoupled eigenvalue
+
+- **What**: found by `bin/break-mutants.mjs` (tickets/0027). Its mutants at the
+  QR search loop survived, and triage showed why: the post-loop code was wrong
+  in a way no test could see. The second bug of the GO TO-as-break class today,
+  after the `*latrs`/`*latps`/`*latbs` growth bound.
+- **Root cause**: the Fortran is `DO 110 M = L, LEND+1, -1; IF(...) GO TO 120;
+  110 CONTINUE; M = LEND; 120 CONTINUE`. The JS loop
+  `for ( m = l; m > lend; m-- ) { … break; }` already leaves `m = lend` when it
+  completes. Its comments wrongly assumed it exits at `lend + 1`, and added
+  `if ( m === lend + 1 ) m = lend`. That fix-up never fires on completion. It
+  fires exactly when the loop BREAKS at `m = lend + 1`, overwriting the split
+  the Fortran keeps: `E(LEND)` was not zeroed, and the negligible element was
+  folded back into the next QR sweep or `dlae2` 2×2.
+- **Repro**: `dsterf(3, d=[1e-20, 1e-20, 0.5e-20], e=[1e-20, 1e300])`. The
+  1e300 norm triggers scaling, the scaled `e[0]²` underflows, and the QR search
+  breaks at `lend + 1`. Old output `[-1e300, 0, 1e300]`, fixed (reference
+  semantics) `[-1e300, 1e-20, 1e300]`. Regression test in
+  `lib/lapack/base/dsterf/test/test.ndarray.js`.
+- **Fix (APPLIED)**: removed the fix-up. Also removed two empty
+  `if ( m === … ) { /* comments */ }` blocks after the other search loops, whose
+  comments repeated the same confusion.
+- **Bug class**: `goto-translation`, in the form "a completion guard that tests
+  an index value a break can also produce". `j === jlast` is a safe completion
+  test only when the loop's test is `j !== jlast` (the break index can never
+  equal it). `m === lend + 1` after `m > lend` is not safe.
+- **Generalization**: grep found no other `m === lend + 1` fix-ups; `dsteqr`,
+  `zsteqr` and `dstqrb` use the correct form. The mutation check catches the
+  class wherever a test can make the two exits differ.

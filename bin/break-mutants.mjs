@@ -12,7 +12,9 @@
 * test for months, because no input made the two choices disagree.
 *
 * For each loop in `lib/<pkg>/base/<routine>/lib/*.js` that is left by an
-* unlabeled `break` and followed by statement S in the same block, this builds:
+* unlabeled `break`, let S be the statement that runs next after the loop: its
+* next sibling, or, if the loop ends an `if` branch or block, the statement after
+* that (climbing out, but never past an enclosing loop or function). This builds:
 *
 *   skip-after-break   S runs only if the loop finished without breaking
 *   drop-guard         S is `if ( G ) B` with no else: replaced by B, so B
@@ -81,7 +83,7 @@ function ownBreaks( loop ) {
 function sites( src ) {
 	const ast = espree.parse( src, { 'ecmaVersion': 2022, 'sourceType': 'module', 'loc': true, 'range': true } );
 	const out = [];
-	( function rec( n ) {
+	( function rec( n, ancestors ) {
 		const body = ( n.type === 'BlockStatement' || n.type === 'Program' ) ? n.body : null;
 		if ( body ) {
 			body.forEach( ( st, i ) => {
@@ -89,16 +91,40 @@ function sites( src ) {
 					return;
 				}
 				const brks = ownBreaks( st );
-				const next = body[ i + 1 ];
+				const next = body[ i + 1 ] || nextAfter( n, ancestors );
 				if ( !brks.length || !next ) {
 					return;
 				}
 				out.push( { 'loop': st, 'breaks': brks, 'next': next } );
 			});
 		}
-		children( n ).forEach( rec );
-	})( ast );
+		children( n ).forEach( ( c ) => rec( c, ancestors.concat( n ) ) );
+	})( ast, [] );
 	return out;
+}
+
+// The statement that runs after `block` finishes, climbing out through `if`
+// branches and plain blocks. Stops (returns null) at a loop, function, switch
+// or try boundary: past those, "after the loop" no longer means "after exit".
+function nextAfter( block, ancestors ) {
+	let child = block;
+	for ( let k = ancestors.length - 1; k >= 0; k-- ) {
+		const a = ancestors[ k ];
+		if ( a.type === 'IfStatement' ) {
+			child = a;
+			continue;
+		}
+		if ( a.type === 'BlockStatement' ) {
+			const idx = a.body.indexOf( child );
+			if ( idx >= 0 && idx + 1 < a.body.length ) {
+				return a.body[ idx + 1 ];
+			}
+			child = a;
+			continue;
+		}
+		return null;
+	}
+	return null;
 }
 
 function snippet( src, node ) {

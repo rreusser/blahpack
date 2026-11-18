@@ -2353,3 +2353,27 @@ Keep entries short. Newest first.
 - **Generalization**: grep found no other `m === lend + 1` fix-ups; `dsteqr`,
   `zsteqr` and `dstqrb` use the correct form. The mutation check catches the
   class wherever a test can make the two exits differ.
+
+---
+
+## 2026-11-18 — dlaqr4 hardcoded its ILAENV tuning values and dlaqr0 mis-rounded the IPARMQ shift count → valid Schur forms in a different order than the reference (tickets/0028)
+
+- **What**: surfaced while triaging `bin/break-mutants.mjs` survivors in the
+  shift-pairing code (tickets/0027). A bit-exact `dlaqr0` vs `dlaqr4` oracle
+  (the reference sources are identical apart from the AED routine) failed
+  because `dlaqr4` used `nwr = 4, nsr = 2, nmin = 15, kacc22 = 0` instead of the
+  IPARMQ values the reference gets through ILAENV. Separately, `dlaqr0`'s
+  `iparmqShifts` computed `round(nh / log2(nh))` where IPARMQ has
+  `NH / NINT(LOG(NH)/LOG(2))` (integer division by the rounded log): nh = 200
+  gave 26 shifts instead of 24.
+- **Repro**: `dlaqr4` on `test/fortran/test_dlaqr4.f90` tests 9/10 (40×40,
+  80×80). The unsorted eigenvalues differed from the reference fixtures by 13.5
+  and 30.0 (the sorted ones agreed). Those fixtures existed but were never loaded
+  (tickets/0030). Now within ~4e-13; the tests fail on the old code.
+- **Fix (APPLIED)**: `dlaqr4` shares `dlaqr0`'s IPARMQ constants and helper;
+  the NS formula is `Math.floor( nh / Math.round( log2( nh ) ) )`.
+- **Bug class**: `tuning-parameter-drift`. A wrong ILAENV substitute still yields
+  a valid decomposition, so every property test passes; only an unsorted
+  comparison against the reference shows it.
+- **Generalization**: `dlaqr3`'s `nmin = 12` (reference 75) and
+  `zlaqr0`/`zlaqr4`'s fixed NWR/NSR remain (tickets/0031).

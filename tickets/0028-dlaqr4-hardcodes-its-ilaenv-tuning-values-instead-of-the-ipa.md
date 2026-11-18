@@ -1,9 +1,10 @@
 ---
 id: 0028
 title: dlaqr4 hardcodes its ILAENV tuning values instead of the IPARMQ values the reference uses
-status: open
+status: resolved
 area: base
 opened: 2026-11-18
+resolved: 2026-11-18
 ---
 
 ## Problem
@@ -22,3 +23,7 @@ The JS `dlaqr4` hardcodes its ILAENV tuning values (`nwr = 4`, `nsr = 2`, `nmin 
 grep -n "nwr = 4\|nsr = 2" lib/lapack/base/dlaqr4/lib/base.js
 grep -c "40x40_wantt_wantz\|80x80_wantt_wantz" lib/lapack/base/dlaqr4/test/*.js
 ```
+
+## Resolution
+
+Fixed during break-mutant triage (tickets/0027): dlaqr4 now uses the IPARMQ parameters, shared with dlaqr0 (whose nh >= 150 shift-count formula was also corrected to NH / NINT(log2 NH)). The 40x40 and 80x80 reference fixtures now match unsorted to ~4e-13, down from 13.5 and 30. Both are now loaded by dlaqr4's tests, which fail on the old code; a bit-exact dlaqr0 vs dlaqr4 test pins the shared schedule.

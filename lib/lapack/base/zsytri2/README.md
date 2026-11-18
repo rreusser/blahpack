@@ -30,7 +30,7 @@ limitations under the License.
 var zsytri2 = require( '@stdlib/lapack/base/zsytri2' );
 ```
 
-#### zsytri2( order, uplo, N, A, LDA, IPIV )
+#### zsytri2( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
 
 Compute the inverse of a complex symmetric indefinite matrix.
 
@@ -42,7 +42,7 @@ var A = new Complex128Array( 1 );
 A.set( [ 5.0, 2.0 ], 0 );
 var IPIV = new Int32Array( [ 0 ] );
 
-zsytri2( 'column-major', 'lower', 1, A, 1, IPIV );
+zsytri2( 'column-major', 'lower', 1, A, 1, IPIV, 1, null );
 // A => <Complex128Array>[ 5/29 - 2/29 i ]
 ```
 
@@ -54,6 +54,8 @@ The function has the following parameters:
 -   **A**: input/output matrix; on entry, the factored form from `zsytrf`; on exit, the symmetric inverse.
 -   **LDA**: leading dimension of `A`.
 -   **IPIV**: pivot indices from `zsytrf`.
+-   **strideIPIV**: stride length for `IPIV`.
+-   **WORK**: workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally.
 
 #### zsytri2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 
@@ -92,7 +94,7 @@ The function has the following additional parameters:
 ## Notes
 
 -   The routine dispatches at the JS-level block-size threshold `NBMAX = 32`. When `N <= NBMAX`, the unblocked worker `zsytri` is invoked and `WORK` must hold at least `N` complex elements. When `N > NBMAX`, the blocked worker `zsytri2x` is invoked and `WORK` must hold at least `(N+NBMAX+1)*(NBMAX+3)` complex elements arranged column-major with leading dimension `N+NBMAX+1`.
--   The BLAS-style wrapper `zsytri2( order, uplo, N, A, LDA, IPIV )` allocates `WORK` internally with the correct size for the dispatch path it will take.
+-   The BLAS-style wrapper `zsytri2( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )` allocates `WORK` internally when `WORK` is `null`, with the correct size for the dispatch path it will take.
 -   `IPIV` follows the JS convention used throughout the Bunch-Kaufman family: non-negative entries denote `1x1` pivot blocks (target row index `0`-based); negative entries `raw` denote `2x2` pivot blocks with target `~raw` (bitwise NOT).
 -   Returns `0` on success; a positive integer `k` indicates that `D[k,k] = 0` and the inverse could not be computed.
 
@@ -113,7 +115,7 @@ var A = new Complex128Array( 1 );
 A.set( [ 5.0, 2.0 ], 0 );
 var IPIV = new Int32Array( [ 0 ] );
 
-var info = zsytri2( 'column-major', 'lower', 1, A, 1, IPIV );
+var info = zsytri2( 'column-major', 'lower', 1, A, 1, IPIV, 1, null );
 console.log( info );
 console.log( A.get( 0 ).toString() );
 ```

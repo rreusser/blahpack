@@ -30,7 +30,7 @@ limitations under the License.
 var zhetri = require( '@stdlib/lapack/base/zhetri' );
 ```
 
-#### zhetri( uplo, N, A, LDA, IPIV )
+#### zhetri( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
 
 Computes the inverse of a complex Hermitian matrix using the factorization computed by zhetrf.
 
@@ -48,11 +48,14 @@ zhetri.ndarray( 'upper', 1, A, 1, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
 
 The function has the following parameters:
 
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
 -   **uplo**: specifies whether the upper or lower triangular part is referenced.
 -   **N**: number of columns.
 -   **A**: input array `A`.
 -   **LDA**: leading dimension of `A`.
 -   **IPIV**: input array `IPIV`.
+-   **strideIPIV**: stride length for `IPIV`.
+-   **WORK**: workspace `Complex128Array` of length at least `N`; if `null`, a workspace is allocated internally.
 
 #### zhetri.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 

@@ -27,10 +27,23 @@ limitations under the License.
 ## Usage
 
 ```javascript
-var dposvx = require( '@stdlib/lapack/base/dposvx' );
+var Float64Array = require( '@stdlib/array/float64' );
+
+var A = new Float64Array( [ 4.0, 2.0, 0.0, 2.0, 5.0, 1.0, 0.0, 1.0, 3.0 ] );
+var AF = new Float64Array( 9 );
+var B = new Float64Array( [ 6.0, 8.0, 4.0 ] );
+var X = new Float64Array( 3 );
+var s = new Float64Array( 3 );
+var rcond = new Float64Array( 1 );
+var FERR = new Float64Array( 1 );
+var BERR = new Float64Array( 1 );
+
+var out = dposvx( 'column-major', 'not-factored', 'upper', 3, 1, A, 3, AF, 3, 'none', s, 1, B, 3, X, 3, rcond, FERR, 1, BERR, 1, null, null );
+// returns { 'info': 0, 'equed': 'none', 'rcond': 0.25 }
+// X => <Float64Array>[ 1.0, 1.0, 1.0 ]
 ```
 
-#### dposvx( fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
+#### dposvx( order, fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, IWORK )
 
 Computes the solution to system of linear equations A·X = B for positive definite matrices.
 
@@ -53,7 +66,8 @@ dposvx.ndarray( 'not-factored', 'upper', N, N, A, N, 1, 0, AF, N, 1, 0, 'none', 
 
 The function has the following parameters:
 
--   **fact**: `fact`.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **fact**: `'not-factored'`, `'equilibrate'`, or `'factored'`.
 -   **uplo**: specifies whether the upper or lower triangular part is referenced.
 -   **N**: number of columns.
 -   **nrhs**: number of right-hand sides.
@@ -68,14 +82,15 @@ The function has the following parameters:
 -   **LDB**: leading dimension of `B`.
 -   **X**: input array `X`.
 -   **LDX**: leading dimension of `X`.
+-   **rcond**: output [`Float64Array`][mdn-float64array]; on return, `rcond[0]` is the reciprocal condition number estimate.
 -   **FERR**: input array `FERR`.
 -   **strideFERR**: stride length for `FERR`.
 -   **BERR**: input array `BERR`.
 -   **strideBERR**: stride length for `BERR`.
--   **WORK**: input array `WORK`.
--   **strideWORK**: stride length for `WORK`.
--   **IWORK**: input array `IWORK`.
--   **strideIWORK**: stride length for `IWORK`.
+-   **WORK**: workspace of length at least `3*N`, or `null` to allocate internally.
+-   **IWORK**: integer workspace of length at least `N`, or `null` to allocate internally.
+
+The function returns an object with properties `info`, `equed`, and `rcond`.
 
 #### dposvx.ndarray( fact, uplo, N, nrhs, A, strideA1, strideA2, offsetA, AF, strideAF1, strideAF2, offsetAF, equed, s, strideS, offsetS, B, strideB1, strideB2, offsetB, X, strideX1, strideX2, offsetX, rcond, FERR, strideFERR, offsetFERR, BERR, strideBERR, offsetBERR, WORK, strideWORK, offsetWORK, IWORK, strideIWORK, offsetIWORK )
 

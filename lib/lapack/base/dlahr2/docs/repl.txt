@@ -1,58 +1,57 @@
-{{alias}}( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT1, strideT2, y, strideY1, strideY2 )
+{{alias}}( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY )
     Reduces NB columns of a real general n-by-(n-k+1) matrix A.
 
     Parameters
     ----------
     order: string
-        Row-major (C-style) or column-major (Fortran-style) order.
+        storage layout (`'row-major'` or `'column-major'`).
 
     N: integer
-        number of columns.
+        number of rows of `A`.
 
     K: integer
-        inner dimension.
+        offset for the reduction.
 
     nb: integer
-        `nb`.
+        number of columns to reduce.
 
     A: Float64Array
-        `A`.
+        input/output `N`-by-`(N-K+1)` matrix.
 
     LDA: integer
         leading dimension of `A`.
 
     tau: Float64Array
-        `tau`.
+        output array of scalar factors (length `nb`).
 
     strideTAU: integer
-        stride length for `TAU`.
+        stride length for `tau`.
 
-    t: Float64Array
-        `t`.
+    T: Float64Array
+        output `nb`-by-`nb` upper triangular matrix.
 
-    strideT1: integer
-        stride of dimension 1 of `T`.
+    LDT: integer
+        leading dimension of `T`.
 
-    strideT2: integer
-        stride of dimension 2 of `T`.
+    Y: Float64Array
+        output `N`-by-`nb` matrix.
 
-    y: Float64Array
-        `y`.
-
-    strideY1: integer
-        stride of dimension 1 of `Y`.
-
-    strideY2: integer
-        stride of dimension 2 of `Y`.
+    LDY: integer
+        leading dimension of `Y`.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    undefined
 
     Examples
     --------
-    // TODO: Add examples
+    > var N = 3;
+    > var A = new {{alias:@stdlib/array/float64}}( N * N );
+    > var tau = new {{alias:@stdlib/array/float64}}( 2 );
+    > var T = new {{alias:@stdlib/array/float64}}( 4 );
+    > var Y = new {{alias:@stdlib/array/float64}}( N * 2 );
+
+    > {{alias}}( 'column-major', N, 1, 2, A, N, tau, 1, T, 2, Y, N );
 
 
 {{alias}}.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )

@@ -29,23 +29,20 @@ interface Routine {
 	/**
 	* Reduces NB columns of a real general n-by-(n-k+1) matrix A.
 	*
-	* @param order - storage layout
-	* @param N - number of columns
-	* @param K - inner dimension
-	* @param nb - `nb`
-	* @param A - `A`
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param N - number of rows of `A`
+	* @param K - offset for the reduction
+	* @param nb - number of columns to reduce
+	* @param A - input/output `N`-by-`(N-K+1)` matrix
 	* @param LDA - leading dimension of `A`
-	* @param tau - `tau`
-	* @param strideTAU - stride of `TAU`
-	* @param t - `t`
-	* @param strideT1 - stride of dimension 1 of `T`
-	* @param strideT2 - stride of dimension 2 of `T`
-	* @param y - `y`
-	* @param strideY1 - stride of dimension 1 of `Y`
-	* @param strideY2 - stride of dimension 2 of `Y`
-	* @returns result
+	* @param tau - output array of scalar factors (length `nb`)
+	* @param strideTAU - stride length for `tau`
+	* @param T - output `nb`-by-`nb` upper triangular matrix
+	* @param LDT - leading dimension of `T`
+	* @param Y - output `N`-by-`nb` matrix
+	* @param LDY - leading dimension of `Y`
 	*/
-	( order: Layout, N: number, K: number, nb: number, A: Float64Array, LDA: number, tau: Float64Array, strideTAU: number, t: Float64Array, strideT1: number, strideT2: number, y: Float64Array, strideY1: number, strideY2: number ): Float64Array;
+	( order: Layout, N: number, K: number, nb: number, A: Float64Array, LDA: number, tau: Float64Array, strideTAU: number, T: Float64Array, LDT: number, Y: Float64Array, LDY: number ): void;
 
 	/**
 	* Reduces NB columns of a real general n-by-(n-k+1) matrix A using alternative indexing semantics.

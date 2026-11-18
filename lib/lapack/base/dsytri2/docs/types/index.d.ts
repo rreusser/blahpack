@@ -20,7 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { Layout } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsytri2`.
@@ -29,19 +29,17 @@ interface Routine {
 	/**
 	* Computes the inverse of a real symmetric indefinite matrix using the factorization produced by dsytrf, dispatching to dsytri (unblocked) or dsytri2x (blocked)
 	*
-	* @param order - storage layout
-	* @param uplo - specifies the operation type
-	* @param N - number of columns
-	* @param A - input matrix
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param uplo - specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`)
+	* @param N - order of the matrix `A`
+	* @param A - input/output matrix `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - input array
+	* @param IPIV - pivot indices from the factorization
 	* @param strideIPIV - stride length for `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @returns result
+	* @param WORK - workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally
+	* @returns status code
 	*/
-	( order: Layout, uplo: string, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array | null ): number;
 
 	/**
 	* Computes the inverse of a real symmetric indefinite matrix using the factorization produced by dsytrf, dispatching to dsytri (unblocked) or dsytri2x (blocked), using alternative indexing semantics.

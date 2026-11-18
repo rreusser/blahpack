@@ -30,13 +30,16 @@ limitations under the License.
 var dlartgs = require( '@stdlib/lapack/base/dlartgs' );
 ```
 
-#### dlartgs( x, y, sigma )
+#### dlartgs( x, y, sigma, out )
 
 Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 
 ```javascript
-var result = dlartgs( 3.0, 4.0, 1.5 );
-// returns { cs: ~0.4903, sn: ~0.8716 }
+var Float64Array = require( '@stdlib/array/float64' );
+
+var out = new Float64Array( 2 );
+dlartgs( 3.0, 4.0, 1.5, out );
+// out => <Float64Array>[ ~0.4903, ~0.8716 ]
 ```
 
 The function has the following parameters:
@@ -44,8 +47,9 @@ The function has the following parameters:
 -   **x**: `(1,1)` entry of an upper bidiagonal matrix.
 -   **y**: `(1,2)` entry of an upper bidiagonal matrix.
 -   **sigma**: shift.
+-   **out**: output [`Float64Array`][mdn-float64array] of length at least `2`.
 
-Returns an object `{ cs, sn }` where `cs` and `sn` define a plane rotation satisfying `[ cs sn; -sn cs ] * [ x^2 - sigma^2; x*y ] = [ r; 0 ]` with `r >= 0`.
+Returns `out`, with `out[0] = cs` and `out[1] = sn`, where `cs` and `sn` define a plane rotation satisfying `[ cs sn; -sn cs ] * [ x^2 - sigma^2; x*y ] = [ r; 0 ]` with `r >= 0`.
 
 #### dlartgs.ndarray( x, y, sigma, out )
 
@@ -83,12 +87,13 @@ The function has the following additional parameters:
 ## Examples
 
 ```javascript
+var Float64Array = require( '@stdlib/array/float64' );
 var dlartgs = require( '@stdlib/lapack/base/dlartgs' );
 
-var r = dlartgs( 3.0, 4.0, 1.5 );
+var r = dlartgs( 3.0, 4.0, 1.5, new Float64Array( 2 ) );
 console.log( r );
 
-r = dlartgs( -2.0, 3.0, 0.0 );
+r = dlartgs( -2.0, 3.0, 0.0, new Float64Array( 2 ) );
 console.log( r );
 ```
 

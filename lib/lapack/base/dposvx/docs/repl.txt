@@ -1,11 +1,14 @@
-{{alias}}( fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, FERR, strideFERR, BERR, strideBERR, WORK, strideWORK, IWORK, strideIWORK )
+{{alias}}( order, fact, uplo, N, nrhs, A, LDA, AF, LDAF, equed, s, strideS, B, LDB, X, LDX, rcond, FERR, strideFERR, BERR, strideBERR, WORK, IWORK )
     Computes the solution to system of linear equations A·X = B for positive
     definite matrices.
 
     Parameters
     ----------
+    order: string
+        Storage layout ('row-major' or 'column-major').
+
     fact: string
-        `fact`.
+        One of 'not-factored', 'equilibrate', or 'factored'.
 
     uplo: string
         specifies whether the upper or lower triangular part is referenced.
@@ -49,6 +52,10 @@
     LDX: integer
         leading dimension of `X`.
 
+    rcond: Float64Array
+        Output array; on return, `rcond[0]` is the reciprocal condition
+        number estimate.
+
     FERR: Float64Array
         `FERR`.
 
@@ -61,22 +68,16 @@
     strideBERR: integer
         stride length for `BERR`.
 
-    WORK: Float64Array
-        `WORK`.
+    WORK: Float64Array|null
+        Workspace of length at least 3*N (allocated if null).
 
-    strideWORK: integer
-        stride length for `WORK`.
-
-    IWORK: Int32Array
-        `IWORK`.
-
-    strideIWORK: integer
-        stride length for `IWORK`.
+    IWORK: Int32Array|null
+        Integer workspace of length at least N (allocated if null).
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    out: Object
+        Result with properties `info`, `equed`, and `rcond`.
 
     Examples
     --------

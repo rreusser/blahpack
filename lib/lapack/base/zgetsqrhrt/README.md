@@ -30,7 +30,7 @@ limitations under the License.
 var zgetsqrhrt = require( '@stdlib/lapack/base/zgetsqrhrt' );
 ```
 
-#### zgetsqrhrt( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT )
+#### zgetsqrhrt( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT, WORK, RWORK )
 
 Computes the QR factorization `A = Q * R` of a complex `M`-by-`N` matrix `A` (`M >= N`) using an internal TSQR factorization followed by Householder reconstruction. The output `Q` and `R` factors are stored in the same format as `zgeqrt` (`Q` in blocked compact `WY`-representation).
 
@@ -40,7 +40,7 @@ var Complex128Array = require( '@stdlib/array/complex128' );
 var A = new Complex128Array( 16 );
 var T = new Complex128Array( 4 );
 
-zgetsqrhrt( 'column-major', 4, 2, 4, 2, 2, A, 4, T, 2 );
+zgetsqrhrt( 'column-major', 4, 2, 4, 2, 2, A, 4, T, 2, null, null );
 ```
 
 The function has the following parameters:
@@ -55,6 +55,8 @@ The function has the following parameters:
 -   **LDA**: leading dimension of `A`.
 -   **T**: output upper-triangular block reflector factors, stored as a sequence of `min(nb2,N)`-by-`min(nb2,N)` blocks.
 -   **LDT**: leading dimension of `T` (`LDT >= max(1, min(nb2, N))`).
+-   **WORK**: complex workspace; if `null`, a workspace of the minimum required size is allocated internally.
+-   **RWORK**: real workspace `Float64Array` of length at least `N`; if `null`, a workspace is allocated internally.
 
 #### zgetsqrhrt.ndarray( M, N, mb1, nb1, nb2, A, strideA1, strideA2, offsetA, T, strideT1, strideT2, offsetT )
 
@@ -109,7 +111,7 @@ var A = new Complex128Array( [
 ] );
 var T = new Complex128Array( 6 );
 
-zgetsqrhrt( 'column-major', 4, 3, 4, 2, 2, A, 4, T, 2 );
+zgetsqrhrt( 'column-major', 4, 3, 4, 2, 2, A, 4, T, 2, null, null );
 console.log( A );
 ```
 

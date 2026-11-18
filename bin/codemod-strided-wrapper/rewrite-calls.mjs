@@ -68,8 +68,15 @@ for ( const [ file, bindings ] of sites ) {
 	const edits = [];
 	for ( const b of bindings ) {
 		for ( const c of b.calls ) {
-			if ( c.arguments.length !== oldList.length ) {
-				console.error( 'WARN arg count ' + c.arguments.length + ' != ' + oldList.length + ' at ' + path.relative( ROOT, file ) + ':' + src.slice( 0, c.start ).split( '\n' ).length );
+			if ( c.arguments.length > oldList.length ) {
+				// More arguments than the old list: the call does not use that
+				// signature (already rewritten, or a mismatched --old). Leave it.
+				console.error( 'WARN arg count ' + c.arguments.length + ' > ' + oldList.length + ', SKIPPED at ' + path.relative( ROOT, file ) + ':' + src.slice( 0, c.start ).split( '\n' ).length );
+				warn += 1;
+				continue;
+			}
+			if ( c.arguments.length < oldList.length ) {
+				console.error( 'WARN arg count ' + c.arguments.length + ' < ' + oldList.length + ' (trailing args treated as omitted) at ' + path.relative( ROOT, file ) + ':' + src.slice( 0, c.start ).split( '\n' ).length );
 				warn += 1;
 			}
 			c.arguments.forEach( ( a, i ) => {

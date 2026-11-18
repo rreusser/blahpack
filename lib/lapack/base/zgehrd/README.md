@@ -30,36 +30,31 @@ limitations under the License.
 var zgehrd = require( '@stdlib/lapack/base/zgehrd' );
 ```
 
-#### zgehrd( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
+#### zgehrd( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK )
 
 Reduces a complex general matrix to upper Hessenberg form using blocked algorithm.
 
 ```javascript
-var zgehrd = require( '@stdlib/lapack/base/zgehrd' );
+var Complex128Array = require( '@stdlib/array/complex128' );
 
-var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var TAU = discreteUniform( N, -10, 10, opts );
-var WORK = discreteUniform( N, -10, 10, opts );
+var A = new Complex128Array( [ 1.0, 0.0, 2.0, 1.0, 3.0, -1.0, 4.0, 0.0 ] );
+var TAU = new Complex128Array( 1 );
 
-zgehrd.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
+var info = zgehrd( 'column-major', 2, 1, 2, A, 2, TAU, 1, null );
+// returns 0
 ```
 
 The function has the following parameters:
 
--   **N**: number of columns.
--   **ilo**: `ilo`.
--   **ihi**: `ihi`.
--   **A**: input array `A`.
--   **strideA1**: stride of dimension 1 of `A`.
--   **strideA2**: stride of dimension 2 of `A`.
--   **offsetA**: starting index for `A`.
--   **TAU**: input array `TAU`.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **N**: order of the matrix `A`.
+-   **ilo**: lower index of the balanced matrix (1-based).
+-   **ihi**: upper index of the balanced matrix (1-based).
+-   **A**: input/output matrix; on exit, the upper Hessenberg matrix and the reflectors.
+-   **LDA**: leading dimension of `A`.
+-   **TAU**: output array of scalar factors of the elementary reflectors (length `N-1`).
 -   **strideTAU**: stride length for `TAU`.
--   **offsetTAU**: starting index for `TAU`.
--   **WORK**: input array `WORK`.
--   **strideWORK**: stride length for `WORK`.
--   **offsetWORK**: starting index for `WORK`.
+-   **WORK**: workspace (or `null` to allocate one internally).
 
 #### zgehrd.ndarray( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
 

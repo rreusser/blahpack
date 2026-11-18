@@ -1,38 +1,32 @@
 
-{{alias}}( order, uplo, N, A, LDA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK )
+{{alias}}( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
     Computes the inverse of a complex symmetric indefinite matrix using zsytrf factorization (dispatches between zsytri and zsytri2x)
 
     Parameters
     ----------
-        order: string
-            Row-major (C-style) or column-major (Fortran-style) order.
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
 
-        uplo: string
-            specifies the operation type.
+    uplo: string
+        Specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`).
 
-        N: integer
-            number of columns.
+    N: integer
+        Order of the matrix `A`.
 
-        A: Float64Array
-            input matrix.
+    A: Complex128Array
+        Input/output matrix `A`.
 
-        LDA: integer
-            leading dimension of `A`.
+    LDA: integer
+        Leading dimension of `A`.
 
-        IPIV: Int32Array
-            input array.
+    IPIV: Int32Array
+        Pivot indices from the factorization.
 
-        strideIPIV: integer
-            stride length for `IPIV`.
+    strideIPIV: integer
+        Stride length for `IPIV`.
 
-        offsetIPIV: integer
-            starting index for `IPIV`.
-
-        WORK: Float64Array
-            output array.
-
-        strideWORK: integer
-            stride length for `WORK`.
+    WORK: Complex128Array|null
+        Workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally.
 
     Returns
     -------

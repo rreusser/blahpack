@@ -1,44 +1,44 @@
 
-{{alias}}( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT, WORK, strideWORK )
+{{alias}}( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT, WORK, RWORK )
     Computes a column-blocked QR factorization of a complex M-by-N matrix using TSQR followed by Householder reconstruction.
 
     Parameters
     ----------
-        order: string
-            Row-major (C-style) or column-major (Fortran-style) order.
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
 
-        M: integer
-            number of rows.
+    M: integer
+        Number of rows of `A` (`M >= N`).
 
-        N: integer
-            number of columns.
+    N: integer
+        Number of columns of `A`.
 
-        mb1: integer
-            mb1.
+    mb1: integer
+        Row block size for the internal TSQR (`mb1 > N`).
 
-        nb1: integer
-            nb1.
+    nb1: integer
+        Column block size for the internal TSQR.
 
-        nb2: integer
-            nb2.
+    nb2: integer
+        Block size for the output blocked QR.
 
-        A: Float64Array
-            input matrix.
+    A: Complex128Array
+        Input/output matrix `A`.
 
-        LDA: integer
-            leading dimension of `A`.
+    LDA: integer
+        Leading dimension of `A`.
 
-        T: Float64Array
-            input matrix.
+    T: Complex128Array
+        Output block reflector factors.
 
-        LDT: integer
-            leading dimension of `T`.
+    LDT: integer
+        Leading dimension of `T`.
 
-        WORK: Float64Array
-            output array.
+    WORK: Complex128Array|null
+        Workspace of length at least `lwt + N*N + lw2` (see `zgetsqrhrt` for `lwt`, `lw2`); if `null`, a workspace is allocated internally.
 
-        strideWORK: integer
-            stride length for `WORK`.
+    RWORK: Float64Array|null
+        Workspace of length at least `N`; if `null`, a workspace is allocated internally.
 
     Returns
     -------

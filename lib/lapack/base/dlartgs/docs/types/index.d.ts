@@ -18,39 +18,62 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlartgs`.
 */
 interface Routine {
 	/**
-	* Generates a plane rotation for the bidiagonal SVD implicit QR iteration
+	* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 	*
-	* @param x - x
-	* @param y - y
-	* @param sigma - sigma
-	* @param cs - cs
-	* @param sn - sn
+	* @param x - (1,1) entry of an upper bidiagonal matrix
+	* @param y - (1,2) entry of an upper bidiagonal matrix
+	* @param sigma - shift
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 2 );
+	* dlartgs( 3.0, 4.0, 1.5, out );
+	* // returns <Float64Array>[ ~0.4903, ~0.8716 ]
 	*/
-	( x: number, y: number, sigma: number, cs: number, sn: number ): void;
+	( x: number, y: number, sigma: number, out: Float64Array ): Float64Array;
 
 	/**
-	* Generates a plane rotation for the bidiagonal SVD implicit QR iteration, using alternative indexing semantics.
+	* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem, using alternative indexing semantics.
 	*
-	* @param x - x
-	* @param y - y
-	* @param sigma - sigma
-	* @param cs - cs
-	* @param sn - sn
+	* @param x - (1,1) entry of an upper bidiagonal matrix
+	* @param y - (1,2) entry of an upper bidiagonal matrix
+	* @param sigma - shift
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 2 );
+	* dlartgs.ndarray( 3.0, 4.0, 1.5, out );
+	* // returns <Float64Array>[ ~0.4903, ~0.8716 ]
 	*/
-	ndarray( x: number, y: number, sigma: number, cs: number, sn: number ): void;
+	ndarray( x: number, y: number, sigma: number, out: Float64Array ): Float64Array;
 }
 
 /**
-* Generates a plane rotation for the bidiagonal SVD implicit QR iteration
+* Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
+*
+* @param x - (1,1) entry of an upper bidiagonal matrix
+* @param y - (1,2) entry of an upper bidiagonal matrix
+* @param sigma - shift
+* @param out - output array
+* @returns output array
+*
+* @example
+* var Float64Array = require( '@stdlib/array/float64' );
+*
+* var out = new Float64Array( 2 );
+* dlartgs( 3.0, 4.0, 1.5, out );
+* // returns <Float64Array>[ ~0.4903, ~0.8716 ]
 */
 declare var dlartgs: Routine;
 

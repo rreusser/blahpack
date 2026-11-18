@@ -18,32 +18,35 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
+
 /**
 * Interface describing `zgelss`.
 */
 interface Routine {
 	/**
-	* Computes the minimum norm solution to a complex linear least squares problem:.
+	* Computes the minimum norm solution to a complex linear least squares problem using the singular value decomposition of `A`.
 	*
-	* @param M - number of rows
-	* @param N - number of columns
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param M - number of rows of `A`
+	* @param N - number of columns of `A`
 	* @param nrhs - number of right-hand sides
-	* @param A - `A`
+	* @param A - input matrix `A`; overwritten on exit
 	* @param LDA - leading dimension of `A`
-	* @param B - `B`
-	* @param LDB - leading dimension of `B`
-	* @param S - `S`
-	* @param strideS - stride of `S`
-	* @param rcond - `rcond`
-	* @param rank - `rank`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
-	* @param RWORK - `RWORK`
-	* @param strideRWORK - stride of `RWORK`
-	* @returns result
+	* @param B - `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit
+	* @param LDB - leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`)
+	* @param S - output singular values in decreasing order (length `min(M,N)`)
+	* @param strideS - stride length for `S`
+	* @param rcond - threshold used to determine the effective rank of `A`
+	* @param rank - output array; `rank[0]` is set to the effective rank of `A`
+	* @param WORK - complex workspace; if `null`, a workspace is allocated internally
+	* @param RWORK - real workspace (length `>= 5*min(M,N)`); if `null`, a workspace is allocated internally
+	* @returns info status code
 	*/
-	( M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: number, WORK: Float64Array, strideWORK: number, lwork: number, RWORK: Float64Array, strideRWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, nrhs: number, A: Complex128Array, LDA: number, B: Complex128Array, LDB: number, S: Float64Array, strideS: number, rcond: number, rank: Array<number>, WORK: Complex128Array | null, RWORK: Float64Array | null ): number;
 
 	/**
 	* Computes the minimum norm solution to a complex linear least squares problem: using alternative indexing semantics.
@@ -80,7 +83,6 @@ interface Routine {
 * Computes the minimum norm solution to a complex linear least squares problem:.
 */
 declare var zgelss: Routine;
-
 
 // EXPORTS //
 

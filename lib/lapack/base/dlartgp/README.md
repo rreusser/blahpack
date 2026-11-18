@@ -30,7 +30,7 @@ limitations under the License.
 var dlartgp = require( '@stdlib/lapack/base/dlartgp' );
 ```
 
-#### dlartgp( f, g )
+#### dlartgp( f, g, out )
 
 Generates a plane rotation such that
 
@@ -42,16 +42,20 @@ Generates a plane rotation such that
 where `cs^2 + sn^2 = 1` and the sign is chosen so that `r >= 0`.
 
 ```javascript
-var result = dlartgp( 3.0, 4.0 );
-// returns { c: 0.6, s: 0.8, r: 5.0 }
+var Float64Array = require( '@stdlib/array/float64' );
+
+var out = new Float64Array( 3 );
+dlartgp( 3.0, 4.0, out );
+// out => <Float64Array>[ 0.6, 0.8, 5.0 ]
 ```
 
 The function has the following parameters:
 
 -   **f**: first component of the vector to be rotated.
 -   **g**: second component of the vector to be rotated.
+-   **out**: [`Float64Array`][mdn-float64array] of length at least `3`. On return, `out[0] = cs` (cosine), `out[1] = sn` (sine), `out[2] = r` (the non-negative radius).
 
-The function returns an object with properties `c` (cosine), `s` (sine), and `r` (the non-negative radius).
+The function returns `out`.
 
 #### dlartgp.ndarray( f, g, out )
 
@@ -93,15 +97,16 @@ The function has the following additional parameters:
 <!-- eslint no-undef: "error" -->
 
 ```javascript
+var Float64Array = require( '@stdlib/array/float64' );
 var dlartgp = require( '@stdlib/lapack/base/dlartgp' );
 
-var r1 = dlartgp( 3.0, 4.0 );
+var r1 = dlartgp( 3.0, 4.0, new Float64Array( 3 ) );
 console.log( r1 );
-// => { c: 0.6, s: 0.8, r: 5.0 }
+// => <Float64Array>[ 0.6, 0.8, 5.0 ]
 
-var r2 = dlartgp( -3.0, -4.0 );
+var r2 = dlartgp( -3.0, -4.0, new Float64Array( 3 ) );
 console.log( r2 );
-// => { c: -0.6, s: -0.8, r: 5.0 }
+// => <Float64Array>[ -0.6, -0.8, 5.0 ]
 ```
 
 </section>

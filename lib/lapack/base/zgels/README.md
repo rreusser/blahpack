@@ -30,7 +30,7 @@ limitations under the License.
 var zgels = require( '@stdlib/lapack/base/zgels' );
 ```
 
-#### zgels( trans, M, N, nrhs, A, LDA, B, LDB, WORK, strideWORK, lwork )
+#### zgels( order, trans, M, N, nrhs, A, LDA, B, LDB, WORK )
 
 Solves overdetermined or underdetermined systems for general matrices.
 
@@ -47,17 +47,16 @@ zgels.ndarray( 'no-transpose', N, N, N, A, N, 1, 0, B, N, 1, 0, WORK, 1, 0, N );
 
 The function has the following parameters:
 
--   **trans**: specifies whether the matrix should be transposed.
--   **M**: number of rows.
--   **N**: number of columns.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **trans**: specifies whether to solve with `A` (`'no-transpose'`) or its conjugate transpose (`'conjugate-transpose'`).
+-   **M**: number of rows of `A`.
+-   **N**: number of columns of `A`.
 -   **nrhs**: number of right-hand sides.
--   **A**: input array `A`.
+-   **A**: input matrix `A`; overwritten with its factorization.
 -   **LDA**: leading dimension of `A`.
--   **B**: input array `B`.
--   **LDB**: leading dimension of `B`.
--   **WORK**: input array `WORK`.
--   **strideWORK**: stride length for `WORK`.
--   **lwork**: `lwork`.
+-   **B**: `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit.
+-   **LDB**: leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`).
+-   **WORK**: workspace; if `null`, a workspace is allocated internally.
 
 #### zgels.ndarray( trans, M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, WORK, strideWORK, offsetWORK, lwork )
 

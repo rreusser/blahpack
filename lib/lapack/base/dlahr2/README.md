@@ -30,38 +30,36 @@ limitations under the License.
 var dlahr2 = require( '@stdlib/lapack/base/dlahr2' );
 ```
 
-#### dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, t, strideT1, strideT2, y, strideY1, strideY2 )
+#### dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY )
 
 Reduces NB columns of a real general n-by-(n-k+1) matrix A.
 
 ```javascript
-var dlahr2 = require( '@stdlib/lapack/base/dlahr2' );
+var Float64Array = require( '@stdlib/array/float64' );
 
 var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var tau = discreteUniform( N, -10, 10, opts );
-var T = discreteUniform( N, -10, 10, opts );
-var Y = discreteUniform( N, -10, 10, opts );
+var A = new Float64Array( N * N );
+var tau = new Float64Array( 2 );
+var T = new Float64Array( 4 );
+var Y = new Float64Array( N * 2 );
 
-dlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, 1, 1, 0, Y, 1, 1, 0 );
+dlahr2( 'column-major', N, 1, 2, A, N, tau, 1, T, 2, Y, N );
 ```
 
 The function has the following parameters:
 
 -   **order**: storage layout (`'row-major'` or `'column-major'`).
--   **N**: number of columns.
--   **K**: inner dimension.
--   **nb**: `nb`.
--   **A**: input array `A`.
+-   **N**: number of rows of `A`.
+-   **K**: offset for the reduction.
+-   **nb**: number of columns to reduce.
+-   **A**: input/output `N`-by-`(N-K+1)` matrix.
 -   **LDA**: leading dimension of `A`.
--   **tau**: `tau`.
--   **strideTAU**: stride length for `TAU`.
--   **t**: `t`.
--   **strideT1**: stride of dimension 1 of `T`.
--   **strideT2**: stride of dimension 2 of `T`.
--   **y**: `y`.
--   **strideY1**: stride of dimension 1 of `Y`.
--   **strideY2**: stride of dimension 2 of `Y`.
+-   **tau**: output array of scalar factors (length `nb`).
+-   **strideTAU**: stride length for `tau`.
+-   **T**: output `nb`-by-`nb` upper triangular matrix.
+-   **LDT**: leading dimension of `T`.
+-   **Y**: output `N`-by-`nb` matrix.
+-   **LDY**: leading dimension of `Y`.
 
 #### dlahr2.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
 

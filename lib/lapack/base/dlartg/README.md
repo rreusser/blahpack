@@ -30,20 +30,25 @@ limitations under the License.
 var dlartg = require( '@stdlib/lapack/base/dlartg' );
 ```
 
-#### dlartg( f, g )
+#### dlartg( f, g, out )
 
 Generates a plane rotation with real cosine and real sine.
 
 ```javascript
-var dlartg = require( '@stdlib/lapack/base/dlartg' );
+var Float64Array = require( '@stdlib/array/float64' );
 
-dlartg.ndarray( 1, 1, 1 );
+var out = new Float64Array( 3 );
+dlartg( 3.0, 4.0, out );
+// out => <Float64Array>[ 0.6, 0.8, 5.0 ]
 ```
 
 The function has the following parameters:
 
--   **f**: `f`.
--   **g**: `g`.
+-   **f**: first component of the vector to be rotated.
+-   **g**: second component of the vector to be rotated.
+-   **out**: [`Float64Array`][mdn-float64array] of length at least `3`. On return, `out[0] = c`, `out[1] = s`, `out[2] = r`.
+
+The function returns `out`.
 
 #### dlartg.ndarray( f, g, out )
 

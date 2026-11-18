@@ -2022,4 +2022,30 @@ Keep entries short. Newest first.
   arguments than it declares. An argument-count check on test calls (like the
   `base-arity` conformance check, but for tests) would catch the class.
 
+## 2026-11-18 — dgehrd/zgehrd strided wrappers under-allocated WORK on `null`
+
+- **Trigger**: rewriting the zgehrd strided wrapper for the signature projection
+  (PR #19 residue). A blocked-path test (`N = 40`, `WORK = null`) made zgehrd base
+  throw "WORK array must have at least 3360 elements … Provided length: 40".
+- **Repro (dgehrd, before fix)**: `dgehrd( 'column-major', 40, 1, 40, A, 40, TAU, 1, null )`
+  with a full-rank A returns info 0 and an A full of NaN; the same call with
+  `new Float64Array( 40*32 + 65*32 )` gives finite results. Real scalar, dense
+  column-major, ilo = 1, ihi = N = 40.
+- **Root cause**: the wrappers allocated `max(1, N)` elements, the *unblocked*
+  dgehd2 size. Once `NH > NB = 32` base.js takes the blocked path and needs
+  `N*NB + LDT*NB` (LDT = 65). zgehrd's base asserts the size and threw; dgehrd's
+  base does not, so typed-array out-of-range writes were silently dropped and the
+  factorization produced NaN.
+- **Bug class**: `wrapper-null-work-undersized` — the same silent
+  workspace-underallocation family as the dgeev/dhseqr pipeline bugs. Fixtures
+  and the harness exercise base/ndarray with caller-owned WORK, so the wrappers'
+  `null` auto-allocation path at blocked sizes is untested.
+- **Fix**: both wrappers allocate `max(1, N*32 + 65*32)`; dgehrd gets a regression
+  test comparing `null` against a caller buffer at N = 40.
+- **Where else it hides**: every blocked routine whose strided wrapper
+  auto-allocates WORK (`?ge*rf`, `?or*`/`?un*` blocked, `?sytrd`, …). A check that
+  calls each wrapper with `WORK = null` at a size above NB and compares against
+  a generously sized caller buffer would catch the class; base.js routines that
+  do not assert WORK length should also be made to.
+
 <!-- Add new entries above this line. -->

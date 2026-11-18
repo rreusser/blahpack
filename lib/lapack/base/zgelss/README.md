@@ -30,7 +30,7 @@ limitations under the License.
 var zgelss = require( '@stdlib/lapack/base/zgelss' );
 ```
 
-#### zgelss( M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, strideWORK, lwork, RWORK, strideRWORK )
+#### zgelss( order, M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, RWORK )
 
 Solves overdetermined or underdetermined systems for general matrices.
 
@@ -49,22 +49,20 @@ zgelss.ndarray( N, N, N, A, N, 1, 0, B, N, 1, 0, S, 1, 0, 1.0, 1, WORK, 1, 0, N,
 
 The function has the following parameters:
 
--   **M**: number of rows.
--   **N**: number of columns.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **M**: number of rows of `A`.
+-   **N**: number of columns of `A`.
 -   **nrhs**: number of right-hand sides.
--   **A**: input array `A`.
+-   **A**: input matrix `A`; overwritten on exit.
 -   **LDA**: leading dimension of `A`.
--   **B**: input array `B`.
--   **LDB**: leading dimension of `B`.
--   **S**: input array `S`.
+-   **B**: `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit.
+-   **LDB**: leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`).
+-   **S**: output singular values in decreasing order (length `min(M,N)`).
 -   **strideS**: stride length for `S`.
--   **rcond**: `rcond`.
--   **rank**: `rank`.
--   **WORK**: input array `WORK`.
--   **strideWORK**: stride length for `WORK`.
--   **lwork**: `lwork`.
--   **RWORK**: input array `RWORK`.
--   **strideRWORK**: stride length for `RWORK`.
+-   **rcond**: threshold used to determine the effective rank of `A`.
+-   **rank**: output array; `rank[0]` is set to the effective rank of `A`.
+-   **WORK**: complex workspace; if `null`, a workspace is allocated internally.
+-   **RWORK**: real workspace (length `>= 5*min(M,N)`); if `null`, a workspace is allocated internally.
 
 #### zgelss.ndarray( M, N, nrhs, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, S, strideS, offsetS, rcond, rank, WORK, strideWORK, offsetWORK, lwork, RWORK, strideRWORK, offsetRWORK )
 

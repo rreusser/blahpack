@@ -23,27 +23,54 @@
 */
 interface Routine {
 	/**
-	* Generates a plane rotation so that:.
+	* Generates a plane rotation with real cosine and real sine.
 	*
-	* @param f - `f`
-	* @param g - `g`
-	* @returns result
+	* @param f - first component of the vector to be rotated
+	* @param g - second component of the vector to be rotated
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 3 );
+	* dlartg( 3.0, 4.0, out );
+	* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 	*/
-	( f: number, g: number ): void;
+	( f: number, g: number, out: Float64Array ): Float64Array;
 
 	/**
-	* Generates a plane rotation so that: using alternative indexing semantics.
+	* Generates a plane rotation with real cosine and real sine, using alternative indexing semantics.
 	*
-	* @param f - `f`
-	* @param g - `g`
-	* @param out - `out`
-	* @returns result
+	* @param f - first component of the vector to be rotated
+	* @param g - second component of the vector to be rotated
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 3 );
+	* dlartg.ndarray( 3.0, 4.0, out );
+	* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 	*/
-	ndarray( f: number, g: number, out: number ): void;
+	ndarray( f: number, g: number, out: Float64Array ): Float64Array;
 }
 
 /**
-* Generates a plane rotation so that:.
+* Generates a plane rotation with real cosine and real sine.
+*
+* @param f - first component of the vector to be rotated
+* @param g - second component of the vector to be rotated
+* @param out - output array
+* @returns output array
+*
+* @example
+* var Float64Array = require( '@stdlib/array/float64' );
+*
+* var out = new Float64Array( 3 );
+* dlartg( 3.0, 4.0, out );
+* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 */
 declare var dlartg: Routine;
 

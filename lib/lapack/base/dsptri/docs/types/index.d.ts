@@ -20,7 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `dsptri`.
@@ -29,13 +29,16 @@ interface Routine {
 	/**
 	* Computes the inverse of a real symmetric matrix in packed storage using the factorization computed by dsptrf.
 	*
-	* @param uplo - specifies whether the upper or lower triangular part is referenced
-	* @param N - number of columns
-	* @param AP - `AP`
-	* @param IPIV - `IPIV`
-	* @returns result
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param uplo - specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`)
+	* @param N - order of the matrix `A`
+	* @param AP - packed factored matrix from `dsptrf`; on exit, the packed inverse
+	* @param IPIV - pivot indices from the factorization
+	* @param strideIPIV - stride length for `IPIV`
+	* @param WORK - workspace of length at least `N`; if `null`, a workspace is allocated internally
+	* @returns status code
 	*/
-	( uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, AP: Float64Array, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array | null ): number;
 
 	/**
 	* Computes the inverse of a real symmetric matrix in packed storage using the factorization computed by dsptrf using alternative indexing semantics.

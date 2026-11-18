@@ -30,7 +30,7 @@ limitations under the License.
 var dsptri = require( '@stdlib/lapack/base/dsptri' );
 ```
 
-#### dsptri( uplo, N, AP, IPIV )
+#### dsptri( order, uplo, N, AP, IPIV, strideIPIV, WORK )
 
 Computes the inverse of a real symmetric matrix in packed storage using the factorization computed by dsptrf.
 
@@ -48,10 +48,13 @@ dsptri.ndarray( 'lower', 3, AP, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
 
 The function has the following parameters:
 
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
 -   **uplo**: specifies whether the upper or lower triangular part is referenced.
 -   **N**: number of columns.
 -   **AP**: input array `AP`.
 -   **IPIV**: input array `IPIV`.
+-   **strideIPIV**: stride length for `IPIV`.
+-   **WORK**: workspace `Float64Array` of length at least `N`; if `null`, a workspace is allocated internally.
 
 #### dsptri.ndarray( uplo, N, AP, strideAP, offsetAP, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 

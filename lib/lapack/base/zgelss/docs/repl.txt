@@ -1,60 +1,55 @@
-{{alias}}( M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, strideWORK, lwork, RWORK, strideRWORK )
-    Solves overdetermined or underdetermined systems for general matrices.
+{{alias}}( order, M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK, RWORK )
+    Computes the minimum norm solution to a complex linear least squares problem
+    using the singular value decomposition of `A`.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     M: integer
-        number of rows.
+        Number of rows of `A`.
 
     N: integer
-        number of columns.
+        Number of columns of `A`.
 
     nrhs: integer
-        number of right-hand sides.
+        Number of right-hand sides.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        Input matrix `A`; overwritten on exit.
 
     LDA: integer
-        leading dimension of `A`.
+        Leading dimension of `A`.
 
-    B: Float64Array
-        `B`.
+    B: Complex128Array
+        `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit.
 
     LDB: integer
-        leading dimension of `B`.
+        Leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`).
 
     S: Float64Array
-        `S`.
+        Output singular values in decreasing order (length `min(M,N)`).
 
     strideS: integer
-        stride length for `S`.
+        Stride length for `S`.
 
     rcond: number
-        `rcond`.
+        Threshold used to determine the effective rank of `A`.
 
-    rank: number
-        `rank`.
+    rank: Array
+        Output array; `rank[0]` is set to the effective rank of `A`.
 
-    WORK: Float64Array
-        `WORK`.
+    WORK: Complex128Array|null
+        Complex workspace; if `null`, a workspace is allocated internally.
 
-    strideWORK: integer
-        stride length for `WORK`.
-
-    lwork: integer
-        `lwork`.
-
-    RWORK: Float64Array
-        `RWORK`.
-
-    strideRWORK: integer
-        stride length for `RWORK`.
+    RWORK: Float64Array|null
+        Real workspace (length `>= 5*min(M,N)`); if `null`, a workspace is allocated internally.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code.
 
     Examples
     --------

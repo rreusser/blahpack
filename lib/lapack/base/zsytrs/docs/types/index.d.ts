@@ -20,32 +20,29 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zsytrs`.
 */
 interface Routine {
 	/**
-	* Perform complex division, storing result in module-level cdR and cdI.
+	* Solves a system of linear equations `A*X = B` with a complex symmetric matrix `A` using the factorization computed by `zsytrf`.
 	*
-	* @param uplo - specifies whether the upper or lower triangular part is referenced
-	* @param N - number of columns
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param uplo - specifies whether the upper or lower triangle was factored (`'upper'` or `'lower'`)
+	* @param N - order of the matrix `A`
 	* @param nrhs - number of right-hand sides
-	* @param A - `A`
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
-	* @param IPIV - `IPIV`
-	* @param strideIPIV - stride of `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @param B - `B`
-	* @param strideB1 - stride of `B`
-	* @param strideB2 - stride of `B`
-	* @param offsetB - starting index for `B`
-	* @returns result
+	* @param A - factored matrix from `zsytrf`
+	* @param LDA - leading dimension of `A`
+	* @param IPIV - pivot indices from `zsytrf`
+	* @param strideIPIV - stride length for `IPIV`
+	* @param B - right-hand side matrix; overwritten with the solution
+	* @param LDB - leading dimension of `B`
+	* @returns info status code
 	*/
-	( uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number, B: Float64Array, strideB1: number, strideB2: number, offsetB: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, nrhs: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, B: Complex128Array, LDB: number ): number;
 
 	/**
 	* Perform complex division, storing result in module-level cdR and cdI using alternative indexing semantics.
@@ -73,7 +70,6 @@ interface Routine {
 * Perform complex division, storing result in module-level cdR and cdI.
 */
 declare var zsytrs: Routine;
-
 
 // EXPORTS //
 

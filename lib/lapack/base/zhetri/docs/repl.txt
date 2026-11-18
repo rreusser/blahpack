@@ -1,23 +1,32 @@
-{{alias}}( uplo, N, A, LDA, IPIV )
+{{alias}}( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
     Computes the inverse of a complex Hermitian matrix using the
     factorization computed by zhetrf.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     uplo: string
-        specifies whether the upper or lower triangular part is referenced.
+        Specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`).
 
     N: integer
-        number of columns.
+        Order of the matrix `A`.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        Input/output matrix `A`.
 
     LDA: integer
-        leading dimension of `A`.
+        Leading dimension of `A`.
 
     IPIV: Int32Array
-        `IPIV`.
+        Pivot indices from the factorization.
+
+    strideIPIV: integer
+        Stride length for `IPIV`.
+
+    WORK: Complex128Array|null
+        Workspace of length at least `N`; if `null`, a workspace is allocated internally.
 
     Returns
     -------

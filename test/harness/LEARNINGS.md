@@ -987,7 +987,10 @@ Keep entries short. Newest first.
   the stride-1 solution BIT-EXACTLY (max deviation 0.0), no non-finite. `ztpcon`
   correctness + full-`schemes.packed.layouts()` bit-exact layout-invariance now
   pass; `dtpcon` (real, unaffected) unchanged. Other `zlatps` callers should be
-  re-run — see generalization.
+  re-run — see generalization. **CORRECTION 2026-11-18**: the negative-stride
+  part of this holds only on the fast path. On the careful path with
+  `normin='no'`, a negative stride still yields zero CNORM because `dzasum`
+  returns 0 for a non-positive stride (tickets/0026).
 - **Bug class**: `storage-mapping` (packed-index-vs-strided-offset conflation) —
   the SAME defect as the zpptri entry below, in a different complex packed routine.
 - **Generalization**: audit every complex packed routine that carries a Float64
@@ -1101,6 +1104,10 @@ Keep entries short. Newest first.
   Every AP element read is numerically identical across offsets, so the divergence
   is a genuine arithmetic-order sensitivity, not an out-of-bounds read (poisoned
   padding never trips: outputs are always finite).
+- **UPDATE 2026-11-18 (RESOLVED, tickets/0019)**: localized. The lower CNORM
+  loop counted `offsetAP` twice (`ip = offsetAP*2`, then `offsetAP + ip/sap + 1`).
+  Fixed incidentally by 549b87df; see the 2026-11-18 `*latrs`/`*latps`/`*latbs`
+  entry at the end of this file. The text below is the original, superseded analysis.
 - **Root cause**: NOT localized to a single line and NOT fixed here (out of scope:
   `zlatps` is a shared, already-validated dependency of the whole packed-complex
   con/solve family; a change risks its many callers). Best current understanding:
@@ -2235,3 +2242,57 @@ Keep entries short. Newest first.
   - `tgsna`: `mm`, as for `trsna`.
 
   Exactly these three wrappers changed.
+
+---
+
+## 2026-11-18 — `*latrs`/`*latps`/`*latbs` (all six scaled triangular solvers) routed overflowing no-transpose non-unit solves to the unscaled fast path → NaN with `scale = 1`; root cause of the old zlatps offset entry (tickets/0019)
+
+- **What**: the new `zlatps` harness validation (`lib/lapack/base/zlatps/test/test.validate.js`)
+  added a `stress` family (off-diagonals × 1e40) so that the careful,
+  rescaling path is actually exercised; earlier fixtures and properties only
+  ever reached the `ztpsv` fast path. For `trans='no-transpose'`,
+  `diag='non-unit'`, N ≥ 9, `zlatps` returned `scale = 1` and a solution full of
+  NaN, which violates the routine's contract that it never overflows. The same
+  input shape breaks `dlatps`, `dlatrs`, `zlatrs`, `dlatbs` and `zlatbs`. In a
+  sweep of N ∈ {9,12,16} × uplo × trans × diag × 5 seeds, about 30 cases per
+  routine were non-finite, all of them no-transpose non-unit.
+- **Repro**: `sc=complex`, `logical.triangular(sc, new RNG(0x200+N), N, {uplo})`
+  with every off-diagonal scaled by `1e40`, RHS `sc.random`, N=16, any uplo,
+  `zlatps(uplo,'no-transpose','non-unit','no',…)`: `scale[0] === 1` and `x`
+  contains NaN. The regression cases in each module's `test.ndarray.js` use a
+  deterministic N=12 matrix and fail on the old code.
+- **Root cause**: the growth-bound loop for the no-transpose non-unit case
+  exits with `IF( GROW.LE.SMLNUM ) GO TO 60` (`GO TO 50` in the real routines).
+  Label 60 sits *after* the `GROW = XBND` that follows the loop, so the early
+  exit keeps the tiny `GROW` and forces the careful path. The translation used
+  `break`, which falls through into `grow = xbnd`. `xbnd` is the bound from
+  the *previous* step (about 1e-280 here), well above `SMLNUM`, so the solve
+  went to the unscaled `*tpsv`/`*trsv`/`*tbsv` and overflowed. The transpose
+  loops have the same `GO TO 90` shape, but their post-loop statement is
+  `grow = min(grow, xbnd)`, which keeps an already-small `grow`, so they were
+  unaffected. The complex routines also dropped the
+  `IF( TJJ.GE.SMLNUM ) … ELSE XBND = ZERO` branch in both non-unit loops.
+- **Fix (APPLIED)**: in all six, `grow = xbnd` now runs only when the loop ran
+  to completion (`if ( j === jlast )`). The complex routines restore the
+  `XBND = ZERO` branch in both loops.
+- **Explains tickets/0019 / the 2026-07-17 zlatps AP-offset entry**: that ~1 ULP
+  offset dependence was a separate defect, already fixed by 549b87df. The
+  lower CNORM loop started `ip` at `offsetAP*2` and then read
+  `offsetAP + ip/sap + 1`, which counted `offsetAP` twice. Any nonzero offset
+  fed wrong column norms into `normin='no'`, and `zppcon` lower then reused
+  them (`normin='yes'`) in its `Lᴴ` solve, which is why the symptom showed up
+  there. Run against the pre-549b87df `zlatps`, the stress sweep gives 1,950
+  stride-1 offset failures; the current code gives 0 of 8,400. The new
+  validation checks bit-exact x, scale and CNORM across offsets and positive
+  strides on both paths, so a recurrence fails loudly.
+- **Bug class**: `goto-translation` (a `GO TO` past a post-loop statement
+  translated as `break`). A `break` is only equivalent when nothing sits
+  between the loop end and the target label. Now a row in
+  `docs/goto-patterns.md`.
+- **Generalization**: the same bug was copy-translated into all six members of
+  the family, so it was searched for and fixed in all six (tickets/0018).
+  Before trusting any `break`, look for any Fortran routine whose `GO TO`
+  target lies past code between the loop end and the label. Separately, the
+  stress sweep showed that a negative packed/band stride breaks the CNORM
+  computation in the whole family, because `dasum`/`dzasum` return 0 for a
+  non-positive stride (tickets/0026).

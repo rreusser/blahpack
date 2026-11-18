@@ -2163,3 +2163,75 @@ Keep entries short. Newest first.
   the block-structured TSQR/TSLQ `T` arrays (xLATSQR, xLASWLQ, xLAMTSQR, xLAMSWLQ,
   xORGTSQR(_ROW), xORHR_COL and complex twins) — marked `'skip'` in ld-rules.js;
   their existing row-major checks were kept unchanged.
+
+## 2026-11-18 — Option values accepted beyond the reference: `trans` in 52 arguments (tickets/0014)
+
+- **What**: real routines validated `trans` with stdlib's `isTransposeOperation`,
+  which accepts `'conjugate-transpose'`, though reference DORMQR/DGEMQRT/DGELS/…
+  accept only N and T; complex routines accepted `'transpose'`, though reference
+  ZUNMQR/ZGELS/… accept only N and C. `base.js` sent the extra value down whichever
+  branch its comparisons left over:
+  - `dgemqrt`, `dgemlqt`, `dgels`, `dlamtsqr`, `dlamswlq`, `dtpmqrt`, `dtpmlqt`
+    branch on `=== 'transpose'`. `dgemqrt( 'left', 'conjugate-transpose', … )`
+    matched no branch and returned C unchanged, with `info = 0`.
+  - Complex `zunm*`/`zgels`/… given `'transpose'` silently applied Qᴴ instead of
+    rejecting.
+  - Conversely `dtrsyl` rejected `'conjugate-transpose'`, which DTRSYL accepts.
+- **Repro**: `dgemqrt( 'left', 'conjugate-transpose', 4, 4, 3, 2, V, 1, 4, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 )`
+  before the fix: no error, C unchanged. Regression tests in
+  `dgemqrt`/`zunmqr`/`dtrsyl` `test/test.ndarray.js`.
+- **Root cause**: nothing compared accepted option values with the reference.
+  `option-parity` only compares the wrapper against `ndarray.js`, and the
+  `no-dprefix-conjugate-transpose` lint rule bans the *literal* in real routines
+  but not its acceptance through the helper. The `dtrmm` instance of this class
+  (2026-07-17) was fixed in that routine only.
+- **Bug class**: `option-vocabulary` (accepted set ≠ reference set).
+- **Fix (APPLIED)**:
+  - `bin/gen_fortran_option_rules.js` evaluates each reference argument check
+    letter by letter (A–Z, LSAME semantics, locals and IF/ELSE cascades,
+    three-valued logic) → `data/fortran-option-rules.json`.
+  - The new `option-rules` conformance check holds `ndarray.js` to it: exact for
+    TRANS*/SIDE/UPLO/DIAG, by count otherwise.
+  - `option-parity` now also fails on options the wrapper takes but never
+    validates; 41 found, e.g. `dpftrs` forwarded `transr` unchecked.
+  - `bin/codemod-option-rules.js` rewrote 104 files and inserted the 41
+    validations.
+  - Fixing them exposed 13 scaffolded tests that passed invalid option values
+    (`transr = 2`, `'no-transpose'` as `direct`) and only passed because the
+    wrapper didn't validate.
+  - `tsc` then narrowed `trans` and flagged 4 now-unreachable `=== 'transpose'`
+    checks in `zgemqrt`/`zlamtsqr`, which were removed.
+- **Not covered**: options `ndarray.js` never validates (88 arguments) are
+  skipped by the check; see tickets/0022.
+
+## 2026-11-18 — Generated LD checks compared against output arguments (tickets/0001)
+
+- **What**: the leading-dimension checks generated earlier the same day gave
+  three wrappers row-major bounds built from the routine's *output* count `M`:
+  - `dstevx`: `LDZ < max( 1, max( 1, M ) )`;
+  - `dtgsna`/`ztgsna`: `LDVL`/`LDVR < max( 1, M )`.
+
+  In `dstevx`/`dtgsna` `M` is an `Int32Array`, so `max( 1, M )` is `NaN` and the
+  check could never fire. In `ztgsna` `M` is a scalar the caller passes and
+  `base.js` overwrites, so the check compared against a meaningless input.
+  Undersized row-major `Z`/`VL`/`VR` were accepted and then read and written
+  out of bounds.
+- **Repro**: `dstevx( 'row-major', 'compute-vectors', 'all', 3, …, Z, 1, … )`
+  returned instead of throwing. Regression tests are in `test.dstevx.js` and
+  `test.dtgsna.js`; both fail on the old checks.
+- **Root cause**: `bin/conformance/ld-rules.js` substituted any same-named
+  wrapper parameter for a Fortran identifier. The `ld-rules` check verifies
+  wrappers against that same translation, so it passed the bad checks. Found by
+  type-checking with stdlib's declarations loaded (tickets/0003): `max` takes
+  `(number, number)`.
+- **Bug class**: `generator-self-validation`, a check that compares code to the
+  output of the generator that produced it inherits the generator's mistakes.
+  Here the specific mistake was output-as-bound.
+- **Fix (APPLIED)**: the translator refuses array-typed parameters (detected
+  from the JSDoc type *or* from `base.js` indexing the parameter, since the JSDoc
+  is unreliable; see tickets/0002) and reference `INTENT(OUT)` arguments. Such a
+  rule is reported unresolved until `COLS` gives the column count:
+  - `stevx`: `range === 'index' ? iu - il + 1 : N`, as for `syevx`;
+  - `tgsna`: `mm`, as for `trsna`.
+
+  Exactly these three wrappers changed.

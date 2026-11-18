@@ -58,6 +58,8 @@ jobs:
       - run: npm ci
       - name: Run conformance checks (fast; structural)
         run: npm run conformance:fast
+      - name: Validate problem tickets
+        run: npm run tickets:check
 
   # Generated files are in sync + the published package imports and runs.
   package:

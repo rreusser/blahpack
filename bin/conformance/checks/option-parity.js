@@ -18,6 +18,11 @@
 * which are expanded to the value set they accept. (`ztgevc.js` validated `side`
 * with `isOperationSide`, rejecting LAPACK's `'both'` that ndarray.js accepts.)
 *
+* An option the wrapper takes but does not validate at all counts as a mismatch
+* too: the wrapper then forwards any string to `base()` (`dpftrs.js` passed
+* `transr` through unchecked; 41 such options on 2026-11-18). Fix those with
+* `node bin/codemod-option-rules.js <routine>`.
+*
 * There is no exception/skip mechanism: a mismatch is fixed in the code.
 */
 
@@ -75,6 +80,27 @@ function optionSets( content ) {
 }
 
 
+/**
+* Options ndarray.js validates that the wrapper takes as a parameter but never validates.
+*
+* @private
+* @param {string} wrapper - wrapper source
+* @param {string} routine - routine name
+* @param {Object} ws - wrapper option sets
+* @param {Object} ns - ndarray option sets
+* @returns {Array<string>} parameter names
+*/
+function unvalidated( wrapper, routine, ws, ns ) {
+	var sig = wrapper.match( new RegExp( 'function ' + routine + '\\(([^)]*)\\)' ) );
+	var params = ( sig ) ? sig[ 1 ].split( ',' ).map( function t( p ) {
+		return p.trim();
+	}) : [];
+	return Object.keys( ns ).filter( function f( k ) {
+		return params.indexOf( k ) >= 0 && !ws[ k ];
+	});
+}
+
+
 // MAIN //
 
 /**
@@ -102,6 +128,9 @@ function check( mod ) {
 	}
 	ws = optionSets( wrapper );
 	ns = optionSets( ndarray );
+	unvalidated( wrapper, mod.routine, ws, ns ).forEach( function each( k ) {
+		violations.push( path.relative( util.ROOT, wrapperPath ) + '  `' + k + '`  is not validated (ndarray.js accepts [' + ns[ k ].join( ', ' ) + '])' );
+	});
 	keys = Object.keys( ws );
 	for ( i = 0; i < keys.length; i++ ) {
 		k = keys[ i ];
@@ -133,3 +162,5 @@ function check( mod ) {
 // EXPORTS //
 
 module.exports = check;
+module.exports.optionSets = optionSets;
+module.exports.unvalidated = unvalidated;

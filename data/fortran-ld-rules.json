@@ -1,19 +1,5 @@
 {
 	"cbbcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -39,6 +25,20 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			]
 		}
 	},
 	"cbdsqr": {
@@ -55,20 +55,6 @@
 		}
 	},
 	"cgbbrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KLU1"
-			],
-			"LDC": [
-				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
-			],
-			"LDPT": [
-				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"KLU1": [
 				[
@@ -99,6 +85,20 @@
 					null,
 					"LSAME( VECT, 'Q' ) .OR. WANTB"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KLU1"
+			],
+			"LDC": [
+				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
+			],
+			"LDPT": [
+				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -205,32 +205,32 @@
 		}
 	},
 	"cgbtf2": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
 	"cgbtrf": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
@@ -294,32 +294,24 @@
 		}
 	},
 	"cgees": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
 					null,
 					"LSAME( JOBVS, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
 		}
 	},
 	"cgeesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
@@ -327,20 +319,17 @@
 					"LSAME( JOBVS, 'V' )"
 				]
 			]
-		}
-	},
-	"cgeev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
-		},
+		}
+	},
+	"cgeev": {
 		"locals": {
 			"WANTVL": [
 				[
@@ -353,21 +342,21 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"cgeevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVL": [
 				[
@@ -380,6 +369,17 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -398,17 +398,6 @@
 		}
 	},
 	"cgejsv": {
-		"rules": {
-			"LDA": [
-				"LDA .LT. M"
-			],
-			"LDU": [
-				"LSVEC .AND. ( LDU .LT. M )"
-			],
-			"LDV": [
-				"RSVEC .AND. ( LDV .LT. N )"
-			]
-		},
 		"locals": {
 			"JRACC": [
 				[
@@ -427,6 +416,17 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. JRACC"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA .LT. M"
+			],
+			"LDU": [
+				"LSVEC .AND. ( LDU .LT. M )"
+			],
+			"LDV": [
+				"RSVEC .AND. ( LDV .LT. N )"
 			]
 		}
 	},
@@ -482,38 +482,38 @@
 		}
 	},
 	"cgelsd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
 	"cgelss": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
@@ -561,17 +561,6 @@
 		}
 	},
 	"cgemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWB)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NOTA": [
 				[
@@ -605,17 +594,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWB)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
+			]
 		}
 	},
 	"cgemqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, MN )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -633,20 +625,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, MN )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			]
 		}
 	},
 	"cgemqrt": {
-		"rules": {
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.NB"
-			],
-			"LDV": [
-				"LDV.LT.MAX( 1, Q )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -669,6 +658,17 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.MAX( 1, Q )"
 			]
 		}
 	},
@@ -833,17 +833,6 @@
 		}
 	},
 	"cgesdd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -875,6 +864,17 @@
 					"LSAME( JOBZ, 'S' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
+			],
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
+			]
 		}
 	},
 	"cgesv": {
@@ -888,17 +888,6 @@
 		}
 	},
 	"cgesvd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -936,20 +925,20 @@
 					"LSAME( JOBVT, 'S' )"
 				]
 			]
-		}
-	},
-	"cgesvdq": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, M )"
 			],
 			"LDU": [
-				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
 			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
 			]
-		},
+		}
+	},
+	"cgesvdq": {
 		"locals": {
 			"CONDA": [
 				[
@@ -1005,18 +994,20 @@
 					"LSAME( JOBV, 'R' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			]
 		}
 	},
 	"cgesvdx": {
-		"rules": {
-			"LDU": [
-				"WANTU .AND. LDU.LT.M"
-			],
-			"LDVT": [
-				"LDVT.LT.IU-IL+1",
-				"LDVT.LT.MINMN"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -1030,17 +1021,18 @@
 					"LSAME( JOBU, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"WANTU .AND. LDU.LT.M"
+			],
+			"LDVT": [
+				"LDVT.LT.IU-IL+1",
+				"LDVT.LT.MINMN"
+			]
 		}
 	},
 	"cgesvj": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -1053,6 +1045,14 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. LSAME( JOBV, 'J' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -1164,20 +1164,6 @@
 		}
 	},
 	"cgges": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -1206,24 +1192,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"cgges3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -1252,24 +1238,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"cggesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -1299,9 +1285,7 @@
 					".FALSE."
 				]
 			]
-		}
-	},
-	"cggev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -1309,13 +1293,15 @@
 			"LDB": [
 				"LDB.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
 			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
-		},
+		}
+	},
+	"cggev": {
 		"locals": {
 			"ILVL": [
 				[
@@ -1344,24 +1330,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"cggev3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -1390,24 +1376,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"cggevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -1436,6 +1422,20 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -1450,20 +1450,6 @@
 		}
 	},
 	"cgghd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
-			],
-			"LDZ": [
-				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -1489,9 +1475,7 @@
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
 			]
-		}
-	},
-	"cgghrd": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -1500,12 +1484,14 @@
 				"LDB.LT.MAX( 1, N )"
 			],
 			"LDQ": [
-				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
 			],
 			"LDZ": [
-				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
+				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
-		},
+		}
+	},
+	"cgghrd": {
 		"locals": {
 			"ILQ": [
 				[
@@ -1534,6 +1520,20 @@
 					"LSAME( COMPZ, 'I' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+			],
+			"LDZ": [
+				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
 		}
 	},
@@ -1568,23 +1568,6 @@
 		}
 	},
 	"cggsvd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -1603,27 +1586,27 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
 			]
 		}
 	},
 	"cggsvp3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -1643,17 +1626,26 @@
 					"LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"cgsvj0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -1666,18 +1658,18 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
 	"cgsvj1": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -1690,6 +1682,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -1728,78 +1728,86 @@
 		}
 	},
 	"chbev": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chbev_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chbevd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chbevd_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chbevx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -1809,18 +1817,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"chbevx_2stage": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -1831,17 +1839,17 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"chbgst": {
+		"locals": {
+			"WANTX": [
+				[
+					null,
+					"LSAME( VECT, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -1852,17 +1860,17 @@
 			"LDX": [
 				"LDX.LT.1 .OR. WANTX .AND. LDX.LT.MAX( 1, N )"
 			]
-		},
-		"locals": {
-			"WANTX": [
-				[
-					null,
-					"LSAME( VECT, 'V' )"
-				]
-			]
 		}
 	},
 	"chbgv": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -1872,18 +1880,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"chbgvd": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -1894,7 +1902,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
+		}
+	},
+	"chbgvx": {
 		"locals": {
 			"WANTZ": [
 				[
@@ -1902,9 +1912,7 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
-		}
-	},
-	"chbgvx": {
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -1918,14 +1926,6 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"chbmv": {
@@ -1936,14 +1936,6 @@
 		}
 	},
 	"chbtrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD1"
-			],
-			"LDQ": [
-				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -1962,6 +1954,14 @@
 					null,
 					"INITQ .OR. LSAME( VECT, 'U' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD1"
+			],
+			"LDQ": [
+				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
 			]
 		}
 	},
@@ -2022,74 +2022,74 @@
 		}
 	},
 	"cheevr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"cheevr_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"cheevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"cheevx_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -2144,6 +2144,14 @@
 		}
 	},
 	"chegvx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -2154,28 +2162,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. (WANTZ .AND. LDZ.LT.N)"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"chemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -2186,6 +2175,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -2211,17 +2211,6 @@
 		}
 	},
 	"cher2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -2232,6 +2221,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -2268,14 +2268,6 @@
 		}
 	},
 	"cherk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -2286,6 +2278,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -2568,11 +2568,6 @@
 		}
 	},
 	"chfrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NROWA )"
-			]
-		},
 		"locals": {
 			"NOTRANS": [
 				[
@@ -2590,23 +2585,14 @@
 					"K"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NROWA )"
+			]
 		}
 	},
 	"chgeqz": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.N"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -2644,95 +2630,109 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.N"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"chpev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chpevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chpevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chpgv": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chpgvd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"chpgvx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -2771,17 +2771,6 @@
 		}
 	},
 	"chsein": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -2801,17 +2790,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
-		}
-	},
-	"chseqr": {
+		},
 		"rules": {
 			"LDH": [
 				"LDH.LT.MAX( 1, N )"
 			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
-		},
+		}
+	},
+	"chseqr": {
 		"locals": {
 			"INITZ": [
 				[
@@ -2824,6 +2816,14 @@
 					null,
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -3015,6 +3015,14 @@
 		}
 	},
 	"clals0": {
+		"locals": {
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDB": [
 				"LDB.LT.N"
@@ -3027,14 +3035,6 @@
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
@@ -3075,17 +3075,6 @@
 		}
 	},
 	"clamtsqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, Q )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, NB)"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -3103,23 +3092,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, Q )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, NB)"
+			]
 		}
 	},
 	"claqz0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.N"
-			],
-			"LDB": [
-				"LDB.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -3149,15 +3135,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.N"
+			],
+			"LDB": [
+				"LDB.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"clascl": {
-		"rules": {
-			"LDA": [
-				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
-				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
-			]
-		},
 		"locals": {
 			"ITYPE": [
 				[
@@ -3192,6 +3186,12 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
+				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
 			]
 		}
 	},
@@ -3550,11 +3550,6 @@
 		}
 	},
 	"cpteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -3573,6 +3568,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -3645,11 +3645,6 @@
 		}
 	},
 	"cstedc": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -3668,6 +3663,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -3679,11 +3679,6 @@
 		}
 	},
 	"cstemr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -3691,14 +3686,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"csteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -3717,6 +3712,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -3770,17 +3770,6 @@
 		}
 	},
 	"csymm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -3791,6 +3780,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -3809,17 +3809,6 @@
 		}
 	},
 	"csyr2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -3830,6 +3819,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -3866,14 +3866,6 @@
 		}
 	},
 	"csyrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -3884,6 +3876,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -4186,20 +4186,6 @@
 		}
 	},
 	"ctgevc": {
-		"rules": {
-			"LDP": [
-				"LDP.LT.MAX( 1, N )"
-			],
-			"LDS": [
-				"LDS.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
-			],
-			"LDVR": [
-				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
-			]
-		},
 		"locals": {
 			"COMPL": [
 				[
@@ -4228,6 +4214,20 @@
 					"LSAME( SIDE, 'B' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDP": [
+				"LDP.LT.MAX( 1, N )"
+			],
+			"LDS": [
+				"LDS.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
+			],
+			"LDVR": [
+				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
 			]
 		}
 	},
@@ -4264,23 +4264,6 @@
 		}
 	},
 	"ctgsja": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -4318,23 +4301,26 @@
 					"INITV .OR. LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"ctgsna": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"WANTS .AND. LDVL.LT.N"
-			],
-			"LDVR": [
-				"WANTS .AND. LDVR.LT.N"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -4347,6 +4333,20 @@
 					null,
 					"LSAME( JOB, 'E' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"WANTS .AND. LDVL.LT.N"
+			],
+			"LDVR": [
+				"WANTS .AND. LDVR.LT.N"
 			]
 		}
 	},
@@ -4421,20 +4421,6 @@
 		}
 	},
 	"ctpmlqt": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.LDAQ"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MB"
-			],
-			"LDV": [
-				"LDV.LT.K"
-			]
-		},
 		"locals": {
 			"LDAQ": [
 				[
@@ -4458,9 +4444,7 @@
 					"LSAME( SIDE, 'R' )"
 				]
 			]
-		}
-	},
-	"ctpmqrt": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.LDAQ"
@@ -4469,12 +4453,14 @@
 				"LDB.LT.MAX( 1, M )"
 			],
 			"LDT": [
-				"LDT.LT.NB"
+				"LDT.LT.MB"
 			],
 			"LDV": [
-				"LDV.LT.LDVQ"
+				"LDV.LT.K"
 			]
-		},
+		}
+	},
+	"ctpmqrt": {
 		"locals": {
 			"LDAQ": [
 				[
@@ -4507,6 +4493,20 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.LDAQ"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.LDVQ"
 			]
 		}
 	},
@@ -4568,17 +4568,6 @@
 		}
 	},
 	"ctrevc": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -4597,21 +4586,21 @@
 					null,
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"ctrevc3": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -4631,17 +4620,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
+			]
 		}
 	},
 	"ctrexc": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -4649,17 +4641,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"ctrmm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -4676,6 +4668,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -4700,14 +4700,6 @@
 		}
 	},
 	"ctrsen": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -4715,17 +4707,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"ctrsm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -4743,23 +4735,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			]
 		}
 	},
 	"ctrsna": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
-			],
-			"LDWORK": [
-				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -4778,6 +4764,20 @@
 					null,
 					"LSAME( JOB, 'V' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
+			],
+			"LDWORK": [
+				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
 			]
 		}
 	},
@@ -4860,6 +4860,14 @@
 		}
 	},
 	"cunbdb": {
+		"locals": {
+			"COLMAJOR": [
+				[
+					null,
+					".NOT. LSAME( TRANS, 'T' )"
+				]
+			]
+		},
 		"rules": {
 			"LDX11": [
 				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
@@ -4876,14 +4884,6 @@
 			"LDX22": [
 				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
 				".NOT.COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
-		"locals": {
-			"COLMAJOR": [
-				[
-					null,
-					".NOT. LSAME( TRANS, 'T' )"
-				]
 			]
 		}
 	},
@@ -4948,36 +4948,6 @@
 		}
 	},
 	"cuncsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			],
-			"LDX11": [
-				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
-			],
-			"LDX12": [
-				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
-			],
-			"LDX21": [
-				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
-			],
-			"LDX22": [
-				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
 		"locals": {
 			"COLMAJOR": [
 				[
@@ -5009,26 +4979,39 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			],
+			"LDX11": [
+				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
+			],
+			"LDX12": [
+				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
+			],
+			"LDX21": [
+				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
+			],
+			"LDX22": [
+				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
+			]
 		}
 	},
 	"cuncsd2by1": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
-			],
-			"LDX11": [
-				"LDX11 .LT. MAX( 1, P )"
-			],
-			"LDX21": [
-				"LDX21 .LT. MAX( 1, M-P )"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -5047,6 +5030,23 @@
 					null,
 					"LSAME( JOBV1T, 'Y' )"
 				]
+			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
+			],
+			"LDX11": [
+				"LDX11 .LT. MAX( 1, P )"
+			],
+			"LDX21": [
+				"LDX21 .LT. MAX( 1, M-P )"
 			]
 		}
 	},
@@ -5158,6 +5158,24 @@
 		}
 	},
 	"cunm22": {
+		"locals": {
+			"LEFT": [
+				[
+					null,
+					"LSAME( SIDE, 'L' )"
+				]
+			],
+			"NQ": [
+				[
+					"LEFT",
+					"M"
+				],
+				[
+					"ELSE",
+					"N"
+				]
+			]
+		},
 		"rules": {
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
@@ -5165,7 +5183,9 @@
 			"LDQ": [
 				"LDQ.LT.MAX( 1, NQ )"
 			]
-		},
+		}
+	},
+	"cunm2l": {
 		"locals": {
 			"LEFT": [
 				[
@@ -5183,45 +5203,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"cunm2l": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
-			]
-		},
-		"locals": {
-			"LEFT": [
-				[
-					null,
-					"LSAME( SIDE, 'L' )"
-				]
-			],
-			"NQ": [
-				[
-					"LEFT",
-					"M"
-				],
-				[
-					"ELSE",
-					"N"
-				]
 			]
 		}
 	},
 	"cunm2r": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -5239,17 +5231,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"cunmbr": {
+		},
 		"rules": {
 			"LDA": [
-				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
+				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"cunmbr": {
 		"locals": {
 			"APPLYQ": [
 				[
@@ -5273,17 +5265,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"cunmhr": {
+		},
 		"rules": {
 			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
+				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"cunmhr": {
 		"locals": {
 			"LEFT": [
 				[
@@ -5300,6 +5292,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -5324,14 +5324,6 @@
 		}
 	},
 	"cunmql": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -5348,18 +5340,18 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
 	"cunmqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -5376,6 +5368,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -5420,14 +5420,6 @@
 		}
 	},
 	"cunmtr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -5444,6 +5436,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -5462,20 +5462,6 @@
 		}
 	},
 	"dbbcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -5501,17 +5487,23 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			]
 		}
 	},
 	"dbdsdc": {
-		"rules": {
-			"LDU": [
-				"( LDU.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDU.LT. N ) )"
-			],
-			"LDVT": [
-				"( LDVT.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDVT.LT. N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPQ": [
 				[
@@ -5531,6 +5523,14 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"( LDU.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDU.LT. N ) )"
+			],
+			"LDVT": [
+				"( LDVT.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDVT.LT. N ) )"
+			]
 		}
 	},
 	"dbdsqr": {
@@ -5547,11 +5547,6 @@
 		}
 	},
 	"dbdsvdx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N*2 )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -5559,23 +5554,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N*2 )"
+			]
 		}
 	},
 	"dgbbrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KLU1"
-			],
-			"LDC": [
-				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
-			],
-			"LDPT": [
-				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"KLU1": [
 				[
@@ -5606,6 +5592,20 @@
 					null,
 					"LSAME( VECT, 'Q' ) .OR. WANTB"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KLU1"
+			],
+			"LDC": [
+				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
+			],
+			"LDPT": [
+				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -5712,32 +5712,32 @@
 		}
 	},
 	"dgbtf2": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
 	"dgbtrf": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
@@ -5801,32 +5801,24 @@
 		}
 	},
 	"dgees": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
 					null,
 					"LSAME( JOBVS, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
 		}
 	},
 	"dgeesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
@@ -5834,20 +5826,17 @@
 					"LSAME( JOBVS, 'V' )"
 				]
 			]
-		}
-	},
-	"dgeev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
-		},
+		}
+	},
+	"dgeev": {
 		"locals": {
 			"WANTVL": [
 				[
@@ -5860,21 +5849,21 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"dgeevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVL": [
 				[
@@ -5887,6 +5876,17 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -5905,17 +5905,6 @@
 		}
 	},
 	"dgejsv": {
-		"rules": {
-			"LDA": [
-				"LDA .LT. M"
-			],
-			"LDU": [
-				"LSVEC .AND. ( LDU .LT. M )"
-			],
-			"LDV": [
-				"RSVEC .AND. ( LDV .LT. N )"
-			]
-		},
 		"locals": {
 			"JRACC": [
 				[
@@ -5934,6 +5923,17 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. JRACC"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA .LT. M"
+			],
+			"LDU": [
+				"LSVEC .AND. ( LDU .LT. M )"
+			],
+			"LDV": [
+				"RSVEC .AND. ( LDV .LT. N )"
 			]
 		}
 	},
@@ -5989,38 +5989,38 @@
 		}
 	},
 	"dgelsd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
 	"dgelss": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
@@ -6068,17 +6068,6 @@
 		}
 	},
 	"dgemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWB)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NOTA": [
 				[
@@ -6112,17 +6101,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWB)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
+			]
 		}
 	},
 	"dgemqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, MN )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -6140,20 +6132,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, MN )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			]
 		}
 	},
 	"dgemqrt": {
-		"rules": {
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.NB"
-			],
-			"LDV": [
-				"LDV.LT.MAX( 1, Q )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -6176,6 +6165,17 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.MAX( 1, Q )"
 			]
 		}
 	},
@@ -6333,17 +6333,6 @@
 		}
 	},
 	"dgesdd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -6375,6 +6364,17 @@
 					"LSAME( JOBZ, 'S' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
+			],
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
+			]
 		}
 	},
 	"dgesv": {
@@ -6388,17 +6388,6 @@
 		}
 	},
 	"dgesvd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -6436,20 +6425,20 @@
 					"LSAME( JOBVT, 'S' )"
 				]
 			]
-		}
-	},
-	"dgesvdq": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, M )"
 			],
 			"LDU": [
-				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
 			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
 			]
-		},
+		}
+	},
+	"dgesvdq": {
 		"locals": {
 			"CONDA": [
 				[
@@ -6505,18 +6494,20 @@
 					"LSAME( JOBV, 'R' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			]
 		}
 	},
 	"dgesvdx": {
-		"rules": {
-			"LDU": [
-				"WANTU .AND. LDU.LT.M"
-			],
-			"LDVT": [
-				"LDVT.LT.IU-IL+1",
-				"LDVT.LT.MINMN"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -6530,17 +6521,18 @@
 					"LSAME( JOBU, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"WANTU .AND. LDU.LT.M"
+			],
+			"LDVT": [
+				"LDVT.LT.IU-IL+1",
+				"LDVT.LT.MINMN"
+			]
 		}
 	},
 	"dgesvj": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -6553,6 +6545,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -6664,20 +6664,6 @@
 		}
 	},
 	"dgges": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -6706,24 +6692,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"dgges3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -6752,24 +6738,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"dggesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -6799,9 +6785,7 @@
 					".FALSE."
 				]
 			]
-		}
-	},
-	"dggev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -6809,13 +6793,15 @@
 			"LDB": [
 				"LDB.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
 			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
-		},
+		}
+	},
+	"dggev": {
 		"locals": {
 			"ILVL": [
 				[
@@ -6844,24 +6830,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"dggev3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -6890,24 +6876,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"dggevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -6936,6 +6922,20 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -6950,20 +6950,6 @@
 		}
 	},
 	"dgghd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
-			],
-			"LDZ": [
-				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -6989,9 +6975,7 @@
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
 			]
-		}
-	},
-	"dgghrd": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -7000,12 +6984,14 @@
 				"LDB.LT.MAX( 1, N )"
 			],
 			"LDQ": [
-				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
 			],
 			"LDZ": [
-				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
+				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
-		},
+		}
+	},
+	"dgghrd": {
 		"locals": {
 			"ILQ": [
 				[
@@ -7034,6 +7020,20 @@
 					"LSAME( COMPZ, 'I' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+			],
+			"LDZ": [
+				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
 		}
 	},
@@ -7068,23 +7068,6 @@
 		}
 	},
 	"dggsvd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -7103,27 +7086,27 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
 			]
 		}
 	},
 	"dggsvp3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -7143,17 +7126,26 @@
 					"LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"dgsvj0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -7166,18 +7158,18 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
 	"dgsvj1": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -7190,6 +7182,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -7228,20 +7228,6 @@
 		}
 	},
 	"dhgeqz": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.N"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -7271,20 +7257,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.N"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"dhsein": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -7304,17 +7293,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
-		}
-	},
-	"dhseqr": {
+		},
 		"rules": {
 			"LDH": [
 				"LDH.LT.MAX( 1, N )"
 			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
-		},
+		}
+	},
+	"dhseqr": {
 		"locals": {
 			"INITZ": [
 				[
@@ -7327,6 +7319,14 @@
 					null,
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -7456,6 +7456,14 @@
 		}
 	},
 	"dlals0": {
+		"locals": {
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDB": [
 				"LDB.LT.N"
@@ -7468,14 +7476,6 @@
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
@@ -7516,17 +7516,6 @@
 		}
 	},
 	"dlamtsqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, Q )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, NB)"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -7543,6 +7532,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, Q )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, NB)"
 			]
 		}
 	},
@@ -7561,20 +7561,6 @@
 		}
 	},
 	"dlaqz0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.N"
-			],
-			"LDB": [
-				"LDB.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -7604,15 +7590,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.N"
+			],
+			"LDB": [
+				"LDB.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"dlascl": {
-		"rules": {
-			"LDA": [
-				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
-				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
-			]
-		},
 		"locals": {
 			"ITYPE": [
 				[
@@ -7648,17 +7642,15 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
+				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
+			]
 		}
 	},
 	"dlasd0": {
-		"rules": {
-			"LDU": [
-				"LDU.LT.N"
-			],
-			"LDVT": [
-				"LDVT.LT.M"
-			]
-		},
 		"locals": {
 			"M": [
 				[
@@ -7666,23 +7658,17 @@
 					"N + SQRE"
 				]
 			]
-		}
-	},
-	"dlasd2": {
+		},
 		"rules": {
 			"LDU": [
 				"LDU.LT.N"
 			],
-			"LDU2": [
-				"LDU2.LT.N"
-			],
 			"LDVT": [
 				"LDVT.LT.M"
-			],
-			"LDVT2": [
-				"LDVT2.LT.M"
 			]
-		},
+		}
+	},
+	"dlasd2": {
 		"locals": {
 			"M": [
 				[
@@ -7696,9 +7682,37 @@
 					"NL + NR + 1"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"LDU.LT.N"
+			],
+			"LDU2": [
+				"LDU2.LT.N"
+			],
+			"LDVT": [
+				"LDVT.LT.M"
+			],
+			"LDVT2": [
+				"LDVT2.LT.M"
+			]
 		}
 	},
 	"dlasd3": {
+		"locals": {
+			"M": [
+				[
+					null,
+					"N + SQRE"
+				]
+			],
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDQ": [
 				"LDQ.LT.K"
@@ -7715,55 +7729,41 @@
 			"LDVT2": [
 				"LDVT2.LT.M"
 			]
-		},
+		}
+	},
+	"dlasd6": {
 		"locals": {
-			"M": [
-				[
-					null,
-					"N + SQRE"
-				]
-			],
 			"N": [
 				[
 					null,
 					"NL + NR + 1"
 				]
 			]
-		}
-	},
-	"dlasd6": {
+		},
 		"rules": {
 			"LDGCOL": [
 				"LDGCOL.LT.N"
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
 	"dlasd7": {
-		"rules": {
-			"LDGCOL": [
-				"LDGCOL.LT.N"
-			],
-			"LDGNUM": [
-				"LDGNUM.LT.N"
-			]
-		},
 		"locals": {
 			"N": [
 				[
 					null,
 					"NL + NR + 1"
 				]
+			]
+		},
+		"rules": {
+			"LDGCOL": [
+				"LDGCOL.LT.N"
+			],
+			"LDGNUM": [
+				"LDGNUM.LT.N"
 			]
 		}
 	},
@@ -7877,6 +7877,14 @@
 		}
 	},
 	"dorbdb": {
+		"locals": {
+			"COLMAJOR": [
+				[
+					null,
+					".NOT. LSAME( TRANS, 'T' )"
+				]
+			]
+		},
 		"rules": {
 			"LDX11": [
 				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
@@ -7893,14 +7901,6 @@
 			"LDX22": [
 				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
 				".NOT.COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
-		"locals": {
-			"COLMAJOR": [
-				[
-					null,
-					".NOT. LSAME( TRANS, 'T' )"
-				]
 			]
 		}
 	},
@@ -7965,36 +7965,6 @@
 		}
 	},
 	"dorcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			],
-			"LDX11": [
-				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
-			],
-			"LDX12": [
-				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
-			],
-			"LDX21": [
-				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
-			],
-			"LDX22": [
-				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
 		"locals": {
 			"COLMAJOR": [
 				[
@@ -8026,26 +7996,39 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			],
+			"LDX11": [
+				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
+			],
+			"LDX12": [
+				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
+			],
+			"LDX21": [
+				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
+			],
+			"LDX22": [
+				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
+			]
 		}
 	},
 	"dorcsd2by1": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
-			],
-			"LDX11": [
-				"LDX11 .LT. MAX( 1, P )"
-			],
-			"LDX21": [
-				"LDX21 .LT. MAX( 1, M-P )"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -8064,6 +8047,23 @@
 					null,
 					"LSAME( JOBV1T, 'Y' )"
 				]
+			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
+			],
+			"LDX11": [
+				"LDX11 .LT. MAX( 1, P )"
+			],
+			"LDX21": [
+				"LDX21 .LT. MAX( 1, M-P )"
 			]
 		}
 	},
@@ -8175,6 +8175,24 @@
 		}
 	},
 	"dorm22": {
+		"locals": {
+			"LEFT": [
+				[
+					null,
+					"LSAME( SIDE, 'L' )"
+				]
+			],
+			"NQ": [
+				[
+					"LEFT",
+					"M"
+				],
+				[
+					"ELSE",
+					"N"
+				]
+			]
+		},
 		"rules": {
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
@@ -8182,7 +8200,9 @@
 			"LDQ": [
 				"LDQ.LT.MAX( 1, NQ )"
 			]
-		},
+		}
+	},
+	"dorm2l": {
 		"locals": {
 			"LEFT": [
 				[
@@ -8200,45 +8220,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"dorm2l": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
-			]
-		},
-		"locals": {
-			"LEFT": [
-				[
-					null,
-					"LSAME( SIDE, 'L' )"
-				]
-			],
-			"NQ": [
-				[
-					"LEFT",
-					"M"
-				],
-				[
-					"ELSE",
-					"N"
-				]
 			]
 		}
 	},
 	"dorm2r": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -8256,17 +8248,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"dormbr": {
+		},
 		"rules": {
 			"LDA": [
-				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
+				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"dormbr": {
 		"locals": {
 			"APPLYQ": [
 				[
@@ -8290,17 +8282,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"dormhr": {
+		},
 		"rules": {
 			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
+				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"dormhr": {
 		"locals": {
 			"LEFT": [
 				[
@@ -8317,6 +8309,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -8341,14 +8341,6 @@
 		}
 	},
 	"dormql": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -8365,18 +8357,18 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
 	"dormqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -8393,6 +8385,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -8437,14 +8437,6 @@
 		}
 	},
 	"dormtr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -8461,6 +8453,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -8740,11 +8740,6 @@
 		}
 	},
 	"dpteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -8763,6 +8758,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -8801,78 +8801,86 @@
 		}
 	},
 	"dsbev": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsbev_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsbevd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsbevd_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsbevx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -8882,18 +8890,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"dsbevx_2stage": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -8904,17 +8912,17 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"dsbgst": {
+		"locals": {
+			"WANTX": [
+				[
+					null,
+					"LSAME( VECT, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -8925,17 +8933,17 @@
 			"LDX": [
 				"LDX.LT.1 .OR. WANTX .AND. LDX.LT.MAX( 1, N )"
 			]
-		},
-		"locals": {
-			"WANTX": [
-				[
-					null,
-					"LSAME( VECT, 'V' )"
-				]
-			]
 		}
 	},
 	"dsbgv": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -8945,18 +8953,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"dsbgvd": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -8967,7 +8975,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
+		}
+	},
+	"dsbgvx": {
 		"locals": {
 			"WANTZ": [
 				[
@@ -8975,9 +8985,7 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
-		}
-	},
-	"dsbgvx": {
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -8991,14 +8999,6 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"dsbmv": {
@@ -9009,14 +9009,6 @@
 		}
 	},
 	"dsbtrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD1"
-			],
-			"LDQ": [
-				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -9036,14 +9028,17 @@
 					"INITQ .OR. LSAME( VECT, 'U' )"
 				]
 			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD1"
+			],
+			"LDQ": [
+				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
+			]
 		}
 	},
 	"dsfrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NROWA )"
-			]
-		},
 		"locals": {
 			"NOTRANS": [
 				[
@@ -9061,6 +9056,11 @@
 					"K"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NROWA )"
+			]
 		}
 	},
 	"dsgesv": {
@@ -9077,92 +9077,92 @@
 		}
 	},
 	"dspev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dspevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dspevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dspgv": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dspgvd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dspgvx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -9214,11 +9214,6 @@
 		}
 	},
 	"dstedc": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -9237,6 +9232,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -9248,11 +9248,6 @@
 		}
 	},
 	"dstemr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -9260,14 +9255,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"dsteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -9287,65 +9282,70 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
+			]
 		}
 	},
 	"dstev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dstevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dstevr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dstevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -9427,74 +9427,74 @@
 		}
 	},
 	"dsyevr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsyevr_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsyevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"dsyevx_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -9549,6 +9549,14 @@
 		}
 	},
 	"dsygvx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -9559,28 +9567,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. (WANTZ .AND. LDZ.LT.N)"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"dsymm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -9591,6 +9580,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -9616,17 +9616,6 @@
 		}
 	},
 	"dsyr2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -9637,6 +9626,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -9673,14 +9673,6 @@
 		}
 	},
 	"dsyrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -9691,6 +9683,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -10031,20 +10031,6 @@
 		}
 	},
 	"dtgevc": {
-		"rules": {
-			"LDP": [
-				"LDP.LT.MAX( 1, N )"
-			],
-			"LDS": [
-				"LDS.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
-			],
-			"LDVR": [
-				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
-			]
-		},
 		"locals": {
 			"COMPL": [
 				[
@@ -10073,6 +10059,20 @@
 					"LSAME( SIDE, 'B' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDP": [
+				"LDP.LT.MAX( 1, N )"
+			],
+			"LDS": [
+				"LDS.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
+			],
+			"LDVR": [
+				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
 			]
 		}
 	},
@@ -10109,23 +10109,6 @@
 		}
 	},
 	"dtgsja": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -10163,23 +10146,26 @@
 					"INITV .OR. LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"dtgsna": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"WANTS .AND. LDVL.LT.N"
-			],
-			"LDVR": [
-				"WANTS .AND. LDVR.LT.N"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -10192,6 +10178,20 @@
 					null,
 					"LSAME( JOB, 'E' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"WANTS .AND. LDVL.LT.N"
+			],
+			"LDVR": [
+				"WANTS .AND. LDVR.LT.N"
 			]
 		}
 	},
@@ -10266,20 +10266,6 @@
 		}
 	},
 	"dtpmlqt": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.LDAQ"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MB"
-			],
-			"LDV": [
-				"LDV.LT.K"
-			]
-		},
 		"locals": {
 			"LDAQ": [
 				[
@@ -10303,9 +10289,7 @@
 					"LSAME( SIDE, 'R' )"
 				]
 			]
-		}
-	},
-	"dtpmqrt": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.LDAQ"
@@ -10314,12 +10298,14 @@
 				"LDB.LT.MAX( 1, M )"
 			],
 			"LDT": [
-				"LDT.LT.NB"
+				"LDT.LT.MB"
 			],
 			"LDV": [
-				"LDV.LT.LDVQ"
+				"LDV.LT.K"
 			]
-		},
+		}
+	},
+	"dtpmqrt": {
 		"locals": {
 			"LDAQ": [
 				[
@@ -10352,6 +10338,20 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.LDAQ"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.LDVQ"
 			]
 		}
 	},
@@ -10413,17 +10413,6 @@
 		}
 	},
 	"dtrevc": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -10442,21 +10431,21 @@
 					null,
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"dtrevc3": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -10476,17 +10465,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
+			]
 		}
 	},
 	"dtrexc": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -10494,17 +10486,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"dtrmm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -10521,6 +10513,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -10545,14 +10545,6 @@
 		}
 	},
 	"dtrsen": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -10560,17 +10552,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"dtrsm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -10588,23 +10580,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			]
 		}
 	},
 	"dtrsna": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
-			],
-			"LDWORK": [
-				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -10623,6 +10609,20 @@
 					null,
 					"LSAME( JOB, 'V' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
+			],
+			"LDWORK": [
+				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
 			]
 		}
 	},
@@ -10705,20 +10705,6 @@
 		}
 	},
 	"sbbcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -10744,17 +10730,23 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			]
 		}
 	},
 	"sbdsdc": {
-		"rules": {
-			"LDU": [
-				"( LDU.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDU.LT. N ) )"
-			],
-			"LDVT": [
-				"( LDVT.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDVT.LT. N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPQ": [
 				[
@@ -10774,6 +10766,14 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"( LDU.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDU.LT. N ) )"
+			],
+			"LDVT": [
+				"( LDVT.LT.1 ) .OR. ( ( ICOMPQ.EQ.2 ) .AND. ( LDVT.LT. N ) )"
+			]
 		}
 	},
 	"sbdsqr": {
@@ -10790,11 +10790,6 @@
 		}
 	},
 	"sbdsvdx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N*2 )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -10802,23 +10797,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N*2 )"
+			]
 		}
 	},
 	"sgbbrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KLU1"
-			],
-			"LDC": [
-				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
-			],
-			"LDPT": [
-				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"KLU1": [
 				[
@@ -10849,6 +10835,20 @@
 					null,
 					"LSAME( VECT, 'Q' ) .OR. WANTB"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KLU1"
+			],
+			"LDC": [
+				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
+			],
+			"LDPT": [
+				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -10955,32 +10955,32 @@
 		}
 	},
 	"sgbtf2": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
 	"sgbtrf": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
@@ -11044,32 +11044,24 @@
 		}
 	},
 	"sgees": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
 					null,
 					"LSAME( JOBVS, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
 		}
 	},
 	"sgeesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
@@ -11077,20 +11069,17 @@
 					"LSAME( JOBVS, 'V' )"
 				]
 			]
-		}
-	},
-	"sgeev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
-		},
+		}
+	},
+	"sgeev": {
 		"locals": {
 			"WANTVL": [
 				[
@@ -11103,21 +11092,21 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"sgeevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVL": [
 				[
@@ -11130,6 +11119,17 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -11148,17 +11148,6 @@
 		}
 	},
 	"sgejsv": {
-		"rules": {
-			"LDA": [
-				"LDA .LT. M"
-			],
-			"LDU": [
-				"LSVEC .AND. ( LDU .LT. M )"
-			],
-			"LDV": [
-				"RSVEC .AND. ( LDV .LT. N )"
-			]
-		},
 		"locals": {
 			"JRACC": [
 				[
@@ -11177,6 +11166,17 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. JRACC"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA .LT. M"
+			],
+			"LDU": [
+				"LSVEC .AND. ( LDU .LT. M )"
+			],
+			"LDV": [
+				"RSVEC .AND. ( LDV .LT. N )"
 			]
 		}
 	},
@@ -11232,38 +11232,38 @@
 		}
 	},
 	"sgelsd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
 	"sgelss": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
@@ -11311,17 +11311,6 @@
 		}
 	},
 	"sgemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWB)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NOTA": [
 				[
@@ -11355,17 +11344,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWB)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
+			]
 		}
 	},
 	"sgemqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, MN )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -11383,20 +11375,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, MN )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			]
 		}
 	},
 	"sgemqrt": {
-		"rules": {
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.NB"
-			],
-			"LDV": [
-				"LDV.LT.MAX( 1, Q )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -11419,6 +11408,17 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.MAX( 1, Q )"
 			]
 		}
 	},
@@ -11576,17 +11576,6 @@
 		}
 	},
 	"sgesdd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -11618,6 +11607,17 @@
 					"LSAME( JOBZ, 'S' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
+			],
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
+			]
 		}
 	},
 	"sgesv": {
@@ -11631,17 +11631,6 @@
 		}
 	},
 	"sgesvd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -11679,20 +11668,20 @@
 					"LSAME( JOBVT, 'S' )"
 				]
 			]
-		}
-	},
-	"sgesvdq": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, M )"
 			],
 			"LDU": [
-				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
 			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
 			]
-		},
+		}
+	},
+	"sgesvdq": {
 		"locals": {
 			"CONDA": [
 				[
@@ -11748,18 +11737,20 @@
 					"LSAME( JOBV, 'R' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			]
 		}
 	},
 	"sgesvdx": {
-		"rules": {
-			"LDU": [
-				"WANTU .AND. LDU.LT.M"
-			],
-			"LDVT": [
-				"LDVT.LT.IU-IL+1",
-				"LDVT.LT.MINMN"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -11773,17 +11764,18 @@
 					"LSAME( JOBU, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"WANTU .AND. LDU.LT.M"
+			],
+			"LDVT": [
+				"LDVT.LT.IU-IL+1",
+				"LDVT.LT.MINMN"
+			]
 		}
 	},
 	"sgesvj": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -11796,6 +11788,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -11907,20 +11907,6 @@
 		}
 	},
 	"sgges": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -11949,24 +11935,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"sgges3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -11995,24 +11981,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"sggesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -12042,9 +12028,7 @@
 					".FALSE."
 				]
 			]
-		}
-	},
-	"sggev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -12052,13 +12036,15 @@
 			"LDB": [
 				"LDB.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
 			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
-		},
+		}
+	},
+	"sggev": {
 		"locals": {
 			"ILVL": [
 				[
@@ -12087,24 +12073,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"sggev3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -12133,24 +12119,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"sggevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -12179,6 +12165,20 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -12193,20 +12193,6 @@
 		}
 	},
 	"sgghd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
-			],
-			"LDZ": [
-				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -12232,9 +12218,7 @@
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
 			]
-		}
-	},
-	"sgghrd": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -12243,12 +12227,14 @@
 				"LDB.LT.MAX( 1, N )"
 			],
 			"LDQ": [
-				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
 			],
 			"LDZ": [
-				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
+				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
-		},
+		}
+	},
+	"sgghrd": {
 		"locals": {
 			"ILQ": [
 				[
@@ -12277,6 +12263,20 @@
 					"LSAME( COMPZ, 'I' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+			],
+			"LDZ": [
+				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
 		}
 	},
@@ -12311,23 +12311,6 @@
 		}
 	},
 	"sggsvd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -12346,27 +12329,27 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
 			]
 		}
 	},
 	"sggsvp3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -12386,17 +12369,26 @@
 					"LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"sgsvj0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -12409,18 +12401,18 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
 	"sgsvj1": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -12433,6 +12425,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -12471,20 +12471,6 @@
 		}
 	},
 	"shgeqz": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.N"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -12514,20 +12500,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.N"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"shsein": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -12547,17 +12536,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
-		}
-	},
-	"shseqr": {
+		},
 		"rules": {
 			"LDH": [
 				"LDH.LT.MAX( 1, N )"
 			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
-		},
+		}
+	},
+	"shseqr": {
 		"locals": {
 			"INITZ": [
 				[
@@ -12570,6 +12562,14 @@
 					null,
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -12699,6 +12699,14 @@
 		}
 	},
 	"slals0": {
+		"locals": {
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDB": [
 				"LDB.LT.N"
@@ -12711,14 +12719,6 @@
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
@@ -12759,17 +12759,6 @@
 		}
 	},
 	"slamtsqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, Q )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, NB)"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -12786,6 +12775,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, Q )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, NB)"
 			]
 		}
 	},
@@ -12804,20 +12804,6 @@
 		}
 	},
 	"slaqz0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.N"
-			],
-			"LDB": [
-				"LDB.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -12847,15 +12833,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.N"
+			],
+			"LDB": [
+				"LDB.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"slascl": {
-		"rules": {
-			"LDA": [
-				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
-				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
-			]
-		},
 		"locals": {
 			"ITYPE": [
 				[
@@ -12891,17 +12885,15 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
+				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
+			]
 		}
 	},
 	"slasd0": {
-		"rules": {
-			"LDU": [
-				"LDU.LT.N"
-			],
-			"LDVT": [
-				"LDVT.LT.M"
-			]
-		},
 		"locals": {
 			"M": [
 				[
@@ -12909,23 +12901,17 @@
 					"N + SQRE"
 				]
 			]
-		}
-	},
-	"slasd2": {
+		},
 		"rules": {
 			"LDU": [
 				"LDU.LT.N"
 			],
-			"LDU2": [
-				"LDU2.LT.N"
-			],
 			"LDVT": [
 				"LDVT.LT.M"
-			],
-			"LDVT2": [
-				"LDVT2.LT.M"
 			]
-		},
+		}
+	},
+	"slasd2": {
 		"locals": {
 			"M": [
 				[
@@ -12939,9 +12925,37 @@
 					"NL + NR + 1"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"LDU.LT.N"
+			],
+			"LDU2": [
+				"LDU2.LT.N"
+			],
+			"LDVT": [
+				"LDVT.LT.M"
+			],
+			"LDVT2": [
+				"LDVT2.LT.M"
+			]
 		}
 	},
 	"slasd3": {
+		"locals": {
+			"M": [
+				[
+					null,
+					"N + SQRE"
+				]
+			],
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDQ": [
 				"LDQ.LT.K"
@@ -12958,55 +12972,41 @@
 			"LDVT2": [
 				"LDVT2.LT.M"
 			]
-		},
+		}
+	},
+	"slasd6": {
 		"locals": {
-			"M": [
-				[
-					null,
-					"N + SQRE"
-				]
-			],
 			"N": [
 				[
 					null,
 					"NL + NR + 1"
 				]
 			]
-		}
-	},
-	"slasd6": {
+		},
 		"rules": {
 			"LDGCOL": [
 				"LDGCOL.LT.N"
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
 	"slasd7": {
-		"rules": {
-			"LDGCOL": [
-				"LDGCOL.LT.N"
-			],
-			"LDGNUM": [
-				"LDGNUM.LT.N"
-			]
-		},
 		"locals": {
 			"N": [
 				[
 					null,
 					"NL + NR + 1"
 				]
+			]
+		},
+		"rules": {
+			"LDGCOL": [
+				"LDGCOL.LT.N"
+			],
+			"LDGNUM": [
+				"LDGNUM.LT.N"
 			]
 		}
 	},
@@ -13120,6 +13120,14 @@
 		}
 	},
 	"sorbdb": {
+		"locals": {
+			"COLMAJOR": [
+				[
+					null,
+					".NOT. LSAME( TRANS, 'T' )"
+				]
+			]
+		},
 		"rules": {
 			"LDX11": [
 				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
@@ -13136,14 +13144,6 @@
 			"LDX22": [
 				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
 				".NOT.COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
-		"locals": {
-			"COLMAJOR": [
-				[
-					null,
-					".NOT. LSAME( TRANS, 'T' )"
-				]
 			]
 		}
 	},
@@ -13208,36 +13208,6 @@
 		}
 	},
 	"sorcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			],
-			"LDX11": [
-				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
-			],
-			"LDX12": [
-				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
-			],
-			"LDX21": [
-				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
-			],
-			"LDX22": [
-				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
 		"locals": {
 			"COLMAJOR": [
 				[
@@ -13269,26 +13239,39 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			],
+			"LDX11": [
+				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
+			],
+			"LDX12": [
+				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
+			],
+			"LDX21": [
+				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
+			],
+			"LDX22": [
+				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
+			]
 		}
 	},
 	"sorcsd2by1": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
-			],
-			"LDX11": [
-				"LDX11 .LT. MAX( 1, P )"
-			],
-			"LDX21": [
-				"LDX21 .LT. MAX( 1, M-P )"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -13307,6 +13290,23 @@
 					null,
 					"LSAME( JOBV1T, 'Y' )"
 				]
+			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
+			],
+			"LDX11": [
+				"LDX11 .LT. MAX( 1, P )"
+			],
+			"LDX21": [
+				"LDX21 .LT. MAX( 1, M-P )"
 			]
 		}
 	},
@@ -13418,6 +13418,24 @@
 		}
 	},
 	"sorm22": {
+		"locals": {
+			"LEFT": [
+				[
+					null,
+					"LSAME( SIDE, 'L' )"
+				]
+			],
+			"NQ": [
+				[
+					"LEFT",
+					"M"
+				],
+				[
+					"ELSE",
+					"N"
+				]
+			]
+		},
 		"rules": {
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
@@ -13425,7 +13443,9 @@
 			"LDQ": [
 				"LDQ.LT.MAX( 1, NQ )"
 			]
-		},
+		}
+	},
+	"sorm2l": {
 		"locals": {
 			"LEFT": [
 				[
@@ -13443,45 +13463,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"sorm2l": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
-			]
-		},
-		"locals": {
-			"LEFT": [
-				[
-					null,
-					"LSAME( SIDE, 'L' )"
-				]
-			],
-			"NQ": [
-				[
-					"LEFT",
-					"M"
-				],
-				[
-					"ELSE",
-					"N"
-				]
 			]
 		}
 	},
 	"sorm2r": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -13499,17 +13491,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"sormbr": {
+		},
 		"rules": {
 			"LDA": [
-				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
+				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"sormbr": {
 		"locals": {
 			"APPLYQ": [
 				[
@@ -13533,17 +13525,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"sormhr": {
+		},
 		"rules": {
 			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
+				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"sormhr": {
 		"locals": {
 			"LEFT": [
 				[
@@ -13560,6 +13552,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -13584,14 +13584,6 @@
 		}
 	},
 	"sormql": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -13608,18 +13600,18 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
 	"sormqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -13636,6 +13628,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -13680,14 +13680,6 @@
 		}
 	},
 	"sormtr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -13704,6 +13696,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -13983,11 +13983,6 @@
 		}
 	},
 	"spteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -14006,6 +14001,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -14044,78 +14044,86 @@
 		}
 	},
 	"ssbev": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssbev_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssbevd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssbevd_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssbevx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -14125,18 +14133,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"ssbevx_2stage": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -14147,17 +14155,17 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"ssbgst": {
+		"locals": {
+			"WANTX": [
+				[
+					null,
+					"LSAME( VECT, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -14168,17 +14176,17 @@
 			"LDX": [
 				"LDX.LT.1 .OR. WANTX .AND. LDX.LT.MAX( 1, N )"
 			]
-		},
-		"locals": {
-			"WANTX": [
-				[
-					null,
-					"LSAME( VECT, 'V' )"
-				]
-			]
 		}
 	},
 	"ssbgv": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -14188,18 +14196,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"ssbgvd": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -14210,7 +14218,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
+		}
+	},
+	"ssbgvx": {
 		"locals": {
 			"WANTZ": [
 				[
@@ -14218,9 +14228,7 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
-		}
-	},
-	"ssbgvx": {
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -14234,14 +14242,6 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"ssbmv": {
@@ -14252,14 +14252,6 @@
 		}
 	},
 	"ssbtrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD1"
-			],
-			"LDQ": [
-				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -14279,14 +14271,17 @@
 					"INITQ .OR. LSAME( VECT, 'U' )"
 				]
 			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD1"
+			],
+			"LDQ": [
+				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
+			]
 		}
 	},
 	"ssfrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NROWA )"
-			]
-		},
 		"locals": {
 			"NOTRANS": [
 				[
@@ -14304,95 +14299,100 @@
 					"K"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NROWA )"
+			]
 		}
 	},
 	"sspev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sspevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sspevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sspgv": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sspgvd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sspgvx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -14431,11 +14431,6 @@
 		}
 	},
 	"sstedc": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -14454,6 +14449,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -14465,11 +14465,6 @@
 		}
 	},
 	"sstemr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -14477,14 +14472,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"ssteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -14504,65 +14499,70 @@
 					"-1"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
+			]
 		}
 	},
 	"sstev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sstevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sstevr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"sstevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -14644,74 +14644,74 @@
 		}
 	},
 	"ssyevr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssyevr_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssyevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"ssyevx_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -14766,6 +14766,14 @@
 		}
 	},
 	"ssygvx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -14776,28 +14784,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. (WANTZ .AND. LDZ.LT.N)"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"ssymm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -14808,6 +14797,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -14833,17 +14833,6 @@
 		}
 	},
 	"ssyr2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -14854,6 +14843,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -14890,14 +14890,6 @@
 		}
 	},
 	"ssyrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -14908,6 +14900,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -15248,20 +15248,6 @@
 		}
 	},
 	"stgevc": {
-		"rules": {
-			"LDP": [
-				"LDP.LT.MAX( 1, N )"
-			],
-			"LDS": [
-				"LDS.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
-			],
-			"LDVR": [
-				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
-			]
-		},
 		"locals": {
 			"COMPL": [
 				[
@@ -15290,6 +15276,20 @@
 					"LSAME( SIDE, 'B' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDP": [
+				"LDP.LT.MAX( 1, N )"
+			],
+			"LDS": [
+				"LDS.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
+			],
+			"LDVR": [
+				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
 			]
 		}
 	},
@@ -15326,23 +15326,6 @@
 		}
 	},
 	"stgsja": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -15380,23 +15363,26 @@
 					"INITV .OR. LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"stgsna": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"WANTS .AND. LDVL.LT.N"
-			],
-			"LDVR": [
-				"WANTS .AND. LDVR.LT.N"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -15409,6 +15395,20 @@
 					null,
 					"LSAME( JOB, 'E' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"WANTS .AND. LDVL.LT.N"
+			],
+			"LDVR": [
+				"WANTS .AND. LDVR.LT.N"
 			]
 		}
 	},
@@ -15483,20 +15483,6 @@
 		}
 	},
 	"stpmlqt": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.LDAQ"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MB"
-			],
-			"LDV": [
-				"LDV.LT.K"
-			]
-		},
 		"locals": {
 			"LDAQ": [
 				[
@@ -15520,9 +15506,7 @@
 					"LSAME( SIDE, 'R' )"
 				]
 			]
-		}
-	},
-	"stpmqrt": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.LDAQ"
@@ -15531,12 +15515,14 @@
 				"LDB.LT.MAX( 1, M )"
 			],
 			"LDT": [
-				"LDT.LT.NB"
+				"LDT.LT.MB"
 			],
 			"LDV": [
-				"LDV.LT.LDVQ"
+				"LDV.LT.K"
 			]
-		},
+		}
+	},
+	"stpmqrt": {
 		"locals": {
 			"LDAQ": [
 				[
@@ -15569,6 +15555,20 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.LDAQ"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.LDVQ"
 			]
 		}
 	},
@@ -15630,17 +15630,6 @@
 		}
 	},
 	"strevc": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -15659,21 +15648,21 @@
 					null,
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"strevc3": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -15693,17 +15682,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
+			]
 		}
 	},
 	"strexc": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -15711,17 +15703,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"strmm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -15738,6 +15730,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -15762,14 +15762,6 @@
 		}
 	},
 	"strsen": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -15777,17 +15769,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"strsm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -15805,23 +15797,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			]
 		}
 	},
 	"strsna": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
-			],
-			"LDWORK": [
-				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -15840,6 +15826,20 @@
 					null,
 					"LSAME( JOB, 'V' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
+			],
+			"LDWORK": [
+				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
 			]
 		}
 	},
@@ -15864,20 +15864,6 @@
 		}
 	},
 	"strsyl3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDSWORK": [
-				".NOT.LQUERY .AND. LDSWORK.LT.MAX( NBA, NBB )"
-			]
-		},
 		"locals": {
 			"LDSWORK": [
 				[
@@ -15908,6 +15894,20 @@
 					null,
 					"MAX( 1, (N + NB - 1) / NB )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDSWORK": [
+				".NOT.LQUERY .AND. LDSWORK.LT.MAX( NBA, NBB )"
 			]
 		}
 	},
@@ -15957,20 +15957,6 @@
 		}
 	},
 	"zbbcsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -15995,6 +15981,20 @@
 					null,
 					"LSAME( JOBV2T, 'Y' )"
 				]
+			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
 			]
 		}
 	},
@@ -16038,20 +16038,6 @@
 		}
 	},
 	"zgbbrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KLU1"
-			],
-			"LDC": [
-				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
-			],
-			"LDPT": [
-				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"KLU1": [
 				[
@@ -16082,6 +16068,20 @@
 					null,
 					"LSAME( VECT, 'Q' ) .OR. WANTB"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KLU1"
+			],
+			"LDC": [
+				"LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )"
+			],
+			"LDPT": [
+				"LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -16188,32 +16188,32 @@
 		}
 	},
 	"zgbtf2": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
 	"zgbtrf": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KL+KV+1"
-			]
-		},
 		"locals": {
 			"KV": [
 				[
 					null,
 					"KU + KL"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KL+KV+1"
 			]
 		}
 	},
@@ -16277,32 +16277,24 @@
 		}
 	},
 	"zgees": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
 					null,
 					"LSAME( JOBVS, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
 		}
 	},
 	"zgeesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVS": [
-				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVS": [
 				[
@@ -16310,20 +16302,17 @@
 					"LSAME( JOBVS, 'V' )"
 				]
 			]
-		}
-	},
-	"zgeev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
+			"LDVS": [
+				"LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )"
 			]
-		},
+		}
+	},
+	"zgeev": {
 		"locals": {
 			"WANTVL": [
 				[
@@ -16336,21 +16325,21 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"zgeevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTVL": [
 				[
@@ -16363,6 +16352,17 @@
 					null,
 					"LSAME( JOBVR, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -16381,17 +16381,6 @@
 		}
 	},
 	"zgejsv": {
-		"rules": {
-			"LDA": [
-				"LDA .LT. M"
-			],
-			"LDU": [
-				"LSVEC .AND. ( LDU .LT. M )"
-			],
-			"LDV": [
-				"RSVEC .AND. ( LDV .LT. N )"
-			]
-		},
 		"locals": {
 			"JRACC": [
 				[
@@ -16410,6 +16399,17 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. JRACC"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA .LT. M"
+			],
+			"LDU": [
+				"LSVEC .AND. ( LDU .LT. M )"
+			],
+			"LDV": [
+				"RSVEC .AND. ( LDV .LT. N )"
 			]
 		}
 	},
@@ -16465,38 +16465,38 @@
 		}
 	},
 	"zgelsd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
 	"zgelss": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, MAXMN )"
-			]
-		},
 		"locals": {
 			"MAXMN": [
 				[
 					null,
 					"MAX( M, N )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, MAXMN )"
 			]
 		}
 	},
@@ -16544,17 +16544,6 @@
 		}
 	},
 	"zgemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWB)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NOTA": [
 				[
@@ -16588,17 +16577,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWB)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
+			]
 		}
 	},
 	"zgemqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, MN )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -16616,20 +16608,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, MN )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			]
 		}
 	},
 	"zgemqrt": {
-		"rules": {
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.NB"
-			],
-			"LDV": [
-				"LDV.LT.MAX( 1, Q )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -16652,6 +16641,17 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.MAX( 1, Q )"
 			]
 		}
 	},
@@ -16816,17 +16816,6 @@
 		}
 	},
 	"zgesdd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -16858,6 +16847,17 @@
 					"LSAME( JOBZ, 'S' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WNTQAS .AND. LDU.LT.M ) .OR. ( WNTQO .AND. M.LT.N .AND. LDU.LT.M )"
+			],
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTQA .AND. LDVT.LT.N ) .OR. ( WNTQS .AND. LDVT.LT.MINMN ) .OR. ( WNTQO .AND. M.GE.N .AND. LDVT.LT.N )"
+			]
 		}
 	},
 	"zgesv": {
@@ -16871,17 +16871,6 @@
 		}
 	},
 	"zgesvd": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
-			],
-			"LDVT": [
-				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -16919,20 +16908,20 @@
 					"LSAME( JOBVT, 'S' )"
 				]
 			]
-		}
-	},
-	"zgesvdq": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, M )"
 			],
 			"LDU": [
-				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+				"LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )"
 			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			"LDVT": [
+				"LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )"
 			]
-		},
+		}
+	},
+	"zgesvdq": {
 		"locals": {
 			"CONDA": [
 				[
@@ -16988,18 +16977,20 @@
 					"LSAME( JOBV, 'R' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( LSVC0 .AND. LDU.LT.M ) .OR. ( WNTUF .AND. LDU.LT.N )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( RSVEC .AND. LDV.LT.N ) .OR. ( CONDA .AND. LDV.LT.N )"
+			]
 		}
 	},
 	"zgesvdx": {
-		"rules": {
-			"LDU": [
-				"WANTU .AND. LDU.LT.M"
-			],
-			"LDVT": [
-				"LDVT.LT.IU-IL+1",
-				"LDVT.LT.MINMN"
-			]
-		},
 		"locals": {
 			"MINMN": [
 				[
@@ -17013,17 +17004,18 @@
 					"LSAME( JOBU, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU": [
+				"WANTU .AND. LDU.LT.M"
+			],
+			"LDVT": [
+				"LDVT.LT.IU-IL+1",
+				"LDVT.LT.MINMN"
+			]
 		}
 	},
 	"zgesvj": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -17036,6 +17028,14 @@
 					null,
 					"LSAME( JOBV, 'V' ) .OR. LSAME( JOBV, 'J' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC .AND. ( LDV.LT.N ) ) .OR. ( APPLV .AND. ( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -17147,20 +17147,6 @@
 		}
 	},
 	"zgges": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -17189,24 +17175,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"zgges3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -17235,24 +17221,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
+			],
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
 		}
 	},
 	"zggesx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVSL": [
-				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
-			],
-			"LDVSR": [
-				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVSL": [
 				[
@@ -17282,9 +17268,7 @@
 					".FALSE."
 				]
 			]
-		}
-	},
-	"zggev": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -17292,13 +17276,15 @@
 			"LDB": [
 				"LDB.LT.MAX( 1, N )"
 			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			"LDVSL": [
+				"LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )"
 			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
+			"LDVSR": [
+				"LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )"
 			]
-		},
+		}
+	},
+	"zggev": {
 		"locals": {
 			"ILVL": [
 				[
@@ -17327,24 +17313,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"zggev3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -17373,24 +17359,24 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"zggevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"ILVL": [
 				[
@@ -17419,6 +17405,20 @@
 					"ELSE",
 					".FALSE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )"
 			]
 		}
 	},
@@ -17433,20 +17433,6 @@
 		}
 	},
 	"zgghd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDQ": [
-				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
-			],
-			"LDZ": [
-				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -17472,9 +17458,7 @@
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
 			]
-		}
-	},
-	"zgghrd": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -17483,12 +17467,14 @@
 				"LDB.LT.MAX( 1, N )"
 			],
 			"LDQ": [
-				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+				"( WANTQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
 			],
 			"LDZ": [
-				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
+				"( WANTZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
-		},
+		}
+	},
+	"zgghrd": {
 		"locals": {
 			"ILQ": [
 				[
@@ -17517,6 +17503,20 @@
 					"LSAME( COMPZ, 'I' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDQ": [
+				"( ILQ .AND. LDQ.LT.N ) .OR. LDQ.LT.1"
+			],
+			"LDZ": [
+				"( ILZ .AND. LDZ.LT.N ) .OR. LDZ.LT.1"
 			]
 		}
 	},
@@ -17551,23 +17551,6 @@
 		}
 	},
 	"zggsvd3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -17586,27 +17569,27 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
 			]
 		}
 	},
 	"zggsvp3": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -17626,17 +17609,26 @@
 					"LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"zgsvj0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -17649,18 +17641,18 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
 	"zgsvj1": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.M"
-			],
-			"LDV": [
-				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
-			]
-		},
 		"locals": {
 			"APPLV": [
 				[
@@ -17673,6 +17665,14 @@
 					null,
 					"LSAME( JOBV, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.M"
+			],
+			"LDV": [
+				"( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )"
 			]
 		}
 	},
@@ -17711,78 +17711,86 @@
 		}
 	},
 	"zhbev": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhbev_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhbevd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhbevd_2stage": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD+1"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD+1"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhbevx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -17792,18 +17800,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"zhbevx_2stage": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KD+1"
@@ -17814,17 +17822,17 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"zhbgst": {
+		"locals": {
+			"WANTX": [
+				[
+					null,
+					"LSAME( VECT, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -17835,17 +17843,17 @@
 			"LDX": [
 				"LDX.LT.1 .OR. WANTX .AND. LDX.LT.MAX( 1, N )"
 			]
-		},
-		"locals": {
-			"WANTX": [
-				[
-					null,
-					"LSAME( VECT, 'V' )"
-				]
-			]
 		}
 	},
 	"zhbgv": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -17855,18 +17863,18 @@
 			],
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
 			]
 		}
 	},
 	"zhbgvd": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -17877,7 +17885,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
+		}
+	},
+	"zhbgvx": {
 		"locals": {
 			"WANTZ": [
 				[
@@ -17885,9 +17895,7 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
-		}
-	},
-	"zhbgvx": {
+		},
 		"rules": {
 			"LDAB": [
 				"LDAB.LT.KA+1"
@@ -17901,14 +17909,6 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"zhbmv": {
@@ -17919,14 +17919,6 @@
 		}
 	},
 	"zhbtrd": {
-		"rules": {
-			"LDAB": [
-				"LDAB.LT.KD1"
-			],
-			"LDQ": [
-				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -17945,6 +17937,14 @@
 					null,
 					"INITQ .OR. LSAME( VECT, 'U' )"
 				]
+			]
+		},
+		"rules": {
+			"LDAB": [
+				"LDAB.LT.KD1"
+			],
+			"LDQ": [
+				"LDQ.LT.MAX( 1, N ) .AND. WANTQ"
 			]
 		}
 	},
@@ -18005,74 +18005,74 @@
 		}
 	},
 	"zheevr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zheevr_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zheevx": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zheevx_2stage": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -18127,6 +18127,14 @@
 		}
 	},
 	"zhegvx": {
+		"locals": {
+			"WANTZ": [
+				[
+					null,
+					"LSAME( JOBZ, 'V' )"
+				]
+			]
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, N )"
@@ -18137,28 +18145,9 @@
 			"LDZ": [
 				"LDZ.LT.1 .OR. (WANTZ .AND. LDZ.LT.N)"
 			]
-		},
-		"locals": {
-			"WANTZ": [
-				[
-					null,
-					"LSAME( JOBZ, 'V' )"
-				]
-			]
 		}
 	},
 	"zhemm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -18169,6 +18158,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -18194,17 +18194,6 @@
 		}
 	},
 	"zher2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -18215,6 +18204,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -18251,14 +18251,6 @@
 		}
 	},
 	"zherk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -18269,6 +18261,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -18551,11 +18551,6 @@
 		}
 	},
 	"zhfrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NROWA )"
-			]
-		},
 		"locals": {
 			"NOTRANS": [
 				[
@@ -18573,23 +18568,14 @@
 					"K"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NROWA )"
+			]
 		}
 	},
 	"zhgeqz": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.N"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -18627,95 +18613,109 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.N"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"zhpev": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhpevd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhpevx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhpgv": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhpgvd": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
 	"zhpgvx": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
 					null,
 					"LSAME( JOBZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
 			]
 		}
 	},
@@ -18754,17 +18754,6 @@
 		}
 	},
 	"zhsein": {
-		"rules": {
-			"LDH": [
-				"LDH.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -18784,17 +18773,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
-		}
-	},
-	"zhseqr": {
+		},
 		"rules": {
 			"LDH": [
 				"LDH.LT.MAX( 1, N )"
 			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
-		},
+		}
+	},
+	"zhseqr": {
 		"locals": {
 			"INITZ": [
 				[
@@ -18807,6 +18799,14 @@
 					null,
 					"INITZ .OR. LSAME( COMPZ, 'V' )"
 				]
+			]
+		},
+		"rules": {
+			"LDH": [
+				"LDH.LT.MAX( 1, N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -18998,6 +18998,14 @@
 		}
 	},
 	"zlals0": {
+		"locals": {
+			"N": [
+				[
+					null,
+					"NL + NR + 1"
+				]
+			]
+		},
 		"rules": {
 			"LDB": [
 				"LDB.LT.N"
@@ -19010,14 +19018,6 @@
 			],
 			"LDGNUM": [
 				"LDGNUM.LT.N"
-			]
-		},
-		"locals": {
-			"N": [
-				[
-					null,
-					"NL + NR + 1"
-				]
 			]
 		}
 	},
@@ -19058,17 +19058,6 @@
 		}
 	},
 	"zlamtsqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, Q )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, NB)"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -19086,23 +19075,20 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, Q )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, NB)"
+			]
 		}
 	},
 	"zlaqz0": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.N"
-			],
-			"LDB": [
-				"LDB.LT.N"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
-			],
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"ILQ": [
 				[
@@ -19132,15 +19118,23 @@
 					".TRUE."
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.N"
+			],
+			"LDB": [
+				"LDB.LT.N"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )"
+			],
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"zlascl": {
-		"rules": {
-			"LDA": [
-				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
-				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
-			]
-		},
 		"locals": {
 			"ITYPE": [
 				[
@@ -19175,6 +19169,12 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
+				"( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )"
 			]
 		}
 	},
@@ -19533,11 +19533,6 @@
 		}
 	},
 	"zpteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -19556,6 +19551,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -19628,11 +19628,6 @@
 		}
 	},
 	"zstedc": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -19651,6 +19646,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -19662,11 +19662,6 @@
 		}
 	},
 	"zstemr": {
-		"rules": {
-			"LDZ": [
-				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTZ": [
 				[
@@ -19674,14 +19669,14 @@
 					"LSAME( JOBZ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDZ": [
+				"LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )"
+			]
 		}
 	},
 	"zsteqr": {
-		"rules": {
-			"LDZ": [
-				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
-			]
-		},
 		"locals": {
 			"ICOMPZ": [
 				[
@@ -19700,6 +19695,11 @@
 					"ELSE",
 					"-1"
 				]
+			]
+		},
+		"rules": {
+			"LDZ": [
+				"( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )"
 			]
 		}
 	},
@@ -19753,17 +19753,6 @@
 		}
 	},
 	"zsymm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -19774,6 +19763,17 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -19792,17 +19792,6 @@
 		}
 	},
 	"zsyr2k": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -19813,6 +19802,17 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -19849,14 +19849,6 @@
 		}
 	},
 	"zsyrk": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDC": [
-				"LDC.LT.MAX(1,N)"
-			]
-		},
 		"locals": {
 			"NROWA": [
 				[
@@ -19867,6 +19859,14 @@
 					"ELSE",
 					"K"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDC": [
+				"LDC.LT.MAX(1,N)"
 			]
 		}
 	},
@@ -20169,20 +20169,6 @@
 		}
 	},
 	"ztgevc": {
-		"rules": {
-			"LDP": [
-				"LDP.LT.MAX( 1, N )"
-			],
-			"LDS": [
-				"LDS.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
-			],
-			"LDVR": [
-				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
-			]
-		},
 		"locals": {
 			"COMPL": [
 				[
@@ -20211,6 +20197,20 @@
 					"LSAME( SIDE, 'B' )",
 					".TRUE."
 				]
+			]
+		},
+		"rules": {
+			"LDP": [
+				"LDP.LT.MAX( 1, N )"
+			],
+			"LDS": [
+				"LDS.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"COMPL .AND. LDVL.LT.N .OR. LDVL.LT.1"
+			],
+			"LDVR": [
+				"COMPR .AND. LDVR.LT.N .OR. LDVR.LT.1"
 			]
 		}
 	},
@@ -20247,23 +20247,6 @@
 		}
 	},
 	"ztgsja": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, M )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, P )"
-			],
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDU": [
-				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
-			],
-			"LDV": [
-				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
-			]
-		},
 		"locals": {
 			"INITQ": [
 				[
@@ -20301,23 +20284,26 @@
 					"INITV .OR. LSAME( JOBV, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, M )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, P )"
+			],
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDU": [
+				"LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )"
+			],
+			"LDV": [
+				"LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )"
+			]
 		}
 	},
 	"ztgsna": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, N )"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"WANTS .AND. LDVL.LT.N"
-			],
-			"LDVR": [
-				"WANTS .AND. LDVR.LT.N"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -20330,6 +20316,20 @@
 					null,
 					"LSAME( JOB, 'E' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, N )"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"WANTS .AND. LDVL.LT.N"
+			],
+			"LDVR": [
+				"WANTS .AND. LDVR.LT.N"
 			]
 		}
 	},
@@ -20404,20 +20404,6 @@
 		}
 	},
 	"ztpmlqt": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.LDAQ"
-			],
-			"LDB": [
-				"LDB.LT.MAX( 1, M )"
-			],
-			"LDT": [
-				"LDT.LT.MB"
-			],
-			"LDV": [
-				"LDV.LT.K"
-			]
-		},
 		"locals": {
 			"LDAQ": [
 				[
@@ -20441,9 +20427,7 @@
 					"LSAME( SIDE, 'R' )"
 				]
 			]
-		}
-	},
-	"ztpmqrt": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.LDAQ"
@@ -20452,12 +20436,14 @@
 				"LDB.LT.MAX( 1, M )"
 			],
 			"LDT": [
-				"LDT.LT.NB"
+				"LDT.LT.MB"
 			],
 			"LDV": [
-				"LDV.LT.LDVQ"
+				"LDV.LT.K"
 			]
-		},
+		}
+	},
+	"ztpmqrt": {
 		"locals": {
 			"LDAQ": [
 				[
@@ -20490,6 +20476,20 @@
 					null,
 					"LSAME( SIDE, 'R' )"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.LDAQ"
+			],
+			"LDB": [
+				"LDB.LT.MAX( 1, M )"
+			],
+			"LDT": [
+				"LDT.LT.NB"
+			],
+			"LDV": [
+				"LDV.LT.LDVQ"
 			]
 		}
 	},
@@ -20551,17 +20551,6 @@
 		}
 	},
 	"ztrevc": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -20580,21 +20569,21 @@
 					null,
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
 			]
 		}
 	},
 	"ztrevc3": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
-			]
-		},
 		"locals": {
 			"BOTHV": [
 				[
@@ -20614,17 +20603,20 @@
 					"LSAME( SIDE, 'R' ) .OR. BOTHV"
 				]
 			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )"
+			]
 		}
 	},
 	"ztrexc": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -20632,17 +20624,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"ztrmm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -20659,6 +20651,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
 			]
 		}
 	},
@@ -20683,14 +20683,6 @@
 		}
 	},
 	"ztrsen": {
-		"rules": {
-			"LDQ": [
-				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
-			],
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			]
-		},
 		"locals": {
 			"WANTQ": [
 				[
@@ -20698,17 +20690,17 @@
 					"LSAME( COMPQ, 'V' )"
 				]
 			]
+		},
+		"rules": {
+			"LDQ": [
+				"LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )"
+			],
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			]
 		}
 	},
 	"ztrsm": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX(1,NROWA)"
-			],
-			"LDB": [
-				"LDB.LT.MAX(1,M)"
-			]
-		},
 		"locals": {
 			"LSIDE": [
 				[
@@ -20726,23 +20718,17 @@
 					"N"
 				]
 			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX(1,NROWA)"
+			],
+			"LDB": [
+				"LDB.LT.MAX(1,M)"
+			]
 		}
 	},
 	"ztrsna": {
-		"rules": {
-			"LDT": [
-				"LDT.LT.MAX( 1, N )"
-			],
-			"LDVL": [
-				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
-			],
-			"LDVR": [
-				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
-			],
-			"LDWORK": [
-				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
-			]
-		},
 		"locals": {
 			"WANTBH": [
 				[
@@ -20761,6 +20747,20 @@
 					null,
 					"LSAME( JOB, 'V' ) .OR. WANTBH"
 				]
+			]
+		},
+		"rules": {
+			"LDT": [
+				"LDT.LT.MAX( 1, N )"
+			],
+			"LDVL": [
+				"LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )"
+			],
+			"LDVR": [
+				"LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )"
+			],
+			"LDWORK": [
+				"LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
 			]
 		}
 	},
@@ -20843,6 +20843,14 @@
 		}
 	},
 	"zunbdb": {
+		"locals": {
+			"COLMAJOR": [
+				[
+					null,
+					".NOT. LSAME( TRANS, 'T' )"
+				]
+			]
+		},
 		"rules": {
 			"LDX11": [
 				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
@@ -20859,14 +20867,6 @@
 			"LDX22": [
 				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
 				".NOT.COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
-		"locals": {
-			"COLMAJOR": [
-				[
-					null,
-					".NOT. LSAME( TRANS, 'T' )"
-				]
 			]
 		}
 	},
@@ -20931,36 +20931,6 @@
 		}
 	},
 	"zuncsd": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. P"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. M-P"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. Q"
-			],
-			"LDV2T": [
-				"WANTV2T .AND. LDV2T .LT. M-Q"
-			],
-			"LDX11": [
-				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
-			],
-			"LDX12": [
-				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
-				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
-			],
-			"LDX21": [
-				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
-			],
-			"LDX22": [
-				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
-				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
-			]
-		},
 		"locals": {
 			"COLMAJOR": [
 				[
@@ -20992,26 +20962,39 @@
 					"LSAME( JOBV2T, 'Y' )"
 				]
 			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. P"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. M-P"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. Q"
+			],
+			"LDV2T": [
+				"WANTV2T .AND. LDV2T .LT. M-Q"
+			],
+			"LDX11": [
+				"COLMAJOR .AND. LDX11 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX11 .LT. MAX( 1, Q )"
+			],
+			"LDX12": [
+				"COLMAJOR .AND. LDX12 .LT. MAX( 1, P )",
+				".NOT. COLMAJOR .AND. LDX12 .LT. MAX( 1, M-Q )"
+			],
+			"LDX21": [
+				"COLMAJOR .AND. LDX21 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX21 .LT. MAX( 1, Q )"
+			],
+			"LDX22": [
+				"COLMAJOR .AND. LDX22 .LT. MAX( 1, M-P )",
+				".NOT. COLMAJOR .AND. LDX22 .LT. MAX( 1, M-Q )"
+			]
 		}
 	},
 	"zuncsd2by1": {
-		"rules": {
-			"LDU1": [
-				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
-			],
-			"LDU2": [
-				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
-			],
-			"LDV1T": [
-				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
-			],
-			"LDX11": [
-				"LDX11 .LT. MAX( 1, P )"
-			],
-			"LDX21": [
-				"LDX21 .LT. MAX( 1, M-P )"
-			]
-		},
 		"locals": {
 			"WANTU1": [
 				[
@@ -21030,6 +21013,23 @@
 					null,
 					"LSAME( JOBV1T, 'Y' )"
 				]
+			]
+		},
+		"rules": {
+			"LDU1": [
+				"WANTU1 .AND. LDU1 .LT. MAX( 1, P )"
+			],
+			"LDU2": [
+				"WANTU2 .AND. LDU2 .LT. MAX( 1, M - P )"
+			],
+			"LDV1T": [
+				"WANTV1T .AND. LDV1T .LT. MAX( 1, Q )"
+			],
+			"LDX11": [
+				"LDX11 .LT. MAX( 1, P )"
+			],
+			"LDX21": [
+				"LDX21 .LT. MAX( 1, M-P )"
 			]
 		}
 	},
@@ -21141,6 +21141,24 @@
 		}
 	},
 	"zunm22": {
+		"locals": {
+			"LEFT": [
+				[
+					null,
+					"LSAME( SIDE, 'L' )"
+				]
+			],
+			"NQ": [
+				[
+					"LEFT",
+					"M"
+				],
+				[
+					"ELSE",
+					"N"
+				]
+			]
+		},
 		"rules": {
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
@@ -21148,7 +21166,9 @@
 			"LDQ": [
 				"LDQ.LT.MAX( 1, NQ )"
 			]
-		},
+		}
+	},
+	"zunm2l": {
 		"locals": {
 			"LEFT": [
 				[
@@ -21166,45 +21186,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"zunm2l": {
+		},
 		"rules": {
 			"LDA": [
 				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
-			]
-		},
-		"locals": {
-			"LEFT": [
-				[
-					null,
-					"LSAME( SIDE, 'L' )"
-				]
-			],
-			"NQ": [
-				[
-					"LEFT",
-					"M"
-				],
-				[
-					"ELSE",
-					"N"
-				]
 			]
 		}
 	},
 	"zunm2r": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -21222,17 +21214,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"zunmbr": {
+		},
 		"rules": {
 			"LDA": [
-				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
+				"LDA.LT.MAX( 1, NQ )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"zunmbr": {
 		"locals": {
 			"APPLYQ": [
 				[
@@ -21256,17 +21248,17 @@
 					"N"
 				]
 			]
-		}
-	},
-	"zunmhr": {
+		},
 		"rules": {
 			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
+				"( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )"
 			],
 			"LDC": [
 				"LDC.LT.MAX( 1, M )"
 			]
-		},
+		}
+	},
+	"zunmhr": {
 		"locals": {
 			"LEFT": [
 				[
@@ -21283,6 +21275,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -21307,14 +21307,6 @@
 		}
 	},
 	"zunmql": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -21331,18 +21323,18 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
 	"zunmqr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -21359,6 +21351,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},
@@ -21403,14 +21403,6 @@
 		}
 	},
 	"zunmtr": {
-		"rules": {
-			"LDA": [
-				"LDA.LT.MAX( 1, NQ )"
-			],
-			"LDC": [
-				"LDC.LT.MAX( 1, M )"
-			]
-		},
 		"locals": {
 			"LEFT": [
 				[
@@ -21427,6 +21419,14 @@
 					"ELSE",
 					"N"
 				]
+			]
+		},
+		"rules": {
+			"LDA": [
+				"LDA.LT.MAX( 1, NQ )"
+			],
+			"LDC": [
+				"LDC.LT.MAX( 1, M )"
 			]
 		}
 	},

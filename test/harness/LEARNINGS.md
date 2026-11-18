@@ -2048,4 +2048,23 @@ Keep entries short. Newest first.
   a generously sized caller buffer would catch the class; base.js routines that
   do not assert WORK length should also be made to.
 
+## 2026-11-18 — ztgsna passed a stale `lwork` to ztgsyl (found by the benchmark smoke run)
+
+- **Trigger**: the regenerated `ztgsna` benchmark (job = 'both', howmny = 'all')
+  threw "Cannot create property 'NaN' on number '-1'" inside ztgsyl at N = 100.
+- **Repro (before fix)**: `ztgsna( 'both', 'all', SELECT, 1, 0, 40, A, 1, 40, 0, B, 1, 40, 0, VL, 1, 40, 0, VR, 1, 40, 0, s, 1, 0, DIF, 1, 0, 40, 0, WORK, 1, 0, IWORK, 1, 0 )`
+  with an upper-triangular complex pair (see the N = 40 test in
+  `lib/lapack/base/ztgsna/test/test.ndarray.js`). Complex scalar, dense column-major.
+- **Root cause**: ztgsna/base.js called ztgsyl with `…, WORK, 1, offset, -1, IWORK, …` —
+  a leftover `lwork` argument from before the caller-owns-WORK migration. Every
+  argument after it shifted: ztgsyl's `IWORK` received `-1`. Only ztgsyl's
+  blocked path (M or N > 32) writes IWORK, so the N <= 4 fixtures passed.
+- **Bug class**: `stale-arity-in-internal-call` — the same signature-drift as
+  `stale-arity-in-tests` above, but in library code calling a dependency.
+- **Fix**: drop the `-1`; add the N = 40 regression test.
+- **Where else it hides**: any base.js call to a dependency's base with surplus
+  or missing arguments, reachable only on blocked/large-N paths. A static check
+  comparing each internal call's argument count with the callee's declared
+  arity would catch the whole class.
+
 <!-- Add new entries above this line. -->

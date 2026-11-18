@@ -246,7 +246,8 @@ function buildSpecs( sig, is2d, literals ) {
 			cands = ( n === 'equed' ) ? [ "[ 'none' ]", "[ 'yes' ]" ] : [ '[ 0 ]' ];
 		} else if ( /integer|Integer/.test( t ) ) {
 			kind = 'int';
-			cands = INTS[ n ] || INTS[ n.toUpperCase() ] || DEFAULT_INTS;
+			// In band routines (xGB/xSB/xTB/xHB/xPB), `K` is a bandwidth:
+			cands = ( n === 'K' && sig.band ) ? BAND : ( INTS[ n ] || INTS[ n.toUpperCase() ] || DEFAULT_INTS );
 		} else {
 			kind = 'unknown';
 			cands = [ 'null' ];
@@ -468,13 +469,14 @@ function emit( o ) {
 	if ( specs.some( ( s ) => s.kind === 'cplx' ) || /^Complex128$/.test( ret ) ) {
 		imports.push( "import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';" );
 	}
+	const rv = [ 'out', 'res', 'result', 'z' ].find( ( v ) => !specs.some( ( q ) => q.name === v ) );
 	let check = null;
 	if ( /^(number|integer|NonNegativeInteger|PositiveInteger|boolean)$/.test( ret ) ) {
-		check = 'isnan( out )';
+		check = `isnan( ${rv} )`;
 	} else if ( ret === 'Float64Array' ) {
-		check = 'isnan( out[ i % out.length ] )';
+		check = `isnan( ${rv}[ i % ${rv}.length ] )`;
 	} else if ( ret === 'Complex128' ) {
-		check = 'isnan( real( out ) )';
+		check = `isnan( real( ${rv} ) )`;
 		imports.push( "import real from '@stdlib/complex/float64/real/lib/index.js';" );
 	}
 	if ( check ) {
@@ -532,12 +534,12 @@ function emit( o ) {
 		'\t\t\t}'
 	].join( '\n' ) + '\n' : '';
 	const endCheck = ( check ) ? [
-		`\t\tif ( ${check.replace( 'i % out.length', '0' )} ) {`,
+		`\t\tif ( ${check.replace( `i % ${rv}.length`, '0' )} ) {`,
 		"\t\t\tb.fail( 'should not return NaN' );",
 		'\t\t}'
 	].join( '\n' ) + '\n' : '';
-	const lets = ( ret === 'void' || ret === 'undefined' ) ? 'let i;' : 'let out, i;';
-	const call = ( ret === 'void' || ret === 'undefined' ) ? `${importName}( ${args.join( ', ' )} );` : `out = ${importName}( ${args.join( ', ' )} );`;
+	const lets = ( ret === 'void' || ret === 'undefined' ) ? 'let i;' : `let ${rv}, i;`;
+	const call = ( ret === 'void' || ret === 'undefined' ) ? `${importName}( ${args.join( ', ' )} );` : `${rv} = ${importName}( ${args.join( ', ' )} );`;
 	const max = ( is2d ) ? ( ( /\/lapack\//.test( o.dir ) ) ? 2 : 3 ) : 6;
 	const opts = ( needsUniform ) ? "const options = {\n\t'dtype': 'float64'\n};\n" : '';
 	return `${( header ) ? header + '\n' : ''}// MODULES //
@@ -665,6 +667,7 @@ async function processOne( dir, kind, write ) {
 	const names = sig.params.map( ( p ) => p.name );
 	const is2d = names.some( ( n ) => /^LD/i.test( n ) || /^stride\w+[12]$/.test( n ) || /^(A|B)P$|^AFP$/.test( n ) ) || /\/lapack\//.test( dir );
 	const literals = harvestStrings( dir );
+	sig.band = /^[dz](gb|sb|tb|hb|pb)/.test( routine ) || /^dlan(sb|tb|gb)|^zlan(sb|tb|gb|hb)/.test( routine );
 	const specs = buildSpecs( sig, is2d, literals );
 	specs.is2d = is2d;
 	specs.literals = literals;

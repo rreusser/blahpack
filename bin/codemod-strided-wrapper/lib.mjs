@@ -16,7 +16,7 @@ import * as walk from 'acorn-walk';
 const require = createRequire( import.meta.url );
 export const ROOT = path.resolve( path.dirname( new URL( import.meta.url ).pathname ), '..', '..' );
 const projection = require( path.join( ROOT, 'lint', 'lib', 'strided-projection.cjs' ) );
-export const { isWorkspace } = projection;
+export const { isWorkspace, isPackedMatrix } = projection;
 
 export function isStride( x ) {
 	return /^stride/i.test( x );

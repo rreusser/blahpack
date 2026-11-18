@@ -1,4 +1,5 @@
-// Pass 1: drop workspace strides from strided wrappers (CONVENTIONS D2/D5).
+// Pass 1: drop workspace and packed-matrix strides from strided wrappers
+// (CONVENTIONS D2/D5). A packed matrix AP is a contiguous triangle: no stride.
 //
 // A workspace array (WORK, IWORK, RWORK, …) is opaque scratch: the strided
 // wrapper takes just `WORK` and passes `WORK, 1, 0` to base. This pass removes
@@ -11,7 +12,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT, loadModules, isStride, isWorkspace, findCallSites, buildMapping, callEdit, applyEdits, rewriteTextCalls } from './lib.mjs';
+import { ROOT, loadModules, isStride, isWorkspace, isPackedMatrix, findCallSites, buildMapping, callEdit, applyEdits, rewriteTextCalls } from './lib.mjs';
 
 const argv = process.argv.slice( 2 );
 const DRY = argv.includes( '--dry' );
@@ -24,7 +25,7 @@ function esc( s ) {
 // Workspace-stride params of `got` that the projection does not have.
 function droppedStrides( m ) {
 	const want = new Set( m.want.map( ( x ) => x.toLowerCase() ) );
-	return m.got.filter( ( p, i ) => isStride( p ) && i > 0 && isWorkspace( m.got[ i - 1 ] ) && !want.has( p.toLowerCase() ) );
+	return m.got.filter( ( p, i ) => isStride( p ) && i > 0 && ( isWorkspace( m.got[ i - 1 ] ) || isPackedMatrix( m.got[ i - 1 ], m.routine ) ) && !want.has( p.toLowerCase() ) );
 }
 
 function transformWrapper( src, m, drops ) {
@@ -122,7 +123,15 @@ for ( const [ file, bindings ] of sites ) {
 		const mapping = buildMapping( m.got, m.newParams, ( p ) => {
 			throw new Error( m.routine + ': cannot insert ' + p );
 		});
+		const dropIdx = m.got.map( ( p, i ) => ( m.newParams.includes( p ) ? -1 : i ) ).filter( ( i ) => i >= 0 );
 		for ( const c of b.calls ) {
+			for ( const i of dropIdx ) {
+				const a = c.arguments[ i ];
+				if ( a && isPackedMatrix( m.got[ i - 1 ], m.routine ) && !( a.type === 'Literal' && a.value === 1 ) ) {
+					console.error( 'NON-UNIT PACKED STRIDE ' + path.relative( ROOT, file ) + ': ' + m.routine + ' ' + src.slice( a.start, a.end ) );
+					problems += 1;
+				}
+			}
 			edits.push( callEdit( src, c, mapping ) );
 			ncalls += 1;
 		}

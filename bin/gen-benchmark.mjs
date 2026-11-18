@@ -95,7 +95,12 @@ const INTS = {
 	'il': [ '1', '0', 'N' ],
 	'iu': [ 'N', 'N-1', '1' ],
 	'IL': [ '1', '0', 'N' ],
-	'IU': [ 'N', 'N-1', '1' ]
+	'IU': [ 'N', 'N-1', '1' ],
+
+	// Block sizes and (0-based) block start of the xTGEX2/xLAEXC/xTREXC family:
+	'n1': [ '1', '2' ],
+	'n2': [ '1', '2' ],
+	'j1': [ '0', '1' ]
 };
 const DEFAULT_INTS = [ 'N', '1', '0', '2', 'N-1', 'N / 2', 'N + 1', '2 * N', '3', '-1' ];
 const NUMBERS = [ '1.0', '0.5', '2.0', '0.0', '-1.0', '10.0' ];
@@ -105,7 +110,7 @@ const SIZES_2D = [ 'N * N', '4 * N * N', '16 * N * N' ];
 const WORK_2D = [ '(4 * N * N) + (64 * N)', '(16 * N * N) + (256 * N)', '(64 * N * N) + (1024 * N)' ];
 const SIZES_1D = [ 'N', '4 * N', '16 * N' ];
 const WORK_1D = [ '64 * N', '256 * N', '1024 * N' ];
-const RE_WORK = /^(WORK|RWORK|IWORK|BWORK|LWORK|ZWORK|DWORK|SWORK|work|rwork|iwork|bwork)$/;
+const RE_WORK = /^[A-Z]?work\w*$/i;
 
 
 // FUNCTIONS //
@@ -267,10 +272,10 @@ function buildSpecs( sig, is2d, literals ) {
 * @param {integer} tier - array size tier
 * @returns {*} value
 */
-function materialize( spec, N, tier ) {
+function materialize( spec, N, tier, pad ) {
 	if ( spec.kind === 'array' ) {
 		let len = Function( 'N', `return ${spec.cands[ Math.min( spec.idx + tier, spec.cands.length - 1 ) ]};` )( N );
-		if ( spec.type === 'Float64Array' ) {
+		if ( pad && spec.type === 'Float64Array' ) {
 			// Distinct padding per array so a failed complex reinterpretation
 			// ("Invalid typed array length: 2*len") identifies the array:
 			len += spec.tag;
@@ -353,11 +358,12 @@ function isBad( v ) {
 */
 function probe( fcn, specs ) {
 	let tier = 0;
+	let pad = true;
 	let lastErr = '';
 	for ( let iter = 0; iter < 200; iter++ ) {
 		let args;
 		try {
-			args = specs.map( ( s ) => materialize( s, PROBE_N, tier ) );
+			args = specs.map( ( s ) => materialize( s, PROBE_N, tier, pad ) );
 		} catch ( e ) {
 			return { 'ok': false, 'error': 'materialize: ' + e.message };
 		}
@@ -368,6 +374,11 @@ function probe( fcn, specs ) {
 			}
 			if ( isBad( v ) ) {
 				throw new Error( 'NaN result' );
+			}
+			if ( pad ) {
+				// Re-verify with the exact (unpadded) sizes the benchmark will use:
+				pad = false;
+				continue;
 			}
 			return { 'ok': true, 'tier': tier };
 		} catch ( e ) {

@@ -18,7 +18,11 @@
 *   drop-guard         S is `if ( G ) B` with no else: replaced by B, so B
 *                      runs on every exit (the old *latrs bug)
 *
-* and runs the routine's own tests against each mutant. A SURVIVING mutant means
+* and runs the routine's own tests against each mutant. Mutants are served in
+* memory by bin/break-mutants-loader.mjs; the working tree is never modified, so
+* concurrent runs are safe.
+*
+* A SURVIVING mutant means
 * the tests cannot distinguish the two exit semantics at that site. Equivalent
 * mutants (both semantics give identical results by construction) are recorded
 * in `test/break-mutants.equivalent.json` with a reason.
@@ -32,7 +36,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import os from 'node:os';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as espree from 'espree';
 
 const ROOT = path.resolve( path.dirname( fileURLToPath( import.meta.url ) ), '..' );
@@ -40,6 +45,7 @@ const EQUIV_PATH = path.join( ROOT, 'test', 'break-mutants.equivalent.json' );
 const TIMEOUT_MS = 120000;
 const LOOP = /^(For|While|DoWhile|ForOf|ForIn)Statement$/;
 const FLAG = '__breakMutantExited';
+const LOADER = path.join( ROOT, 'bin', 'break-mutants-loader.mjs' );
 
 function children( n ) {
 	const out = [];
@@ -158,10 +164,23 @@ function moduleDir( routine ) {
 	return null;
 }
 
-function runTests( dir ) {
+// Run the module's tests, optionally with `file` replaced in memory by `mutant`.
+function runTests( dir, file, mutant ) {
 	const tdir = path.join( dir, 'test' );
 	const files = fs.readdirSync( tdir ).filter( ( f ) => /^test.*\.js$/.test( f ) ).map( ( f ) => path.join( tdir, f ) );
-	const r = spawnSync( process.execPath, [ '--test', '--test-reporter=dot', ...files ], { 'cwd': ROOT, 'timeout': TIMEOUT_MS, 'encoding': 'utf8' } );
+	const env = Object.assign( {}, process.env );
+	let tmp = null;
+	if ( file ) {
+		tmp = path.join( fs.mkdtempSync( path.join( os.tmpdir(), 'break-mutant-' ) ), 'mutant.js' );
+		fs.writeFileSync( tmp, mutant );
+		env.NODE_OPTIONS = ( ( env.NODE_OPTIONS || '' ) + ' --import=' + pathToFileURL( LOADER ).href ).trim();
+		env.BREAK_MUTANT_TARGET = pathToFileURL( file ).href;
+		env.BREAK_MUTANT_SOURCE = tmp;
+	}
+	const r = spawnSync( process.execPath, [ '--test', '--test-reporter=dot', ...files ], { 'cwd': ROOT, 'timeout': TIMEOUT_MS, 'encoding': 'utf8', 'env': env } );
+	if ( tmp ) {
+		fs.rmSync( path.dirname( tmp ), { 'recursive': true, 'force': true } );
+	}
 	if ( r.error && r.error.code === 'ETIMEDOUT' ) {
 		return 'timeout';
 	}
@@ -197,13 +216,7 @@ function analyze( routine, equivalent ) {
 		}
 		for ( const site of found ) {
 			for ( const m of mutants( orig, site ) ) {
-				let outcome;
-				try {
-					fs.writeFileSync( file, m.src );
-					outcome = runTests( dir );
-				} finally {
-					fs.writeFileSync( file, orig );
-				}
+				const outcome = runTests( dir, file, m.src );
 				const line = site.breaks[ 0 ].loc.start.line;
 				const k = key( file, line, m.kind );
 				results.push({

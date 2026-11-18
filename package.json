@@ -959,6 +959,7 @@
     "lint:escape-hatches": "node lint/verify-no-escape-hatches.cjs",
     "typecheck": "tsc -p tsconfig.json",
     "gen:fortran-signatures": "node bin/gen_fortran_signatures.js",
+    "gen:fortran-ld-rules": "node bin/gen_fortran_ld_rules.js",
     "lint:fix": "bash bin/lint-fix.sh",
     "conformance": "node bin/conformance.js --all",
     "conformance:full": "node bin/conformance.js --all --coverage",

@@ -28,6 +28,7 @@ var SOURCE_RULES = {
 	'no-dprefix-conjugate-transpose': 'error',
 	'no-stub-wrappers': 'error',
 	'no-todo-params': 'error',
+	'no-nary-stdlib-minmax': 'error',
 	'z-prefix-reinterpret': 'error',
 
 	// Workspace strategy: base.js/ndarray.js never allocate a problem-sized

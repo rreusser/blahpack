@@ -2126,3 +2126,40 @@ Keep entries short. Newest first.
 - **Also fixed**: 21 `ndarray.js` doc blocks were copied from a `base.js` helper
   (e.g. `zgecon` documented as "CABS1"); `ztrevc3`/`dtrevc3`/`ztrevc` never write the
   `M` output (documented, not changed).
+
+## 2026-11-18 — Leading-dimension audit: wrapper LD checks regenerated from the reference rules
+
+- **Method**: new cache `data/fortran-ld-rules.json` (`npm run gen:fortran-ld-rules`)
+  records every routine's Fortran argument-check conditions on `LD*` plus the locals
+  they use. `bin/conformance/ld-rules.js` translates them (flags inlined from
+  base.js or translated from `LSAME`, option letters matched against the values
+  ndarray.js accepts, cascades → ternaries); column-major = the Fortran rule,
+  row-major = same rule with the bound replaced by the declared column count.
+  `bin/codemod-ld-checks.js` rewrote 526 wrappers; the `ld-rules` conformance
+  check now enforces the exact checks.
+- **Classes found (≈220 wrappers had a real defect):**
+  - *Rejected valid input*: BLAS-3 checked `LDA >= M` regardless of `transa`
+    (`A` is K-by-M when transposed); every band routine (xGBMV, xSBMV, xTBMV/SV,
+    xGBCON, xGBBRD, …) required `LDA >= M`/`N` instead of `KL+KU+1` / `K+1`, so
+    standard band storage was unusable from the layout wrapper; vector arrays were
+    required `>= N` even when not computed (Fortran: `>= 1` then).
+  - *Accepted out-of-bounds input*: the same checks when `K > M`; `dggrqf` checked
+    `LDB >= M` for a P-by-N `B`; several drivers (xGGES, xGGEV, …) had no LD check
+    at all.
+  - *Row-major aliasing*: `dtplqt`/`ztplqt` tests passed `LDT = 2` for a 2x3
+    row-major `T` (rows overlapped); the tests only asserted `info === 0`. They now
+    compare `T` against the column-major factorization (agrees to 1e-14).
+- **LAPACK documentation errors found** (declared shapes that contradict the code,
+  overridden in ld-rules.js): xGELQT3 and xTPLQT document `T` as `(LDT,N)` but use
+  `(LDT,M)` (M reflectors); ZTRSNA documents `WORK(LDWORK,N+6)` (copied from DTRSNA)
+  but only uses column N+1.
+- **Spin-off bug class — binary `max`/`min`**: the stdlib `max`/`min` (and `fast/`)
+  are binary; `max( 1, M, N )` silently returns `max( 1, M )`. Found because the
+  translator emitted `max( 1, M, N )` for xGELS; 11 pre-existing call sites were
+  wrong too, mostly default WORK sizes. Repro: `zgebrd( 'column-major', 3, 8, … )`
+  with WORK omitted returned NaN in `d`/`e` (allocated `max(1,M)` instead of
+  `max(M,N)`). New lint rule `no-nary-stdlib-minmax`; all sites nested.
+- **Not verified (documented, enforced column-major only)**: row-major layouts of
+  the block-structured TSQR/TSLQ `T` arrays (xLATSQR, xLASWLQ, xLAMTSQR, xLAMSWLQ,
+  xORGTSQR(_ROW), xORHR_COL and complex twins) — marked `'skip'` in ld-rules.js;
+  their existing row-major checks were kept unchanged.

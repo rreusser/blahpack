@@ -109,15 +109,21 @@ function detectStringParams( params, baseContent ) {
 /**
 * Detect which dimension params a signature has.
 *
+* A name like `K` or `M` that base.js documents as an array (e.g. `Int32Array`)
+* is an OUTPUT, not an input dimension, so it is not range-validated.
+*
 * @private
 * @param {Array} params - parameter names
+* @param {string} [baseContent] - base.js source (used to exclude array-typed outputs)
 * @returns {Array} parameter names that are dimensions
 */
-function detectDimensionParams( params ) {
+function detectDimensionParams( params, baseContent ) {
 	var result = [];
+	var re;
 	var i;
 	for ( i = 0; i < params.length; i++ ) {
-		if ( DIMENSION_PARAMS.has( params[ i ] ) ) {
+		re = new RegExp( '@param\\s*\\{[^}]*Array[^}]*\\}\\s+' + params[ i ] + '\\b' );
+		if ( DIMENSION_PARAMS.has( params[ i ] ) && !( baseContent && re.test( baseContent ) ) ) {
 			result.push( params[ i ] );
 		}
 	}
@@ -152,6 +158,24 @@ function detectLeadingDimParams( params ) {
 */
 function hasValidatorImport( content, validatorName ) {
 	return content.indexOf( validatorName ) >= 0;
+}
+
+/**
+* Check if a string param is validated, either by its stdlib assertion helper or
+* by an explicit `param !== '...' && ...` chain that throws a TypeError.
+*
+* The explicit form is required when LAPACK accepts more than the helper does
+* (e.g. `side = 'both'` in xTREVC/xTGEVC/xHSEIN, `uplo = 'all'` in xLACPY/xLASET);
+* demanding the helper there forced wrappers to reject valid values.
+*
+* @private
+* @param {string} content - file content
+* @param {Object} param - { name, validator }
+* @returns {boolean}
+*/
+function hasStringValidation( content, param ) {
+	var re = new RegExp( 'if \\(\\s*' + param.name + ' !== \'[^\']*\'[^)]*\\) \\{\\s*throw new TypeError' );
+	return hasValidatorImport( content, param.validator ) || re.test( content );
 }
 
 /**
@@ -284,7 +308,7 @@ function check( mod ) {
 			var missingRoutineValidators = [];
 			var i;
 			for ( i = 0; i < routineStrings.length; i++ ) {
-				if ( !hasValidatorImport( routineContent, routineStrings[ i ].validator ) ) {
+				if ( !hasStringValidation( routineContent, routineStrings[ i ] ) ) {
 					missingRoutineValidators.push( routineStrings[ i ].name + ' (' + routineStrings[ i ].validator + ')' );
 				}
 			}
@@ -304,7 +328,7 @@ function check( mod ) {
 		}
 
 		// Dimension validation
-		var routineDims = detectDimensionParams( routineParams );
+		var routineDims = detectDimensionParams( routineParams, baseContent );
 		if ( routineDims.length > 0 ) {
 			if ( hasRangeError( routineContent ) ) {
 				results.push( util.pass( ID + '.routine-dimension-validation', mod.routine + '.js validates dimensions' ) );
@@ -370,7 +394,7 @@ function check( mod ) {
 			var missingNdarrayValidators = [];
 			var j;
 			for ( j = 0; j < ndarrayStrings.length; j++ ) {
-				if ( !hasValidatorImport( ndarrayContent, ndarrayStrings[ j ].validator ) ) {
+				if ( !hasStringValidation( ndarrayContent, ndarrayStrings[ j ] ) ) {
 					missingNdarrayValidators.push( ndarrayStrings[ j ].name + ' (' + ndarrayStrings[ j ].validator + ')' );
 				}
 			}
@@ -390,7 +414,7 @@ function check( mod ) {
 		}
 
 		// Dimension validation in ndarray.js
-		var ndarrayDims = detectDimensionParams( ndarrayParams );
+		var ndarrayDims = detectDimensionParams( ndarrayParams, baseContent );
 		if ( ndarrayDims.length > 0 ) {
 			if ( hasRangeError( ndarrayContent ) ) {
 				results.push( util.pass( ID + '.ndarray-dimension-validation', 'ndarray.js validates dimensions' ) );

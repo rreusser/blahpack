@@ -962,6 +962,7 @@
     "tickets:check": "node bin/tickets.js check",
     "gen:fortran-signatures": "node bin/gen_fortran_signatures.js",
     "gen:fortran-ld-rules": "node bin/gen_fortran_ld_rules.js",
+    "gen:fortran-option-rules": "node bin/gen_fortran_option_rules.js",
     "lint:fix": "bash bin/lint-fix.sh",
     "conformance": "node bin/conformance.js --all",
     "conformance:full": "node bin/conformance.js --all --coverage",

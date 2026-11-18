@@ -1,9 +1,10 @@
 ---
 id: 0014
 title: Accepted option values are not checked against the values the reference Fortran accepts
-status: open
+status: resolved
 area: conformance
 opened: 2026-11-18
+resolved: 2026-11-18
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ opened: 2026-11-18
 ```bash
 for d in lib/*/base/d*/lib; do grep -q "=== 'transpose'" $d/base.js 2>/dev/null && grep -qE 'isTransposeOperation|isMatrixTranspose' $d/ndarray.js 2>/dev/null && echo $d; done
 ```
+
+## Resolution
+
+The new `option-rules` conformance check compares every option `ndarray.js` validates with the letters the reference accepts. `bin/gen_fortran_option_rules.js` derives those letters by evaluating each reference argument check letter by letter and writes them to `data/fortran-option-rules.json`. `option-parity` now also fails when the layout wrapper skips a validation that `ndarray.js` performs. `bin/codemod-option-rules.js` fixed the 52 `trans` arguments (including `dtrsyl`, which was too narrow) and inserted 41 missing wrapper validations. Regression tests were added for `dgemqrt`, `zunmqr` and `dtrsyl`. Options `ndarray.js` never validates are tracked in ticket 0022. See LEARNINGS.md 2026-11-18 (option values).

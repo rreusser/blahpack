@@ -2163,3 +2163,43 @@ Keep entries short. Newest first.
   the block-structured TSQR/TSLQ `T` arrays (xLATSQR, xLASWLQ, xLAMTSQR, xLAMSWLQ,
   xORGTSQR(_ROW), xORHR_COL and complex twins) — marked `'skip'` in ld-rules.js;
   their existing row-major checks were kept unchanged.
+
+## 2026-11-18 — Option values accepted beyond the reference: `trans` in 52 arguments (tickets/0014)
+
+- **What**: real routines validated `trans` with stdlib's `isTransposeOperation`,
+  which accepts `'conjugate-transpose'`, though reference DORMQR/DGEMQRT/DGELS/…
+  accept only N and T; complex routines accepted `'transpose'`, though reference
+  ZUNMQR/ZGELS/… accept only N and C. `base.js` sent the extra value down whichever
+  branch its comparisons left over:
+  - `dgemqrt`, `dgemlqt`, `dgels`, `dlamtsqr`, `dlamswlq`, `dtpmqrt`, `dtpmlqt`
+    branch on `=== 'transpose'`. `dgemqrt( 'left', 'conjugate-transpose', … )`
+    matched no branch and returned C unchanged, with `info = 0`.
+  - Complex `zunm*`/`zgels`/… given `'transpose'` silently applied Qᴴ instead of
+    rejecting.
+  - Conversely `dtrsyl` rejected `'conjugate-transpose'`, which DTRSYL accepts.
+- **Repro**: `dgemqrt( 'left', 'conjugate-transpose', 4, 4, 3, 2, V, 1, 4, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 )`
+  before the fix: no error, C unchanged. Regression tests in
+  `dgemqrt`/`zunmqr`/`dtrsyl` `test/test.ndarray.js`.
+- **Root cause**: nothing compared accepted option values with the reference.
+  `option-parity` only compares the wrapper against `ndarray.js`, and the
+  `no-dprefix-conjugate-transpose` lint rule bans the *literal* in real routines
+  but not its acceptance through the helper. The `dtrmm` instance of this class
+  (2026-07-17) was fixed in that routine only.
+- **Bug class**: `option-vocabulary` (accepted set ≠ reference set).
+- **Fix (APPLIED)**:
+  - `bin/gen_fortran_option_rules.js` evaluates each reference argument check
+    letter by letter (A–Z, LSAME semantics, locals and IF/ELSE cascades,
+    three-valued logic) → `data/fortran-option-rules.json`.
+  - The new `option-rules` conformance check holds `ndarray.js` to it: exact for
+    TRANS*/SIDE/UPLO/DIAG, by count otherwise.
+  - `option-parity` now also fails on options the wrapper takes but never
+    validates; 41 found, e.g. `dpftrs` forwarded `transr` unchecked.
+  - `bin/codemod-option-rules.js` rewrote 104 files and inserted the 41
+    validations.
+  - Fixing them exposed 13 scaffolded tests that passed invalid option values
+    (`transr = 2`, `'no-transpose'` as `direct`) and only passed because the
+    wrapper didn't validate.
+  - `tsc` then narrowed `trans` and flagged 4 now-unreachable `=== 'transpose'`
+    checks in `zgemqrt`/`zlamtsqr`, which were removed.
+- **Not covered**: options `ndarray.js` never validates (88 arguments) are
+  skipped by the check; see tickets/0022.

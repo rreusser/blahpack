@@ -645,5 +645,6 @@ module.exports = {
 	'expected': expected,
 	'checks': checks,
 	'nestMinMax': nestMinMax,
+	'ordinal': ordinal,
 	'wrapperParams': wrapperParams
 };

@@ -2068,3 +2068,61 @@ Keep entries short. Newest first.
   arity would catch the whole class.
 
 <!-- Add new entries above this line. -->
+
+## 2026-11-18 — `tsc --checkJs` sweep: stale call signatures, dead WORK sizing, wrong option/LD validation
+
+- **Trigger**: ran the TypeScript checker over every `lib/*/base/*/lib/*.js` using the
+  existing JSDoc (`npm run typecheck`, config in `tsconfig.json` +
+  `types/jsdoc-aliases.d.ts`). 222 errors → 0. Not a harness find, but recorded here
+  because several are silent-wrong-answer bugs and each is a reusable bug class.
+- **Silent wrong answers found:**
+  - `zlaqr2`/`zlaqr3` (AED, only reached for N > 75): `zcopy( ns, V, strideV1, … )`
+    copied V's first COLUMN, reference `ZCOPY( NS, V, LDV, … )` copies the first ROW
+    → must be `strideV2` (same bug as the 2026-05-17 `dlaqr2` fix; the "isolated"
+    audit then missed the complex twin). Also `zlarf` was called with a stale
+    signature (a `Complex128` scalar instead of `(tauArray, offsetTau)`), shifting every
+    later argument. Effect: `zgeev`/`zgees`/`zgeevx` returned info=0 with
+    eigen-residuals ~1e-1 for N > 75. Repro + regression: `zgeev/test/test.ndarray.js`
+    (random complex N=80, 120; `max |A v − w v|`).
+  - `zggsvd3` forwarded `jobu='compute-U'` to `ztgsja`, which only recognized
+    `'compute-vectors'` → Jacobi rotations never applied to U/V/Q (GSVD shared-R
+    residual ~1). Fixed by making `dtgsja`/`ztgsja` use LAPACK's meaning
+    (`'update'`/`'initialize'`/`'none'`) and having both GSVD drivers map their
+    `'compute-*'` to `'update'` (reference xGGSVD3 forwards 'U'/'V'/'Q', which xTGSJA
+    reads as "update"). Regression: `zggsvd3/test/test.ndarray.js` (shapes 5×4/4,
+    6×5/3, 4×6/5; seed 7). The `dtgsja.ndarray` validation also accepted `'compute'`,
+    which base silently treated as `'none'` (the benchmark timed the wrong path).
+  - `dtrsna`/`ztrsna` default WORK was `max(1, LDWORK, N+6)` for a reference
+    `WORK(LDWORK, N+6)` / `(LDWORK, N+1)` matrix → all SEP = NaN when WORK omitted.
+    Same class in `dlarfb`/`zlarfb` (`max(1, LDWORK, K)` for an LDWORK-by-K matrix).
+  - `ztgsen` passed a stale `lwork = -1` to `ztgsyl`, so `IWORK = -1` (only read on the
+    blocked path, n1 or n2 > block size).
+  - `dsaup2` computed `nev + np` on two length-1 `Int32Array`s (string concatenation).
+- **Crashes on documented signatures:** 11 z-routines' default-WORK sizing used
+  Fortran names (`NB`, `MB`, `NBLOCAL`, `N`, `lwork`) undefined in JS
+  (`zgeqrt`, `zhetri2`, `zhetri2x`, `zsytri2x`, `zla_porpvgrw`, `zlatsqr`, `ztplqt`,
+  `ztpqrt`, `zungtsqr`, `zungtsqr_row`, `zggbal`); `zhseqr` lacked the
+  `Complex128Array` import → ReferenceError whenever WORK was omitted.
+- **Option-validation class (new `option-parity` conformance check):** ~70 layout
+  wrappers accepted a different option set than `ndarray.js` — generated from only the
+  values seen in fixtures (e.g. `zgeev` rejected `'no-vectors'`, `dlarfb` rejected
+  `'backward'`/`'rowwise'`, the xTREVC/xTGEVC/xHSEIN family rejected `side='both'`,
+  xLACPY/xLASET rejected `uplo='all'`, RFP routines rejected `transr='transpose'`).
+  Where `ndarray.js` was the over-permissive side it was tightened to the Fortran set:
+  xGECON/xGBCON/xGTCON `norm` ('max'/'frobenius' silently computed the inf-norm
+  estimate), xTREXC/xTRSEN `compq` ('initialize' silently skipped Q), RFP `transr`
+  (real: N/T, complex: N/C). The conventions check's name-based demand for
+  `isOperationSide`/`isMatrixTriangle` was what forced the narrow wrappers; it now
+  accepts an explicit literal validation chain.
+- **Leading-dimension class:** scaffolded wrapper LD checks ("rows if column-major,
+  cols if row-major") ignored the option that makes a matrix optional
+  (reference: `LDZ >= 1, and >= N when WANTZ`), used the wrong dimension
+  (`dtgsja` LDV/LDQ vs M; `dlarfb` LDT vs M), or compared against an OUTPUT array
+  (`max( 1, M )` with `M` an Int32Array → NaN → dead check: dstevx, dtgsen, dtgsna,
+  dtrsen, ztgevc, ztrsen, ztrsna). Rewritten from the reference rules for the
+  affected routines. **Where else it might hide:** any other wrapper whose LD check
+  is not conditional on the corresponding job flag — the remaining wrappers were not
+  audited against Fortran in this pass.
+- **Also fixed**: 21 `ndarray.js` doc blocks were copied from a `base.js` helper
+  (e.g. `zgecon` documented as "CABS1"); `ztrevc3`/`dtrevc3`/`ztrevc` never write the
+  `M` output (documented, not changed).

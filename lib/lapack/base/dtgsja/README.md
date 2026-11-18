@@ -47,7 +47,7 @@ var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 
-dtgsja.ndarray( 'compute-U', 'compute-V', 'compute-Q', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
+dtgsja.ndarray( 'update', 'update', 'update', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
 ```
 
 The function has the following parameters:
@@ -97,7 +97,7 @@ var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 
-dtgsja.ndarray( 'compute-U', 'compute-V', 'compute-Q', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
+dtgsja.ndarray( 'update', 'update', 'update', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
 ```
 
 The function has the following additional parameters:
@@ -154,7 +154,7 @@ var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 var WORK = discreteUniform( N, -10, 10, opts );
 
-dtgsja.ndarray( 'compute-U', 'compute-V', 'compute-Q', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
+dtgsja.ndarray( 'update', 'update', 'update', N, 1, N, N, 1, A, N, 1, 0, B, N, 1, 0, 1, 1, ALPHA, 1, 0, BETA, 1, 0, U, N, 1, 0, V, N, 1, 0, Q, N, 1, 0, WORK, 1, 0, 1 );
 ```
 
 </section>

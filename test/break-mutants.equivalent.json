@@ -37,5 +37,9 @@
 	"lib/lapack/base/zsteqr/lib/base.js:303:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken.",
 	"lib/arpack/base/dstqrb/lib/base.js:130:skip-after-break": "The split loop only breaks at m <= N-2, so the guard `m > N - 2` is false whenever the break is taken (matching Fortran GO TO 30 skipping `M = N`).",
 	"lib/arpack/base/dstqrb/lib/base.js:187:skip-after-break": "The QL search loop only breaks at m <= lend-1, so the guard `m > lend - 1` is false whenever the break is taken.",
-	"lib/arpack/base/dstqrb/lib/base.js:294:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken."
+	"lib/arpack/base/dstqrb/lib/base.js:294:skip-after-break": "The QR search loop only breaks at m >= lend+1, so the guard `m < lend + 1` is false whenever the break is taken.",
+	"lib/lapack/base/dhgeqz/lib/base.js:320:skip-after-break": "Both breaks out of the DO 60 loop happen with converged === true (one inside `if ( converged )`, one right after `converged = true`), so `!converged` is false on every break.",
+	"lib/lapack/base/zhgeqz/lib/base.js:811:skip-after-break": "The only break fires inside the body, where the loop condition jj >= ifirst + 1 holds and jj has not yet been decremented, so the guard `jj < ifirst + 1` is false on every break.",
+	"lib/lapack/base/dtgsja/lib/base.js:205:skip-after-break": "The convergence break fires inside `for ( kcycle = 1; kcycle <= MAXIT; kcycle++ )` and the body never changes kcycle, so kcycle <= MAXIT on every break and the guard `kcycle > MAXIT` is false.",
+	"lib/lapack/base/ztgsja/lib/base.js:285:skip-after-break": "The convergence break fires inside `for ( kcycle = 1; kcycle <= MAXIT; kcycle++ )` and the body never changes kcycle, so kcycle <= MAXIT on every break and the guard `kcycle > MAXIT` is false."
 }

@@ -25,7 +25,9 @@
 * A SURVIVING mutant means
 * the tests cannot distinguish the two exit semantics at that site. Equivalent
 * mutants (both semantics give identical results by construction) are recorded
-* in `test/break-mutants.equivalent.json` with a reason.
+* in `test/break-mutants.equivalent.json` with a reason. An entry whose reason
+* starts with `UNREACHABLE` is a mutant that is NOT equivalent but whose path no
+* known input reaches; it is reported as `unreach`, separately from `equiv`.
 *
 * Usage:
 *   node bin/break-mutants.mjs <routine> [<routine> ...]
@@ -245,7 +247,7 @@ function main( argv ) {
 				console.log( r + ': ' + res.error );
 			} else {
 				res.results.forEach( ( x ) => {
-					const tag = x.killed ? 'killed  ' : ( x.equivalent ? 'equiv   ' : 'SURVIVED' );
+					const tag = x.killed ? 'killed  ' : ( x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED' );
 					console.log( tag + '  ' + x.site + '  ' + x.kind + '  next: ' + x.next );
 				});
 			}
@@ -258,7 +260,8 @@ function main( argv ) {
 	const bad = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && !x.equivalent ) );
 	if ( !asJson ) {
 		const total = all.reduce( ( n, r ) => n + ( r.results || [] ).length, 0 );
-		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors' );
+		const unreach = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && /^UNREACHABLE/.test( x.equivalent || '' ) ) );
+		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors, ' + unreach.length + ' unreachable (not equivalent)' );
 	}
 	if ( check && bad.length ) {
 		process.exitCode = 1;

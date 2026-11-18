@@ -15,7 +15,18 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
 - The `*latrs`/`*latps`/`*latbs` growth-bound bug (LEARNINGS 2026-11-18, fixed in 57427401): the faulty `break` was covered in all six routines, but only by singular or tiny-diagonal inputs, where `xbnd` had already collapsed to 0, so running `grow = xbnd` was harmless.
 - `python bin/goto-exits.py --translated`: 154 Fortran sites in 65 translated routines exit a loop past code (131 past-code, 19 multi-level, 4 cycle-outer).
 - `node bin/break-mutants.mjs zlatrs` against the pre-fix `zlatrs` and its old tests: the `skip-after-break` mutant at the bug site survives. On the fixed family, all non-equivalent mutants are killed.
-- Sweep of the 32 other translated routines whose Fortran has such exits and whose JS has a `break` followed by code: 139 mutants, 68 killed, 71 survived in 26 routines (`dsteqr`/`zsteqr`/`dsterf`/`dstqrb`, the four `*gsvj0`/`*gsvj1`, `dlahqr`/`zlahqr`/`dlaqr0`/`dlaqr4`/`zlaqr4`, `dhgeqz`/`zhgeqz`/`dtgsja`/`ztgsja`/`ztgsen`, `dlaein`/`zlaein`/`dlaed2`/`dlasq2`, `dggbal`/`zggbal`/`dsapps`). Early triage finds both equivalent mutants (`dlaqr0` k-search: a completed JS `for` already leaves `k = ilo`) and real test gaps (`dlaqr0` `info` is only tested with `ilo = 1`). Triage is in progress.
+- Sweep and triage of every translated routine whose Fortran has such exits (38 routines with JS break sites; the tool also follows the exit out of `if` branches): 193 mutants, of which 136 are killed, 56 are equivalent with recorded proofs (`test/break-mutants.equivalent.json`), 1 is unreachable (`dlasq2` INFO = 2), and 0 are unexplained.
+- Real bugs found by, or during, the triage, all fixed with tests that fail on the old code (LEARNINGS 2026-11-18):
+  - the `*latrs`/`*latps`/`*latbs` growth bound (6 routines);
+  - the `dsterf` QR deflation, where a completion guard also fired on a break;
+  - the `zgsvj1` convergence threshold;
+  - the `dlaqr4` IPARMQ parameters and the `dlaqr0` shift count (tickets/0028).
+- About 40 test gaps closed. Examples: `zsteqr` had no scaled-input tests; `dlaein` had no complex-eigenvalue tests; the careful path was untested for 5 of the 6 scaled triangular solvers.
+
+## Remaining
+
+- The check is not in CI and has only been run on routines whose Fortran has exits that skip code. Loops whose JS `break` was introduced in translation (no Fortran GO TO) are unchecked. A full-corpus run plus a CI gate on changed routines would close this.
+- Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 
 ## Reproduce
 

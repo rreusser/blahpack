@@ -2005,4 +2005,21 @@ Keep entries short. Newest first.
   stride on opaque scratch has no use case; prefer dropping workspace strides
   over "fixing" them.
 
+## 2026-11-18 — ztgsen/ztgsyl tests ran with scrambled workspace arguments
+
+- **Trigger**: adding the unit-workspace-stride assertion to every `ndarray.js`
+  (CONVENTIONS.md D5). `ztgsen` and `ztgsyl` `test.ndarray.js` immediately threw
+  "`strideIWork` must be 1 … Value: `0`".
+- **Root cause**: the tests still passed the removed `lwork`/`liwork` arguments
+  (`WK, 1, 0, -1, IWK, 1, 0, -1` and `null, 1, 0, -1, IWORK, 1, 0`). Every argument
+  after `offsetWork` was shifted by one: `IWORK` received `-1`, `strideIWork`
+  received the IWORK array, and so on. The tests passed anyway because the paths
+  they exercise never touch IWORK, so the call looked fine.
+- **Bug class**: `stale-arity-in-tests` — a signature change (dropping `lwork`) that
+  left surplus arguments in test calls. Nothing compares test call arity against
+  the function's arity; test files are also excluded from ESLint.
+- **Where else it hides**: any test calling an ndarray function with more
+  arguments than it declares. An argument-count check on test calls (like the
+  `base-arity` conformance check, but for tests) would catch the class.
+
 <!-- Add new entries above this line. -->

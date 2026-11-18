@@ -120,6 +120,27 @@ ndarray form, which keeps them.
 `dsytrf`, `zggevx`, `zhetrd`, `zsytrf`) now thread caller-owned workspace through
 `base.js`.
 
+### D5 — workspace offset and stride (RESOLVED 2026-11-18)
+
+Workspace (`WORK`, `IWORK`, `RWORK`, `BWORK`, …) is unobservable scratch:
+outputs carry no guarantee about its contents. So in `base.js`/`ndarray.js`:
+
+* **offset → must be honored.** It is how a driver reuses one caller buffer by
+  handing each callee a slice (`zggevx` keeps an eigenvector pair at
+  `WORK(1:2N)` and passes `ztgevc` `WORK(2N+1:)`).
+* **stride → unit only, for now.** The parameter stays for parity with
+  stdlib's ndarray shape, but nothing needs strided scratch, so `ndarray.js`
+  throws a `RangeError` unless it is `1`. Supporting non-unit workspace
+  strides is a future feature, if anyone asks for it.
+* **A stride is either supported or rejected — never silently ignored.** If a
+  `WORK`-named array is really a documented output (`dlasd5`:
+  `WORK(j) = D(j) + sigma`), its `base.js` honors the stride and `ndarray.js`
+  need not reject it.
+
+Enforced by `workspace-addressing-honored`. Tests vary the workspace offset
+(`schemes.unitStride( layout )` in the harness) and must leave every output
+bit-identical.
+
 ## Conformance status
 
 Run the exact checks over the corpus with `node lint/verify-corpus.cjs`. Current

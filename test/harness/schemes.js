@@ -343,7 +343,21 @@ function vectorLayouts() {
 	];
 }
 
+/**
+* Restrict a vector layout to a caller-owned WORKSPACE vector. Workspace is
+* unobservable scratch and only a unit stride is supported (lint/CONVENTIONS.md
+* D5): ndarray.js rejects any other stride. What still varies, and must leave
+* every output bit-identical, is where the scratch starts (`lead` = offset) and
+* what surrounds it (`tail`), since drivers hand callees slices of one buffer.
+*
+* @param {(Object|null)} layout - vector layout (or null for tight)
+* @returns {Object} the same layout with `stride: 1`
+*/
+function unitStride( layout ) {
+	return Object.assign( {}, layout || {}, { 'stride': 1 } );
+}
+
 
 // EXPORTS //
 
-export { dense, banded, packed, realizeVector, vectorLayouts, denseAlloc };
+export { dense, banded, packed, realizeVector, vectorLayouts, unitStride, denseAlloc };

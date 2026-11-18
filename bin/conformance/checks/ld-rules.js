@@ -18,6 +18,11 @@
 * row-major") rejected valid calls (band storage, transposed operands, unwanted
 * vectors), accepted out-of-bounds ones, or compared against an output array.
 *
+* A bound may not reference an array argument or a reference output (INTENT(OUT)):
+* `max( 1, M )` with M the Int32Array eigenvector count is NaN, so `LD < NaN`
+* never fires (tickets/0001). The translator reports such a rule as unresolved;
+* give the column count in ld-rules.js COLS.
+*
 * Fix a failure with `node bin/codemod-ld-checks.js <routine>`. Rules whose
 * row-major layout is not yet verified are marked 'skip' in ld-rules.js and
 * only their column-major check is enforced.

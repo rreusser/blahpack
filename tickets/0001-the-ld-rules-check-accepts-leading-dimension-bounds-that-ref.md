@@ -1,9 +1,10 @@
 ---
 id: 0001
 title: The `ld-rules` check accepts leading-dimension bounds that reference array arguments
-status: open
+status: resolved
 area: conformance
 opened: 2026-11-18
+resolved: 2026-11-18
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ opened: 2026-11-18
 ```bash
 grep -n 'max( 1, M )\|max( 1, max( 1, M ) )' lib/lapack/base/dstevx/lib/dstevx.js lib/lapack/base/dtgsna/lib/dtgsna.js
 ```
+
+## Resolution
+
+The `ld-rules` translator in `bin/conformance/ld-rules.js` now refuses to use array-typed parameters (JSDoc type or indexing in `base.js`) and reference INTENT(OUT) arguments as bounds; such a rule stays unresolved, so the `ld-rules` check fails until COLS gives the column count. COLS now covers `stevx` and `tgsna`, and the codemod regenerated `dstevx`, `dtgsna` and `ztgsna` (`ztgsna` had the same bug with a scalar output `M`). Regression tests in `test.dstevx.js` and `test.dtgsna.js` fail on the old checks. See LEARNINGS.md 2026-11-18 (output arguments as LD bounds).

@@ -2203,3 +2203,35 @@ Keep entries short. Newest first.
     checks in `zgemqrt`/`zlamtsqr`, which were removed.
 - **Not covered**: options `ndarray.js` never validates (88 arguments) are
   skipped by the check; see tickets/0022.
+
+## 2026-11-18 — Generated LD checks compared against output arguments (tickets/0001)
+
+- **What**: the leading-dimension checks generated earlier the same day gave
+  three wrappers row-major bounds built from the routine's *output* count `M`:
+  - `dstevx`: `LDZ < max( 1, max( 1, M ) )`;
+  - `dtgsna`/`ztgsna`: `LDVL`/`LDVR < max( 1, M )`.
+
+  In `dstevx`/`dtgsna` `M` is an `Int32Array`, so `max( 1, M )` is `NaN` and the
+  check could never fire. In `ztgsna` `M` is a scalar the caller passes and
+  `base.js` overwrites, so the check compared against a meaningless input.
+  Undersized row-major `Z`/`VL`/`VR` were accepted and then read and written
+  out of bounds.
+- **Repro**: `dstevx( 'row-major', 'compute-vectors', 'all', 3, …, Z, 1, … )`
+  returned instead of throwing. Regression tests are in `test.dstevx.js` and
+  `test.dtgsna.js`; both fail on the old checks.
+- **Root cause**: `bin/conformance/ld-rules.js` substituted any same-named
+  wrapper parameter for a Fortran identifier. The `ld-rules` check verifies
+  wrappers against that same translation, so it passed the bad checks. Found by
+  type-checking with stdlib's declarations loaded (tickets/0003): `max` takes
+  `(number, number)`.
+- **Bug class**: `generator-self-validation`, a check that compares code to the
+  output of the generator that produced it inherits the generator's mistakes.
+  Here the specific mistake was output-as-bound.
+- **Fix (APPLIED)**: the translator refuses array-typed parameters (detected
+  from the JSDoc type *or* from `base.js` indexing the parameter, since the JSDoc
+  is unreliable; see tickets/0002) and reference `INTENT(OUT)` arguments. Such a
+  rule is reported unresolved until `COLS` gives the column count:
+  - `stevx`: `range === 'index' ? iu - il + 1 : N`, as for `syevx`;
+  - `tgsna`: `mm`, as for `trsna`.
+
+  Exactly these three wrappers changed.

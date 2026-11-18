@@ -87,6 +87,9 @@ var COLS = {
 	'ztrsna': { 'LDWORK': 'js:( N < 2 ) ? N : N + 1' },
 	// Z( LDZ, max(1,M) ) where M (found eigenvalues) is an output: its largest possible value.
 	'syevx': { 'LDZ': "js:( range === 'index' ) ? iu - il + 1 : N" },
+	'stevx': { 'LDZ': "js:( range === 'index' ) ? iu - il + 1 : N" },
+	// VL( LDVL, * ) / VR( LDVR, * ) hold MM columns; M (columns used) is an output.
+	'tgsna': { 'LDVL': 'js:mm', 'LDVR': 'js:mm' },
 	'syevr': { 'LDZ': "js:( range === 'index' ) ? iu - il + 1 : N" },
 	'stevr': { 'LDZ': "js:( range === 'index' ) ? iu - il + 1 : N" },
 	'sbevx': { 'LDZ': "js:( range === 'index' ) ? iu - il + 1 : N" },
@@ -265,6 +268,18 @@ function translate( expr, ctx, seen ) {
 		var up = name.toUpperCase();
 		if ( FKEYWORDS.test( up ) ) {
 			return pre + up.toLowerCase();
+		}
+		if ( ctx.arrays[ up ] ) {
+			// An array argument is never a bound: Fortran scalar outputs such as
+			// M (eigenvectors found) are Int32Array in JS, and `max( 1, M )` is NaN,
+			// which makes `LD < NaN` a check that never fires (tickets/0001).
+			unresolved.push( up + '(array argument; give the column count in COLS)' );
+			return m;
+		}
+		if ( ctx.outputs[ up ] ) {
+			// Nor is an output: its value on entry is meaningless (ztgsna's M).
+			unresolved.push( up + '(output argument; give the column count in COLS)' );
+			return m;
 		}
 		if ( ctx.params[ up ] ) {
 			return pre + ctx.params[ up ];
@@ -453,6 +468,35 @@ function usesOnlyParams( expr, ctx ) {
 }
 
 /**
+* Wrapper parameters that are arrays (upper-cased name → true): JSDoc type is an
+* array, or base.js indexes the parameter. Both, because the JSDoc is not always
+* right (tickets/0002).
+*/
+function arrayParams( wrapperSrc, baseSrc, params ) {
+	var out = {};
+	params.forEach( function each( name ) {
+		var doc = new RegExp( '@param \\{([^}]*)\\} \\[?' + name + '\\b' ).exec( wrapperSrc );
+		if ( ( doc && /Array|Collection/.test( doc[ 1 ] ) ) || new RegExp( '\\b' + name + '\\[' ).test( baseSrc ) ) {
+			out[ name.toUpperCase() ] = true;
+		}
+	});
+	return out;
+}
+
+/**
+* Reference arguments with INTENT(OUT) (upper-cased name → true).
+*/
+function outputArgs( routine ) {
+	var out = {};
+	( ( SIGS[ routine ] && SIGS[ routine ].arguments ) || [] ).forEach( function each( a ) {
+		if ( a.intent === 'out' ) {
+			out[ a.name.toUpperCase() ] = true;
+		}
+	});
+	return out;
+}
+
+/**
 * Expected wrapper checks for a routine: { LDX: { col, row, fortran, unresolved } }.
 * `row` is null when the wrapper has no `order` parameter (column-major only).
 */
@@ -470,6 +514,8 @@ function expected( routine, wrapperSrc, baseSrc, ndarraySrc ) {
 	}
 	ctx = {
 		'params': {},
+		'arrays': arrayParams( wrapperSrc, baseSrc, params ),
+		'outputs': outputArgs( routine ),
 		'base': baseSrc,
 		'locals': entry.locals || {},
 		'extraLocals': EXTRA_LOCALS[ stem( routine ) ] || null,

@@ -433,6 +433,23 @@ If coverage is low, add targeted test cases:
 - **Convergence failure paths (info > 0):** Require matrices that defeat
   iterative convergence. Accept as uncovered with inline TODO comment.
 
+**Coverage does not verify early loop exits.** A `break` translating a Fortran
+`GO TO` out of a loop can be 100% covered and still wrong: the
+`*latrs`/`*latps`/`*latbs` growth-bound exit ran `GROW = XBND`, which the
+Fortran skips, and every test passed because no input made the two choices
+differ (tickets/0027). Run the early-exit mutation check:
+
+```bash
+python bin/goto-exits.py <routine>          # Fortran exits that skip post-loop code
+node bin/break-mutants.mjs --check <routine> 2>&1 | tail -20
+```
+
+Each `SURVIVED` mutant marks a `break` where the tests cannot tell whether the
+code after the loop should run. Add a test that makes the two choices differ (an
+input that takes the exit while the skipped statement would change the result),
+or, if both choices are provably identical, record the site with its reason in
+`test/break-mutants.equivalent.json`.
+
 ### Step 7: Lint the module
 
 ```bash
@@ -667,6 +684,7 @@ sine values from a reinterpreted WORK array, copy to a scratch
 | `CABS1(z)` | `Math.abs(re) + Math.abs(im)` | NOT the same as `ABS`. Used for backward error norms. `ABS` is the true modulus — do not confuse them. |
 | Complex `X.NE.ZERO` | `xr !== 0.0 \|\| xi !== 0.0` | Must use OR, not AND. Fortran checks both real and imaginary parts are zero. Using AND would skip updates when only one part is zero. |
 | `safmin` / `safmax` | `require('@stdlib/constants/float64/smallest-normal')` / `1.0/safmin` | Use stdlib constants, not magic numbers. Hoist to module scope — never call `dlamch()` inside a function body. |
+| `IF (c) GO TO 60` in a loop, with statements between the loop end and `60` | guard the post-loop code: `if ( j === jlast ) { … }` or a flag | A bare `break` runs the statements the `GO TO` skipped. See `docs/goto-patterns.md`; `python bin/goto-exits.py <routine>` lists every such site. |
 
 ### Hermitian vs. Symmetric: Silent Differences
 

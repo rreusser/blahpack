@@ -106,6 +106,14 @@ function resolveStride( suffix, params, idx ) {
 		if ( dm[ 2 ] === '1' && idx.hasArray( base ) && idx.has( 'stride' + base ) ) {
 			return { 'resolved': true, 'effSuffix': base };
 		}
+		// Collision form in the strided projection: array `Q2` beside a 2-D
+		// matrix `Q` is `strideQ21` (the offset form's `strideQ2` is Q's
+		// second stride). Projected, Q carries `LDQ` instead of strides, so the
+		// disambiguated name stands without its `strideQ2` sibling.
+		var mb = /^(.*)2$/.exec( base );
+		if ( dm[ 2 ] === '1' && mb && idx.hasArray( base ) && idx.has( 'LD' + mb[ 1 ].toUpperCase() ) ) {
+			return { 'resolved': true, 'effSuffix': base };
+		}
 	}
 
 	// (3) shared stride over parallel arrays (strided form).

@@ -1,45 +1,44 @@
-{{alias}}( trans, M, N, nrhs, A, LDA, B, LDB, WORK, strideWORK, lwork )
-    Solves overdetermined or underdetermined systems for general matrices.
+{{alias}}( order, trans, M, N, nrhs, A, LDA, B, LDB, WORK )
+    Solves overdetermined or underdetermined complex linear systems involving an
+    M-by-N matrix `A`, or its conjugate transpose, using a QR or LQ
+    factorization of `A`.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     trans: string
-        specifies whether the matrix should be transposed.
+        Specifies whether to solve with `A` (`'no-transpose'`) or its conjugate transpose (`'conjugate-transpose'`).
 
     M: integer
-        number of rows.
+        Number of rows of `A`.
 
     N: integer
-        number of columns.
+        Number of columns of `A`.
 
     nrhs: integer
-        number of right-hand sides.
+        Number of right-hand sides.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        Input matrix `A`; overwritten with its factorization.
 
     LDA: integer
-        leading dimension of `A`.
+        Leading dimension of `A`.
 
-    B: Float64Array
-        `B`.
+    B: Complex128Array
+        `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit.
 
     LDB: integer
-        leading dimension of `B`.
+        Leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`).
 
-    WORK: Float64Array
-        `WORK`.
-
-    strideWORK: integer
-        stride length for `WORK`.
-
-    lwork: integer
-        `lwork`.
+    WORK: Complex128Array|null
+        Workspace; if `null`, a workspace is allocated internally.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code.
 
     Examples
     --------

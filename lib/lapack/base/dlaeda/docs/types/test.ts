@@ -23,7 +23,7 @@ import dlaeda = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dlaeda( 'row-major', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2, 2, 2, 2, new Float64Array( 4 ), 2, new Float64Array( 4 ), 2 ); // $ExpectType Float64Array
+	dlaeda( 'column-major', 2, 2, 2, 2, new Int32Array( 4 ), 1, new Int32Array( 4 ), 1, new Int32Array( 4 ), 1, new Int32Array( 8 ), 2, new Float64Array( 8 ), 2, new Float64Array( 4 ), 1, new Int32Array( 4 ), 1, new Float64Array( 4 ), 1, new Float64Array( 4 ), 1 ); // $ExpectType Float64Array
 }
 
 // The compiler throws an error if the function is provided an unsupported number of arguments...

@@ -30,7 +30,7 @@ limitations under the License.
 var zsytrs = require( '@stdlib/lapack/base/zsytrs' );
 ```
 
-#### zsytrs( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
+#### zsytrs( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
 
 Perform complex division, storing result in module-level cdR and cdI.
 
@@ -47,20 +47,16 @@ zsytrs.ndarray( 'upper', N, N, A, N, 1, 0, IPIV, 1, 0, B, N, 1, 0 );
 
 The function has the following parameters:
 
--   **uplo**: specifies whether the upper or lower triangular part is referenced.
--   **N**: number of columns.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **uplo**: specifies whether the upper or lower triangle was factored (`'upper'` or `'lower'`).
+-   **N**: order of the matrix `A`.
 -   **nrhs**: number of right-hand sides.
--   **A**: input array `A`.
--   **strideA1**: stride of dimension 1 of `A`.
--   **strideA2**: stride of dimension 2 of `A`.
--   **offsetA**: starting index for `A`.
--   **IPIV**: input array `IPIV`.
+-   **A**: factored matrix from `zsytrf`.
+-   **LDA**: leading dimension of `A`.
+-   **IPIV**: pivot indices from `zsytrf`.
 -   **strideIPIV**: stride length for `IPIV`.
--   **offsetIPIV**: starting index for `IPIV`.
--   **B**: input array `B`.
--   **strideB1**: stride of dimension 1 of `B`.
--   **strideB2**: stride of dimension 2 of `B`.
--   **offsetB**: starting index for `B`.
+-   **B**: right-hand side matrix; overwritten with the solution.
+-   **LDB**: leading dimension of `B`.
 
 #### zsytrs.ndarray( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
 

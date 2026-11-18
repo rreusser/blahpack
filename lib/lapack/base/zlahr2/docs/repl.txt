@@ -1,71 +1,58 @@
-{{alias}}( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
+{{alias}}( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY )
     Reduces the first nb columns of a complex general rectangular matrix to
     upper trapezoidal form.
 
     Parameters
     ----------
+    order: string
+        storage layout (`'row-major'` or `'column-major'`).
+
     N: integer
-        number of columns.
+        number of rows of `A`.
 
     K: integer
-        inner dimension.
+        offset for the reduction.
 
     nb: integer
-        `nb`.
+        number of columns to reduce.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        input/output `N`-by-`(N-K+1)` matrix.
 
-    strideA1: integer
-        stride of dimension 1 of `A`.
+    LDA: integer
+        leading dimension of `A`.
 
-    strideA2: integer
-        stride of dimension 2 of `A`.
-
-    offsetA: integer
-        starting index for `A`.
-
-    tau: Float64Array
-        `tau`.
+    tau: Complex128Array
+        output array of scalar factors (length `nb`).
 
     strideTAU: integer
-        stride length for `TAU`.
+        stride length for `tau`.
 
-    offsetTAU: integer
-        starting index for `TAU`.
+    T: Complex128Array
+        output `nb`-by-`nb` upper triangular matrix.
 
-    T: Float64Array
-        `T`.
+    LDT: integer
+        leading dimension of `T`.
 
-    strideT1: integer
-        stride of dimension 1 of `T`.
+    Y: Complex128Array
+        output `N`-by-`nb` matrix.
 
-    strideT2: integer
-        stride of dimension 2 of `T`.
-
-    offsetT: integer
-        starting index for `T`.
-
-    Y: Float64Array
-        `Y`.
-
-    strideY1: integer
-        stride of dimension 1 of `Y`.
-
-    strideY2: integer
-        stride of dimension 2 of `Y`.
-
-    offsetY: integer
-        starting index for `Y`.
+    LDY: integer
+        leading dimension of `Y`.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    undefined
 
     Examples
     --------
-    // TODO: Add examples
+    > var N = 3;
+    > var A = new {{alias:@stdlib/array/complex128}}( N * N );
+    > var tau = new {{alias:@stdlib/array/complex128}}( 2 );
+    > var T = new {{alias:@stdlib/array/complex128}}( 4 );
+    > var Y = new {{alias:@stdlib/array/complex128}}( N * 2 );
+
+    > {{alias}}( 'column-major', N, 1, 2, A, N, tau, 1, T, 2, Y, N );
 
 
 {{alias}}.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )

@@ -30,7 +30,7 @@ limitations under the License.
 var zsytrf = require( '@stdlib/lapack/base/zsytrf' );
 ```
 
-#### zsytrf( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
+#### zsytrf( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
 
 Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
 
@@ -46,15 +46,14 @@ zsytrf.ndarray( 'upper', N, A, N, 1, 0, IPIV, 1, 0 );
 
 The function has the following parameters:
 
--   **uplo**: specifies whether the upper or lower triangular part is referenced.
--   **N**: number of columns.
--   **A**: input array `A`.
--   **strideA1**: stride of dimension 1 of `A`.
--   **strideA2**: stride of dimension 2 of `A`.
--   **offsetA**: starting index for `A`.
--   **IPIV**: input array `IPIV`.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **uplo**: specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`).
+-   **N**: order of the matrix `A`.
+-   **A**: input/output matrix `A`; overwritten with the block diagonal factor and multipliers.
+-   **LDA**: leading dimension of `A`.
+-   **IPIV**: output pivot indices.
 -   **strideIPIV**: stride length for `IPIV`.
--   **offsetIPIV**: starting index for `IPIV`.
+-   **WORK**: workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally.
 
 #### zsytrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 

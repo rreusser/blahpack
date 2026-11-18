@@ -18,6 +18,10 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Layout } from '@stdlib/types/blas';
+
 /**
 * Interface describing `zlahr2`.
 */
@@ -25,27 +29,20 @@ interface Routine {
 	/**
 	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
 	*
-	* @param N - number of columns
-	* @param K - inner dimension
-	* @param nb - `nb`
-	* @param A - `A`
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
-	* @param tau - `tau`
-	* @param strideTAU - stride of `TAU`
-	* @param offsetTAU - starting index for `TAU`
-	* @param T - `T`
-	* @param strideT1 - stride of `T`
-	* @param strideT2 - stride of `T`
-	* @param offsetT - starting index for `T`
-	* @param Y - `Y`
-	* @param strideY1 - stride of `Y`
-	* @param strideY2 - stride of `Y`
-	* @param offsetY - starting index for `Y`
-	* @returns result
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param N - number of rows of `A`
+	* @param K - offset for the reduction
+	* @param nb - number of columns to reduce
+	* @param A - input/output `N`-by-`(N-K+1)` matrix
+	* @param LDA - leading dimension of `A`
+	* @param tau - output array of scalar factors (length `nb`)
+	* @param strideTAU - stride length for `tau`
+	* @param T - output `nb`-by-`nb` upper triangular matrix
+	* @param LDT - leading dimension of `T`
+	* @param Y - output `N`-by-`nb` matrix
+	* @param LDY - leading dimension of `Y`
 	*/
-	( N: number, K: number, nb: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, tau: Float64Array, strideTAU: number, offsetTAU: number, T: Float64Array, strideT1: number, strideT2: number, offsetT: number, Y: Float64Array, strideY1: number, strideY2: number, offsetY: number ): Float64Array;
+	( order: Layout, N: number, K: number, nb: number, A: Complex128Array, LDA: number, tau: Complex128Array, strideTAU: number, T: Complex128Array, LDT: number, Y: Complex128Array, LDY: number ): void;
 
 	/**
 	* Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form using alternative indexing semantics.

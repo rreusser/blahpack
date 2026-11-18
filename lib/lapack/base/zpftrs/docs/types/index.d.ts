@@ -20,7 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
 
 /**
 * Interface describing `zpftrs`.
@@ -29,15 +29,18 @@ interface Routine {
 	/**
 	* @license Apache-2.0.
 	*
+	* @param order - storage layout
 	* @param transr - `transr`
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
 	* @param N - number of columns
 	* @param nrhs - number of right-hand sides
 	* @param A - `A`
+	* @param strideA - stride length for `A`
 	* @param B - `B`
+	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, B: Float64Array ): Float64Array;
+	( order: Layout, transr: string, uplo: MatrixTriangle, N: number, nrhs: number, A: Float64Array, strideA: number, B: Float64Array, LDB: number ): Float64Array;
 
 	/**
 	* @license Apache-2.0 using alternative indexing semantics.

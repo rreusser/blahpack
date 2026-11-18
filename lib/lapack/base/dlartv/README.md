@@ -30,7 +30,7 @@ limitations under the License.
 var dlartv = require( '@stdlib/lapack/base/dlartv' );
 ```
 
-#### dlartv( N, x, strideX, y, strideY, c, s, strideCS )
+#### dlartv( N, x, strideX, y, strideY, c, strideC, s, strideS )
 
 Applies a vector of real plane rotations to elements of two real vectors.
 
@@ -54,8 +54,9 @@ The function has the following parameters:
 -   **y**: `y`.
 -   **strideY**: stride length for `Y`.
 -   **c**: `c`.
+-   **strideC**: stride length for `C`.
 -   **s**: `s`.
--   **strideCS**: stride length for `CS`.
+-   **strideS**: stride length for `S`.
 
 #### dlartv.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, strideC, offsetC, s, strideS, offsetS )
 

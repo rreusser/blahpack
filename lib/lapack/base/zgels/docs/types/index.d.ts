@@ -20,29 +20,29 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { TransposeOperation } from '@stdlib/types/blas';
+import { Layout, TransposeOperation } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zgels`.
 */
 interface Routine {
 	/**
-	* Solves overdetermined or underdetermined complex linear systems involving an.
+	* Solves overdetermined or underdetermined complex linear systems involving an M-by-N matrix `A`, or its conjugate transpose, using a QR or LQ factorization of `A`.
 	*
-	* @param trans - specifies whether the matrix should be transposed
-	* @param M - number of rows
-	* @param N - number of columns
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param trans - specifies whether to solve with `A` (`'no-transpose'`) or its conjugate transpose (`'conjugate-transpose'`)
+	* @param M - number of rows of `A`
+	* @param N - number of columns of `A`
 	* @param nrhs - number of right-hand sides
-	* @param A - `A`
+	* @param A - input matrix `A`; overwritten with its factorization
 	* @param LDA - leading dimension of `A`
-	* @param B - `B`
-	* @param LDB - leading dimension of `B`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param lwork - workspace size
-	* @returns result
+	* @param B - `max(M,N)`-by-`nrhs` matrix: the right-hand sides on entry, the solution on exit
+	* @param LDB - leading dimension of `B` (column-major: `>= max(1,M,N)`; row-major: `>= max(1,nrhs)`)
+	* @param WORK - workspace; if `null`, a workspace is allocated internally
+	* @returns info status code
 	*/
-	( trans: TransposeOperation, M: number, N: number, nrhs: number, A: Float64Array, LDA: number, B: Float64Array, LDB: number, WORK: Float64Array, strideWORK: number, lwork: number ): Float64Array;
+	( order: Layout, trans: TransposeOperation, M: number, N: number, nrhs: number, A: Complex128Array, LDA: number, B: Complex128Array, LDB: number, WORK: Complex128Array | null ): number;
 
 	/**
 	* Solves overdetermined or underdetermined complex linear systems involving an using alternative indexing semantics.
@@ -72,7 +72,6 @@ interface Routine {
 * Solves overdetermined or underdetermined complex linear systems involving an.
 */
 declare var zgels: Routine;
-
 
 // EXPORTS //
 

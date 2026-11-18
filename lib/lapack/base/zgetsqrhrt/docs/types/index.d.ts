@@ -21,6 +21,7 @@
 /// <reference types="@stdlib/types"/>
 
 import { Layout } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zgetsqrhrt`.
@@ -29,21 +30,21 @@ interface Routine {
 	/**
 	* Computes a column-blocked QR factorization of a complex M-by-N matrix using TSQR followed by Householder reconstruction.
 	*
-	* @param order - storage layout
-	* @param M - number of rows
-	* @param N - number of columns
-	* @param mb1 - mb1
-	* @param nb1 - nb1
-	* @param nb2 - nb2
-	* @param A - input matrix
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param M - number of rows of `A` (`M >= N`)
+	* @param N - number of columns of `A`
+	* @param mb1 - row block size for the internal TSQR (`mb1 > N`)
+	* @param nb1 - column block size for the internal TSQR
+	* @param nb2 - block size for the output blocked QR
+	* @param A - input/output matrix `A`
 	* @param LDA - leading dimension of `A`
-	* @param T - input matrix
+	* @param T - output block reflector factors
 	* @param LDT - leading dimension of `T`
-	* @param WORK - output array
-	* @param strideWORK - stride length for `WORK`
-	* @returns result
+	* @param WORK - workspace of length at least `lwt + N*N + lw2` (see `zgetsqrhrt` for `lwt`, `lw2`); if `null`, a workspace is allocated internally
+	* @param RWORK - workspace of length at least `N`; if `null`, a workspace is allocated internally
+	* @returns status code
 	*/
-	( order: Layout, M: number, N: number, mb1: number, nb1: number, nb2: number, A: Float64Array, LDA: number, T: Float64Array, LDT: number, WORK: Float64Array, strideWORK: number ): Float64Array;
+	( order: Layout, M: number, N: number, mb1: number, nb1: number, nb2: number, A: Complex128Array, LDA: number, T: Complex128Array, LDT: number, WORK: Complex128Array | null, RWORK: Float64Array | null ): number;
 
 	/**
 	* Computes a column-blocked QR factorization of a complex M-by-N matrix using TSQR followed by Householder reconstruction., using alternative indexing semantics.

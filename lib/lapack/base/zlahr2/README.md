@@ -30,42 +30,36 @@ limitations under the License.
 var zlahr2 = require( '@stdlib/lapack/base/zlahr2' );
 ```
 
-#### zlahr2( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
+#### zlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY )
 
 Reduces the first nb columns of a complex general rectangular matrix to upper trapezoidal form.
 
 ```javascript
-var zlahr2 = require( '@stdlib/lapack/base/zlahr2' );
+var Complex128Array = require( '@stdlib/array/complex128' );
 
 var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var T = discreteUniform( N * N, -10, 10, opts );
-var Y = discreteUniform( N * N, -10, 10, opts );
-var tau = discreteUniform( N, -10, 10, opts );
+var A = new Complex128Array( N * N );
+var tau = new Complex128Array( 2 );
+var T = new Complex128Array( 4 );
+var Y = new Complex128Array( N * 2 );
 
-zlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, N, 1, 0, Y, N, 1, 0 );
+zlahr2( 'column-major', N, 1, 2, A, N, tau, 1, T, 2, Y, N );
 ```
 
 The function has the following parameters:
 
--   **N**: number of columns.
--   **K**: inner dimension.
--   **nb**: `nb`.
--   **A**: input array `A`.
--   **strideA1**: stride of dimension 1 of `A`.
--   **strideA2**: stride of dimension 2 of `A`.
--   **offsetA**: starting index for `A`.
--   **tau**: `tau`.
--   **strideTAU**: stride length for `TAU`.
--   **offsetTAU**: starting index for `TAU`.
--   **T**: input array `T`.
--   **strideT1**: stride of dimension 1 of `T`.
--   **strideT2**: stride of dimension 2 of `T`.
--   **offsetT**: starting index for `T`.
--   **Y**: input array `Y`.
--   **strideY1**: stride of dimension 1 of `Y`.
--   **strideY2**: stride of dimension 2 of `Y`.
--   **offsetY**: starting index for `Y`.
+-   **order**: storage layout (`'row-major'` or `'column-major'`).
+-   **N**: number of rows of `A`.
+-   **K**: offset for the reduction.
+-   **nb**: number of columns to reduce.
+-   **A**: input/output `N`-by-`(N-K+1)` matrix.
+-   **LDA**: leading dimension of `A`.
+-   **tau**: output array of scalar factors (length `nb`).
+-   **strideTAU**: stride length for `tau`.
+-   **T**: output `nb`-by-`nb` upper triangular matrix.
+-   **LDT**: leading dimension of `T`.
+-   **Y**: output `N`-by-`nb` matrix.
+-   **LDY**: leading dimension of `Y`.
 
 #### zlahr2.ndarray( N, K, nb, A, strideA1, strideA2, offsetA, tau, strideTAU, offsetTAU, T, strideT1, strideT2, offsetT, Y, strideY1, strideY2, offsetY )
 

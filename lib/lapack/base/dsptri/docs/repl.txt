@@ -1,20 +1,29 @@
-{{alias}}( uplo, N, AP, IPIV )
+{{alias}}( order, uplo, N, AP, IPIV, strideIPIV, WORK )
     Computes the inverse of a real symmetric matrix in packed storage using
     the factorization computed by dsptrf.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     uplo: string
-        specifies whether the upper or lower triangular part is referenced.
+        Specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`).
 
     N: integer
-        number of columns.
+        Order of the matrix `A`.
 
     AP: Float64Array
-        `AP`.
+        Packed factored matrix from `dsptrf`; on exit, the packed inverse.
 
     IPIV: Int32Array
-        `IPIV`.
+        Pivot indices from the factorization.
+
+    strideIPIV: integer
+        Stride length for `IPIV`.
+
+    WORK: Float64Array|null
+        Workspace of length at least `N`; if `null`, a workspace is allocated internally.
 
     Returns
     -------

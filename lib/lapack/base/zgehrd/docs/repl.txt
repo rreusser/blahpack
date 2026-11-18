@@ -1,56 +1,48 @@
-{{alias}}( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )
+{{alias}}( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK )
     Reduces a complex general matrix to upper Hessenberg form using blocked
     algorithm.
 
     Parameters
     ----------
+    order: string
+        storage layout (`'row-major'` or `'column-major'`).
+
     N: integer
-        number of columns.
+        order of the matrix `A`.
 
     ilo: integer
-        `ilo`.
+        lower index of the balanced matrix (1-based).
 
     ihi: integer
-        `ihi`.
+        upper index of the balanced matrix (1-based).
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        input/output matrix; on exit, the upper Hessenberg matrix and the reflectors.
 
-    strideA1: integer
-        stride of dimension 1 of `A`.
+    LDA: integer
+        leading dimension of `A`.
 
-    strideA2: integer
-        stride of dimension 2 of `A`.
-
-    offsetA: integer
-        starting index for `A`.
-
-    TAU: Float64Array
-        `TAU`.
+    TAU: Complex128Array
+        output array of scalar factors of the elementary reflectors (length `N-1`).
 
     strideTAU: integer
         stride length for `TAU`.
 
-    offsetTAU: integer
-        starting index for `TAU`.
-
-    WORK: Float64Array
-        `WORK`.
-
-    strideWORK: integer
-        stride length for `WORK`.
-
-    offsetWORK: integer
-        starting index for `WORK`.
+    WORK: Complex128Array|null
+        workspace (or `null` to allocate one internally).
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code (0 = success).
 
     Examples
     --------
-    // TODO: Add examples
+    > var A = new {{alias:@stdlib/array/complex128}}( [ 1.0, 0.0, 2.0, 1.0, 3.0, -1.0, 4.0, 0.0 ] );
+    > var TAU = new {{alias:@stdlib/array/complex128}}( 1 );
+
+    > var info = {{alias}}( 'column-major', 2, 1, 2, A, 2, TAU, 1, null );
+    // returns 0
 
 
 {{alias}}.ndarray( N, ilo, ihi, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWORK, offsetWORK )

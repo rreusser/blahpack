@@ -1,54 +1,43 @@
-{{alias}}( uplo, N, nrhs, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, B, strideB1, strideB2, offsetB )
-    Perform complex division, storing result in module-level cdR and cdI.
+{{alias}}( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB )
+    Solves a system of linear equations `A*X = B` with a complex symmetric
+    matrix `A` using the factorization computed by `zsytrf`.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     uplo: string
-        specifies whether the upper or lower triangular part is referenced.
+        Specifies whether the upper or lower triangle was factored (`'upper'` or `'lower'`).
 
     N: integer
-        number of columns.
+        Order of the matrix `A`.
 
     nrhs: integer
-        number of right-hand sides.
+        Number of right-hand sides.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        Factored matrix from `zsytrf`.
 
-    strideA1: integer
-        stride of dimension 1 of `A`.
-
-    strideA2: integer
-        stride of dimension 2 of `A`.
-
-    offsetA: integer
-        starting index for `A`.
+    LDA: integer
+        Leading dimension of `A`.
 
     IPIV: Int32Array
-        `IPIV`.
+        Pivot indices from `zsytrf`.
 
     strideIPIV: integer
-        stride length for `IPIV`.
+        Stride length for `IPIV`.
 
-    offsetIPIV: integer
-        starting index for `IPIV`.
+    B: Complex128Array
+        Right-hand side matrix; overwritten with the solution.
 
-    B: Float64Array
-        `B`.
-
-    strideB1: integer
-        stride of dimension 1 of `B`.
-
-    strideB2: integer
-        stride of dimension 2 of `B`.
-
-    offsetB: integer
-        starting index for `B`.
+    LDB: integer
+        Leading dimension of `B`.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code.
 
     Examples
     --------

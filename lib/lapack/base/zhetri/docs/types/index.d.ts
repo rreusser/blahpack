@@ -20,7 +20,8 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zhetri`.
@@ -29,14 +30,17 @@ interface Routine {
 	/**
 	* Computes the inverse of a complex Hermitian matrix using the factorization computed by zhetrf.
 	*
-	* @param uplo - specifies whether the upper or lower triangular part is referenced
-	* @param N - number of columns
-	* @param A - `A`
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param uplo - specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`)
+	* @param N - order of the matrix `A`
+	* @param A - input/output matrix `A`
 	* @param LDA - leading dimension of `A`
-	* @param IPIV - `IPIV`
-	* @returns result
+	* @param IPIV - pivot indices from the factorization
+	* @param strideIPIV - stride length for `IPIV`
+	* @param WORK - workspace of length at least `N`; if `null`, a workspace is allocated internally
+	* @returns status code
 	*/
-	( uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Complex128Array | null ): number;
 
 	/**
 	* Computes the inverse of a complex Hermitian matrix using the factorization computed by zhetrf using alternative indexing semantics.

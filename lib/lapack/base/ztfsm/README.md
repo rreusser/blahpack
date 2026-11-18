@@ -30,14 +30,14 @@ limitations under the License.
 var ztfsm = require( '@stdlib/lapack/base/ztfsm' );
 ```
 
-#### ztfsm( transr, side, uplo, trans, diag, M, N, alpha, A, B )
+#### ztfsm( order, transr, side, uplo, trans, diag, M, N, alpha, A, strideA, B, LDB )
 
 Solves a matrix equation with a complex triangular matrix in Rectangular Full Packed format.
 
 ```javascript
 var ztfsm = require( '@stdlib/lapack/base/ztfsm' );
 
-ztfsm( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, B );
+ztfsm( 'column-major', 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, 1, B, 3 );
 ```
 
 The function has the following parameters:
@@ -60,7 +60,7 @@ Solves a matrix equation with a complex triangular matrix in Rectangular Full Pa
 ```javascript
 var ztfsm = require( '@stdlib/lapack/base/ztfsm' );
 
-ztfsm( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, B );
+ztfsm( 'column-major', 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, 1, B, 3 );
 ```
 
 The function has the following additional parameters:
@@ -94,7 +94,7 @@ The function has the following additional parameters:
 ```javascript
 var ztfsm = require( '@stdlib/lapack/base/ztfsm' );
 
-ztfsm( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, B );
+ztfsm( 'column-major', 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 1, alpha, A, 1, B, 3 );
 ```
 
 </section>

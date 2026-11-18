@@ -18,39 +18,59 @@
 
 // TypeScript Version: 4.1
 
-/// <reference types="@stdlib/types"/>
-
-
-
 /**
 * Interface describing `dlartgp`.
 */
 interface Routine {
 	/**
-	* Generates a plane rotation with non-negative diagonal
+	* Generates a plane rotation with non-negative diagonal.
 	*
-	* @param f - f
-	* @param g - g
-	* @param cs - cs
-	* @param sn - sn
-	* @param r - r
+	* @param f - first component of the vector to be rotated
+	* @param g - second component of the vector to be rotated
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 3 );
+	* dlartgp( 3.0, 4.0, out );
+	* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 	*/
-	( f: number, g: number, cs: number, sn: number, r: number ): void;
+	( f: number, g: number, out: Float64Array ): Float64Array;
 
 	/**
 	* Generates a plane rotation with non-negative diagonal, using alternative indexing semantics.
 	*
-	* @param f - f
-	* @param g - g
-	* @param cs - cs
-	* @param sn - sn
-	* @param r - r
+	* @param f - first component of the vector to be rotated
+	* @param g - second component of the vector to be rotated
+	* @param out - output array
+	* @returns output array
+	*
+	* @example
+	* var Float64Array = require( '@stdlib/array/float64' );
+	*
+	* var out = new Float64Array( 3 );
+	* dlartgp.ndarray( 3.0, 4.0, out );
+	* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 	*/
-	ndarray( f: number, g: number, cs: number, sn: number, r: number ): void;
+	ndarray( f: number, g: number, out: Float64Array ): Float64Array;
 }
 
 /**
-* Generates a plane rotation with non-negative diagonal
+* Generates a plane rotation with non-negative diagonal.
+*
+* @param f - first component of the vector to be rotated
+* @param g - second component of the vector to be rotated
+* @param out - output array
+* @returns output array
+*
+* @example
+* var Float64Array = require( '@stdlib/array/float64' );
+*
+* var out = new Float64Array( 3 );
+* dlartgp( 3.0, 4.0, out );
+* // returns <Float64Array>[ 0.6, 0.8, 5.0 ]
 */
 declare var dlartgp: Routine;
 

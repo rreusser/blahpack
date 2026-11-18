@@ -18,6 +18,10 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Layout } from '@stdlib/types/blas';
+
 /**
 * Interface describing `zgehrd`.
 */
@@ -25,22 +29,18 @@ interface Routine {
 	/**
 	* Reduces a complex general matrix to upper Hessenberg form using blocked algorithm.
 	*
-	* @param N - number of columns
-	* @param ilo - lower index
-	* @param ihi - upper index
-	* @param A - `A`
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
-	* @param TAU - `TAU`
-	* @param strideTAU - stride of `TAU`
-	* @param offsetTAU - starting index for `TAU`
-	* @param WORK - `WORK`
-	* @param strideWORK - stride of `WORK`
-	* @param offsetWORK - starting index for `WORK`
-	* @returns result
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param N - order of the matrix `A`
+	* @param ilo - lower index of the balanced matrix (1-based)
+	* @param ihi - upper index of the balanced matrix (1-based)
+	* @param A - input/output matrix; on exit, the upper Hessenberg matrix and the reflectors
+	* @param LDA - leading dimension of `A`
+	* @param TAU - output array of scalar factors of the elementary reflectors (length `N-1`)
+	* @param strideTAU - stride length for `TAU`
+	* @param WORK - workspace (or `null` to allocate one internally)
+	* @returns status code
 	*/
-	( N: number, ilo: number, ihi: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, TAU: Float64Array, strideTAU: number, offsetTAU: number, WORK: Float64Array, strideWORK: number, offsetWORK: number ): Float64Array;
+	( order: Layout, N: number, ilo: number, ihi: number, A: Complex128Array, LDA: number, TAU: Complex128Array, strideTAU: number, WORK: Complex128Array | null ): number;
 
 	/**
 	* Reduces a complex general matrix to upper Hessenberg form using blocked algorithm using alternative indexing semantics.

@@ -1,40 +1,37 @@
 # `workspace-addressing-honored`
 
-base.js must honor the declared offset **and stride** of every caller-owned workspace array it uses.
+Caller-owned workspace contract (`lint/CONVENTIONS.md` D5): `base.js` honors
+the declared offset; a declared stride is either rejected by `ndarray.js` or
+honored by `base.js`.
 
-**Files:** `base.js`
+**Files:** `base.js`, `ndarray.js`
 
-Caller-owned workspace (`WORK`/`RWORK`/`IWORK`/`BWORK`/...) comes with an
-`offsetX`. The offset is load-bearing: a driver sub-allocates one caller buffer
-among its callees by offset (e.g. `zggevx` keeps an eigenvector pair at
-`WORK(1:2N)` and hands `ztgevc` `WORK(2N+1:)`). A kernel that ignores it
-silently overwrites the caller's other partitions whenever the offset is
-nonzero, and every call site that happens to pass `0` hides the bug
-(`test/harness/LEARNINGS.md`, 2026-11-17, ztgevc).
+Workspace is unobservable scratch, so its two addressing parameters have
+different jobs:
 
-Caller-owned workspace (`WORK`/`RWORK`/`IWORK`/`BWORK`/...) comes with
-`strideX, offsetX` in `base.js`/`ndarray.js`. Declared means honored: a
-caller passing a nonzero offset or a non-unit stride must get exactly those
-elements read and written.
+* **Offset — load-bearing.** A driver reuses one caller buffer by handing each
+  callee a slice. A kernel that ignores the offset overwrites the caller's
+  other slices whenever it is nonzero (`test/harness/LEARNINGS.md`,
+  2026-11-17, ztgevc).
+* **Stride — unit only.** Kept in the signature for parity with stdlib's
+  ndarray shape; nothing needs strided scratch. Supporting non-unit strides is
+  a future feature.
 
-Reported, only when the array itself is referenced in the body:
+Reported in `base.js`, only when the array itself is referenced:
 
-1. a declared `offsetX` or `strideX` that is never read;
-2. the array forwarded to a call with an integer literal `0` where its offset
-   goes (`W, s, 0` or `W, s1, s2, 0`), unless one of the next three arguments
-   already mentions `offsetX` (the `(array, offset)` pair convention);
-3. the array forwarded with a numeric literal where its stride goes (`W, 1, …`);
-4. an element access `W[ … ]` (or on a `reinterpret( W, … )` view) whose index
-   varies but is never scaled by the stride. Variables and local helper
-   functions derived from `strideX` count as scaled.
+1. a declared `offsetX` that is never read;
+2. the array forwarded with an integer literal `0` where its offset goes
+   (`W, s, 0` or `W, s1, s2, 0`), unless one of the next three arguments
+   mentions `offsetX` (the `(array, offset)` pair convention).
 
-Accepted: rebasing the offset once at entry (`WORK = WORK.subarray( offsetWork );`)
-and then addressing from 0 *with the stride*. A declared but unreferenced
-workspace (an unused Fortran argument) is not checked.
+Rebasing once (`WORK = WORK.subarray( offsetWork );`) honors the offset, and
+`reinterpret( W, 0 )` builds a view rather than forwarding.
 
-The strided `<routine>.js` wrapper takes workspace with no stride
-(CONVENTIONS.md D2) and passes `WORK, 1, 0` to base; this rule checks `base.js`
-only.
+Reported in `ndarray.js`: a workspace whose `strideX` is neither compared
+against `1` (the rejection) nor honored by the sibling `base.js`. Honored
+means the stride is read, the array is never forwarded with a literal stride,
+and every varying element index is scaled by a value derived from the stride.
+That is the branch a `WORK`-named documented output takes (`dlasd5`).
 
 Examples are in [`fixtures/pass`](fixtures/pass) and [`fixtures/fail`](fixtures/fail).
 Run `node --test lint/rules/workspace-addressing-honored/test.cjs`.

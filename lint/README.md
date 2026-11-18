@@ -83,7 +83,7 @@ workspace strategy and catch scaffolding/convention defects:
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
-| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js` | A caller-owned workspace that is used must be addressed through its declared offset and stride. |
+| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `ndarray.js` | Workspace offsets are honored in `base.js`; a workspace stride is either rejected in `ndarray.js` (must be 1) or honored by `base.js` (CONVENTIONS.md D5). |
 | [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
 | [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
@@ -98,9 +98,7 @@ New rules' tests are one line calling the shared fixture runner,
 path with `// target:` and, for failures, the expected report with `// expect:`.
 (The first three rules predate it and carry their own `test.cjs`.)
 
-**Workspace strides (decided 2026-11-17): keep and enforce.** `base.js`/`ndarray.js`
-keep `strideX` on caller-owned workspace and must honor it
-(`workspace-addressing-honored`); the strided `<routine>.js` form takes none (D2).
+**Workspace offset and stride:** see CONVENTIONS.md D5. Offsets are honored; strides must be 1 unless `base.js` honors them.
 
 **No escape hatches.** Every check is a hard CI gate; there is no baseline,
 known-failures list, `continue-on-error`, or `'warn'` level.

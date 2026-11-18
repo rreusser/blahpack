@@ -30,7 +30,7 @@ limitations under the License.
 var dlaeda = require( '@stdlib/lapack/base/dlaeda' );
 ```
 
-#### dlaeda( order, N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, offsetPRMPTR, PERM, stridePERM, offsetPERM, GIVPTR, strideGIVPTR, offsetGIVPTR, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, LDGIVNUM, q, strideQ, QPTR, strideQPTR, offsetQPTR, z, strideZ, ZTEMP, strideZTEMP )
+#### dlaeda( order, N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, PERM, stridePERM, GIVPTR, strideGIVPTR, GIVCOL, LDGIVCOL, GIVNUM, LDGIVNUM, q, strideQ, QPTR, strideQPTR, z, strideZ, ZTEMP, strideZTEMP )
 
 Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
 
@@ -50,40 +50,37 @@ var givptr = new Int32Array( 4 );
 var givcol = new Int32Array( 2 * 4 );
 var givnum = new Float64Array( 2 * 4 );
 
-dlaeda( 'row-major', N, 1, 1, 0, prmptr, 1, 0, perm, 1, 0, givptr, 1, 0, givcol, 2, 1, 0, givnum, N, q, 1, QPTR, 1, 0, z, 1, ZTEMP, 1 );
+dlaeda( 'column-major', N, 1, 1, 0, prmptr, 1, perm, 1, givptr, 1, givcol, 2, givnum, 2, q, 1, QPTR, 1, z, 1, ZTEMP, 1 );
+// z => <Float64Array>[ 0.0, 1.0, 1.0, 0.0 ]
 ```
 
 The function has the following parameters:
 
--   **order**: storage layout (`'row-major'` or `'column-major'`).
--   **N**: number of columns.
+-   **order**: storage layout of `GIVCOL` and `GIVNUM` (`'row-major'` or `'column-major'`).
+-   **N**: size of the current subproblem.
 -   **tlvls**: tlvls.
 -   **curlvl**: curlvl.
 -   **curpbm**: curpbm.
 -   **PRMPTR**: input array.
 -   **stridePRMPTR**: stride length for `PRMPTR`.
--   **offsetPRMPTR**: starting index for `PRMPTR`.
 -   **PERM**: input array.
 -   **stridePERM**: stride length for `PERM`.
--   **offsetPERM**: starting index for `PERM`.
 -   **GIVPTR**: input array.
 -   **strideGIVPTR**: stride length for `GIVPTR`.
--   **offsetGIVPTR**: starting index for `GIVPTR`.
--   **GIVCOL**: input matrix.
--   **strideGIVCOL1**: stride of the first dimension of `GIVCOL`.
--   **strideGIVCOL2**: stride of the second dimension of `GIVCOL`.
--   **offsetGIVCOL**: starting index for `GIVCOL`.
+-   **GIVCOL**: input matrix (2-by-*).
+-   **LDGIVCOL**: leading dimension of `GIVCOL`.
 -   **GIVNUM**: input matrix.
 -   **LDGIVNUM**: leading dimension of `GIVNUM`.
 -   **q**: input array.
 -   **strideQ**: stride length for `q`.
 -   **QPTR**: input array.
 -   **strideQPTR**: stride length for `QPTR`.
--   **offsetQPTR**: starting index for `QPTR`.
 -   **z**: input array.
 -   **strideZ**: stride length for `z`.
 -   **ZTEMP**: output array.
 -   **strideZTEMP**: stride length for `ZTEMP`.
+
+The tree-indexed arrays (`PRMPTR`, `PERM`, `GIVPTR`, `q`, `QPTR`) are addressed through stored pointers, so their length is not derivable from `N`; for a negative stride, their first element is the last element reachable from the end of the buffer.
 
 #### dlaeda.ndarray( N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, offsetPRMPTR, PERM, stridePERM, offsetPERM, GIVPTR, strideGIVPTR, offsetGIVPTR, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, strideGIVNUM1, strideGIVNUM2, offsetGIVNUM, q, strideQ, offsetQ, QPTR, strideQPTR, offsetQPTR, z, strideZ, offsetZ, ZTEMP, strideZTEMP, offsetZTEMP )
 
@@ -180,7 +177,8 @@ var givptr = new Int32Array( 4 );
 var givcol = new Int32Array( 2 * 4 );
 var givnum = new Float64Array( 2 * 4 );
 
-dlaeda( 'row-major', N, 1, 1, 0, prmptr, 1, 0, perm, 1, 0, givptr, 1, 0, givcol, 2, 1, 0, givnum, N, q, 1, QPTR, 1, 0, z, 1, ZTEMP, 1 );
+dlaeda( 'column-major', N, 1, 1, 0, prmptr, 1, perm, 1, givptr, 1, givcol, 2, givnum, 2, q, 1, QPTR, 1, z, 1, ZTEMP, 1 );
+// z => <Float64Array>[ 0.0, 1.0, 1.0, 0.0 ]
 console.log( z );
 ```
 

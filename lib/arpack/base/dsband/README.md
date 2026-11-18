@@ -30,7 +30,7 @@ limitations under the License.
 import dsband from '@stdlib/arpack/base/dsband/lib/index.js';
 ```
 
-#### dsband( rvec, howmny, select, d, Z, ldz, sigma, N, AB, MB, lda, RFAC, kl, ku, which, bmat, nev, tol, resid, ncv, V, ldv, iparam, workd, workl, lworkl, iwork, infoIn )
+#### dsband( order, rvec, howmny, select, strideSelect, d, strideD, Z, LDZ, sigma, N, AB, LDAB, MB, LDMB, RFAC, LDRFAC, kl, ku, which, bmat, nev, tol, resid, strideResid, ncv, V, LDV, iparam, strideIparam, workd, workl, lworkl, iwork, infoIn )
 
 Computes converged approximations to the eigenvalues of `A*z = lambda*B*z`, where `A` and `B` are symmetric matrices stored in LAPACK band form, and optionally the corresponding eigenvectors. Unlike the lower-level ARPACK routines, `dsband` is a **self-contained driver**: it runs the entire `dsaupd`/`dseupd` reverse-communication loop internally (applying the banded operators via `dgbtrf`, `dgbtrs`, and `dgbmv`) and returns once the iteration converges.
 
@@ -90,7 +90,7 @@ var iwork = new Int32Array( n );
 var select = new Int32Array( ncv );
 
 // which = 'LM' with sigma = 0 targets the smallest generalized eigenvalues:
-var info = dsband( true, 'all', select, d, V, n, 0.0, n, AB, MB, lda, RFAC, kl, ku, 'LM', 'generalized', nev, 0.0, resid, ncv, V, n, iparam, workd, workl, lworkl, iwork, 1 );
+var info = dsband( 'column-major', true, 'all', select, 1, d, 1, V, n, 0.0, n, AB, lda, MB, lda, RFAC, lda, kl, ku, 'LM', 'generalized', nev, 0.0, resid, 1, ncv, V, n, iparam, 1, workd, workl, lworkl, iwork, 1 );
 // d[ 0 .. iparam[4]-1 ] now holds the converged eigenvalues in ascending order.
 ```
 
@@ -199,7 +199,7 @@ iparam[ 6 ] = 3;
 var iwork = new Int32Array( n );
 var select = new Int32Array( ncv );
 
-var info = dsband( true, 'all', select, d, V, n, 0.0, n, AB, MB, lda, RFAC, kl, ku, 'LM', 'generalized', nev, 0.0, resid, ncv, V, n, iparam, workd, workl, lworkl, iwork, 1 );
+var info = dsband( 'column-major', true, 'all', select, 1, d, 1, V, n, 0.0, n, AB, lda, MB, lda, RFAC, lda, kl, ku, 'LM', 'generalized', nev, 0.0, resid, 1, ncv, V, n, iparam, 1, workd, workl, lworkl, iwork, 1 );
 
 console.log( 'info: %d, converged: %d', info, iparam[ 4 ] );
 console.log( 'smallest eigenvalues:', Array.prototype.slice.call( d, 0, nev ) );

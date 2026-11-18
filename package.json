@@ -989,6 +989,7 @@
   "devDependencies": {
     "@observablehq/notebook-kit": "^1.5.2",
     "@rreusser/mcp-observable-notebook-kit-debug": "^1.0.1",
+    "@stdlib/bench": "^0.5.1",
     "doctrine": "^3.0.0",
     "eslint": "^8.57.1",
     "eslint-plugin-node": "^11.1.0",

@@ -1,9 +1,12 @@
-{{alias}}( transr, side, uplo, trans, diag, M, N, alpha, A, B )
+{{alias}}( order, transr, side, uplo, trans, diag, M, N, alpha, A, strideA, B, LDB )
     Solves a matrix equation with a complex triangular matrix in Rectangular
     Full Packed format.
 
     Parameters
     ----------
+    order: string
+        Storage layout ('row-major' or 'column-major').
+
     transr: string
         `transr`.
 
@@ -31,8 +34,14 @@
     A: Float64Array
         `A`.
 
+    strideA: integer
+        Stride length for `A`.
+
     B: Float64Array
         `B`.
+
+    LDB: integer
+        Leading dimension of `B`.
 
     Returns
     -------

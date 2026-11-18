@@ -1,8 +1,11 @@
-{{alias}}( transr, uplo, N, nrhs, A, B )
+{{alias}}( order, transr, uplo, N, nrhs, A, strideA, B, LDB )
     @license Apache-2.0.
 
     Parameters
     ----------
+    order: string
+        Storage layout ('row-major' or 'column-major').
+
     transr: string
         `transr`.
 
@@ -18,8 +21,14 @@
     A: Float64Array
         `A`.
 
+    strideA: integer
+        Stride length for `A`.
+
     B: Float64Array
         `B`.
+
+    LDB: integer
+        Leading dimension of `B`.
 
     Returns
     -------

@@ -30,18 +30,18 @@ limitations under the License.
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
 ```
 
-#### dlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx )
+#### dlaswp( order, N, A, LDA, k1, k2, inck, IPIV, strideIPIV )
 
 Performs a series of row interchanges on a general rectangular matrix.
 
 ```javascript
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
 
-var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var IPIV = discreteUniform( N, -10, 10, opts );
+var A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
+var IPIV = new Int32Array( [ 2, 1, 2 ] );
 
-dlaswp.ndarray( N, A, N, 1, 0, 1, 1, IPIV, 1, 0, 1 );
+dlaswp( 'row-major', 2, A, 2, 0, 2, 1, IPIV, 1 );
+// A => <Float64Array>[ 5.0, 6.0, 3.0, 4.0, 1.0, 2.0 ]
 ```
 
 The function has the following parameters:
@@ -52,22 +52,22 @@ The function has the following parameters:
 -   **LDA**: leading dimension of `A`.
 -   **k1**: `k1`.
 -   **k2**: `k2`.
+-   **inck**: direction in which to apply pivots (`-1` to apply pivots in reverse order; otherwise, apply in provided order).
 -   **IPIV**: input array `IPIV`.
 -   **strideIPIV**: stride length for `IPIV`.
--   **incx**: `incx`.
 
-#### dlaswp.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, IPIV, strideIPIV, offsetIPIV, incx )
+#### dlaswp.ndarray( N, A, strideA1, strideA2, offsetA, k1, k2, inck, IPIV, strideIPIV, offsetIPIV )
 
 Performs a series of row interchanges on a general rectangular matrix, using alternative indexing semantics.
 
 ```javascript
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
 
-var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var IPIV = discreteUniform( N, -10, 10, opts );
+var A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
+var IPIV = new Int32Array( [ 2, 1, 2 ] );
 
-dlaswp.ndarray( N, A, N, 1, 0, 1, 1, IPIV, 1, 0, 1 );
+dlaswp.ndarray( 2, A, 2, 1, 0, 0, 2, 1, IPIV, 1, 0 );
+// A => <Float64Array>[ 5.0, 6.0, 3.0, 4.0, 1.0, 2.0 ]
 ```
 
 The function has the following additional parameters:
@@ -100,11 +100,11 @@ The function has the following additional parameters:
 ```javascript
 var dlaswp = require( '@stdlib/lapack/base/dlaswp' );
 
-var N = 3;
-var A = discreteUniform( N * N, -10, 10, opts );
-var IPIV = discreteUniform( N, -10, 10, opts );
+var A = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 ] );
+var IPIV = new Int32Array( [ 2, 1, 2 ] );
 
-dlaswp.ndarray( N, A, N, 1, 0, 1, 1, IPIV, 1, 0, 1 );
+dlaswp.ndarray( 2, A, 2, 1, 0, 0, 2, 1, IPIV, 1, 0 );
+// A => <Float64Array>[ 5.0, 6.0, 3.0, 4.0, 1.0, 2.0 ]
 ```
 
 </section>

@@ -1,47 +1,58 @@
-{{alias}}( f, g )
+
+{{alias}}( f, g, out )
     Generates a plane rotation with real cosine and real sine.
 
     Parameters
     ----------
     f: number
-        `f`.
+        First component of the vector to be rotated.
 
     g: number
-        `g`.
+        Second component of the vector to be rotated.
+
+    out: Float64Array
+        Output array of length at least 3. On return, `out[0] = c`,
+        `out[1] = s`, and `out[2] = r`.
 
     Returns
     -------
     out: Float64Array
-        Result.
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 3 );
+    > {{alias}}( 3.0, 4.0, out )
+    <Float64Array>[ 0.6, 0.8, 5.0 ]
 
 
 {{alias}}.ndarray( f, g, out )
-    Generates a plane rotation with real cosine and real sine, using
-    alternative indexing semantics.
+    Generates a plane rotation with real cosine and real sine, using alternative indexing
+    semantics.
 
     Parameters
     ----------
     f: number
-        `f`.
+        First component of the vector to be rotated.
 
     g: number
-        `g`.
+        Second component of the vector to be rotated.
 
-    out: number
-        `out`.
+    out: Float64Array
+        Output array of length at least 3. On return, `out[0] = c`,
+        `out[1] = s`, and `out[2] = r`.
 
     Returns
     -------
     out: Float64Array
-        Result.
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 3 );
+    > {{alias}}.ndarray( 3.0, 4.0, out )
+    <Float64Array>[ 0.6, 0.8, 5.0 ]
 
     See Also
     --------
+

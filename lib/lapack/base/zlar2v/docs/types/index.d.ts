@@ -27,15 +27,18 @@ interface Routine {
 	*
 	* @param N - number of columns
 	* @param x - `x`
+	* @param strideX - stride of `X`
 	* @param y - `y`
+	* @param strideY - stride of `Y`
 	* @param z - `z`
-	* @param strideXYZ - stride of `XYZ`
+	* @param strideZ - stride of `Z`
 	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param s - `s`
-	* @param strideCS - stride of `CS`
+	* @param strideS - stride of `S`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, y: Float64Array, z: Float64Array, strideXYZ: number, c: Float64Array, s: Float64Array, strideCS: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, z: Float64Array, strideZ: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number ): Float64Array;
 
 	/**
 	* Apply a vector of complex plane rotations with real cosines from both sides to a sequence of 2-by-2 complex Hermitian matrices using alternative indexing semantics.

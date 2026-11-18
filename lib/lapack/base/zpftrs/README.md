@@ -30,7 +30,7 @@ limitations under the License.
 var zpftrs = require( '@stdlib/lapack/base/zpftrs' );
 ```
 
-#### zpftrs( transr, uplo, N, nrhs, A, B )
+#### zpftrs( order, transr, uplo, N, nrhs, A, strideA, B, LDB )
 
 @license Apache-2.0.
 

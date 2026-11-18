@@ -1,40 +1,37 @@
-{{alias}}( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
-    Compute the factorization of a complex symmetric matrix using
-    Bunch-Kaufman diagonal pivoting.
+{{alias}}( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
+    Computes the factorization of a complex symmetric matrix using Bunch-Kaufman
+    diagonal pivoting.
 
     Parameters
     ----------
+    order: string
+        Storage layout (`'row-major'` or `'column-major'`).
+
     uplo: string
-        specifies whether the upper or lower triangular part is referenced.
+        Specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`).
 
     N: integer
-        number of columns.
+        Order of the matrix `A`.
 
-    A: Float64Array
-        `A`.
+    A: Complex128Array
+        Input/output matrix `A`; overwritten with the block diagonal factor and multipliers.
 
-    strideA1: integer
-        stride of dimension 1 of `A`.
-
-    strideA2: integer
-        stride of dimension 2 of `A`.
-
-    offsetA: integer
-        starting index for `A`.
+    LDA: integer
+        Leading dimension of `A`.
 
     IPIV: Int32Array
-        `IPIV`.
+        Output pivot indices.
 
     strideIPIV: integer
-        stride length for `IPIV`.
+        Stride length for `IPIV`.
 
-    offsetIPIV: integer
-        starting index for `IPIV`.
+    WORK: Complex128Array|null
+        Workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code.
 
     Examples
     --------
@@ -76,8 +73,8 @@
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    info: integer
+        Status code.
 
     Examples
     --------

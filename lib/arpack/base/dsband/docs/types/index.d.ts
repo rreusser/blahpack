@@ -20,6 +20,10 @@
 
 /// <reference types="@stdlib/types"/>
 
+import { Layout } from '@stdlib/types/blas';
+
+// INTERFACES //
+
 /**
 * Interface describing `dsband`.
 */
@@ -27,18 +31,23 @@ interface Routine {
 	/**
 	* Computes converged approximations to eigenvalues of a banded symmetric generalized eigenproblem, and optionally the eigenvectors.
 	*
+	* @param order - storage layout
 	* @param rvec - whether to compute Ritz vectors
 	* @param howmny - `'all'` or `'select'`
 	* @param select - selection array (length ncv)
+	* @param strideSelect - stride length for `select`
 	* @param d - Ritz values (length nev; out)
-	* @param Z - Ritz vectors (column-major; out)
-	* @param ldz - leading dimension of `Z`
+	* @param strideD - stride length for `d`
+	* @param Z - Ritz vectors (out)
+	* @param LDZ - leading dimension of `Z`
 	* @param sigma - the shift
 	* @param N - order of the problem
 	* @param AB - matrix A in band storage
+	* @param LDAB - leading dimension of `AB`
 	* @param MB - matrix M in band storage
-	* @param lda - leading dimension of `AB`, `MB`, `RFAC`
+	* @param LDMB - leading dimension of `MB`
 	* @param RFAC - band LU workspace/output
+	* @param LDRFAC - leading dimension of `RFAC`
 	* @param kl - number of subdiagonals
 	* @param ku - number of superdiagonals
 	* @param which - which eigenvalues to compute
@@ -46,10 +55,12 @@ interface Routine {
 	* @param nev - number of eigenvalues to compute
 	* @param tol - relative accuracy for Ritz value convergence
 	* @param resid - residual vector (length N; in/out)
+	* @param strideResid - stride length for `resid`
 	* @param ncv - number of Lanczos vectors
-	* @param V - Lanczos basis (column-major; out)
-	* @param ldv - leading dimension of `V`
+	* @param V - Lanczos basis (out)
+	* @param LDV - leading dimension of `V`
 	* @param iparam - input/output parameters (length 11; in/out)
+	* @param strideIparam - stride length for `iparam`
 	* @param workd - reverse-communication workspace (length >= 3*N)
 	* @param workl - private workspace (length >= ncv^2 + 8*ncv)
 	* @param lworkl - length of `workl`
@@ -57,7 +68,7 @@ interface Routine {
 	* @param infoIn - nonzero to signal a user-supplied initial residual
 	* @returns INFO
 	*/
-	( rvec: boolean, howmny: string, select: Int32Array, d: Float64Array, Z: Float64Array, ldz: number, sigma: number, N: number, AB: Float64Array, MB: Float64Array, lda: number, RFAC: Float64Array, kl: number, ku: number, which: string, bmat: string, nev: number, tol: number, resid: Float64Array, ncv: number, V: Float64Array, ldv: number, iparam: Int32Array, workd: Float64Array, workl: Float64Array, lworkl: number, iwork: Int32Array, infoIn: number ): number;
+	( order: Layout, rvec: boolean, howmny: string, select: Int32Array, strideSelect: number, d: Float64Array, strideD: number, Z: Float64Array, LDZ: number, sigma: number, N: number, AB: Float64Array, LDAB: number, MB: Float64Array, LDMB: number, RFAC: Float64Array, LDRFAC: number, kl: number, ku: number, which: string, bmat: string, nev: number, tol: number, resid: Float64Array, strideResid: number, ncv: number, V: Float64Array, LDV: number, iparam: Int32Array, strideIparam: number, workd: Float64Array, workl: Float64Array, lworkl: number, iwork: Int32Array, infoIn: number ): number;
 
 	/**
 	* Computes converged approximations to eigenvalues of a banded symmetric generalized eigenproblem, using alternative indexing semantics.

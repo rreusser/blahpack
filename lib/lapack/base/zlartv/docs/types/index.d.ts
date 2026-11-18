@@ -31,11 +31,12 @@ interface Routine {
 	* @param y - `y`
 	* @param strideY - stride of `Y`
 	* @param c - `c`
+	* @param strideC - stride of `C`
 	* @param s - `s`
-	* @param strideCS - stride of `CS`
+	* @param strideS - stride of `S`
 	* @returns result
 	*/
-	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, s: Float64Array, strideCS: number ): Float64Array;
+	( N: number, x: Float64Array, strideX: number, y: Float64Array, strideY: number, c: Float64Array, strideC: number, s: Float64Array, strideS: number ): Float64Array;
 
 	/**
 	* Apply a vector of complex plane rotations with real cosines to two complex vectors using alternative indexing semantics.

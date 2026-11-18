@@ -1,5 +1,5 @@
 
-{{alias}}( order, N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, offsetPRMPTR, PERM, stridePERM, offsetPERM, GIVPTR, strideGIVPTR, offsetGIVPTR, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, LDGIVNUM, q, strideQ, QPTR, strideQPTR, offsetQPTR, z, strideZ, ZTEMP, strideZTEMP )
+{{alias}}( order, N, tlvls, curlvl, curpbm, PRMPTR, stridePRMPTR, PERM, stridePERM, GIVPTR, strideGIVPTR, GIVCOL, LDGIVCOL, GIVNUM, LDGIVNUM, q, strideQ, QPTR, strideQPTR, z, strideZ, ZTEMP, strideZTEMP )
     Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.
 
     Parameters
@@ -25,17 +25,11 @@
         stridePRMPTR: integer
             stride length for `PRMPTR`.
 
-        offsetPRMPTR: integer
-            starting index for `PRMPTR`.
-
         PERM: Int32Array
             input array.
 
         stridePERM: integer
             stride length for `PERM`.
-
-        offsetPERM: integer
-            starting index for `PERM`.
 
         GIVPTR: Int32Array
             input array.
@@ -43,20 +37,11 @@
         strideGIVPTR: integer
             stride length for `GIVPTR`.
 
-        offsetGIVPTR: integer
-            starting index for `GIVPTR`.
-
         GIVCOL: Int32Array
             input matrix.
 
-        strideGIVCOL1: integer
-            stride of the first dimension of `GIVCOL`.
-
-        strideGIVCOL2: integer
-            stride of the second dimension of `GIVCOL`.
-
-        offsetGIVCOL: integer
-            starting index for `GIVCOL`.
+        LDGIVCOL: integer
+            leading dimension of `GIVCOL`.
 
         GIVNUM: Float64Array
             input matrix.
@@ -75,9 +60,6 @@
 
         strideQPTR: integer
             stride length for `QPTR`.
-
-        offsetQPTR: integer
-            starting index for `QPTR`.
 
         z: Float64Array
             input array.
@@ -124,17 +106,11 @@
         stridePRMPTR: integer
             stride length for `PRMPTR`.
 
-        offsetPRMPTR: integer
-            starting index for `PRMPTR`.
-
         PERM: Int32Array
             input array.
 
         stridePERM: integer
             stride length for `PERM`.
-
-        offsetPERM: integer
-            starting index for `PERM`.
 
         GIVPTR: Int32Array
             input array.

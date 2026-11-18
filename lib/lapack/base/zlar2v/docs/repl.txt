@@ -1,4 +1,4 @@
-{{alias}}( N, x, y, z, strideXYZ, c, s, strideCS )
+{{alias}}( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS )
     Apply a vector of complex plane rotations with real cosines from both
     sides to a sequence of 2-by-2 complex Hermitian matrices.
 
@@ -10,23 +10,32 @@
     x: Float64Array
         `x`.
 
+    strideX: integer
+        stride length for `X`.
+
     y: Float64Array
         `y`.
+
+    strideY: integer
+        stride length for `Y`.
 
     z: Float64Array
         `z`.
 
-    strideXYZ: integer
-        stride length for `XYZ`.
+    strideZ: integer
+        stride length for `Z`.
 
     c: Float64Array
         `c`.
 
+    strideC: integer
+        stride length for `C`.
+
     s: Float64Array
         `s`.
 
-    strideCS: integer
-        stride length for `CS`.
+    strideS: integer
+        stride length for `S`.
 
     Returns
     -------

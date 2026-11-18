@@ -30,7 +30,7 @@ limitations under the License.
 var dsytri2 = require( '@stdlib/lapack/base/dsytri2' );
 ```
 
-#### dsytri2( order, uplo, N, A, LDA, IPIV )
+#### dsytri2( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )
 
 Compute the inverse of a real symmetric indefinite matrix.
 
@@ -41,7 +41,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var A = new Float64Array( [ 5.0 ] );
 var IPIV = new Int32Array( [ 0 ] );
 
-dsytri2( 'column-major', 'lower', 1, A, 1, IPIV );
+dsytri2( 'column-major', 'lower', 1, A, 1, IPIV, 1, null );
 // A => <Float64Array>[ 0.2 ]
 ```
 
@@ -53,6 +53,8 @@ The function has the following parameters:
 -   **A**: input/output matrix; on entry, the factored form from `dsytrf`; on exit, the symmetric inverse.
 -   **LDA**: leading dimension of `A`.
 -   **IPIV**: pivot indices from `dsytrf`.
+-   **strideIPIV**: stride length for `IPIV`.
+-   **WORK**: workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally.
 
 #### dsytri2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 
@@ -90,7 +92,7 @@ The function has the following additional parameters:
 ## Notes
 
 -   The routine dispatches at the JS-level block-size threshold `NBMAX = 32`. When `N <= NBMAX`, the unblocked worker `dsytri` is invoked and `WORK` must hold at least `N` elements. When `N > NBMAX`, the blocked worker `dsytri2x` is invoked and `WORK` must hold at least `(N+NBMAX+1)*(NBMAX+3)` elements arranged column-major with leading dimension `N+NBMAX+1`.
--   The BLAS-style wrapper `dsytri2( order, uplo, N, A, LDA, IPIV )` allocates `WORK` internally with the correct size for the dispatch path it will take.
+-   The BLAS-style wrapper `dsytri2( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )` allocates `WORK` internally when `WORK` is `null`, with the correct size for the dispatch path it will take.
 -   `IPIV` follows the JS convention used throughout the Bunch-Kaufman family: non-negative entries denote `1x1` pivot blocks (target row index `0`-based); negative entries `raw` denote `2x2` pivot blocks with target `~raw` (bitwise NOT).
 -   Returns `0` on success; a positive integer `k` indicates that `D[k,k] = 0` and the inverse could not be computed.
 
@@ -110,7 +112,7 @@ var dsytri2 = require( '@stdlib/lapack/base/dsytri2' );
 var A = new Float64Array( [ 5.0 ] );
 var IPIV = new Int32Array( [ 0 ] );
 
-var info = dsytri2( 'column-major', 'lower', 1, A, 1, IPIV );
+var info = dsytri2( 'column-major', 'lower', 1, A, 1, IPIV, 1, null );
 console.log( info );
 console.log( A[ 0 ] );
 ```

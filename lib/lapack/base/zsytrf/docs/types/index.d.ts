@@ -20,27 +20,27 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { MatrixTriangle } from '@stdlib/types/blas';
+import { Layout, MatrixTriangle } from '@stdlib/types/blas';
+import { Complex128Array } from '@stdlib/types/array';
 
 /**
 * Interface describing `zsytrf`.
 */
 interface Routine {
 	/**
-	* Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
+	* Computes the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
 	*
-	* @param uplo - specifies whether the upper or lower triangular part is referenced
-	* @param N - number of columns
-	* @param A - `A`
-	* @param strideA1 - stride of `A`
-	* @param strideA2 - stride of `A`
-	* @param offsetA - starting index for `A`
-	* @param IPIV - `IPIV`
-	* @param strideIPIV - stride of `IPIV`
-	* @param offsetIPIV - starting index for `IPIV`
-	* @returns result
+	* @param order - storage layout (`'row-major'` or `'column-major'`)
+	* @param uplo - specifies whether the upper or lower triangle of `A` is stored (`'upper'` or `'lower'`)
+	* @param N - order of the matrix `A`
+	* @param A - input/output matrix `A`; overwritten with the block diagonal factor and multipliers
+	* @param LDA - leading dimension of `A`
+	* @param IPIV - output pivot indices
+	* @param strideIPIV - stride length for `IPIV`
+	* @param WORK - workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally
+	* @returns info status code
 	*/
-	( uplo: MatrixTriangle, N: number, A: Float64Array, strideA1: number, strideA2: number, offsetA: number, IPIV: Int32Array, strideIPIV: number, offsetIPIV: number ): Float64Array;
+	( order: Layout, uplo: MatrixTriangle, N: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Complex128Array | null ): number;
 
 	/**
 	* Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting using alternative indexing semantics.
@@ -63,7 +63,6 @@ interface Routine {
 * Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diagonal pivoting.
 */
 declare var zsytrf: Routine;
-
 
 // EXPORTS //
 

@@ -1,62 +1,58 @@
 
-{{alias}}( f, g, cs, sn, r )
-    Generates a plane rotation with non-negative diagonal
+{{alias}}( f, g, out )
+    Generates a plane rotation with non-negative diagonal.
 
     Parameters
     ----------
-        f: number
-            f.
+    f: number
+        First component of the vector to be rotated.
 
-        g: number
-            g.
+    g: number
+        Second component of the vector to be rotated.
 
-        cs: number
-            cs.
-
-        sn: number
-            sn.
-
-        r: number
-            r.
+    out: Float64Array
+        Output array of length at least 3. On return, `out[0] = cs`,
+        `out[1] = sn`, and `out[2] = r` (non-negative).
 
     Returns
     -------
-    out: None
-        Result.
+    out: Float64Array
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 3 );
+    > {{alias}}( 3.0, 4.0, out )
+    <Float64Array>[ 0.6, 0.8, 5.0 ]
 
 
-{{alias}}.ndarray( f, g, cs, sn, r )
-    Generates a plane rotation with non-negative diagonal, using alternative indexing semantics.
+{{alias}}.ndarray( f, g, out )
+    Generates a plane rotation with non-negative diagonal, using alternative indexing
+    semantics.
 
     Parameters
     ----------
-        f: number
-            f.
+    f: number
+        First component of the vector to be rotated.
 
-        g: number
-            g.
+    g: number
+        Second component of the vector to be rotated.
 
-        cs: number
-            cs.
-
-        sn: number
-            sn.
-
-        r: number
-            r.
+    out: Float64Array
+        Output array of length at least 3. On return, `out[0] = cs`,
+        `out[1] = sn`, and `out[2] = r` (non-negative).
 
     Returns
     -------
-    out: None
-        Result.
+    out: Float64Array
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 3 );
+    > {{alias}}.ndarray( 3.0, 4.0, out )
+    <Float64Array>[ 0.6, 0.8, 5.0 ]
 
     See Also
     --------
+

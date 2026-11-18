@@ -2005,4 +2005,66 @@ Keep entries short. Newest first.
   stride on opaque scratch has no use case; prefer dropping workspace strides
   over "fixing" them.
 
+## 2026-11-18 — ztgsen/ztgsyl tests ran with scrambled workspace arguments
+
+- **Trigger**: adding the unit-workspace-stride assertion to every `ndarray.js`
+  (CONVENTIONS.md D5). `ztgsen` and `ztgsyl` `test.ndarray.js` immediately threw
+  "`strideIWork` must be 1 … Value: `0`".
+- **Root cause**: the tests still passed the removed `lwork`/`liwork` arguments
+  (`WK, 1, 0, -1, IWK, 1, 0, -1` and `null, 1, 0, -1, IWORK, 1, 0`). Every argument
+  after `offsetWork` was shifted by one: `IWORK` received `-1`, `strideIWork`
+  received the IWORK array, and so on. The tests passed anyway because the paths
+  they exercise never touch IWORK, so the call looked fine.
+- **Bug class**: `stale-arity-in-tests` — a signature change (dropping `lwork`) that
+  left surplus arguments in test calls. Nothing compares test call arity against
+  the function's arity; test files are also excluded from ESLint.
+- **Where else it hides**: any test calling an ndarray function with more
+  arguments than it declares. An argument-count check on test calls (like the
+  `base-arity` conformance check, but for tests) would catch the class.
+
+## 2026-11-18 — dgehrd/zgehrd strided wrappers under-allocated WORK on `null`
+
+- **Trigger**: rewriting the zgehrd strided wrapper for the signature projection
+  (PR #19 residue). A blocked-path test (`N = 40`, `WORK = null`) made zgehrd base
+  throw "WORK array must have at least 3360 elements … Provided length: 40".
+- **Repro (dgehrd, before fix)**: `dgehrd( 'column-major', 40, 1, 40, A, 40, TAU, 1, null )`
+  with a full-rank A returns info 0 and an A full of NaN; the same call with
+  `new Float64Array( 40*32 + 65*32 )` gives finite results. Real scalar, dense
+  column-major, ilo = 1, ihi = N = 40.
+- **Root cause**: the wrappers allocated `max(1, N)` elements, the *unblocked*
+  dgehd2 size. Once `NH > NB = 32` base.js takes the blocked path and needs
+  `N*NB + LDT*NB` (LDT = 65). zgehrd's base asserts the size and threw; dgehrd's
+  base does not, so typed-array out-of-range writes were silently dropped and the
+  factorization produced NaN.
+- **Bug class**: `wrapper-null-work-undersized` — the same silent
+  workspace-underallocation family as the dgeev/dhseqr pipeline bugs. Fixtures
+  and the harness exercise base/ndarray with caller-owned WORK, so the wrappers'
+  `null` auto-allocation path at blocked sizes is untested.
+- **Fix**: both wrappers allocate `max(1, N*32 + 65*32)`; dgehrd gets a regression
+  test comparing `null` against a caller buffer at N = 40.
+- **Where else it hides**: every blocked routine whose strided wrapper
+  auto-allocates WORK (`?ge*rf`, `?or*`/`?un*` blocked, `?sytrd`, …). A check that
+  calls each wrapper with `WORK = null` at a size above NB and compares against
+  a generously sized caller buffer would catch the class; base.js routines that
+  do not assert WORK length should also be made to.
+
+## 2026-11-18 — ztgsna passed a stale `lwork` to ztgsyl (found by the benchmark smoke run)
+
+- **Trigger**: the regenerated `ztgsna` benchmark (job = 'both', howmny = 'all')
+  threw "Cannot create property 'NaN' on number '-1'" inside ztgsyl at N = 100.
+- **Repro (before fix)**: `ztgsna( 'both', 'all', SELECT, 1, 0, 40, A, 1, 40, 0, B, 1, 40, 0, VL, 1, 40, 0, VR, 1, 40, 0, s, 1, 0, DIF, 1, 0, 40, 0, WORK, 1, 0, IWORK, 1, 0 )`
+  with an upper-triangular complex pair (see the N = 40 test in
+  `lib/lapack/base/ztgsna/test/test.ndarray.js`). Complex scalar, dense column-major.
+- **Root cause**: ztgsna/base.js called ztgsyl with `…, WORK, 1, offset, -1, IWORK, …` —
+  a leftover `lwork` argument from before the caller-owns-WORK migration. Every
+  argument after it shifted: ztgsyl's `IWORK` received `-1`. Only ztgsyl's
+  blocked path (M or N > 32) writes IWORK, so the N <= 4 fixtures passed.
+- **Bug class**: `stale-arity-in-internal-call` — the same signature-drift as
+  `stale-arity-in-tests` above, but in library code calling a dependency.
+- **Fix**: drop the `-1`; add the N = 40 regression test.
+- **Where else it hides**: any base.js call to a dependency's base with surplus
+  or missing arguments, reachable only on blocked/large-N paths. A static check
+  comparing each internal call's argument count with the callee's declared
+  arity would catch the whole class.
+
 <!-- Add new entries above this line. -->

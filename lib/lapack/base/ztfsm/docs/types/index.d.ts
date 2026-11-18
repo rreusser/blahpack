@@ -20,7 +20,7 @@
 
 /// <reference types="@stdlib/types"/>
 
-import { OperationSide, MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
+import { Layout, OperationSide, MatrixTriangle, TransposeOperation, DiagonalType } from '@stdlib/types/blas';
 
 /**
 * Interface describing `ztfsm`.
@@ -29,6 +29,7 @@ interface Routine {
 	/**
 	* Solves a matrix equation with a complex triangular matrix in Rectangular Full Packed format.
 	*
+	* @param order - storage layout
 	* @param transr - `transr`
 	* @param side - specifies the side of the operation
 	* @param uplo - specifies whether the upper or lower triangular part is referenced
@@ -38,10 +39,12 @@ interface Routine {
 	* @param N - number of columns
 	* @param alpha - scalar constant
 	* @param A - `A`
+	* @param strideA - stride length for `A`
 	* @param B - `B`
+	* @param LDB - leading dimension of `B`
 	* @returns result
 	*/
-	( transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, B: Float64Array ): Float64Array;
+	( order: Layout, transr: string, side: OperationSide, uplo: MatrixTriangle, trans: TransposeOperation, diag: DiagonalType, M: number, N: number, alpha: number, A: Float64Array, strideA: number, B: Float64Array, LDB: number ): Float64Array;
 
 	/**
 	* Solves a matrix equation with a complex triangular matrix in Rectangular Full Packed format using alternative indexing semantics.

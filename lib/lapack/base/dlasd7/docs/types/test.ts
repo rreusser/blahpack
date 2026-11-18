@@ -23,7 +23,7 @@ import dlasd7 = require( './index' );
 
 // The function returns a Float64Array...
 {
-	dlasd7( 10 ); // $ExpectType Float64Array
+	dlasd7( 'column-major', 1, 3, 3, 0, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, new Float64Array( 7 ), 1, 0.5, 0.3, new Float64Array( 7 ), 1, new Int32Array( 7 ), 1, new Int32Array( 7 ), 1, new Int32Array( 7 ), 1, new Int32Array( 7 ), 1, new Int32Array( 14 ), 7, new Float64Array( 14 ), 7 ); // $ExpectType Float64Array
 }
 
 // The compiler throws an error if the function is provided a first argument which is not a number...

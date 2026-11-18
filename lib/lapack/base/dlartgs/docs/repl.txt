@@ -1,62 +1,66 @@
 
-{{alias}}( x, y, sigma, cs, sn )
-    Generates a plane rotation for the bidiagonal SVD implicit QR iteration
+{{alias}}( x, y, sigma, out )
+    Generates a plane rotation designed to introduce a bulge in implicit QR
+    iteration for the bidiagonal SVD problem.
 
     Parameters
     ----------
-        x: number
-            x.
+    x: number
+        (1,1) entry of an upper bidiagonal matrix.
 
-        y: number
-            y.
+    y: number
+        (1,2) entry of an upper bidiagonal matrix.
 
-        sigma: number
-            sigma.
+    sigma: number
+        Shift.
 
-        cs: number
-            cs.
-
-        sn: number
-            sn.
+    out: Float64Array
+        Output array of length at least 2. On return, `out[0] = cs` and
+        `out[1] = sn`.
 
     Returns
     -------
-    out: None
-        Result.
+    out: Float64Array
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 2 );
+    > {{alias}}( 3.0, 4.0, 1.5, out )
+    <Float64Array>[ ~0.4903, ~0.8716 ]
 
 
-{{alias}}.ndarray( x, y, sigma, cs, sn )
-    Generates a plane rotation for the bidiagonal SVD implicit QR iteration, using alternative indexing semantics.
+{{alias}}.ndarray( x, y, sigma, out )
+    Generates a plane rotation designed to introduce a bulge in implicit QR
+    iteration for the bidiagonal SVD problem, using alternative indexing
+    semantics.
 
     Parameters
     ----------
-        x: number
-            x.
+    x: number
+        (1,1) entry of an upper bidiagonal matrix.
 
-        y: number
-            y.
+    y: number
+        (1,2) entry of an upper bidiagonal matrix.
 
-        sigma: number
-            sigma.
+    sigma: number
+        Shift.
 
-        cs: number
-            cs.
-
-        sn: number
-            sn.
+    out: Float64Array
+        Output array of length at least 2. On return, `out[0] = cs` and
+        `out[1] = sn`.
 
     Returns
     -------
-    out: None
-        Result.
+    out: Float64Array
+        Output array.
 
     Examples
     --------
-    // TODO: Add examples
+    > var out = new {{alias:@stdlib/array/float64}}( 2 );
+    > {{alias}}.ndarray( 3.0, 4.0, 1.5, out )
+    <Float64Array>[ ~0.4903, ~0.8716 ]
 
     See Also
     --------
+

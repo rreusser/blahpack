@@ -2,7 +2,7 @@
 
 // The deterministic strided projection: base.js (offset form) → <routine>.js
 // (strided form). Encodes the resolved, stdlib-deferred conventions from
-// lint/CONVENTIONS.md (D1–D3) with no wiggle room.
+// CONVENTIONS.md (D1–D3) with no wiggle room.
 //
 //   2-D matrix `A, strideA1, strideA2, offsetA`  → `A, LD<A>`    (+ triggers order)
 //   packed matrix `AP, strideAP, offsetAP`       → `AP`          (+ triggers order)

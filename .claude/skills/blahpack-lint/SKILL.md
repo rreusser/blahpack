@@ -8,7 +8,7 @@ argument-hint: [path | --fix path | --new <rule-name>]
 
 Every project rule lives in `lint/`, one self-contained directory per rule.
 There is no other rule source: stdlib's internal ESLint rules are not used, and
-there are no per-module exemptions. `eslint.config.cjs` loads the rules from
+there are no per-module exemptions (CONVENTIONS T5). `eslint.config.cjs` loads the rules from
 `lint/plugin.cjs`, and every configured rule is an error.
 
 ## Run the gate

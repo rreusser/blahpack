@@ -17,6 +17,7 @@ stdlib-js reference clone: `/Users/rreusser/gh/stdlib-js/stdlib/`
 ## Project Structure
 
 ```
+CONVENTIONS.md                 # THE rules (IDs S/D/W/V/N/C/F/J/T/X), each with its enforcer
 bin/                           # Pipeline scripts
   conformance.js               #   THE conformance check — all checks in one command
   conformance/                 #   Conformance check modules (file-structure, scaffolding, etc.)
@@ -35,6 +36,7 @@ lint/                          # THE rule library: one dir per rule (rule, READM
   plugin.cjs                   #   Registers lint/rules/* under `blahpack/` (loaded by eslint.config.cjs)
   lib/                         #   Shared helpers (fortran-data cache, naming, fixture-test runner)
   verify-corpus.cjs            #   Per-rule violation summary over the whole corpus
+  verify-signatures.cjs        #   Exact signature projections (CONVENTIONS S3/S4/D1–D3)
 data/                          # Reference Fortran source + parsed-Fortran cache (fortran-signatures.json)
   BLAS-3.12.0/
   lapack-3.12.0/
@@ -45,17 +47,20 @@ test/                          # Fortran tests and fixtures
   fortran/                     #   Test programs (test_<routine>.f90)
   fortran/deps_<routine>.txt   #   LAPACK link dependencies
   fixtures/                    #   Reference outputs from Fortran (JSONL)
+  run_fortran.sh               #   Compile + run a Fortran test program → fixture
+  harness/                     #   Property-based validation harness (see below)
 docs/                          # Reference documentation
   complex-numbers.md           #   Complex128Array patterns, arithmetic rules
   dependency-conventions.md    #   Calling convention gotchas
-  review-guidelines.md         #   Review checklist (also in /blahpack-review skill)
-  ndarray-conformance.md       #   ndarray.js validation spec (being superseded; see enforcement-architecture.md)
   enforcement-architecture.md  #   Plan: per-routine specs, CONVENTIONS.md, one tool per job
   goto-patterns.md             #   Fortran GOTO → JS restructuring
   performance-patterns.md      #   Optimization patterns with code examples
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
 bench/                         # Performance benchmarks
 ```
+
+**Conventions:** `CONVENTIONS.md` owns every rule; skills and docs cite its IDs
+rather than restating them.
 
 ## Commands
 
@@ -175,23 +180,26 @@ property-based harness in `test/harness/` (see its `README.md`):
   property check.
 - **Validation levels** are recorded honestly at runtime (only passing checks
   count): `node bin/validation-level.js [--badges|--md]`. Ladder L0–L4 in the
-  README. Aim to raise every routine to at least L3 (layout-fuzzed).
+  README. L3 (layout-fuzzed) is the definition of done (CONVENTIONS T7); not
+  yet gated.
 
 **MANDATORY: when the harness catches ANY bug (in a routine OR the harness),
 add an entry to `test/harness/LEARNINGS.md` before/with the fix** — with the
 reproducing seed, scalar type, storage scheme, flags, dimensions, root cause,
 bug class, and where else it might hide. Never fix silently; the learning is the
 most valuable output. This overrides any inclination to "just fix it."
+(CONVENTIONS T8.)
 
 ## Known Limitations
 
-- Fortran `.f90` files that use modules (`USE la_constants`) cannot be
-  compiled by `run_fortran.sh` without module compilation ordering.
-  Work around: write JS tests with hand-computed expected values.
+- Fortran `.f90` sources that `USE la_constants` / `la_xisnan` (e.g.
+  `dnrm2.f90`, `dlassq.f90`) compile with `test/run_fortran.sh` only when
+  those modules are listed first in `deps_<routine>.txt` (see
+  `deps_dgels.txt`); the script builds the `.mod` files in a per-routine dir.
 - **`deps.py` misses transitive Fortran-only dependencies.** Routines
   that call `ILAENV` transitively need `ilaenv`, `ieeeck`, `iparmq` in
   their Fortran deps file for test compilation. These are not JS
   dependencies (ILAENV is replaced with hardcoded constants), but
-  `deps_<routine>.txt` must include them for `run_fortran.sh` to link.
+  `deps_<routine>.txt` must include them for `test/run_fortran.sh` to link.
   Check the deps files of similar routines when compilation fails with
   undefined references.

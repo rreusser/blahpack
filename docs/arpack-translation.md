@@ -16,10 +16,8 @@ Every numeric leaf the `dsband`/`dsaupd`/`dseupd` closure calls **already
 exists in blahpack** (21 routines, verified 2026-07). Nothing else numeric is
 needed. `xerbla` is *not* on the path: the only reference to it is the
 argument-check block in `dstqrb`, which ARPACK ships commented out (`c$$$`),
-and blahpack does not translate `xerbla` anyway — routines that validate
-arguments return the negative info code directly (e.g. `dsteqr` does
-`return -1`), dropping the Fortran `XERBLA` print/stop as legacy error
-reporting with no idiomatic-JS equivalent.
+and blahpack does not translate `xerbla` anyway (CONVENTIONS X3): `base.js`
+returns `info`, and the public entry points throw (V1).
 
 ### Routines to translate (13, all vendored under `data/arpack-ng-3.9.1/SRC/`)
 
@@ -93,7 +91,7 @@ Driver loop shape the notebook (or `dsband`) implements:
 const state = {};
 const IDO = new Int32Array([0]);
 do {
-  dsaupd(state, IDO, 'G', n, which, nev, tol, resid, ..., info);
+  dsaupd(state, IDO, 'generalized', n, which, nev, tol, resid, ..., info);
   if (IDO[0] === -1 || IDO[0] === 1) applyOP(workd, ipntr);   // (K−σM)⁻¹ M x via dgbtrs
   else if (IDO[0] === 2) applyB(workd, ipntr);                // M x
 } while (IDO[0] !== 99);
@@ -183,20 +181,16 @@ driver for one checkable only by property tests, against the trust model.
 
 ## Tooling note
 
-`bin/scaffold.py` reads the reference Fortran from
-`data/lapack-3.12.0/SRC/{routine}.f` (hard-coded, ~line 1721). ARPACK sources
-live under `data/arpack-ng-3.9.1/SRC/` (and `EXAMPLES/BAND/`), so scaffolding
-these needs either a `--source-dir` override or a small path branch keyed on
-package. `routines.json` / `descriptions.json` also don't cover ARPACK; the
+`bin/scaffold.py` takes `arpack` as a package and reads
+`data/arpack-ng-3.9.1/SRC/{routine}.f` (falling back to `EXAMPLES/BAND/`).
+`data/routines.json` / `data/descriptions.json` don't cover ARPACK; the
 per-routine metadata will come from the Fortran headers directly.
 
 ## Translation order (leaves first)
 
-1. The no-op stubs (`arscnd`, `dvout`, `ivout`, `dmout`). (No `xerbla`: it is
-   not called on the path and blahpack does not translate it — see above.)
-2. `dsconv`, `dsortr`, `dsesrt`, `dstqrb`, `dseigt`, `dsgets` — pure numeric
+1. `dsconv`, `dsortr`, `dsesrt`, `dstqrb`, `dseigt`, `dsgets` — pure numeric
    leaves of the RC subtree, individually fixture-testable.
-3. `dgetv0`, `dsaitr`, `dsapps` — the Lanczos-step routines.
-4. `dsaup2`, then `dsaupd` — the RC driver (state-object pattern lands here).
-5. `dseupd` — eigenvector extraction.
-6. `dsband` — the banded shift-invert driver; wire into the notebook.
+2. `dgetv0`, `dsaitr`, `dsapps` — the Lanczos-step routines.
+3. `dsaup2`, then `dsaupd` — the RC driver (state-object pattern lands here).
+4. `dseupd` — eigenvector extraction.
+5. `dsband` — the banded shift-invert driver; wire into the notebook.

@@ -1,10 +1,8 @@
 # Complex Number Support
 
-## API Boundary Convention (following stdlib)
-
-- **Complex arrays**: `Complex128Array` — strides and offsets in complex elements
-- **Complex scalars**: `Complex128` objects — extract via `real(z)` / `imag(z)`
-- **Real arrays**: `Float64Array` — strides and offsets in Float64 units (as before)
+API-boundary rules (array/scalar types, strides in complex elements,
+`reinterpret` indexing, `cmplx` for div/abs/sqrt) are owned by CONVENTIONS
+C1–C5. This page is practical how-to.
 
 ## Inside Routines: Reinterpret Pattern
 
@@ -38,15 +36,16 @@ zscal( N, alpha, A, strideA1, offsetA + j * strideA2 );
 // A is Complex128Array, strides/offsets in complex elements
 ```
 
-## Workspace and Constants
+## Constants
 
 ```javascript
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
 const CZERO = new Complex128( 0.0, 0.0 );
 const CONE = new Complex128( 1.0, 0.0 );
-const WORK = new Complex128Array( N );      // complex workspace
-const RWORK = new Float64Array( 5 * N );    // real workspace
 ```
+
+Workspace (`WORK` as `Complex128Array`, `RWORK` as `Float64Array`) is
+caller-owned: see CONVENTIONS D4, W4.
 
 ## Complex Arithmetic
 
@@ -96,33 +95,17 @@ A[ iy + 1 ] = yi + alphaR * ti + alphaI * tr;
 ## Useful Patterns
 
 **CABS1/ABS1** — `ABS1(X) = ABS(DBLE(X)) + ABS(DIMAG(X))`.
-In JS: `Math.abs(v[idx]) + Math.abs(v[idx+1])`. For routines that use this
-heavily, define a local helper `cabs1At(arr, idx)`.
+In JS: `cmplx.abs1At( v, idx )`.
 
 **Conjugation is a sign flip** — In-place on Float64 views:
 `v[idx+1] = -v[idx+1]`. zlaqps conjugates before zgemv, then unconjugates.
 
-## CRITICAL: Complex Stride Convention Mismatch
+## Sub-Panel Offsets
 
-Two incompatible stride conventions coexist. Mixing them causes **silent
-data corruption** — this is the single most dangerous integration bug:
-
-1. **Complex-element strides** (stride1=1, stride2=LDA):
-   Used by: all BLAS routines, zgeqrf, zgeqr2, zlarf, zlarfb, zlarft,
-   zlange, zlascl. These routines do `sa1 = strideA1 * 2` internally.
-
-2. **Double-based strides** (stride1=2, stride2=2*LDA):
-   Used by: zgghrd, zhgeqz, zggbal, zggbak, zlaset, zrot. These routines
-   use strides directly as Float64 indices.
-
-**How to tell which a routine expects:** If the source code contains
-`sa1 = strideA1 * 2` (or `sx = strideX * 2`), it expects complex-element
-strides. If it directly indexes `offset + i * strideA1` for real parts
-and `+1` for imaginary, it expects double-based strides.
-
-**When passing sub-panels** with complex-element strides, the offset into
-the interleaved Float64Array is: `offsetA + 2 * (i * strideA1 + j * strideA2)`.
-The factor of 2 accounts for interleaving. Forgetting this is a recurring bug.
+Strides and offsets are always in complex elements (C1); `base.js` doubles
+them once after `reinterpret` (C2). When indexing a sub-panel in the Float64
+view, the offset is `2 * ( offsetA + i * strideA1 + j * strideA2 )`. The
+factor of 2 accounts for interleaving. Forgetting it is a recurring bug.
 
 ## Fortran Test Pattern
 

@@ -1,6 +1,6 @@
 'use strict';
 
-// Caller-owned workspace contract (lint/CONVENTIONS.md D5).
+// Caller-owned workspace contract (CONVENTIONS.md D5).
 //
 // Workspace (WORK/RWORK/IWORK/BWORK/...) is unobservable scratch: outputs carry
 // no guarantee about its contents. Its addressing parameters therefore have

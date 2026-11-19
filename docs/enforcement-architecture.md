@@ -70,8 +70,8 @@ BLIS indexing (`stride-provenance.mjs`, a dataflow analysis over `base.js`):
 
 The missing piece so far is a **target**. Translations were written, then
 patched as problems turned up. The conventions they were patched toward lived
-in prose spread across skills, docs, `CLAUDE.md` and `lint/CONVENTIONS.md`, and
-that prose contradicts itself and the code. For example:
+in prose spread across skills, docs, `CLAUDE.md` and `CONVENTIONS.md`, and
+that prose contradicted itself and the code. For example (all fixed in Step 1):
 
 - `blahpack-review/SKILL.md` and `docs/ndarray-conformance.md` still prescribe
   CJS `var x = require( … )` in an ESM codebase.
@@ -318,7 +318,7 @@ Scripts: `docs/enforcement-architecture/measurements/stdlib-{extract,compare,mes
    is a set lookup instead of a heuristic. This replaces the "184 shapes"
    problem with something objective.
 2. **Enum validation uses `*-resolve-str`.**
-3. **Canonical names** follow stdlib (extends `lint/CONVENTIONS.md`'s
+3. **Canonical names** follow stdlib (extends `CONVENTIONS.md`'s
    `DA → alpha` ruling to `zx → x`, `za → alpha`, `d → D`, `transa → transA`).
 4. **Packed routines take `order`**, because packed layout cannot be expressed
    by strides. This fills a real capability gap in blahpack.
@@ -374,7 +374,7 @@ newest one never replaced the older ones. Audit date: 2026-11-17.
 | **Status / progress** | `report.js` → tracked `progress.html`, `audit.py` + `audit.sh`, `gen-queue.js` → `QUEUE.md`, `validation-level.js`, `test-failures.sh`, `run-tests.sh`, `bin/conformance.js` report | 6 |
 | **Sandbox** | `.devcontainer/`, `Dockerfile.sandbox`, `bin/sandbox`, `bin/sandbox-worktree` (worktrees don't work here), `bin/claude-sandbox` | 5 |
 | **Python env** | `env/` (the documented one) and `.venv/` | 2 |
-| **Convention prose** | `.claude/skills/*` (translate skill 1,231 lines), 10 `docs/*.md`, `CLAUDE.md`, `lint/CONVENTIONS.md`, `CONTRIBUTING.md`, `CHECKLIST.template.md`, 914 per-module `LEARNINGS*.md` (29k lines; 202 are mostly "N/A" boilerplate), 41 `DIFFERENCES.md` | — |
+| **Convention prose** | `.claude/skills/*` (translate skill 1,231 lines), 10 `docs/*.md`, `CLAUDE.md`, `CONVENTIONS.md`, `CONTRIBUTING.md`, `CHECKLIST.template.md`, 914 per-module `LEARNINGS*.md` (29k lines; 202 are mostly "N/A" boilerplate), 41 `DIFFERENCES.md` | — |
 
 The "patch after the fact" row is the clearest symptom. `archive/bin/`
 contains five separate sweeps over *validation code alone*. Each one fixed a
@@ -401,7 +401,7 @@ Known debris:
 | Status | `npm run status`: reads the lint gate and harness ledger, and prints the per-module "is it correct" verdict (§2). Output is generated and untracked | `report.js`, `progress.html`, `audit.*`, `gen-queue.js`, `QUEUE.md` |
 | One-shot migrations | none tracked; git history is the archive | `codemods/`, `archive/` |
 | Sandbox | `.devcontainer/` | `Dockerfile.sandbox`, `bin/sandbox*`, `bin/claude-sandbox` (after confirming none is still used) |
-| Conventions | `CONVENTIONS.md` (rules) + `docs/` for *patterns* only (GOTO, complex numbers, performance, optimization policy) + slim skills that cite IDs | `ndarray-conformance.md`, `review-guidelines.md`, `stdlib-style-differences.md`, `blis-comparison.md` (folded in), `lint/CONVENTIONS.md`, `CHECKLIST.template.md` |
+| Conventions | `CONVENTIONS.md` (rules) + `docs/` for *patterns* only (GOTO, complex numbers, performance, optimization policy) + slim skills that cite IDs | `ndarray-conformance.md`, `review-guidelines.md`, `stdlib-style-differences.md`, `blis-comparison.md` (folded in), `CONVENTIONS.md`, `CHECKLIST.template.md` |
 
 Rough size: `bin/` goes from 60 scripts (~20k lines) to about 4 entry points
 plus `bin/translate/`, and `archive/` and `codemods/` disappear.
@@ -482,7 +482,7 @@ records bugs the harness caught, which is a different kind of record.
   replaced with what the gate enforces and the actual ESM style.
 - The review skill's rule names and CJS imports are fixed.
 - CJS/`var` examples in `docs/` are converted to ESM/`const`/`let`.
-- `ndarray-conformance.md` carries a banner naming its open rulings.
+- `ndarray-conformance.md` carries a banner naming its open rulings (it was deleted in Step 1, and its rulings are now `CONVENTIONS.md` V7/V9/V10/V8).
 
 **Corrections to the audit above:**
 - The `lint/` rules *were* already gated in CI through ESLint. What wasn't
@@ -532,7 +532,16 @@ and patchers, and the spec linters delete `bin/conformance`.
 The steps are ordered so that the target exists before anything is enforced
 against it, and enforcement exists before code is conformed to it.
 
-### Step 1: Convention inventory and rulings → `CONVENTIONS.md` v1
+### Step 1: Convention inventory and rulings → `CONVENTIONS.md` v1 — DONE 2026-11-19
+
+**Result:** `CONVENTIONS.md` at the repo root (moved from `lint/`; D1–D5 keep
+their IDs). 548 statements were harvested from skills, docs, `CLAUDE.md`,
+rule READMEs and `bin/conformance/checks`, and tagged keep/discard/conflict. The 54 conflicts are
+resolved in its *Rulings log*. Every rule names an enforcer, marked
+**(warn)** or **(unbuilt)** where nothing gates it yet; those marks are the
+Step 3–4 worklist. The deletion half of Step 7 was done at the same time (see
+there).
+
 
 1. Harvest every convention statement from:
    - `.claude/skills/*` (the translate skill alone is 1,231 lines),
@@ -616,7 +625,14 @@ gate.
 
 *Exit:* every routine with fixtures reaches L3.
 
-### Step 7: Rewrite the skills to match
+### Step 7: Rewrite the skills to match — deletions DONE 2026-11-19
+
+**Done with Step 1:** restated and contradicted rules were stripped from the
+skills, `CLAUDE.md` and `docs/`, and replaced with `CONVENTIONS.md` IDs.
+`docs/ndarray-conformance.md` and `docs/review-guidelines.md` were deleted.
+**Remaining:** the spec-driven translate flow (it needs Step 2) and
+skill-hygiene lint (Step 4).
+
 
 - **`blahpack-translate`:**
   1. generate the spec,

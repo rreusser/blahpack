@@ -27,11 +27,11 @@ structure. Fixture equality and coverage % are NOT correctness.
       (Step 4c) — the advertised WORK minimum suffices on the blocked path.
 - [ ] Level recorded via `ledger.checked(...)`; `node bin/validation-level.js`
       shows `$ARGUMENTS` at **L3 or higher**.
-- [ ] Any bug found is logged in `test/harness/LEARNINGS.md` (before/with the fix).
+- [ ] Any bug found is logged in `test/harness/LEARNINGS.md` (before/with the fix; T8).
 - [ ] Test lives at `lib/<pkg>/base/$ARGUMENTS/test/test.validate.js` and passes:
       `node --test lib/<pkg>/base/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20`
 
-**Target: every routine reaches at least L3.** Reach L4 when a trusted-routine or
+**L3 is the definition of done (CONVENTIONS T7; not yet gated).** Reach L4 when a trusted-routine or
 Fortran oracle is available (see step 6).
 
 ---
@@ -157,7 +157,7 @@ import wrap from './../lib/<routine>.js';   // the LDA/LDB wrapper, not ndarray
 assertLeadingDimGuard( ( ldb ) => {
   const A = realizeLD( order, M, N, M, N, requiredLD(order,M,N), aVal );
   const B = realizeLD( order, pRows, nrhs, Math.max(M,N), nrhs, ldb, bVal );
-  wrap( order, ...flags, M, N, nrhs, A.data, A.ld, B.data, ldb, null, 1 );
+  wrap( order, ...flags, M, N, nrhs, A.data, A.ld, B.data, ldb, null );
 }, requiredLD( order, Math.max(M,N), nrhs ), 'LDB guard' );
 ```
 
@@ -230,7 +230,7 @@ node bin/validation-level.js            # confirm $ARGUMENTS is L3+
 
 ## Step 7 — On ANY failure: log before you fix
 
-**Mandatory.** Add an entry to `test/harness/LEARNINGS.md` (newest first):
+**Mandatory (CONVENTIONS T8).** Add an entry to `test/harness/LEARNINGS.md` (newest first):
 routine, reproducing **seed** + scalar + scheme + flags + dims, **root cause**,
 **bug class** (`off-by-one`/`0-vs-1-index`/`wrong-branch`/`row-col-transpose`/
 `stride-sign`/`uplo-trans-diag-handling`/`storage-mapping`/`tolerance`/
@@ -241,13 +241,13 @@ Then fix. Never fix silently — the learning is the deliverable.
 
 ## Consistency rules (apply to every routine, no exceptions)
 
-1. Never allocate storage by hand in a test — always via a `schemes.*` realizer
+1. Never allocate storage by hand in a test (T9) — always via a `schemes.*` realizer
    (poisoning + layout freedom come for free). Extend the harness if a scheme is
    missing.
 2. Always validate against `ref`/`check` (independent oracle), never against the
    library under test — except the explicit `cross-validation` layer.
 3. Always sweep the full size list and the full flag cross-product.
-4. Always run the layout-invariance fuzz (bit-exact). No routine ships below L3.
+4. Always run the layout-invariance fuzz (bit-exact); L3 is done (T7).
 5. Always record via `checked(...)` so the level is honest.
 6. Validate `d` and `z` forms together when both exist.
 7. If the routine has an LD wrapper, always run the leading-dimension conformance

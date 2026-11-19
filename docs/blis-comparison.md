@@ -38,7 +38,7 @@ BLIS exposes three API layers. Blahpack has analogues for two of them.
 | **Object API** | `bli_gemm(alpha, a, b, beta, c)` — type-polymorphic, all metadata in `obj_t` | No equivalent |
 | **Typed API** | `bli_dgemm(transa, transb, m, n, k, alpha, a, rs_a, cs_a, ...)` | `base.js` (same idea, with offsets added) |
 | **Validation** | (none) | `ndarray.js` — validates params, delegates to base.js |
-| **BLAS compat** | `dgemm_(transa, transb, m, n, k, alpha, a, lda, ...)` | `<routine>.js` (planned, currently stubs) |
+| **BLAS compat** | `dgemm_(transa, transb, m, n, k, alpha, a, lda, ...)` | `<routine>.js` (stdlib BLAS-classic strided form) |
 
 ### The object API
 
@@ -74,7 +74,7 @@ there's no runtime context or threading model.
 | Complex type | `dcomplex` struct `{real, imag}` | `Complex128` object + `Complex128Array` |
 | Strides | Always in complex elements | Complex elements at API boundary, doubled to Float64 internally via `reinterpret()` |
 | Scalars | Passed as `const dcomplex*` (pointer) | Passed as `Complex128`, decomposed with `real()`/`imag()` at entry |
-| Conjugation | Separate `conj_t` param, independent of transpose | Folded into `trans_t` as `'C'` (matching Fortran convention) |
+| Conjugation | Separate `conj_t` param, independent of transpose | Folded into `trans` as `'conjugate-transpose'` (matching Fortran's `'C'`) |
 
 BLIS separates conjugation from transposition — you can conjugate without
 transposing (`BLIS_CONJ_NO_TRANSPOSE`), which traditional BLAS and blahpack
@@ -174,10 +174,10 @@ cache-hierarchy concerns.
 
 | Aspect | BLIS | Blahpack |
 |---|---|---|
-| Language | C (with inline assembly) | JavaScript (CommonJS) |
+| Language | C (with inline assembly) | JavaScript (ESM) |
 | Offset mechanism | Pointer arithmetic / `obj_t.off[]` | Explicit `offset` parameter |
 | Type dispatch | Object API (polymorphic) or name prefix | Name prefix only |
-| Conjugation | Independent `conj_t` parameter | Folded into `trans_t` |
+| Conjugation | Independent `conj_t` parameter | Folded into `trans` |
 | Validation | None in typed API | `ndarray.js` layer |
 | Threading | Per-call `rntm_t` control | None |
 | Performance model | Register tiling, cache blocking, packing, SIMD | JIT-friendly patterns, allocation reduction |

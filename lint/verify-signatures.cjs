@@ -2,7 +2,7 @@
 
 // Strict cross-file signature conformance gate — no wiggle room.
 //
-// Enforces the resolved conventions in lint/CONVENTIONS.md exactly:
+// Enforces the resolved conventions in CONVENTIONS.md exactly:
 //   * ndarray.js parameter list  ===  base.js parameter list
 //   * <routine>.js parameter list === strided projection of base.js
 //

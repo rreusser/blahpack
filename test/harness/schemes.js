@@ -345,7 +345,7 @@ function vectorLayouts() {
 
 /**
 * Restrict a vector layout to a caller-owned WORKSPACE vector. Workspace is
-* unobservable scratch and only a unit stride is supported (lint/CONVENTIONS.md
+* unobservable scratch and only a unit stride is supported (CONVENTIONS.md
 * D5): ndarray.js rejects any other stride. What still varies, and must leave
 * every output bit-identical, is where the scratch starts (`lead` = offset) and
 * what surrounds it (`tail`), since drivers hand callees slices of one buffer.

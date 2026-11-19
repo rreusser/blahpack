@@ -82,9 +82,9 @@ There is no exemption mechanism.
 | **Stride-name collision** — 2D `Q` claims `strideQ2`, so 1D `Q2` becomes `strideQ21` (its sole dimension), keeping `offsetQ2`. | When a 1D array's canonical stride name is already taken by another array's dimension, a trailing `1` disambiguates. Fires only on a genuine collision. | `pass/dlaed2--stride-name-collision.js` |
 | **Output-scalar packing** — `DROTG(DA,DB,C,S)` → `ab,strideAB,offsetAB, cs,strideCS,offsetCS`. | A by-value JS parameter cannot return a written scalar, so `out`/`inout` scalars are packed into caller arrays (or a result object). These slots are count-flexible. | `pass/drotg--scalar-packing.js` |
 | **Complex function return** — `COMPLEX*16 FUNCTION ZLADIV(X,Y)` gains an `out,offsetOut`. | A complex result is not a single JS number, so it is surfaced through an added output parameter with no Fortran counterpart. | `pass/zladiv--complex-return.js` |
-| **Workspace arrays** — `WORK`, `RWORK`, `IWORK`. | Allocated internally and elided, or kept as `arr,offset` / `arr,stride,offset` / a 2D workspace. Count-flexible. | (exercised across the corpus, e.g. dgeqrf) |
+| **Workspace arrays** — `WORK`, `RWORK`, `IWORK`. | Always a parameter (CONVENTIONS D4, S3), as `arr,offset` / `arr,stride,offset` / a 2D workspace. This rule's slot is count-flexible; the strictness lives in `conf:workspace.caller-provided` and `sig`. | (exercised across the corpus, e.g. dgeqrf) |
 | **Increment kept** — a rare routine keeps `INCX` for its sign semantics (e.g. `DLASWP`). | `INC*` is normally replaced by a stride, but not always; allowed to be kept. | (corpus) |
-| **Workspace size kept** — ARPACK keeps `LWORKL`. | `L*WORK` sizes are normally implicit in the typed array's length, but some routines keep them. | `pass/dsaupd--reverse-communication-state.js` |
+| **Workspace size kept** — ARPACK keeps `LWORKL`. | `L*WORK` sizes are implicit in the typed array's length; `LWORKL` is the one exception (CONVENTIONS W1). | `pass/dsaupd--reverse-communication-state.js` |
 | **Reverse-communication state** — any routine with an `IDO` argument gains a leading `state` object. | ARPACK's reverse-communication protocol persists progress in Fortran `SAVE` variables; JS has no `SAVE`, so state is threaded explicitly. | `pass/dsaupd--reverse-communication-state.js` |
 
 ## Coverage and the `noData` failure

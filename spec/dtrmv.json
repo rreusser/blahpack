@@ -1,0 +1,170 @@
+{
+	"routine": "dtrmv",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTRMV(UPLO,TRANS,DIAG,N,A,LDA,X,INCX)",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "diag",
+			"fortran": "DIAG",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 8,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": 2,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND. .NOT.LSAME(TRANS,'C')",
+			"js": "trans !== 'no-transpose' && trans !== 'transpose' && trans !== 'conjugate-transpose'"
+		},
+		{
+			"info": 3,
+			"param": "DIAG",
+			"kind": "enum",
+			"fortranValues": "NU",
+			"values": [
+				"non-unit",
+				"unit"
+			],
+			"fortran": ".NOT.LSAME(DIAG,'U') .AND. .NOT.LSAME(DIAG,'N')",
+			"js": "diag !== 'unit' && diag !== 'non-unit'"
+		},
+		{
+			"info": 4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX(1,N)",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": 8,
+			"param": "INCX",
+			"kind": "nonzero",
+			"vector": "X",
+			"fortran": "INCX.EQ.0",
+			"js": "incx === 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

@@ -1,0 +1,93 @@
+{
+	"routine": "drotm",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DROTM(N,DX,INCX,DY,INCY,DPARAM)",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "DX",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DX"
+		},
+		{
+			"name": "y",
+			"fortran": "DY",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DY"
+		},
+		{
+			"name": "param",
+			"fortran": "DPARAM",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"5"
+			],
+			"length": {
+				"fortran": "5",
+				"js": "5"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0 .OR. (DFLAG+TWO.EQ.ZERO)",
+			"js": null
+		}
+	],
+	"untranslated": [
+		"quickReturn 0: unsupported call DPARAM"
+	]
+}

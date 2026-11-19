@@ -1,0 +1,218 @@
+{
+	"routine": "dtfsm",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTFSM( TRANSR, SIDE, UPLO, TRANS, DIAG, M, N, ALPHA, A,",
+	"returns": {
+		"kind": "array",
+		"param": "B"
+	},
+	"params": [
+		{
+			"name": "transr",
+			"fortran": "TRANSR",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 4,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "diag",
+			"fortran": "DIAG",
+			"position": 5,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 7,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"NT"
+			],
+			"length": {
+				"fortran": "NT",
+				"js": null
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TRANSR",
+			"kind": "enum",
+			"fortranValues": "NT",
+			"values": [
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.NORMALTRANSR .AND. .NOT.LSAME( TRANSR, 'T' )",
+			"js": "transr !== 'no-transpose' && transr !== 'transpose'"
+		},
+		{
+			"info": -2,
+			"param": "SIDE",
+			"kind": "enum",
+			"fortranValues": "LR",
+			"values": [
+				"left",
+				"right"
+			],
+			"fortran": ".NOT.LSIDE .AND. .NOT.LSAME( SIDE, 'R' )",
+			"js": "side !== 'left' && side !== 'right'"
+		},
+		{
+			"info": -3,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LOWER .AND. .NOT.LSAME( UPLO, 'U' )",
+			"js": "uplo !== 'lower' && uplo !== 'upper'"
+		},
+		{
+			"info": -4,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "NT",
+			"values": [
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.NOTRANS .AND. .NOT.LSAME( TRANS, 'T' )",
+			"js": "trans !== 'no-transpose' && trans !== 'transpose'"
+		},
+		{
+			"info": -5,
+			"param": "DIAG",
+			"kind": "enum",
+			"fortranValues": "NU",
+			"values": [
+				"non-unit",
+				"unit"
+			],
+			"fortran": ".NOT.LSAME( DIAG, 'N' ) .AND. .NOT.LSAME( DIAG, 'U' )",
+			"js": "diag !== 'non-unit' && diag !== 'unit'"
+		},
+		{
+			"info": -6,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -7,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -11,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDB.LT.MAX( 1, M )",
+			"js": "ldb < max( 1, M )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "( M.EQ.0 ) .OR. ( N.EQ.0 )",
+			"js": "M === 0 || N === 0"
+		}
+	],
+	"untranslated": [
+		"A.length: unknown identifier NT"
+	]
+}

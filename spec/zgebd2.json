@@ -1,0 +1,174 @@
+{
+	"routine": "zgebd2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGEBD2( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)-1"
+			],
+			"length": {
+				"fortran": "MIN(M,N)-1",
+				"js": "min( M, N ) - 1"
+			}
+		},
+		{
+			"name": "TAUQ",
+			"fortran": "TAUQ",
+			"position": 7,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "TAUP",
+			"fortran": "TAUP",
+			"position": 8,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 9,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(M,N)"
+			],
+			"length": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )"
+			},
+			"minLength": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 10,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		}
+	],
+	"quickReturn": []
+}

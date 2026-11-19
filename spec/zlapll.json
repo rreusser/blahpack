@@ -1,0 +1,86 @@
+{
+	"routine": "zlapll",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAPLL( N, X, INCX, Y, INCY, SSMIN )",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*INCX"
+			],
+			"length": {
+				"fortran": "1+(N-1)*INCX",
+				"js": "1 + (N - 1) * incx"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*INCY"
+			],
+			"length": {
+				"fortran": "1+(N-1)*INCY",
+				"js": "1 + (N - 1) * incy"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		},
+		{
+			"name": "ssmin",
+			"fortran": "SSMIN",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.1",
+			"js": "N <= 1",
+			"sets": [
+				"SSMIN = ZERO"
+			]
+		}
+	]
+}

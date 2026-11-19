@@ -1,0 +1,53 @@
+{
+	"routine": "dlartgs",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARTGS( X, Y, SIGMA, CS, SN )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "cs",
+			"fortran": "CS",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "sn",
+			"fortran": "SN",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

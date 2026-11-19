@@ -11,7 +11,10 @@
 // Everything a check needs from Fortran comes from the committed parsed cache,
 // data/fortran-signatures.json (via lint/lib/fortran-data.cjs or
 // bin/conformance/util.js#fortranArgNames). Generating that cache is a
-// developer-time step (bin/gen_fortran_signatures.js), never a CI one.
+// developer-time step (bin/gen_fortran_signatures.js), never a CI one. The
+// same holds for the spec: `bin/gen_spec --extract` (bin/spec-gen/extract.cjs)
+// reads the sources; `bin/gen_spec --check` and `bin/spec` read only the
+// committed data/fortran-checks.json.
 //
 // Run:  node --test lint/no-fortran-source.test.cjs
 
@@ -21,7 +24,7 @@ var test = require( 'node:test' );
 var assert = require( 'node:assert' );
 
 var ROOT = path.join( __dirname, '..' );
-var CI_CODE = [ 'lint', path.join( 'bin', 'conformance' ), path.join( 'bin', 'conformance.js' ) ];
+var CI_CODE = [ 'lint', path.join( 'bin', 'conformance' ), path.join( 'bin', 'conformance.js' ), path.join( 'bin', 'gen_spec' ), path.join( 'bin', 'spec' ), path.join( 'bin', 'spec-gen', 'build.cjs' ), path.join( 'bin', 'spec-gen', 'fexpr.cjs' ) ];
 var SOURCE_DIR_RE = /BLAS-3\.12\.0|lapack-3\.12\.0|arpack-ng-/;
 
 function files( p, out ) {
@@ -32,7 +35,7 @@ function files( p, out ) {
 				files( path.join( p, name ), out );
 			}
 		});
-	} else if ( /\.(c|m)?js$/.test( p ) && full !== __filename ) {
+	} else if ( ( /\.(c|m)?js$/.test( p ) || CI_CODE.indexOf( p ) !== -1 ) && full !== __filename ) {
 		out.push( p );
 	}
 	return out;

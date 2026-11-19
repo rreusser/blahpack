@@ -1,0 +1,69 @@
+{
+	"routine": "dlaev2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAEV2( A, B, C, RT1, RT2, CS1, SN1 )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "rt1",
+			"fortran": "RT1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rt2",
+			"fortran": "RT2",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "cs1",
+			"fortran": "CS1",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "sn1",
+			"fortran": "SN1",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

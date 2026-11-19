@@ -1,0 +1,193 @@
+{
+	"routine": "zgemv",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGEMV(TRANS,M,N,ALPHA,A,LDA,X,INCX,BETA,Y,INCY)",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 7,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 8,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 10,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(M-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 11,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.LSAME(TRANS,'N') .AND. .NOT.LSAME(TRANS,'T') .AND. .NOT.LSAME(TRANS,'C')",
+			"js": "trans !== 'no-transpose' && trans !== 'transpose' && trans !== 'conjugate-transpose'"
+		},
+		{
+			"info": 2,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": 3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX(1,M)",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": 8,
+			"param": "INCX",
+			"kind": "nonzero",
+			"vector": "X",
+			"fortran": "INCX.EQ.0",
+			"js": "incx === 0"
+		},
+		{
+			"info": 11,
+			"param": "INCY",
+			"kind": "nonzero",
+			"vector": "Y",
+			"fortran": "INCY.EQ.0",
+			"js": "incy === 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "(M.EQ.0) .OR. (N.EQ.0) .OR. ((ALPHA.EQ.ZERO).AND. (BETA.EQ.ONE))",
+			"js": "(M === 0 || N === 0) || (real( alpha ) === 0 && imag( alpha ) === 0 && (real( beta ) === 1 && imag( beta ) === 0))"
+		}
+	]
+}

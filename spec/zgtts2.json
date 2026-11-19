@@ -1,0 +1,148 @@
+{
+	"routine": "zgtts2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGTTS2( ITRANS, N, NRHS, DL, D, DU, DU2, IPIV, B, LDB )",
+	"returns": {
+		"kind": "array",
+		"param": "B"
+	},
+	"params": [
+		{
+			"name": "itrans",
+			"fortran": "ITRANS",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "DL",
+			"fortran": "DL",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "DU",
+			"fortran": "DU",
+			"position": 6,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "DU2",
+			"fortran": "DU2",
+			"position": 7,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N-2"
+			],
+			"length": {
+				"fortran": "N-2",
+				"js": "N - 2"
+			}
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 8,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0 .OR. NRHS.EQ.0",
+			"js": "N === 0 || nrhs === 0"
+		}
+	]
+}

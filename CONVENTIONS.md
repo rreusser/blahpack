@@ -62,11 +62,11 @@ of the third:
 | D3 | The strided form has no `offset*` params. The offset comes from `stride2offset( len, stride )`. | stdlib. | `sig` |
 | S5 | No leading-dimension (`LDA`, `ld*`) params in `base.js`/`ndarray.js`. | Strides replace them. | `lint:fortran-signature`; `conf:conventions.no-leading-dimension-in-stride-tier` (dup) |
 | S6 | Column-major `<routine>.js` → base strides `(1, LDA)`; row-major → `(LDA, 1)`. | Definition of `order`. | `harness:layout-invariance` |
-| S7 | Scalar names are canonical everywhere: `DA → alpha`, `DB → beta`. Otherwise params keep their Fortran names (case-insensitive). | One name per concept, matching stdlib. | `lint:fortran-signature` (names); canonical-alias table (unbuilt, Step 2 spec) |
+| S7 | Names are canonical everywhere: `DA → alpha`, `DB → beta`, and the level-1 vectors `DX`/`SX → x`, `DY`/`SY → y`, `DPARAM → param` (unless the alias collides with another argument). Otherwise params keep their Fortran names (case-insensitive). | One name per concept, matching stdlib. | `lint:fortran-signature` (names); alias table in `bin/spec-gen/build.cjs` → `spec/<routine>.json` names (checked by `bin/spec xcheck`; gate unbuilt, Step 3) |
 | S8 | `<routine>.js` calls `base.js`, never `ndarray.js`. `ndarray.js` calls `base.js`. | One validation layer per entry point. | `conf:conventions.routine-calls-base`, `conf:conventions.ndarray-calls-base` |
 | S9 | Every `base(...)` call passes exactly `base.length` args. | Catches argument drift after a signature change. | `conf:base-arity` |
-| S10 | Output scalars go into caller-provided arrays (length-1 `Float64Array`/`Int32Array`) or the return value. An in/out scalar is a length-1 typed array. Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. | `lint:fortran-signature` (shape); typed-array kind (unbuilt) |
-| S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary output array (BLAS, stdlib style). | stdlib return conventions. | (unbuilt; Step 2 spec) |
+| S10 | Each output scalar (a Fortran out/inout non-array argument other than `INFO`) is its own caller-provided length-1 typed array param (`Float64Array`/`Int32Array`), named after the Fortran argument and in its Fortran position. A complex one is `x, offsetX` (S1). Output scalars are never returned in a result object or packed into a shared `out` array. (Open: the container for a CHARACTER output such as `EQUED` in the 13 `laq*` routines, which a typed array can't hold.) Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. One derivable form (from the spec) instead of per-routine result shapes. | `lint:fortran-signature` (shape); `bin/spec xcheck` (exact; gate unbuilt, Step 3; worklist: 94 routines). Typed-array kind unbuilt |
+| S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary (last) output array (BLAS, stdlib style). An in/out `INFO` (ARPACK) also enters as the param `infoIn`. | stdlib return conventions. | `spec.returns` (Step 2); code check unbuilt (Step 3) |
 | S12 | Public pivot/index arrays (`IPIV`, `JPVT`, `IBLOCK`, …) are **0-based**. Fortran's 1-based values are converted inside `base.js`. `ndarray.js` passes them through. | JS indexing; same meaning across both entry points. | `harness:reconstruction` (pivot round-trip) |
 
 ## W: Workspace
@@ -81,7 +81,7 @@ of the third:
 | W2 | Workspace stride/offset names use stdlib camel case: `strideWork`, `offsetWork`, `strideIWork`, `offsetRWork`. Never `strideWORK`. The array keeps its Fortran name (`WORK`, `IWORK`). | stdlib naming. | `conf:workspace.naming` |
 | W3 | `ndarray.js` checks the workspace length and throws `RangeError` when it's too small: `WORK.length - offsetWork < required`. Zero-dimension quick returns come **before** that check. | A short buffer must fail loudly, not read past the end. Empty problems need no workspace. | `conf:work-assert`, `conf:work-assert.early-return-order` (only `WORK`; `IWORK`/`RWORK` unbuilt); `harness:assertWorkspaceSufficient` (the advertised minimum suffices) |
 | W4 | In z/c routines, a complex workspace allocated by the wrapper is a `Complex128Array`/`Complex64Array`, unless `base.js` documents a `Float64Array`. | Matches the Fortran type; `reinterpret` works on it. | `conf:workspace.complex-workspace-type` |
-| W5 | The required workspace size is documented in the `@param` JSDoc. | Replaces LWORK queries. | (unbuilt; Step 2 spec → generated JSDoc) |
+| W5 | The required workspace size is documented in the `@param` JSDoc. | Replaces LWORK queries. | sizes: `spec` `minLength` (Step 2); JSDoc check unbuilt (Step 3) |
 
 ## V: Argument validation
 
@@ -174,15 +174,18 @@ of the third:
 ## Appendix A: canonical option strings
 
 Used everywhere: `base.js` dispatch, both validators, tests, examples, and the README (N1, N8).
-Fortran letters map to these values; `bin/conformance/checks/option-rules.js` holds the
-letter → value map for the fixed families (TRANS*, SIDE, UPLO, DIAG).
+Fortran letters map to these values. The machine-readable letter → value map is
+`spec/options.json` (read by `bin/gen_spec`); `lint/spec-schema.test.cjs` fails if it uses
+a value this table doesn't list. Option families missing here (BALANC, SENSE, JOB in
+trsen/trsna, INITV, EIGSRC, PIVOT, TYPE in lascl, ID in lasrt, VECT in sbgst, JOBV in gsvj0/1)
+are listed in each spec's `notes`.
 
 | Param family | Canonical values |
 |--------------|------------------|
 | `order` | `'row-major'`, `'column-major'` |
 | `uplo` | `'upper'`, `'lower'` |
 | `trans`, `transa`, `transb`, `transr` | `'no-transpose'`, `'transpose'`, `'conjugate-transpose'` |
-| `side` | `'left'`, `'right'` |
+| `side` | `'left'`, `'right'`; `'both'` (trevc/tgevc/hsein) |
 | `diag` | `'unit'`, `'non-unit'` |
 | `direct` | `'forward'`, `'backward'` |
 | `storev` | `'columnwise'`, `'rowwise'` |
@@ -242,6 +245,7 @@ the prose has been corrected.
 | ndarray.js converts IPIV from 1-based | S12: public API is 0-based, passed through. |
 | Undersized WORK makes the callee allocate (`dependency-conventions.md`) | W3/D4: it throws. |
 | `LWORKL` vs no-LWORK | W1: named exception. |
+| Output scalars: own length-1 array, result object, or packed `out` (S10 allowed both; 135 / 66 / 21 routines, 7 mixed) | S10: own length-1 array per scalar, named after the Fortran argument; complex keeps `x, offsetX`. **Ratified 2026-11-19.** |
 | `dstebz`/`dlarrd` param `order` vs D1 | D1: D1 governs the layout flag only. **Ratified 2026-11-19.** |
 | Drop vs keep `INCX==1` specializations (performance vs optimization policy) | X5. |
 | "Aim for L3" vs "no routine ships below L3" | T7: L3 is the definition of done; not yet gated. |

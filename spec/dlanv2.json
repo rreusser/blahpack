@@ -1,0 +1,93 @@
+{
+	"routine": "dlanv2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLANV2( A, B, C, D, RT1R, RT1I, RT2R, RT2I, CS, SN )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "rt1r",
+			"fortran": "RT1R",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rt1i",
+			"fortran": "RT1I",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rt2r",
+			"fortran": "RT2R",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rt2i",
+			"fortran": "RT2I",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "cs",
+			"fortran": "CS",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "sn",
+			"fortran": "SN",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

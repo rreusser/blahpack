@@ -1,0 +1,226 @@
+{
+	"routine": "ztrsm",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZTRSM(SIDE,UPLO,TRANSA,DIAG,M,N,ALPHA,A,LDA,B,LDB)",
+	"returns": {
+		"kind": "array",
+		"param": "B"
+	},
+	"params": [
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "transa",
+			"fortran": "TRANSA",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "diag",
+			"fortran": "DIAG",
+			"position": 4,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"K"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "NROWA",
+				"js": "side === 'left' ? M : N"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "SIDE",
+			"kind": "enum",
+			"fortranValues": "LR",
+			"values": [
+				"left",
+				"right"
+			],
+			"fortran": "(.NOT.LSIDE) .AND. (.NOT.LSAME(SIDE,'R'))",
+			"js": "side !== 'left' && side !== 'right'"
+		},
+		{
+			"info": 2,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": "(.NOT.UPPER) .AND. (.NOT.LSAME(UPLO,'L'))",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": 3,
+			"param": "TRANSA",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": "(.NOT.LSAME(TRANSA,'N')) .AND. (.NOT.LSAME(TRANSA,'T')) .AND. (.NOT.LSAME(TRANSA,'C'))",
+			"js": "transa !== 'no-transpose' && transa !== 'transpose' && transa !== 'conjugate-transpose'"
+		},
+		{
+			"info": 4,
+			"param": "DIAG",
+			"kind": "enum",
+			"fortranValues": "NU",
+			"values": [
+				"non-unit",
+				"unit"
+			],
+			"fortran": "(.NOT.LSAME(DIAG,'U')) .AND. (.NOT.LSAME(DIAG,'N'))",
+			"js": "diag !== 'unit' && diag !== 'non-unit'"
+		},
+		{
+			"info": 5,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": 6,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 9,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,NROWA)",
+				"js": "max( 1, side === 'left' ? M : N )"
+			},
+			"fortran": "LDA.LT.MAX(1,NROWA)",
+			"js": "lda < max( 1, side === 'left' ? M : N )"
+		},
+		{
+			"info": 11,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDB.LT.MAX(1,M)",
+			"js": "ldb < max( 1, M )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0",
+			"js": "M === 0 || N === 0"
+		}
+	],
+	"untranslated": [
+		"A.cols: unknown identifier K"
+	]
+}

@@ -1,0 +1,76 @@
+{
+	"routine": "dlaneg",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "INTEGER FUNCTION DLANEG( N, D, LLD, SIGMA, PIVMIN, R )",
+	"returns": {
+		"kind": "value",
+		"dtype": "int32"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "LLD",
+			"fortran": "LLD",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "pivmin",
+			"fortran": "PIVMIN",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

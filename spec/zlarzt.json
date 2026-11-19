@@ -1,0 +1,144 @@
+{
+	"routine": "zlarzt",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARZT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )",
+	"returns": {
+		"kind": "array",
+		"param": "T"
+	},
+	"params": [
+		{
+			"name": "direct",
+			"fortran": "DIRECT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "storev",
+			"fortran": "STOREV",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDV",
+				"K"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 7,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"K"
+			],
+			"length": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDT",
+				"K"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "DIRECT",
+			"kind": "enum",
+			"fortranValues": "B",
+			"values": [
+				"backward"
+			],
+			"fortran": ".NOT.LSAME( DIRECT, 'B' )",
+			"js": "direct !== 'backward'"
+		},
+		{
+			"info": -2,
+			"param": "STOREV",
+			"kind": "enum",
+			"fortranValues": "R",
+			"values": [
+				"rowwise"
+			],
+			"fortran": ".NOT.LSAME( STOREV, 'R' )",
+			"js": "storev !== 'rowwise'"
+		}
+	],
+	"quickReturn": []
+}

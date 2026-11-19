@@ -1,0 +1,37 @@
+{
+	"routine": "zladiv",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "COMPLEX*16     FUNCTION ZLADIV( X, Y )",
+	"returns": {
+		"kind": "value",
+		"dtype": "complex128"
+	},
+	"params": [
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "out",
+			"fortran": null,
+			"role": "result",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

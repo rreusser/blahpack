@@ -1,0 +1,266 @@
+{
+	"routine": "dlaebz",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAEBZ( IJOB, NITMAX, N, MMAX, MINP, NBMIN, ABSTOL,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "ijob",
+			"fortran": "IJOB",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nitmax",
+			"fortran": "NITMAX",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "mmax",
+			"fortran": "MMAX",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "minp",
+			"fortran": "MINP",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nbmin",
+			"fortran": "NBMIN",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "abstol",
+			"fortran": "ABSTOL",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "reltol",
+			"fortran": "RELTOL",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "pivmin",
+			"fortran": "PIVMIN",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "E2",
+			"fortran": "E2",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "NVAL",
+			"fortran": "NVAL",
+			"position": 13,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"MINP"
+			],
+			"length": {
+				"fortran": "MINP",
+				"js": "minp"
+			}
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"MMAX",
+				"2"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "MMAX",
+				"js": "mmax"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 15,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"MMAX"
+			],
+			"length": {
+				"fortran": "MMAX",
+				"js": "mmax"
+			}
+		},
+		{
+			"name": "mout",
+			"fortran": "MOUT",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "NAB",
+			"fortran": "NAB",
+			"position": 17,
+			"role": "matrix",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"MMAX",
+				"2"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "MMAX",
+				"js": "mmax"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 18,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MMAX"
+			],
+			"length": {
+				"fortran": "MMAX",
+				"js": "mmax"
+			},
+			"minLength": {
+				"fortran": "MMAX",
+				"js": "mmax",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 19,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"MMAX"
+			],
+			"length": {
+				"fortran": "MMAX",
+				"js": "mmax"
+			},
+			"minLength": {
+				"fortran": "MMAX",
+				"js": "mmax",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 20,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "IJOB.LT.1 .OR. IJOB.GT.3",
+			"js": "ijob < 1 || ijob > 3",
+			"sets": [
+				"INFO = -1"
+			]
+		}
+	]
+}

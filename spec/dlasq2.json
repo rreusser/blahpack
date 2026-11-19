@@ -1,0 +1,58 @@
+{
+	"routine": "dlasq2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASQ2( N, Z, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": "4 * N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 3,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"check INFO=-201: no argument at that position",
+		"check INFO=-201: no argument at that position",
+		"check INFO=-202: no argument at that position",
+		"check INFO=-203: no argument at that position"
+	]
+}

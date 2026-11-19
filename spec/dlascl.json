@@ -1,0 +1,194 @@
+{
+	"routine": "dlascl",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "type",
+			"fortran": "TYPE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "cfrom",
+			"fortran": "CFROM",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "cto",
+			"fortran": "CTO",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 7,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 10,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TYPE",
+			"kind": "enum",
+			"fortranValues": "BGHLQUZ",
+			"values": null,
+			"fortran": "ITYPE.EQ.-1",
+			"js": null
+		},
+		{
+			"info": -4,
+			"param": "CFROM",
+			"kind": "expr",
+			"fortran": "CFROM.EQ.ZERO .OR. DISNAN(CFROM)",
+			"js": null
+		},
+		{
+			"info": -5,
+			"param": "CTO",
+			"kind": "expr",
+			"fortran": "DISNAN(CTO)",
+			"js": null
+		},
+		{
+			"info": -6,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -7,
+			"param": "N",
+			"kind": "expr",
+			"fortran": "N.LT.0 .OR. ( ITYPE.EQ.4 .AND. N.NE.M ) .OR. ( ITYPE.EQ.5 .AND. N.NE.M )",
+			"js": null
+		},
+		{
+			"info": -9,
+			"param": "LDA",
+			"kind": "expr",
+			"fortran": "ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
+			"js": null
+		},
+		{
+			"info": -2,
+			"param": "KL",
+			"kind": "expr",
+			"fortran": "KL.LT.0 .OR. KL.GT.MAX( M-1, 0 )",
+			"guard": "ITYPE.GE.4",
+			"js": null
+		},
+		{
+			"info": -3,
+			"param": "KU",
+			"kind": "expr",
+			"fortran": "KU.LT.0 .OR. KU.GT.MAX( N-1, 0 ) .OR. ( ( ITYPE.EQ.4 .OR. ITYPE.EQ.5 ) .AND. KL.NE.KU )",
+			"guard": "ITYPE.GE.4",
+			"js": null
+		},
+		{
+			"info": -9,
+			"param": "LDA",
+			"kind": "expr",
+			"fortran": "( ITYPE.EQ.4 .AND. LDA.LT.KL+1 ) .OR. ( ITYPE.EQ.5 .AND. LDA.LT.KU+1 ) .OR. ( ITYPE.EQ.6 .AND. LDA.LT.2*KL+KU+1 )",
+			"guard": "ITYPE.GE.4",
+			"js": null
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0 .OR. M.EQ.0",
+			"js": "N === 0 || M === 0"
+		}
+	],
+	"untranslated": [
+		"check -1: no canonical value for TYPE='G'",
+		"check -4: unsupported call DISNAN",
+		"check -5: unsupported call DISNAN",
+		"check -7: local recursion too deep",
+		"check -9: no canonical value for TYPE='G'",
+		"check -2: no canonical value for TYPE='G'",
+		"check -3: local recursion too deep",
+		"check -9: local recursion too deep"
+	],
+	"notes": [
+		"option TYPE accepts 'BGHLQUZ' but spec/options.json has no canonical value for this family"
+	]
+}

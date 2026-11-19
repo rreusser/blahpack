@@ -1,0 +1,29 @@
+{
+	"routine": "dlabad",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLABAD( SMALL, LARGE )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "small",
+			"fortran": "SMALL",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "large",
+			"fortran": "LARGE",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

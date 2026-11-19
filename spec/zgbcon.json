@@ -1,0 +1,208 @@
+{
+	"routine": "zgbcon",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGBCON( NORM, N, KL, KU, AB, LDAB, IPIV, ANORM, RCOND,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 5,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "2*KL+KU+1",
+				"js": "2 * kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "anorm",
+			"fortran": "ANORM",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "rcond",
+			"fortran": "RCOND",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 11,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 12,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "NORM",
+			"kind": "enum",
+			"fortranValues": "IO1",
+			"values": [
+				"inf-norm",
+				"one-norm",
+				"one-norm"
+			],
+			"fortran": ".NOT.ONENRM .AND. .NOT.LSAME( NORM, 'I' )",
+			"js": "!(norm === '1' || norm === 'one-norm') && norm !== 'inf-norm'"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -3,
+			"param": "KL",
+			"kind": "nonnegative",
+			"fortran": "KL.LT.0",
+			"js": "kl < 0"
+		},
+		{
+			"info": -4,
+			"param": "KU",
+			"kind": "nonnegative",
+			"fortran": "KU.LT.0",
+			"js": "ku < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "2*KL+KU+1",
+				"js": "2 * kl + ku + 1"
+			},
+			"fortran": "LDAB.LT.2*KL+KU+1",
+			"js": "ldab < 2 * kl + ku + 1"
+		},
+		{
+			"info": -8,
+			"param": "ANORM",
+			"kind": "expr",
+			"fortran": "ANORM.LT.ZERO",
+			"js": "anorm < 0"
+		}
+	],
+	"quickReturn": []
+}

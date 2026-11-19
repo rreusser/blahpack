@@ -1,0 +1,103 @@
+{
+	"routine": "dlasd5",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASD5( I, D, Z, DELTA, RHO, DSIGMA, WORK )",
+	"returns": {
+		"kind": "array",
+		"param": "DELTA"
+	},
+	"params": [
+		{
+			"name": "i",
+			"fortran": "I",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "DELTA",
+			"fortran": "DELTA",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "rho",
+			"fortran": "RHO",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dsigma",
+			"fortran": "DSIGMA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 7,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			},
+			"minLength": {
+				"fortran": "2",
+				"js": "2",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -1,0 +1,263 @@
+{
+	"routine": "dseupd",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSEUPD( RVEC, HOWMNY, SELECT, D, Z, LDZ, SIGMA, BMAT, N, WHICH, NEV, TOL, RESID, NCV, V, LDV, IPARAM, IPNTR, WORKD, WORKL, LWORKL, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "rvec",
+			"fortran": "RVEC",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "howmny",
+			"fortran": "HOWMNY",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "SELECT",
+			"fortran": "SELECT",
+			"position": 3,
+			"role": "vector",
+			"dtype": "bool",
+			"intent": "inout",
+			"dims": [
+				"NCV"
+			],
+			"length": {
+				"fortran": "NCV",
+				"js": "ncv"
+			}
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NEV"
+			],
+			"length": {
+				"fortran": "NEV",
+				"js": "nev"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"NEV"
+			],
+			"ld": "LDZ",
+			"cols": {
+				"fortran": "NEV",
+				"js": "nev"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "bmat",
+			"fortran": "BMAT",
+			"position": 8,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 9,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "which",
+			"fortran": "WHICH",
+			"position": 10,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "nev",
+			"fortran": "NEV",
+			"position": 11,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "tol",
+			"fortran": "TOL",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "RESID",
+			"fortran": "RESID",
+			"position": 13,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ncv",
+			"fortran": "NCV",
+			"position": 14,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDV",
+				"NCV"
+			],
+			"ld": "LDV",
+			"cols": {
+				"fortran": "NCV",
+				"js": "ncv"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "IPARAM",
+			"fortran": "IPARAM",
+			"position": 17,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"7"
+			],
+			"length": {
+				"fortran": "7",
+				"js": "7"
+			}
+		},
+		{
+			"name": "IPNTR",
+			"fortran": "IPNTR",
+			"position": 18,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"11"
+			],
+			"length": {
+				"fortran": "11",
+				"js": "11"
+			}
+		},
+		{
+			"name": "WORKD",
+			"fortran": "WORKD",
+			"position": 19,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "WORKL",
+			"fortran": "WORKL",
+			"position": 20,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LWORKL"
+			],
+			"minLength": null
+		},
+		{
+			"name": "lworkl",
+			"fortran": "LWORKL",
+			"position": 21,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 22,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORKL"
+	]
+}

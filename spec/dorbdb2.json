@@ -1,0 +1,251 @@
+{
+	"routine": "dorbdb2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DORBDB2( M, P, Q, X11, LDX11, X21, LDX21, THETA, PHI,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "P",
+			"fortran": "P",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "X11",
+			"fortran": "X11",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDX11",
+				"Q"
+			],
+			"ld": "LDX11",
+			"rows": {
+				"fortran": "P",
+				"js": "P"
+			},
+			"cols": {
+				"fortran": "Q",
+				"js": "Q"
+			}
+		},
+		{
+			"name": "ldx11",
+			"fortran": "LDX11",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X11"
+		},
+		{
+			"name": "X21",
+			"fortran": "X21",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDX21",
+				"Q"
+			],
+			"ld": "LDX21",
+			"rows": {
+				"fortran": "M-P",
+				"js": "M - P"
+			},
+			"cols": {
+				"fortran": "Q",
+				"js": "Q"
+			}
+		},
+		{
+			"name": "ldx21",
+			"fortran": "LDX21",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X21"
+		},
+		{
+			"name": "THETA",
+			"fortran": "THETA",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"Q"
+			],
+			"length": {
+				"fortran": "Q",
+				"js": "Q"
+			}
+		},
+		{
+			"name": "PHI",
+			"fortran": "PHI",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"Q-1"
+			],
+			"length": {
+				"fortran": "Q-1",
+				"js": "Q - 1"
+			}
+		},
+		{
+			"name": "TAUP1",
+			"fortran": "TAUP1",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"P-1"
+			],
+			"length": {
+				"fortran": "P-1",
+				"js": "P - 1"
+			}
+		},
+		{
+			"name": "TAUP2",
+			"fortran": "TAUP2",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"Q"
+			],
+			"length": {
+				"fortran": "Q",
+				"js": "Q"
+			}
+		},
+		{
+			"name": "TAUQ1",
+			"fortran": "TAUQ1",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"Q"
+			],
+			"length": {
+				"fortran": "Q",
+				"js": "Q"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 13,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": {
+				"fortran": "LWORKMIN",
+				"js": "max( 2 + max( max( P - 1, M - P ), Q - 1 ) - 1, 2 + (Q - 1) - 1 )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 14,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 15,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M .LT. 0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "P",
+			"kind": "expr",
+			"fortran": "P .LT. 0 .OR. P .GT. M-P",
+			"js": "P < 0 || P > M - P"
+		},
+		{
+			"info": -3,
+			"param": "Q",
+			"kind": "expr",
+			"fortran": "Q .LT. 0 .OR. Q .LT. P .OR. M-Q .LT. P",
+			"js": "(Q < 0 || Q < P) || M - Q < P"
+		},
+		{
+			"info": -5,
+			"param": "LDX11",
+			"kind": "ld",
+			"matrix": "X11",
+			"min": {
+				"fortran": "MAX(1,P)",
+				"js": "max( 1, P )"
+			},
+			"fortran": "LDX11 .LT. MAX( 1, P )",
+			"js": "ldx11 < max( 1, P )"
+		},
+		{
+			"info": -7,
+			"param": "LDX21",
+			"kind": "ld",
+			"matrix": "X21",
+			"min": {
+				"fortran": "MAX(1,M-P)",
+				"js": "max( 1, M - P )"
+			},
+			"fortran": "LDX21 .LT. MAX( 1, M-P )",
+			"js": "ldx21 < max( 1, M - P )"
+		}
+	],
+	"quickReturn": []
+}

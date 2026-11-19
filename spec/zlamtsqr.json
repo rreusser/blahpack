@@ -1,0 +1,289 @@
+{
+	"routine": "zlamtsqr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAMTSQR( SIDE, TRANS, M, N, K, MB, NB, A, LDA, T, LDT, C, LDC, WORK, LWORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "mb",
+			"fortran": "MB",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"K"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "Q",
+				"js": "side === 'left' ? M : N"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDT",
+				"*"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 14,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MAX(1,LW)",
+				"js": "max( 1, side === 'left' ? N * nb : M * nb )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 15,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 16,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "SIDE",
+			"kind": "enum",
+			"fortranValues": "LR",
+			"values": [
+				"left",
+				"right"
+			],
+			"fortran": ".NOT.LEFT .AND. .NOT.RIGHT",
+			"js": "side !== 'left' && side !== 'right'"
+		},
+		{
+			"info": -2,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.TRAN .AND. .NOT.NOTRAN",
+			"js": "trans !== 'conjugate-transpose' && trans !== 'no-transpose'"
+		},
+		{
+			"info": -3,
+			"param": "M",
+			"kind": "expr",
+			"fortran": "M.LT.K",
+			"js": "M < K"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -5,
+			"param": "K",
+			"kind": "nonnegative",
+			"fortran": "K.LT.0",
+			"js": "K < 0"
+		},
+		{
+			"info": -7,
+			"param": "NB",
+			"kind": "expr",
+			"fortran": "K.LT.NB .OR. NB.LT.1",
+			"js": "K < nb || nb < 1"
+		},
+		{
+			"info": -9,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,Q)",
+				"js": "max( 1, side === 'left' ? M : N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, Q )",
+			"js": "lda < max( 1, side === 'left' ? M : N )"
+		},
+		{
+			"info": -11,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "MAX(1,NB)",
+				"js": "max( 1, nb )"
+			},
+			"fortran": "LDT.LT.MAX( 1, NB)",
+			"js": "ldt < max( 1, nb )"
+		},
+		{
+			"info": -13,
+			"param": "LDC",
+			"kind": "ld",
+			"matrix": "C",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDC.LT.MAX( 1, M )",
+			"js": "ldc < max( 1, M )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "MIN(M,N,K).EQ.0",
+			"js": "min( min( M, N ), K ) === 0"
+		},
+		{
+			"fortran": "(MB.LE.K).OR.(MB.GE.MAX(M,N,K))",
+			"js": "mb <= K || mb >= max( max( M, N ), K )",
+			"sets": [
+				"CALL ZGEMQRT( SIDE, TRANS, M, N, K, NB, A, LDA, T, LDT, C, LDC, WORK, INFO)"
+			]
+		}
+	]
+}

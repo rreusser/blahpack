@@ -56,6 +56,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Specs in sync with the committed Fortran facts and overrides
+        run: npm run spec:check
       - name: Run conformance checks (fast; structural)
         run: npm run conformance:fast
       - name: Validate problem tickets

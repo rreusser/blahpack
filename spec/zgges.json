@@ -1,0 +1,374 @@
+{
+	"routine": "zgges",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B, LDB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobvsl",
+			"fortran": "JOBVSL",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobvsr",
+			"fortran": "JOBVSR",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "sort",
+			"fortran": "SORT",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "selctg",
+			"fortran": "SELCTG",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "sdim",
+			"fortran": "SDIM",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "ALPHA",
+			"fortran": "ALPHA",
+			"position": 11,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "BETA",
+			"fortran": "BETA",
+			"position": 12,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "VSL",
+			"fortran": "VSL",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDVSL",
+				"N"
+			],
+			"ld": "LDVSL",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvsl",
+			"fortran": "LDVSL",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VSL"
+		},
+		{
+			"name": "VSR",
+			"fortran": "VSR",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDVSR",
+				"N"
+			],
+			"ld": "LDVSR",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvsr",
+			"fortran": "LDVSR",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VSR"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "LWKMIN",
+				"js": "max( 1, 2 * N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 18,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 19,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"8*N"
+			],
+			"length": {
+				"fortran": "8*N",
+				"js": "8 * N"
+			},
+			"minLength": {
+				"fortran": "8*N",
+				"js": "8 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "BWORK",
+			"fortran": "BWORK",
+			"position": 20,
+			"role": "workspace",
+			"dtype": "bool",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 21,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBVSL",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": "IJOBVL.LE.0",
+			"js": "(jobvsl === 'no-vectors' ? 1 : (jobvsl === 'compute-vectors' ? 2 : -1)) <= 0"
+		},
+		{
+			"info": -2,
+			"param": "JOBVSR",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": "IJOBVR.LE.0",
+			"js": "(jobvsr === 'no-vectors' ? 1 : (jobvsr === 'compute-vectors' ? 2 : -1)) <= 0"
+		},
+		{
+			"info": -3,
+			"param": "SORT",
+			"kind": "enum",
+			"fortranValues": "NS",
+			"values": [
+				"none",
+				"sort"
+			],
+			"fortran": "( .NOT.WANTST ) .AND. ( .NOT.LSAME( SORT, 'N' ) )",
+			"js": "sort !== 'sort' && sort !== 'none'"
+		},
+		{
+			"info": -5,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -7,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -9,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )"
+		},
+		{
+			"info": -14,
+			"param": "LDVSL",
+			"kind": "expr",
+			"fortran": "LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )",
+			"js": "ldvsl < 1 || ((jobvsl === 'no-vectors' ? false : (jobvsl === 'compute-vectors' ? true : false)) && ldvsl < N)"
+		},
+		{
+			"info": -16,
+			"param": "LDVSR",
+			"kind": "expr",
+			"fortran": "LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )",
+			"js": "ldvsr < 1 || ((jobvsr === 'no-vectors' ? false : (jobvsr === 'compute-vectors' ? true : false)) && ldvsr < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0",
+			"sets": [
+				"SDIM = 0"
+			]
+		}
+	]
+}

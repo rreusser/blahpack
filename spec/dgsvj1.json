@@ -1,0 +1,287 @@
+{
+	"routine": "dgsvj1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGSVJ1( JOBV, M, N, N1, A, LDA, D, SVA, MV, V, LDV,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobv",
+			"fortran": "JOBV",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n1",
+			"fortran": "N1",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "SVA",
+			"fortran": "SVA",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "mv",
+			"fortran": "MV",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDV",
+				"N"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "eps",
+			"fortran": "EPS",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sfmin",
+			"fortran": "SFMIN",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "tol",
+			"fortran": "TOL",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "nsweep",
+			"fortran": "NSWEEP",
+			"position": 15,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 16,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": {
+				"fortran": "M",
+				"js": "M",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 17,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 18,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBV",
+			"kind": "enum",
+			"fortranValues": "ANV",
+			"values": null,
+			"fortran": ".NOT.( RSVEC .OR. APPLV .OR. LSAME( JOBV, 'N' ) )",
+			"js": null
+		},
+		{
+			"info": -2,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "expr",
+			"fortran": "( N.LT.0 ) .OR. ( N.GT.M )",
+			"js": "N < 0 || N > M"
+		},
+		{
+			"info": -4,
+			"param": "N1",
+			"kind": "nonnegative",
+			"fortran": "N1.LT.0",
+			"js": "n1 < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"fortran": "LDA.LT.M",
+			"js": "lda < M"
+		},
+		{
+			"info": -9,
+			"param": "MV",
+			"kind": "expr",
+			"fortran": "( RSVEC.OR.APPLV ) .AND. ( MV.LT.0 )",
+			"js": null
+		},
+		{
+			"info": -11,
+			"param": "LDV",
+			"kind": "expr",
+			"fortran": "( RSVEC.AND.( LDV.LT.N ) ).OR. ( APPLV.AND.( LDV.LT.MV ) )",
+			"js": null
+		},
+		{
+			"info": -14,
+			"param": "TOL",
+			"kind": "expr",
+			"fortran": "TOL.LE.EPS",
+			"js": "tol <= eps"
+		},
+		{
+			"info": -15,
+			"param": "NSWEEP",
+			"kind": "nonnegative",
+			"fortran": "NSWEEP.LT.0",
+			"js": "nsweep < 0"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"check -1: no canonical value for JOBV='V'",
+		"check -9: no canonical value for JOBV='V'",
+		"check -11: no canonical value for JOBV='V'"
+	],
+	"notes": [
+		"option JOBV accepts 'ANV' but spec/options.json has no canonical value for this family"
+	]
+}

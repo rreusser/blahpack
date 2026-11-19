@@ -1,0 +1,60 @@
+{
+	"routine": "ilazlc",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "INTEGER FUNCTION ILAZLC( M, N, A, LDA )",
+	"returns": {
+		"kind": "value",
+		"dtype": "int32"
+	},
+	"params": [
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "m"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

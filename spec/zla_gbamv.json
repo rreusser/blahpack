@@ -1,0 +1,213 @@
+{
+	"routine": "zla_gbamv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLA_GBAMV( TRANS, M, N, KL, KU, ALPHA, AB, LDAB, X,",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 9,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 10,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(M-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 13,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "TRANS",
+			"kind": "expr",
+			"fortran": ".NOT.( ( TRANS.EQ.ILATRANS( 'N' ) ) .OR. ( TRANS.EQ.ILATRANS( 'T' ) ) .OR. ( TRANS.EQ.ILATRANS( 'C' ) ) )",
+			"js": null
+		},
+		{
+			"info": 2,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": 3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 4,
+			"param": "KL",
+			"kind": "expr",
+			"fortran": "KL.LT.0 .OR. KL.GT.M-1",
+			"js": "kl < 0 || kl > M - 1"
+		},
+		{
+			"info": 5,
+			"param": "KU",
+			"kind": "expr",
+			"fortran": "KU.LT.0 .OR. KU.GT.N-1",
+			"js": "ku < 0 || ku > N - 1"
+		},
+		{
+			"info": 6,
+			"param": "ALPHA",
+			"kind": "expr",
+			"fortran": "LDAB.LT.KL+KU+1",
+			"js": "ldab < kl + ku + 1"
+		},
+		{
+			"info": 8,
+			"param": "LDAB",
+			"kind": "expr",
+			"fortran": "INCX.EQ.0",
+			"js": "incx === 0"
+		},
+		{
+			"info": 11,
+			"param": "BETA",
+			"kind": "expr",
+			"fortran": "INCY.EQ.0",
+			"js": "incy === 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "( M.EQ.0 ).OR.( N.EQ.0 ).OR. ( ( ALPHA.EQ.ZERO ).AND.( BETA.EQ.ONE ) )",
+			"js": "(M === 0 || N === 0) || (alpha === 0 && beta === 1)"
+		}
+	],
+	"untranslated": [
+		"check 1: unsupported call ILATRANS"
+	]
+}

@@ -1,0 +1,342 @@
+{
+	"routine": "zgbbrd",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGBBRD( VECT, M, N, NCC, KL, KU, AB, LDAB, D, E, Q,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "vect",
+			"fortran": "VECT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ncc",
+			"fortran": "NCC",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 7,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KLU1",
+				"js": "kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)-1"
+			],
+			"length": {
+				"fortran": "MIN(M,N)-1",
+				"js": "min( M, N ) - 1"
+			}
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 11,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDQ",
+				"M"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "PT",
+			"fortran": "PT",
+			"position": 13,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDPT",
+				"N"
+			],
+			"ld": "LDPT",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldpt",
+			"fortran": "LDPT",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "PT"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 15,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"NCC"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "NCC",
+				"js": "ncc"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(M,N)"
+			],
+			"length": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )"
+			},
+			"minLength": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 18,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(M,N)"
+			],
+			"length": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )"
+			},
+			"minLength": {
+				"fortran": "MAX(M,N)",
+				"js": "max( M, N )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 19,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "VECT",
+			"kind": "enum",
+			"fortranValues": "BNPQ",
+			"values": [
+				"both",
+				"no-vectors",
+				"p-only",
+				"q-only"
+			],
+			"fortran": ".NOT.WANTQ .AND. .NOT.WANTPT .AND. .NOT.LSAME( VECT, 'N' )",
+			"js": "!(vect === 'q-only' || vect === 'both') && !(vect === 'p-only' || vect === 'both') && vect !== 'no-vectors'"
+		},
+		{
+			"info": -2,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "NCC",
+			"kind": "nonnegative",
+			"fortran": "NCC.LT.0",
+			"js": "ncc < 0"
+		},
+		{
+			"info": -5,
+			"param": "KL",
+			"kind": "nonnegative",
+			"fortran": "KL.LT.0",
+			"js": "kl < 0"
+		},
+		{
+			"info": -6,
+			"param": "KU",
+			"kind": "nonnegative",
+			"fortran": "KU.LT.0",
+			"js": "ku < 0"
+		},
+		{
+			"info": -8,
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "KLU1",
+				"js": "kl + ku + 1"
+			},
+			"fortran": "LDAB.LT.KLU1",
+			"js": "ldab < kl + ku + 1"
+		},
+		{
+			"info": -12,
+			"param": "LDQ",
+			"kind": "expr",
+			"fortran": "LDQ.LT.1 .OR. WANTQ .AND. LDQ.LT.MAX( 1, M )",
+			"js": "ldq < 1 || ((vect === 'q-only' || vect === 'both') && ldq < max( 1, M ))"
+		},
+		{
+			"info": -14,
+			"param": "LDPT",
+			"kind": "expr",
+			"fortran": "LDPT.LT.1 .OR. WANTPT .AND. LDPT.LT.MAX( 1, N )",
+			"js": "ldpt < 1 || ((vect === 'p-only' || vect === 'both') && ldpt < max( 1, N ))"
+		},
+		{
+			"info": -16,
+			"param": "LDC",
+			"kind": "expr",
+			"fortran": "LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )",
+			"js": "ldc < 1 || (ncc > 0 && ldc < max( 1, M ))"
+		}
+	],
+	"quickReturn": []
+}

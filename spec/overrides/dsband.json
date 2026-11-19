@@ -1,0 +1,9 @@
+{
+	"routine": "dsband",
+	"overrides": [
+		{
+			"reason": "DSBAND is an ARPACK driver from EXAMPLES/BAND, outside the vendored SRC/UTIL directories, so there are no source facts. Its package is arpack, and LDA is the shared leading dimension of AB, MB and RFAC (the doc says so; the signature cache cannot tie it to an array).",
+			"set": { "package": "arpack", "params.LDA.role": "ld", "params.LDA.of": "AB" }
+		}
+	]
+}

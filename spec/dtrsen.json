@@ -1,0 +1,280 @@
+{
+	"routine": "dtrsen",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, WR, WI,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "job",
+			"fortran": "JOB",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "compq",
+			"fortran": "COMPQ",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "SELECT",
+			"fortran": "SELECT",
+			"position": 3,
+			"role": "vector",
+			"dtype": "bool",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDT",
+				"N"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "WR",
+			"fortran": "WR",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WI",
+			"fortran": "WI",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "sep",
+			"fortran": "SEP",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 14,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "LWMIN",
+				"js": null,
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 15,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 16,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LIWORK)"
+			],
+			"minLength": {
+				"fortran": "LIWMIN",
+				"js": null,
+				"source": "check"
+			}
+		},
+		{
+			"name": "liwork",
+			"fortran": "LIWORK",
+			"position": 17,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "IWORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 18,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOB",
+			"kind": "enum",
+			"fortranValues": "BENV",
+			"values": null,
+			"fortran": ".NOT.LSAME( JOB, 'N' ) .AND. .NOT.WANTS .AND. .NOT.WANTSP",
+			"js": null
+		},
+		{
+			"info": -2,
+			"param": "COMPQ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"none",
+				"update"
+			],
+			"fortran": ".NOT.LSAME( COMPQ, 'N' ) .AND. .NOT.WANTQ",
+			"js": "compq !== 'none' && compq !== 'update'"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDT.LT.MAX( 1, N )",
+			"js": "ldt < max( 1, N )"
+		},
+		{
+			"info": -8,
+			"param": "LDQ",
+			"kind": "expr",
+			"fortran": "LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )",
+			"js": "ldq < 1 || (compq === 'update' && ldq < N)"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"check -1: no canonical value for JOB='N'",
+		"WORK.minLength: local LWMIN is assigned inside nested control flow",
+		"IWORK.minLength: local LIWMIN is assigned inside nested control flow"
+	],
+	"notes": [
+		"option JOB accepts 'BENV' but spec/options.json has no canonical value for this family"
+	]
+}

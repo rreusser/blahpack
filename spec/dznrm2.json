@@ -1,0 +1,47 @@
+{
+	"routine": "dznrm2",
+	"package": "blas",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DZNRM2(N,X,INCX)",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N <= 0",
+			"js": "N <= 0"
+		}
+	]
+}

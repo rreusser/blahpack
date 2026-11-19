@@ -1,0 +1,233 @@
+{
+	"routine": "dtplqt",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTPLQT( M, N, L, MB, A, LDA, B, LDB, T, LDT, WORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "L",
+			"fortran": "L",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "mb",
+			"fortran": "MB",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"M"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDT",
+				"N"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "MB",
+				"js": "mb"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 11,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MB*M"
+			],
+			"length": {
+				"fortran": "MB*M",
+				"js": "mb * M"
+			},
+			"minLength": {
+				"fortran": "MB*M",
+				"js": "mb * M",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 12,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -3,
+			"param": "L",
+			"kind": "expr",
+			"fortran": "L.LT.0 .OR. (L.GT.MIN(M,N) .AND. MIN(M,N).GE.0)",
+			"js": "L < 0 || (L > min( M, N ) && min( M, N ) >= 0)"
+		},
+		{
+			"info": -4,
+			"param": "MB",
+			"kind": "expr",
+			"fortran": "MB.LT.1 .OR. (MB.GT.M .AND. M.GT.0)",
+			"js": "mb < 1 || (mb > M && M > 0)"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -8,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDB.LT.MAX( 1, M )",
+			"js": "ldb < max( 1, M )"
+		},
+		{
+			"info": -10,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "MB",
+				"js": "mb"
+			},
+			"fortran": "LDT.LT.MB",
+			"js": "ldt < mb"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0",
+			"js": "M === 0 || N === 0"
+		}
+	]
+}

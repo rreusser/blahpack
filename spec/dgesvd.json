@@ -1,0 +1,254 @@
+{
+	"routine": "dgesvd",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobu",
+			"fortran": "JOBU",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobvt",
+			"fortran": "JOBVT",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "U",
+			"fortran": "U",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDU",
+				"UCOL"
+			],
+			"ld": "LDU",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "UCOL",
+				"js": null
+			}
+		},
+		{
+			"name": "ldu",
+			"fortran": "LDU",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "U"
+		},
+		{
+			"name": "VT",
+			"fortran": "VT",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDVT",
+				"N"
+			],
+			"ld": "LDVT",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvt",
+			"fortran": "LDVT",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VT"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MINWRK",
+				"js": null,
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 13,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBU",
+			"kind": "enum",
+			"fortranValues": "ANOS",
+			"values": [
+				"all-columns",
+				"none",
+				"overwrite",
+				"economy"
+			],
+			"fortran": ".NOT.( WNTUA .OR. WNTUS .OR. WNTUO .OR. WNTUN )",
+			"js": "!(((jobu === 'all-columns' || jobu === 'economy') || jobu === 'overwrite') || jobu === 'none')"
+		},
+		{
+			"info": -2,
+			"param": "JOBVT",
+			"kind": "expr",
+			"fortran": ".NOT.( WNTVA .OR. WNTVS .OR. WNTVO .OR. WNTVN ) .OR. ( WNTVO .AND. WNTUO )",
+			"js": "!(((jobvt === 'all-rows' || jobvt === 'economy') || jobvt === 'overwrite') || jobvt === 'none') || (jobvt === 'overwrite' && jobu === 'overwrite')"
+		},
+		{
+			"info": -3,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -9,
+			"param": "LDU",
+			"kind": "expr",
+			"fortran": "LDU.LT.1 .OR. ( WNTUAS .AND. LDU.LT.M )",
+			"js": "ldu < 1 || ((jobu === 'all-columns' || jobu === 'economy') && ldu < M)"
+		},
+		{
+			"info": -11,
+			"param": "LDVT",
+			"kind": "expr",
+			"fortran": "LDVT.LT.1 .OR. ( WNTVA .AND. LDVT.LT.N ) .OR. ( WNTVS .AND. LDVT.LT.MINMN )",
+			"js": "(ldvt < 1 || (jobvt === 'all-rows' && ldvt < N)) || (jobvt === 'economy' && ldvt < min( M, N ))"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0",
+			"js": "M === 0 || N === 0"
+		}
+	],
+	"untranslated": [
+		"U.cols: unknown identifier UCOL",
+		"WORK.minLength: local MINWRK is assigned inside nested control flow"
+	]
+}

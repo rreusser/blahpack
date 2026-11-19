@@ -1,0 +1,118 @@
+{
+	"routine": "dla_porpvgrw",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DLA_PORPVGRW( UPLO, NCOLS, A, LDA, AF,",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "ncols",
+			"fortran": "NCOLS",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": null
+			},
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "AF",
+			"fortran": "AF",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDAF",
+				"N"
+			],
+			"ld": "LDAF",
+			"rows": {
+				"fortran": "N",
+				"js": null
+			},
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "ldaf",
+			"fortran": "LDAF",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AF"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 7,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": null
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": null,
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"A.rows: unknown identifier N",
+		"A.cols: unknown identifier N",
+		"AF.rows: unknown identifier N",
+		"AF.cols: unknown identifier N",
+		"WORK.length: unknown identifier N",
+		"WORK.minLength: unknown identifier N"
+	]
+}

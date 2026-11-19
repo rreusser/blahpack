@@ -556,7 +556,41 @@ there).
 *Exit:* no unresolved conflicts, and every rule names an enforcer (even if that
 enforcer isn't built yet).
 
-### Step 2: Spec schema and generator
+### Step 2: Spec schema and generator — DONE 2026-11-19
+
+**Result:** 912 specs in `spec/` (schema `spec/schema.json`, usage
+`spec/README.md`). Stage A, `bin/gen_spec --extract`, is developer-time and
+reads the sources into the committed `data/fortran-checks.json`. Stage B,
+`bin/gen_spec`, is a pure function of committed files, so CI runs
+`npm run spec:check` (regenerate and byte-compare) with no sources.
+
+- **Content:** 3,340 argument checks (1,014 nonnegative, 889 ld, 797 enum,
+  66 nonzero, 574 expr; 117 left untranslated), 575 quick returns, and
+  minimum lengths for 503 of 612 workspaces.
+- **What `untranslated` means:** data-dependent or `ILAENV`-driven locals, and
+  doc pseudo-variables such as `KA`. These carry `js: null` and a reason.
+- **Overrides:** 3 one-offs. `dlaswp` and `zlaswp`: `INCX` is a direction, not
+  a consumed increment. `dsband`: the source is outside the vendored dirs.
+- **Generator bugs fixed:** recurring categories that turned out to be
+  generator bugs, not overrides:
+  - argument order and missing args taken from the `SUBROUTINE` statement
+    rather than the doc cache
+  - rank taken from the declarations (the cache truncates multi-line
+    dimensions)
+  - INC linked by adjacency
+  - the BLAS vector aliases
+  - in/out `INFO` → `infoIn`
+- **`bin/spec show <r>`** prints the three signatures (`lint/lib/spec.cjs`).
+- **`bin/spec xcheck`:** 752/912 modules match the spec on all three forms.
+  The remainder are code/convention discrepancies, listed in the PR, not
+  generator bugs.
+- **`lint/verify-signatures.cjs` fixed:** it had silently skipped the 45
+  modules with camelCase function names. It now resolves the function through
+  `export default`, and the 36 wrappers that check exposed are conformed.
+
+Deletes later: `data/fortran-ld-rules.json` and `data/fortran-option-rules.json`
+(plus their generators) are derivable from the spec, and go with the
+conformance checks that read them in Step 3.
 
 1. Define the JSON schema.
 2. Write `bin/gen_spec` with Fortran as input, using

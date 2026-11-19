@@ -163,7 +163,7 @@ function transform( m ) {
 	if ( !calls.length ) {
 		return { residue: 'no base call' };
 	}
-	const fn = ast.body.find( ( n ) => n.type === 'FunctionDeclaration' && n.id.name === m.routine );
+	const fn = ast.body.find( ( n ) => n.type === 'FunctionDeclaration' && n.id.name === m.fn );
 	if ( !fn ) {
 		return { residue: 'no function decl' };
 	}
@@ -250,14 +250,14 @@ function transform( m ) {
 	}
 
 	// --- Signature.
-	src = src.replace( new RegExp( '(function\\s+' + m.routine + '\\s*\\()[^)]*\\)' ), '$1 ' + params.join( ', ' ) + ' )' );
+	src = src.replace( new RegExp( '(function\\s+' + m.fn + '\\s*\\()[^)]*\\)' ), '$1 ' + params.join( ', ' ) + ' )' );
 
 	// --- Ordinals (+1) everywhere they name an argument position.
 	src = shiftOrdinals( src );
 
 	// --- Body: order validation (+ packed rejection, + inline stride decls)
 	// right after leading `let` declarations / blank lines.
-	const fnStart = src.search( new RegExp( 'function\\s+' + m.routine + '\\s*\\(' ) );
+	const fnStart = src.search( new RegExp( 'function\\s+' + m.fn + '\\s*\\(' ) );
 	const braceIdx = src.indexOf( '{', src.indexOf( ')', fnStart ) );
 	let pos = src.indexOf( '\n', braceIdx ) + 1;
 	for ( ;; ) {
@@ -300,7 +300,7 @@ function transform( m ) {
 		jsdoc = jsdoc.replace( /\n\* @returns/, '\n' + throwLine + '\n* @returns' );
 	}
 	src = src.slice( 0, jsStart ) + jsdoc + src.slice( jsStart + origJsdoc.length );
-	src = src.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.routine, m.got, params, ( p ) => ( p === 'order' ? '\'column-major\'' : null ) ) );
+	src = src.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.fn, m.got, params, ( p ) => ( p === 'order' ? '\'column-major\'' : null ) ) );
 
 	// --- Imports.
 	const addImport = ( local, spec ) => {

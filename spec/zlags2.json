@@ -1,0 +1,117 @@
+{
+	"routine": "zlags2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAGS2( UPPER, A1, A2, A3, B1, B2, B3, CSU, SNU, CSV,",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "upper",
+			"fortran": "UPPER",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "a1",
+			"fortran": "A1",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "a2",
+			"fortran": "A2",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "a3",
+			"fortran": "A3",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "b1",
+			"fortran": "B1",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "b2",
+			"fortran": "B2",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "b3",
+			"fortran": "B3",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "csu",
+			"fortran": "CSU",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "snu",
+			"fortran": "SNU",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		},
+		{
+			"name": "csv",
+			"fortran": "CSV",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "snv",
+			"fortran": "SNV",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		},
+		{
+			"name": "csq",
+			"fortran": "CSQ",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "snq",
+			"fortran": "SNQ",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -33,6 +33,11 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
   - `kk = k ± kstep ∓ 1` in 6 `*sytrf_rk`/`*hetrf_rk` panel routines;
   - `x_state` in 3 `*la_*rfsx_extended` routines;
   - plus singletons (`dlar1v`/`zlar1v`, `dhsein`, `*gebal`, `dlasq3`/`dlasq4`, `dlarrb`/`dlarrf`/`dlarrj`/`dlarrr`, `dlarft`, `drscl`/`zdrscl`, …).
+- Wave 1 (2026-11-19) triaged the 52 family survivors. It closed 48 test gaps and fixed `zlasyf_rk` and `dpocon`/`dppcon`/`dpbcon`/`zpbcon` (LEARNINGS). It also exposed two tool flaws, both now fixed: wrapping a `const` declaration caused false kills, and a loop with several breaks got only one mutant for all of them.
+- Full rerun of all 912 modules with the fixed tool: 540 mutants, of which 361 are killed (9 by timeout), 59 explained, and 120 unexplained in 62 routines:
+  - 60 in already-triaged routines, almost all the new per-break mutants;
+  - 28 never surfaced before, including 12 `ainvnm` guards in `*sycon`/`*hecon`/`*spcon` that were previously false kills;
+  - 32 one-offs from the earlier backlog.
 - The check is not in CI. A CI gate on changed routines would keep this closed once the backlog is triaged.
 - Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 

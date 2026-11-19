@@ -76,7 +76,7 @@ review; [GENERATE] means the file should be generated from a template.
 
 ## Signature Conformance
 
-- Signatures are enforced by `sig` and `lint:fortran-signature` (CONVENTIONS S1–S4, D1–D3).
+- Signatures, the validation prologue, messages and JSDoc are enforced by `lint:spec-*` against `spec/<routine>.json` (CONVENTIONS S1–S4, D1–D3, V1–V9, J2).
 - [ ] [MANUAL] For routines with stdlib reference: verify parameter order matches stdlib
 
 ## Notes

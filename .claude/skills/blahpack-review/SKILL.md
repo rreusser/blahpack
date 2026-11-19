@@ -18,12 +18,12 @@ Any failure is a finding. Cite the CONVENTIONS ID whose enforcer failed.
 ```bash
 node bin/conformance.js $ARGUMENTS                     # conf:* checks
 bin/lint.sh $ARGUMENTS                                 # lint:* rules (--fix for fixable ones)
-node lint/verify-signatures.cjs --routine <routine>    # sig: S3, S4, D1–D3
+bin/spec xcheck <routine>                          # spec-signature: S1–S4, D1–D3
 node --test $ARGUMENTS/test/test*.js 2>&1 | tail -20   # T1, T2
 ```
 
 With no argument (full audit): `node bin/conformance.js --all --fast 2>&1 | tail -30`,
-`bin/lint.sh`, `node lint/verify-signatures.cjs --list`, and `bin/test-failures.sh`.
+`bin/lint.sh`, `bin/spec xcheck --list`, and `bin/test-failures.sh`.
 Never run `npm test` or `npm run check` unpiped.
 
 `bin/lint-fix.sh <module>` applies the mechanical fixes. `bin/fix_wrapper_docs.py`

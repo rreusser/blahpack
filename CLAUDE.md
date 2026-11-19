@@ -36,7 +36,7 @@ lint/                          # THE rule library: one dir per rule (rule, READM
   plugin.cjs                   #   Registers lint/rules/* under `blahpack/` (loaded by eslint.config.cjs)
   lib/                         #   Shared helpers (fortran-data cache, naming, fixture-test runner)
   verify-corpus.cjs            #   Per-rule violation summary over the whole corpus
-  verify-signatures.cjs        #   Exact signature projections (CONVENTIONS S3/S4/D1–D3)
+  lib/spec.cjs, prologue.cjs   #   Spec projections + generated prologue (rules spec-*)
 data/                          # Reference Fortran source + parsed-Fortran cache (fortran-signatures.json)
   BLAS-3.12.0/
   lapack-3.12.0/

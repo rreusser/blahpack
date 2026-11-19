@@ -606,7 +606,44 @@ conformance checks that read them in Step 3.
 *Exit:* 899 specs, an overrides count with a reason for each, and a
 `bin/spec show <routine>` command that prints the three derived signatures.
 
-### Step 3: Spec ↔ code linters (exact, derived)
+### Step 3: Spec ↔ code linters (exact, derived) — DONE 2026-11-19
+
+**Result:** four ESLint rules, all hard `error` gates, clean over all 912
+modules; `bin/spec xcheck` reports 912/912.
+
+- `spec-signature`: `base.js` / `ndarray.js` / `<routine>.js` parameter lists
+  equal the `lint/lib/spec.cjs` projections.
+- `spec-prologue` + `spec-messages`: the validation prologue equals the one
+  `lint/lib/prologue.cjs` generates from `spec.checks` (stdlib validators,
+  Appendix A whitelists, nonnegative/non-zero, per-layout LD bounds from the
+  new `rowMajor` field), with canonical messages. Fix:
+  `bin/codemod-spec/prologue.cjs`.
+- `spec-jsdoc`: `@param` types, the prologue's `@throws`, and the S11
+  `@returns`. Fix: `bin/codemod-spec/jsdoc.cjs`.
+- **Conformance work:** about 1,050 prologues regenerated (the result was
+  cross-checked against the old `ld-rules`/`option-rules` before they were
+  deleted), about 1,800 JSDoc blocks corrected, S11 returns added to about
+  120 functions, and the ratified API breaks done: EQUED as a single-element
+  Array (laq*, svx), packed wrappers (`order`, no `strideAP`), workspace
+  stride/offset (gelqt, pstf2/pstrf), an S1 carve-out for `zdotc`/`zdotu`,
+  complex outputs in `zlaic1`, no invented `RWORK` in `zgetsqrhrt`.
+- **Generator fixes, not overrides:** ZX/ZY/ZA aliases, LD row-major bounds,
+  misnumbered reference INFO values, checks on output arguments left
+  untranslated, EXTERNAL arguments typed as functions, the la_* INTEGER option
+  codes, 2-D workspace without an LD.
+- **New override keys:** `base: 0` (dhgeqz, dtgexc, ztgexc), `element` on inputs
+  (zladiv, zlarf, zlarz), `jsOrder` (dlaswp).
+- **Deleted:** `fortran-signature`, `wrapper-signature`,
+  `lint/verify-signatures.cjs`, `strided-projection.cjs`, `naming.cjs`, the
+  conformance checks `ld-rules`, `option-rules` and `option-parity` (with
+  `data/fortran-{ld,option}-rules.json` and their generators), and the
+  string/dimension/LD/order/parity sub-checks of conventions, implementation
+  and workspace.
+- **Open (not gated):** reference checks the generator can't translate yet
+  (locals defined on some paths, ILATRANS, BALANC/SENSE families) remain as
+  hand-written checks after the prologue. The index base of scalar indices is
+  not a convention yet (S12 covers arrays only).
+
 
 All of these live in `lint/`. Each compares code to what the spec plus
 conventions produce, with no heuristics:
@@ -620,8 +657,8 @@ conventions produce, with no heuristics:
 - **Module exports:** the existing rule.
 
 Then delete everything this supersedes in `tools/eslint/rules` and
-`bin/conformance/checks`, leaving one gate. Rules that aren't clean yet
-publish worklist counts that can only fall.
+`bin/conformance/checks`, leaving one gate. Every rule is a hard `error` gate
+from the start; the corpus is conformed in the same change.
 
 *Exit:* one gate, no `warn`, and the superseded checks deleted.
 

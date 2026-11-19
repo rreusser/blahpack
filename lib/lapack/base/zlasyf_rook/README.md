@@ -61,7 +61,7 @@ The function has the following parameters:
 
 Returns an object `{ info, kb }` where `info = 0` indicates success and `kb` is the number of columns actually factorized.
 
-#### zlasyf_rook.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
+#### zlasyf_rook.ndarray( uplo, N, nb, kb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
 
 Computes a partial factorization of a complex symmetric matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method, using alternative indexing semantics.
 

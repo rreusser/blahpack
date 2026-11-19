@@ -30,7 +30,7 @@ limitations under the License.
 var zlasyf = require( '@stdlib/lapack/base/zlasyf' );
 ```
 
-#### zlasyf( uplo, N, nb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
+#### zlasyf( uplo, N, nb, kb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
 
 CABS1: |re(z)| + |im(z)| — used for pivot selection.
 

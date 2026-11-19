@@ -215,10 +215,67 @@ export class FileRewriter {
 				}
 			}
 		}
+		// Routines passed as an argument: `function callX( mod, … ) { mod( … ) }`
+		// where every call of callX passes the same migrating routine's
+		// base/ndarray entry (same signature) in that position.
+		const paramBindings = new Map(); // fn node → Map(param name → binding)
+		const fnDecls = new Map();
+		walkParents( this.ast, ( n ) => {
+			if ( n.type === 'FunctionDeclaration' ) {
+				fnDecls.set( n.id.name, n );
+			}
+			return true;
+		});
+		const callsOf = new Map();
+		walkParents( this.ast, ( n ) => {
+			if ( n.type === 'CallExpression' && n.callee.type === 'Identifier' && fnDecls.has( n.callee.name ) ) {
+				if ( !callsOf.has( n.callee.name ) ) {
+					callsOf.set( n.callee.name, [] );
+				}
+				callsOf.get( n.callee.name ).push( n );
+			}
+			return true;
+		});
+		for ( const [ fname, fnode ] of fnDecls ) {
+			const cs = callsOf.get( fname ) || [];
+			fnode.params.forEach( ( prm, i ) => {
+				if ( prm.type !== 'Identifier' || !cs.length ) {
+					return;
+				}
+				const bs = cs.map( ( c ) => c.arguments[ i ] && c.arguments[ i ].type === 'Identifier' && byName.get( c.arguments[ i ].name ) );
+				if ( bs.some( ( b ) => !b ) ) {
+					return;
+				}
+				const sig = ( b ) => JSON.stringify( lists( b.P, b.kind ) );
+				if ( bs.some( ( b ) => b.P !== bs[ 0 ].P || sig( b ) !== sig( bs[ 0 ] ) ) ) {
+					return;
+				}
+				if ( !paramBindings.has( fnode ) ) {
+					paramBindings.set( fnode, new Map() );
+				}
+				paramBindings.get( fnode ).set( prm.name, { ...bs[ 0 ], local: prm.name } );
+			});
+		}
+		const paramBinding = ( node, name ) => {
+			let fn = enclosingFunction( node );
+			while ( fn ) {
+				if ( fn.params.some( ( q ) => q.type === 'Identifier' && q.name === name ) ) {
+					return paramBindings.has( fn ) ? paramBindings.get( fn ).get( name ) || null : null;
+				}
+				fn = enclosingFunction( fn );
+			}
+			return null;
+		};
 		const calls = [];
 		walkParents( this.ast, ( n ) => {
+			if ( n.type === 'CallExpression' && n.callee.type === 'Identifier' && !byName.has( n.callee.name ) ) {
+				const pb = paramBinding( n, n.callee.name );
+				if ( pb ) {
+					calls.push( { node: n, b: pb, kind: pb.kind } );
+				}
+			}
 			if ( n.type === 'CallExpression' ) {
-				if ( n.callee.type === 'Identifier' && byName.has( n.callee.name ) ) {
+				if ( n.callee.type === 'Identifier' && byName.has( n.callee.name ) && !paramBinding( n, n.callee.name ) ) {
 					calls.push( { node: n, b: byName.get( n.callee.name ), kind: byName.get( n.callee.name ).kind } );
 				} else if ( n.callee.type === 'MemberExpression' && !n.callee.computed && n.callee.object.type === 'Identifier' && byName.has( n.callee.object.name ) && n.callee.property.name === 'ndarray' && byName.get( n.callee.object.name ).hasNdarray ) {
 					calls.push( { node: n, b: byName.get( n.callee.object.name ), kind: 'ndarray' } );

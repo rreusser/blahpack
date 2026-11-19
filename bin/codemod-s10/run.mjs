@@ -19,7 +19,7 @@ import path from 'node:path';
 import { ROOT, parse, exportedName, ordinal } from '../codemod-strided-wrapper/lib.mjs';
 import { plan } from './plan.mjs';
 import { worklist } from './forms.mjs';
-import { transformBase, rewriteMainJsdoc } from './base.mjs';
+import { transformBase, rewriteMainJsdoc, rewriteWrapperReturns } from './base.mjs';
 import { FileRewriter, allSources, removeDead } from './calls.mjs';
 
 const argv = process.argv.slice( 2 );
@@ -168,6 +168,7 @@ for ( const P of plans ) {
 			}
 		}
 
+		src = rewriteWrapperReturns( src, P, fn ).src;
 		src = remapOrdinals( src, oldL, newL );
 		src = rewriteMainJsdoc( src, P, fn, newL, false );
 		writes.set( f, src );

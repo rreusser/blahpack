@@ -205,6 +205,16 @@ export class FileRewriter {
 			return false;
 		}
 		const byName = new Map( bindings.map( ( b ) => [ b.local, b ] ) );
+		// Module-level aliases: `const dgeevx = ndarrayFn;`.
+		for ( const node of this.ast.body ) {
+			if ( node.type === 'VariableDeclaration' ) {
+				for ( const d of node.declarations ) {
+					if ( d.id.type === 'Identifier' && d.init && d.init.type === 'Identifier' && byName.has( d.init.name ) ) {
+						byName.set( d.id.name, { ...byName.get( d.init.name ), local: d.id.name } );
+					}
+				}
+			}
+		}
 		const calls = [];
 		walkParents( this.ast, ( n ) => {
 			if ( n.type === 'CallExpression' ) {
@@ -276,10 +286,18 @@ export class FileRewriter {
 			return;
 		}
 		const nargs = node.arguments.length;
+		let truncated = false;
 		if ( nargs !== oldL.length ) {
 			if ( nargs === newL.length && oldL.length !== newL.length ) {
 				return; // already migrated
 			}
+			if ( nargs < oldL.length && nargs > 0 ) {
+				// Trailing arguments omitted (argument-validation tests): map
+				// the given ones by name; trailing omissions stay omitted.
+				truncated = true;
+			}
+		}
+		if ( nargs !== oldL.length && !truncated ) {
 			// Not a call of the old signature (argument-validation tests with
 			// too few args, or an example that was already wrong): leave it.
 			this.warnings.push( path.relative( ROOT, this.file ) + ':' + this.line( node.start ) + ': ' + P.routine + ' called with ' + nargs + ' args, old signature has ' + oldL.length + ' (left unchanged)' );
@@ -401,7 +419,19 @@ export class FileRewriter {
 			}
 			throw new Error( 'no value for inserted param ' + name + ' of ' + P.routine );
 		});
-		const newArgs = mapping.map( ( m ) => {
+		let lastNew = mapping.length - 1;
+		if ( truncated ) {
+			lastNew = -1;
+			mapping.forEach( ( m, i ) => {
+				if ( m.from !== void 0 && m.from < nargs ) {
+					lastNew = i;
+				}
+			});
+		}
+		const newArgs = mapping.slice( 0, lastNew + 1 ).map( ( m ) => {
+			if ( m.from !== void 0 && m.from >= nargs ) {
+				return 'void 0';
+			}
 			if ( m.from !== void 0 ) {
 				const p = outs.find( ( q ) => P.form[ q.name ].kind === 'value' && lc( oldL[ m.from ] ) === lc( P.form[ q.name ].param ) );
 				if ( p && !own ) {

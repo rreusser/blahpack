@@ -429,3 +429,48 @@ export function rewriteMainJsdoc( src, P, fn, newList, isBase ) {
 	const nd = rewriteJsdoc( doc, newList, added, retyped, returnsLine( P ) );
 	return src.slice( 0, ds ) + nd + src.slice( de );
 }
+
+// Wrapper quick returns: `return { 'info': 0, 'sdim': 0 };` in ndarray.js /
+// <r>.js → output writes + the new return value.
+export function rewriteWrapperReturns( src, P, fn ) {
+	const ast = annotate( parse( src ) );
+	const main = mainFunction( ast, fn );
+	const edits = [];
+	const problems = [];
+	for ( const r of ownReturns( main ) ) {
+		if ( !r.argument || r.argument.type !== 'ObjectExpression' ) {
+			continue;
+		}
+		const lines = [];
+		let infoText = null;
+		const extras = [];
+		for ( const prop of r.argument.properties ) {
+			const k = keyName( prop );
+			const val = src.slice( prop.value.start, prop.value.end );
+			if ( k === 'info' ) {
+				infoText = val;
+				continue;
+			}
+			const p = P.outs.find( ( q ) => P.form[ q.name ].key === k && P.form[ q.name ].kind !== 'outField' );
+			if ( p && !isComplex( p ) ) {
+				lines.push( P.pname[ p.name ] + '[ 0 ] = ' + val + ';' );
+				continue;
+			}
+			extras.push( '\'' + k + '\': ' + val );
+		}
+		if ( extras.length ) {
+			lines.push( 'return {\n' + ( infoText !== null ? [ '\'info\': ' + infoText ] : [] ).concat( extras ).map( ( x ) => '\t' + x ).join( ',\n' ) + '\n};' );
+		} else if ( P.ret === 'info' ) {
+			lines.push( 'return ' + ( infoText !== null ? infoText : '0' ) + ';' );
+		} else if ( P.ret === 'array' ) {
+			lines.push( 'return ' + P.retParam + ';' );
+		} else {
+			lines.push( 'return;' );
+		}
+		const ind = lineIndent( src, r.start );
+		const inBlock = r.__parent.type === 'BlockStatement' || r.__parent.type === 'SwitchCase';
+		const text = inBlock ? lines.map( ( l ) => l.replace( /\n/g, '\n' + ind ) ).join( '\n' + ind ) : '{\n' + lines.map( ( l ) => ind + '\t' + l.replace( /\n/g, '\n' + ind + '\t' ) ).join( '\n' ) + '\n' + ind + '}';
+		edits.push( { start: r.start, end: r.end, text } );
+	}
+	return { src: edits.length ? finalize( src, edits ) : src, problems };
+}

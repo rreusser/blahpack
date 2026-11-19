@@ -68,6 +68,8 @@ export function paramLine( routine, p, name ) {
 	let desc = fortranDesc( routine, p.fortran || p.name );
 	const io = ( p.intent === 'inout' ) ? 'input/output' : 'output';
 	desc = desc ? desc.charAt( 0 ).toLowerCase() + desc.slice( 1 ) : '`' + name + '`';
+	// Fortran option letters read as code: 'N' → `'N'`.
+	desc = desc.replace( /(^|[^`])('[A-Za-z]')(?!`)/g, '$1`$2`' );
 	const lines = [ '* @param {' + arrayType( p ) + '} ' + name + ' - ' + io + ' (length-1 array): ' + desc.replace( /\*\//g, '* /' ) ];
 	if ( isComplex( p ) ) {
 		lines.push( '* @param {NonNegativeInteger} ' + offsetName( p ) + ' - starting index for `' + name + '` (in complex elements)' );

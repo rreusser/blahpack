@@ -54,7 +54,8 @@ export function dropOutputChecks( routine, dry ) {
 		let src = fs.readFileSync( file, 'utf8' );
 		const before = src;
 		for ( const o of outs ) {
-			const re = new RegExp( '\\ntest\\( \'[^\'\\n]*(negative|invalid) ' + esc( o ) + '\'[\\s\\S]*?\\n\\} ?\\);\\n', 'gi' );
+			// Only `… throws … for negative M` / `… invalid M` (not "non-negative r").
+			const re = new RegExp( '\\ntest\\( \'[^\'\\n]*\\bthrows\\b[^\'\\n]*[^-\\w](negative|invalid) ' + esc( o ) + '\'[\\s\\S]*?\\n\\} ?\\);\\n', 'gi' );
 			src = src.replace( re, '\n' );
 		}
 		src = src.replace( /\n{3,}(?=test\()/g, '\n\n' );

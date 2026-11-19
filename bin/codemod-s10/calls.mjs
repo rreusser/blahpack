@@ -524,12 +524,16 @@ export class FileRewriter {
 				if ( p && !own ) {
 					// By-value in/out: copy the old argument in first.
 					const v = render( src, this.edits, node.arguments[ m.from ].start, node.arguments[ m.from ].end );
-					// An output-only param needs no copy-in; the old argument
-					// variable may now be dead.
-					if ( p.intent === 'out' && node.arguments[ m.from ].type === 'Identifier' ) {
+					// A by-value param the old routine ignored entirely (an
+					// output it never set, M of dtrevc) needs no copy-in; the old
+					// argument variable may now be dead. Any other by-value
+					// param is copied in: LAPACK documents some read outputs as
+					// [out] (SIGMA of dlasq3, TTYPE of dlasq4).
+					const ignored = p.intent === 'out' && P.form[ p.name ].key === null;
+					if ( ignored && node.arguments[ m.from ].type === 'Identifier' ) {
 						this.dropIfUnused.push( { name: node.arguments[ m.from ].name } );
 					}
-					if ( p.intent !== 'out' && v !== arr[ p.name ] + '[ 0 ]' ) {
+					if ( !ignored && v !== arr[ p.name ] + '[ 0 ]' ) {
 						pre.push( arr[ p.name ] + '[ 0 ] = ' + v + ';' );
 						// In/out with no result field (TOL of dlagts): the
 						// Fortran writes the caller's variable, so copy back

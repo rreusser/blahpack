@@ -183,7 +183,9 @@ export function detect( routine ) {
 	const fieldKeys = new Set( Object.values( form ).flatMap( ( f ) => ( f.kind === 'cfield' ? [ f.re, f.im ] : ( f.key && f.kind !== 'outField' ? [ f.key ] : [] ) ) ) );
 	// Keys naming a Fortran input (`qmax` of dlasq3, `ifst` of ztgexc) are not
 	// outputs of the routine: they are dropped, not kept as extras.
-	const inputs = new Set( spec.params.filter( ( p ) => p.intent === 'in' ).map( ( p ) => p.name.toLowerCase() ) );
+	// Likewise keys echoing an array param the routine already writes in
+	// place (`ifaill` of zhsein returns the IFAILL array itself).
+	const inputs = new Set( spec.params.filter( ( p ) => p.intent === 'in' || [ 'vector', 'matrix', 'banded', 'index', 'packed', 'rfp', 'workspace' ].includes( p.role ) ).map( ( p ) => p.name.toLowerCase() ) );
 	const dropped = [ ...keys ].filter( ( k ) => k && !fieldKeys.has( k ) && k !== 'info' && inputs.has( k.toLowerCase() ) );
 	const extras = [ ...keys ].filter( ( k ) => k && !fieldKeys.has( k ) && k !== 'info' && !inputs.has( k.toLowerCase() ) );
 	const outP = Object.values( form ).find( ( f ) => f.kind === 'outIndex' || f.kind === 'outField' );

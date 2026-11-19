@@ -230,18 +230,23 @@ function analyze( routine, equivalent ) {
 	}
 	const libDir = path.join( dir, 'lib' );
 	const results = [];
-	if ( runTests( dir ) !== 'pass' ) {
-		return { 'routine': routine, 'error': 'tests fail before mutation' };
-	}
+	const work = [];
 	for ( const f of fs.readdirSync( libDir ).filter( ( x ) => x.endsWith( '.js' ) ) ) {
 		const file = path.join( libDir, f );
 		const orig = fs.readFileSync( file, 'utf8' );
-		let found;
 		try {
-			found = sites( orig );
+			work.push( { 'file': file, 'orig': orig, 'found': sites( orig ) } );
 		} catch ( e ) {
-			continue;
+			// Unparseable file: nothing to mutate.
 		}
+	}
+	if ( !work.some( ( w ) => w.found.length ) ) {
+		return { 'routine': routine, 'results': results };
+	}
+	if ( runTests( dir ) !== 'pass' ) {
+		return { 'routine': routine, 'error': 'tests fail before mutation' };
+	}
+	for ( const { file, orig, found } of work ) {
 		for ( const site of found ) {
 			for ( const m of mutants( orig, site ) ) {
 				const outcome = runTests( dir, file, m.src );

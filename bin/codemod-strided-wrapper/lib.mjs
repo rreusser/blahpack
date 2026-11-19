@@ -25,9 +25,17 @@ export function isOffset( x ) {
 	return /^offset/i.test( x );
 }
 
-// Parameter list of `function <routine>(...)` in `src`.
-export function paramsOf( src, routine ) {
-	const m = new RegExp( 'function\\s+' + routine + '\\s*\\(([^)]*)\\)' ).exec( src );
+// Name of the function `src` default-exports (camelCase for some routines:
+// dsytf2_rk exports `dsytf2rk`).
+export function exportedName( src ) {
+	const e = /export default (\w+)/.exec( src );
+	return e ? e[ 1 ] : null;
+}
+
+// Parameter list of the default-exported function in `src`.
+export function paramsOf( src ) {
+	const fn = exportedName( src );
+	const m = fn && new RegExp( 'function\\s+' + fn + '\\s*\\(([^)]*)\\)' ).exec( src );
 	if ( !m ) {
 		return null;
 	}
@@ -50,14 +58,16 @@ export function loadModules() {
 			if ( !fs.existsSync( bfile ) || !fs.existsSync( wfile ) ) {
 				continue;
 			}
-			const base = paramsOf( fs.readFileSync( bfile, 'utf8' ), r );
-			const got = paramsOf( fs.readFileSync( wfile, 'utf8' ), r );
+			const base = paramsOf( fs.readFileSync( bfile, 'utf8' ) );
+			const wsrc = fs.readFileSync( wfile, 'utf8' );
+			const got = paramsOf( wsrc );
+			const fn = exportedName( wsrc );
 			if ( !base || !got ) {
 				continue;
 			}
 			const want = projection.project( base, { 'routine': r } ).params;
 			const ok = want.length === got.length && want.every( ( x, i ) => x.toLowerCase() === got[ i ].toLowerCase() );
-			out.push( { routine: r, dir, wrapper: wfile, base, got, want, ok } );
+			out.push( { routine: r, fn, dir, wrapper: wfile, base, got, want, ok } );
 		}
 	}
 	return out;

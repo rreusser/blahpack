@@ -43,14 +43,20 @@ function findBases( dir, out ) {
 	return out;
 }
 
-// Extract the exported routine's parameter names from a file.
-function params( file, routine ) {
+// Extract the exported routine's parameter names from a file. The function is
+// found through `export default <name>`, not by the routine name: modules like
+// dsytf2_rk export a camelCase `dsytf2rk`, and matching `function dsytf2_rk(`
+// silently skipped all 45 of them. A module whose export can't be resolved
+// is an error, never a skip.
+function params( file ) {
 	if ( !fs.existsSync( file ) ) {
 		return null;
 	}
 	var src = fs.readFileSync( file, 'utf8' );
-	var m = new RegExp( 'function\\s+' + routine + '\\s*\\(([^)]*)\\)' ).exec( src );
+	var e = /export default (\w+)/.exec( src );
+	var m = e && new RegExp( 'function\\s+' + e[ 1 ] + '\\s*\\(([^)]*)\\)' ).exec( src );
 	if ( !m ) {
+		unresolved.push( path.relative( ROOT, file ) );
 		return null;
 	}
 	return m[ 1 ].split( ',' ).map( function map( x ) {
@@ -84,6 +90,7 @@ function classify( proj, name ) {
 	return keys.length ? keys.join( '+' ) : 'other';
 }
 
+var unresolved = [];
 var bases = findBases( LIB, [] );
 var ndDiffs = [];
 var nameDiffs = {};
@@ -96,12 +103,12 @@ bases.forEach( function forEach( b ) {
 		return;
 	}
 	total += 1;
-	var base = params( b, routine );
+	var base = params( b );
 	if ( !base ) {
 		return;
 	}
 
-	var nd = params( path.join( dir, 'ndarray.js' ), routine );
+	var nd = params( path.join( dir, 'ndarray.js' ) );
 	if ( nd === null ) {
 		ndMissing += 1;
 	} else if ( eq( nd, base ) ) {
@@ -110,7 +117,7 @@ bases.forEach( function forEach( b ) {
 		ndDiffs.push( { routine: routine, base: base, nd: nd } );
 	}
 
-	var name = params( path.join( dir, routine + '.js' ), routine );
+	var name = params( path.join( dir, routine + '.js' ) );
 	var proj = projection.project( base, { 'routine': routine } ).params;
 	if ( name === null ) {
 		nameMissing += 1;
@@ -154,7 +161,14 @@ Object.keys( nameDiffs ).sort( function s( a, b ) {
 	}
 });
 
-var totalNon = ndDiffs.length + nameDiffCount;
+if ( unresolved.length ) {
+	console.log( '' );
+	console.log( 'Unresolvable exported function (no `export default <fn>` with a matching declaration): ' + unresolved.length );
+	unresolved.forEach( function forEach( f ) {
+		console.log( '   ' + f );
+	});
+}
+var totalNon = ndDiffs.length + nameDiffCount + unresolved.length;
 console.log( '' );
 console.log( 'Total nonconforming: ' + totalNon );
 process.exit( totalNon > 0 ? 1 : 0 );

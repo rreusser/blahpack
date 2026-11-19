@@ -581,9 +581,12 @@ reads the sources into the committed `data/fortran-checks.json`. Stage B,
   - the BLAS vector aliases
   - in/out `INFO` → `infoIn`
 - **`bin/spec show <r>`** prints the three signatures (`lint/lib/spec.cjs`).
-- **`bin/spec xcheck`:** 726/912 modules match the spec on all three forms.
+- **`bin/spec xcheck`:** 752/912 modules match the spec on all three forms.
   The remainder are code/convention discrepancies, listed in the PR, not
   generator bugs.
+- **`lint/verify-signatures.cjs` fixed:** it had silently skipped the 45
+  modules with camelCase function names. It now resolves the function through
+  `export default`, and the 36 wrappers that check exposed are conformed.
 
 Deletes later: `data/fortran-ld-rules.json` and `data/fortran-option-rules.json`
 (plus their generators) are derivable from the spec, and go with the

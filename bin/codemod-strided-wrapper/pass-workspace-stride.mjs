@@ -33,7 +33,7 @@ function transformWrapper( src, m, drops ) {
 	const newParams = m.got.filter( ( p ) => !drops.includes( p ) );
 
 	// Signature.
-	s = s.replace( new RegExp( '(function\\s+' + m.routine + '\\s*\\()[^)]*\\)' ), '$1 ' + newParams.join( ', ' ) + ' )' );
+	s = s.replace( new RegExp( '(function\\s+' + m.fn + '\\s*\\()[^)]*\\)' ), '$1 ' + newParams.join( ', ' ) + ' )' );
 
 	for ( const sw of drops ) {
 		const W = esc( sw );
@@ -70,7 +70,7 @@ function transformWrapper( src, m, drops ) {
 		s = s.replace( /\nimport stride2offset from [^\n]*;/, '' );
 	}
 	// Text-level example calls in comments.
-	s = s.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.routine, m.got, newParams, () => {
+	s = s.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.fn, m.got, newParams, () => {
 		throw new Error( 'insert' );
 	}) );
 	return { src: s, newParams };

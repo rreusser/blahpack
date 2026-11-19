@@ -165,7 +165,7 @@ function transform( m ) {
 			}
 		}
 	});
-	const fnStart = src.search( new RegExp( 'function\\s+' + m.routine + '\\s*\\(' ) );
+	const fnStart = src.search( new RegExp( 'function\\s+' + m.fn + '\\s*\\(' ) );
 	const decls = [];
 	const edits = [];
 	const jsdocAdds = [];
@@ -242,11 +242,11 @@ function transform( m ) {
 	src = applyEdits( src, edits );
 
 	// Signature.
-	src = src.replace( new RegExp( '(function\\s+' + m.routine + '\\s*\\()[^)]*\\)' ), '$1 ' + params.join( ', ' ) + ' )' );
+	src = src.replace( new RegExp( '(function\\s+' + m.fn + '\\s*\\()[^)]*\\)' ), '$1 ' + params.join( ', ' ) + ' )' );
 
 	// Declarations: right after leading `let`/blank lines and the order /
 	// packed checks at the top of the body.
-	const fs0 = src.search( new RegExp( 'function\\s+' + m.routine + '\\s*\\(' ) );
+	const fs0 = src.search( new RegExp( 'function\\s+' + m.fn + '\\s*\\(' ) );
 	const brace = src.indexOf( '{', src.indexOf( ')', fs0 ) );
 	let pos = src.indexOf( '\n', brace ) + 1;
 	for ( ;; ) {
@@ -269,7 +269,7 @@ function transform( m ) {
 	src = prev + ( needBlank ? '\n' : '' ) + decls.map( ( d ) => '\t' + d + '\n' ).join( '' ) + src.slice( pos );
 
 	// JSDoc.
-	const fs1 = src.search( new RegExp( 'function\\s+' + m.routine + '\\s*\\(' ) );
+	const fs1 = src.search( new RegExp( 'function\\s+' + m.fn + '\\s*\\(' ) );
 	const jsStart = src.lastIndexOf( '/**', fs1 );
 	const jsEnd = src.indexOf( '*/', jsStart ) + 2;
 	let jsdoc = src.slice( jsStart, jsEnd );
@@ -284,7 +284,7 @@ function transform( m ) {
 		jsdoc = jsdoc.replace( re, '$1\n' + a.line );
 	}
 	src = src.slice( 0, jsStart ) + jsdoc + src.slice( jsEnd );
-	src = src.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.routine, m.got, params, ( p ) => ( isStride( p ) ? '1' : null ) ) );
+	src = src.replace( /(\/\*\*[\s\S]*?\*\/)/g, ( c ) => rewriteTextCalls( c, m.fn, m.got, params, ( p ) => ( isStride( p ) ? '1' : null ) ) );
 
 	// Imports.
 	const addImport = ( local, spec ) => {

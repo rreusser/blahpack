@@ -672,7 +672,22 @@ export class FileRewriter {
 			}
 			if ( !escapes ) {
 				this.edits.push( ...edits );
-				const keepVar = infoNow || extras.length;
+				// Keep the binding only if something still reads it (`res.info`,
+				// an extra field, or the info value itself) anywhere in scope.
+				const live = refs.filter( ( r ) => {
+					const m = r.__parent;
+					if ( m.type === 'AssignmentExpression' && m.left === r ) {
+						return false;
+					}
+					if ( m.type === 'VariableDeclarator' && m.id === r ) {
+						return false;
+					}
+					if ( m.type === 'MemberExpression' && m.object === r && !m.computed && readOf( m.property.name ) ) {
+						return false;
+					}
+					return true;
+				});
+				const keepVar = ( infoNow || extras.length ) && live.length;
 				if ( keepVar ) {
 					return callText;
 				}

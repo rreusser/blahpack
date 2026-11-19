@@ -1,0 +1,12 @@
+{
+	"routine": "ztgexc",
+	"overrides": [
+		{
+			"reason": "The JS API takes IFST and ILST 0-based (base.js and its tests index the diagonal with them directly), unlike ztrexc's 1-based IFST/ILST.",
+			"set": {
+				"params.IFST.base": 0,
+				"params.ILST.base": 0
+			}
+		}
+	]
+}

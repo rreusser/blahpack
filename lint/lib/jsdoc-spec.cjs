@@ -37,7 +37,8 @@ function arrayType( p ) {
 function leadType( p, form, g ) {
 	switch ( p.role ) {
 	case 'flag':
-		return 'string';
+		// An output option (EQUED of the svx drivers) is a single-element Array.
+		return ( p.intent === 'in' ) ? 'string' : 'Array';
 	case 'dim':
 		return 'NonNegativeInteger';
 	case 'info':

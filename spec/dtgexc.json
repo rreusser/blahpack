@@ -157,7 +157,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"base": 0
 		},
 		{
 			"name": "ilst",
@@ -165,7 +166,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"base": 0
 		},
 		{
 			"name": "WORK",
@@ -270,5 +272,14 @@
 	],
 	"untranslated": [
 		"WORK.minLength: local LWMIN is assigned inside nested control flow"
+	],
+	"overrides": [
+		{
+			"reason": "The JS API takes IFST and ILST 0-based (base.js and its tests index the diagonal with them directly), unlike dtrexc's 1-based IFST/ILST.",
+			"set": {
+				"params.IFST.base": 0,
+				"params.ILST.base": 0
+			}
+		}
 	]
 }

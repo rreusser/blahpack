@@ -138,22 +138,28 @@ function nameMap( spec, form, actual ) {
 	// length-1 array (S10), or an element `x[ offsetX ]`; a scalar index the
 	// JS takes 0-based (`base: 0` in the spec) is restated 1-based.
 	var expr = {};
+	var value = {};
 	Object.keys( map ).forEach( function each( k ) {
 		expr[ k ] = map[ k ];
+		value[ k ] = map[ k ];
 	});
 	groups.forEach( function each( g ) {
 		var p = g.param;
 		var n = map[ lc( p.name ) ];
-		if ( !n || p.role !== 'scalar' ) {
+		if ( !n || ( p.role !== 'scalar' && p.role !== 'flag' ) ) {
 			return;
 		}
+		var e = n;
 		if ( p.intent !== 'in' || p.element === true ) {
-			expr[ lc( p.name ) ] = ( g.names.length === 2 && form !== 'strided' ) ? n + '[ ' + spell[ lc( g.names[ 1 ] ) ] + ' ]' : n + '[ 0 ]';
-		} else if ( p.base === 0 ) {
-			expr[ lc( p.name ) ] = '( ' + n + ' + 1 )';
+			e = ( g.names.length === 2 && form !== 'strided' ) ? n + '[ ' + spell[ lc( g.names[ 1 ] ) ] + ' ]' : n + '[ 0 ]';
 		}
+		value[ lc( p.name ) ] = e;
+		if ( p.base === 0 ) {
+			e = '( ' + e + ' + 1 )';
+		}
+		expr[ lc( p.name ) ] = e;
 	});
-	return { 'map': map, 'expr': expr, 'names': names.map( function m( n ) {
+	return { 'map': map, 'expr': expr, 'value': value, 'names': names.map( function m( n ) {
 		return spell[ lc( n ) ];
 	}) };
 }
@@ -233,7 +239,7 @@ function tidy( js ) {
 				out += '';
 			} else if ( prev.value === '(' ) {
 				out += ' ';
-			} else if ( v === '(' && ( prev.type === 'Identifier' ) ) {
+			} else if ( ( v === '(' || v === '[' ) && ( prev.type === 'Identifier' ) ) {
 				out += '';
 			} else if ( prev.value === '!' ) {
 				out += '';
@@ -375,7 +381,7 @@ function prologue( spec, form, actual ) {
 			return;
 		}
 		pos = nm.names.indexOf( name ) + 1;
-		name = nm.expr[ lc( p.name ) ];
+		name = nm.value[ lc( p.name ) ];
 		if ( c.kind === 'enum' ) {
 			key = c.values.slice().sort().join( ',' );
 			v = VALIDATORS[ key ];

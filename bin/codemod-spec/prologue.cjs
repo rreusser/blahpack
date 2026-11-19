@@ -85,6 +85,12 @@ function classify( stmt ) {
 		return null;
 	}
 	last = call.arguments[ call.arguments.length - 1 ];
+	if ( last.type === 'MemberExpression' && last.object.type === 'Identifier' ) {
+		last = last.object; // `ifst[ 0 ]`: an output scalar's value (S10)
+	}
+	if ( last.type === 'BinaryExpression' && last.left.type === 'Identifier' ) {
+		last = last.left; // `( ilo + 1 )`
+	}
 	if ( last.type !== 'Identifier' ) {
 		return null;
 	}
@@ -114,9 +120,14 @@ function layoutOf( stmt, msg ) {
 	return m ? m[ 1 ] : null;
 }
 
+// The argument a generated check reports (`ifst[ 0 ]` → `ifst`).
+function argName( c ) {
+	return /^\(?\s*([\w$]+)/.exec( c.args[ c.args.length - 1 ] )[ 1 ];
+}
+
 function replaced( ex, gen ) {
 	var ld = gen.filter( function f( c ) {
-		return c.layout !== undefined && c.args[ c.args.length - 1 ] === ex.param;
+		return c.layout !== undefined && argName( c ) === ex.param;
 	});
 	if ( ld.length && ( ex.cat === 'ld' || ex.cat === 'other' ) ) {
 		// A leading-dimension check is replaced only by generated checks
@@ -131,7 +142,7 @@ function replaced( ex, gen ) {
 		}) );
 	}
 	return gen.some( function some( c ) {
-		var v = c.args[ c.args.length - 1 ];
+		var v = argName( c );
 		var gcat = c.kind;
 		if ( v !== ex.param ) {
 			return false;
@@ -330,6 +341,9 @@ function main() {
 			}
 			if ( out !== src ) {
 				report.written += 1;
+				if ( DRY ) {
+					console.log( 'would write: ' + file );
+				}
 				if ( !DRY ) {
 					fs.writeFileSync( file, out );
 				}

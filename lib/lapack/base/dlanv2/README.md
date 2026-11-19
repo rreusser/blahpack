@@ -30,7 +30,7 @@ limitations under the License.
 var dlanv2 = require( '@stdlib/lapack/base/dlanv2' );
 ```
 
-#### dlanv2( a, b, c, d )
+#### dlanv2( a, b, c, d, rt1r, rt1i, rt2r, rt2i, cs, sn )
 
 @license Apache-2.0.
 
@@ -47,7 +47,7 @@ The function has the following parameters:
 -   **c**: `c`.
 -   **d**: `d`.
 
-#### dlanv2.ndarray( A, B, C, D )
+#### dlanv2.ndarray( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn )
 
 @license Apache-2.0, using alternative indexing semantics.
 

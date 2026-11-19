@@ -43,10 +43,11 @@ function isOneD( p ) {
 	return !isTwoD( p ) && ( p.role === 'vector' || p.role === 'index' || p.role === 'packed' || p.role === 'workspace' );
 }
 
-// Complex out/inout scalars cross as `x, offsetX` (S1); every other scalar
-// output is a single caller-provided length-1 array (S10).
-function isComplexOutScalar( p ) {
-	return p.role === 'scalar' && p.intent !== 'in' && /^complex/.test( p.dtype );
+// Complex out/inout scalars cross as `x, offsetX` (S1), as does a scalar
+// marked `element` (callers pass an element of their own array; S10). Every
+// other scalar output is a single caller-provided length-1 array (S10).
+function isOffsetScalar( p ) {
+	return p.role === 'scalar' && ( p.element === true || ( p.intent !== 'in' && /^complex/.test( p.dtype ) ) );
 }
 
 // Groups of base.js parameter names, one group per spec param.
@@ -75,7 +76,7 @@ function baseGroups( spec ) {
 				g = [ p.name, 'stride' + s + '1', 'stride' + s + '2', 'offset' + s ];
 			} else if ( isOneD( p ) ) {
 				g = [ p.name, 'stride' + s, 'offset' + s ];
-			} else if ( isComplexOutScalar( p ) ) {
+			} else if ( isOffsetScalar( p ) ) {
 				g = [ p.name, 'offset' + s ];
 			} else {
 				g = [ p.name ];

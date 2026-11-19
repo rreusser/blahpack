@@ -77,7 +77,7 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "inout"
 		},
 		{
 			"name": "nfail",
@@ -177,5 +177,13 @@
 		}
 	],
 	"checks": [],
-	"quickReturn": []
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "DLASQ3 documents QMAX as [in] but assigns it (dlasq3.f:317, QMAX = MAX( QMAX, Z( 4*I0+PP-3 ), Z( 4*I0+PP+1 ) )), so it is in/out.",
+			"set": {
+				"params.QMAX.intent": "inout"
+			}
+		}
+	]
 }

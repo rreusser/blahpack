@@ -30,7 +30,7 @@ limitations under the License.
 var dlasq6 = require( '@stdlib/lapack/base/dlasq6' );
 ```
 
-#### dlasq6( i0, n0, z, stride, pp )
+#### dlasq6( i0, n0, z, stride, pp, dmin, dmin1, dmin2, dn, dnm1, dnm2 )
 
 Computes one dqds transform in ping-pong form without a shift.
 
@@ -48,7 +48,7 @@ The function has the following parameters:
 -   **stride**: `stride`.
 -   **pp**: `pp`.
 
-#### dlasq6.ndarray( i0, n0, z, stride, offset, pp )
+#### dlasq6.ndarray( i0, n0, z, stride, offset, pp, dmin, dmin1, dmin2, dn, dnm1, dnm2 )
 
 Computes one dqds transform in ping-pong form without a shift, using alternative indexing semantics.
 

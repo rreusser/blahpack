@@ -30,7 +30,7 @@ limitations under the License.
 var zlaqps = require( '@stdlib/lapack/base/zlaqps' );
 ```
 
-#### zlaqps( order, M, N, offset, nb, A, LDA, JPVT, strideJPVT, TAU, strideTAU, VN1, strideVN1, VN2, strideVN2, AUXV, strideAUXV, F, LDF )
+#### zlaqps( order, M, N, offset, nb, kb, A, LDA, JPVT, strideJPVT, TAU, strideTAU, VN1, strideVN1, VN2, strideVN2, AUXV, strideAUXV, F, LDF )
 
 Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.
 
@@ -69,7 +69,7 @@ The function has the following parameters:
 -   **F**: input array `F`.
 -   **LDF**: leading dimension of `F`.
 
-#### zlaqps.ndarray( M, N, offset, nb, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, VN1, strideVN1, offsetVN1, VN2, strideVN2, offsetVN2, AUXV, strideAUXV, offsetAUXV, F, strideF1, strideF2, offsetF )
+#### zlaqps.ndarray( M, N, offset, nb, kb, A, strideA1, strideA2, offsetA, JPVT, strideJPVT, offsetJPVT, TAU, strideTAU, offsetTAU, VN1, strideVN1, offsetVN1, VN2, strideVN2, offsetVN2, AUXV, strideAUXV, offsetAUXV, F, strideF1, strideF2, offsetF )
 
 Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3, using alternative indexing semantics.
 

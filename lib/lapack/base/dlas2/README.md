@@ -30,7 +30,7 @@ limitations under the License.
 var dlas2 = require( '@stdlib/lapack/base/dlas2' );
 ```
 
-#### dlas2( f, g, h, out )
+#### dlas2( f, g, h, ssmin, ssmax )
 
 Computes singular values of a 2-by-2 triangular matrix.
 
@@ -47,7 +47,7 @@ The function has the following parameters:
 -   **h**: `h`.
 -   **out**: `out`.
 
-#### dlas2.ndarray( f, g, h, out )
+#### dlas2.ndarray( f, g, h, ssmin, ssmax )
 
 Computes singular values of a 2-by-2 triangular matrix, using alternative indexing semantics.
 

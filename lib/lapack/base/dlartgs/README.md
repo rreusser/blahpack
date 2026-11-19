@@ -30,7 +30,7 @@ limitations under the License.
 var dlartgs = require( '@stdlib/lapack/base/dlartgs' );
 ```
 
-#### dlartgs( x, y, sigma, out )
+#### dlartgs( x, y, sigma, cs, sn )
 
 Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 
@@ -51,7 +51,7 @@ The function has the following parameters:
 
 Returns `out`, with `out[0] = cs` and `out[1] = sn`, where `cs` and `sn` define a plane rotation satisfying `[ cs sn; -sn cs ] * [ x^2 - sigma^2; x*y ] = [ r; 0 ]` with `r >= 0`.
 
-#### dlartgs.ndarray( x, y, sigma, out )
+#### dlartgs.ndarray( x, y, sigma, cs, sn )
 
 Generates a plane rotation and writes the result into a preallocated output array.
 

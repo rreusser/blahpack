@@ -22,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"element": true
 		},
 		{
 			"name": "x",
@@ -54,7 +55,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"element": true
 		}
 	],
 	"checks": [],
@@ -65,6 +67,15 @@
 			"sets": [
 				"TAU = ZERO"
 			]
+		}
+	],
+	"overrides": [
+		{
+			"reason": "Callers pass ALPHA and TAU as elements of their own arrays (X11(i,i) and TAUP1(i) in dorbdb*, A(i,i) and TAU(i) in dgeqr2p), which DLARFGP updates in place, so they keep `x, offsetX` instead of a length-1 array every caller would copy in and out (S10, ruled 2026-11-19).",
+			"set": {
+				"params.ALPHA.element": true,
+				"params.TAU.element": true
+			}
 		}
 	]
 }

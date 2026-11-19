@@ -1,0 +1,20 @@
+# S10 migration waves, in the order they were run (one wave per line).
+# run-waves.sh from 51e0c6a35 reproduces lib/ except these hand edits made
+# after the codemod: M computed in dtrevc, dtrevc3, dtgevc, ztrevc, ztrevc3
+# (base.js; their test.ndarray.js assert it), and the dlagts TOL test/fixtures.
+dlartg dlartgp dlartgs dlaev2 dlae2
+dlas2 dlasv2 dladiv dlaic1 dlag2
+dlags2 dlagv2 dlanv2 dlaln2 dlaqtr
+dgeequ dgbequ dpoequ dpbequ dppequ zgeequ zgbequ zpoequ zpbequ zppequ
+dgebal dggbal zgebal zggbal dgeevx dggevx zggevx dgges zgges dtrsna
+dgesvx dgbsvx zgesvx zgbsvx dlasyf dlasyf_rk dlasyf_rook zlasyf zlasyf_rk zlasyf_rook zlahef zlahef_rk zlahef_rook dlaqps zlaqps
+dsbevx dsbgvx dspevx dspgvx dstevr dsyevr dsyevx dsygvx zhbevx zhbgvx zheevr zheevx zhegvx zhpevx zhpgvx
+dlaqr2 dlaqr3 dlaed2 dlasd7 dlarrc dlarrd
+dlasq5 dlasq6 dgetv0 dseigt dsconv
+drotg drotmg zlaev2 zlags2
+dlasq3 dlasq4 dlassq zlassq dlatdf zlatdf
+dtgexc dtrexc ztgexc zgeevx dhsein
+ztgsen ztgsna zlaesy zlaqr2 zlaqr3 dlabad
+dtrevc dtrevc3 dtgevc ztrevc ztrevc3
+dlagts
+zhsein

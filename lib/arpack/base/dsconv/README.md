@@ -30,7 +30,7 @@ limitations under the License.
 import dsconv from '@stdlib/arpack/base/dsconv/lib/index.js';
 ```
 
-#### dsconv( N, ritz, strideRITZ, bounds, strideBOUNDS, tol )
+#### dsconv( N, ritz, strideRITZ, bounds, strideBOUNDS, tol, nconv )
 
 Counts the number of "converged" Ritz values, returning the count.
 
@@ -55,7 +55,7 @@ The function has the following parameters:
 -   **strideBOUNDS**: stride length for `bounds`.
 -   **tol**: desired relative accuracy for a Ritz value to be considered "converged".
 
-#### dsconv.ndarray( N, ritz, strideRITZ, offsetRITZ, bounds, strideBOUNDS, offsetBOUNDS, tol )
+#### dsconv.ndarray( N, ritz, strideRITZ, offsetRITZ, bounds, strideBOUNDS, offsetBOUNDS, tol, nconv )
 
 Counts the number of "converged" Ritz values, using alternative indexing semantics.
 

@@ -30,7 +30,7 @@ limitations under the License.
 var zlaev2 = require( '@stdlib/lapack/base/zlaev2' );
 ```
 
-#### zlaev2( a, b, c )
+#### zlaev2( a, b, c, rt1, rt2, cs1, sn1 )
 
 @license Apache-2.0.
 
@@ -41,7 +41,7 @@ var a = new Complex128( 5.0, 0.0 );
 var b = new Complex128( 1.0, 2.0 );
 var c = new Complex128( 3.0, 0.0 );
 
-zlaev2( a, b, c );
+zlaev2( a, b, c, rt1, rt2, cs1, sn1 );
 ```
 
 The function has the following parameters:
@@ -50,7 +50,7 @@ The function has the following parameters:
 -   **b**: `b`.
 -   **c**: `c`.
 
-#### zlaev2.ndarray( a, b, c )
+#### zlaev2.ndarray( a, b, c, rt1, rt2, cs1, sn1 )
 
 @license Apache-2.0, using alternative indexing semantics.
 
@@ -61,7 +61,7 @@ var a = new Complex128( 5.0, 0.0 );
 var b = new Complex128( 1.0, 2.0 );
 var c = new Complex128( 3.0, 0.0 );
 
-zlaev2( a, b, c );
+zlaev2( a, b, c, rt1, rt2, cs1, sn1 );
 ```
 
 The function has the following additional parameters:
@@ -94,7 +94,7 @@ var a = new Complex128( 5.0, 0.0 );
 var b = new Complex128( 1.0, 2.0 );
 var c = new Complex128( 3.0, 0.0 );
 
-zlaev2( a, b, c );
+zlaev2( a, b, c, rt1, rt2, cs1, sn1 );
 ```
 
 </section>

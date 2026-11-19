@@ -172,7 +172,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -8,
@@ -184,7 +185,8 @@
 				"js": "max( 1, min( nb, N ) )"
 			},
 			"fortran": "LDT.LT.MAX( 1, MIN( NB, N ) )",
-			"js": "ldt < max( 1, min( nb, N ) )"
+			"js": "ldt < max( 1, min( nb, N ) )",
+			"rowMajor": null
 		}
 	],
 	"quickReturn": [
@@ -197,6 +199,8 @@
 		}
 	],
 	"untranslated": [
-		"T.cols: unknown identifier NIRB"
+		"T.cols: unknown identifier NIRB",
+		"T.cols: the row-major column count is not established",
+		"check -8.rowMajor: the column count of T is not established"
 	]
 }

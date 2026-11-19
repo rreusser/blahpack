@@ -229,7 +229,8 @@
 				"js": "M"
 			},
 			"fortran": "LDA.LT.M",
-			"js": "lda < M"
+			"js": "lda < M",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -8,

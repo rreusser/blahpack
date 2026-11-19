@@ -217,7 +217,8 @@
 				"js": "max( 1, N )"
 			},
 			"fortran": "LDZ.LT.MAX( 1, N )",
-			"js": "ldz < max( 1, N )"
+			"js": "ldz < max( 1, N )",
+			"rowMajor": "ldz < max( 1, M )"
 		}
 	],
 	"quickReturn": []

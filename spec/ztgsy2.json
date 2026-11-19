@@ -321,7 +321,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		},
 		{
 			"info": -12,
@@ -357,7 +358,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDF.LT.MAX( 1, M )",
-			"js": "ldf < max( 1, M )"
+			"js": "ldf < max( 1, M )",
+			"rowMajor": "ldf < max( 1, N )"
 		}
 	],
 	"quickReturn": []

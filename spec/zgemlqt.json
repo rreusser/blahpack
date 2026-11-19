@@ -73,7 +73,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "M"
+				"js": "side === 'left' ? M : N"
 			}
 		},
 		{
@@ -229,7 +229,8 @@
 				"js": "max( 1, K )"
 			},
 			"fortran": "LDV.LT.MAX( 1, K )",
-			"js": "ldv < max( 1, K )"
+			"js": "ldv < max( 1, K )",
+			"rowMajor": "ldv < max( 1, side === 'left' ? M : N )"
 		},
 		{
 			"info": -10,
@@ -241,7 +242,8 @@
 				"js": "mb"
 			},
 			"fortran": "LDT.LT.MB",
-			"js": "ldt < mb"
+			"js": "ldt < mb",
+			"rowMajor": "ldt < max( 1, K )"
 		},
 		{
 			"info": -12,
@@ -253,7 +255,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [

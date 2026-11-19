@@ -71,7 +71,7 @@
 			},
 			"cols": {
 				"fortran": "N",
-				"js": "N"
+				"js": "M"
 			}
 		},
 		{
@@ -117,7 +117,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA .LT. MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -6,

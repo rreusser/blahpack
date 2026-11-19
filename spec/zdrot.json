@@ -5,7 +5,7 @@
 	"signature": "SUBROUTINE ZDROT( N, ZX, INCX, ZY, INCY, C, S )",
 	"returns": {
 		"kind": "array",
-		"param": "ZY"
+		"param": "y"
 	},
 	"params": [
 		{
@@ -17,7 +17,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "ZX",
+			"name": "x",
 			"fortran": "ZX",
 			"position": 2,
 			"role": "vector",
@@ -41,7 +41,7 @@
 			"of": "ZX"
 		},
 		{
-			"name": "ZY",
+			"name": "y",
 			"fortran": "ZY",
 			"position": 4,
 			"role": "vector",

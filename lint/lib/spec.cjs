@@ -35,8 +35,11 @@ function suffix( p ) {
 	return p.name;
 }
 
+// A 2-D workspace is 2-D only when it has an LD argument (dtrsna's
+// `WORK( LDWORK, N+6 )`); one whose leading extent is computed (dsytri2x's
+// `WORK( N+NB+1, * )`) is caller-owned scratch like any other (D2).
 function isTwoD( p ) {
-	return p.role === 'matrix' || p.role === 'banded' || ( p.role === 'workspace' && p.dims && p.dims.length === 2 );
+	return p.role === 'matrix' || p.role === 'banded' || ( p.role === 'workspace' && p.dims && p.dims.length === 2 && !!p.ld );
 }
 
 function isOneD( p ) {

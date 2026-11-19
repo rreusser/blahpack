@@ -219,7 +219,8 @@
 				"js": "max( 1, m1 )"
 			},
 			"fortran": "LDQ1 .LT. MAX( 1, M1 )",
-			"js": "ldq1 < max( 1, m1 )"
+			"js": "ldq1 < max( 1, m1 )",
+			"rowMajor": "ldq1 < max( 1, N )"
 		},
 		{
 			"info": -11,
@@ -231,7 +232,8 @@
 				"js": "max( 1, m2 )"
 			},
 			"fortran": "LDQ2 .LT. MAX( 1, M2 )",
-			"js": "ldq2 < max( 1, m2 )"
+			"js": "ldq2 < max( 1, m2 )",
+			"rowMajor": "ldq2 < max( 1, N )"
 		}
 	],
 	"quickReturn": []

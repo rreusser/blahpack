@@ -5,7 +5,7 @@
 	"signature": "SUBROUTINE ZDSCAL(N,DA,ZX,INCX)",
 	"returns": {
 		"kind": "array",
-		"param": "ZX"
+		"param": "x"
 	},
 	"params": [
 		{
@@ -25,7 +25,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "ZX",
+			"name": "x",
 			"fortran": "ZX",
 			"position": 3,
 			"role": "vector",

@@ -232,21 +232,23 @@
 			"param": "LDVL",
 			"kind": "expr",
 			"fortran": "LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )",
-			"js": "ldvl < 1 || ((side === 'left' || side === 'both') && ldvl < N)"
+			"js": "ldvl < 1 || ((side === 'left' || side === 'both') && ldvl < N)",
+			"rowMajor": "ldvl<1||((side==='left'||side==='both')&&ldvl<max(1,mm))"
 		},
 		{
 			"info": -10,
 			"param": "LDVR",
 			"kind": "expr",
 			"fortran": "LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )",
-			"js": "ldvr < 1 || ((side === 'right' || side === 'both') && ldvr < N)"
+			"js": "ldvr < 1 || ((side === 'right' || side === 'both') && ldvr < N)",
+			"rowMajor": "ldvr<1||((side==='right'||side==='both')&&ldvr<max(1,mm))"
 		},
 		{
 			"info": -11,
 			"param": "MM",
 			"kind": "expr",
 			"fortran": "MM.LT.M",
-			"js": "mm < m"
+			"js": null
 		}
 	],
 	"quickReturn": [
@@ -254,5 +256,8 @@
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
 		}
+	],
+	"untranslated": [
+		"check -11: tests the output argument M (its value is computed, not passed in)"
 	]
 }

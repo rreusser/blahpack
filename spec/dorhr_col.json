@@ -79,7 +79,7 @@
 			},
 			"cols": {
 				"fortran": "N",
-				"js": "N"
+				"js": null
 			}
 		},
 		{
@@ -143,7 +143,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -7,
@@ -155,7 +156,8 @@
 				"js": "max( 1, min( nb, N ) )"
 			},
 			"fortran": "LDT.LT.MAX( 1, MIN( NB, N ) )",
-			"js": "ldt < max( 1, min( nb, N ) )"
+			"js": "ldt < max( 1, min( nb, N ) )",
+			"rowMajor": null
 		}
 	],
 	"quickReturn": [
@@ -163,5 +165,9 @@
 			"fortran": "MIN( M, N ).EQ.0",
 			"js": "min( M, N ) === 0"
 		}
+	],
+	"untranslated": [
+		"T.cols: the row-major column count is not established",
+		"check -7.rowMajor: the column count of T is not established"
 	]
 }

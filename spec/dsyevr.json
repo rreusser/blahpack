@@ -150,7 +150,7 @@
 			},
 			"cols": {
 				"fortran": "MAX(1,M)",
-				"js": "max( 1, m )"
+				"js": "range === 'index' ? iu - il + 1 : N"
 			}
 		},
 		{
@@ -322,7 +322,8 @@
 			"param": "LDZ",
 			"kind": "expr",
 			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
-			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)",
+			"rowMajor": "ldz<1||(jobz==='compute-vectors'&&ldz<max(1,range==='index'?iu-il+1:N))"
 		}
 	],
 	"quickReturn": [

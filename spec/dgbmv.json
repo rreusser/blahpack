@@ -195,7 +195,8 @@
 				"js": "kl + ku + 1"
 			},
 			"fortran": "LDA.LT. (KL+KU+1)",
-			"js": "lda < kl + ku + 1"
+			"js": "lda < kl + ku + 1",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": 10,

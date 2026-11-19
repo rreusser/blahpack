@@ -196,7 +196,8 @@
 				"js": "kd + 1"
 			},
 			"fortran": "LDAB.LT.KD+1",
-			"js": "ldab < kd + 1"
+			"js": "ldab < kd + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		}
 	],
 	"quickReturn": [

@@ -189,7 +189,8 @@
 				"js": "max( 1, kd + 1 )"
 			},
 			"fortran": "LDAB.LT.MAX( 1, KD+1 )",
-			"js": "ldab < max( 1, kd + 1 )"
+			"js": "ldab < max( 1, kd + 1 )",
+			"rowMajor": "ldab < max( 1, N )"
 		}
 	],
 	"quickReturn": [],

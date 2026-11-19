@@ -239,7 +239,8 @@
 				"js": "ka + 1"
 			},
 			"fortran": "LDAB.LT.KA+1",
-			"js": "ldab < ka + 1"
+			"js": "ldab < ka + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		},
 		{
 			"info": -9,
@@ -251,7 +252,8 @@
 				"js": "kb + 1"
 			},
 			"fortran": "LDBB.LT.KB+1",
-			"js": "ldbb < kb + 1"
+			"js": "ldbb < kb + 1",
+			"rowMajor": "ldbb < max( 1, N )"
 		},
 		{
 			"info": -11,

@@ -124,7 +124,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "m"
+				"js": "mm"
 			}
 		},
 		{
@@ -154,7 +154,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "m"
+				"js": "mm"
 			}
 		},
 		{
@@ -338,7 +338,7 @@
 			"param": "MM",
 			"kind": "expr",
 			"fortran": "MM.LT.M",
-			"js": "mm < m"
+			"js": null
 		}
 	],
 	"quickReturn": [
@@ -351,6 +351,7 @@
 		"check -1: no canonical value for JOB='E'",
 		"check -10: no canonical value for JOB='E'",
 		"check -12: no canonical value for JOB='E'",
+		"check -15: tests the output argument M (its value is computed, not passed in)",
 		"WORK.minLength: local LWMIN is assigned inside nested control flow"
 	],
 	"notes": [

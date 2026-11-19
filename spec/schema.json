@@ -102,7 +102,8 @@
 				"values": { "type": [ "array", "null" ], "items": { "type": [ "string", "null" ] }, "description": "Canonical JS strings (spec/options.json); null when Appendix A has no mapping." },
 				"guard": { "type": "string", "description": "Enclosing Fortran IF condition(s)." },
 				"fortran": { "type": "string" },
-				"js": { "type": [ "string", "null" ], "description": "Rejection condition (guard included) in JS; null = untranslated." }
+				"js": { "type": [ "string", "null" ], "description": "Rejection condition (guard included) in JS; null = untranslated." },
+				"rowMajor": { "type": [ "string", "null" ], "description": "Leading-dimension checks only: the rejection condition for row-major storage, on the array's column count (CONVENTIONS V5). Absent when the array is square (one condition for both layouts); null when the column count is not established (column-major check only)." }
 			}
 		}
 	}

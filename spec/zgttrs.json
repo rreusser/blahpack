@@ -183,7 +183,8 @@
 				"js": "max( N, 1 )"
 			},
 			"fortran": "LDB.LT.MAX( N, 1 )",
-			"js": "ldb < max( N, 1 )"
+			"js": "ldb < max( N, 1 )",
+			"rowMajor": "ldb < max( 1, nrhs )"
 		}
 	],
 	"quickReturn": [

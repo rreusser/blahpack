@@ -174,7 +174,8 @@
 				"js": "max( 1, N )"
 			},
 			"fortran": "LDV.LT.MAX( 1, N )",
-			"js": "ldv < max( 1, N )"
+			"js": "ldv < max( 1, N )",
+			"rowMajor": "ldv < max( 1, M )"
 		}
 	],
 	"quickReturn": [

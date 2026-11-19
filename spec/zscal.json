@@ -5,7 +5,7 @@
 	"signature": "SUBROUTINE ZSCAL(N,ZA,ZX,INCX)",
 	"returns": {
 		"kind": "array",
-		"param": "ZX"
+		"param": "x"
 	},
 	"params": [
 		{
@@ -17,7 +17,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "za",
+			"name": "alpha",
 			"fortran": "ZA",
 			"position": 2,
 			"role": "scalar",
@@ -25,7 +25,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "ZX",
+			"name": "x",
 			"fortran": "ZX",
 			"position": 3,
 			"role": "vector",
@@ -53,7 +53,7 @@
 	"quickReturn": [
 		{
 			"fortran": "N.LE.0 .OR. INCX.LE.0 .OR. ZA.EQ.ONE",
-			"js": "(N <= 0 || incx <= 0) || (real( za ) === 1 && imag( za ) === 0)"
+			"js": "(N <= 0 || incx <= 0) || (real( alpha ) === 1 && imag( alpha ) === 0)"
 		}
 	]
 }

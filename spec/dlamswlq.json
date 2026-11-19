@@ -81,7 +81,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "M"
+				"js": "side === 'left' ? M : N"
 			}
 		},
 		{
@@ -108,6 +108,10 @@
 			"rows": {
 				"fortran": "MB",
 				"js": "mb"
+			},
+			"cols": {
+				"fortran": "*",
+				"js": null
 			}
 		},
 		{
@@ -246,7 +250,8 @@
 				"js": "max( 1, K )"
 			},
 			"fortran": "LDA.LT.MAX( 1, K )",
-			"js": "lda < max( 1, K )"
+			"js": "lda < max( 1, K )",
+			"rowMajor": "lda < max( 1, side === 'left' ? M : N )"
 		},
 		{
 			"info": -11,
@@ -258,7 +263,8 @@
 				"js": "max( 1, mb )"
 			},
 			"fortran": "LDT.LT.MAX( 1, MB)",
-			"js": "ldt < max( 1, mb )"
+			"js": "ldt < max( 1, mb )",
+			"rowMajor": null
 		},
 		{
 			"info": -13,
@@ -270,7 +276,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [
@@ -285,5 +292,9 @@
 				"CALL DGEMLQT( SIDE, TRANS, M, N, K, MB, A, LDA, T, LDT, C, LDC, WORK, INFO)"
 			]
 		}
+	],
+	"untranslated": [
+		"T.cols: the row-major column count is not established",
+		"check -11.rowMajor: the column count of T is not established"
 	]
 }

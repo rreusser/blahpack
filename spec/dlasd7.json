@@ -375,7 +375,8 @@
 				"js": "nl + nr + 1"
 			},
 			"fortran": "LDGCOL.LT.N",
-			"js": "ldgcol < nl + nr + 1"
+			"js": "ldgcol < nl + nr + 1",
+			"rowMajor": "ldgcol < max( 1, 2 )"
 		},
 		{
 			"info": -24,
@@ -387,7 +388,8 @@
 				"js": "nl + nr + 1"
 			},
 			"fortran": "LDGNUM.LT.N",
-			"js": "ldgnum < nl + nr + 1"
+			"js": "ldgnum < nl + nr + 1",
+			"rowMajor": "ldgnum < max( 1, 2 )"
 		}
 	],
 	"quickReturn": [],

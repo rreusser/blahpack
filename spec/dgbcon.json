@@ -194,7 +194,8 @@
 				"js": "2 * kl + ku + 1"
 			},
 			"fortran": "LDAB.LT.2*KL+KU+1",
-			"js": "ldab < 2 * kl + ku + 1"
+			"js": "ldab < 2 * kl + ku + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		},
 		{
 			"info": -8,

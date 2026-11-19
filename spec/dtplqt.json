@@ -117,7 +117,7 @@
 			},
 			"cols": {
 				"fortran": "N",
-				"js": "N"
+				"js": "M"
 			}
 		},
 		{
@@ -209,7 +209,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDB.LT.MAX( 1, M )",
-			"js": "ldb < max( 1, M )"
+			"js": "ldb < max( 1, M )",
+			"rowMajor": "ldb < max( 1, N )"
 		},
 		{
 			"info": -10,
@@ -221,7 +222,8 @@
 				"js": "mb"
 			},
 			"fortran": "LDT.LT.MB",
-			"js": "ldt < mb"
+			"js": "ldt < mb",
+			"rowMajor": "ldt < max( 1, M )"
 		}
 	],
 	"quickReturn": [

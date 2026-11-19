@@ -30,7 +30,7 @@ limitations under the License.
 var dlasv2 = require( '@stdlib/lapack/base/dlasv2' );
 ```
 
-#### dlasv2( f, g, h )
+#### dlasv2( f, g, h, ssmin, ssmax, snr, csr, snl, csl )
 
 Returns |a| with the sign of b (Fortran SIGN intrinsic).
 
@@ -46,7 +46,7 @@ The function has the following parameters:
 -   **g**: `g`.
 -   **h**: `h`.
 
-#### dlasv2.ndarray( f, g, h )
+#### dlasv2.ndarray( f, g, h, ssmin, ssmax, snr, csr, snl, csl )
 
 Returns |a| with the sign of b (Fortran SIGN intrinsic), using alternative indexing semantics.
 

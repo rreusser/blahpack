@@ -123,6 +123,7 @@ export class FileRewriter {
 		this.needReinterpret = false;
 		this.changed = false;
 		this.dropIfUnused = [];
+		this.warnings = [];
 		for ( const S of selfPlans ) {
 			if ( path.join( S.dir, 'lib', 'base.js' ) === file ) {
 				Object.values( S.pname ).forEach( ( n ) => this.taken.add( n ) );
@@ -279,11 +280,9 @@ export class FileRewriter {
 			if ( nargs === newL.length && oldL.length !== newL.length ) {
 				return; // already migrated
 			}
-			if ( nargs === 0 || nargs < oldL.length - 3 ) {
-				// Argument-validation tests calling with too few args: leave.
-				return;
-			}
-			this.problem( P.routine + ' called with ' + nargs + ' args, old signature has ' + oldL.length, node );
+			// Not a call of the old signature (argument-validation tests with
+			// too few args, or an example that was already wrong): leave it.
+			this.warnings.push( path.relative( ROOT, this.file ) + ':' + this.line( node.start ) + ': ' + P.routine + ' called with ' + nargs + ' args, old signature has ' + oldL.length + ' (left unchanged)' );
 			return;
 		}
 		const src = this.src;
@@ -416,6 +415,21 @@ export class FileRewriter {
 				return render( src, this.edits, node.arguments[ m.from ].start, node.arguments[ m.from ].end );
 			}
 			const ins = m.insert;
+			if ( ins.out && P.form[ ins.out.name ].kind === 'slot' && !own ) {
+				// Strided slot `ab[ offsetAB + k*strideAB ]`: pass a view, so the
+				// caller's array keeps receiving the values.
+				const f = P.form[ ins.out.name ];
+				const at = ( n ) => argText[ oldL.findIndex( ( x ) => lc( x ) === lc( n ) ) ];
+				const off = at( f.offset );
+				const st = at( f.stride );
+				let i0;
+				if ( /^\d+$/.test( off ) && /^\d+$/.test( st ) ) {
+					i0 = String( Number( off ) + ( f.index * Number( st ) ) );
+					return at( f.param ) + '.subarray( ' + i0 + ', ' + ( Number( i0 ) + 1 ) + ' )';
+				}
+				i0 = f.index === 0 ? off : off + ' + ' + ( f.index === 1 ? st : f.index + '*' + st );
+				return at( f.param ) + '.subarray( ' + i0 + ', ' + i0 + ' + 1 )';
+			}
 			if ( ins.out ) {
 				const p = ins.out;
 				const f = P.form[ p.name ];
@@ -598,6 +612,17 @@ export class FileRewriter {
 				}
 				return null;
 			}
+			if ( node.__parent.type === 'AssignmentExpression' && node.__parent.operator === '=' && node.__parent.__parent.type === 'ExpressionStatement' ) {
+				// `state.x = f()` → `f(); state.x = arr[ 0 ];`
+				const a = node.__parent;
+				const ind = lineIndent( src, stmt.start );
+				this.edits.push( { start: a.start, end: a.end, text: callText + ';\n' + ind + src.slice( a.left.start, a.left.end ) + ' = ' + arr[ retOut.name ] + '[ 0 ]', renders: true } );
+				if ( pre.length ) {
+					this.edits.push( { start: stmt.start, end: stmt.start, text: pre.join( '\n' + ind ) + '\n' + ind, order: -1 } );
+				}
+				this.changed = true;
+				return null;
+			}
 			// Used inline (`if ( f() > 0 )`): comma-free form needs a statement.
 			this.problem( 'inline use of scalar-returning ' + P.routine, node );
 			return null;
@@ -606,10 +631,7 @@ export class FileRewriter {
 		if ( resKind === 'discard' ) {
 			return callText;
 		}
-		if ( resKind === 'return' ) {
-			this.problem( 'result of ' + P.routine + ' returned to caller', node );
-			return callText;
-		}
+
 		if ( resVar ) {
 			const scope = fn || this.ast;
 			const refs = refsIn( scope, resVar );
@@ -679,7 +701,7 @@ export class FileRewriter {
 			}
 			return '{ ' + ( P.hasInfoKey ? [ '\'info\': ' + callText ] : [] ).concat( props ).join( ', ' ) + ' }';
 		}
-		if ( resKind === 'decl' || resKind === 'assign' ) {
+		if ( resKind === 'decl' || resKind === 'assign' || resKind === 'return' ) {
 			pre.push( callText + ';' );
 			return '{ ' + props.join( ', ' ) + ' }';
 		}
@@ -736,7 +758,8 @@ export class FileRewriter {
 // Remove declarators (and plain `x = …;` statements for dropped bindings) of
 // names in `names` that are no longer referenced; follow simple aliases
 // (`const dout = DOUT;`).
-export function removeDead( src, names ) {
+export function removeDead( src, names, anyInit ) {
+	const force = new Set( anyInit || [] );
 	let todo = [ ...new Set( names ) ];
 	for ( let iter = 0; iter < 5 && todo.length; iter++ ) {
 		const ast = annotate( parse( src ) );
@@ -789,7 +812,7 @@ export function removeDead( src, names ) {
 		}
 		const byDecl = new Map();
 		for ( const d of deadDecls ) {
-			if ( d.init && !/^(NewExpression|Identifier|ObjectExpression|ArrayExpression|Literal)$/.test( d.init.type ) ) {
+			if ( d.init && !force.has( d.id.name ) && !/^(NewExpression|Identifier|ObjectExpression|ArrayExpression|Literal)$/.test( d.init.type ) ) {
 				continue;
 			}
 			if ( d.init && d.init.type === 'Identifier' ) {

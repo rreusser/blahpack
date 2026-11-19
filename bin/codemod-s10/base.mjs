@@ -73,7 +73,8 @@ export function transformBase( src, P ) {
 			// Not used as a local: nothing to arrayify.
 			continue;
 		} else if ( !bi.decls.length && bi.refs.length && main.params.every( ( q ) => q.name !== N ) ) {
-			problems.push( N + ' referenced but not declared in the function (module scope?)' );
+			// Only the array itself (a pass-through argument written by the
+			// call-site rewrite): nothing to arrayify.
 			continue;
 		}
 		for ( const d of bi.decls ) {
@@ -96,9 +97,65 @@ export function transformBase( src, P ) {
 		arrayified.add( N );
 	}
 
-	// 2. Packed `out[ k ]` / `out.M` → the output's own array.
+	// 2a. Strided slots (`ab[ offsetAB + strideAB ]`) → the output's own array.
+	const slotParams = new Map();
+	for ( const p of P.outs ) {
+		const f = P.form[ p.name ];
+		if ( f.kind === 'slot' ) {
+			if ( !slotParams.has( f.param ) ) {
+				slotParams.set( f.param, { f, byIndex: new Map() } );
+			}
+			slotParams.get( f.param ).byIndex.set( f.index, P.pname[ p.name ] );
+		}
+	}
+	for ( const [ param, { f, byIndex } ] of slotParams ) {
+		const bi = bindingInfo( main, param );
+		for ( const r of bi.refs ) {
+			const m = r.__parent;
+			if ( m.type === 'MemberExpression' && m.object === r && m.computed ) {
+				const expr = src.slice( m.property.start, m.property.end ).replace( new RegExp( '\\b' + f.offset + '\\b', 'g' ), '0' ).replace( new RegExp( '\\b' + f.stride + '\\b', 'g' ), '1' );
+				let k = null;
+				if ( /^[\d\s+*()-]+$/.test( expr ) ) {
+					k = Function( 'return ' + expr )();
+				}
+				if ( k !== null && byIndex.has( k ) ) {
+					edits.push( { start: m.start, end: m.end, text: byIndex.get( k ) + '[ 0 ]' } );
+					continue;
+				}
+			}
+			problems.push( 'unhandled use of slot param `' + param + '` at ' + src.slice( 0, r.start ).split( '\n' ).length );
+		}
+	}
+
+	// 2b. Packed `out[ k ]` / `out.M` → the output's own array. If the
+	// container is used any other way (handed to a helper), keep it as a
+	// module-level scratch and copy out on return.
 	const outParam = Object.values( P.form ).find( ( f ) => f.kind === 'outIndex' || f.kind === 'outField' );
+	let scratch = null;
 	if ( outParam ) {
+		const bi0 = bindingInfo( main, outParam.param );
+		const odd = bi0.refs.filter( ( r ) => {
+			const m = r.__parent;
+			if ( m.type === 'ReturnStatement' ) {
+				return false;
+			}
+			return !( m.type === 'MemberExpression' && m.object === r && ( ( m.computed && m.property.type === 'Literal' ) || !m.computed ) );
+		});
+		if ( odd.length && outParam.kind === 'outIndex' ) {
+			scratch = outParam.param.toUpperCase();
+			const n = Math.max( ...P.outs.filter( ( p ) => P.form[ p.name ].kind === 'outIndex' ).map( ( p ) => P.form[ p.name ].index ) ) + 1;
+			for ( const r of bi0.refs ) {
+				if ( r.__parent.type !== 'ReturnStatement' ) {
+					edits.push( { start: r.start, end: r.end, text: scratch } );
+				}
+			}
+			const lastImport = ast.body.filter( ( x ) => x.type === 'ImportDeclaration' ).pop();
+			const firstFn = ast.body.find( ( x ) => x.start > ( lastImport ? lastImport.end : 0 ) && ( x.type === 'FunctionDeclaration' || x.type === 'VariableDeclaration' ) );
+			const at = firstFn ? src.lastIndexOf( '\n', ( src.lastIndexOf( '/**', firstFn.start ) > ( lastImport ? lastImport.end : 0 ) && firstFn.type === 'FunctionDeclaration' ) ? src.lastIndexOf( '/**', firstFn.start ) : firstFn.start ) + 1 : src.length;
+			edits.push( { start: at, end: at, text: '// Scratch for the helpers that fill the packed result; copied to the outputs on return.\nconst ' + scratch + ' = new Float64Array( ' + n + ' );\n\n', order: -1 } );
+		}
+	}
+	if ( outParam && !scratch ) {
 		const byIndex = new Map();
 		const byKey = new Map();
 		for ( const p of P.outs ) {
@@ -132,7 +189,10 @@ export function transformBase( src, P ) {
 	// 3. Declarations losing declarators.
 	for ( const [ decl, gone ] of declEdits ) {
 		const keep = decl.declarations.filter( ( d ) => !gone.has( d ) );
-		const assigns = decl.declarations.filter( ( d ) => gone.has( d ) && d.init ).map( ( d ) => d.id.name + '[ 0 ] = ' + render( src, edits, d.init.start, d.init.end ) + ';' );
+		const assigns = decl.declarations.filter( ( d ) => gone.has( d ) && d.init ).map( ( d ) => d.id.name + '[ 0 ] = ' + render( src, edits, d.init.start, d.init.end ) + ';' ).filter( ( a ) => {
+			const m = /^(\w+\[ 0 \]) = (.*);$/.exec( a );
+			return !( m && m[ 1 ] === m[ 2 ] );
+		});
 		const ind = lineIndent( src, decl.start );
 		const parts = [];
 		if ( keep.length ) {
@@ -157,6 +217,14 @@ export function transformBase( src, P ) {
 	// 4. Return statements.
 	const returnForm = P.outs.find( ( p ) => P.form[ p.name ].kind === 'return' );
 	const rets = ownReturns( main );
+	const localFns = new Set( ast.body.filter( ( x ) => x.type === 'FunctionDeclaration' && x !== main ).map( ( x ) => x.id.name ) );
+	const usedIn = new Set();
+	walkParents( main, ( n ) => {
+		if ( n.type === 'Identifier' ) {
+			usedIn.add( n.name );
+		}
+		return true;
+	});
 	const lastStmt = main.body.body[ main.body.body.length - 1 ];
 	const writeOut = ( p, valText, lines ) => {
 		const N = P.pname[ p.name ];
@@ -211,9 +279,31 @@ export function transformBase( src, P ) {
 			}
 		} else if ( outParam && r.argument && r.argument.type === 'Identifier' && r.argument.name === outParam.param ) {
 			handled = true;
+		} else if ( r.argument && r.argument.type === 'CallExpression' && r.argument.callee.type === 'Identifier' && P.outs.some( ( p ) => P.form[ p.name ].kind === 'field' ) ) {
+			// Delegation to a same-file implementation returning the old object.
+			handled = true;
+			const tmp = [ 'result', 'res', 'out', 'obj' ].find( ( x ) => !usedIn.has( x ) );
+			lines.push( 'const ' + tmp + ' = ' + render( src, edits, r.argument.start, r.argument.end ) + ';' );
+			for ( const p of P.outs ) {
+				const f = P.form[ p.name ];
+				if ( f.kind === 'field' ) {
+					writeOut( p, tmp + '.' + f.key, lines );
+				}
+			}
+			if ( P.hasInfoKey || P.ret === 'info' ) {
+				infoText = tmp + '.info';
+			}
 		} else if ( returnForm && r.argument ) {
 			handled = true;
 			writeOut( returnForm, render( src, edits, r.argument.start, r.argument.end ), lines );
+		}
+		if ( scratch && handled ) {
+			for ( const p of P.outs ) {
+				const f = P.form[ p.name ];
+				if ( f.kind === 'outIndex' ) {
+					lines.unshift( P.pname[ p.name ] + '[ 0 ] = ' + scratch + '[ ' + f.index + ' ];' );
+				}
+			}
 		}
 		if ( !handled ) {
 			if ( r.argument && P.ret !== 'info' && P.ret !== 'function' && !( P.ret === 'array' && r.argument.type === 'Identifier' && r.argument.name.toLowerCase() === String( P.retParam ).toLowerCase() ) ) {

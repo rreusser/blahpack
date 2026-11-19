@@ -1,1 +1,28 @@
-{}
+{
+	"dlaqps": { "reason": "returns KB as the function value", "forms": { "kb": { "kind": "return" } } },
+	"zlaqps": { "reason": "returns KB as the function value", "forms": { "kb": { "kind": "return" } } },
+	"dgetv0": { "reason": "returns IERR as the function value", "forms": { "ierr": { "kind": "return" } } },
+	"dseigt": { "reason": "returns IERR as the function value", "forms": { "ierr": { "kind": "return" } } },
+	"dsconv": { "reason": "returns NCONV as the function value", "forms": { "nconv": { "kind": "return" } } },
+	"dlaqr2": { "reason": "main delegates to a shared implementation returning { ns, nd }", "forms": { "ns": { "kind": "field", "key": "ns" }, "nd": { "kind": "field", "key": "nd" } } },
+	"dlaqr3": { "reason": "main delegates to a shared implementation returning { ns, nd }", "forms": { "ns": { "kind": "field", "key": "ns" }, "nd": { "kind": "field", "key": "nd" } } },
+	"drotg": {
+		"reason": "A, B, C, S live in two strided pairs (ab, cs)",
+		"forms": {
+			"a": { "kind": "slot", "param": "ab", "stride": "strideAB", "offset": "offsetAB", "index": 0 },
+			"b": { "kind": "slot", "param": "ab", "stride": "strideAB", "offset": "offsetAB", "index": 1 },
+			"c": { "kind": "slot", "param": "cs", "stride": "strideCS", "offset": "offsetCS", "index": 0 },
+			"s": { "kind": "slot", "param": "cs", "stride": "strideCS", "offset": "offsetCS", "index": 1 }
+		},
+		"remove": [ "ab", "strideAB", "offsetAB", "cs", "strideCS", "offsetCS" ]
+	},
+	"drotmg": {
+		"reason": "DD1, DD2 live in a strided pair D; DX1 in a strided x1",
+		"forms": {
+			"dd1": { "kind": "slot", "param": "D", "stride": "strideD", "offset": "offsetD", "index": 0 },
+			"dd2": { "kind": "slot", "param": "D", "stride": "strideD", "offset": "offsetD", "index": 1 },
+			"dx1": { "kind": "slot", "param": "x1", "stride": "strideX1", "offset": "offsetX1", "index": 0 }
+		},
+		"remove": [ "D", "strideD", "offsetD", "x1", "strideX1", "offsetX1" ]
+	}
+}

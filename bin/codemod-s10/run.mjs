@@ -20,7 +20,7 @@ import { ROOT, parse, exportedName, ordinal } from '../codemod-strided-wrapper/l
 import { plan } from './plan.mjs';
 import { worklist } from './forms.mjs';
 import { transformBase, rewriteMainJsdoc } from './base.mjs';
-import { FileRewriter, allSources } from './calls.mjs';
+import { FileRewriter, allSources, removeDead } from './calls.mjs';
 
 const argv = process.argv.slice( 2 );
 const DRY = argv.includes( '--dry' );
@@ -55,6 +55,7 @@ if ( problems.length ) {
 }
 
 const writes = new Map(); // file → new source
+const warnings = [];
 const read = ( f ) => ( writes.has( f ) ? writes.get( f ) : fs.readFileSync( f, 'utf8' ) );
 
 // 1. Call sites.
@@ -82,6 +83,7 @@ for ( const f of allSources() ) {
 		continue;
 	}
 	problems.push( ...rw.problems );
+	warnings.push( ...rw.warnings );
 	try {
 		writes.set( f, rw.finish() );
 	} catch ( e ) {
@@ -137,14 +139,35 @@ for ( const P of plans ) {
 		const main = ast.body.find( ( n ) => n.type === 'FunctionDeclaration' && n.id.name === fn );
 		const open = src.indexOf( '(', main.id.end );
 		const close = main.params.length ? src.indexOf( ')', main.params[ main.params.length - 1 ].end ) : src.indexOf( ')', open );
+		src = src.slice( 0, open ) + '( ' + newL.join( ', ' ) + ' )' + src.slice( close + 1 );
+		// Packed-container reads in the wrapper (`out.M = 0;` quick returns).
+		for ( const p of P.outs ) {
+			const fm = P.form[ p.name ];
+			if ( fm.kind === 'outField' ) {
+				src = src.slice( 0, open ) + src.slice( open ).replace( new RegExp( '\\b' + fm.param + '\\.' + fm.key + '\\b', 'g' ), P.pname[ p.name ] + '[ 0 ]' );
+			} else if ( fm.kind === 'outIndex' ) {
+				src = src.slice( 0, open ) + src.slice( open ).replace( new RegExp( '\\b' + fm.param + '\\[\\s*' + fm.index + '\\s*\\]', 'g' ), P.pname[ p.name ] + '[ 0 ]' );
+			}
+		}
+		// Locals computed only from removed params (`const oab = stride2offset( 2, strideAB );`).
+		const removedNames = oldL.filter( ( x ) => P.removed.has( x.toLowerCase() ) || ( [ ...P.removed ].some( ( r ) => x.toLowerCase() === 'stride' + r ) ) );
+		if ( removedNames.length ) {
+			const re = new RegExp( '\\b(?:const|let)\\s+(\\w+)\\s*=[^;]*\\b(?:' + removedNames.join( '|' ) + ')\\b[^;]*;', 'g' );
+			const dead = [];
+			let mm;
+			while ( ( mm = re.exec( src ) ) !== null ) {
+				dead.push( mm[ 1 ] );
+			}
+			src = removeDead( src, dead, dead );
+		}
 		// Removed params must not be referenced any more.
 		for ( const r of P.removed ) {
 			const nm = oldL.find( ( x ) => x.toLowerCase() === r );
-			if ( nm && new RegExp( '[^.\\w\'`]' + nm + '\\b(?!\\s*:)' ).test( src.slice( close + 1 ).replace( /\/\*\*[\s\S]*?\*\//g, '' ).replace( /\/\/.*$/gm, '' ).replace( /'[^'\n]*'/g, '\'\'' ) ) ) {
+			if ( nm && new RegExp( '[^.\\w\'`]' + nm + '\\b(?!\\s*:)' ).test( src.slice( src.indexOf( ')', open ) + 1 ).replace( /\/\*\*[\s\S]*?\*\//g, '' ).replace( /\/\/.*$/gm, '' ).replace( /'[^'\n]*'/g, '\'\'' ) ) ) {
 				problems.push( P.routine + '/' + file + ': removed param `' + nm + '` still referenced' );
 			}
 		}
-		src = src.slice( 0, open ) + '( ' + newL.join( ', ' ) + ' )' + src.slice( close + 1 );
+
 		src = remapOrdinals( src, oldL, newL );
 		src = rewriteMainJsdoc( src, P, fn, newL, false );
 		writes.set( f, src );
@@ -176,6 +199,9 @@ for ( const P of plans ) {
 	}
 }
 
+if ( warnings.length ) {
+	console.error( 'WARNINGS:\n  ' + warnings.join( '\n  ' ) );
+}
 if ( problems.length ) {
 	console.error( 'PROBLEMS:\n  ' + problems.join( '\n  ' ) );
 }

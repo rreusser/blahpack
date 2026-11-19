@@ -134,7 +134,26 @@ function nameMap( spec, form, actual ) {
 	if ( has( 'order' ) && form === 'strided' && specLib.takesOrder( spec ) ) {
 		map.order = spell.order;
 	}
-	return { 'map': map, 'names': names.map( function m( n ) {
+	// How a check reads each argument's value: an output scalar is a
+	// length-1 array (S10), or an element `x[ offsetX ]`; a scalar index the
+	// JS takes 0-based (`base: 0` in the spec) is restated 1-based.
+	var expr = {};
+	Object.keys( map ).forEach( function each( k ) {
+		expr[ k ] = map[ k ];
+	});
+	groups.forEach( function each( g ) {
+		var p = g.param;
+		var n = map[ lc( p.name ) ];
+		if ( !n || p.role !== 'scalar' ) {
+			return;
+		}
+		if ( p.intent !== 'in' || p.element === true ) {
+			expr[ lc( p.name ) ] = ( g.names.length === 2 && form !== 'strided' ) ? n + '[ ' + spell[ lc( g.names[ 1 ] ) ] + ' ]' : n + '[ 0 ]';
+		} else if ( p.base === 0 ) {
+			expr[ lc( p.name ) ] = '( ' + n + ' + 1 )';
+		}
+	});
+	return { 'map': map, 'expr': expr, 'names': names.map( function m( n ) {
 		return spell[ lc( n ) ];
 	}) };
 }
@@ -278,7 +297,7 @@ function ldParamCheck( spec, c, p, nm, out ) {
 		return;
 	}
 	pos = nm.names.indexOf( ld ) + 1;
-	col = rename( c.js, nm.map );
+	col = rename( c.js, nm.expr );
 	if ( !col ) {
 		return;
 	}
@@ -287,7 +306,7 @@ function ldParamCheck( spec, c, p, nm, out ) {
 		return;
 	}
 	out.push( ldStatement( c, p, ld, pos, 'column-major', col ) );
-	row = ( c.rowMajor === null ) ? null : rename( c.rowMajor, nm.map );
+	row = ( c.rowMajor === null ) ? null : rename( c.rowMajor, nm.expr );
 	if ( row ) {
 		out.push( ldStatement( c, p, ld, pos, 'row-major', row ) );
 	}
@@ -308,12 +327,12 @@ function ldStatement( c, p, ld, pos, layout, test ) {
 	if ( c.kind === 'ld' && bound ) {
 		s.format = 'invalid argument. ' + ordinal( pos ) + ' argument must be greater than or equal to ' + ( ( inner !== null ) ? 'max(1,%d)' : '%d' ) + '. Value: `%d`.';
 		s.args = [ ( inner !== null ) ? inner : bound, ld ];
-		s.doc = ordinal( pos ).toLowerCase() + ' argument must be greater than or equal to `' + bound + '`' + where;
+		s.doc = ordinal( pos ).toLowerCase() + ' argument must be greater than or equal to `' + bound + '`' + ( layout ? ' (' + layout + ')' : '' );
 		return s;
 	}
-	s.format = 'invalid argument. ' + ordinal( pos ) + ' argument is invalid (rejected when `' + quoteMsg( unwrap( test ) ) + '`' + where + '). Value: `%d`.';
+	s.format = 'invalid argument. ' + ordinal( pos ) + ' argument is invalid (' + where + 'rejected when `' + quoteMsg( unwrap( test ) ) + '`). Value: `%d`.';
 	s.args = [ ld ];
-	s.doc = ordinal( pos ).toLowerCase() + ' argument is invalid (rejected when `' + quoteMsg( unwrap( test ) ) + '`' + where + ')';
+	s.doc = ordinal( pos ).toLowerCase() + ' argument is invalid (' + where + 'rejected when `' + quoteMsg( unwrap( test ) ) + '`)';
 	return s;
 }
 
@@ -321,7 +340,7 @@ function prologue( spec, form, actual ) {
 	var nm = nameMap( spec, form, actual );
 	var out = [];
 	var checks;
-	if ( form === 'strided' && nm.map.order ) {
+	if ( form === 'strided' && nm.map.order && specLib.takesOrder( spec ) ) {
 		out.push({
 			'param': 'order',
 			'kind': 'order',
@@ -356,6 +375,7 @@ function prologue( spec, form, actual ) {
 			return;
 		}
 		pos = nm.names.indexOf( name ) + 1;
+		name = nm.expr[ lc( p.name ) ];
 		if ( c.kind === 'enum' ) {
 			key = c.values.slice().sort().join( ',' );
 			v = VALIDATORS[ key ];
@@ -365,7 +385,7 @@ function prologue( spec, form, actual ) {
 				'ctor': 'TypeError',
 				'test': v ? '!' + v.fn + '( ' + name + ' )' : rename( c.values.map( function m( x ) {
 					return p.name + ' !== \'' + x + '\'';
-				}).join( ' && ' ), nm.map ),
+				}).join( ' && ' ), nm.expr ),
 				'format': 'invalid argument. ' + ordinal( pos ) + ' argument must be ' + ( v ? v.what : 'one of the following: ' + c.values.map( function m( x ) {
 					return '"' + x + '"';
 				}).join( ', ' ) ) + '. Value: `%s`.',
@@ -376,7 +396,7 @@ function prologue( spec, form, actual ) {
 			});
 			return;
 		}
-		test = rename( c.js, nm.map );
+		test = rename( c.js, nm.expr );
 		if ( !test ) {
 			return;
 		}
@@ -447,3 +467,25 @@ module.exports = {
 	'ordinal': ordinal,
 	'tidy': tidy
 };
+
+// Do two pieces of source text have the same tokens (formatting aside)?
+function tokens( src ) {
+	try {
+		return espree.tokenize( src, { 'ecmaVersion': 2022 } ).map( function m( t ) {
+			return ( t.type === 'String' ) ? 'S:' + JSON.stringify( espree.parse( '(' + t.value + ')', { 'ecmaVersion': 2022 } ).body[ 0 ].expression.value ) : t.value;
+		});
+	} catch ( e ) {
+		return null;
+	}
+}
+
+function sameTokens( a, b ) {
+	var x = tokens( a );
+	var y = tokens( b );
+	return !!x && !!y && x.length === y.length && x.every( function every( t, i ) {
+		return t === y[ i ];
+	});
+}
+
+module.exports.sameTokens = sameTokens;
+module.exports.unwrap = unwrap;

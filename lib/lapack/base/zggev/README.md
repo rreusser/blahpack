@@ -45,7 +45,7 @@ var VR = discreteUniform( N * N, -10, 10, opts );
 var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 
-zggev.ndarray( 'compute', 'compute', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
+zggev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
 ```
 
 The function has the following parameters:
@@ -82,7 +82,7 @@ var VR = discreteUniform( N * N, -10, 10, opts );
 var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 
-zggev.ndarray( 'compute', 'compute', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
+zggev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
 ```
 
 The function has the following additional parameters:
@@ -133,7 +133,7 @@ var VR = discreteUniform( N * N, -10, 10, opts );
 var ALPHA = discreteUniform( N, -10, 10, opts );
 var BETA = discreteUniform( N, -10, 10, opts );
 
-zggev.ndarray( 'compute', 'compute', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
+zggev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, B, N, 1, 0, ALPHA, 1, 0, BETA, 1, 0, VL, N, 1, 0, VR, N, 1, 0 );
 ```
 
 </section>

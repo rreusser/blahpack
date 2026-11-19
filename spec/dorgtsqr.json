@@ -200,7 +200,6 @@
 	],
 	"untranslated": [
 		"T.cols: unknown identifier NIRB",
-		"T.cols: the row-major column count is not established",
 		"check -8.rowMajor: the column count of T is not established",
 		"WORK.minLength: local LWORKOPT is assigned inside nested control flow"
 	]

@@ -204,7 +204,6 @@
 	],
 	"untranslated": [
 		"T.cols: unknown identifier NUMBER_OF_ROW_BLOCKS",
-		"T.cols: the row-major column count is not established",
 		"check -8.rowMajor: the column count of T is not established"
 	]
 }

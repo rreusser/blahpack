@@ -36,7 +36,7 @@
 			"fortran": "SELCTG",
 			"position": 4,
 			"role": "scalar",
-			"dtype": "float64",
+			"dtype": "function",
 			"intent": "in"
 		},
 		{

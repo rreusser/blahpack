@@ -63,7 +63,7 @@ var COLS = {
 	'unmtr': { 'LDA': "side === 'left' ? M : N" },
 	'unm22': { 'LDQ': "side === 'left' ? M : N" },
 	'gemlqt': { 'LDV': "side === 'left' ? M : N" },
-	'lamswlq': { 'LDA': "side === 'left' ? M : N", 'LDT': null },
+	'lamswlq': { 'LDA': "side === 'left' ? M : N" },
 	'tpmlqt': { 'LDA': "side === 'left' ? N : K" },
 	'tpmqrt': { 'LDA': "side === 'left' ? N : K" },
 	'gesvd': { 'LDU': "jobu === 'all-columns' ? M : min( M, N )" },
@@ -93,17 +93,7 @@ var COLS = {
 	'hbevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
 	'hbgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
 	'hpevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
-	'hpgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
-	// TSQR/TSLQ block-structured T: the row-major layout is not established.
-	'latsqr': { 'LDT': null },
-	'laswlq': { 'LDT': null },
-	'lamtsqr': { 'LDT': null },
-	'orgtsqr': { 'LDT': null },
-	'orgtsqr_row': { 'LDT': null },
-	'orhr_col': { 'LDT': null },
-	'ungtsqr': { 'LDT': null },
-	'ungtsqr_row': { 'LDT': null },
-	'unhr_col': { 'LDT': null }
+	'hpgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" }
 };
 
 // Row-major forms of leading-dimension checks whose array's shape depends on
@@ -119,6 +109,11 @@ var ROW_MAJOR = {
 
 function dtypeOf( type ) {
 	var t = String( type || '' ).toUpperCase();
+	// An EXTERNAL procedure argument (dgees's SELECT: "a LOGICAL FUNCTION of
+	// two DOUBLE PRECISION arguments") is a JS callback.
+	if ( /\bFUNCTION\b/.test( t ) ) {
+		return 'function';
+	}
 	if ( /COMPLEX\s*\*\s*16|DOUBLE COMPLEX|COMPLEX\s*\(\s*(KIND\s*=\s*)?(DP|WP|8)\s*\)/.test( t ) ) {
 		return 'complex128';
 	}
@@ -497,6 +492,15 @@ function build( routine, sig, facts, options ) {
 		}
 		if ( p.dtype === 'string' ) {
 			p.role = 'flag';
+			return;
+		}
+		// INTEGER-coded options (the extended-precision la_* routines take
+		// TRANS/UPLO as ILATRANS/ILAUPLO codes; laic1's JOB is 1 or 2). The JS
+		// takes the canonical option string (N1).
+		if ( p.dtype === 'int32' && ( ( /^la_/.test( routine.slice( 1 ) ) && /^(TRANS|TRANS_TYPE|UPLO)$/.test( F ) ) || ( routine.slice( 1 ) === 'laic1' && F === 'JOB' ) ) ) {
+			p.role = 'flag';
+			p.dtype = 'string';
+			notes.push( 'option ' + F + ' is an INTEGER code in the reference; the JS takes the option string' );
 			return;
 		}
 		if ( p.dtype === 'int32' && p.intent === 'in' && ( checkedNonnegative( F ) || inDims( F ) ) ) {

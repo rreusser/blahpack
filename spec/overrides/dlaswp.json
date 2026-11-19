@@ -7,6 +7,21 @@
 				"params.INCX.role": "scalar",
 				"params.INCX.of": null
 			}
+		},
+		{
+			"reason": "stdlib's dlaswp API (lapack/base/dlaswp) takes the direction as `inck` before IPIV: `( N, A, strideA1, strideA2, offsetA, k1, k2, inck, IPIV, strideIPIV, offsetIPIV )`; the JS keeps that order and name.",
+			"set": {
+				"params.INCX.name": "inck",
+				"jsOrder": [
+					"N",
+					"A",
+					"LDA",
+					"K1",
+					"K2",
+					"INCX",
+					"IPIV"
+				]
+			}
 		}
 	]
 }

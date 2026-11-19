@@ -12,8 +12,8 @@
 			"name": "uplo",
 			"fortran": "UPLO",
 			"position": 1,
-			"role": "scalar",
-			"dtype": "int32",
+			"role": "flag",
+			"dtype": "string",
 			"intent": "in"
 		},
 		{
@@ -171,5 +171,8 @@
 	],
 	"untranslated": [
 		"check 1: unsupported call ILAUPLO"
+	],
+	"notes": [
+		"option UPLO is an INTEGER code in the reference; the JS takes the option string"
 	]
 }

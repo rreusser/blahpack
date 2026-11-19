@@ -11,8 +11,8 @@
 			"name": "job",
 			"fortran": "JOB",
 			"position": 1,
-			"role": "scalar",
-			"dtype": "int32",
+			"role": "flag",
+			"dtype": "string",
 			"intent": "in"
 		},
 		{
@@ -95,5 +95,8 @@
 		}
 	],
 	"checks": [],
-	"quickReturn": []
+	"quickReturn": [],
+	"notes": [
+		"option JOB is an INTEGER code in the reference; the JS takes the option string"
+	]
 }

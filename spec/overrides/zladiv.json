@@ -1,0 +1,12 @@
+{
+	"routine": "zladiv",
+	"overrides": [
+		{
+			"reason": "Callers pass X and Y as elements of their own Complex128Arrays (the division operands of zlatrs, zlatbs, ztrevc and the other complex solvers), so they cross as `x, offsetX` instead of a Complex128 every caller would construct (S10 element form).",
+			"set": {
+				"params.X.element": true,
+				"params.Y.element": true
+			}
+		}
+	]
+}

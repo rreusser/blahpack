@@ -145,6 +145,10 @@ export function detect( routine ) {
 				form[ name ] = { kind: 'array', param: pname };
 			} else if ( fieldKey ) {
 				form[ name ] = { kind: 'value', param: pname, key: fieldKey };
+			} else if ( p.intent === 'out' ) {
+				// An output param taken by value and never written back (M of
+				// dtrevc): it becomes an array; the body must be fixed to set it.
+				form[ name ] = { kind: 'value', param: pname, key: null };
 			} else {
 				problems.push( name + ': by-value param, no result field' );
 			}

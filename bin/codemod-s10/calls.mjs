@@ -504,7 +504,12 @@ export class FileRewriter {
 				if ( p && !own ) {
 					// By-value in/out: copy the old argument in first.
 					const v = render( src, this.edits, node.arguments[ m.from ].start, node.arguments[ m.from ].end );
-					if ( v !== arr[ p.name ] + '[ 0 ]' ) {
+					// An output-only param needs no copy-in; the old argument
+					// variable may now be dead.
+					if ( p.intent === 'out' && node.arguments[ m.from ].type === 'Identifier' ) {
+						this.dropIfUnused.push( { name: node.arguments[ m.from ].name } );
+					}
+					if ( p.intent !== 'out' && v !== arr[ p.name ] + '[ 0 ]' ) {
 						pre.push( arr[ p.name ] + '[ 0 ] = ' + v + ';' );
 					}
 					return arr[ p.name ];

@@ -22,6 +22,7 @@ import { worklist } from './forms.mjs';
 import { transformBase, rewriteMainJsdoc, rewriteWrapperReturns } from './base.mjs';
 import { FileRewriter, allSources, removeDead } from './calls.mjs';
 import { walkParents } from './edits.mjs';
+import { dropOutputChecks } from './drop-output-checks.mjs';
 
 function walkAll( ast, fn ) {
 	walkParents( ast, ( n ) => {
@@ -271,5 +272,9 @@ if ( DRY ) {
 } else {
 	for ( const [ f, s ] of writes ) {
 		fs.writeFileSync( f, s );
+	}
+	// 6. Wrapper validation of output scalars (and its tests).
+	for ( const P of plans ) {
+		dropOutputChecks( P.routine, false );
 	}
 }

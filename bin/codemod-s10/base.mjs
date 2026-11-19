@@ -484,7 +484,7 @@ export function rewriteMainJsdoc( src, P, fn, newList, isBase ) {
 	for ( const p of P.outs ) {
 		const f = P.form[ p.name ];
 		const N = P.pname[ p.name ];
-		if ( f.kind === 'value' ) {
+		if ( f.kind === 'value' && f.key !== null ) {
 			retyped[ N ] = arrayType( p );
 		} else {
 			const ls = paramLine( P.routine, p, N );

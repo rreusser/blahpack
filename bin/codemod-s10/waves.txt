@@ -12,3 +12,4 @@ drotg drotmg zlaev2 zlags2
 dlasq3 dlasq4 dlassq zlassq dlatdf zlatdf
 dtgexc dtrexc ztgexc zgeevx dhsein
 ztgsen ztgsna zlaesy zlaqr2 zlaqr3 dlabad
+dtrevc dtrevc3 dtgevc ztrevc ztrevc3

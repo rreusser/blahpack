@@ -1,0 +1,67 @@
+{
+	"routine": "dsconv",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSCONV( N, RITZ, BOUNDS, TOL, NCONV )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "RITZ",
+			"fortran": "RITZ",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "BOUNDS",
+			"fortran": "BOUNDS",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "tol",
+			"fortran": "TOL",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "nconv",
+			"fortran": "NCONV",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

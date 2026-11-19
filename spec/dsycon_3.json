@@ -1,0 +1,192 @@
+{
+	"routine": "dsycon_3",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSYCON_3( UPLO, N, A, LDA, E, IPIV, ANORM, RCOND,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "anorm",
+			"fortran": "ANORM",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "rcond",
+			"fortran": "RCOND",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 9,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 11,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' )",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -7,
+			"param": "ANORM",
+			"kind": "expr",
+			"fortran": "ANORM.LT.ZERO",
+			"js": "anorm < 0"
+		}
+	],
+	"quickReturn": []
+}

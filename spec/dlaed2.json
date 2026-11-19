@@ -1,0 +1,265 @@
+{
+	"routine": "dlaed2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAED2( K, N, N1, D, Q, LDQ, INDXQ, RHO, Z, DLAMBDA, W,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "k",
+			"fortran": "K",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n1",
+			"fortran": "N1",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "INDXQ",
+			"fortran": "INDXQ",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "rho",
+			"fortran": "RHO",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "DLAMBDA",
+			"fortran": "DLAMBDA",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Q2",
+			"fortran": "Q2",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N1**2+(N-N1)**2"
+			],
+			"length": {
+				"fortran": "N1**2+(N-N1)**2",
+				"js": "n1**2 + (N - n1)**2"
+			}
+		},
+		{
+			"name": "INDX",
+			"fortran": "INDX",
+			"position": 13,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "INDXC",
+			"fortran": "INDXC",
+			"position": 14,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "INDXP",
+			"fortran": "INDXP",
+			"position": 15,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "COLTYP",
+			"fortran": "COLTYP",
+			"position": 16,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 17,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDQ",
+			"kind": "ld",
+			"matrix": "Q",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDQ.LT.MAX( 1, N )",
+			"js": "ldq < max( 1, N )"
+		},
+		{
+			"info": -3,
+			"param": "N1",
+			"kind": "expr",
+			"fortran": "MIN( 1, ( N / 2 ) ).GT.N1 .OR. ( N / 2 ).LT.N1",
+			"js": "min( 1, trunc( N / 2 ) ) > n1 || trunc( N / 2 ) < n1"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

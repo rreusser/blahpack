@@ -1,0 +1,206 @@
+{
+	"routine": "dlatsqr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLATSQR( M, N, MB, NB, A, LDA, T, LDT, WORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "mb",
+			"fortran": "MB",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDT",
+				"N*NUMBER_OF_ROW_BLOCKS"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "NB",
+				"js": "nb"
+			},
+			"cols": {
+				"fortran": "N*NUMBER_OF_ROW_BLOCKS",
+				"js": null
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 9,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "N*NB",
+				"js": "N * nb",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 10,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 11,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "expr",
+			"fortran": "N.LT.0 .OR. M.LT.N",
+			"js": "N < 0 || M < N"
+		},
+		{
+			"info": -3,
+			"param": "MB",
+			"kind": "expr",
+			"fortran": "MB.LT.1",
+			"js": "mb < 1"
+		},
+		{
+			"info": -4,
+			"param": "NB",
+			"kind": "expr",
+			"fortran": "NB.LT.1 .OR. ( NB.GT.N .AND. N.GT.0 )",
+			"js": "nb < 1 || (nb > N && N > 0)"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -8,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "NB",
+				"js": "nb"
+			},
+			"fortran": "LDT.LT.NB",
+			"js": "ldt < nb"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "MIN(M,N).EQ.0",
+			"js": "min( M, N ) === 0"
+		},
+		{
+			"fortran": "(MB.LE.N).OR.(MB.GE.M)",
+			"js": "mb <= N || mb >= M",
+			"sets": [
+				"CALL DGEQRT( M, N, NB, A, LDA, T, LDT, WORK, INFO)"
+			]
+		}
+	],
+	"untranslated": [
+		"T.cols: unknown identifier NUMBER_OF_ROW_BLOCKS"
+	]
+}

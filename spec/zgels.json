@@ -1,0 +1,204 @@
+{
+	"routine": "zgels",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "MAX(1,M,N)",
+				"js": "max( max( 1, M ), N )"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 9,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MAX(1,MN+MAX(MN,NRHS))",
+				"js": "max( 1, min( M, N ) + max( min( M, N ), nrhs ) )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 10,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 11,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.( LSAME( TRANS, 'N' ) .OR. LSAME( TRANS, 'C' ) )",
+			"js": "!(trans === 'no-transpose' || trans === 'conjugate-transpose')"
+		},
+		{
+			"info": -2,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "NRHS",
+			"kind": "nonnegative",
+			"fortran": "NRHS.LT.0",
+			"js": "nrhs < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -8,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,M,N)",
+				"js": "max( max( 1, M ), N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, M, N )",
+			"js": "ldb < max( max( 1, M ), N )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "MIN( M, N, NRHS ).EQ.0",
+			"js": "min( min( M, N ), nrhs ) === 0",
+			"sets": [
+				"CALL ZLASET( 'FULL', MAX( M, N ), NRHS, CZERO, CZERO, B, LDB )"
+			]
+		}
+	]
+}

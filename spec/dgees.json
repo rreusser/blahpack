@@ -1,0 +1,258 @@
+{
+	"routine": "dgees",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGEES( JOBVS, SORT, SELECT, N, A, LDA, SDIM, WR, WI,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobvs",
+			"fortran": "JOBVS",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "sort",
+			"fortran": "SORT",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "select",
+			"fortran": "SELECT",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "sdim",
+			"fortran": "SDIM",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "WR",
+			"fortran": "WR",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WI",
+			"fortran": "WI",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "VS",
+			"fortran": "VS",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDVS",
+				"N"
+			],
+			"ld": "LDVS",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvs",
+			"fortran": "LDVS",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VS"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MINWRK",
+				"js": null,
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 13,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "BWORK",
+			"fortran": "BWORK",
+			"position": 14,
+			"role": "workspace",
+			"dtype": "bool",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 15,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBVS",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": "( .NOT.WANTVS ) .AND. ( .NOT.LSAME( JOBVS, 'N' ) )",
+			"js": "jobvs !== 'compute-vectors' && jobvs !== 'no-vectors'"
+		},
+		{
+			"info": -2,
+			"param": "SORT",
+			"kind": "enum",
+			"fortranValues": "NS",
+			"values": [
+				"none",
+				"sort"
+			],
+			"fortran": "( .NOT.WANTST ) .AND. ( .NOT.LSAME( SORT, 'N' ) )",
+			"js": "sort !== 'sort' && sort !== 'none'"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -11,
+			"param": "LDVS",
+			"kind": "expr",
+			"fortran": "LDVS.LT.1 .OR. ( WANTVS .AND. LDVS.LT.N )",
+			"js": "ldvs < 1 || (jobvs === 'compute-vectors' && ldvs < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0",
+			"sets": [
+				"SDIM = 0"
+			]
+		}
+	],
+	"untranslated": [
+		"WORK.minLength: local MINWRK is assigned inside nested control flow"
+	]
+}

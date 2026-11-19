@@ -1,0 +1,117 @@
+{
+	"routine": "zlarfy",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARFY( UPLO, N, V, INCV, TAU, C, LDC, WORK )",
+	"returns": {
+		"kind": "array",
+		"param": "C"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCV)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incv",
+			"fortran": "INCV",
+			"position": 4,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 8,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "TAU.EQ.ZERO",
+			"js": "real( tau ) === 0 && imag( tau ) === 0"
+		}
+	]
+}

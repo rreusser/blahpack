@@ -1,0 +1,170 @@
+{
+	"routine": "ztgex2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "wantq",
+			"fortran": "WANTQ",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "wantz",
+			"fortran": "WANTZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"*"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"*"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "j1",
+			"fortran": "J1",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 13,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.1",
+			"js": "N <= 1"
+		}
+	]
+}

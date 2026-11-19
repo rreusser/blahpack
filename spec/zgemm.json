@@ -1,0 +1,253 @@
+{
+	"routine": "zgemm",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGEMM(TRANSA,TRANSB,M,N,K,ALPHA,A,LDA,B,LDB,BETA,C,LDC)",
+	"returns": {
+		"kind": "array",
+		"param": "C"
+	},
+	"params": [
+		{
+			"name": "transa",
+			"fortran": "TRANSA",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "transb",
+			"fortran": "TRANSB",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"KA"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "NROWA",
+				"js": "transa === 'no-transpose' ? M : K"
+			},
+			"cols": {
+				"fortran": "KA",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"KB"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "NROWB",
+				"js": "transb === 'no-transpose' ? K : N"
+			},
+			"cols": {
+				"fortran": "KB",
+				"js": null
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "TRANSA",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": "(.NOT.NOTA) .AND. (.NOT.CONJA) .AND. (.NOT.LSAME(TRANSA,'T'))",
+			"js": "transa !== 'no-transpose' && transa !== 'conjugate-transpose' && transa !== 'transpose'"
+		},
+		{
+			"info": 2,
+			"param": "TRANSB",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": "(.NOT.NOTB) .AND. (.NOT.CONJB) .AND. (.NOT.LSAME(TRANSB,'T'))",
+			"js": "transb !== 'no-transpose' && transb !== 'conjugate-transpose' && transb !== 'transpose'"
+		},
+		{
+			"info": 3,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": 4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 5,
+			"param": "K",
+			"kind": "nonnegative",
+			"fortran": "K.LT.0",
+			"js": "K < 0"
+		},
+		{
+			"info": 8,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,NROWA)",
+				"js": "max( 1, transa === 'no-transpose' ? M : K )"
+			},
+			"fortran": "LDA.LT.MAX(1,NROWA)",
+			"js": "lda < max( 1, transa === 'no-transpose' ? M : K )"
+		},
+		{
+			"info": 10,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,NROWB)",
+				"js": "max( 1, transb === 'no-transpose' ? K : N )"
+			},
+			"fortran": "LDB.LT.MAX(1,NROWB)",
+			"js": "ldb < max( 1, transb === 'no-transpose' ? K : N )"
+		},
+		{
+			"info": 13,
+			"param": "LDC",
+			"kind": "ld",
+			"matrix": "C",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDC.LT.MAX(1,M)",
+			"js": "ldc < max( 1, M )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "(M.EQ.0) .OR. (N.EQ.0) .OR. (((ALPHA.EQ.ZERO).OR. (K.EQ.0)).AND. (BETA.EQ.ONE))",
+			"js": "(M === 0 || N === 0) || (((real( alpha ) === 0 && imag( alpha ) === 0) || K === 0) && (real( beta ) === 1 && imag( beta ) === 0))"
+		}
+	],
+	"untranslated": [
+		"A.cols: unknown identifier KA",
+		"B.cols: unknown identifier KB"
+	]
+}

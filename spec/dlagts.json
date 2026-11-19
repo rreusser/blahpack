@@ -1,0 +1,155 @@
+{
+	"routine": "dlagts",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAGTS( JOB, N, A, B, C, D, IN, Y, TOL, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "job",
+			"fortran": "JOB",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-2"
+			],
+			"length": {
+				"fortran": "N-2",
+				"js": "N - 2"
+			}
+		},
+		{
+			"name": "IN",
+			"fortran": "IN",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "tol",
+			"fortran": "TOL",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 10,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOB",
+			"kind": "expr",
+			"fortran": "( ABS( JOB ).GT.2 ) .OR. ( JOB.EQ.0 )",
+			"js": "abs( job ) > 2 || job === 0"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

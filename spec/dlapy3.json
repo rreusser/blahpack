@@ -1,0 +1,38 @@
+{
+	"routine": "dlapy3",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DLAPY3( X, Y, Z )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

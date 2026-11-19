@@ -1,0 +1,12 @@
+{
+	"routine": "dlaswp",
+	"overrides": [
+		{
+			"reason": "INCX is both IPIV's stride and the pivot direction (its sign selects reverse order). The JS carries the IPIV stride separately as strideIPIV and keeps INCX as a plain direction scalar, so it is not a consumed increment.",
+			"set": {
+				"params.INCX.role": "scalar",
+				"params.INCX.of": null
+			}
+		}
+	]
+}

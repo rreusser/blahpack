@@ -1,0 +1,75 @@
+{
+	"routine": "zlangt",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION ZLANGT( NORM, N, DL, D, DU )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "DL",
+			"fortran": "DL",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "DU",
+			"fortran": "DU",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

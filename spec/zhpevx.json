@@ -1,0 +1,318 @@
+{
+	"routine": "zhpevx",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZHPEVX( JOBZ, RANGE, UPLO, N, AP, VL, VU, IL, IU,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobz",
+			"fortran": "JOBZ",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "range",
+			"fortran": "RANGE",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 5,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "vl",
+			"fortran": "VL",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "vu",
+			"fortran": "VU",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "il",
+			"fortran": "IL",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "iu",
+			"fortran": "IU",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "abstol",
+			"fortran": "ABSTOL",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"MAX(1,M)"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, m )"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 15,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 16,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"7*N"
+			],
+			"length": {
+				"fortran": "7*N",
+				"js": "7 * N"
+			},
+			"minLength": {
+				"fortran": "7*N",
+				"js": "7 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"5*N"
+			],
+			"length": {
+				"fortran": "5*N",
+				"js": "5 * N"
+			},
+			"minLength": {
+				"fortran": "5*N",
+				"js": "5 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IFAIL",
+			"fortran": "IFAIL",
+			"position": 18,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 19,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBZ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": ".NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) )",
+			"js": "!(jobz === 'compute-vectors' || jobz === 'no-vectors')"
+		},
+		{
+			"info": -2,
+			"param": "RANGE",
+			"kind": "enum",
+			"fortranValues": "AIV",
+			"values": [
+				"all",
+				"index",
+				"value"
+			],
+			"fortran": ".NOT.( ALLEIG .OR. VALEIG .OR. INDEIG )",
+			"js": "!((range === 'all' || range === 'value') || range === 'index')"
+		},
+		{
+			"info": -3,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.( LSAME( UPLO, 'L' ) .OR. LSAME( UPLO, 'U' ) )",
+			"js": "!(uplo === 'lower' || uplo === 'upper')"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -7,
+			"param": "VU",
+			"kind": "expr",
+			"fortran": "N.GT.0 .AND. VU.LE.VL",
+			"guard": "VALEIG",
+			"js": "range === 'value' && (N > 0 && vu <= vl)"
+		},
+		{
+			"info": -8,
+			"param": "IL",
+			"kind": "expr",
+			"fortran": "IL.LT.1 .OR. IL.GT.MAX( 1, N )",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && (il < 1 || il > max( 1, N ))"
+		},
+		{
+			"info": -9,
+			"param": "IU",
+			"kind": "expr",
+			"fortran": "IU.LT.MIN( N, IL ) .OR. IU.GT.N",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && (iu < min( N, il ) || iu > N)"
+		},
+		{
+			"info": -14,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

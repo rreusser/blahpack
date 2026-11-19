@@ -1,0 +1,128 @@
+{
+	"routine": "zlahef",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAHEF( UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kb",
+			"fortran": "KB",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "W",
+			"fortran": "W",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDW",
+				"NB"
+			],
+			"ld": "LDW",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldw",
+			"fortran": "LDW",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "W"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 10,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -1,0 +1,483 @@
+{
+	"routine": "zggevx",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGGEVX( BALANC, JOBVL, JOBVR, SENSE, N, A, LDA, B, LDB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "balanc",
+			"fortran": "BALANC",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobvl",
+			"fortran": "JOBVL",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobvr",
+			"fortran": "JOBVR",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "sense",
+			"fortran": "SENSE",
+			"position": 4,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "ALPHA",
+			"fortran": "ALPHA",
+			"position": 10,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "BETA",
+			"fortran": "BETA",
+			"position": 11,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "VL",
+			"fortran": "VL",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDVL",
+				"N"
+			],
+			"ld": "LDVL",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvl",
+			"fortran": "LDVL",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VL"
+		},
+		{
+			"name": "VR",
+			"fortran": "VR",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDVR",
+				"N"
+			],
+			"ld": "LDVR",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldvr",
+			"fortran": "LDVR",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VR"
+		},
+		{
+			"name": "ilo",
+			"fortran": "ILO",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "LSCALE",
+			"fortran": "LSCALE",
+			"position": 18,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "RSCALE",
+			"fortran": "RSCALE",
+			"position": 19,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "abnrm",
+			"fortran": "ABNRM",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "bbnrm",
+			"fortran": "BBNRM",
+			"position": 21,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "RCONDE",
+			"fortran": "RCONDE",
+			"position": 22,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "RCONDV",
+			"fortran": "RCONDV",
+			"position": 23,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MINWRK",
+				"js": null,
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 25,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 26,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LRWORK"
+			],
+			"minLength": null
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 27,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N+2"
+			],
+			"length": {
+				"fortran": "N+2",
+				"js": "N + 2"
+			},
+			"minLength": {
+				"fortran": "N+2",
+				"js": "N + 2",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "BWORK",
+			"fortran": "BWORK",
+			"position": 28,
+			"role": "workspace",
+			"dtype": "bool",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 29,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "BALANC",
+			"kind": "enum",
+			"fortranValues": "BNPS",
+			"values": null,
+			"fortran": ".NOT.( NOSCL .OR. LSAME( BALANC,'S' ) .OR. LSAME( BALANC, 'B' ) )",
+			"js": null
+		},
+		{
+			"info": -2,
+			"param": "JOBVL",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": "IJOBVL.LE.0",
+			"js": "(jobvl === 'no-vectors' ? 1 : (jobvl === 'compute-vectors' ? 2 : -1)) <= 0"
+		},
+		{
+			"info": -3,
+			"param": "JOBVR",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": "IJOBVR.LE.0",
+			"js": "(jobvr === 'no-vectors' ? 1 : (jobvr === 'compute-vectors' ? 2 : -1)) <= 0"
+		},
+		{
+			"info": -4,
+			"param": "SENSE",
+			"kind": "enum",
+			"fortranValues": "BENV",
+			"values": null,
+			"fortran": ".NOT.( WANTSN .OR. WANTSE .OR. WANTSB .OR. WANTSV )",
+			"js": null
+		},
+		{
+			"info": -5,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -7,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -9,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )"
+		},
+		{
+			"info": -13,
+			"param": "LDVL",
+			"kind": "expr",
+			"fortran": "LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )",
+			"js": "ldvl < 1 || ((jobvl === 'no-vectors' ? false : (jobvl === 'compute-vectors' ? true : false)) && ldvl < N)"
+		},
+		{
+			"info": -15,
+			"param": "LDVR",
+			"kind": "expr",
+			"fortran": "LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )",
+			"js": "ldvr < 1 || ((jobvr === 'no-vectors' ? false : (jobvr === 'compute-vectors' ? true : false)) && ldvr < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	],
+	"untranslated": [
+		"check -1: no canonical value for BALANC='N'",
+		"check -4: no canonical value for SENSE='N'",
+		"WORK.minLength: local MINWRK is assigned inside nested control flow"
+	],
+	"notes": [
+		"option BALANC accepts 'BNPS' but spec/options.json has no canonical value for this family",
+		"option SENSE accepts 'BENV' but spec/options.json has no canonical value for this family",
+		"no derivable minimum length for workspace RWORK"
+	]
+}

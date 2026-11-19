@@ -1,0 +1,129 @@
+{
+	"routine": "dlatrd",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLATRD( UPLO, N, NB, A, LDA, E, TAU, W, LDW )",
+	"returns": {
+		"kind": "array",
+		"param": "W"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "W",
+			"fortran": "W",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDW",
+				"NB"
+			],
+			"ld": "LDW",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldw",
+			"fortran": "LDW",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "W"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

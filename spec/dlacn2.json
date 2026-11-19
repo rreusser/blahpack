@@ -1,0 +1,98 @@
+{
+	"routine": "dlacn2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLACN2( N, V, X, ISGN, EST, KASE, ISAVE )",
+	"returns": {
+		"kind": "array",
+		"param": "ISAVE"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ISGN",
+			"fortran": "ISGN",
+			"position": 4,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "est",
+			"fortran": "EST",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "kase",
+			"fortran": "KASE",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "ISAVE",
+			"fortran": "ISAVE",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"3"
+			],
+			"length": {
+				"fortran": "3",
+				"js": "3"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

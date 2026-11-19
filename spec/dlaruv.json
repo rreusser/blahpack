@@ -1,0 +1,57 @@
+{
+	"routine": "dlaruv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARUV( ISEED, N, X )",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "ISEED",
+			"fortran": "ISEED",
+			"position": 1,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"4"
+			],
+			"length": {
+				"fortran": "4",
+				"js": "4"
+			}
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N < 1",
+			"js": "N < 1"
+		}
+	]
+}

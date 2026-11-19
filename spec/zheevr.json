@@ -1,0 +1,362 @@
+{
+	"routine": "zheevr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZHEEVR( JOBZ, RANGE, UPLO, N, A, LDA, VL, VU, IL, IU,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobz",
+			"fortran": "JOBZ",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "range",
+			"fortran": "RANGE",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "vl",
+			"fortran": "VL",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "vu",
+			"fortran": "VU",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "il",
+			"fortran": "IL",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "iu",
+			"fortran": "IU",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "abstol",
+			"fortran": "ABSTOL",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 13,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"MAX(1,M)"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, m )"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "ISUPPZ",
+			"fortran": "ISUPPZ",
+			"position": 16,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"2*MAX(1,M)"
+			],
+			"length": {
+				"fortran": "2*MAX(1,M)",
+				"js": "2 * max( 1, m )"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "LWMIN",
+				"js": "max( 1, 2 * N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 18,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 19,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LRWORK)"
+			],
+			"minLength": {
+				"fortran": "LRWMIN",
+				"js": "max( 1, 24 * N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lrwork",
+			"fortran": "LRWORK",
+			"position": 20,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "RWORK"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 21,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LIWORK)"
+			],
+			"minLength": {
+				"fortran": "LIWMIN",
+				"js": "max( 1, 10 * N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "liwork",
+			"fortran": "LIWORK",
+			"position": 22,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "IWORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 23,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBZ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": ".NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) )",
+			"js": "!(jobz === 'compute-vectors' || jobz === 'no-vectors')"
+		},
+		{
+			"info": -2,
+			"param": "RANGE",
+			"kind": "enum",
+			"fortranValues": "AIV",
+			"values": [
+				"all",
+				"index",
+				"value"
+			],
+			"fortran": ".NOT.( ALLEIG .OR. VALEIG .OR. INDEIG )",
+			"js": "!((range === 'all' || range === 'value') || range === 'index')"
+		},
+		{
+			"info": -3,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.( LOWER .OR. LSAME( UPLO, 'U' ) )",
+			"js": "!(uplo === 'lower' || uplo === 'upper')"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -8,
+			"param": "VU",
+			"kind": "expr",
+			"fortran": "N.GT.0 .AND. VU.LE.VL",
+			"guard": "VALEIG",
+			"js": "range === 'value' && (N > 0 && vu <= vl)"
+		},
+		{
+			"info": -9,
+			"param": "IL",
+			"kind": "expr",
+			"fortran": "IL.LT.1 .OR. IL.GT.MAX( 1, N )",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && (il < 1 || il > max( 1, N ))"
+		},
+		{
+			"info": -10,
+			"param": "IU",
+			"kind": "expr",
+			"fortran": "IU.LT.MIN( N, IL ) .OR. IU.GT.N",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && (iu < min( N, il ) || iu > N)"
+		},
+		{
+			"info": -15,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0",
+			"sets": [
+				"WORK( 1 ) = 1"
+			]
+		}
+	]
+}

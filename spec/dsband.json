@@ -1,0 +1,332 @@
+{
+	"routine": "dsband",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSBAND( RVEC, HOWMNY, SELECT, D, Z, LDZ, SIGMA, N, AB, MB, LDA, RFAC, KL, KU, WHICH, BMAT, NEV, TOL, RESID, NCV, V, LDV, IPARAM, WORKD, WORKL, LWORKL, IWORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "rvec",
+			"fortran": "RVEC",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "howmny",
+			"fortran": "HOWMNY",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "SELECT",
+			"fortran": "SELECT",
+			"position": 3,
+			"role": "vector",
+			"dtype": "bool",
+			"intent": "inout",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 5,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LD",
+				"*"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "LD",
+				"js": null
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "n",
+			"fortran": "N",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 9,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LD",
+				"*"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "LD",
+				"js": null
+			}
+		},
+		{
+			"name": "MB",
+			"fortran": "MB",
+			"position": 10,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LD",
+				"*"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "LD",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "RFAC",
+			"fortran": "RFAC",
+			"position": 12,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LD",
+				"*"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "LD",
+				"js": null
+			}
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "which",
+			"fortran": "WHICH",
+			"position": 15,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "bmat",
+			"fortran": "BMAT",
+			"position": 16,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "nev",
+			"fortran": "NEV",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "tol",
+			"fortran": "TOL",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "RESID",
+			"fortran": "RESID",
+			"position": 19,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "ncv",
+			"fortran": "NCV",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 21,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LD",
+				"*"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "LD",
+				"js": null
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 22,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "IPARAM",
+			"fortran": "IPARAM",
+			"position": 23,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "WORKD",
+			"fortran": "WORKD",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"*"
+			],
+			"minLength": null
+		},
+		{
+			"name": "WORKL",
+			"fortran": "WORKL",
+			"position": 25,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"*"
+			],
+			"minLength": null
+		},
+		{
+			"name": "lworkl",
+			"fortran": "LWORKL",
+			"position": 26,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 27,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"*"
+			],
+			"minLength": null
+		},
+		{
+			"name": "infoIn",
+			"fortran": "INFO",
+			"position": 28,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"Z.rows: unknown identifier LD",
+		"AB.rows: unknown identifier LD",
+		"MB.rows: unknown identifier LD",
+		"RFAC.rows: unknown identifier LD",
+		"V.rows: unknown identifier LD"
+	],
+	"notes": [
+		"no derivable minimum length for workspace WORKD",
+		"no derivable minimum length for workspace WORKL",
+		"no derivable minimum length for workspace IWORK",
+		"no Fortran source facts (signature-only routine): checks and quick returns unknown"
+	],
+	"overrides": [
+		{
+			"reason": "DSBAND is an ARPACK driver from EXAMPLES/BAND, outside the vendored SRC/UTIL directories, so there are no source facts. Its package is arpack, and LDA is the shared leading dimension of AB, MB and RFAC (the doc says so; the signature cache cannot tie it to an array).",
+			"set": {
+				"package": "arpack",
+				"params.LDA.role": "ld",
+				"params.LDA.of": "AB"
+			}
+		}
+	]
+}

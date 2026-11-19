@@ -1,0 +1,202 @@
+{
+	"routine": "dlaqz2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQZ2( ILQ, ILZ, K, ISTARTM, ISTOPM, IHI, A, LDA, B, LDB, NQ, QSTART, Q, LDQ, NZ, ZSTART, Z, LDZ )",
+	"returns": {
+		"kind": "array",
+		"param": "Z"
+	},
+	"params": [
+		{
+			"name": "ilq",
+			"fortran": "ILQ",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "ilz",
+			"fortran": "ILZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "k",
+			"fortran": "K",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "istartm",
+			"fortran": "ISTARTM",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "istopm",
+			"fortran": "ISTOPM",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "nq",
+			"fortran": "NQ",
+			"position": 11,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "qstart",
+			"fortran": "QSTART",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"NQ"
+			],
+			"ld": "LDQ",
+			"cols": {
+				"fortran": "NQ",
+				"js": "nq"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "nz",
+			"fortran": "NZ",
+			"position": 15,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "zstart",
+			"fortran": "ZSTART",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 17,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"NZ"
+			],
+			"ld": "LDZ",
+			"cols": {
+				"fortran": "NZ",
+				"js": "nz"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 18,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"A.cols: unknown identifier N",
+		"B.cols: unknown identifier N"
+	]
+}

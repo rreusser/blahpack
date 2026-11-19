@@ -1,0 +1,321 @@
+{
+	"routine": "dlaqr5",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQR5( WANTT, WANTZ, KACC22, N, KTOP, KBOT, NSHFTS,",
+	"returns": {
+		"kind": "array",
+		"param": "WH"
+	},
+	"params": [
+		{
+			"name": "wantt",
+			"fortran": "WANTT",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "wantz",
+			"fortran": "WANTZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "kacc22",
+			"fortran": "KACC22",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ktop",
+			"fortran": "KTOP",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kbot",
+			"fortran": "KBOT",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nshfts",
+			"fortran": "NSHFTS",
+			"position": 7,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "SR",
+			"fortran": "SR",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"NSHFTS"
+			],
+			"length": {
+				"fortran": "NSHFTS",
+				"js": "nshfts"
+			}
+		},
+		{
+			"name": "SI",
+			"fortran": "SI",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"NSHFTS"
+			],
+			"length": {
+				"fortran": "NSHFTS",
+				"js": "nshfts"
+			}
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "iloz",
+			"fortran": "ILOZ",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihiz",
+			"fortran": "IHIZ",
+			"position": 13,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"IHIZ"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "IHIZ",
+				"js": "ihiz"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 16,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDV",
+				"NSHFTS/2"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "3",
+				"js": "3"
+			},
+			"cols": {
+				"fortran": "NSHFTS/2",
+				"js": "trunc( nshfts / 2 )"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 17,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "U",
+			"fortran": "U",
+			"position": 18,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDU",
+				"2*NSHFTS"
+			],
+			"ld": "LDU",
+			"rows": {
+				"fortran": "2*NSHFTS",
+				"js": "2 * nshfts"
+			},
+			"cols": {
+				"fortran": "2*NSHFTS",
+				"js": "2 * nshfts"
+			}
+		},
+		{
+			"name": "ldu",
+			"fortran": "LDU",
+			"position": 19,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "U"
+		},
+		{
+			"name": "nv",
+			"fortran": "NV",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "WV",
+			"fortran": "WV",
+			"position": 21,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDWV",
+				"2*NSHFTS"
+			],
+			"ld": "LDWV",
+			"rows": {
+				"fortran": "NV",
+				"js": "nv"
+			},
+			"cols": {
+				"fortran": "2*NSHFTS",
+				"js": "2 * nshfts"
+			}
+		},
+		{
+			"name": "ldwv",
+			"fortran": "LDWV",
+			"position": 22,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WV"
+		},
+		{
+			"name": "nh",
+			"fortran": "NH",
+			"position": 23,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "WH",
+			"fortran": "WH",
+			"position": 24,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDWH",
+				"NH"
+			],
+			"ld": "LDWH",
+			"rows": {
+				"fortran": "2*NSHFTS",
+				"js": "2 * nshfts"
+			},
+			"cols": {
+				"fortran": "NH",
+				"js": "nh"
+			}
+		},
+		{
+			"name": "ldwh",
+			"fortran": "LDWH",
+			"position": 25,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WH"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "NSHFTS.LT.2",
+			"js": "nshfts < 2"
+		},
+		{
+			"fortran": "KTOP.GE.KBOT",
+			"js": "ktop >= kbot"
+		}
+	]
+}

@@ -1,0 +1,68 @@
+{
+	"routine": "zlacon",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLACON( N, V, X, EST, KASE )",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "est",
+			"fortran": "EST",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "kase",
+			"fortran": "KASE",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

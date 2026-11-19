@@ -1,0 +1,271 @@
+{
+	"routine": "zgemlqt",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGEMLQT( SIDE, TRANS, M, N, K, MB, V, LDV, T, LDT,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "mb",
+			"fortran": "MB",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDV",
+				"M"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDT",
+				"K"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "MB",
+				"js": "mb"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 11,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 13,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"*"
+			],
+			"minLength": null
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "SIDE",
+			"kind": "enum",
+			"fortranValues": "LR",
+			"values": [
+				"left",
+				"right"
+			],
+			"fortran": ".NOT.LEFT .AND. .NOT.RIGHT",
+			"js": "side !== 'left' && side !== 'right'"
+		},
+		{
+			"info": -2,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.TRAN .AND. .NOT.NOTRAN",
+			"js": "trans !== 'conjugate-transpose' && trans !== 'no-transpose'"
+		},
+		{
+			"info": -3,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -5,
+			"param": "K",
+			"kind": "expr",
+			"fortran": "K.LT.0 .OR. K.GT.Q",
+			"js": null
+		},
+		{
+			"info": -6,
+			"param": "MB",
+			"kind": "expr",
+			"fortran": "MB.LT.1 .OR. (MB.GT.K .AND. K.GT.0)",
+			"js": "mb < 1 || (mb > K && K > 0)"
+		},
+		{
+			"info": -8,
+			"param": "LDV",
+			"kind": "ld",
+			"matrix": "V",
+			"min": {
+				"fortran": "MAX(1,K)",
+				"js": "max( 1, K )"
+			},
+			"fortran": "LDV.LT.MAX( 1, K )",
+			"js": "ldv < max( 1, K )"
+		},
+		{
+			"info": -10,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "MB",
+				"js": "mb"
+			},
+			"fortran": "LDT.LT.MB",
+			"js": "ldt < mb"
+		},
+		{
+			"info": -12,
+			"param": "LDC",
+			"kind": "ld",
+			"matrix": "C",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDC.LT.MAX( 1, M )",
+			"js": "ldc < max( 1, M )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0",
+			"js": "(M === 0 || N === 0) || K === 0"
+		}
+	],
+	"untranslated": [
+		"check -5: local Q undefined on some path"
+	],
+	"notes": [
+		"no derivable minimum length for workspace WORK"
+	]
+}

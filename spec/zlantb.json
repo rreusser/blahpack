@@ -1,0 +1,99 @@
+{
+	"routine": "zlantb",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION ZLANTB( NORM, UPLO, DIAG, N, K, AB,",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "diag",
+			"fortran": "DIAG",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "K+1",
+				"js": "K + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 8,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": null
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORK"
+	]
+}

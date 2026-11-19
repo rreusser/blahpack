@@ -1,0 +1,65 @@
+{
+	"routine": "zlassq",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLASSQ( N, X, INCX, SCALE, SUMSQ )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "n",
+			"fortran": "N",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "scale",
+			"fortran": "SCALE",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "sumsq",
+			"fortran": "SUMSQ",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "LA_ISNAN(SCALE) .OR. LA_ISNAN(SUMSQ)",
+			"js": null
+		}
+	],
+	"untranslated": [
+		"quickReturn 0: unsupported call LA_ISNAN"
+	]
+}

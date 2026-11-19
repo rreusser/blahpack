@@ -1,0 +1,148 @@
+{
+	"routine": "dlaqp2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,",
+	"returns": {
+		"kind": "array",
+		"param": "VN2"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "offset",
+			"fortran": "OFFSET",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "JPVT",
+			"fortran": "JPVT",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "VN1",
+			"fortran": "VN1",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "VN2",
+			"fortran": "VN2",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

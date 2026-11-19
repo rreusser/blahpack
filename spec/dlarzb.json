@@ -1,0 +1,223 @@
+{
+	"routine": "dlarzb",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARZB( SIDE, TRANS, DIRECT, STOREV, M, N, K, L, V,",
+	"returns": {
+		"kind": "array",
+		"param": "C"
+	},
+	"params": [
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "direct",
+			"fortran": "DIRECT",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "storev",
+			"fortran": "STOREV",
+			"position": 4,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 7,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "L",
+			"fortran": "L",
+			"position": 8,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDV",
+				"NV"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "L",
+				"js": "L"
+			},
+			"cols": {
+				"fortran": "NV",
+				"js": null
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 11,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDT",
+				"K"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "m"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 15,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDWORK",
+				"K"
+			],
+			"ld": "LDWORK",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldwork",
+			"fortran": "LDWORK",
+			"position": 16,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [
+		{
+			"info": -3,
+			"param": "DIRECT",
+			"kind": "enum",
+			"fortranValues": "B",
+			"values": [
+				"backward"
+			],
+			"fortran": ".NOT.LSAME( DIRECT, 'B' )",
+			"js": "direct !== 'backward'"
+		},
+		{
+			"info": -4,
+			"param": "STOREV",
+			"kind": "enum",
+			"fortranValues": "R",
+			"values": [
+				"rowwise"
+			],
+			"fortran": ".NOT.LSAME( STOREV, 'R' )",
+			"js": "storev !== 'rowwise'"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"V.cols: unknown identifier NV"
+	]
+}

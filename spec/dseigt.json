@@ -1,0 +1,114 @@
+{
+	"routine": "dseigt",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSEIGT( RNORM, N, H, LDH, EIG, BOUNDS, WORKL, IERR )",
+	"returns": {
+		"kind": "array",
+		"param": "BOUNDS"
+	},
+	"params": [
+		{
+			"name": "rnorm",
+			"fortran": "RNORM",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDH",
+				"2"
+			],
+			"ld": "LDH",
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "EIG",
+			"fortran": "EIG",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "BOUNDS",
+			"fortran": "BOUNDS",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORKL",
+			"fortran": "WORKL",
+			"position": 7,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"3*N"
+			],
+			"length": {
+				"fortran": "3*N",
+				"js": "3 * N"
+			},
+			"minLength": {
+				"fortran": "3*N",
+				"js": "3 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "ierr",
+			"fortran": "IERR",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

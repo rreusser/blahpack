@@ -1,0 +1,189 @@
+{
+	"routine": "dlaqps",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,",
+	"returns": {
+		"kind": "array",
+		"param": "F"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "offset",
+			"fortran": "OFFSET",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kb",
+			"fortran": "KB",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "JPVT",
+			"fortran": "JPVT",
+			"position": 8,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"KB"
+			],
+			"length": {
+				"fortran": "KB",
+				"js": "kb"
+			}
+		},
+		{
+			"name": "VN1",
+			"fortran": "VN1",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "VN2",
+			"fortran": "VN2",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "AUXV",
+			"fortran": "AUXV",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"NB"
+			],
+			"length": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "F",
+			"fortran": "F",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDF",
+				"NB"
+			],
+			"ld": "LDF",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldf",
+			"fortran": "LDF",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "F"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

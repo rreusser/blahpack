@@ -1,0 +1,84 @@
+{
+	"routine": "zlaqr1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAQR1( N, H, LDH, S1, S2, V )",
+	"returns": {
+		"kind": "array",
+		"param": "v"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 2,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 3,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "s1",
+			"fortran": "S1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "s2",
+			"fortran": "S2",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 6,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.NE.2 .AND. N.NE.3",
+			"js": "N !== 2 && N !== 3"
+		}
+	]
+}

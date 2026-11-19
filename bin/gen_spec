@@ -1,0 +1,215 @@
+#!/usr/bin/env node
+'use strict';
+
+// Generate the per-routine specs (docs/enforcement-architecture.md §3, Step 2).
+//
+//   bin/gen_spec                  regenerate spec/<routine>.json for every routine
+//   bin/gen_spec <routine>...     regenerate just these (also creates new specs)
+//   bin/gen_spec --check          CI: regenerate in memory, fail on any difference
+//   bin/gen_spec --extract        refresh data/fortran-checks.json from the
+//                                 Fortran sources (developer-time only)
+//
+// The routine set is every module with a lib/**/base.js plus every existing
+// spec file, so a spec can be generated before its module is written.
+//
+// Inputs are committed (data/fortran-signatures.json, data/fortran-checks.json,
+// spec/options.json, spec/overrides/), so --check runs without the Fortran
+// sources (CONVENTIONS T6).
+
+var path = require( 'path' );
+var fs = require( 'fs' );
+var build = require( './spec-gen/build.cjs' ).build;
+
+var ROOT = path.join( __dirname, '..' );
+var SPEC = path.join( ROOT, 'spec' );
+var OVR = path.join( SPEC, 'overrides' );
+var RESERVED = { 'options': true, 'schema': true };
+
+function readJSON( p ) {
+	return JSON.parse( fs.readFileSync( p, 'utf8' ) );
+}
+
+// Routines with a module: lib/<pkg>/base/<routine>/lib/base.js.
+function moduleRoutines() {
+	var out = {};
+	fs.readdirSync( path.join( ROOT, 'lib' ) ).forEach( function each( pkg ) {
+		var dir = path.join( ROOT, 'lib', pkg, 'base' );
+		if ( !fs.existsSync( dir ) ) {
+			return;
+		}
+		fs.readdirSync( dir ).forEach( function eachR( r ) {
+			if ( fs.existsSync( path.join( dir, r, 'lib', 'base.js' ) ) ) {
+				out[ r ] = pkg;
+			}
+		});
+	});
+	return out;
+}
+
+function specRoutines() {
+	if ( !fs.existsSync( SPEC ) ) {
+		return [];
+	}
+	return fs.readdirSync( SPEC ).filter( function f( n ) {
+		return /\.json$/.test( n ) && !RESERVED[ n.replace( /\.json$/, '' ) ];
+	}).map( function m( n ) {
+		return n.replace( /\.json$/, '' );
+	});
+}
+
+// Apply one override file. Each entry: { reason, set: { path: value } }.
+// Paths: `params.<FORTRAN or js name>.<key>`, `checks.<info>.<key>`, or a
+// top-level key. A null value deletes. An override that changes nothing is
+// stale and an error.
+function applyOverrides( spec, file ) {
+	var o = readJSON( file );
+	var applied = [];
+	if ( o.routine !== spec.routine ) {
+		throw new Error( file + ': routine mismatch' );
+	}
+	( o.overrides || [] ).forEach( function each( entry, i ) {
+		var before;
+		if ( !entry.reason || typeof entry.reason !== 'string' || entry.reason.trim().length < 10 ) {
+			throw new Error( file + ': override #' + i + ' needs a reason' );
+		}
+		before = JSON.stringify( spec );
+		Object.keys( entry.set || {} ).forEach( function eachPath( p ) {
+			setPath( spec, p, entry.set[ p ], file );
+		});
+		if ( JSON.stringify( spec ) === before ) {
+			throw new Error( file + ': override #' + i + ' is stale (changes nothing)' );
+		}
+		applied.push( { 'reason': entry.reason, 'set': entry.set } );
+	});
+	spec.overrides = applied;
+}
+
+function setPath( spec, p, value, file ) {
+	var parts = p.split( '.' );
+	var obj;
+	var key;
+	var i = 1;
+	if ( parts[ 0 ] === 'params' ) {
+		obj = spec.params.filter( function f( q ) {
+			return q.fortran === parts[ 1 ] || q.name === parts[ 1 ];
+		})[ 0 ];
+		i = 2;
+	} else if ( parts[ 0 ] === 'checks' ) {
+		obj = spec.checks.filter( function f( c ) {
+			return String( c.info ) === parts[ 1 ];
+		})[ 0 ];
+		i = 2;
+	} else {
+		obj = spec;
+		i = 0;
+	}
+	if ( !obj ) {
+		throw new Error( file + ': no target for ' + p );
+	}
+	for ( ; i < parts.length - 1; i++ ) {
+		if ( obj[ parts[ i ] ] === undefined || obj[ parts[ i ] ] === null ) {
+			obj[ parts[ i ] ] = {};
+		}
+		obj = obj[ parts[ i ] ];
+	}
+	key = parts[ parts.length - 1 ];
+	if ( value === null ) {
+		delete obj[ key ];
+	} else {
+		obj[ key ] = value;
+	}
+}
+
+function serialize( spec ) {
+	return JSON.stringify( spec, null, '\t' ) + '\n';
+}
+
+function generate( routine, inputs ) {
+	var sig = inputs.sigs[ routine ];
+	var spec;
+	var ovr;
+	if ( !sig ) {
+		throw new Error( routine + ': not in data/fortran-signatures.json' );
+	}
+	spec = build( routine, sig, inputs.facts[ routine ] || null, inputs.options );
+	ovr = path.join( OVR, routine + '.json' );
+	if ( fs.existsSync( ovr ) ) {
+		applyOverrides( spec, ovr );
+	}
+	return spec;
+}
+
+function main() {
+	var argv = process.argv.slice( 2 );
+	var check = argv.indexOf( '--check' ) !== -1;
+	var only = argv.filter( function f( a ) {
+		return !/^--/.test( a );
+	});
+	if ( argv.indexOf( '--extract' ) !== -1 ) {
+		require( './spec-gen/extract.cjs' ).main();
+		return;
+	}
+	var inputs = {
+		'sigs': readJSON( path.join( ROOT, 'data', 'fortran-signatures.json' ) ),
+		'facts': readJSON( path.join( ROOT, 'data', 'fortran-checks.json' ) ),
+		'options': readJSON( path.join( SPEC, 'options.json' ) )
+	};
+	var mods = moduleRoutines();
+	var set = {};
+	Object.keys( mods ).concat( specRoutines() ).forEach( function each( r ) {
+		set[ r ] = true;
+	});
+	var routines = only.length ? only : Object.keys( set ).sort();
+	var problems = [];
+	var written = 0;
+
+	// Overrides for routines with no spec are orphans.
+	if ( fs.existsSync( OVR ) ) {
+		fs.readdirSync( OVR ).forEach( function each( n ) {
+			var r = n.replace( /\.json$/, '' );
+			if ( !set[ r ] && only.indexOf( r ) === -1 ) {
+				problems.push( 'orphan override: spec/overrides/' + n );
+			}
+		});
+	}
+
+	routines.forEach( function each( r ) {
+		var text;
+		var file = path.join( SPEC, r + '.json' );
+		try {
+			text = serialize( generate( r, inputs ) );
+		} catch ( err ) {
+			problems.push( err.message );
+			return;
+		}
+		if ( check ) {
+			if ( !fs.existsSync( file ) ) {
+				problems.push( 'missing spec/' + r + '.json' );
+			} else if ( fs.readFileSync( file, 'utf8' ) !== text ) {
+				problems.push( 'stale spec/' + r + '.json' );
+			}
+			return;
+		}
+		if ( !fs.existsSync( file ) || fs.readFileSync( file, 'utf8' ) !== text ) {
+			fs.writeFileSync( file, text );
+			written += 1;
+		}
+	});
+
+	if ( check ) {
+		if ( problems.length ) {
+			console.error( problems.slice( 0, 50 ).join( '\n' ) );
+			console.error( '\n' + problems.length + ' spec problem(s). Run `bin/gen_spec` and commit spec/.' );
+			process.exit( 1 );
+		}
+		console.log( 'spec: ' + routines.length + ' specs in sync with data/ and spec/overrides/' );
+		return;
+	}
+	if ( problems.length ) {
+		console.error( problems.join( '\n' ) );
+		process.exit( 1 );
+	}
+	console.log( 'spec: ' + routines.length + ' routines, ' + written + ' written' );
+}
+
+main();

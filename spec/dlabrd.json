@@ -1,0 +1,193 @@
+{
+	"routine": "dlabrd",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,",
+	"returns": {
+		"kind": "array",
+		"param": "Y"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NB"
+			],
+			"length": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NB"
+			],
+			"length": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "TAUQ",
+			"fortran": "TAUQ",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NB"
+			],
+			"length": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "TAUP",
+			"fortran": "TAUP",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NB"
+			],
+			"length": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "X",
+			"fortran": "X",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDX",
+				"NB"
+			],
+			"ld": "LDX",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldx",
+			"fortran": "LDX",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "Y",
+			"fortran": "Y",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDY",
+				"NB"
+			],
+			"ld": "LDY",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldy",
+			"fortran": "LDY",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "M.LE.0 .OR. N.LE.0",
+			"js": "M <= 0 || N <= 0"
+		}
+	]
+}

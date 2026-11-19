@@ -1,0 +1,120 @@
+{
+	"routine": "dlarrc",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARRC( JOBT, N, VL, VU, D, E, PIVMIN,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobt",
+			"fortran": "JOBT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "vl",
+			"fortran": "VL",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "vu",
+			"fortran": "VU",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "pivmin",
+			"fortran": "PIVMIN",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "eigcnt",
+			"fortran": "EIGCNT",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "lcnt",
+			"fortran": "LCNT",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "rcnt",
+			"fortran": "RCNT",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 11,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

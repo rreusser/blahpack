@@ -1,0 +1,206 @@
+{
+	"routine": "dggrqf",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGGRQF( M, P, N, A, LDA, TAUA, B, LDB, TAUB, WORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "P",
+			"fortran": "P",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "TAUA",
+			"fortran": "TAUA",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(M,N)"
+			],
+			"length": {
+				"fortran": "MIN(M,N)",
+				"js": "min( M, N )"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "P",
+				"js": "P"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "TAUB",
+			"fortran": "TAUB",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MIN(P,N)"
+			],
+			"length": {
+				"fortran": "MIN(P,N)",
+				"js": "min( P, N )"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MAX(1,M,P,N)",
+				"js": "max( max( max( 1, M ), P ), N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 11,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 12,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "P",
+			"kind": "nonnegative",
+			"fortran": "P.LT.0",
+			"js": "P < 0"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -5,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -8,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,P)",
+				"js": "max( 1, P )"
+			},
+			"fortran": "LDB.LT.MAX( 1, P )",
+			"js": "ldb < max( 1, P )"
+		}
+	],
+	"quickReturn": []
+}

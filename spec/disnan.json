@@ -1,0 +1,22 @@
+{
+	"routine": "disnan",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "LOGICAL FUNCTION DISNAN( DIN )",
+	"returns": {
+		"kind": "value",
+		"dtype": "bool"
+	},
+	"params": [
+		{
+			"name": "din",
+			"fortran": "DIN",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

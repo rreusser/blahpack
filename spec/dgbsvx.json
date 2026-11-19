@@ -1,0 +1,450 @@
+{
+	"routine": "dgbsvx",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGBSVX( FACT, TRANS, N, KL, KU, NRHS, AB, LDAB, AFB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "fact",
+			"fortran": "FACT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 7,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "AFB",
+			"fortran": "AFB",
+			"position": 9,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDAFB",
+				"N"
+			],
+			"ld": "LDAFB",
+			"rows": {
+				"fortran": "2*KL+KU+1",
+				"js": "2 * kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldafb",
+			"fortran": "LDAFB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AFB"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 11,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "equed",
+			"fortran": "EQUED",
+			"position": 12,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "inout"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 13,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 14,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "X",
+			"fortran": "X",
+			"position": 17,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDX",
+				"NRHS"
+			],
+			"ld": "LDX",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldx",
+			"fortran": "LDX",
+			"position": 18,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "rcond",
+			"fortran": "RCOND",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "FERR",
+			"fortran": "FERR",
+			"position": 20,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "BERR",
+			"fortran": "BERR",
+			"position": 21,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 22,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,3*N)"
+			],
+			"length": {
+				"fortran": "MAX(1,3*N)",
+				"js": "max( 1, 3 * N )"
+			},
+			"minLength": {
+				"fortran": "MAX(1,3*N)",
+				"js": "max( 1, 3 * N )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 23,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 24,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "FACT",
+			"kind": "enum",
+			"fortranValues": "EFN",
+			"values": [
+				"equilibrate",
+				"factored",
+				"not-factored"
+			],
+			"fortran": ".NOT.NOFACT .AND. .NOT.EQUIL .AND. .NOT.LSAME( FACT, 'F' )",
+			"js": "fact !== 'not-factored' && fact !== 'equilibrate' && fact !== 'factored'"
+		},
+		{
+			"info": -2,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CNT",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) .AND. .NOT. LSAME( TRANS, 'C' )",
+			"js": "trans !== 'no-transpose' && trans !== 'transpose' && trans !== 'conjugate-transpose'"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "KL",
+			"kind": "nonnegative",
+			"fortran": "KL.LT.0",
+			"js": "kl < 0"
+		},
+		{
+			"info": -5,
+			"param": "KU",
+			"kind": "nonnegative",
+			"fortran": "KU.LT.0",
+			"js": "ku < 0"
+		},
+		{
+			"info": -6,
+			"param": "NRHS",
+			"kind": "nonnegative",
+			"fortran": "NRHS.LT.0",
+			"js": "nrhs < 0"
+		},
+		{
+			"info": -8,
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"fortran": "LDAB.LT.KL+KU+1",
+			"js": "ldab < kl + ku + 1"
+		},
+		{
+			"info": -10,
+			"param": "LDAFB",
+			"kind": "ld",
+			"matrix": "AFB",
+			"min": {
+				"fortran": "2*KL+KU+1",
+				"js": "2 * kl + ku + 1"
+			},
+			"fortran": "LDAFB.LT.2*KL+KU+1",
+			"js": "ldafb < 2 * kl + ku + 1"
+		},
+		{
+			"info": -12,
+			"param": "EQUED",
+			"kind": "expr",
+			"fortran": "LSAME( FACT, 'F' ) .AND. .NOT. ( ROWEQU .OR. COLEQU .OR. LSAME( EQUED, 'N' ) )",
+			"js": "fact === 'factored' && !(((fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'row' || equed === 'both') || (fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'column' || equed === 'both')) || equed === 'none')"
+		},
+		{
+			"info": -13,
+			"param": "R",
+			"kind": "expr",
+			"fortran": "RCMIN.LE.ZERO",
+			"guard": "ROWEQU",
+			"js": null
+		},
+		{
+			"info": -14,
+			"param": "C",
+			"kind": "expr",
+			"fortran": "RCMIN.LE.ZERO",
+			"guard": "COLEQU .AND. INFO.EQ.0",
+			"js": null
+		},
+		{
+			"info": -16,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )"
+		},
+		{
+			"info": -18,
+			"param": "LDX",
+			"kind": "ld",
+			"matrix": "X",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDX.LT.MAX( 1, N )",
+			"js": "ldx < max( 1, N )"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"check -13: local RCMIN is assigned inside nested control flow",
+		"check -14: local RCMIN is assigned inside nested control flow"
+	]
+}

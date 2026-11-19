@@ -1,0 +1,270 @@
+#!/usr/bin/env node
+'use strict';
+
+// Inspect specs and compare them with the code.
+//
+//   bin/spec show <routine>       the spec summary and its three derived
+//                                 signatures (base.js, ndarray.js, <routine>.js)
+//   bin/spec xcheck [--list]      compare every spec projection with the code
+//                                 and with lint/lib/strided-projection.cjs;
+//                                 print categorized discrepancies
+//   bin/spec xcheck <routine>     one routine, verbose
+
+var path = require( 'path' );
+var fs = require( 'fs' );
+var specLib = require( '../lint/lib/spec.cjs' );
+var legacy = require( '../lint/lib/strided-projection.cjs' );
+
+var ROOT = path.join( __dirname, '..' );
+
+function moduleDir( routine ) {
+	var pkgs = fs.readdirSync( path.join( ROOT, 'lib' ) );
+	var i;
+	var d;
+	for ( i = 0; i < pkgs.length; i++ ) {
+		d = path.join( ROOT, 'lib', pkgs[ i ], 'base', routine );
+		if ( fs.existsSync( path.join( d, 'lib', 'base.js' ) ) ) {
+			return { 'pkg': pkgs[ i ], 'dir': path.join( d, 'lib' ) };
+		}
+	}
+	return null;
+}
+
+// Parameters of a file's default export (resolved through `export default`,
+// so camelCase function names like `dsytf2rk` are found too).
+function params( file ) {
+	var src;
+	var e;
+	var m;
+	if ( !fs.existsSync( file ) ) {
+		return null;
+	}
+	src = fs.readFileSync( file, 'utf8' );
+	e = /export default (\w+)/.exec( src );
+	if ( !e ) {
+		return null;
+	}
+	m = new RegExp( 'function\\s+' + e[ 1 ] + '\\s*\\(([^)]*)\\)' ).exec( src );
+	if ( !m ) {
+		return null;
+	}
+	return m[ 1 ].split( ',' ).map( function t( x ) {
+		return x.trim();
+	}).filter( Boolean );
+}
+
+function eq( a, b ) {
+	return !!a && !!b && a.length === b.length && a.every( function e( x, i ) {
+		return x.toLowerCase() === b[ i ].toLowerCase();
+	});
+}
+
+function fmt( list ) {
+	return '( ' + list.join( ', ' ) + ' )';
+}
+
+function show( routine ) {
+	var spec = specLib.load( routine );
+	if ( !spec ) {
+		console.error( 'no spec/' + routine + '.json (run bin/gen_spec ' + routine + ')' );
+		process.exit( 1 );
+	}
+	console.log( routine + '  [' + spec.package + ', ' + spec.kind + '; returns ' + JSON.stringify( spec.returns ) + ']' );
+	console.log( '  ' + spec.signature );
+	console.log( '' );
+	console.log( '  base.js      ' + fmt( specLib.base( spec ) ) );
+	console.log( '  ndarray.js   ' + fmt( specLib.ndarray( spec ) ) );
+	console.log( '  ' + ( routine + '.js' ).padEnd( 12 ) + ' ' + fmt( specLib.strided( spec ) ) );
+	console.log( '' );
+	console.log( '  params:' );
+	spec.params.forEach( function each( p ) {
+		var extra = [];
+		if ( p.of ) {
+			extra.push( 'of ' + p.of );
+		}
+		if ( p.rows ) {
+			extra.push( 'rows ' + ( p.rows.js || '?' + p.rows.fortran ) );
+		}
+		if ( p.cols ) {
+			extra.push( 'cols ' + ( p.cols.js || '?' + p.cols.fortran ) );
+		}
+		if ( p.length ) {
+			extra.push( 'length ' + ( p.length.js || '?' + p.length.fortran ) );
+		}
+		if ( p.minLength ) {
+			extra.push( 'min ' + ( p.minLength.js || '?' + p.minLength.fortran ) );
+		}
+		console.log( '    ' + String( p.name ).padEnd( 10 ) + ( p.role + ( p.format ? '/' + p.format : '' ) ).padEnd( 14 ) + String( p.dtype ).padEnd( 11 ) + String( p.intent ).padEnd( 6 ) + extra.join( ', ' ) );
+	});
+	if ( spec.checks.length ) {
+		console.log( '  checks:' );
+		spec.checks.forEach( function each( c ) {
+			console.log( '    INFO=' + String( c.info ).padEnd( 4 ) + c.kind.padEnd( 12 ) + ( c.js || '? ' + c.fortran ) + ( c.values ? '   values: ' + c.values.join( ', ' ) : '' ) );
+		});
+	}
+	spec.quickReturn.forEach( function each( q ) {
+		console.log( '  quick return: ' + ( q.js || '? ' + q.fortran ) );
+	});
+	( spec.overrides || [] ).forEach( function each( o ) {
+		console.log( '  override: ' + o.reason );
+	});
+	( spec.notes || [] ).forEach( function each( n ) {
+		console.log( '  note: ' + n );
+	});
+}
+
+// Classify one form's mismatch (spec projection vs code).
+function classify( want, got ) {
+	var W = want.map( function l( x ) {
+		return x.toLowerCase();
+	});
+	var G = got.map( function l( x ) {
+		return x.toLowerCase();
+	});
+	var tags = [];
+	if ( W[ 0 ] === 'order' && G[ 0 ] !== 'order' ) {
+		tags.push( 'missing-order' );
+	}
+	if ( W[ 0 ] !== 'order' && G[ 0 ] === 'order' ) {
+		tags.push( 'extra-order' );
+	}
+	var w = W.filter( function f( x ) {
+		return G.indexOf( x ) < 0;
+	});
+	var g = G.filter( function f( x ) {
+		return W.indexOf( x ) < 0;
+	});
+	if ( w.length === 0 && g.length === 0 && !tags.length ) {
+		tags.push( 'order-of-params' );
+	}
+	if ( w.length ) {
+		tags.push( 'missing:' + w.map( kind ).filter( uniq ).join( ',' ) );
+	}
+	if ( g.length ) {
+		tags.push( 'extra:' + g.map( kind ).filter( uniq ).join( ',' ) );
+	}
+	return tags.join( ' ' );
+}
+function kind( x ) {
+	if ( /^stride/.test( x ) ) {
+		return 'stride';
+	}
+	if ( /^offset/.test( x ) ) {
+		return 'offset';
+	}
+	if ( /^ld/.test( x ) ) {
+		return 'ld';
+	}
+	if ( x === 'order' ) {
+		return 'order';
+	}
+	return 'name';
+}
+function uniq( x, i, a ) {
+	return a.indexOf( x ) === i;
+}
+
+function xcheck( only, list ) {
+	var routines = fs.readdirSync( specLib.SPEC_DIR ).filter( function f( n ) {
+		return /\.json$/.test( n ) && n !== 'options.json' && n !== 'schema.json';
+	}).map( function m( n ) {
+		return n.replace( /\.json$/, '' );
+	}).sort();
+	var cats = {};
+	var total = 0;
+	var ok = 0;
+	var legacyDiff = [];
+	var pkgDiff = [];
+	if ( only ) {
+		routines = [ only ];
+	}
+	routines.forEach( function each( r ) {
+		var spec = specLib.load( r );
+		var mod = moduleDir( r );
+		var forms;
+		var bad = false;
+		if ( !mod ) {
+			return;
+		}
+		total += 1;
+		if ( spec.package && spec.package !== mod.pkg ) {
+			pkgDiff.push( r + ' (lib/' + mod.pkg + ', reference ' + spec.package + ')' );
+		}
+		var code = {
+			'base': params( path.join( mod.dir, 'base.js' ) ),
+			'ndarray': params( path.join( mod.dir, 'ndarray.js' ) ),
+			'strided': params( path.join( mod.dir, r + '.js' ) )
+		};
+		forms = {
+			'base': specLib.base( spec ),
+			'ndarray': specLib.ndarray( spec ),
+			'strided': specLib.strided( spec )
+		};
+		Object.keys( forms ).forEach( function eachForm( f ) {
+			var c;
+			if ( !code[ f ] ) {
+				c = f + ': unparseable';
+			} else if ( eq( code[ f ], forms[ f ] ) ) {
+				return;
+			} else {
+				c = f + ': ' + classify( forms[ f ], code[ f ] );
+			}
+			bad = true;
+			( cats[ c ] = cats[ c ] || [] ).push( { 'r': r, 'want': forms[ f ], 'got': code[ f ] } );
+		});
+		// Cross-check with the legacy projection of the actual base.js.
+		if ( code.base && eq( code.base, forms.base ) && !eq( legacy.project( code.base, { 'routine': r } ).params, forms.strided ) ) {
+			legacyDiff.push( { 'r': r, 'spec': forms.strided, 'legacy': legacy.project( code.base, { 'routine': r } ).params } );
+		}
+		if ( !bad ) {
+			ok += 1;
+		}
+	});
+	console.log( 'Modules: ' + total + ', all three forms match the spec: ' + ok );
+	Object.keys( cats ).sort( function s( a, b ) {
+		return cats[ b ].length - cats[ a ].length;
+	}).forEach( function each( c ) {
+		console.log( String( cats[ c ].length ).padStart( 5 ) + '  ' + c + ( list ? '' : '   e.g. ' + cats[ c ].slice( 0, 6 ).map( function m( x ) {
+			return x.r;
+		}).join( ' ' ) ) );
+		if ( list || only ) {
+			cats[ c ].forEach( function eachR( x ) {
+				console.log( '         ' + x.r );
+				console.log( '             spec: ' + x.want.join( ', ' ) );
+				console.log( '             code: ' + x.got.join( ', ' ) );
+			});
+		}
+	});
+	console.log( '' );
+	console.log( 'Spec strided form vs lint/lib/strided-projection.cjs (where base.js matches the spec): ' + legacyDiff.length + ' differ' );
+	legacyDiff.forEach( function each( d ) {
+		console.log( '   ' + d.r + '\n       spec:   ' + d.spec.join( ', ' ) + '\n       legacy: ' + d.legacy.join( ', ' ) );
+	});
+	if ( pkgDiff.length ) {
+		console.log( '' );
+		console.log( 'Module package differs from the reference source directory (F7): ' + pkgDiff.length );
+		pkgDiff.forEach( function each( d ) {
+			console.log( '   ' + d );
+		});
+	}
+}
+
+function main() {
+	var argv = process.argv.slice( 2 );
+	var cmd = argv[ 0 ];
+	var rest = argv.slice( 1 ).filter( function f( a ) {
+		return !/^--/.test( a );
+	});
+	if ( cmd === 'show' && rest[ 0 ] ) {
+		show( rest[ 0 ] );
+		return;
+	}
+	if ( cmd === 'xcheck' ) {
+		xcheck( rest[ 0 ] || null, argv.indexOf( '--list' ) !== -1 );
+		return;
+	}
+	console.error( 'usage: bin/spec show <routine> | bin/spec xcheck [<routine>] [--list]' );
+	process.exit( 2 );
+}
+
+main();

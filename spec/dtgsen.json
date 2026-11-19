@@ -1,0 +1,375 @@
+{
+	"routine": "dtgsen",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTGSEN( IJOB, WANTQ, WANTZ, SELECT, N, A, LDA, B, LDB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "ijob",
+			"fortran": "IJOB",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "wantq",
+			"fortran": "WANTQ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "wantz",
+			"fortran": "WANTZ",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "SELECT",
+			"fortran": "SELECT",
+			"position": 4,
+			"role": "vector",
+			"dtype": "bool",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "ALPHAR",
+			"fortran": "ALPHAR",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ALPHAI",
+			"fortran": "ALPHAI",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "BETA",
+			"fortran": "BETA",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "pl",
+			"fortran": "PL",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "pr",
+			"fortran": "PR",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "DIF",
+			"fortran": "DIF",
+			"position": 20,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 21,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "LWMIN",
+				"js": "(ijob === 1 || ijob === 2) || ijob === 4 ? max( max( 1, 4 * N + 16 ), 2 * m * (N - m) ) : (ijob === 3 || ijob === 5 ? max( max( 1, 4 * N + 16 ), 4 * m * (N - m) ) : max( 1, 4 * N + 16 ))",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 22,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 23,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LIWORK)"
+			],
+			"minLength": {
+				"fortran": "LIWMIN",
+				"js": "(ijob === 1 || ijob === 2) || ijob === 4 ? max( 1, N + 6 ) : (ijob === 3 || ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 6 ) : 1)",
+				"source": "check"
+			}
+		},
+		{
+			"name": "liwork",
+			"fortran": "LIWORK",
+			"position": 24,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "IWORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 25,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "IJOB",
+			"kind": "expr",
+			"fortran": "IJOB.LT.0 .OR. IJOB.GT.5",
+			"js": "ijob < 0 || ijob > 5"
+		},
+		{
+			"info": -5,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -7,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDA.LT.MAX( 1, N )",
+			"js": "lda < max( 1, N )"
+		},
+		{
+			"info": -9,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )"
+		},
+		{
+			"info": -14,
+			"param": "LDQ",
+			"kind": "expr",
+			"fortran": "LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )",
+			"js": "ldq < 1 || (wantq && ldq < N)"
+		},
+		{
+			"info": -16,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (wantz && ldz < N)"
+		}
+	],
+	"quickReturn": []
+}

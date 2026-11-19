@@ -1,0 +1,94 @@
+{
+	"routine": "zlargv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARGV( N, X, INCX, Y, INCY, C, INCC )",
+	"returns": {
+		"kind": "array",
+		"param": "c"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*INCX"
+			],
+			"length": {
+				"fortran": "1+(N-1)*INCX",
+				"js": "1 + (N - 1) * incx"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*INCY"
+			],
+			"length": {
+				"fortran": "1+(N-1)*INCY",
+				"js": "1 + (N - 1) * incy"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"1+(N-1)*INCC"
+			],
+			"length": {
+				"fortran": "1+(N-1)*INCC",
+				"js": "1 + (N - 1) * incc"
+			}
+		},
+		{
+			"name": "incc",
+			"fortran": "INCC",
+			"position": 7,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

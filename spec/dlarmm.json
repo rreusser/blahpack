@@ -1,0 +1,38 @@
+{
+	"routine": "dlarmm",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DLARMM( ANORM, BNORM, CNORM )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "anorm",
+			"fortran": "ANORM",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "bnorm",
+			"fortran": "BNORM",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "cnorm",
+			"fortran": "CNORM",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

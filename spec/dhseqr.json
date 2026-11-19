@@ -1,0 +1,242 @@
+{
+	"routine": "dhseqr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DHSEQR( JOB, COMPZ, N, ILO, IHI, H, LDH, WR, WI, Z,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "job",
+			"fortran": "JOB",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "compz",
+			"fortran": "COMPZ",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ilo",
+			"fortran": "ILO",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "WR",
+			"fortran": "WR",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WI",
+			"fortran": "WI",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 13,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOB",
+			"kind": "enum",
+			"fortranValues": "ES",
+			"values": [
+				"eigenvalues",
+				"schur"
+			],
+			"fortran": ".NOT.LSAME( JOB, 'E' ) .AND. .NOT.WANTT",
+			"js": "job !== 'eigenvalues' && job !== 'schur'"
+		},
+		{
+			"info": -2,
+			"param": "COMPZ",
+			"kind": "enum",
+			"fortranValues": "INV",
+			"values": [
+				"initialize",
+				"none",
+				"update"
+			],
+			"fortran": ".NOT.LSAME( COMPZ, 'N' ) .AND. .NOT.WANTZ",
+			"js": "compz !== 'none' && !(compz === 'initialize' || compz === 'update')"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "ILO",
+			"kind": "expr",
+			"fortran": "ILO.LT.1 .OR. ILO.GT.MAX( 1, N )",
+			"js": "ilo < 1 || ilo > max( 1, N )"
+		},
+		{
+			"info": -5,
+			"param": "IHI",
+			"kind": "expr",
+			"fortran": "IHI.LT.MIN( ILO, N ) .OR. IHI.GT.N",
+			"js": "ihi < min( ilo, N ) || ihi > N"
+		},
+		{
+			"info": -7,
+			"param": "LDH",
+			"kind": "ld",
+			"matrix": "H",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDH.LT.MAX( 1, N )",
+			"js": "ldh < max( 1, N )"
+		},
+		{
+			"info": -11,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.MAX( 1, N ) )",
+			"js": "ldz < 1 || ((compz === 'initialize' || compz === 'update') && ldz < max( 1, N ))"
+		}
+	],
+	"quickReturn": []
+}

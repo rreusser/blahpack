@@ -1,0 +1,76 @@
+{
+	"routine": "dlamrg",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAMRG( N1, N2, A, DTRD1, DTRD2, INDEX )",
+	"returns": {
+		"kind": "array",
+		"param": "INDEX"
+	},
+	"params": [
+		{
+			"name": "n1",
+			"fortran": "N1",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n2",
+			"fortran": "N2",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N1+N2"
+			],
+			"length": {
+				"fortran": "N1+N2",
+				"js": "n1 + n2"
+			}
+		},
+		{
+			"name": "dtrd1",
+			"fortran": "DTRD1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "dtrd2",
+			"fortran": "DTRD2",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "INDEX",
+			"fortran": "INDEX",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N1+N2"
+			],
+			"length": {
+				"fortran": "N1+N2",
+				"js": "n1 + n2"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -1,0 +1,59 @@
+{
+	"routine": "zrscl",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZRSCL( N, A, X, INCX )",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 4,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

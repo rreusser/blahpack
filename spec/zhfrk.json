@@ -1,0 +1,187 @@
+{
+	"routine": "zhfrk",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZHFRK( TRANSR, UPLO, TRANS, N, K, ALPHA, A, LDA, BETA,",
+	"returns": {
+		"kind": "array",
+		"param": "C"
+	},
+	"params": [
+		{
+			"name": "transr",
+			"fortran": "TRANSR",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"KA"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "NROWA",
+				"js": "trans === 'no-transpose' ? N : K"
+			},
+			"cols": {
+				"fortran": "KA",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 10,
+			"role": "packed",
+			"format": "rfp",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TRANSR",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.NORMALTRANSR .AND. .NOT.LSAME( TRANSR, 'C' )",
+			"js": "transr !== 'no-transpose' && transr !== 'conjugate-transpose'"
+		},
+		{
+			"info": -2,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LOWER .AND. .NOT.LSAME( UPLO, 'U' )",
+			"js": "uplo !== 'lower' && uplo !== 'upper'"
+		},
+		{
+			"info": -3,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.NOTRANS .AND. .NOT.LSAME( TRANS, 'C' )",
+			"js": "trans !== 'no-transpose' && trans !== 'conjugate-transpose'"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -5,
+			"param": "K",
+			"kind": "nonnegative",
+			"fortran": "K.LT.0",
+			"js": "K < 0"
+		},
+		{
+			"info": -8,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,NROWA)",
+				"js": "max( 1, trans === 'no-transpose' ? N : K )"
+			},
+			"fortran": "LDA.LT.MAX( 1, NROWA )",
+			"js": "lda < max( 1, trans === 'no-transpose' ? N : K )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "( N.EQ.0 ) .OR. ( ( ( ALPHA.EQ.ZERO ) .OR. ( K.EQ.0 ) ) .AND. ( BETA.EQ.ONE ) )",
+			"js": "N === 0 || ((alpha === 0 || K === 0) && beta === 1)"
+		}
+	],
+	"untranslated": [
+		"A.cols: unknown identifier KA"
+	]
+}

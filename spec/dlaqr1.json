@@ -1,0 +1,100 @@
+{
+	"routine": "dlaqr1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQR1( N, H, LDH, SR1, SI1, SR2, SI2, V )",
+	"returns": {
+		"kind": "array",
+		"param": "v"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 2,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 3,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "sr1",
+			"fortran": "SR1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "si1",
+			"fortran": "SI1",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sr2",
+			"fortran": "SR2",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "si2",
+			"fortran": "SI2",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.NE.2 .AND. N.NE.3",
+			"js": "N !== 2 && N !== 3"
+		}
+	]
+}

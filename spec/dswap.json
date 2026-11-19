@@ -1,0 +1,75 @@
+{
+	"routine": "dswap",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSWAP(N,DX,INCX,DY,INCY)",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "DX",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DX"
+		},
+		{
+			"name": "y",
+			"fortran": "DY",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DY"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

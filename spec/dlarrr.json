@@ -1,0 +1,67 @@
+{
+	"routine": "dlarrr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARRR( N, D, E, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 4,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0",
+			"sets": [
+				"INFO = 0"
+			]
+		}
+	]
+}

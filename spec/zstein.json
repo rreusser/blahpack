@@ -1,0 +1,224 @@
+{
+	"routine": "zstein",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZSTEIN( N, D, E, M, W, IBLOCK, ISPLIT, Z, LDZ, WORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "IBLOCK",
+			"fortran": "IBLOCK",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ISPLIT",
+			"fortran": "ISPLIT",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"M"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"5*N"
+			],
+			"length": {
+				"fortran": "5*N",
+				"js": "5 * N"
+			},
+			"minLength": {
+				"fortran": "5*N",
+				"js": "5 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 11,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IFAIL",
+			"fortran": "IFAIL",
+			"position": 12,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 13,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "M",
+			"kind": "expr",
+			"fortran": "M.LT.0 .OR. M.GT.N",
+			"js": "M < 0 || M > N"
+		},
+		{
+			"info": -9,
+			"param": "LDZ",
+			"kind": "ld",
+			"matrix": "Z",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDZ.LT.MAX( 1, N )",
+			"js": "ldz < max( 1, N )"
+		}
+	],
+	"quickReturn": []
+}

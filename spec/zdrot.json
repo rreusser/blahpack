@@ -1,0 +1,91 @@
+{
+	"routine": "zdrot",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZDROT( N, ZX, INCX, ZY, INCY, C, S )",
+	"returns": {
+		"kind": "array",
+		"param": "ZY"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ZX",
+			"fortran": "ZX",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZX"
+		},
+		{
+			"name": "ZY",
+			"fortran": "ZY",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZY"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

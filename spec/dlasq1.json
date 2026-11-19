@@ -1,0 +1,87 @@
+{
+	"routine": "dlasq1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASQ1( N, D, E, WORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 4,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": "4 * N"
+			},
+			"minLength": {
+				"fortran": "4*N",
+				"js": "4 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 5,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		}
+	],
+	"quickReturn": []
+}

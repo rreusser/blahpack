@@ -1,0 +1,305 @@
+{
+	"routine": "dlarrd",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARRD( RANGE, ORDER, N, VL, VU, IL, IU, GERS,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "range",
+			"fortran": "RANGE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "order",
+			"fortran": "ORDER",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "vl",
+			"fortran": "VL",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "vu",
+			"fortran": "VU",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "il",
+			"fortran": "IL",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "iu",
+			"fortran": "IU",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "GERS",
+			"fortran": "GERS",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			}
+		},
+		{
+			"name": "reltol",
+			"fortran": "RELTOL",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "E2",
+			"fortran": "E2",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "pivmin",
+			"fortran": "PIVMIN",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "nsplit",
+			"fortran": "NSPLIT",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ISPLIT",
+			"fortran": "ISPLIT",
+			"position": 15,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 17,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WERR",
+			"fortran": "WERR",
+			"position": 18,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "wl",
+			"fortran": "WL",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "wu",
+			"fortran": "WU",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "IBLOCK",
+			"fortran": "IBLOCK",
+			"position": 21,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "INDEXW",
+			"fortran": "INDEXW",
+			"position": 22,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 23,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": "4 * N"
+			},
+			"minLength": {
+				"fortran": "4*N",
+				"js": "4 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"3*N"
+			],
+			"length": {
+				"fortran": "3*N",
+				"js": "3 * N"
+			},
+			"minLength": {
+				"fortran": "3*N",
+				"js": "3 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 25,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

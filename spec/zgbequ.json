@@ -1,0 +1,188 @@
+{
+	"routine": "zgbequ",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGBEQU( M, N, KL, KU, AB, LDAB, R, C, ROWCND, COLCND,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 5,
+			"role": "banded",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "rowcnd",
+			"fortran": "ROWCND",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "colcnd",
+			"fortran": "COLCND",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "amax",
+			"fortran": "AMAX",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 12,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -3,
+			"param": "KL",
+			"kind": "nonnegative",
+			"fortran": "KL.LT.0",
+			"js": "kl < 0"
+		},
+		{
+			"info": -4,
+			"param": "KU",
+			"kind": "nonnegative",
+			"fortran": "KU.LT.0",
+			"js": "ku < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"fortran": "LDAB.LT.KL+KU+1",
+			"js": "ldab < kl + ku + 1"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0",
+			"js": "M === 0 || N === 0",
+			"sets": [
+				"ROWCND = ONE",
+				"COLCND = ONE",
+				"AMAX = ZERO"
+			]
+		}
+	]
+}

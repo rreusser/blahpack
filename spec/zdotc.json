@@ -1,0 +1,82 @@
+{
+	"routine": "zdotc",
+	"package": "blas",
+	"kind": "function",
+	"signature": "COMPLEX*16 FUNCTION ZDOTC(N,ZX,INCX,ZY,INCY)",
+	"returns": {
+		"kind": "value",
+		"dtype": "complex128"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ZX",
+			"fortran": "ZX",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 3,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZX"
+		},
+		{
+			"name": "ZY",
+			"fortran": "ZY",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZY"
+		},
+		{
+			"name": "out",
+			"fortran": null,
+			"role": "result",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		}
+	]
+}

@@ -557,7 +557,7 @@ export class FileRewriter {
 		let replaceCall = callText;
 		const hasFieldOuts = !own && outs.some( ( p ) => [ 'field', 'cfield', 'return' ].includes( P.form[ p.name ].kind ) || ( P.form[ p.name ].kind === 'value' && P.form[ p.name ].key ) );
 		if ( hasFieldOuts ) {
-			const res = this.rewriteResultReads( { fn, node, P, resVar, resKind, arr, callText, stmt, pre, post } );
+			const res = this.rewriteResultReads( { fn, node, P, resVar, resKind, arr, callText, stmt, pre, post, kind: c.kind } );
 			if ( res === null ) {
 				// The rewrite placed its own edits (binding dropped / split).
 				this.changed = true;
@@ -811,8 +811,16 @@ export class FileRewriter {
 			}
 			void infoUses;
 		}
-		// Fallback: rebuild the old object after the call.
+		// Fallback: rebuild the old object after the call. A dropped key echoed
+		// an input argument; it echoes the same argument.
 		const props = oldKeys.filter( ( k ) => k !== 'info' ).map( ( k ) => '\'' + k + '\': ' + readOf( k ) );
+		for ( const k of P.dropped || [] ) {
+			const oldL = lists( P, ctx.kind )[ 0 ];
+			const i = oldL.findIndex( ( x ) => lc( x ) === lc( k ) );
+			if ( i !== -1 && i < node.arguments.length ) {
+				props.push( '\'' + k + '\': ' + src.slice( node.arguments[ i ].start, node.arguments[ i ].end ) );
+			}
+		}
 		if ( P.ret === 'info' ) {
 			if ( extras.length ) {
 				// The call still returns an object with info + extras: merge.

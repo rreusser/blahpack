@@ -30,7 +30,7 @@ limitations under the License.
 var dlartgp = require( '@stdlib/lapack/base/dlartgp' );
 ```
 
-#### dlartgp( f, g, out )
+#### dlartgp( f, g, cs, sn, r )
 
 Generates a plane rotation such that
 
@@ -57,7 +57,7 @@ The function has the following parameters:
 
 The function returns `out`.
 
-#### dlartgp.ndarray( f, g, out )
+#### dlartgp.ndarray( f, g, cs, sn, r )
 
 Generates a plane rotation, writing the results `[cs, sn, r]` into a pre-allocated output array.
 

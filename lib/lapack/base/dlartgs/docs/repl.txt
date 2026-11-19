@@ -1,5 +1,5 @@
 
-{{alias}}( x, y, sigma, out )
+{{alias}}( x, y, sigma, cs, sn )
     Generates a plane rotation designed to introduce a bulge in implicit QR
     iteration for the bidiagonal SVD problem.
 
@@ -30,7 +30,7 @@
     <Float64Array>[ ~0.4903, ~0.8716 ]
 
 
-{{alias}}.ndarray( x, y, sigma, out )
+{{alias}}.ndarray( x, y, sigma, cs, sn )
     Generates a plane rotation designed to introduce a bulge in implicit QR
     iteration for the bidiagonal SVD problem, using alternative indexing
     semantics.

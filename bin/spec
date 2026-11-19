@@ -5,15 +5,13 @@
 //
 //   bin/spec show <routine>       the spec summary and its three derived
 //                                 signatures (base.js, ndarray.js, <routine>.js)
-//   bin/spec xcheck [--list]      compare every spec projection with the code
-//                                 and with lint/lib/strided-projection.cjs;
+//   bin/spec xcheck [--list]      compare every spec projection with the code;
 //                                 print categorized discrepancies
 //   bin/spec xcheck <routine>     one routine, verbose
 
 var path = require( 'path' );
 var fs = require( 'fs' );
 var specLib = require( '../lint/lib/spec.cjs' );
-var legacy = require( '../lint/lib/strided-projection.cjs' );
 
 var ROOT = path.join( __dirname, '..' );
 
@@ -173,7 +171,6 @@ function xcheck( only, list ) {
 	var cats = {};
 	var total = 0;
 	var ok = 0;
-	var legacyDiff = [];
 	var pkgDiff = [];
 	if ( only ) {
 		routines = [ only ];
@@ -212,15 +209,14 @@ function xcheck( only, list ) {
 			bad = true;
 			( cats[ c ] = cats[ c ] || [] ).push( { 'r': r, 'want': forms[ f ], 'got': code[ f ] } );
 		});
-		// Cross-check with the legacy projection of the actual base.js.
-		if ( code.base && eq( code.base, forms.base ) && !eq( legacy.project( code.base, { 'routine': r } ).params, forms.strided ) ) {
-			legacyDiff.push( { 'r': r, 'spec': forms.strided, 'legacy': legacy.project( code.base, { 'routine': r } ).params } );
-		}
 		if ( !bad ) {
 			ok += 1;
 		}
 	});
 	console.log( 'Modules: ' + total + ', all three forms match the spec: ' + ok );
+	if ( ok < total ) {
+		process.exitCode = 1;
+	}
 	Object.keys( cats ).sort( function s( a, b ) {
 		return cats[ b ].length - cats[ a ].length;
 	}).forEach( function each( c ) {
@@ -236,10 +232,6 @@ function xcheck( only, list ) {
 		}
 	});
 	console.log( '' );
-	console.log( 'Spec strided form vs lint/lib/strided-projection.cjs (where base.js matches the spec): ' + legacyDiff.length + ' differ' );
-	legacyDiff.forEach( function each( d ) {
-		console.log( '   ' + d.r + '\n       spec:   ' + d.spec.join( ', ' ) + '\n       legacy: ' + d.legacy.join( ', ' ) );
-	});
 	if ( pkgDiff.length ) {
 		console.log( '' );
 		console.log( 'Module package differs from the reference source directory (F7): ' + pkgDiff.length );

@@ -22,8 +22,9 @@ jobs:
         run: npm run test:unit
 
   # Lint: every project rule (lint/, one directory per rule) over every module,
-  # plus each rule's own pass/fail fixture tests, the escape-hatch guard, and
-  # the exact strided-wrapper signature check. Hard gate — zero errors.
+  # including the spec ↔ code rules (signatures, validation prologue, messages,
+  # JSDoc; exact, derived from spec/), plus each rule's own pass/fail fixture
+  # tests and the escape-hatch guard. Hard gate — zero errors.
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -40,8 +41,6 @@ jobs:
         run: npm run lint:escape-hatches
       - name: Run ESLint
         run: npm run test:lint
-      - name: Strided wrapper signatures match the convention (CONVENTIONS.md D1-D3)
-        run: npm run lint:conformance
 
   # Conformance: the stdlib-conformance checks (file structure, scaffolding,
   # workspace ownership, naming, JSDoc, ...) beyond what lint/unit cover.

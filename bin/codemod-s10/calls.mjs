@@ -457,6 +457,17 @@ export class FileRewriter {
 		if ( hasFieldOuts ) {
 			const res = this.rewriteResultReads( { fn, node, P, resVar, resKind, arr, callText, stmt, pre, post } );
 			if ( res === null ) {
+				// The rewrite placed its own edits (binding dropped / split).
+				this.changed = true;
+				if ( pre.length || post.length ) {
+					const ind = lineIndent( src, stmt.start );
+					if ( pre.length ) {
+						this.edits.push( { start: stmt.start, end: stmt.start, text: pre.join( '\n' + ind ) + '\n' + ind, order: -1 } );
+					}
+					if ( post.length ) {
+						this.edits.push( { start: stmt.end, end: stmt.end, text: '\n' + ind + post.join( '\n' + ind ), order: 1 } );
+					}
+				}
 				return;
 			}
 			replaceCall = res;
@@ -603,13 +614,6 @@ export class FileRewriter {
 				}
 				// `x = f()` → `f(); x = arr[ 0 ];`
 				this.edits.push( { start: node.__parent.start, end: node.__parent.end, text: callText, renders: true } );
-				this.changed = true;
-				// post handled by caller? we returned null; emit post here.
-				const ind = lineIndent( src, stmt.start );
-				this.edits.push( { start: stmt.end, end: stmt.end, text: '\n' + ind + ctx.post.join( '\n' + ind ), order: 1 } );
-				if ( pre.length ) {
-					this.edits.push( { start: stmt.start, end: stmt.start, text: pre.join( '\n' + ind ) + '\n' + ind, order: -1 } );
-				}
 				return null;
 			}
 			if ( node.__parent.type === 'AssignmentExpression' && node.__parent.operator === '=' && node.__parent.__parent.type === 'ExpressionStatement' ) {
@@ -617,10 +621,6 @@ export class FileRewriter {
 				const a = node.__parent;
 				const ind = lineIndent( src, stmt.start );
 				this.edits.push( { start: a.start, end: a.end, text: callText + ';\n' + ind + src.slice( a.left.start, a.left.end ) + ' = ' + arr[ retOut.name ] + '[ 0 ]', renders: true } );
-				if ( pre.length ) {
-					this.edits.push( { start: stmt.start, end: stmt.start, text: pre.join( '\n' + ind ) + '\n' + ind, order: -1 } );
-				}
-				this.changed = true;
 				return null;
 			}
 			// Used inline (`if ( f() > 0 )`): comma-free form needs a statement.

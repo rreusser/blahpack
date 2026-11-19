@@ -21,6 +21,14 @@ import { plan } from './plan.mjs';
 import { worklist } from './forms.mjs';
 import { transformBase, rewriteMainJsdoc, rewriteWrapperReturns } from './base.mjs';
 import { FileRewriter, allSources, removeDead } from './calls.mjs';
+import { walkParents } from './edits.mjs';
+
+function walkAll( ast, fn ) {
+	walkParents( ast, ( n ) => {
+		fn( n );
+		return true;
+	});
+}
 
 const argv = process.argv.slice( 2 );
 const DRY = argv.includes( '--dry' );
@@ -198,6 +206,45 @@ for ( const P of plans ) {
 			writes.set( f, src );
 		}
 	}
+}
+
+// 5. Imports left unused by the rewrite (`stride2offset` of a removed
+// strided pair).
+for ( const [ f, s ] of writes ) {
+	if ( !f.endsWith( '.js' ) ) {
+		continue;
+	}
+	const before = fs.readFileSync( f, 'utf8' );
+	let ast;
+	try {
+		ast = parse( s );
+	} catch ( e ) {
+		problems.push( path.relative( ROOT, f ) + ': does not parse after rewrite: ' + e.message );
+		continue;
+	}
+	let out = s;
+	const imports = ast.body.filter( ( n ) => n.type === 'ImportDeclaration' && n.specifiers.length === 1 && n.specifiers[ 0 ].type === 'ImportDefaultSpecifier' );
+	for ( const imp of imports.reverse() ) {
+		const name = imp.specifiers[ 0 ].local.name;
+		const count = ( text ) => {
+			let n = 0;
+			try {
+				walkAll( parse( text ), ( x ) => {
+					if ( x.type === 'Identifier' && x.name === name ) {
+						n += 1;
+					}
+				});
+			} catch ( e ) {
+				n = 99;
+			}
+			return n;
+		};
+		if ( count( out ) === 1 && count( before ) > 1 ) {
+			const nl = out.indexOf( '\n', imp.end );
+			out = out.slice( 0, imp.start ) + out.slice( nl + 1 );
+		}
+	}
+	writes.set( f, out );
 }
 
 if ( warnings.length ) {

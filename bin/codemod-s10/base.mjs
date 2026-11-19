@@ -4,7 +4,7 @@
 // The return value becomes INFO / the spec's return array / nothing (S11).
 
 import { parse } from '../codemod-strided-wrapper/lib.mjs';
-import { annotate, walkParents, isFunction, isReference, lineIndent, finalize, render } from './edits.mjs';
+import { annotate, walkParents, isFunction, isReference, lineIndent, finalize, render, lineSpan } from './edits.mjs';
 import { mainFunction, ownReturns, keyName, isComplex } from './forms.mjs';
 import { arrayType, offsetName } from './plan.mjs';
 import { paramLine, rewriteJsdoc } from './docs.mjs';
@@ -47,13 +47,57 @@ export function transformBase( src, P ) {
 	const edits = [];
 	const outByName = new Map( P.outs.map( ( p ) => [ p.name, p ] ) );
 	const arrayified = new Set();
+	const renamedLocal = new Map();
 	let needReinterpret = false;
 
-	// 1. Arrayify the local (or by-value param) holding each output.
+	// 0. A local length-1 array already named after an output (a caller-side
+	// array an earlier call-site rewrite allocated for a callee): same type →
+	// drop it and let the callee write the output directly; other type →
+	// rename it out of the way.
 	const declEdits = new Map(); // VariableDeclaration → Set(declarator) removed
+	const passThrough = new Set();
+	const usedAll = new Set();
+	walkParents( ast, ( n ) => {
+		if ( n.type === 'Identifier' ) {
+			usedAll.add( n.name );
+		}
+		return true;
+	});
+	for ( const p of P.outs ) {
+		const N = P.pname[ p.name ];
+		const bi = bindingInfo( main, N );
+		const arrDecl = bi.decls.find( ( d ) => d.init && d.init.type === 'NewExpression' && /^(Float64|Int32|Complex128)Array$/.test( d.init.callee.name ) && d.init.arguments.length === 1 && d.init.arguments[ 0 ].value === 1 );
+		if ( !arrDecl || bi.decls.length !== 1 ) {
+			continue;
+		}
+		if ( arrDecl.init.callee.name === arrayType( p ) && !isComplex( p ) ) {
+			passThrough.add( N );
+			const decl = arrDecl.__parent;
+			if ( !declEdits.has( decl ) ) {
+				declEdits.set( decl, new Set() );
+			}
+			declEdits.get( decl ).add( arrDecl );
+		} else {
+			let nn = N + 'Out';
+			for ( let k = 2; usedAll.has( nn ); k++ ) {
+				nn = N + 'Out' + k;
+			}
+			usedAll.add( nn );
+			edits.push( { start: arrDecl.id.start, end: arrDecl.id.end, text: nn } );
+			for ( const r of bi.refs ) {
+				edits.push( { start: r.start, end: r.end, text: nn } );
+			}
+			renamedLocal.set( N, nn );
+		}
+	}
+
+	// 1. Arrayify the local (or by-value param) holding each output.
 	for ( const p of P.outs ) {
 		const f = P.form[ p.name ];
 		const N = P.pname[ p.name ];
+		if ( passThrough.has( N ) || renamedLocal.has( N ) ) {
+			continue;
+		}
 		if ( isComplex( p ) ) {
 			const bi = bindingInfo( main, N );
 			if ( bi.decls.length ) {
@@ -189,7 +233,7 @@ export function transformBase( src, P ) {
 	// 3. Declarations losing declarators.
 	for ( const [ decl, gone ] of declEdits ) {
 		const keep = decl.declarations.filter( ( d ) => !gone.has( d ) );
-		const assigns = decl.declarations.filter( ( d ) => gone.has( d ) && d.init ).map( ( d ) => d.id.name + '[ 0 ] = ' + render( src, edits, d.init.start, d.init.end ) + ';' ).filter( ( a ) => {
+		const assigns = decl.declarations.filter( ( d ) => gone.has( d ) && d.init && !passThrough.has( d.id.name ) ).map( ( d ) => d.id.name + '[ 0 ] = ' + render( src, edits, d.init.start, d.init.end ) + ';' ).filter( ( a ) => {
 			const m = /^(\w+\[ 0 \]) = (.*);$/.exec( a );
 			return !( m && m[ 1 ] === m[ 2 ] );
 		});
@@ -203,14 +247,7 @@ export function transformBase( src, P ) {
 			edits.push( { start: decl.start, end: decl.end, text: parts.join( '\n' + ind ), renders: true } );
 		} else {
 			// Remove the whole line.
-			const ls = src.lastIndexOf( '\n', decl.start - 1 );
-			let end = decl.end;
-			// Trailing comment on the same line goes too.
-			const nl = src.indexOf( '\n', end );
-			if ( /^\s*(\/\/.*)?$/.test( src.slice( end, nl ) ) ) {
-				end = nl;
-			}
-			edits.push( { start: ls, end, text: '', renders: true } );
+			edits.push( { ...lineSpan( src, decl.start, decl.end ), text: '', renders: true } );
 		}
 	}
 
@@ -335,8 +372,7 @@ export function transformBase( src, P ) {
 			text = lines.map( ( l ) => l.replace( /\n/g, '\n' + ind ) ).join( '\n' + ind );
 			if ( !lines.length ) {
 				// Drop the line.
-				const ls = src.lastIndexOf( '\n', r.start - 1 );
-				edits.push( { start: ls, end: r.end, text: '', renders: true } );
+				edits.push( { ...lineSpan( src, r.start, r.end ), text: '', renders: true } );
 				continue;
 			}
 		} else {
@@ -352,8 +388,7 @@ export function transformBase( src, P ) {
 			const l = render( src, edits, a.left.start, a.left.end );
 			const r = render( src, edits, a.right.start, a.right.end );
 			if ( l === r && /\[ 0 \]$/.test( l ) ) {
-				const ls = src.lastIndexOf( '\n', n.start - 1 );
-				edits.push( { start: ls, end: n.end, text: '', renders: true } );
+				edits.push( { ...lineSpan( src, n.start, n.end ), text: '', renders: true } );
 			}
 		}
 		return true;

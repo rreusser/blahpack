@@ -143,3 +143,19 @@ export function render( src, edits, start, end ) {
 	}
 	return text;
 }
+
+// Span that deletes the statement [start, end) together with its own line
+// (leading indentation, a trailing `//` comment, the newline), so a zero-width
+// insertion at the end of the previous line is untouched. Falls back to the
+// bare span when other code shares the line.
+export function lineSpan( src, start, end ) {
+	const ls = src.lastIndexOf( '\n', start - 1 ) + 1;
+	let nl = src.indexOf( '\n', end );
+	if ( nl === -1 ) {
+		nl = src.length;
+	}
+	if ( !/^[\t ]*$/.test( src.slice( ls, start ) ) || !/^[\t ]*(\/\/.*)?$/.test( src.slice( end, nl ) ) ) {
+		return { start, end };
+	}
+	return { start: ls, end: Math.min( nl + 1, src.length ) };
+}

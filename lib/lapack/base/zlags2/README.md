@@ -30,7 +30,7 @@ limitations under the License.
 var zlags2 = require( '@stdlib/lapack/base/zlags2' );
 ```
 
-#### zlags2( upper, a1, a2, a3, b1, b2, b3 )
+#### zlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq )
 
 Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form.
 
@@ -50,7 +50,7 @@ The function has the following parameters:
 -   **b2**: `b2`.
 -   **b3**: `b3`.
 
-#### zlags2.ndarray( upper, a1, a2, a3, b1, b2, b3 )
+#### zlags2.ndarray( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq )
 
 Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form, using alternative indexing semantics.
 

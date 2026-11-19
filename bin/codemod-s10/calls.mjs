@@ -21,7 +21,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT, parse, buildMapping } from '../codemod-strided-wrapper/lib.mjs';
-import { annotate, walkParents, isFunction, isReference, usedNames, lineIndent, finalize, render, enclosingFunction } from './edits.mjs';
+import { annotate, walkParents, isFunction, isReference, usedNames, lineIndent, finalize, render, enclosingFunction, lineSpan } from './edits.mjs';
 import { isComplex } from './forms.mjs';
 import { arrayType, offsetName } from './plan.mjs';
 
@@ -920,8 +920,7 @@ export function removeDead( src, names, anyInit ) {
 				}
 				for ( const w of writes ) {
 					const st = w.__parent.__parent;
-					const ls = src.lastIndexOf( '\n', st.start - 1 );
-					edits.push( { start: ls, end: st.end, text: '' } );
+					edits.push( { ...lineSpan( src, st.start, st.end ), text: '' } );
 				}
 				deadDecls.push( d );
 			}
@@ -946,16 +945,18 @@ export function removeDead( src, names, anyInit ) {
 		for ( const [ decl, dead ] of byDecl ) {
 			const keep = decl.declarations.filter( ( x ) => !dead.has( x ) );
 			if ( !keep.length ) {
-				let ls = src.lastIndexOf( '\n', decl.start - 1 );
+				const span = lineSpan( src, decl.start, decl.end );
 				// Take the comment lines directly above with it.
-				for ( ;; ) {
-					const prev = src.lastIndexOf( '\n', ls - 1 );
-					if ( prev === -1 || !/^\s*\/\//.test( src.slice( prev + 1, ls ) ) ) {
-						break;
+				if ( span.start !== decl.start ) {
+					for ( ;; ) {
+						const prev = src.lastIndexOf( '\n', span.start - 2 ) + 1;
+						if ( span.start === 0 || !/^\s*\/\/[^\n]*\n$/.test( src.slice( prev, span.start ) ) ) {
+							break;
+						}
+						span.start = prev;
 					}
-					ls = prev;
 				}
-				edits.push( { start: ls, end: decl.end, text: '' } );
+				edits.push( { ...span, text: '' } );
 			} else {
 				edits.push( { start: decl.start, end: decl.end, text: decl.kind + ' ' + keep.map( ( x ) => src.slice( x.start, x.end ) ).join( ', ' ) + ';' } );
 			}

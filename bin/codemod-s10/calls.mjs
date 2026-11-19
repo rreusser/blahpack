@@ -744,7 +744,9 @@ export class FileRewriter {
 			}
 			const firstStmt = body.body[ 0 ];
 			const ind = firstStmt ? lineIndent( this.src, firstStmt.start ) : '\t';
-			this.edits.push( { start: body.start + 1, end: body.start + 1, text: '\n' + ind + decls.join( '\n' + ind ), order: -2 } );
+			// After the line holding `{` (keeps a trailing `// eslint-disable-line` on its line).
+			const eol = this.src.indexOf( '\n', body.start );
+			this.edits.push( { start: eol, end: eol, text: '\n' + ind + decls.join( '\n' + ind ), order: -2 } );
 		}
 		let out = finalize( this.src, this.edits );
 		const imports = [];

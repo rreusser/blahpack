@@ -363,7 +363,8 @@ export function transformBase( src, P ) {
 	if ( needReinterpret ) {
 		const ind = lineIndent( src, main.body.body[ 0 ].start );
 		const views = P.outs.filter( ( p ) => P.form[ p.name ].kind === 'cfield' ).map( ( p ) => 'const ' + P.pname[ p.name ] + 'v = reinterpret( ' + P.pname[ p.name ] + ', 0 );' );
-		edits.push( { start: main.body.start + 1, end: main.body.start + 1, text: '\n' + ind + views.join( '\n' + ind ) + '\n', order: 1 } );
+		const eol = src.indexOf( '\n', main.body.start );
+		edits.push( { start: eol, end: eol, text: '\n' + ind + views.join( '\n' + ind ), order: 1 } );
 		if ( !/import reinterpret from/.test( src ) ) {
 			const im = ast.body.filter( ( n ) => n.type === 'ImportDeclaration' ).pop();
 			edits.push( { start: im.end, end: im.end, text: '\n' + REINTERPRET, order: 2 } );

@@ -51,7 +51,7 @@ The function has the following parameters:
 -   **AP**: input array `AP`.
 -   **s**: `s`.
 
-#### dppequ.ndarray( uplo, N, AP, strideAP, offsetAP, s, strideS, offsetS )
+#### dppequ.ndarray( uplo, N, AP, strideAP, offsetAP, s, strideS, offsetS, scond, amax )
 
 Computes row and column scalings intended to equilibrate a symmetric positive definite matrix in packed storage and reduce its condition number, using alternative indexing semantics.
 

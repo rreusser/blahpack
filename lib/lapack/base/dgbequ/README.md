@@ -58,7 +58,7 @@ The function has the following parameters:
 -   **c**: `c`.
 -   **strideC**: stride length for `C`.
 
-#### dgbequ.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC )
+#### dgbequ.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax )
 
 Computes row and column scalings to equilibrate a real general band matrix, using alternative indexing semantics.
 

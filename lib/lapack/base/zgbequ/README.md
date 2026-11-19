@@ -59,7 +59,7 @@ The function has the following parameters:
 -   **c**: `c`.
 -   **strideC**: stride length for `C`.
 
-#### zgbequ.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC )
+#### zgbequ.ndarray( M, N, kl, ku, AB, strideAB1, strideAB2, offsetAB, r, strideR, offsetR, c, strideC, offsetC, rowcnd, colcnd, amax )
 
 Computes row and column scalings intended to equilibrate an M-by-N complex band matrix A and reduce its condition number, using alternative indexing semantics.
 

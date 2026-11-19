@@ -112,7 +112,11 @@ function returns( spec ) {
 	}
 	if ( r.kind === 'value' ) {
 		if ( /^complex/.test( r.dtype ) ) {
-			return ARRAY[ r.dtype ];
+			// with an `out` result param the function returns it (S1);
+			// otherwise (BLAS dot products) it returns the value
+			return spec.params.some( function some( p ) {
+				return p.role === 'result';
+			}) ? ARRAY[ r.dtype ] : SCALAR_IN[ r.dtype ];
 		}
 		return SCALAR_IN[ r.dtype ] || '*';
 	}

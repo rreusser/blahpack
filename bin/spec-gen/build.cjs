@@ -860,8 +860,10 @@ function build( routine, sig, facts, options ) {
 	var returns;
 	if ( ( sig.kind || ( facts && facts.kind ) ) === 'function' ) {
 		returns = { 'kind': 'value', 'dtype': dtypeOf( sig.returns ) };
-		if ( /^complex/.test( returns.dtype ) ) {
-			// S1: a complex FUNCTION writes its result into `out, offsetOut`.
+		// S1: a complex FUNCTION writes its result into `out, offsetOut`,
+		// except the level-1 BLAS dot products, which return a Complex128
+		// as stdlib's do (S1 carve-out, ruled 2026-11-19).
+		if ( /^complex/.test( returns.dtype ) && !/^[cz]dot[cu]$/.test( routine ) ) {
 			out.push( { 'name': 'out', 'fortran': null, 'role': 'result', 'dtype': returns.dtype, 'intent': 'out' } );
 		}
 	} else if ( byName.INFO && byName.INFO.role === 'info' ) {

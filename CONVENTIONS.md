@@ -20,7 +20,6 @@ A rule with no named enforcer is a defect in this file.
 | Tag | Meaning | Gate in CI? |
 |---|---|---|
 | `lint:<rule>` | ESLint rule in `lint/rules/<rule>/`; always `error` | yes (`npm run test:lint`) |
-| `sig` | `lint/verify-signatures.cjs` (exact signature projections) | yes (`npm run lint:conformance`) |
 | `hatch` | `lint/verify-no-escape-hatches.cjs` | yes (`npm run lint:escape-hatches`) |
 | `conf:<id>` | `bin/conformance.js` result at **fail** level | yes (`npm run conformance:fast`), except `tests.coverage-*` (needs `--coverage`) |
 | `ci:<job>` | another CI step (`package`, `tickets`, `test:unit`, `test:lint-rules`) | yes |
@@ -41,7 +40,7 @@ A module states its routine in three places. Two of them are exact projections
 of the third:
 
 ```
-     Fortran signature (data/fortran-signatures.json)
+     spec/<routine>.json (generated from the reference Fortran)
                 │  authority
                 ▼
             base.js  ── offset form
@@ -53,20 +52,20 @@ of the third:
 
 | ID | Rule | Rationale | Enforcer |
 |---|---|---|---|
-| S1 | `base.js` params expand the Fortran signature. A 1-D array becomes `x, strideX, offsetX`. A 2-D array becomes `A, strideA1, strideA2, offsetA`. A complex scalar becomes `x, offsetX`. A complex FUNCTION adds `out, offsetOut`. `INFO` is the return value, not a parameter. | Fortran is the authority. | `lint:fortran-signature` |
-| S2 | Every `stride*`/`offset*` param names an array that really exists (`strideA1`, `offsetA`). On a name collision, a 1-D array takes a trailing `1` (`strideQ21`). | Stride/offset bindings stay legible and checkable. | `lint:fortran-signature`, `lint:wrapper-signature` |
-| S3 | `ndarray.js` params ≡ `base.js` params, exactly. No renames; nothing added or dropped (workspace included). | `ndarray.js` is the public offset form. | `sig`; `conf:workspace.ndarray-parity` (dup); `conf:conventions.ndarray-matches-base-sig` (warn, dup) |
-| S4 | `<routine>.js` params ≡ the strided projection of `base.js` (`lint/lib/strided-projection.cjs`): 1-D `x, strideX, offsetX` → `x, strideX`; 2-D/banded → `A, LDA`; packed → `AP`; workspace → `WORK`; complex scalar → `x`. | stdlib's BLAS/LAPACK-classic API. | `sig` |
-| D1 | `order` (`'row-major'`/`'column-major'`) appears **only** in `<routine>.js`, and only when the routine takes a non-workspace matrix (LD or packed). It is the first param. It never appears in `base.js`/`ndarray.js`. A Fortran argument literally named `ORDER` (`dstebz`, `dlarrd`: `'block'`/`'entire'`) is not the layout flag and keeps its name. | Two strides already encode the layout. Matches stdlib `dgemm`/`dgemv`/`dlaswp`. | `sig`; `conf:conventions.ndarray-no-order` (dup) |
-| D2 | In the strided form, data vectors and index arrays keep a stride. 2-D/banded matrices take `LD<A>`. Packed matrices and workspace take no stride. | stdlib; a stride on caller-owned scratch means nothing. | `sig` |
-| D3 | The strided form has no `offset*` params. The offset comes from `stride2offset( len, stride )`. | stdlib. | `sig` |
-| S5 | No leading-dimension (`LDA`, `ld*`) params in `base.js`/`ndarray.js`. | Strides replace them. | `lint:fortran-signature`; `conf:conventions.no-leading-dimension-in-stride-tier` (dup) |
+| S1 | `base.js` params expand the Fortran signature. A 1-D array becomes `x, strideX, offsetX`. A 2-D array becomes `A, strideA1, strideA2, offsetA`. A complex scalar becomes `x, offsetX`. A complex FUNCTION adds `out, offsetOut`, except the level-1 BLAS dot products `zdotc`/`zdotu`, which return a `Complex128` like stdlib's (ruled 2026-11-19). `INFO` is the return value, not a parameter. | Fortran is the authority. | `lint:spec-signature` |
+| S2 | Every `stride*`/`offset*` param names an array that really exists (`strideA1`, `offsetA`). On a name collision, a 1-D array takes a trailing `1` (`strideQ21`). | Stride/offset bindings stay legible and checkable. | `lint:spec-signature` |
+| S3 | `ndarray.js` params ≡ `base.js` params, exactly. No renames; nothing added or dropped (workspace included). | `ndarray.js` is the public offset form. | `lint:spec-signature` |
+| S4 | `<routine>.js` params ≡ the strided projection of `base.js` (`lint/lib/strided-projection.cjs`): 1-D `x, strideX, offsetX` → `x, strideX`; 2-D/banded → `A, LDA`; packed → `AP`; workspace → `WORK`; complex scalar → `x`. | stdlib's BLAS/LAPACK-classic API. | `lint:spec-signature` |
+| D1 | `order` (`'row-major'`/`'column-major'`) appears **only** in `<routine>.js`, and only when the routine takes a non-workspace matrix (LD or packed). It is the first param. It never appears in `base.js`/`ndarray.js`. A Fortran argument literally named `ORDER` (`dstebz`, `dlarrd`: `'block'`/`'entire'`) is not the layout flag and keeps its name. | Two strides already encode the layout. Matches stdlib `dgemm`/`dgemv`/`dlaswp`. | `lint:spec-signature`; `lint:spec-prologue` (layout check) |
+| D2 | In the strided form, data vectors and index arrays keep a stride. 2-D/banded matrices take `LD<A>`. Packed matrices and workspace take no stride. | stdlib; a stride on caller-owned scratch means nothing. | `lint:spec-signature` |
+| D3 | The strided form has no `offset*` params. The offset comes from `stride2offset( len, stride )`. | stdlib. | `lint:spec-signature` |
+| S5 | No leading-dimension (`LDA`, `ld*`) params in `base.js`/`ndarray.js`. | Strides replace them. | `lint:spec-signature` |
 | S6 | Column-major `<routine>.js` → base strides `(1, LDA)`; row-major → `(LDA, 1)`. | Definition of `order`. | `harness:layout-invariance` |
-| S7 | Names are canonical everywhere: `DA → alpha`, `DB → beta`, and the level-1 vectors `DX`/`SX → x`, `DY`/`SY → y`, `DPARAM → param` (unless the alias collides with another argument). Otherwise params keep their Fortran names (case-insensitive). | One name per concept, matching stdlib. | `lint:fortran-signature` (names); alias table in `bin/spec-gen/build.cjs` → `spec/<routine>.json` names (checked by `bin/spec xcheck`; gate unbuilt, Step 3) |
+| S7 | Names are canonical everywhere: `DA → alpha`, `DB → beta`, and the level-1 vectors `DX`/`SX → x`, `DY`/`SY → y`, `DPARAM → param` (unless the alias collides with another argument). Otherwise params keep their Fortran names (case-insensitive). | One name per concept, matching stdlib. | `lint:spec-signature` (names from `spec/<routine>.json`; alias table in `bin/spec-gen/build.cjs`) |
 | S8 | `<routine>.js` calls `base.js`, never `ndarray.js`. `ndarray.js` calls `base.js`. | One validation layer per entry point. | `conf:conventions.routine-calls-base`, `conf:conventions.ndarray-calls-base` |
 | S9 | Every `base(...)` call passes exactly `base.length` args. | Catches argument drift after a signature change. | `conf:base-arity` |
-| S10 | Each output scalar (a Fortran out/inout non-array argument other than `INFO`) is its own caller-provided length-1 typed array param (`Float64Array`/`Int32Array`), named after the Fortran argument and in its Fortran position. A complex one is `x, offsetX` (S1). So is a scalar that callers pass as an element of their own array, read or updated in place (`alpha`/`tau` of dlarfg, dlarfgp; `f`, `g`, `c` of zlartg; `b`, `c` of zrotg), marked `element` by a spec override with its reason (ruled 2026-11-19). Output scalars are never returned in a result object or packed into a shared `out` array. (Open: the container for a CHARACTER output such as `EQUED` in the 13 `laq*` routines, which a typed array can't hold.) Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. One derivable form (from the spec) instead of per-routine result shapes. | `lint:fortran-signature` (shape); `bin/spec xcheck` (exact; gate unbuilt, Step 3; worklist: 94 routines). Typed-array kind unbuilt |
-| S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary (last) output array (BLAS, stdlib style). An in/out `INFO` (ARPACK) also enters as the param `infoIn`. | stdlib return conventions. | `spec.returns` (Step 2); code check unbuilt (Step 3) |
+| S10 | Each output scalar (a Fortran out/inout non-array argument other than `INFO`) is its own caller-provided length-1 typed array param (`Float64Array`/`Int32Array`), named after the Fortran argument and in its Fortran position. A complex one is `x, offsetX` (S1). So is a scalar that callers pass as an element of their own array, read or updated in place (`alpha`/`tau` of dlarfg, dlarfgp; `f`, `g`, `c` of zlartg; `b`, `c` of zrotg), marked `element` by a spec override with its reason (ruled 2026-11-19). Output scalars are never returned in a result object or packed into a shared `out` array. (Open: the container for a CHARACTER output such as `EQUED` in the 13 `laq*` routines, which a typed array can't hold.) Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. One derivable form (from the spec) instead of per-routine result shapes. | `lint:spec-signature` (shape); `lint:spec-jsdoc` (typed-array kind, `@param` type) |
+| S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary (last) output array (BLAS, stdlib style). An in/out `INFO` (ARPACK) also enters as the param `infoIn`. | stdlib return conventions. | `spec.returns`; `lint:spec-jsdoc` (`@returns`) |
 | S12 | Public pivot/index arrays (`IPIV`, `JPVT`, `IBLOCK`, …) are **0-based**. Fortran's 1-based values are converted inside `base.js`. `ndarray.js` passes them through. | JS indexing; same meaning across both entry points. | `harness:reconstruction` (pivot round-trip) |
 
 ## W: Workspace
@@ -76,26 +75,26 @@ of the third:
 | D4 | `base.js`/`ndarray.js` never allocate a problem-sized workspace. The caller owns it, and `base.js` takes every Fortran workspace array (`WORK`, `RWORK`, `IWORK`, `BWORK`, `SWORK`) as a parameter. | Drivers reuse one buffer across callees; no hidden allocation. | `lint:no-internal-workspace-alloc`; `conf:workspace.caller-provided`; `conf:workspace.no-internal-alloc` (dup) |
 | D5a | The workspace **offset** is honored by `base.js` and forwarded to callees, never replaced by a literal `0`. | Drivers sub-allocate one buffer by offset (`zggevx` → `ztgevc`). | `lint:workspace-addressing-honored` |
 | D5b | The workspace **stride** is unit-only. `ndarray.js` throws `RangeError` unless it is `1`, except where `base.js` really honors it (a `WORK` that is a documented output, e.g. `dlasd5`). A stride is never silently ignored. | Supported ⇒ honored; unsupported ⇒ rejected. | `lint:workspace-addressing-honored`; `harness:unitStride` (offset varies, outputs bit-identical) |
-| D5c | `<routine>.js` takes workspace with no stride. It **must** accept `null` and then allocate a sufficient workspace, passing `WORK, 1, 0` to `base.js`. | Convenience lives in the wrapper only. | `sig` (no stride); `conf:work-autoalloc` (null branch) |
+| D5c | `<routine>.js` takes workspace with no stride. It **must** accept `null` and then allocate a sufficient workspace, passing `WORK, 1, 0` to `base.js`. | Convenience lives in the wrapper only. | `lint:spec-signature` (no stride); `lint:spec-jsdoc` (`(T\|null)`); `conf:work-autoalloc` (null branch) |
 | W1 | No workspace-length param (`LWORK`, `LRWORK`, `LIWORK`, …): a typed array carries `.length`. ARPACK's `LWORKL` is the one exception. It is a Fortran *partition size* of `workl`, not an allocation query. | Redundant, and invites mismatch. | `lint:no-lwork-param`; `conf:workspace.naming` (dup, lwork half) |
 | W2 | Workspace stride/offset names use stdlib camel case: `strideWork`, `offsetWork`, `strideIWork`, `offsetRWork`. Never `strideWORK`. The array keeps its Fortran name (`WORK`, `IWORK`). | stdlib naming. | `conf:workspace.naming` |
 | W3 | `ndarray.js` checks the workspace length and throws `RangeError` when it's too small: `WORK.length - offsetWork < required`. Zero-dimension quick returns come **before** that check. | A short buffer must fail loudly, not read past the end. Empty problems need no workspace. | `conf:work-assert`, `conf:work-assert.early-return-order` (only `WORK`; `IWORK`/`RWORK` unbuilt); `harness:assertWorkspaceSufficient` (the advertised minimum suffices) |
 | W4 | In z/c routines, a complex workspace allocated by the wrapper is a `Complex128Array`/`Complex64Array`, unless `base.js` documents a `Float64Array`. | Matches the Fortran type; `reinterpret` works on it. | `conf:workspace.complex-workspace-type` |
-| W5 | The required workspace size is documented in the `@param` JSDoc. | Replaces LWORK queries. | sizes: `spec` `minLength` (Step 2); JSDoc check unbuilt (Step 3) |
+| W5 | The required workspace size is documented in the `@param` JSDoc. | Replaces LWORK queries. | sizes: `spec` `minLength`; JSDoc text (unbuilt) |
 
 ## V: Argument validation
 
 | ID | Rule | Rationale | Enforcer |
 |---|---|---|---|
-| V1 | Public entry points (`ndarray.js`, `<routine>.js`) reject what the reference rejects (its `INFO = -k` checks), with `TypeError` for options and `RangeError` for numbers. | Supported ⇒ honored, unsupported ⇒ rejected, with Fortran as the arbiter. | per-kind below; generated prologue (unbuilt, Step 3) |
+| V1 | Public entry points (`ndarray.js`, `<routine>.js`) reject what the reference rejects (its `INFO = -k` checks), with `TypeError` for options and `RangeError` for numbers. | Supported ⇒ honored, unsupported ⇒ rejected, with Fortran as the arbiter. | `lint:spec-prologue` (generated from the spec's checks) |
 | V2 | `base.js` does no argument validation and imports no validators. | Validate once, at the boundary. Internal callers pass known-good args. | `conf:conventions.base-no-param-validation` (warn) |
-| V3 | Each option param is validated, and accepts exactly the values the reference accepts. `ndarray.js` and `<routine>.js` accept the same set. | No silently-misread flags. | `conf:option-rules`, `conf:option-parity`, `conf:implementation.ndarray-string-validation`, `conf:conventions.routine-string-validation` |
-| V4 | Dimension params (`M`, `N`, `K`, `nrhs`, …) are checked `≥ 0` with `RangeError` in both entry points. | Reference `INFO` checks. | `conf:conventions.routine-dimension-validation`; ndarray side `conf:conventions.ndarray-dimension-validation` (warn) |
-| V5 | `<routine>.js` checks leading dimensions exactly as the reference does (column-major: `LDA < max(1, rows)`; row-major uses columns), with no extra checks. | Reference-derived; no invented constraints. | `conf:ld-rules`; `harness:assertLeadingDimGuard` (output-inclusive extent); `conf:conventions.routine-ld-validation` (warn, dup) |
-| V6 | `<routine>.js` validates `order` with `isLayout` (`TypeError`, "First argument must be a valid order") whenever it takes `order` (D1). | stdlib. | `conf:conventions.routine-string-validation` |
-| V7 | A vector stride is rejected (`RangeError`) when it is zero exactly where the reference rejects `INCX = 0` (level-2/3 BLAS). Matrix strides are not checked. | V1 applied to strides. | (unbuilt; ticket 0017) |
-| V8 | Error messages use stdlib wording through `format()`: `'invalid argument. <Ordinal> argument must be <constraint>. Value: \`%s\`.'`. No string concatenation. | One message catalog (Message DB, §2). | (unbuilt; Step 3 message DB) |
-| V9 | Validators come from stdlib assert packages, bound to their package name: `isLayout`, `isTransposeOperation`, `isMatrixTriangle`, `isOperationSide`, `isDiagonalType`. Use `isTransposeOperation`, not `isMatrixTranspose`. Options without a stdlib helper use an explicit whitelist. | stdlib is moving off `isMatrixTranspose`; one binding name per package. | (unbuilt; worklist: 96 files bind `isMatrixTranspose`) |
+| V3 | Each option param is validated, and accepts exactly the values the reference accepts. `ndarray.js` and `<routine>.js` accept the same set. | No silently-misread flags. | `lint:spec-prologue` |
+| V4 | Dimension params (`M`, `N`, `K`, `nrhs`, …) are checked `≥ 0` with `RangeError` in both entry points. | Reference `INFO` checks. | `lint:spec-prologue` |
+| V5 | `<routine>.js` checks leading dimensions exactly as the reference does (column-major: `LDA < max(1, rows)`; row-major uses columns), with no extra checks. | Reference-derived; no invented constraints. | `lint:spec-prologue` (row-major bound: `spec` `rowMajor`); `harness:assertLeadingDimGuard` (output-inclusive extent) |
+| V6 | `<routine>.js` validates `order` with `isLayout` (`TypeError`, "First argument must be a valid order") whenever it takes `order` (D1). | stdlib. | `lint:spec-prologue` |
+| V7 | A vector stride is rejected (`RangeError`) when it is zero exactly where the reference rejects `INCX = 0` (level-2/3 BLAS). Matrix strides are not checked. | V1 applied to strides. | `lint:spec-prologue` (`nonzero` checks on INC arguments) |
+| V8 | Error messages use stdlib wording through `format()`: `'invalid argument. <Ordinal> argument must be <constraint>. Value: \`%s\`.'`. No string concatenation. | One message catalog (Message DB, §2). | `lint:spec-messages` |
+| V9 | Validators come from stdlib assert packages, bound to their package name: `isLayout`, `isTransposeOperation`, `isMatrixTriangle`, `isOperationSide`, `isDiagonalType`. Use `isTransposeOperation`, not `isMatrixTranspose`. Options without a stdlib helper use an explicit whitelist. | stdlib is moving off `isMatrixTranspose`; one binding name per package. | `lint:spec-prologue` (generated validators) |
 | V10 | Quick returns are written in `base.js`, mirroring the Fortran. `ndarray.js` may repeat a zero-dimension quick return, and must if it checks workspace (W3). | Fortran faithfulness; empty problems must not fail the workspace check. | `conf:work-assert.early-return-order`; `conf:implementation.ndarray-early-return` (warn) |
 
 ## N: Names, strings, and imports
@@ -108,17 +107,17 @@ of the third:
 | N4 | ESM only: `import … from '…/lib/index.js'` (deep path to stdlib packages and to `../../<dep>/lib/base.js` for internal deps), `export default`. Use `const`/`let`, never `var`, and never `require()`. | The codebase is ESM. | (unbuilt; Step 4 ESM-style rule) |
 | N5 | Fortran-only spellings (`LDA`, `INCX`, `LDZ`, …) don't appear in `base.js` JSDoc. | The JS form has strides, not LDs. | `conf:jsdoc.no-stale-fortran` |
 | N6 | Local names and comments are meaningful and faithful to the Fortran's variables. | Readability; reviewability against the reference. | `skill:blahpack-translate#naming-and-comments` |
-| N8 | One vocabulary per option: the strings `ndarray.js` and `<routine>.js` validate are exactly the strings `base.js` dispatches on. Validators are positive whitelists of every legal value. No translation tables (`*_MAP`) and no aliases. A new option reuses its sister routine's canonical values (Appendix A), or picks the most specific name (`'all-columns'` over `'all'`). | A validator/base mismatch passes validation and then takes a wrong branch silently (dgesvd, dorgbr, dormbr, dlascl). | `conf:option-rules`, `conf:option-parity`; validator ≡ base-dispatch set (unbuilt); `conf:scaffold-noise.no-wrapper-string-map` (dead: matches only `var`) |
+| N8 | One vocabulary per option: the strings `ndarray.js` and `<routine>.js` validate are exactly the strings `base.js` dispatches on. Validators are positive whitelists of every legal value. No translation tables (`*_MAP`) and no aliases. A new option reuses its sister routine's canonical values (Appendix A), or picks the most specific name (`'all-columns'` over `'all'`). | A validator/base mismatch passes validation and then takes a wrong branch silently (dgesvd, dorgbr, dormbr, dlascl). | `lint:spec-prologue` (both entry points validate the spec's Appendix A set); validator ≡ base-dispatch set (unbuilt); `conf:scaffold-noise.no-wrapper-string-map` (dead: matches only `var`) |
 | N7 | stdlib `max`/`min` take exactly two args. | The stdlib functions are binary; a third arg is silently dropped. | `lint:no-nary-stdlib-minmax` |
 
 ## C: Complex (z/c-prefix)
 
 | ID | Rule | Rationale | Enforcer |
 |---|---|---|---|
-| C1 | Complex arrays cross the API as `Complex128Array` (`Complex64Array` for c). Strides and offsets are in **complex elements**. | stdlib. | (unbuilt; Step 3 JSDoc-type check) |
+| C1 | Complex arrays cross the API as `Complex128Array` (`Complex64Array` for c). Strides and offsets are in **complex elements**. | stdlib. | `lint:spec-jsdoc` (`@param` types) |
 | C2 | `base.js` indexes complex data through `reinterpret()` Float64 views. Strides and offsets are doubled once, at the top. | Fast, allocation-free access. | `lint:z-prefix-reinterpret`; `conf:complex.reinterpret` (dup) |
 | C3 | Complex division, `abs`, and `sqrt` go through `lib/cmplx.js` (`cmplx.div`, `cmplx.abs`, `cmplx.abs1At`, …). They are never inlined. Mul/add/conj may be inlined. | Inline forms overflow/underflow where the robust algorithms don't. | `conf:complex.no-inline-division` (warn); `skill:blahpack-translate#complex-arithmetic` |
-| C4 | Complex scalar params are `Complex128`, read with `real()`/`imag()`. | stdlib. | `lint:fortran-signature` (shape); type (unbuilt) |
+| C4 | Complex scalar params are `Complex128`, read with `real()`/`imag()`. | stdlib. | `lint:spec-signature` (shape); `lint:spec-jsdoc` (type) |
 | C5 | Hermitian vs symmetric, conj vs no-conj, `zrot`'s complex sine: follow the Fortran exactly. | Silent wrong answers otherwise. | `skill:blahpack-translate#complex-arithmetic`; `harness:reconstruction` |
 
 ## F: Files and module surface
@@ -138,7 +137,7 @@ of the third:
 | ID | Rule | Rationale | Enforcer |
 |---|---|---|---|
 | J1 | `base.js` is `@private`; `ndarray.js` is not. | `ndarray.js` is public; `base.js` is internal. | `conf:implementation.ndarray-not-private`; `conf:implementation.base-is-private` (warn) |
-| J2 | Public functions document `@param`, `@returns`, and one `@throws` per validation. | stdlib docs. | (unbuilt; Step 3 JSDoc ↔ spec) |
+| J2 | Public functions document `@param`, `@returns`, and one `@throws` per validation. | stdlib docs. | `lint:spec-jsdoc` |
 | J3 | `base.js` and `ndarray.js` carry a runnable `@example`. | stdlib docs. | `conf:jsdoc.base-example`, `conf:jsdoc.ndarray-example` (warn; 1,716 missing) |
 | J4 | No scaffold noise: no `TODO` in `@param`, `{TODO}`, `@returns {*}`, `,.` typos, stray `//` copyright lines, or "not yet implemented" stubs. | Leftover scaffold reads as documentation. | `lint:no-todo-params`, `lint:no-stub-wrappers`, `conf:scaffold-noise.*`, `conf:scaffolding.no-stub-wrappers` (dup) |
 | J5 | No `TODO` in `base.js`, `README.md`, or examples. An uncoverable branch gets a plain comment saying why (e.g. `// Unreachable for finite input: …`). Known divergences from the reference go in `DIFFERENCES.md` or a ticket. | TODOs rot; the gate rejects them. | `conf:scaffolding.no-todo-base`, `conf:scaffolding.no-todo-readme`, `conf:scaffolding.examples-filled`, `conf:scaffolding.index-example` |
@@ -249,10 +248,11 @@ the prose has been corrected.
 | `dstebz`/`dlarrd` param `order` vs D1 | D1: D1 governs the layout flag only. **Ratified 2026-11-19.** |
 | Drop vs keep `INCX==1` specializations (performance vs optimization policy) | X5. |
 | "Aim for L3" vs "no routine ships below L3" | T7: L3 is the definition of done; not yet gated. |
-| `wrapper-signature` README: an exact wrapper check "would be wrong" | Superseded by S4/`sig`. |
+| `wrapper-signature` README: an exact wrapper check "would be wrong" | Superseded by S4/`lint:spec-signature`. |
 | `run_fortran.sh` can't compile `la_constants` modules (CLAUDE.md, translate skill) | Stale: `test/run_fortran.sh` builds them; list them in `deps_<r>.txt`. |
 
 ## Conformance standing
 
-`node lint/verify-corpus.cjs` and `node lint/verify-signatures.cjs` report the
-exact checks over the corpus. Both S3 and S4 are clean and gated in CI.
+`node lint/verify-corpus.cjs` reports every lint rule over the corpus, and
+`bin/spec xcheck` the spec ↔ signature comparison. Both are clean, and the
+`spec-*` rules gate CI.

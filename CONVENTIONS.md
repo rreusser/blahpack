@@ -229,20 +229,20 @@ the prose has been corrected.
 | `isMatrixTranspose` vs `isTransposeOperation` | V9: `isTransposeOperation`. |
 | Apache license header (`ndarray-conformance.md`) | F4: MIT. |
 | TODO comments for known issues/uncoverable branches (translate skill) vs `no-todo-base` | J5: no TODO; plain comment, `DIFFERENCES.md`, or a ticket. |
-| Pivoting tests: verify residuals, not fixture pivots (translate skill) | T1: match Fortran exactly. |
+| Pivoting tests: verify residuals, not fixture pivots (translate skill) | T1: match Fortran exactly. The exception is a non-unique, ill-conditioned output, which compares the invariant. **Ratified 2026-11-19.** |
 | Use stdlib `is-almost-equal-float64array` in tests (translate skill; 0 modules do) | Dropped. Not a convention; local tolerance helpers stand. |
 | CommonJS `require` / "base.js is CommonJS" (translate skill, blis doc) | N4: ESM. |
 | index.js native-addon fallback | F3: none. |
 | "Only base.js + test.js required initially" | F1: full file set. |
-| Quick return in ndarray.js (open ruling) | V10: in `base.js`; `ndarray.js` may repeat it, and must before the workspace check. |
-| Stride-zero policy (open ruling) | V7: reject iff the reference rejects. |
+| Quick return in ndarray.js (open ruling) | V10: in `base.js`; `ndarray.js` may repeat it, and must before the workspace check. **Ratified 2026-11-19.** |
+| Stride-zero policy (open ruling) | V7: reject iff the reference rejects. **Ratified 2026-11-19.** |
 | Complex strides in doubles for some routines (`complex-numbers.md`) | C1/C2: always complex elements, doubled internally. |
 | Inline complex `abs` "safe to inline" (translate skill) | C3: never; use `cmplx.abs`. |
 | `DLAMCH('S') → Number.MIN_VALUE` | X4: smallest normal. |
 | ndarray.js converts IPIV from 1-based | S12: public API is 0-based, passed through. |
 | Undersized WORK makes the callee allocate (`dependency-conventions.md`) | W3/D4: it throws. |
 | `LWORKL` vs no-LWORK | W1: named exception. |
-| `dstebz`/`dlarrd` param `order` vs D1 | D1: D1 governs the layout flag only. |
+| `dstebz`/`dlarrd` param `order` vs D1 | D1: D1 governs the layout flag only. **Ratified 2026-11-19.** |
 | Drop vs keep `INCX==1` specializations (performance vs optimization policy) | X5. |
 | "Aim for L3" vs "no routine ships below L3" | T7: L3 is the definition of done; not yet gated. |
 | `wrapper-signature` README: an exact wrapper check "would be wrong" | Superseded by S4/`sig`. |

@@ -20,6 +20,7 @@ program test_dlagts
   call begin_test('solve_job_m1')
   call print_int('info', info)
   call print_array('y', y, 5)
+  call print_scalar('tol', tol)
   call end_test()
 
   ! Test 2: Solve transpose with perturbation (job=-2)
@@ -34,6 +35,7 @@ program test_dlagts
   call begin_test('solve_job_m2')
   call print_int('info', info)
   call print_array('y', y, 5)
+  call print_scalar('tol', tol)
   call end_test()
 
   ! Test 3: N=0

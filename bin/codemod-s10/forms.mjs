@@ -145,9 +145,10 @@ export function detect( routine ) {
 				form[ name ] = { kind: 'array', param: pname };
 			} else if ( fieldKey ) {
 				form[ name ] = { kind: 'value', param: pname, key: fieldKey };
-			} else if ( p.intent === 'out' ) {
+			} else if ( p.intent === 'out' || p.intent === 'inout' ) {
 				// An output param taken by value and never written back (M of
-				// dtrevc): it becomes an array; the body must be fixed to set it.
+				// dtrevc; TOL of dlagts): it becomes an array. An in/out one is
+				// written by the arrayified body; an out one the body must set.
 				form[ name ] = { kind: 'value', param: pname, key: null };
 			} else {
 				problems.push( name + ': by-value param, no result field' );

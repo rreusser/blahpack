@@ -330,6 +330,26 @@ export class FileRewriter {
 		return null;
 	}
 
+	// Is `id` a `let`/`var` local or a parameter (not a const or import)?
+	isAssignable( id ) {
+		for ( let fn = enclosingFunction( id ); fn; fn = enclosingFunction( fn ) ) {
+			if ( fn.params.some( ( q ) => q.type === 'Identifier' && q.name === id.name ) ) {
+				return true;
+			}
+			let kind = null;
+			walkParents( fn.body, ( n ) => {
+				if ( n.type === 'VariableDeclarator' && n.id.type === 'Identifier' && n.id.name === id.name ) {
+					kind = n.__parent.kind;
+				}
+				return true;
+			});
+			if ( kind ) {
+				return kind !== 'const';
+			}
+		}
+		return false;
+	}
+
 	rewriteCall( c ) {
 		const { node } = c;
 		const P = c.b.P;
@@ -511,6 +531,13 @@ export class FileRewriter {
 					}
 					if ( p.intent !== 'out' && v !== arr[ p.name ] + '[ 0 ]' ) {
 						pre.push( arr[ p.name ] + '[ 0 ] = ' + v + ';' );
+						// In/out with no result field (TOL of dlagts): the
+						// Fortran writes the caller's variable, so copy back
+						// into an assignable local.
+						const a0 = node.arguments[ m.from ];
+						if ( P.form[ p.name ].key === null && a0.type === 'Identifier' && this.isAssignable( a0 ) ) {
+							post.push( a0.name + ' = ' + arr[ p.name ] + '[ 0 ];' );
+						}
 					}
 					return arr[ p.name ];
 				}

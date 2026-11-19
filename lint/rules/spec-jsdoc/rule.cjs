@@ -27,9 +27,11 @@ function leadingJSDoc( source, fn ) {
 	if ( fn.parent && fn.parent.type === 'ExportDefaultDeclaration' ) {
 		node = fn.parent;
 	}
-	comments = source.getCommentsBefore( node );
+	comments = source.getCommentsBefore( node ).filter( function f( x ) {
+		return x.type === 'Block' && x.value.charAt( 0 ) === '*';
+	});
 	c = comments[ comments.length - 1 ];
-	return ( c && c.type === 'Block' && c.value.charAt( 0 ) === '*' ) ? c : null;
+	return c || null;
 }
 
 function show( list ) {

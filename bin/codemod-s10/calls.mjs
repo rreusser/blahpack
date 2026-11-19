@@ -87,7 +87,7 @@ function lc( s ) {
 // References to `name` in function `fn` (not crossing a rebinding function).
 function refsIn( fn, name ) {
 	const refs = [];
-	walkParents( fn.body || fn, ( n ) => {
+	walkParents( fn.type === 'Program' ? fn : fn.body, ( n ) => {
 		if ( n !== fn && isFunction( n ) && n.params.some( ( p ) => p.type === 'Identifier' && p.name === name ) ) {
 			return false;
 		}
@@ -346,8 +346,11 @@ export class FileRewriter {
 		let truncated = false;
 		let extra = false;
 		if ( nargs !== oldL.length ) {
-			if ( nargs === newL.length && oldL.length !== newL.length ) {
-				return; // already migrated
+			// Already migrated: new arity, and an identifier (not a literal
+			// placeholder) where each output array goes.
+			const outIdx = newL.map( ( n, i ) => ( P.outs.some( ( q ) => lc( P.pname[ q.name ] ) === lc( n ) ) && !oldL.some( ( o ) => lc( o ) === lc( n ) ) ? i : -1 ) ).filter( ( i ) => i !== -1 );
+			if ( nargs === newL.length && oldL.length !== newL.length && outIdx.every( ( i ) => node.arguments[ i ].type !== 'Literal' && !( node.arguments[ i ].type === 'Identifier' && oldL[ i ] && lc( node.arguments[ i ].name ) === lc( oldL[ i ] ) ) ) ) {
+				return;
 			}
 			if ( nargs < oldL.length && nargs > 0 ) {
 				// Trailing arguments omitted (argument-validation tests): map
@@ -541,7 +544,9 @@ export class FileRewriter {
 				return arr[ p.name ];
 			}
 			if ( ins.offsetOf ) {
-				return own && c.kind !== 'strided' ? offsetName( ins.offsetOf ) : '0';
+				// The ndarray wrapper passes its own offset through; the strided
+				// wrapper (no offset param) and other callers pass 0.
+				return own && path.basename( this.file ) === 'ndarray.js' ? offsetName( ins.offsetOf ) : '0';
 			}
 			return ins;
 		});
@@ -635,7 +640,9 @@ export class FileRewriter {
 				byKey.set( lc( f.key ), arr[ p.name ] );
 			}
 		}
-		const seg = refs.filter( ( r ) => r.start > call.end && r.start < segEnd && !( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) );
+		// The boundary itself (C passed to the next migrating call, or C
+		// reassigned) is not a read of this call's outputs.
+		const seg = refs.filter( ( r ) => r.start > call.end && r.start < segEnd && !( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) && !( r.__parent.type === 'CallExpression' && r.__parent.arguments.includes( r ) && this.waveCalls.has( r.__parent ) ) );
 		const edits = [];
 		for ( const r of seg ) {
 			const m = r.__parent;
@@ -811,6 +818,9 @@ export class FileRewriter {
 			}
 			void infoUses;
 		}
+		// One property per line (keeps `'K': …` keys alone on their line).
+		const ind = lineIndent( src, stmt.start );
+		const objLit = ( ps ) => ( ps.length > 1 ? '{\n' + ps.map( ( x ) => ind + '\t' + x ).join( ',\n' ) + '\n' + ind + '}' : '{ ' + ps.join( ', ' ) + ' }' );
 		// Fallback: rebuild the old object after the call. A dropped key echoed
 		// an input argument; it echoes the same argument.
 		const props = oldKeys.filter( ( k ) => k !== 'info' ).map( ( k ) => '\'' + k + '\': ' + readOf( k ) );
@@ -826,11 +836,11 @@ export class FileRewriter {
 				// The call still returns an object with info + extras: merge.
 				return 'Object.assign( ' + callText + ', { ' + props.join( ', ' ) + ' } )';
 			}
-			return '{ ' + ( P.hasInfoKey ? [ '\'info\': ' + callText ] : [] ).concat( props ).join( ', ' ) + ' }';
+			return objLit( ( P.hasInfoKey ? [ '\'info\': ' + callText ] : [] ).concat( props ) );
 		}
 		if ( resKind === 'decl' || resKind === 'assign' || resKind === 'return' ) {
 			pre.push( callText + ';' );
-			return '{ ' + props.join( ', ' ) + ' }';
+			return objLit( props );
 		}
 		this.problem( 'cannot rebuild result of ' + P.routine + ' inline', node );
 		return callText;
@@ -908,7 +918,7 @@ export function removeDead( src, names, anyInit ) {
 				// Refs bound to this declarator: refs in its scope not under a
 				// nested function that declares the name itself.
 				const refs = [];
-				walkParents( scope.body || scope, ( n ) => {
+				walkParents( scope.type === 'Program' ? scope : scope.body, ( n ) => {
 					if ( n !== scope && isFunction( n ) ) {
 						let own = n.params.some( ( p ) => p.type === 'Identifier' && p.name === name );
 						walkParents( n.body, ( m ) => {
@@ -960,7 +970,7 @@ export function removeDead( src, names, anyInit ) {
 			if ( !keep.length ) {
 				const span = lineSpan( src, decl.start, decl.end );
 				// Take the comment lines directly above with it.
-				if ( span.start !== decl.start ) {
+				if ( span.end !== decl.end ) {
 					for ( ;; ) {
 						const prev = src.lastIndexOf( '\n', span.start - 2 ) + 1;
 						if ( span.start === 0 || !/^\s*\/\/[^\n]*\n$/.test( src.slice( prev, span.start ) ) ) {

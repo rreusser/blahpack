@@ -48,6 +48,7 @@ export function transformBase( src, P ) {
 	const outByName = new Map( P.outs.map( ( p ) => [ p.name, p ] ) );
 	const arrayified = new Set();
 	const renamedLocal = new Map();
+	const keptLocal = new Map();
 	let needReinterpret = false;
 
 	// 0. A local length-1 array already named after an output (a caller-side
@@ -119,6 +120,36 @@ export function transformBase( src, P ) {
 		} else if ( !bi.decls.length && bi.refs.length && main.params.every( ( q ) => q.name !== N ) ) {
 			// Only the array itself (a pass-through argument written by the
 			// call-site rewrite): nothing to arrayify.
+			continue;
+		}
+		// Keep-local: an output the body assigns inside a loop stays in a
+		// local (`dminLocal`) and is written to its array on return, so hot
+		// loops don't store through a typed array on every iteration.
+		const inLoop = ( n ) => {
+			for ( let a = n.__parent; a && a !== main; a = a.__parent ) {
+				if ( /^(For|ForIn|ForOf|While|DoWhile)Statement$/.test( a.type ) ) {
+					return true;
+				}
+			}
+			return false;
+		};
+		const loopWrite = f.kind !== 'value' && bi.decls.length && bi.refs.some( ( r ) => {
+			const m = r.__parent;
+			return ( ( m.type === 'AssignmentExpression' && m.left === r ) || m.type === 'UpdateExpression' ) && inLoop( r );
+		});
+		if ( loopWrite ) {
+			let nn = N + 'Local';
+			for ( let k = 2; usedAll.has( nn ); k++ ) {
+				nn = N + 'Local' + k;
+			}
+			usedAll.add( nn );
+			for ( const d of bi.decls ) {
+				edits.push( { start: d.id.start, end: d.id.end, text: nn } );
+			}
+			for ( const r of bi.refs ) {
+				edits.push( { start: r.start, end: r.end, text: nn } );
+			}
+			keptLocal.set( N, nn );
 			continue;
 		}
 		for ( const d of bi.decls ) {

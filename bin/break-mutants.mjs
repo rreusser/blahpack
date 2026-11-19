@@ -249,14 +249,21 @@ function analyze( routine, equivalent ) {
 	for ( const { file, orig, found } of work ) {
 		for ( const site of found ) {
 			for ( const m of mutants( orig, site ) ) {
-				const outcome = runTests( dir, file, m.src );
+				// A mutant that does not parse would "fail" its tests and look killed.
+				let outcome;
+				try {
+					espree.parse( m.src, { 'ecmaVersion': 2022, 'sourceType': 'module' } );
+					outcome = runTests( dir, file, m.src );
+				} catch ( e ) {
+					outcome = 'invalid';
+				}
 				const line = site.breaks[ 0 ].loc.start.line;
 				const k = key( file, line, m.kind );
 				results.push({
 					'site': path.relative( ROOT, file ) + ':' + line,
 					'kind': m.kind,
 					'next': snippet( orig, site.next ),
-					'killed': outcome !== 'pass',
+					'killed': outcome === 'fail' || outcome === 'timeout',
 					'outcome': outcome,
 					'equivalent': equivalent[ k ] || null
 				});
@@ -278,7 +285,7 @@ function main( argv ) {
 				console.log( r + ': ' + res.error );
 			} else {
 				res.results.forEach( ( x ) => {
-					const tag = x.killed ? 'killed  ' : ( x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED' );
+					const tag = ( x.outcome === 'invalid' ) ? 'INVALID ' : x.killed ? 'killed  ' : ( x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED' );
 					console.log( tag + '  ' + x.site + '  ' + x.kind + '  next: ' + x.next );
 				});
 			}
@@ -288,7 +295,7 @@ function main( argv ) {
 	if ( asJson ) {
 		console.log( JSON.stringify( all, null, 1 ) );
 	}
-	const bad = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && !x.equivalent ) );
+	const bad = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && ( !x.equivalent || x.outcome === 'invalid' ) ) );
 	if ( !asJson ) {
 		const total = all.reduce( ( n, r ) => n + ( r.results || [] ).length, 0 );
 		const unreach = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && /^UNREACHABLE/.test( x.equivalent || '' ) ) );

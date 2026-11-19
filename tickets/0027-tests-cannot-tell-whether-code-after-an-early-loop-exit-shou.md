@@ -25,7 +25,15 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
 
 ## Remaining
 
-- The check is not in CI and has only been run on routines whose Fortran has exits that skip code. Loops whose JS `break` was introduced in translation (no Fortran GO TO) are unchecked. A full-corpus run plus a CI gate on changed routines would close this.
+- Full-corpus run (2026-11-19; the other 874 modules): 119 have break sites, giving 220 mutants. 136 are killed; 84 survive in 68 routines, not yet triaged. They cluster into families:
+  - `lstres = 0.0` after the refinement loop in about 19 `*rfs` routines;
+  - `if ( ainvnm !== 0.0 )` in 12 `*la_*cond*` routines;
+  - `if ( !bail )` in 8 `*con` routines;
+  - `FERR[…]` in 6 triangular/tridiagonal `*rfs` routines;
+  - `kk = k ± kstep ∓ 1` in 6 `*sytrf_rk`/`*hetrf_rk` panel routines;
+  - `x_state` in 3 `*la_*rfsx_extended` routines;
+  - plus singletons (`dlar1v`/`zlar1v`, `dhsein`, `*gebal`, `dlasq3`/`dlasq4`, `dlarrb`/`dlarrf`/`dlarrj`/`dlarrr`, `dlarft`, `drscl`/`zdrscl`, …).
+- The check is not in CI. A CI gate on changed routines would keep this closed once the backlog is triaged.
 - Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 
 ## Reproduce

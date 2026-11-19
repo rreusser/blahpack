@@ -28,7 +28,8 @@ function insertOutputs( list, spec, outs, groupsOf ) {
 		const gi = groups.findIndex( ( g ) => g.param === p );
 		let at = 0;
 		for ( let j = gi - 1; j >= 0; j-- ) {
-			const prev = groups[ j ].names.concat( [ groups[ j ].param.name ] ).map( lc );
+			// Base names, plus the strided form's `LD<NAME>` for a matrix.
+			const prev = groups[ j ].names.concat( [ groups[ j ].param.name, 'LD' + groups[ j ].param.name ] ).map( lc );
 			let idx = -1;
 			out.forEach( ( x, k ) => {
 				if ( prev.includes( lc( x ) ) ) {

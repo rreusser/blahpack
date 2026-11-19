@@ -344,6 +344,7 @@ export class FileRewriter {
 		}
 		const nargs = node.arguments.length;
 		let truncated = false;
+		let extra = false;
 		if ( nargs !== oldL.length ) {
 			if ( nargs === newL.length && oldL.length !== newL.length ) {
 				return; // already migrated
@@ -352,9 +353,15 @@ export class FileRewriter {
 				// Trailing arguments omitted (argument-validation tests): map
 				// the given ones by name; trailing omissions stay omitted.
 				truncated = true;
+			} else if ( nargs > oldL.length ) {
+				// Extra trailing arguments (a dropped `lwork`, or an example
+				// that was already wrong): remap the signature's arguments and
+				// keep the extras at the end, ignored as before.
+				extra = true;
+				this.warnings.push( path.relative( ROOT, this.file ) + ':' + this.line( node.start ) + ': ' + P.routine + ' called with ' + nargs + ' args, old signature has ' + oldL.length + ' (extras kept at the end)' );
 			}
 		}
-		if ( nargs !== oldL.length && !truncated ) {
+		if ( nargs !== oldL.length && !truncated && !extra ) {
 			// Not a call of the old signature (argument-validation tests with
 			// too few args, or an example that was already wrong): leave it.
 			this.warnings.push( path.relative( ROOT, this.file ) + ':' + this.line( node.start ) + ': ' + P.routine + ' called with ' + nargs + ' args, old signature has ' + oldL.length + ' (left unchanged)' );
@@ -535,6 +542,11 @@ export class FileRewriter {
 			}
 			return ins;
 		});
+		if ( extra ) {
+			for ( let k = oldL.length; k < nargs; k++ ) {
+				newArgs.push( render( src, this.edits, node.arguments[ k ].start, node.arguments[ k ].end ) );
+			}
+		}
 		const open = src.indexOf( '(', node.callee.end );
 		const callText = src.slice( node.start, open ) + '( ' + newArgs.join( ', ' ) + ' )';
 

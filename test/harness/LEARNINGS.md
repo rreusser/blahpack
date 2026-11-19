@@ -2377,3 +2377,52 @@ Keep entries short. Newest first.
   comparison against the reference shows it.
 - **Generalization**: `dlaqr3`'s `nmin = 12` (reference 75) and
   `zlaqr0`/`zlaqr4`'s fixed NWR/NSR remain (tickets/0031).
+
+---
+
+## 2026-11-19 — dpocon/dppcon/dpbcon/zpbcon: the overflow bail of the DLACN2 loop fell into the RCOND computation the Fortran skips → rcond ≈ 2.9e-308 instead of 0
+
+- **What**: found while triaging `bin/break-mutants.mjs` survivors in the
+  `*con` family (tickets/0027). The siblings `zpocon`/`zppcon` were correct.
+  These four were not on the triage list and had no survivor at all, because the
+  tool treated both exits of the loop alike.
+- **Root cause**: the Fortran leaves the DLACN2 loop on overflow with
+  `IF( SCALE.LT.ABS( WORK( IX ) )*SMLNUM .OR. SCALE.EQ.ZERO ) GO TO 20`, where
+  label 20 lies past `IF( AINVNM.NE.ZERO ) RCOND = ( ONE / AINVNM ) / ANORM`. The
+  JS used `KASE[ 0 ] = 0; break;`, which runs that computation.
+- **Repro**: `dpocon( uplo, 2, [1, 0, 0, 1.2e-154], 1, 2, 0, 1.0, … )` (and the
+  packed and band equivalents). The second solve overflows while EST is already
+  about 3.5e307, so the reference gives rcond = 0 but the old code gave
+  2.88e-308. Regression tests in each module fail on the old code.
+- **Fix (APPLIED)**: `return 0;` at the bail (rcond is already 0).
+- **Bug class**: `goto-translation`, the third instance this week: a `GO TO`
+  past post-loop code translated as `break`. This time only ONE of the loop's
+  two exits must skip the code.
+- **Detection**: `bin/break-mutants.mjs` now adds a `skip-after-this-break`
+  mutant per `break` when a loop has several. It also no longer wraps a
+  `const`/`let` declaration (that caused a ReferenceError and a false "killed").
+  On the old `dpocon` it reports the bail exit as SURVIVED.
+
+---
+
+## 2026-11-19 — zlasyf_rk mixed two variants of the KP≠KK column interchange → wrong factorization whenever rook pivoting needs a real interchange
+
+- **What**: found while triaging break mutants in the `*sytrf_rk` panel family
+  (tickets/0027). A new residual test (rook-forcing 6×6 matrix, one panel,
+  solved with `zsytrs_3`) gave solve errors of 0.16 (upper) and 1.08 (lower),
+  against about 2e-15 from the unblocked `zsytf2_rk`.
+- **Root cause**: the reference sets `A(KP,K) = A(KK,K)` and counts the following
+  copies from K. The JS kept that assignment but used the copy counts of the
+  OTHER variant (which sets `A(KP,KP) = A(KK,KK)` and counts from KK):
+  `kk-1-kp` instead of `K-1-KP` (upper) and `kp-kk-1` from row kk+1 instead of
+  `KP-K-1` from row K+1 (lower). The upper column copy also dropped Fortran's
+  1-based count `KP`, copying `kp` instead of `kp+1` elements.
+- **Fix (APPLIED)**: counts as in `zlasyf_rk.f` lines 526/528/843. The panel now
+  matches `zsytf2_rk` to 3e-16. Affects `zsytrf_rk` for N > nb.
+- **Bug class**: `variant-mixing`: a translation that combines two valid forms of
+  the same step but takes index bounds from the wrong one. It only shows with a
+  rook search that needs a KP ≠ KK interchange, which the Fortran fixtures never
+  exercised.
+- **Generalization**: grep of every `kk-1-kp` / `kp-kk-1` site in the
+  `*lasyf*`/`*lahef*` routines found zlasyf_rk the only mixed one; `dlasyf_rk`
+  and `zlasyf_rook` use the other variant consistently.

@@ -19,6 +19,9 @@
 *   skip-after-break   S runs only if the loop finished without breaking
 *   drop-guard         S is `if ( G ) B` with no else: replaced by B, so B
 *                      runs on every exit (the old *latrs bug)
+*   skip-after-this-break  (loops with several breaks) S skipped after one
+*                      particular break only (the old *pocon bug); keyed by
+*                      that break's line
 *
 * and runs the routine's own tests against each mutant. Mutants are served in
 * memory by bin/break-mutants-loader.mjs; the working tree is never modified, so
@@ -91,11 +94,15 @@ function sites( src ) {
 					return;
 				}
 				const brks = ownBreaks( st );
-				const next = body[ i + 1 ] || nextAfter( n, ancestors );
-				if ( !brks.length || !next ) {
+				const after = ( body[ i + 1 ] ) ? { 'next': body[ i + 1 ], 'anchor': st } : nextAfter( n, ancestors );
+				if ( !brks.length || !after ) {
 					return;
 				}
-				out.push( { 'loop': st, 'breaks': brks, 'next': next } );
+				const target = pastDeclarations( after.next, ( body[ i + 1 ] ) ? body : null, n, ancestors );
+				if ( !target ) {
+					return;
+				}
+				out.push( { 'loop': st, 'breaks': brks, 'next': target, 'anchor': after.anchor } );
 			});
 		}
 		children( n ).forEach( ( c ) => rec( c, ancestors.concat( n ) ) );
@@ -103,8 +110,39 @@ function sites( src ) {
 	return out;
 }
 
+// Wrapping a `const`/`let` declaration in `if ( !flag ) { … }` moves it into a
+// block, so later uses throw a ReferenceError and the mutant looks killed. When
+// S is a declaration, keep it (it only names a value) and mutate the first
+// non-declaration statement after it in the same block instead.
+function pastDeclarations( next, siblings, block, ancestors ) {
+	if ( next.type !== 'VariableDeclaration' ) {
+		return next;
+	}
+	const owner = siblings || containingBody( next, block, ancestors );
+	if ( !owner ) {
+		return null;
+	}
+	for ( let k = owner.indexOf( next ); k < owner.length; k++ ) {
+		if ( owner[ k ].type !== 'VariableDeclaration' ) {
+			return owner[ k ];
+		}
+	}
+	return null;
+}
+
+function containingBody( node, block, ancestors ) {
+	const all = ancestors.concat( block );
+	for ( let k = all.length - 1; k >= 0; k-- ) {
+		const b = all[ k ].body;
+		if ( Array.isArray( b ) && b.indexOf( node ) >= 0 ) {
+			return b;
+		}
+	}
+	return null;
+}
+
 // The statement that runs after `block` finishes, climbing out through `if`
-// branches and plain blocks. Stops (returns null) at a loop, function, switch
+// branches and plain blocks, as { next, anchor }. Stops (returns null) at a loop, function, switch
 // or try boundary: past those, "after the loop" no longer means "after exit".
 function nextAfter( block, ancestors ) {
 	let child = block;
@@ -117,7 +155,9 @@ function nextAfter( block, ancestors ) {
 		if ( a.type === 'BlockStatement' ) {
 			const idx = a.body.indexOf( child );
 			if ( idx >= 0 && idx + 1 < a.body.length ) {
-				return a.body[ idx + 1 ];
+				// `anchor` precedes `next` in the same block, so a flag reset
+				// before it runs on every path that reaches `next`.
+				return { 'next': a.body[ idx + 1 ], 'anchor': child };
 			}
 			child = a;
 			continue;
@@ -151,12 +191,26 @@ function mutants( src, site ) {
 	if ( completionGuard( src, loop, next ) ) {
 		return out.concat( dropGuard( src, next ) );
 	}
-	const edits = breaks.map( ( b ) => [ b.range[ 0 ], b.range[ 1 ], '{ ' + FLAG + ' = true; break; }' ] );
-	edits.push( [ loop.range[ 0 ], loop.range[ 0 ], 'var ' + FLAG + ' = false; ' ] );
-	edits.push( [ next.range[ 0 ], next.range[ 1 ], 'if ( !' + FLAG + ' ) { ' + nextSrc + ' }' ] );
-	out.push( { 'kind': 'skip-after-break', 'src': apply( src, edits ) } );
+	out.push( { 'kind': 'skip-after-break', 'src': skipOn( src, site, breaks, nextSrc ) } );
+
+	// skip-after-this-break: with several exits, each may need different
+	// handling (e.g. dpocon: the KASE exit runs S, the overflow bail must not).
+	if ( breaks.length > 1 ) {
+		breaks.forEach( ( b ) => {
+			out.push( { 'kind': 'skip-after-this-break', 'line': b.loc.start.line, 'src': skipOn( src, site, [ b ], nextSrc ) } );
+		});
+	}
 
 	return out.concat( dropGuard( src, next ) );
+}
+
+// Source with S skipped whenever one of `brks` was taken. The flag is reset
+// before the anchor, so it cannot carry over from an earlier pass.
+function skipOn( src, site, brks, nextSrc ) {
+	const edits = brks.map( ( b ) => [ b.range[ 0 ], b.range[ 1 ], '{ ' + FLAG + ' = true; break; }' ] );
+	edits.push( [ site.anchor.range[ 0 ], site.anchor.range[ 0 ], 'var ' + FLAG + ' = false; ' ] );
+	edits.push( [ site.next.range[ 0 ], site.next.range[ 1 ], 'if ( !' + FLAG + ' ) { ' + nextSrc + ' }' ] );
+	return apply( src, edits );
 }
 
 // drop-guard: `if ( G ) B` (no else) -> `B`.
@@ -257,7 +311,7 @@ function analyze( routine, equivalent ) {
 				} catch ( e ) {
 					outcome = 'invalid';
 				}
-				const line = site.breaks[ 0 ].loc.start.line;
+				const line = m.line || site.breaks[ 0 ].loc.start.line;
 				const k = key( file, line, m.kind );
 				results.push({
 					'site': path.relative( ROOT, file ) + ':' + line,

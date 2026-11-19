@@ -28,10 +28,11 @@ const sa0 = isrm ? strideA2 : strideA1;  // fast (inner) stride
 const sa1 = isrm ? strideA1 : strideA2;  // slow (outer) stride
 ```
 
-## 3. Drop Fortran stride-1 specialization
+## 3. Fortran stride-1 specialization
 
 The general stride/offset loop handles unit stride fine. Don't port the
-`IF (INCX.EQ.1)` branches.
+`IF (INCX.EQ.1)` branches by default; add one only as a measured
+optimization (CONVENTIONS X5, `docs/optimization-policy.md`).
 
 ## 4. Preserve zero-element guards
 
@@ -41,17 +42,17 @@ The general stride/offset loop handles unit stride fine. Don't port the
 ## 5. Hoist machine constants to module scope
 
 Fortran routines call DLAMCH inside the function body. In JavaScript, each
-call goes through `charAt(0).toUpperCase()` plus an if-chain — V8 cannot
-constant-propagate through this. Move to module-level:
+call is a table lookup V8 cannot constant-propagate. Move to module level
+(CONVENTIONS X4):
 ```javascript
 // BAD: 3 dlamch calls per invocation × 200K invocations = 600K calls
 function dladiv( a, b, c, d, out ) {
-    const ov = dlamch( 'O' );  // same value every time
+    const ov = dlamch( 'overflow' );  // same value every time
     ...
 }
 
-// GOOD: computed once at require() time
-const OV = dlamch( 'O' );
+// GOOD: computed once at module load
+const OV = dlamch( 'overflow' );
 function dladiv( a, b, c, d, out ) {
     // use OV directly
     ...

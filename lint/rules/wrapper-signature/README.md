@@ -2,15 +2,9 @@
 
 **The strided `<routine>.js` wrapper must keep stride/array naming discipline.**
 
-`<routine>.js` is the classic BLAS/LAPACK-style public API: it takes leading
-dimensions (`LDA`) rather than strides+offsets for matrices, computes offsets
-internally, and prepends `order` for the CBLAS-style routines. Unlike
-`base.js`/`ndarray.js`, it is **not** a rigid expansion of the Fortran signature
-— across the corpus its exact shape is legitimately irregular (`order` is
-present only sometimes, some auxiliary arrays drop their strides, some scalars
-are renamed). A bit-exact derived check would be wrong here.
-
-What is invariant is **naming discipline**, and that is what this rule enforces:
+`<routine>.js` is the classic BLAS/LAPACK-style public API. Its exact shape is
+the strided projection of `base.js` (CONVENTIONS S4, D1–D3), enforced by
+`lint/verify-signatures.cjs`. This rule checks only **stride naming**:
 
 * Every `stride*` parameter must resolve to a real array parameter, using the
   shared naming logic in [`lint/lib/naming.cjs`](../../lib/naming.cjs) —
@@ -24,8 +18,7 @@ What is invariant is **naming discipline**, and that is what this rule enforces:
   Fortran-native names (`LDAB`, `LDGCOL`, `LDGNUM`) that need not derive from the
   JS array name.
 
-This catches the real defect class — a stride whose array was renamed or dropped
-— without imposing a false rigid shape on a legitimately varied wrapper.
+This catches a stride whose array was renamed or dropped.
 
 ## Files
 

@@ -1,7 +1,7 @@
 // Shared helpers for the strided-wrapper signature codemods.
 //
 // The strided wrapper `<routine>.js` must equal the exact strided projection of
-// `base.js` (lint/CONVENTIONS.md D1–D3, lint/lib/strided-projection.cjs). These
+// `base.js` (CONVENTIONS.md D1–D3, lint/lib/strided-projection.cjs). These
 // helpers load every module's signatures, locate every call site of a wrapper
 // anywhere in the repository (by resolving imports with an AST parser, not by
 // name matching), and rewrite those calls from an old parameter list to a new

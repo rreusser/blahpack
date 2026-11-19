@@ -1,6 +1,6 @@
 # `workspace-addressing-honored`
 
-Caller-owned workspace contract (`lint/CONVENTIONS.md` D5): `base.js` honors
+Caller-owned workspace contract (`CONVENTIONS.md` D5): `base.js` honors
 the declared offset; a declared stride is either rejected by `ndarray.js` or
 honored by `base.js`.
 

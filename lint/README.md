@@ -1,7 +1,7 @@
 # `lint/` — the blahpack lint library
 
 A single, coherent library of lint rules that enforce the Fortran→JavaScript
-translation conventions. Each rule is a **self-contained directory** — its
+translation conventions (owned by [`CONVENTIONS.md`](../CONVENTIONS.md)). Each rule is a **self-contained directory** — its
 implementation, its specification, and its worked examples all live together —
 so a rule reads as one artifact you can understand end to end, not a fragment
 scattered across a `bin/` of scripts and a config file.
@@ -10,8 +10,8 @@ scattered across a `bin/` of scripts and a config file.
 
 1. **One rule, one directory.** `lint/rules/<name>/` holds the rule
    (`rule.cjs`), its spec (`README.md`), pass/fail fixtures (`fixtures/`), and
-   its own test (`test.cjs`). Adding a rule means adding a directory; there is
-   no central registry to edit beyond listing it in `plugin.cjs`.
+   its own test (`test.cjs`). Adding a rule means adding a directory; `plugin.cjs`
+   discovers it, and `eslint.config.cjs` enables it.
 
 2. **No exemptions.** There is deliberately no configuration file, allowlist, or
    per-module suppression mechanism. The previous conformance setup accreted a
@@ -39,10 +39,15 @@ lint/
   README.md                    ← this file
   plugin.cjs                   ← assembles rules/*/rule.cjs into an ESLint plugin
   verify-corpus.cjs            ← runs every rule over all module files (the gate)
+  verify-signatures.cjs        ← exact S3/S4 signature projections (`sig`)
+  verify-no-escape-hatches.cjs ← rejects baselines/allowlists/skips (`hatch`)
+  no-fortran-source.test.cjs   ← CI never reads vendored Fortran (T6)
   lib/
     fortran-data.cjs           ← loads parsed Fortran argument metadata
     naming.cjs                 ← shared stride/offset naming-discipline check
-    require-eslint.cjs          ← resolves eslint locally or globally
+    strided-projection.cjs     ← base.js → <routine>.js projection (S4)
+    fixture-test.cjs           ← shared fixture runner for rule tests
+    require-eslint.cjs         ← resolves eslint locally or globally
   rules/
     fortran-signature/         ← base.js + ndarray.js params expand the Fortran signature
       README.md  rule.cjs  derive.cjs
@@ -53,6 +58,7 @@ lint/
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
     module-exports/            ← index.js/main.js expose the default + ndarray surface
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
+    <name>/                    ← every other rule, same shape
 ```
 
 ## Commands
@@ -79,16 +85,17 @@ workspace strategy and catch scaffolding/convention defects:
 | Rule | Files | Enforces |
 | --- | --- | --- |
 | [`fortran-signature`](rules/fortran-signature/) | `base.js`, `ndarray.js` | The offset-form parameter list faithfully expands the reference Fortran signature (computed from the parsed Fortran, checked against the JS). |
-| [`wrapper-signature`](rules/wrapper-signature/) | `<routine>.js` | The strided wrapper keeps stride/array naming discipline (offsets computed internally; shared strides and Fortran-native `LD*` names accommodated). |
+| [`wrapper-signature`](rules/wrapper-signature/) | `<routine>.js` | Stride naming only (shared strides and Fortran-native `LD*` names accommodated). The exact wrapper shape is `verify-signatures.cjs` (S4). |
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
-| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `ndarray.js` | Workspace offsets are honored in `base.js`; a workspace stride is either rejected in `ndarray.js` (must be 1) or honored by `base.js` (CONVENTIONS.md D5). |
+| [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `ndarray.js` | CONVENTIONS D5a/D5b (workspace offset honored; stride rejected unless honored). |
 | [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
 | [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
 | [`no-stub-wrappers`](rules/no-stub-wrappers/) | all but `base.js` | No "not yet implemented" scaffolding stubs. |
 | [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
+| [`no-nary-stdlib-minmax`](rules/no-nary-stdlib-minmax/) | all | stdlib `max`/`min` take exactly two args. |
 
 The offset-form naming logic is shared between `fortran-signature` and
 `wrapper-signature` via [`lib/naming.cjs`](lib/naming.cjs).
@@ -98,10 +105,8 @@ New rules' tests are one line calling the shared fixture runner,
 path with `// target:` and, for failures, the expected report with `// expect:`.
 (The first three rules predate it and carry their own `test.cjs`.)
 
-**Workspace offset and stride:** see CONVENTIONS.md D5. Offsets are honored; strides must be 1 unless `base.js` honors them.
-
-**No escape hatches.** Every check is a hard CI gate; there is no baseline,
-known-failures list, `continue-on-error`, or `'warn'` level.
+**No escape hatches.** Every lint rule is a hard CI gate at `error`; there is no
+baseline, known-failures list, or `continue-on-error` (CONVENTIONS T5).
 `lint/verify-no-escape-hatches.cjs` fails CI, loudly, if one is introduced.
 
 _The checks under `bin/conformance` are candidates to migrate into this

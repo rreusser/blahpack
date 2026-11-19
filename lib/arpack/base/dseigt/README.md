@@ -64,7 +64,7 @@ The function has the following parameters:
 
 The function returns `IERR`: `0` on success, otherwise the `dstqrb` error code.
 
-#### dseigt.ndarray( rnorm, N, H, strideH1, strideH2, offsetH, eig, strideEig, offsetEig, bounds, strideBounds, offsetBounds, workl, strideWorkl, offsetWorkl )
+#### dseigt.ndarray( rnorm, N, H, strideH1, strideH2, offsetH, eig, strideEig, offsetEig, bounds, strideBounds, offsetBounds, workl, strideWorkl, offsetWorkl, ierr )
 
 Computes the eigenvalues and Ritz estimates, using alternative indexing semantics.
 

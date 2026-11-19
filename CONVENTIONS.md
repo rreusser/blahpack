@@ -65,7 +65,7 @@ of the third:
 | S7 | Names are canonical everywhere: `DA → alpha`, `DB → beta`, and the level-1 vectors `DX`/`SX → x`, `DY`/`SY → y`, `DPARAM → param` (unless the alias collides with another argument). Otherwise params keep their Fortran names (case-insensitive). | One name per concept, matching stdlib. | `lint:fortran-signature` (names); alias table in `bin/spec-gen/build.cjs` → `spec/<routine>.json` names (checked by `bin/spec xcheck`; gate unbuilt, Step 3) |
 | S8 | `<routine>.js` calls `base.js`, never `ndarray.js`. `ndarray.js` calls `base.js`. | One validation layer per entry point. | `conf:conventions.routine-calls-base`, `conf:conventions.ndarray-calls-base` |
 | S9 | Every `base(...)` call passes exactly `base.length` args. | Catches argument drift after a signature change. | `conf:base-arity` |
-| S10 | Output scalars go into caller-provided arrays (length-1 `Float64Array`/`Int32Array`) or the return value. An in/out scalar is a length-1 typed array. Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. | `lint:fortran-signature` (shape); typed-array kind (unbuilt) |
+| S10 | Each output scalar (a Fortran out/inout non-array argument other than `INFO`) is its own caller-provided length-1 typed array param (`Float64Array`/`Int32Array`), named after the Fortran argument and in its Fortran position. A complex one is `x, offsetX` (S1). Output scalars are never returned in a result object or packed into a shared `out` array. (Open: the container for a CHARACTER output such as `EQUED` in the 13 `laq*` routines, which a typed array can't hold.) Reverse-communication (IDO) routines take a leading state object. | JS has no by-reference scalars. One derivable form (from the spec) instead of per-routine result shapes. | `lint:fortran-signature` (shape); `bin/spec xcheck` (exact; gate unbuilt, Step 3; worklist: 94 routines). Typed-array kind unbuilt |
 | S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary (last) output array (BLAS, stdlib style). An in/out `INFO` (ARPACK) also enters as the param `infoIn`. | stdlib return conventions. | `spec.returns` (Step 2); code check unbuilt (Step 3) |
 | S12 | Public pivot/index arrays (`IPIV`, `JPVT`, `IBLOCK`, …) are **0-based**. Fortran's 1-based values are converted inside `base.js`. `ndarray.js` passes them through. | JS indexing; same meaning across both entry points. | `harness:reconstruction` (pivot round-trip) |
 
@@ -245,6 +245,7 @@ the prose has been corrected.
 | ndarray.js converts IPIV from 1-based | S12: public API is 0-based, passed through. |
 | Undersized WORK makes the callee allocate (`dependency-conventions.md`) | W3/D4: it throws. |
 | `LWORKL` vs no-LWORK | W1: named exception. |
+| Output scalars: own length-1 array, result object, or packed `out` (S10 allowed both; 135 / 66 / 21 routines, 7 mixed) | S10: own length-1 array per scalar, named after the Fortran argument; complex keeps `x, offsetX`. **Ratified 2026-11-19.** |
 | `dstebz`/`dlarrd` param `order` vs D1 | D1: D1 governs the layout flag only. **Ratified 2026-11-19.** |
 | Drop vs keep `INCX==1` specializations (performance vs optimization policy) | X5. |
 | "Aim for L3" vs "no routine ships below L3" | T7: L3 is the definition of done; not yet gated. |

@@ -1,0 +1,12 @@
+{
+	"routine": "zrotg",
+	"overrides": [
+		{
+			"reason": "B and C keep `x, offsetX` like A and S so all four ZROTG scalars share one form, matching ZLARTG (S10, ruled 2026-11-19).",
+			"set": {
+				"params.B.element": true,
+				"params.C.element": true
+			}
+		}
+	]
+}

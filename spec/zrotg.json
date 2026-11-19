@@ -21,7 +21,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"element": true
 		},
 		{
 			"name": "c",
@@ -29,7 +30,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"element": true
 		},
 		{
 			"name": "s",
@@ -41,5 +43,14 @@
 		}
 	],
 	"checks": [],
-	"quickReturn": []
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "B and C keep `x, offsetX` like A and S so all four ZROTG scalars share one form, matching ZLARTG (S10, ruled 2026-11-19).",
+			"set": {
+				"params.B.element": true,
+				"params.C.element": true
+			}
+		}
+	]
 }

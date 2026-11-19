@@ -78,6 +78,7 @@
 				"dtype": { "$ref": "#/definitions/dtype" },
 				"intent": { "enum": [ "in", "out", "inout" ] },
 				"of": { "type": "string", "description": "ld/inc/lwork: the Fortran array it belongs to." },
+				"element": { "type": "boolean", "description": "scalar: callers pass an element of one of their arrays, read or updated in place, so it crosses as `x, offsetX` (S10). Set only by an override." },
 				"dims": { "type": "array", "items": { "type": "string" }, "description": "Declared Fortran extents (rank from the declaration, extents from the doc comment)." },
 				"ld": { "type": [ "string", "null" ], "description": "Fortran LD argument of a 2-D array." },
 				"rows": { "$ref": "#/definitions/expr" },

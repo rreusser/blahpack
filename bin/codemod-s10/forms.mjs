@@ -176,7 +176,11 @@ export function detect( routine ) {
 	}
 	// What the function returns today, besides the outputs.
 	const fieldKeys = new Set( Object.values( form ).flatMap( ( f ) => ( f.kind === 'cfield' ? [ f.re, f.im ] : ( f.key && f.kind !== 'outField' ? [ f.key ] : [] ) ) ) );
-	const extras = [ ...keys ].filter( ( k ) => k && !fieldKeys.has( k ) && k !== 'info' );
+	// Keys naming a Fortran input (`qmax` of dlasq3, `ifst` of ztgexc) are not
+	// outputs of the routine: they are dropped, not kept as extras.
+	const inputs = new Set( spec.params.filter( ( p ) => p.intent === 'in' ).map( ( p ) => p.name.toLowerCase() ) );
+	const dropped = [ ...keys ].filter( ( k ) => k && !fieldKeys.has( k ) && k !== 'info' && inputs.has( k.toLowerCase() ) );
+	const extras = [ ...keys ].filter( ( k ) => k && !fieldKeys.has( k ) && k !== 'info' && !inputs.has( k.toLowerCase() ) );
 	const outP = Object.values( form ).find( ( f ) => f.kind === 'outIndex' || f.kind === 'outField' );
 	const retContainer = !!outP && rets.some( ( r ) => r.argument && r.argument.type === 'Identifier' && r.argument.name === outP.param );
 	return {
@@ -188,6 +192,7 @@ export function detect( routine ) {
 		params,
 		form,
 		extras,
+		dropped,
 		hasInfoKey: keys.has( 'info' ),
 		objReturns: objRets.length,
 		returns: rets.length,

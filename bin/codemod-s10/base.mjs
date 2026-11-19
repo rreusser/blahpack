@@ -312,6 +312,9 @@ export function transformBase( src, P ) {
 					needReinterpret = true;
 					continue;
 				}
+				if ( P.dropped.includes( k ) ) {
+					continue;
+				}
 				extras.push( '\'' + k + '\': ' + val );
 			}
 		} else if ( outParam && r.argument && r.argument.type === 'Identifier' && r.argument.name === outParam.param ) {

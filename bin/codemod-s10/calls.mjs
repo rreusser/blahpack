@@ -500,7 +500,10 @@ export class FileRewriter {
 				const p = outs.find( ( q ) => P.form[ q.name ].kind === 'value' && lc( oldL[ m.from ] ) === lc( P.form[ q.name ].param ) );
 				if ( p && !own ) {
 					// By-value in/out: copy the old argument in first.
-					pre.push( arr[ p.name ] + '[ 0 ] = ' + render( src, this.edits, node.arguments[ m.from ].start, node.arguments[ m.from ].end ) + ';' );
+					const v = render( src, this.edits, node.arguments[ m.from ].start, node.arguments[ m.from ].end );
+					if ( v !== arr[ p.name ] + '[ 0 ]' ) {
+						pre.push( arr[ p.name ] + '[ 0 ] = ' + v + ';' );
+					}
 					return arr[ p.name ];
 				}
 				if ( p && own ) {
@@ -612,12 +615,14 @@ export class FileRewriter {
 		let segEnd = Infinity;
 		if ( byAssign ) {
 			// Result alias: the segment ends at the next assignment to C.
-			const as = refs.filter( ( r ) => r.__parent.type === 'AssignmentExpression' && r.__parent.left === r && r.start > call.end ).map( ( r ) => r.start );
+			// A reassignment takes effect after its right side, which may
+			// still read the old value: the boundary is its end.
+			const as = refs.filter( ( r ) => r.__parent.type === 'AssignmentExpression' && r.__parent.left === r && r.start > call.end ).map( ( r ) => r.__parent.end );
 			segEnd = as.length ? Math.min( ...as ) : Infinity;
 		} else {
 			// Calls to migrating routines that fill C, and reassignments of C,
 			// end the segment. Passing C anywhere else is an escape.
-			const ends = refs.filter( ( r ) => ( r.__parent.type === 'CallExpression' && r.__parent.arguments.includes( r ) && this.waveCalls.has( r.__parent ) ) || ( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) ).map( ( r ) => r.start ).filter( ( x ) => x > call.end );
+			const ends = refs.filter( ( r ) => ( r.__parent.type === 'CallExpression' && r.__parent.arguments.includes( r ) && this.waveCalls.has( r.__parent ) ) || ( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) ).map( ( r ) => r.__parent.end ).filter( ( x ) => x > call.end );
 			segEnd = ends.length ? Math.min( ...ends ) : Infinity;
 		}
 		const byIndex = new Map();
@@ -735,10 +740,10 @@ export class FileRewriter {
 			const scope = fn || this.ast;
 			const refs = refsIn( scope, resVar );
 			// Assignments to resVar delimit segments.
-			const assigns = refs.filter( ( r ) => ( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) ).map( ( r ) => r.__parent.start );
-			const declPos = node.__parent.type === 'VariableDeclarator' ? node.__parent.start : node.__parent.start;
-			const bounds = assigns.concat( [ declPos ] ).sort( ( a, b ) => a - b );
-			const nextAssign = bounds.find( ( x ) => x > declPos );
+			// The next assignment takes effect after its right side (which may
+			// still read this result): the boundary is its end.
+			const assigns = refs.filter( ( r ) => ( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) ).map( ( r ) => r.__parent.end );
+			const nextAssign = assigns.filter( ( x ) => x > node.end ).sort( ( a, b ) => a - b )[ 0 ];
 			const seg = refs.filter( ( r ) => r.start > node.end && ( nextAssign === void 0 || r.start < nextAssign ) && !( r.__parent.type === 'AssignmentExpression' && r.__parent.left === r ) );
 			const edits = [];
 			let escapes = false;

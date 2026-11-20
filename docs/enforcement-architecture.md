@@ -662,7 +662,36 @@ from the start; the corpus is conformed in the same change.
 
 *Exit:* one gate, no `warn`, and the superseded checks deleted.
 
-### Step 4: Code-quality linters (not spec-derived, still objective)
+### Step 4: Code-quality linters (not spec-derived, still objective) — stride-provenance DONE 2026-11-20
+
+**Done:** `lint/rules/stride-provenance` (P1 + P3, CONVENTIONS **S13**) is a hard
+gate, clean over the corpus.
+- **Call sites:** it reads the callee's spec to know which arguments are
+  which array's strides and offset.
+- **Autofix:** 1-D arrays only. 2-D strides are fixed by hand against the
+  Fortran.
+- **Findings:**
+  - **21 real bugs** in 7 routines (`dsterf`, `ztgsna`, `dgees`,
+    `zgbbrd`, `zgees`, `dorbdb3`, `zunbdb3`). That's 7 more than the
+    prototype found: it never resolved same-package imports, and missed
+    case-differing names.
+  - **81 harmless sites** with the same shape, conformed anyway.
+  - **Each bug has a regression test** (`test/test.layout.js`) that fails on
+    the old code; see `test/harness/LEARNINGS.md` 2026-11-20.
+  - `dorbdb3`/`zunbdb3` copy a reference typo, recorded in their
+    `DIFFERENCES.md`.
+- **Built along the way (the core of Step 6):** `test/harness/spec-layout.js`
+  re-runs any valid call under other layouts, driven by the spec:
+  - `offset` is checked bit-exact;
+  - `row-major`/`negative` are checked to a tolerance, because the
+    layout-adaptive BLAS kernels reorder sums.
+- **Separate bug found:** tickets/0026, `zgees` NaN below `smlnum`.
+
+**Remaining:**
+- P2 + one-index-variable-per-array;
+- the vendored stdlib error rules;
+- skill-hygiene lint.
+
 
 - `stride-provenance` P1–P5 and index-variable-per-array, using the callee
   spec for role-checked calls.

@@ -41,7 +41,11 @@ var SOURCE_RULES = {
 
 	// base.js honors the declared offset of each caller-owned workspace it
 	// uses (drivers sub-allocate one buffer among callees by offset).
-	'workspace-addressing-honored': 'error'
+	'workspace-addressing-honored': 'error',
+
+	// base.js honors every array's strides and offset: element indices use the
+	// array's offset, and callees get the array's own strides (S13).
+	'stride-provenance': 'error'
 };
 
 // Namespace a rule map, failing loudly on any rule the library does not

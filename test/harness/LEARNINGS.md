@@ -987,7 +987,10 @@ Keep entries short. Newest first.
   the stride-1 solution BIT-EXACTLY (max deviation 0.0), no non-finite. `ztpcon`
   correctness + full-`schemes.packed.layouts()` bit-exact layout-invariance now
   pass; `dtpcon` (real, unaffected) unchanged. Other `zlatps` callers should be
-  re-run — see generalization.
+  re-run — see generalization. **CORRECTION 2026-11-18**: the negative-stride
+  part of this holds only on the fast path. On the careful path with
+  `normin='no'`, a negative stride still yields zero CNORM because `dzasum`
+  returns 0 for a non-positive stride (tickets/0044).
 - **Bug class**: `storage-mapping` (packed-index-vs-strided-offset conflation) —
   the SAME defect as the zpptri entry below, in a different complex packed routine.
 - **Generalization**: audit every complex packed routine that carries a Float64
@@ -1101,6 +1104,10 @@ Keep entries short. Newest first.
   Every AP element read is numerically identical across offsets, so the divergence
   is a genuine arithmetic-order sensitivity, not an out-of-bounds read (poisoned
   padding never trips: outputs are always finite).
+- **UPDATE 2026-11-18 (RESOLVED, tickets/0019)**: localized. The lower CNORM
+  loop counted `offsetAP` twice (`ip = offsetAP*2`, then `offsetAP + ip/sap + 1`).
+  Fixed incidentally by 549b87df; see the 2026-11-18 `*latrs`/`*latps`/`*latbs`
+  entry at the end of this file. The text below is the original, superseded analysis.
 - **Root cause**: NOT localized to a single line and NOT fixed here (out of scope:
   `zlatps` is a shared, already-validated dependency of the whole packed-complex
   con/solve family; a change risks its many callers). Best current understanding:
@@ -2235,6 +2242,192 @@ Keep entries short. Newest first.
   - `tgsna`: `mm`, as for `trsna`.
 
   Exactly these three wrappers changed.
+
+---
+
+## 2026-11-18 — `*latrs`/`*latps`/`*latbs` (all six scaled triangular solvers) routed overflowing no-transpose non-unit solves to the unscaled fast path → NaN with `scale = 1`; root cause of the old zlatps offset entry (tickets/0019)
+
+- **What**: the new `zlatps` harness validation (`lib/lapack/base/zlatps/test/test.validate.js`)
+  added a `stress` family (off-diagonals × 1e40) so that the careful,
+  rescaling path is actually exercised; earlier fixtures and properties only
+  ever reached the `ztpsv` fast path. For `trans='no-transpose'`,
+  `diag='non-unit'`, N ≥ 9, `zlatps` returned `scale = 1` and a solution full of
+  NaN, which violates the routine's contract that it never overflows. The same
+  input shape breaks `dlatps`, `dlatrs`, `zlatrs`, `dlatbs` and `zlatbs`. In a
+  sweep of N ∈ {9,12,16} × uplo × trans × diag × 5 seeds, about 30 cases per
+  routine were non-finite, all of them no-transpose non-unit.
+- **Repro**: `sc=complex`, `logical.triangular(sc, new RNG(0x200+N), N, {uplo})`
+  with every off-diagonal scaled by `1e40`, RHS `sc.random`, N=16, any uplo,
+  `zlatps(uplo,'no-transpose','non-unit','no',…)`: `scale[0] === 1` and `x`
+  contains NaN. The regression cases in each module's `test.ndarray.js` use a
+  deterministic N=12 matrix and fail on the old code.
+- **Root cause**: the growth-bound loop for the no-transpose non-unit case
+  exits with `IF( GROW.LE.SMLNUM ) GO TO 60` (`GO TO 50` in the real routines).
+  Label 60 sits *after* the `GROW = XBND` that follows the loop, so the early
+  exit keeps the tiny `GROW` and forces the careful path. The translation used
+  `break`, which falls through into `grow = xbnd`. `xbnd` is the bound from
+  the *previous* step (about 1e-280 here), well above `SMLNUM`, so the solve
+  went to the unscaled `*tpsv`/`*trsv`/`*tbsv` and overflowed. The transpose
+  loops have the same `GO TO 90` shape, but their post-loop statement is
+  `grow = min(grow, xbnd)`, which keeps an already-small `grow`, so they were
+  unaffected. The complex routines also dropped the
+  `IF( TJJ.GE.SMLNUM ) … ELSE XBND = ZERO` branch in both non-unit loops.
+- **Fix (APPLIED)**: in all six, `grow = xbnd` now runs only when the loop ran
+  to completion (`if ( j === jlast )`). The complex routines restore the
+  `XBND = ZERO` branch in both loops.
+- **Explains tickets/0019 / the 2026-07-17 zlatps AP-offset entry**: that ~1 ULP
+  offset dependence was a separate defect, already fixed by 549b87df. The
+  lower CNORM loop started `ip` at `offsetAP*2` and then read
+  `offsetAP + ip/sap + 1`, which counted `offsetAP` twice. Any nonzero offset
+  fed wrong column norms into `normin='no'`, and `zppcon` lower then reused
+  them (`normin='yes'`) in its `Lᴴ` solve, which is why the symptom showed up
+  there. Run against the pre-549b87df `zlatps`, the stress sweep gives 1,950
+  stride-1 offset failures; the current code gives 0 of 8,400. The new
+  validation checks bit-exact x, scale and CNORM across offsets and positive
+  strides on both paths, so a recurrence fails loudly.
+- **Bug class**: `goto-translation` (a `GO TO` past a post-loop statement
+  translated as `break`). A `break` is only equivalent when nothing sits
+  between the loop end and the target label. Now a row in
+  `docs/goto-patterns.md`.
+- **Generalization**: the same bug was copy-translated into all six members of
+  the family, so it was searched for and fixed in all six (tickets/0018).
+  Before trusting any `break`, look for any Fortran routine whose `GO TO`
+  target lies past code between the loop end and the label. Separately, the
+  stress sweep showed that a negative packed/band stride breaks the CNORM
+  computation in the whole family, because `dasum`/`dzasum` return 0 for a
+  non-positive stride (tickets/0044).
+
+---
+
+## 2026-11-18 — zgsvj1 convergence test used the REAL variant's `N*TOL` instead of `SQRT(N)*TOL` → could report convergence one sweep early
+
+- **What**: found while triaging `bin/break-mutants.mjs` survivors in the
+  `*gsvj0`/`*gsvj1` family (tickets/0045). `zgsvj1.f:661` stops sweeping when
+  `MXAAPQ < SQRT(DBLE(N))*TOL`; the JS used `mxaapq < N * tol`, the threshold of
+  the real `dgsvj0`/`dgsvj1` (`zgsvj0` was already correct).
+- **Effect**: a looser test than the reference, so `info = 0` could come back a
+  sweep early with less-orthogonalized columns. Easy to trigger: many 4×4
+  inputs with `n1 = 1` give `info = 0` where the reference gives `nsweep - 1`.
+- **Repro**: regression test in `lib/lapack/base/zgsvj1/test/test.ndarray.js`
+  (M=N=4, n1=1, tol=1e-2): after one sweep, the first pair of sweep 2 has
+  |cos| = 2.75·tol, which lies in [√N·tol, N·tol), so the reference keeps going
+  and `nsweep = 2` must return `info = 1`. Fails on the old code with `info = 0`.
+- **Fix (APPLIED)**: `mxaapq < Math.sqrt( N ) * tol`.
+- **Bug class**: `real-complex-constant-drift`: a complex routine translated from
+  (or alongside) its real sibling inherits a constant that differs between the two
+  reference sources. Line coverage cannot see it, and a fixture only catches it if
+  some input lands between the two thresholds.
+- **Generalization**: diff numeric thresholds between each `d`/`z` pair of
+  reference sources where they differ, and check that the JS follows each
+  source, not its sibling. Candidates: `zgesvj`/`zgejsv` and other Jacobi or
+  iterative routines with tolerance tests (tickets/0007 covers d/z contract parity).
+
+---
+
+## 2026-11-18 — dsterf QR deflation search: a "loop completed" fix-up also fired on a break at `m = lend + 1` → lost a decoupled eigenvalue
+
+- **What**: found by `bin/break-mutants.mjs` (tickets/0045). Its mutants at the
+  QR search loop survived, and triage showed why: the post-loop code was wrong
+  in a way no test could see. The second bug of the GO TO-as-break class today,
+  after the `*latrs`/`*latps`/`*latbs` growth bound.
+- **Root cause**: the Fortran is `DO 110 M = L, LEND+1, -1; IF(...) GO TO 120;
+  110 CONTINUE; M = LEND; 120 CONTINUE`. The JS loop
+  `for ( m = l; m > lend; m-- ) { … break; }` already leaves `m = lend` when it
+  completes. Its comments wrongly assumed it exits at `lend + 1`, and added
+  `if ( m === lend + 1 ) m = lend`. That fix-up never fires on completion. It
+  fires exactly when the loop BREAKS at `m = lend + 1`, overwriting the split
+  the Fortran keeps: `E(LEND)` was not zeroed, and the negligible element was
+  folded back into the next QR sweep or `dlae2` 2×2.
+- **Repro**: `dsterf(3, d=[1e-20, 1e-20, 0.5e-20], e=[1e-20, 1e300])`. The
+  1e300 norm triggers scaling, the scaled `e[0]²` underflows, and the QR search
+  breaks at `lend + 1`. Old output `[-1e300, 0, 1e300]`, fixed (reference
+  semantics) `[-1e300, 1e-20, 1e300]`. Regression test in
+  `lib/lapack/base/dsterf/test/test.ndarray.js`.
+- **Fix (APPLIED)**: removed the fix-up. Also removed two empty
+  `if ( m === … ) { /* comments */ }` blocks after the other search loops, whose
+  comments repeated the same confusion.
+- **Bug class**: `goto-translation`, in the form "a completion guard that tests
+  an index value a break can also produce". `j === jlast` is a safe completion
+  test only when the loop's test is `j !== jlast` (the break index can never
+  equal it). `m === lend + 1` after `m > lend` is not safe.
+- **Generalization**: grep found no other `m === lend + 1` fix-ups; `dsteqr`,
+  `zsteqr` and `dstqrb` use the correct form. The mutation check catches the
+  class wherever a test can make the two exits differ.
+
+---
+
+## 2026-11-18 — dlaqr4 hardcoded its ILAENV tuning values and dlaqr0 mis-rounded the IPARMQ shift count → valid Schur forms in a different order than the reference (tickets/0046)
+
+- **What**: surfaced while triaging `bin/break-mutants.mjs` survivors in the
+  shift-pairing code (tickets/0045). A bit-exact `dlaqr0` vs `dlaqr4` oracle
+  (the reference sources are identical apart from the AED routine) failed
+  because `dlaqr4` used `nwr = 4, nsr = 2, nmin = 15, kacc22 = 0` instead of the
+  IPARMQ values the reference gets through ILAENV. Separately, `dlaqr0`'s
+  `iparmqShifts` computed `round(nh / log2(nh))` where IPARMQ has
+  `NH / NINT(LOG(NH)/LOG(2))` (integer division by the rounded log): nh = 200
+  gave 26 shifts instead of 24.
+- **Repro**: `dlaqr4` on `test/fortran/test_dlaqr4.f90` tests 9/10 (40×40,
+  80×80). The unsorted eigenvalues differed from the reference fixtures by 13.5
+  and 30.0 (the sorted ones agreed). Those fixtures existed but were never loaded
+  (tickets/0048). Now within ~4e-13; the tests fail on the old code.
+- **Fix (APPLIED)**: `dlaqr4` shares `dlaqr0`'s IPARMQ constants and helper;
+  the NS formula is `Math.floor( nh / Math.round( log2( nh ) ) )`.
+- **Bug class**: `tuning-parameter-drift`. A wrong ILAENV substitute still yields
+  a valid decomposition, so every property test passes; only an unsorted
+  comparison against the reference shows it.
+- **Generalization**: `dlaqr3`'s `nmin = 12` (reference 75) and
+  `zlaqr0`/`zlaqr4`'s fixed NWR/NSR remain (tickets/0049).
+
+---
+
+## 2026-11-19 — dpocon/dppcon/dpbcon/zpbcon: the overflow bail of the DLACN2 loop fell into the RCOND computation the Fortran skips → rcond ≈ 2.9e-308 instead of 0
+
+- **What**: found while triaging `bin/break-mutants.mjs` survivors in the
+  `*con` family (tickets/0045). The siblings `zpocon`/`zppcon` were correct.
+  These four were not on the triage list and had no survivor at all, because the
+  tool treated both exits of the loop alike.
+- **Root cause**: the Fortran leaves the DLACN2 loop on overflow with
+  `IF( SCALE.LT.ABS( WORK( IX ) )*SMLNUM .OR. SCALE.EQ.ZERO ) GO TO 20`, where
+  label 20 lies past `IF( AINVNM.NE.ZERO ) RCOND = ( ONE / AINVNM ) / ANORM`. The
+  JS used `KASE[ 0 ] = 0; break;`, which runs that computation.
+- **Repro**: `dpocon( uplo, 2, [1, 0, 0, 1.2e-154], 1, 2, 0, 1.0, … )` (and the
+  packed and band equivalents). The second solve overflows while EST is already
+  about 3.5e307, so the reference gives rcond = 0 but the old code gave
+  2.88e-308. Regression tests in each module fail on the old code.
+- **Fix (APPLIED)**: `return 0;` at the bail (rcond is already 0).
+- **Bug class**: `goto-translation`, the third instance this week: a `GO TO`
+  past post-loop code translated as `break`. This time only ONE of the loop's
+  two exits must skip the code.
+- **Detection**: `bin/break-mutants.mjs` now adds a `skip-after-this-break`
+  mutant per `break` when a loop has several. It also no longer wraps a
+  `const`/`let` declaration (that caused a ReferenceError and a false "killed").
+  On the old `dpocon` it reports the bail exit as SURVIVED.
+
+---
+
+## 2026-11-19 — zlasyf_rk mixed two variants of the KP≠KK column interchange → wrong factorization whenever rook pivoting needs a real interchange
+
+- **What**: found while triaging break mutants in the `*sytrf_rk` panel family
+  (tickets/0045). A new residual test (rook-forcing 6×6 matrix, one panel,
+  solved with `zsytrs_3`) gave solve errors of 0.16 (upper) and 1.08 (lower),
+  against about 2e-15 from the unblocked `zsytf2_rk`.
+- **Root cause**: the reference sets `A(KP,K) = A(KK,K)` and counts the following
+  copies from K. The JS kept that assignment but used the copy counts of the
+  OTHER variant (which sets `A(KP,KP) = A(KK,KK)` and counts from KK):
+  `kk-1-kp` instead of `K-1-KP` (upper) and `kp-kk-1` from row kk+1 instead of
+  `KP-K-1` from row K+1 (lower). The upper column copy also dropped Fortran's
+  1-based count `KP`, copying `kp` instead of `kp+1` elements.
+- **Fix (APPLIED)**: counts as in `zlasyf_rk.f` lines 526/528/843. The panel now
+  matches `zsytf2_rk` to 3e-16. Affects `zsytrf_rk` for N > nb.
+- **Bug class**: `variant-mixing`: a translation that combines two valid forms of
+  the same step but takes index bounds from the wrong one. It only shows with a
+  rook search that needs a KP ≠ KK interchange, which the Fortran fixtures never
+  exercised.
+- **Generalization**: grep of every `kk-1-kp` / `kp-kk-1` site in the
+  `*lasyf*`/`*lahef*` routines found zlasyf_rk the only mixed one; `dlasyf_rk`
+  and `zlasyf_rook` use the other variant consistently.
+
+---
 
 ## 2026-11-20 — Callees handed a literal or another array's stride: 21 call sites in 7 routines walked the wrong elements under any non-default layout (lint `stride-provenance`, CONVENTIONS S13)
 

@@ -10,6 +10,14 @@
 		"bin/bench-smoke.sh": {
 			"kind": "gate"
 		},
+		"bin/break-mutants-loader.mjs": {
+			"kind": "ticket",
+			"ticket": "0045"
+		},
+		"bin/break-mutants.mjs": {
+			"kind": "ticket",
+			"ticket": "0045"
+		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",
 			"ticket": "0030"
@@ -117,6 +125,10 @@
 		"bin/gen_test_ts.js": {
 			"kind": "tool",
 			"why": "generator: docs/types/test.ts"
+		},
+		"bin/goto-exits.py": {
+			"kind": "tool",
+			"why": "inventory: lists reference-Fortran GO TO exits that skip post-loop code; not a pass/fail check"
 		},
 		"bin/init_routine.py": {
 			"kind": "tool",

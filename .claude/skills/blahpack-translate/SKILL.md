@@ -147,6 +147,24 @@ node --test lib/<package>/base/<routine>/test/test*.js 2>&1 | tail -20
 node --test --experimental-test-coverage lib/<package>/base/<routine>/test/test*.js 2>&1 | tail -30
 ```
 
+**Coverage does not verify early loop exits.** A `break` translating a Fortran
+`GO TO` out of a loop can be 100% covered and still wrong: the
+`*latrs`/`*latps`/`*latbs` growth-bound exit ran `GROW = XBND`, which the
+Fortran skips, and every test passed because no input made the two choices
+differ (tickets/0045). Run the early-exit mutation check:
+
+```bash
+python bin/goto-exits.py <routine>          # Fortran exits that skip post-loop code
+node bin/break-mutants.mjs --check <routine> 2>&1 | tail -20
+```
+
+Each `SURVIVED` mutant marks a `break` where the tests cannot tell whether the
+code after the loop should run (`skip-after-this-break`: after that particular
+exit). Add a test that makes the two choices differ (an input that takes the
+exit while the skipped statement would change the result), or, if both choices
+are provably identical, record the site with its reason in
+`test/break-mutants.equivalent.json`.
+
 ### Step 5: Lint and conformance loop (until clean)
 
 ```bash
@@ -234,6 +252,13 @@ Restructure without changing control flow (X2). See
 table. Common cases: `GO TO` inside DO → `continue`; backward `GO TO` →
 `while`/`do-while`; forward `GO TO` → `if/else`.
 
+A forward `GO TO` out of a DO loop is a `break` **only** if nothing sits
+between the loop end and its label. Otherwise the `break` runs code the Fortran
+skips; guard it (`if ( j === jlast ) { … }`, a flag, or `return`). This bug was
+found in 11 routines (`*latrs`/`*latps`/`*latbs`, `dsterf`,
+`dpocon`/`dppcon`/`dpbcon`/`zpbcon`), all fully line-covered.
+`python bin/goto-exits.py <routine>` lists every such exit in the source.
+
 ## Complex arithmetic
 
 Rules: C1–C5. Reference: [docs/complex-numbers.md](../../../docs/complex-numbers.md).
@@ -286,7 +311,8 @@ mirror reads, zeroed diagonal imaginary parts, and `'transpose'` →
 | `DLAMCH('E')` | `Number.EPSILON / 2` | Machine epsilon (half-precision) |
 | `DLAMCH('P')` | `Number.EPSILON` | Precision = epsilon × base. Distinct from `'E'`. |
 | `safmin` / `safmax` | `import FLOAT64_SMALLEST_NORMAL from '@stdlib/constants/float64/smallest-normal/lib/index.js'` (or module-scope `dlamch( 'safe-minimum' )`) / `1.0 / safmin` | Hoist to module scope (X4). |
-| `ILAENV(1, ...)` | `NB = 32` (hardcoded) | X3. Defaults vary by query: `ILAENV(1)` → NB=32, `ILAENV(3)` → NX=128 (crossover), `ILAENV(12)` → NMIN=12 (dlaqr3 threshold). Check which query the source uses. |
+| `IF (c) GO TO 60` in a loop, with statements between the loop end and `60` | guard the post-loop code: `if ( j === jlast ) { … }`, a flag, or `return` | A bare `break` runs the statements the `GO TO` skips (X2). `python bin/goto-exits.py <routine>` lists every such site. |
+| `ILAENV(1, ...)` | `NB = 32` (hardcoded) | X3. Defaults vary by query: `ILAENV(1)` → NB=32, `ILAENV(3)` → NX=128 (crossover), `ILAENV(12)` (ISPEC = INMIN) → NMIN=75 (IPARMQ; the `12` is the query number, not the value; tickets/0049). Check which query the source uses. |
 | Integer division | `(expr)\|0` | Fortran truncates toward zero, like `\|0`, NOT `Math.floor`: `Math.floor(-3/2) = -2`, Fortran gives `-1`. |
 | `ABS(z)` (complex) | `cmplx.abs` | C3: never inline (overflows). |
 

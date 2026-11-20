@@ -33,7 +33,7 @@ const path = require( 'path' );
 
 const ROOT = path.join( __dirname, '..' );
 const KINDS = [ 'gate', 'ticket', 'part', 'alias', 'tool' ];
-const CITE = /\btickets?[ /](\d{4})\b/g;
+const CITE = /\btickets?[ /](\d{4})\b/gi;
 
 // Names that are checks by construction (`check-*`, `verify-*`, `*-smoke`, ...);
 // they may not be classified `tool`.

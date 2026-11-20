@@ -68,6 +68,10 @@
 			"kind": "tool",
 			"why": "translation pipeline: Fortran to ESTree"
 		},
+		"bin/gen-benchmark-recipes.mjs": {
+			"kind": "tool",
+			"why": "generator: structured-input recipes for bin/gen-benchmark.mjs"
+		},
 		"bin/gen-benchmark.mjs": {
 			"kind": "tool",
 			"why": "generator: probe-driven benchmarks"

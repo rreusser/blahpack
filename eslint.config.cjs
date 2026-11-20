@@ -98,7 +98,8 @@ module.exports = [
 			'no-compare-neg-zero': 'error',
 			'no-self-assign': 'error',
 			'no-constant-condition': [ 'error', { 'checkLoops': false } ],
-			'no-unused-vars': [ 'error', { 'args': 'none' } ]
+			'no-unused-vars': [ 'error', { 'args': 'none' } ],
+			'no-undef': 'error'
 		}, namespaced( SOURCE_RULES ) )
 	}
 ];

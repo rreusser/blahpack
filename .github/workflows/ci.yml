@@ -41,6 +41,8 @@ jobs:
         run: npm run lint:escape-hatches
       - name: Run ESLint
         run: npm run test:lint
+      - name: Per-rule corpus report is clean
+        run: npm run lint:corpus
 
   # Conformance: the stdlib-conformance checks (file structure, scaffolding,
   # workspace ownership, naming, JSDoc, ...) beyond what lint/unit cover.
@@ -59,7 +61,20 @@ jobs:
         run: npm run spec:check
       - name: Run conformance checks (fast; structural)
         run: npm run conformance:fast
-      - name: Validate problem tickets
+      - name: Run conformance checks (full; includes per-module ESLint)
+        run: npm run conformance
+      - name: Spec ↔ signature cross-check (all three forms)
+        run: npm run spec:xcheck
+      - name: Convention audit (bin/audit.sh)
+        run: npm run audit
+      - name: No stub wrapper files
+        run: bash bin/check-stubs.sh
+      - name: Module LEARNINGS files are filled in
+        run: npm run lint:learnings
+      # Tickets: format, plus coverage (CONVENTIONS P1): every check in bin/,
+      # lint/ and package.json is gated here or tracked by an open ticket
+      # (bin/checks.json), and every documented gap cites a ticket.
+      - name: Validate problem tickets and ticket coverage
         run: npm run tickets:check
 
   # Generated files are in sync + the published package imports and runs.

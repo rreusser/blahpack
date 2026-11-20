@@ -22,6 +22,7 @@ The sweep reports 1,842 warnings:
 - `complex.reinterpret`, 91 modules: a heuristic ("z-prefix base.js missing reinterpret"). Many of these likely delegate all complex arithmetic and are noise. Its signal cannot be judged while it is just a warning.
 - `complex.no-inline-division`, 1 module (`zlahef`): possible inline complex division.
 - `implementation.base-is-private`, 1 module (`izamax`).
+- CONVENTIONS rules whose only enforcer is a warn-level check, so nothing gates them: V2 (`conventions.base-no-param-validation`), V10 (`implementation.ndarray-early-return`), C3 (`complex.no-inline-division`), F3 (`conventions.main-setreadonly`; `lint:module-exports` also accepts plain assignment), J1 (`implementation.base-is-private`), J3 (`jsdoc.base-example`, `jsdoc.ndarray-example`).
 
 ## Reproduce
 

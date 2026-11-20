@@ -1,0 +1,411 @@
+{
+	"scripts": {
+		"bin/audit.py": {
+			"kind": "ticket",
+			"ticket": "0036"
+		},
+		"bin/audit.sh": {
+			"kind": "gate"
+		},
+		"bin/bench-smoke.sh": {
+			"kind": "ticket",
+			"ticket": "0027"
+		},
+		"bin/check-stub-tests.sh": {
+			"kind": "ticket",
+			"ticket": "0030"
+		},
+		"bin/check-stubs.sh": {
+			"kind": "gate"
+		},
+		"bin/checks.json": {
+			"kind": "tool",
+			"why": "data: the check and artifact registry that bin/tickets-coverage.js verifies"
+		},
+		"bin/claude-sandbox": {
+			"kind": "tool",
+			"why": "launches Claude Code in the Docker dev container"
+		},
+		"bin/codemod-index.js": {
+			"kind": "tool",
+			"why": "codemod: mechanical index.js fixes"
+		},
+		"bin/codemod-json-name-import.mjs": {
+			"kind": "tool",
+			"why": "codemod: package.json name import for benchmarks"
+		},
+		"bin/codemod-tests.js": {
+			"kind": "tool",
+			"why": "codemod: mechanical test-file fixes"
+		},
+		"bin/conformance.js": {
+			"kind": "gate"
+		},
+		"bin/deps.py": {
+			"kind": "tool",
+			"why": "prints a routine dependency tree"
+		},
+		"bin/estree_to_js.js": {
+			"kind": "tool",
+			"why": "translation pipeline: ESTree to JS"
+		},
+		"bin/extract_metadata.py": {
+			"kind": "tool",
+			"why": "generator: data/routines.json from the Fortran"
+		},
+		"bin/fetch-reference.sh": {
+			"kind": "tool",
+			"why": "downloads the reference Fortran into data/"
+		},
+		"bin/fix_wrapper_docs.py": {
+			"kind": "tool",
+			"why": "codemod: propagates @param docs to wrappers"
+		},
+		"bin/fortran_body.py": {
+			"kind": "tool",
+			"why": "translation pipeline: strips Fortran to its executable body"
+		},
+		"bin/fortran_to_estree.py": {
+			"kind": "tool",
+			"why": "translation pipeline: Fortran to ESTree"
+		},
+		"bin/gen-benchmark.mjs": {
+			"kind": "tool",
+			"why": "generator: probe-driven benchmarks"
+		},
+		"bin/gen-descriptions.js": {
+			"kind": "tool",
+			"why": "generator: module descriptions"
+		},
+		"bin/gen-exports.js": {
+			"kind": "gate"
+		},
+		"bin/gen-queue.js": {
+			"kind": "tool",
+			"why": "generator: QUEUE.md"
+		},
+		"bin/gen_examples.js": {
+			"kind": "tool",
+			"why": "generator: examples/index.js"
+		},
+		"bin/gen_fortran_signatures.js": {
+			"kind": "tool",
+			"why": "generator: data/fortran-signatures.json"
+		},
+		"bin/gen_readme.js": {
+			"kind": "tool",
+			"why": "generator: module README.md"
+		},
+		"bin/gen_repl_txt.js": {
+			"kind": "tool",
+			"why": "generator: docs/repl.txt"
+		},
+		"bin/gen_routine_js.py": {
+			"kind": "tool",
+			"why": "generator: <routine>.js wrappers"
+		},
+		"bin/gen_spec": {
+			"kind": "gate"
+		},
+		"bin/gen_test.py": {
+			"kind": "tool",
+			"why": "generator: test scaffold from fixtures"
+		},
+		"bin/gen_test_ts.js": {
+			"kind": "tool",
+			"why": "generator: docs/types/test.ts"
+		},
+		"bin/init_routine.py": {
+			"kind": "tool",
+			"why": "scaffolds a new routine"
+		},
+		"bin/lint-fix.sh": {
+			"kind": "tool",
+			"why": "fixer: codemods plus eslint --fix"
+		},
+		"bin/lint.sh": {
+			"kind": "gate"
+		},
+		"bin/package.json": {
+			"kind": "tool",
+			"why": "marks bin/ as CommonJS"
+		},
+		"bin/remove_goto.py": {
+			"kind": "tool",
+			"why": "translation pipeline: GOTO removal"
+		},
+		"bin/report.js": {
+			"kind": "tool",
+			"why": "generator: progress.html report"
+		},
+		"bin/run-tests.sh": {
+			"kind": "gate"
+		},
+		"bin/scaffold.py": {
+			"kind": "tool",
+			"why": "generator: module scaffold"
+		},
+		"bin/signature.py": {
+			"kind": "tool",
+			"why": "prints a stdlib-js signature for a Fortran routine"
+		},
+		"bin/spec": {
+			"kind": "gate"
+		},
+		"bin/test-failures.sh": {
+			"kind": "tool",
+			"why": "alternate output of the gated unit tests: failures only"
+		},
+		"bin/tickets-coverage.js": {
+			"kind": "part",
+			"of": "bin/tickets.js"
+		},
+		"bin/tickets.js": {
+			"kind": "gate"
+		},
+		"bin/transform.py": {
+			"kind": "tool",
+			"why": "translation pipeline: code-mod registry"
+		},
+		"bin/validation-level.js": {
+			"kind": "ticket",
+			"ticket": "0034"
+		},
+		"lint/no-fortran-source.test.cjs": {
+			"kind": "gate"
+		},
+		"lint/plugin.cjs": {
+			"kind": "tool",
+			"why": "ESLint plugin module loaded by eslint.config.cjs; its rules run under npm:test:lint"
+		},
+		"lint/spec-schema.test.cjs": {
+			"kind": "gate"
+		},
+		"lint/tickets-coverage.test.cjs": {
+			"kind": "gate"
+		},
+		"lint/verify-corpus.cjs": {
+			"kind": "gate"
+		},
+		"lint/verify-no-escape-hatches.cjs": {
+			"kind": "gate"
+		},
+		"npm:audit": {
+			"kind": "gate"
+		},
+		"npm:bundle:naca": {
+			"kind": "gate"
+		},
+		"npm:bundle:notebook": {
+			"kind": "gate"
+		},
+		"npm:bundle:pseudospectra": {
+			"kind": "gate"
+		},
+		"npm:check": {
+			"kind": "alias",
+			"of": [
+				"npm:test",
+				"npm:conformance"
+			]
+		},
+		"npm:conformance": {
+			"kind": "gate"
+		},
+		"npm:conformance:fast": {
+			"kind": "gate"
+		},
+		"npm:conformance:full": {
+			"kind": "ticket",
+			"ticket": "0033"
+		},
+		"npm:dev": {
+			"kind": "tool",
+			"why": "local dev server"
+		},
+		"npm:fetch-reference": {
+			"kind": "tool",
+			"why": "downloads the reference Fortran into data/"
+		},
+		"npm:fixtures": {
+			"kind": "tool",
+			"why": "generator: Fortran fixtures"
+		},
+		"npm:gen-exports": {
+			"kind": "tool",
+			"why": "generator: root index.js and exports map (the package CI job runs the script directly)"
+		},
+		"npm:gen:fortran-checks": {
+			"kind": "tool",
+			"why": "generator: Fortran check extraction"
+		},
+		"npm:gen:fortran-signatures": {
+			"kind": "tool",
+			"why": "generator: data/fortran-signatures.json"
+		},
+		"npm:gen:spec": {
+			"kind": "tool",
+			"why": "generator: per-routine specs"
+		},
+		"npm:lint": {
+			"kind": "alias",
+			"of": [
+				"bin/lint.sh"
+			]
+		},
+		"npm:lint:corpus": {
+			"kind": "gate"
+		},
+		"npm:lint:escape-hatches": {
+			"kind": "gate"
+		},
+		"npm:lint:fix": {
+			"kind": "tool",
+			"why": "fixer: codemods plus eslint --fix"
+		},
+		"npm:lint:learnings": {
+			"kind": "gate"
+		},
+		"npm:report": {
+			"kind": "tool",
+			"why": "generator: progress.html report"
+		},
+		"npm:spec:check": {
+			"kind": "gate"
+		},
+		"npm:spec:xcheck": {
+			"kind": "gate"
+		},
+		"npm:test": {
+			"kind": "alias",
+			"of": [
+				"npm:test:unit",
+				"npm:test:lint"
+			]
+		},
+		"npm:test:lint": {
+			"kind": "gate"
+		},
+		"npm:test:lint-rules": {
+			"kind": "gate"
+		},
+		"npm:test:unit": {
+			"kind": "gate"
+		},
+		"npm:tickets": {
+			"kind": "tool",
+			"why": "lists tickets"
+		},
+		"npm:tickets:check": {
+			"kind": "gate"
+		},
+		"npm:typecheck": {
+			"kind": "ticket",
+			"ticket": "0029"
+		}
+	},
+	"artifacts": {
+		"lib/base.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit",
+				"npm:test:lint",
+				"npm:conformance:fast"
+			]
+		},
+		"lib/ndarray.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit",
+				"npm:test:lint",
+				"npm:conformance:fast"
+			]
+		},
+		"lib/<r>.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit",
+				"npm:test:lint",
+				"npm:conformance:fast"
+			]
+		},
+		"lib/main.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:lint",
+				"npm:conformance:fast"
+			]
+		},
+		"lib/index.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit",
+				"npm:conformance:fast"
+			]
+		},
+		"package.json": {
+			"kind": "gate",
+			"by": [
+				"npm:conformance:fast"
+			]
+		},
+		"test/test.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit"
+			]
+		},
+		"test/test.*.js": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit"
+			]
+		},
+		"test/fixtures/**": {
+			"kind": "gate",
+			"by": [
+				"npm:test:unit"
+			]
+		},
+		"examples/index.js": {
+			"kind": "ticket",
+			"ticket": "0041"
+		},
+		"benchmark/*.js": {
+			"kind": "ticket",
+			"ticket": "0027"
+		},
+		"README.md": {
+			"kind": "ticket",
+			"ticket": "0037"
+		},
+		"docs/repl.txt": {
+			"kind": "ticket",
+			"ticket": "0037"
+		},
+		"docs/types/index.d.ts": {
+			"kind": "ticket",
+			"ticket": "0037"
+		},
+		"docs/types/test.ts": {
+			"kind": "ticket",
+			"ticket": "0037"
+		},
+		"LEARNINGS.md": {
+			"kind": "gate",
+			"by": [
+				"npm:lint:learnings"
+			]
+		},
+		"LEARNINGS.integrated.md": {
+			"kind": "gate",
+			"by": [
+				"npm:lint:learnings"
+			]
+		},
+		"DIFFERENCES.md": {
+			"kind": "unchecked",
+			"why": "free-form prose recording intentional differences from the reference; it states no property a check could test"
+		}
+	}
+}

@@ -42,9 +42,17 @@ node bin/tickets.js new "X is inconsistent across Y" --area base
 node bin/tickets.js resolve 7 "Fixed in <sha>; the ld-rules check now rejects array-typed bounds."
 node bin/tickets.js reopen 7 "Recurred in zfoo: ..."
 node bin/tickets.js check
+PR_BODY="$(gh pr view 42 --json body -q .body)" node bin/tickets.js pr-body
 ```
 
 ## Rules
+
+- A known problem is a ticket, not prose (CONVENTIONS P1–P4). `check` fails
+  when a CONVENTIONS enforcer marked (warn)/(unbuilt)/(dup)/dead, or a doc line
+  that says something isn't in CI, cites no open ticket naming it. It also fails
+  when a check script or a kind of module file is neither gated nor ticketed
+  (`bin/checks.json`). `pr-body` fails when a PR description defers work
+  without citing a ticket.
 
 - Resolve a ticket only when the problem is gone, not when a workaround lands.
   Prefer resolutions that make the problem structurally impossible (a check, a

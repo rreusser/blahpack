@@ -161,6 +161,23 @@ Any manual work that repeats across routines is a bug in the tooling. If you
 perform the same mechanical transformation twice, stop and automate it (new
 transform in `bin/transform.py` or script in `bin/`) before continuing.
 
+## Known problems
+
+Every known problem is a ticket (`tickets/`, `node bin/tickets.js new "<problem>"`),
+never only prose (CONVENTIONS P1–P4). CI enforces most of this:
+
+- **PR descriptions:** a "not in this PR" / "known gaps" / "follow-up" line, and
+  each list item under such a heading, cites `ticket NNNN`
+  (`.github/workflows/pr-body.yml`). Open the ticket first.
+- **New check script or npm script:** classify it in `bin/checks.json`. If it
+  passes, add it to CI. If it fails and you can't fix it now, open a ticket.
+- **New kind of module file:** classify it in `bin/checks.json` `artifacts`.
+- **Delegating work** (agent or session) for a known problem: cite the ticket in
+  the brief. If the work stops unfinished, record in the ticket what is left and
+  where it lives (branch, worktree, uncommitted files).
+
+`node bin/tickets.js check` runs all of the repo-side checks locally.
+
 ## Validation Harness (correctness, not just coverage)
 
 Fixture tests and coverage % do NOT prove correctness — tests that assert

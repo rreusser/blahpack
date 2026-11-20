@@ -31,7 +31,7 @@ structure. Fixture equality and coverage % are NOT correctness.
 - [ ] Test lives at `lib/<pkg>/base/$ARGUMENTS/test/test.validate.js` and passes:
       `node --test lib/<pkg>/base/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20`
 
-**L3 is the definition of done (CONVENTIONS T7; not yet gated).** Reach L4 when a trusted-routine or
+**L3 is the definition of done (CONVENTIONS T7; not yet gated, ticket 0034).** Reach L4 when a trusted-routine or
 Fortran oracle is available (see step 6).
 
 ---

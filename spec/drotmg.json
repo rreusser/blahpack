@@ -1,0 +1,61 @@
+{
+	"routine": "drotmg",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DROTMG(DD1,DD2,DX1,DY1,DPARAM)",
+	"returns": {
+		"kind": "array",
+		"param": "param"
+	},
+	"params": [
+		{
+			"name": "dd1",
+			"fortran": "DD1",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dd2",
+			"fortran": "DD2",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dx1",
+			"fortran": "DX1",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dy1",
+			"fortran": "DY1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "param",
+			"fortran": "DPARAM",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"5"
+			],
+			"length": {
+				"fortran": "5",
+				"js": "5"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

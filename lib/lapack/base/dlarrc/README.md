@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **E**: input array `E`.
 -   **pivmin**: `pivmin`.
 
-#### dlarrc.ndarray( jobt, N, vl, vu, D, strideD, offsetD, E, strideE, offsetE, pivmin )
+#### dlarrc.ndarray( jobt, N, vl, vu, D, strideD, offsetD, E, strideE, offsetE, pivmin, eigcnt, lcnt, rcnt )
 
 Counts the number of eigenvalues of a symmetric tridiagonal matrix in an interval, using alternative indexing semantics.
 

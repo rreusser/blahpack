@@ -1,0 +1,221 @@
+{
+	"routine": "zhpgv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZHPGV( ITYPE, JOBZ, UPLO, N, AP, BP, W, Z, LDZ, WORK,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "itype",
+			"fortran": "ITYPE",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "jobz",
+			"fortran": "JOBZ",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 5,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "BP",
+			"fortran": "BP",
+			"position": 6,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,2*N-1)"
+			],
+			"length": {
+				"fortran": "MAX(1,2*N-1)",
+				"js": "max( 1, 2 * N - 1 )"
+			},
+			"minLength": {
+				"fortran": "MAX(1,2*N-1)",
+				"js": "max( 1, 2 * N - 1 )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 11,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,3*N-2)"
+			],
+			"length": {
+				"fortran": "MAX(1,3*N-2)",
+				"js": "max( 1, 3 * N - 2 )"
+			},
+			"minLength": {
+				"fortran": "MAX(1,3*N-2)",
+				"js": "max( 1, 3 * N - 2 )",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 12,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "ITYPE",
+			"kind": "expr",
+			"fortran": "ITYPE.LT.1 .OR. ITYPE.GT.3",
+			"js": "itype < 1 || itype > 3"
+		},
+		{
+			"info": -2,
+			"param": "JOBZ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": ".NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) )",
+			"js": "!(jobz === 'compute-vectors' || jobz === 'no-vectors')"
+		},
+		{
+			"info": -3,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.( UPPER .OR. LSAME( UPLO, 'L' ) )",
+			"js": "!(uplo === 'upper' || uplo === 'lower')"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -9,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

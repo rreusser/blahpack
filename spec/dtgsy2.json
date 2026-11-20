@@ -1,0 +1,394 @@
+{
+	"routine": "dtgsy2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTGSY2( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "ijob",
+			"fortran": "IJOB",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"M"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "D",
+			"fortran": "D",
+			"position": 11,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDD",
+				"M"
+			],
+			"ld": "LDD",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "ldd",
+			"fortran": "LDD",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "D"
+		},
+		{
+			"name": "E",
+			"fortran": "E",
+			"position": 13,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDE",
+				"N"
+			],
+			"ld": "LDE",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lde",
+			"fortran": "LDE",
+			"position": 14,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "E"
+		},
+		{
+			"name": "F",
+			"fortran": "F",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDF",
+				"N"
+			],
+			"ld": "LDF",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldf",
+			"fortran": "LDF",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "F"
+		},
+		{
+			"name": "scale",
+			"fortran": "SCALE",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rdsum",
+			"fortran": "RDSUM",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "rdscal",
+			"fortran": "RDSCAL",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 20,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"M+N+2"
+			],
+			"length": {
+				"fortran": "M+N+2",
+				"js": "M + N + 2"
+			},
+			"minLength": {
+				"fortran": "M+N+2",
+				"js": "M + N + 2",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "pq",
+			"fortran": "PQ",
+			"position": 21,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 22,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "NT",
+			"values": [
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' )",
+			"js": "trans !== 'no-transpose' && trans !== 'transpose'"
+		},
+		{
+			"info": -2,
+			"param": "IJOB",
+			"kind": "expr",
+			"fortran": "( IJOB.LT.0 ) .OR. ( IJOB.GT.2 )",
+			"guard": "NOTRAN",
+			"js": "trans === 'no-transpose' && (ijob < 0 || ijob > 2)"
+		},
+		{
+			"info": -3,
+			"param": "M",
+			"kind": "expr",
+			"fortran": "M.LE.0",
+			"js": "M <= 0"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "expr",
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		},
+		{
+			"info": -6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )"
+		},
+		{
+			"info": -8,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )"
+		},
+		{
+			"info": -10,
+			"param": "LDC",
+			"kind": "ld",
+			"matrix": "C",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDC.LT.MAX( 1, M )",
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
+		},
+		{
+			"info": -12,
+			"param": "LDD",
+			"kind": "ld",
+			"matrix": "D",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDD.LT.MAX( 1, M )",
+			"js": "ldd < max( 1, M )"
+		},
+		{
+			"info": -14,
+			"param": "LDE",
+			"kind": "ld",
+			"matrix": "E",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDE.LT.MAX( 1, N )",
+			"js": "lde < max( 1, N )"
+		},
+		{
+			"info": -16,
+			"param": "LDF",
+			"kind": "ld",
+			"matrix": "F",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDF.LT.MAX( 1, M )",
+			"js": "ldf < max( 1, M )",
+			"rowMajor": "ldf < max( 1, N )"
+		}
+	],
+	"quickReturn": []
+}

@@ -1,0 +1,11 @@
+{
+	"routine": "zlarz",
+	"overrides": [
+		{
+			"reason": "Callers pass TAU as an element of their own TAU array (TAU(i) in zlatrz, zunmr3), so it crosses as `tau, offsetTau` instead of a Complex128 every caller would construct (S10 element form).",
+			"set": {
+				"params.TAU.element": true
+			}
+		}
+	]
+}

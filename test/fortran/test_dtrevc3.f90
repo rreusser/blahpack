@@ -7,6 +7,7 @@ program test_dtrevc3
   double precision :: WORK(3*MAXN)
   logical :: SELEC(MAXN)
   integer :: INFO, M, N, I
+  integer :: ISEL(MAXN)
 
   ! ============================================================
   ! Test 1: SIDE='R', HOWMNY='A', 4x4 with 2 real + 1 complex pair
@@ -70,6 +71,31 @@ program test_dtrevc3
   call DTREVC3('R', 'S', SELEC, N, T, MAXN, VL, MAXN, VR, MAXN, N, M, WORK, 3*MAXN, INFO)
   call begin_test('right selected 4x4')
   call print_matrix('VR', VR, MAXN, N, M)
+  call print_int('M', M)
+  call print_int('info', INFO)
+  call end_test()
+
+  ! ============================================================
+  ! Test 4b: SIDE='R', HOWMNY='S', only the SECOND column of the complex
+  ! pair (3,4) selected: M counts the pair, SELECT is standardized.
+  ! ============================================================
+  T = 0.0d0; VR = 0.0d0; VL = 0.0d0; WORK = 0.0d0
+  T(1,1) = 1.0d0; T(1,2) = 0.5d0; T(1,3) = 0.2d0; T(1,4) = 0.1d0
+  T(2,2) = 2.0d0; T(2,3) = 0.3d0; T(2,4) = 0.15d0
+  T(3,3) = 3.0d0; T(3,4) = -0.5d0
+  T(4,3) = 0.8d0; T(4,4) = 3.0d0
+  SELEC(1) = .TRUE.
+  SELEC(2) = .FALSE.
+  SELEC(3) = .FALSE.
+  SELEC(4) = .TRUE.
+  call DTREVC3('R', 'S', SELEC, N, T, MAXN, VL, MAXN, VR, MAXN, N, M, WORK, 3*MAXN, INFO)
+  do I = 1, N
+    ISEL(I) = 0
+    if ( SELEC(I) ) ISEL(I) = 1
+  end do
+  call begin_test('right selected second of pair 4x4')
+  call print_matrix('VR', VR, MAXN, N, M)
+  call print_int_array('SELECT', ISEL, N)
   call print_int('M', M)
   call print_int('info', INFO)
   call end_test()

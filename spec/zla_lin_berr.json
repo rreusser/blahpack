@@ -1,0 +1,95 @@
+{
+	"routine": "zla_lin_berr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLA_LIN_BERR( N, NZ, NRHS, RES, AYB, BERR )",
+	"returns": {
+		"kind": "array",
+		"param": "BERR"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nz",
+			"fortran": "NZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "RES",
+			"fortran": "RES",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N",
+				"NRHS"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "AYB",
+			"fortran": "AYB",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N",
+				"NRHS"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "BERR",
+			"fortran": "BERR",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

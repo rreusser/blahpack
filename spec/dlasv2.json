@@ -1,0 +1,85 @@
+{
+	"routine": "dlasv2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASV2( F, G, H, SSMIN, SSMAX, SNR, CSR, SNL, CSL )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "f",
+			"fortran": "F",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "g",
+			"fortran": "G",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "h",
+			"fortran": "H",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "ssmin",
+			"fortran": "SSMIN",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "ssmax",
+			"fortran": "SSMAX",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "snr",
+			"fortran": "SNR",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "csr",
+			"fortran": "CSR",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "snl",
+			"fortran": "SNL",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "csl",
+			"fortran": "CSL",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

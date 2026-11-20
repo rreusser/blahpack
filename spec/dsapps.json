@@ -1,0 +1,166 @@
+{
+	"routine": "dsapps",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSAPPS( N, KEV, NP, SHIFT, V, LDV, H, LDH, RESID, Q, LDQ, WORKD )",
+	"returns": {
+		"kind": "array",
+		"param": "Q"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kev",
+			"fortran": "KEV",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "np",
+			"fortran": "NP",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "SHIFT",
+			"fortran": "SHIFT",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"NP"
+			],
+			"length": {
+				"fortran": "NP",
+				"js": "np"
+			}
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDV",
+				"KEV+NP"
+			],
+			"ld": "LDV",
+			"cols": {
+				"fortran": "KEV+NP",
+				"js": "kev + np"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"2"
+			],
+			"ld": "LDH",
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "RESID",
+			"fortran": "RESID",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"KEV+NP"
+			],
+			"ld": "LDQ",
+			"cols": {
+				"fortran": "KEV+NP",
+				"js": "kev + np"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "WORKD",
+			"fortran": "WORKD",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

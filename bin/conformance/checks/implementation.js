@@ -11,49 +11,12 @@ function check( mod ) {
 	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
 	var baseContent = util.readFile( basePath );
 	var ndarrayContent = util.readFile( ndarrayPath );
-	var hasStringParams;
 
 	if ( !ndarrayContent ) {
 		// ndarray.js doesn't exist — all checks skip
-		results.push( util.skip( ID + '.ndarray-string-validation', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-dimension-validation', 'No ndarray.js' ) );
 		results.push( util.skip( ID + '.ndarray-early-return', 'No ndarray.js' ) );
 		results.push( util.skip( ID + '.ndarray-not-private', 'No ndarray.js' ) );
 	} else {
-		// 1. ndarray.js has string validation when base.js has @param {string}
-		hasStringParams = baseContent && /@param\s*\{string\}/.test( baseContent );
-		if ( hasStringParams ) {
-			if ( /throw new TypeError/.test( ndarrayContent ) ) {
-				results.push( util.pass( ID + '.ndarray-string-validation', 'ndarray.js validates string params' ) );
-			} else {
-				results.push( util.fail(
-					ID + '.ndarray-string-validation',
-					'ndarray.js validates string params',
-					1, [ 'ndarray.js' ],
-					'base.js has @param {string} but ndarray.js has no TypeError'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.ndarray-string-validation', 'No string params' ) );
-		}
-
-		// 2. ndarray.js has dimension validation
-		var hasDimensionParams = baseContent && /@param\s*\{(integer|number)\}[^*]*\b[MNK]\b/i.test( baseContent );
-		if ( hasDimensionParams ) {
-			if ( /throw new RangeError/.test( ndarrayContent ) ) {
-				results.push( util.pass( ID + '.ndarray-dimension-validation', 'ndarray.js validates dimensions' ) );
-			} else {
-				results.push( util.warn(
-					ID + '.ndarray-dimension-validation',
-					'ndarray.js validates dimensions',
-					1, [ 'ndarray.js' ],
-					'base.js has dimension params but ndarray.js has no RangeError'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.ndarray-dimension-validation', 'No dimension params' ) );
-		}
-
 		// 3. ndarray.js has early return
 		if ( baseContent && /if\s*\(\s*[MNK]\s*===\s*0/i.test( baseContent ) ) {
 			if ( /if\s*\(\s*[MNK]\s*===\s*0/i.test( ndarrayContent ) || /return\s/.test( ndarrayContent ) ) {

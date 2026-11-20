@@ -93,7 +93,7 @@ The function has the following parameters:
 
 The function returns `IERR`: `0` on success, `-1` if iterative refinement failed to produce an orthogonal vector.
 
-#### dgetv0.ndarray( state, ido, bmat, itry, initv, N, j, V, strideV1, strideV2, offsetV, resid, strideResid, offsetResid, rnorm, ipntr, strideIpntr, offsetIpntr, workd, strideWorkd, offsetWorkd )
+#### dgetv0.ndarray( state, ido, bmat, itry, initv, N, j, V, strideV1, strideV2, offsetV, resid, strideResid, offsetResid, rnorm, ipntr, strideIpntr, offsetIpntr, workd, strideWorkd, offsetWorkd, ierr )
 
 Same computation, using alternative indexing semantics: `V` takes two strides and an offset, and each vector takes an explicit stride and offset.
 

@@ -30,7 +30,7 @@ limitations under the License.
 var dladiv = require( '@stdlib/lapack/base/dladiv' );
 ```
 
-#### dladiv( a, b, c, d, out )
+#### dladiv( a, b, c, d, p, q )
 
 Internal helper: DLADIV2.
 
@@ -48,7 +48,7 @@ The function has the following parameters:
 -   **d**: `d`.
 -   **out**: `out`.
 
-#### dladiv.ndarray( a, b, c, d, out )
+#### dladiv.ndarray( a, b, c, d, p, q )
 
 Internal helper: DLADIV2, using alternative indexing semantics.
 

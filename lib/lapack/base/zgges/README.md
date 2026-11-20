@@ -45,7 +45,7 @@ var BETA = new Complex128Array( 3 );
 var VSL = new Complex128Array( 9 );
 var VSR = new Complex128Array( 9 );
 
-zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
+zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
 ```
 
 The function has the following parameters:
@@ -92,7 +92,7 @@ var BETA = new Complex128Array( 3 );
 var VSL = new Complex128Array( 9 );
 var VSR = new Complex128Array( 9 );
 
-zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
+zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
 ```
 
 The function has the following additional parameters:
@@ -164,7 +164,7 @@ var BETA = new Complex128Array( 3 );
 var VSL = new Complex128Array( 9 );
 var VSR = new Complex128Array( 9 );
 
-zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
+zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 3, B, 3, ALPHA, BETA, VSL, 3, VSR, 3 );
 ```
 
 </section>

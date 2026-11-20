@@ -1,5 +1,5 @@
 
-{{alias}}( f, g, out )
+{{alias}}( f, g, c, s, r )
     Generates a plane rotation with real cosine and real sine.
 
     Parameters
@@ -26,7 +26,7 @@
     <Float64Array>[ 0.6, 0.8, 5.0 ]
 
 
-{{alias}}.ndarray( f, g, out )
+{{alias}}.ndarray( f, g, c, s, r )
     Generates a plane rotation with real cosine and real sine, using alternative indexing
     semantics.
 

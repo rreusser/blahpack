@@ -1,8 +1,10 @@
-# blahpack
+<div align="center">
+  <img width="377px" src="./blahpack.png" alt="BLAHPACK">
+</div>
 
-JavaScript implementations of BLAS and LAPACK routines, translated from the
-Fortran reference implementations. Covers real (double) and complex
-(double-complex) linear algebra.
+# BLAHPACK
+
+Idiomatic JavaScript implementations of BLAS and LAPACK routines (hence the portmanteau "BLA"), translated from the Fortran reference implementations via an LLM (hence the resulting "BLAH").
 
 ## What's included
 

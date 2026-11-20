@@ -1,5 +1,5 @@
 
-{{alias}}( N, ritz, strideRITZ, bounds, strideBOUNDS, tol )
+{{alias}}( N, ritz, strideRITZ, bounds, strideBOUNDS, tol, nconv )
     Counts the number of "converged" Ritz values for the symmetric
     Lanczos/Arnoldi eigenvalue iteration.
 
@@ -43,7 +43,7 @@
     2
 
 
-{{alias}}.ndarray( N, ritz, strideRITZ, offsetRITZ, bounds, strideBOUNDS, offsetBOUNDS, tol )
+{{alias}}.ndarray( N, ritz, strideRITZ, offsetRITZ, bounds, strideBOUNDS, offsetBOUNDS, tol, nconv )
     Counts the number of "converged" Ritz values for the symmetric
     Lanczos/Arnoldi eigenvalue iteration, using alternative indexing semantics.
 

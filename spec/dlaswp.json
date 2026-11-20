@@ -1,0 +1,120 @@
+{
+	"routine": "dlaswp",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASWP( N, A, LDA, K1, K2, IPIV, INCX )",
+	"returns": {
+		"kind": "array",
+		"param": "A"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 2,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 3,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "k1",
+			"fortran": "K1",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "k2",
+			"fortran": "K2",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"K1+(K2-K1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "K1+(K2-K1)*ABS(INCX)",
+				"js": "k1 + (k2 - k1) * abs( incx )"
+			}
+		},
+		{
+			"name": "inck",
+			"fortran": "INCX",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"jsOrder": [
+		"N",
+		"A",
+		"LDA",
+		"K1",
+		"K2",
+		"INCX",
+		"IPIV"
+	],
+	"overrides": [
+		{
+			"reason": "INCX is both IPIV's stride and the pivot direction (its sign selects reverse order). The JS carries the IPIV stride separately as strideIPIV and keeps INCX as a plain direction scalar, so it is not a consumed increment.",
+			"set": {
+				"params.INCX.role": "scalar",
+				"params.INCX.of": null
+			}
+		},
+		{
+			"reason": "stdlib's dlaswp API (lapack/base/dlaswp) takes the direction as `inck` before IPIV: `( N, A, strideA1, strideA2, offsetA, k1, k2, inck, IPIV, strideIPIV, offsetIPIV )`; the JS keeps that order and name.",
+			"set": {
+				"params.INCX.name": "inck",
+				"jsOrder": [
+					"N",
+					"A",
+					"LDA",
+					"K1",
+					"K2",
+					"INCX",
+					"IPIV"
+				]
+			}
+		}
+	]
+}

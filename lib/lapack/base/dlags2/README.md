@@ -30,7 +30,7 @@ limitations under the License.
 var dlags2 = require( '@stdlib/lapack/base/dlags2' );
 ```
 
-#### dlags2( upper, a1, a2, a3, b1, b2, b3 )
+#### dlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq )
 
 Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel.
 

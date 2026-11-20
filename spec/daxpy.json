@@ -1,0 +1,87 @@
+{
+	"routine": "daxpy",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DAXPY(N,DA,DX,INCX,DY,INCY)",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "DA",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "DX",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 4,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DX"
+		},
+		{
+			"name": "y",
+			"fortran": "DY",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 6,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "DY"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0"
+		},
+		{
+			"fortran": "DA.EQ.0.0D0",
+			"js": "alpha === 0"
+		}
+	]
+}

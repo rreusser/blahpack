@@ -47,7 +47,7 @@ var BETA = new Float64Array( 2 );
 var VSL = new Float64Array( 4 );
 var VSR = new Float64Array( 4 );
 
-var result = dgges( 'column-major', 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 2, A, 2, B, 2, ALPHAR, ALPHAI, BETA, VSL, 2, VSR, 2 );
+var result = dgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 2, A, 2, B, 2, ALPHAR, ALPHAI, BETA, VSL, 2, VSR, 2 );
 // result.info => 0
 // result.sdim => 0
 ```
@@ -57,7 +57,7 @@ The function has the following parameters:
 -   **order**: storage layout (`'row-major'` or `'column-major'`).
 -   **jobvsl**: `'compute-vectors'` to compute left Schur vectors, `'no-vectors'` to not.
 -   **jobvsr**: `'compute-vectors'` to compute right Schur vectors, `'no-vectors'` to not.
--   **sort**: `'sorted'` to order eigenvalues, `'not-sorted'` to not.
+-   **sort**: `'sort'` to order eigenvalues, `'none'` to not.
 -   **selctg**: selection function `(alphar, alphai, beta) => boolean`.
 -   **N**: order of matrices A and B.
 -   **A**: input matrix A (N x N), overwritten by Schur form S on exit.
@@ -94,7 +94,7 @@ var BETA = new Float64Array( 2 );
 var VSL = new Float64Array( 4 );
 var VSR = new Float64Array( 4 );
 
-var result = dgges.ndarray( 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 2, A, 1, 2, 0, B, 1, 2, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, VSL, 1, 2, 0, VSR, 1, 2, 0 );
+var result = dgges.ndarray( 'compute-vectors', 'compute-vectors', 'none', noop, 2, A, 1, 2, 0, B, 1, 2, 0, ALPHAR, 1, 0, ALPHAI, 1, 0, BETA, 1, 0, VSL, 1, 2, 0, VSR, 1, 2, 0 );
 // result.info => 0
 // result.sdim => 0
 ```
@@ -111,7 +111,7 @@ var result = dgges.ndarray( 'compute-vectors', 'compute-vectors', 'not-sorted', 
 
 -   The generalized eigenvalues are represented as `(ALPHAR[j] + i*ALPHAI[j]) / BETA[j]`.
 
--   When `sort` is `'sorted'`, eigenvalues for which `selctg` returns `true` are reordered to the leading diagonal blocks. Complex conjugate pairs are always reordered together.
+-   When `sort` is `'sort'`, eigenvalues for which `selctg` returns `true` are reordered to the leading diagonal blocks. Complex conjugate pairs are always reordered together.
 
 -   Workspace arrays are allocated internally.
 
@@ -137,7 +137,7 @@ var BETA = new Float64Array( 3 );
 var VSL = new Float64Array( 9 );
 var VSR = new Float64Array( 9 );
 
-var result = dgges( 'column-major', 'compute-vectors', 'compute-vectors', 'not-sorted', noop, 3, A, 3, B, 3, ALPHAR, ALPHAI, BETA, VSL, 3, VSR, 3 );
+var result = dgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 3, A, 3, B, 3, ALPHAR, ALPHAI, BETA, VSL, 3, VSR, 3 );
 console.log( 'info:', result.info );
 console.log( 'eigenvalues:', ALPHAR[0]/BETA[0], ALPHAR[1]/BETA[1], ALPHAR[2]/BETA[2] );
 ```

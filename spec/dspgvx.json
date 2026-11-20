@@ -1,0 +1,330 @@
+{
+	"routine": "dspgvx",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSPGVX( ITYPE, JOBZ, RANGE, UPLO, N, AP, BP, VL, VU,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "itype",
+			"fortran": "ITYPE",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "jobz",
+			"fortran": "JOBZ",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "range",
+			"fortran": "RANGE",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 4,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 6,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "BP",
+			"fortran": "BP",
+			"position": 7,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "vl",
+			"fortran": "VL",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "vu",
+			"fortran": "VU",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "il",
+			"fortran": "IL",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "iu",
+			"fortran": "IU",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "abstol",
+			"fortran": "ABSTOL",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 14,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"MAX(1,M)"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "MAX(1,M)",
+				"js": "range === 'index' ? iu - il + 1 : N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"8*N"
+			],
+			"length": {
+				"fortran": "8*N",
+				"js": "8 * N"
+			},
+			"minLength": {
+				"fortran": "8*N",
+				"js": "8 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 18,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"5*N"
+			],
+			"length": {
+				"fortran": "5*N",
+				"js": "5 * N"
+			},
+			"minLength": {
+				"fortran": "5*N",
+				"js": "5 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IFAIL",
+			"fortran": "IFAIL",
+			"position": 19,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 20,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "ITYPE",
+			"kind": "expr",
+			"fortran": "ITYPE.LT.1 .OR. ITYPE.GT.3",
+			"js": "itype < 1 || itype > 3"
+		},
+		{
+			"info": -2,
+			"param": "JOBZ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": ".NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) )",
+			"js": "!(jobz === 'compute-vectors' || jobz === 'no-vectors')"
+		},
+		{
+			"info": -3,
+			"param": "RANGE",
+			"kind": "enum",
+			"fortranValues": "AIV",
+			"values": [
+				"all",
+				"index",
+				"value"
+			],
+			"fortran": ".NOT.( ALLEIG .OR. VALEIG .OR. INDEIG )",
+			"js": "!((range === 'all' || range === 'value') || range === 'index')"
+		},
+		{
+			"info": -4,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.( UPPER .OR. LSAME( UPLO, 'L' ) )",
+			"js": "!(uplo === 'upper' || uplo === 'lower')"
+		},
+		{
+			"info": -5,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -9,
+			"param": "VU",
+			"kind": "expr",
+			"fortran": "N.GT.0 .AND. VU.LE.VL",
+			"guard": "VALEIG",
+			"js": "range === 'value' && (N > 0 && vu <= vl)"
+		},
+		{
+			"info": -10,
+			"param": "IL",
+			"kind": "expr",
+			"fortran": "IL.LT.1",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && il < 1"
+		},
+		{
+			"info": -11,
+			"param": "IU",
+			"kind": "expr",
+			"fortran": "IU.LT.MIN( N, IL ) .OR. IU.GT.N",
+			"guard": ".NOT.( VALEIG ) .AND. INDEIG",
+			"js": "range !== 'value' && range === 'index' && (iu < min( N, il ) || iu > N)"
+		},
+		{
+			"info": -16,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)",
+			"rowMajor": "ldz<1||(jobz==='compute-vectors'&&ldz<max(1,range==='index'?iu-il+1:N))"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

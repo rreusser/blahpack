@@ -1,0 +1,59 @@
+{
+	"routine": "zscal",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZSCAL(N,ZA,ZX,INCX)",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ZA",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "ZX",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 4,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZX"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0 .OR. INCX.LE.0 .OR. ZA.EQ.ONE",
+			"js": "(N <= 0 || incx <= 0) || (real( alpha ) === 1 && imag( alpha ) === 0)"
+		}
+	]
+}

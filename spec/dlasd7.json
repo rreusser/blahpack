@@ -1,0 +1,404 @@
+{
+	"routine": "dlasd7",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASD7( ICOMPQ, NL, NR, SQRE, K, D, Z, ZW, VF, VFW, VL,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "icompq",
+			"fortran": "ICOMPQ",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nl",
+			"fortran": "NL",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nr",
+			"fortran": "NR",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "sqre",
+			"fortran": "SQRE",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "k",
+			"fortran": "K",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "ZW",
+			"fortran": "ZW",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "VF",
+			"fortran": "VF",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "VFW",
+			"fortran": "VFW",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "VL",
+			"fortran": "VL",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "VLW",
+			"fortran": "VLW",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": null
+			}
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "DSIGMA",
+			"fortran": "DSIGMA",
+			"position": 15,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "IDX",
+			"fortran": "IDX",
+			"position": 16,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "IDXP",
+			"fortran": "IDXP",
+			"position": 17,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "IDXQ",
+			"fortran": "IDXQ",
+			"position": 18,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "PERM",
+			"fortran": "PERM",
+			"position": 19,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			}
+		},
+		{
+			"name": "givptr",
+			"fortran": "GIVPTR",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "GIVCOL",
+			"fortran": "GIVCOL",
+			"position": 21,
+			"role": "matrix",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"LDGCOL",
+				"2"
+			],
+			"ld": "LDGCOL",
+			"rows": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "ldgcol",
+			"fortran": "LDGCOL",
+			"position": 22,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "GIVCOL"
+		},
+		{
+			"name": "GIVNUM",
+			"fortran": "GIVNUM",
+			"position": 23,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDGNUM",
+				"2"
+			],
+			"ld": "LDGNUM",
+			"rows": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "ldgnum",
+			"fortran": "LDGNUM",
+			"position": 24,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "GIVNUM"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 25,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 26,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 27,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "ICOMPQ",
+			"kind": "expr",
+			"fortran": "( ICOMPQ.LT.0 ) .OR. ( ICOMPQ.GT.1 )",
+			"js": "icompq < 0 || icompq > 1"
+		},
+		{
+			"info": -2,
+			"param": "NL",
+			"kind": "expr",
+			"fortran": "NL.LT.1",
+			"js": "nl < 1"
+		},
+		{
+			"info": -3,
+			"param": "NR",
+			"kind": "expr",
+			"fortran": "NR.LT.1",
+			"js": "nr < 1"
+		},
+		{
+			"info": -4,
+			"param": "SQRE",
+			"kind": "expr",
+			"fortran": "( SQRE.LT.0 ) .OR. ( SQRE.GT.1 )",
+			"js": "sqre < 0 || sqre > 1"
+		},
+		{
+			"info": -22,
+			"param": "LDGCOL",
+			"kind": "ld",
+			"matrix": "GIVCOL",
+			"min": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			},
+			"fortran": "LDGCOL.LT.N",
+			"js": "ldgcol < nl + nr + 1",
+			"rowMajor": "ldgcol < max( 1, 2 )"
+		},
+		{
+			"info": -24,
+			"param": "LDGNUM",
+			"kind": "ld",
+			"matrix": "GIVNUM",
+			"min": {
+				"fortran": "N",
+				"js": "nl + nr + 1"
+			},
+			"fortran": "LDGNUM.LT.N",
+			"js": "ldgnum < nl + nr + 1",
+			"rowMajor": "ldgnum < max( 1, 2 )"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"Z.length: unknown identifier M",
+		"ZW.length: unknown identifier M",
+		"VF.length: unknown identifier M",
+		"VFW.length: unknown identifier M",
+		"VL.length: unknown identifier M",
+		"VLW.length: unknown identifier M"
+	]
+}

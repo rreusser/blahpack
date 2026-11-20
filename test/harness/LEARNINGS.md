@@ -2068,3 +2068,226 @@ Keep entries short. Newest first.
   arity would catch the whole class.
 
 <!-- Add new entries above this line. -->
+
+## 2026-11-18 — `tsc --checkJs` sweep: stale call signatures, dead WORK sizing, wrong option/LD validation
+
+- **Trigger**: ran the TypeScript checker over every `lib/*/base/*/lib/*.js` using the
+  existing JSDoc (`npm run typecheck`, config in `tsconfig.json` +
+  `types/jsdoc-aliases.d.ts`). 222 errors → 0. Not a harness find, but recorded here
+  because several are silent-wrong-answer bugs and each is a reusable bug class.
+- **Silent wrong answers found:**
+  - `zlaqr2`/`zlaqr3` (AED, only reached for N > 75): `zcopy( ns, V, strideV1, … )`
+    copied V's first COLUMN, reference `ZCOPY( NS, V, LDV, … )` copies the first ROW
+    → must be `strideV2` (same bug as the 2026-05-17 `dlaqr2` fix; the "isolated"
+    audit then missed the complex twin). Also `zlarf` was called with a stale
+    signature (a `Complex128` scalar instead of `(tauArray, offsetTau)`), shifting every
+    later argument. Effect: `zgeev`/`zgees`/`zgeevx` returned info=0 with
+    eigen-residuals ~1e-1 for N > 75. Repro + regression: `zgeev/test/test.ndarray.js`
+    (random complex N=80, 120; `max |A v − w v|`).
+  - `zggsvd3` forwarded `jobu='compute-U'` to `ztgsja`, which only recognized
+    `'compute-vectors'` → Jacobi rotations never applied to U/V/Q (GSVD shared-R
+    residual ~1). Fixed by making `dtgsja`/`ztgsja` use LAPACK's meaning
+    (`'update'`/`'initialize'`/`'none'`) and having both GSVD drivers map their
+    `'compute-*'` to `'update'` (reference xGGSVD3 forwards 'U'/'V'/'Q', which xTGSJA
+    reads as "update"). Regression: `zggsvd3/test/test.ndarray.js` (shapes 5×4/4,
+    6×5/3, 4×6/5; seed 7). The `dtgsja.ndarray` validation also accepted `'compute'`,
+    which base silently treated as `'none'` (the benchmark timed the wrong path).
+  - `dtrsna`/`ztrsna` default WORK was `max(1, LDWORK, N+6)` for a reference
+    `WORK(LDWORK, N+6)` / `(LDWORK, N+1)` matrix → all SEP = NaN when WORK omitted.
+    Same class in `dlarfb`/`zlarfb` (`max(1, LDWORK, K)` for an LDWORK-by-K matrix).
+  - `ztgsen` passed a stale `lwork = -1` to `ztgsyl`, so `IWORK = -1` (only read on the
+    blocked path, n1 or n2 > block size).
+  - `dsaup2` computed `nev + np` on two length-1 `Int32Array`s (string concatenation).
+- **Crashes on documented signatures:** 11 z-routines' default-WORK sizing used
+  Fortran names (`NB`, `MB`, `NBLOCAL`, `N`, `lwork`) undefined in JS
+  (`zgeqrt`, `zhetri2`, `zhetri2x`, `zsytri2x`, `zla_porpvgrw`, `zlatsqr`, `ztplqt`,
+  `ztpqrt`, `zungtsqr`, `zungtsqr_row`, `zggbal`); `zhseqr` lacked the
+  `Complex128Array` import → ReferenceError whenever WORK was omitted.
+- **Option-validation class (new `option-parity` conformance check):** ~70 layout
+  wrappers accepted a different option set than `ndarray.js` — generated from only the
+  values seen in fixtures (e.g. `zgeev` rejected `'no-vectors'`, `dlarfb` rejected
+  `'backward'`/`'rowwise'`, the xTREVC/xTGEVC/xHSEIN family rejected `side='both'`,
+  xLACPY/xLASET rejected `uplo='all'`, RFP routines rejected `transr='transpose'`).
+  Where `ndarray.js` was the over-permissive side it was tightened to the Fortran set:
+  xGECON/xGBCON/xGTCON `norm` ('max'/'frobenius' silently computed the inf-norm
+  estimate), xTREXC/xTRSEN `compq` ('initialize' silently skipped Q), RFP `transr`
+  (real: N/T, complex: N/C). The conventions check's name-based demand for
+  `isOperationSide`/`isMatrixTriangle` was what forced the narrow wrappers; it now
+  accepts an explicit literal validation chain.
+- **Leading-dimension class:** scaffolded wrapper LD checks ("rows if column-major,
+  cols if row-major") ignored the option that makes a matrix optional
+  (reference: `LDZ >= 1, and >= N when WANTZ`), used the wrong dimension
+  (`dtgsja` LDV/LDQ vs M; `dlarfb` LDT vs M), or compared against an OUTPUT array
+  (`max( 1, M )` with `M` an Int32Array → NaN → dead check: dstevx, dtgsen, dtgsna,
+  dtrsen, ztgevc, ztrsen, ztrsna). Rewritten from the reference rules for the
+  affected routines. **Where else it might hide:** any other wrapper whose LD check
+  is not conditional on the corresponding job flag — the remaining wrappers were not
+  audited against Fortran in this pass.
+- **Also fixed**: 21 `ndarray.js` doc blocks were copied from a `base.js` helper
+  (e.g. `zgecon` documented as "CABS1"); `ztrevc3`/`dtrevc3`/`ztrevc` never write the
+  `M` output (documented, not changed).
+
+## 2026-11-18 — Leading-dimension audit: wrapper LD checks regenerated from the reference rules
+
+- **Method**: new cache `data/fortran-ld-rules.json` (`npm run gen:fortran-ld-rules`)
+  records every routine's Fortran argument-check conditions on `LD*` plus the locals
+  they use. `bin/conformance/ld-rules.js` translates them (flags inlined from
+  base.js or translated from `LSAME`, option letters matched against the values
+  ndarray.js accepts, cascades → ternaries); column-major = the Fortran rule,
+  row-major = same rule with the bound replaced by the declared column count.
+  `bin/codemod-ld-checks.js` rewrote 526 wrappers; the `ld-rules` conformance
+  check now enforces the exact checks.
+- **Classes found (≈220 wrappers had a real defect):**
+  - *Rejected valid input*: BLAS-3 checked `LDA >= M` regardless of `transa`
+    (`A` is K-by-M when transposed); every band routine (xGBMV, xSBMV, xTBMV/SV,
+    xGBCON, xGBBRD, …) required `LDA >= M`/`N` instead of `KL+KU+1` / `K+1`, so
+    standard band storage was unusable from the layout wrapper; vector arrays were
+    required `>= N` even when not computed (Fortran: `>= 1` then).
+  - *Accepted out-of-bounds input*: the same checks when `K > M`; `dggrqf` checked
+    `LDB >= M` for a P-by-N `B`; several drivers (xGGES, xGGEV, …) had no LD check
+    at all.
+  - *Row-major aliasing*: `dtplqt`/`ztplqt` tests passed `LDT = 2` for a 2x3
+    row-major `T` (rows overlapped); the tests only asserted `info === 0`. They now
+    compare `T` against the column-major factorization (agrees to 1e-14).
+- **LAPACK documentation errors found** (declared shapes that contradict the code,
+  overridden in ld-rules.js): xGELQT3 and xTPLQT document `T` as `(LDT,N)` but use
+  `(LDT,M)` (M reflectors); ZTRSNA documents `WORK(LDWORK,N+6)` (copied from DTRSNA)
+  but only uses column N+1.
+- **Spin-off bug class — binary `max`/`min`**: the stdlib `max`/`min` (and `fast/`)
+  are binary; `max( 1, M, N )` silently returns `max( 1, M )`. Found because the
+  translator emitted `max( 1, M, N )` for xGELS; 11 pre-existing call sites were
+  wrong too, mostly default WORK sizes. Repro: `zgebrd( 'column-major', 3, 8, … )`
+  with WORK omitted returned NaN in `d`/`e` (allocated `max(1,M)` instead of
+  `max(M,N)`). New lint rule `no-nary-stdlib-minmax`; all sites nested.
+- **Not verified (documented, enforced column-major only)**: row-major layouts of
+  the block-structured TSQR/TSLQ `T` arrays (xLATSQR, xLASWLQ, xLAMTSQR, xLAMSWLQ,
+  xORGTSQR(_ROW), xORHR_COL and complex twins) — marked `'skip'` in ld-rules.js;
+  their existing row-major checks were kept unchanged.
+
+## 2026-11-18 — Option values accepted beyond the reference: `trans` in 52 arguments (tickets/0014)
+
+- **What**: real routines validated `trans` with stdlib's `isTransposeOperation`,
+  which accepts `'conjugate-transpose'`, though reference DORMQR/DGEMQRT/DGELS/…
+  accept only N and T; complex routines accepted `'transpose'`, though reference
+  ZUNMQR/ZGELS/… accept only N and C. `base.js` sent the extra value down whichever
+  branch its comparisons left over:
+  - `dgemqrt`, `dgemlqt`, `dgels`, `dlamtsqr`, `dlamswlq`, `dtpmqrt`, `dtpmlqt`
+    branch on `=== 'transpose'`. `dgemqrt( 'left', 'conjugate-transpose', … )`
+    matched no branch and returned C unchanged, with `info = 0`.
+  - Complex `zunm*`/`zgels`/… given `'transpose'` silently applied Qᴴ instead of
+    rejecting.
+  - Conversely `dtrsyl` rejected `'conjugate-transpose'`, which DTRSYL accepts.
+- **Repro**: `dgemqrt( 'left', 'conjugate-transpose', 4, 4, 3, 2, V, 1, 4, 0, T, 1, 2, 0, C, 1, 4, 0, WORK, 1, 0 )`
+  before the fix: no error, C unchanged. Regression tests in
+  `dgemqrt`/`zunmqr`/`dtrsyl` `test/test.ndarray.js`.
+- **Root cause**: nothing compared accepted option values with the reference.
+  `option-parity` only compares the wrapper against `ndarray.js`, and the
+  `no-dprefix-conjugate-transpose` lint rule bans the *literal* in real routines
+  but not its acceptance through the helper. The `dtrmm` instance of this class
+  (2026-07-17) was fixed in that routine only.
+- **Bug class**: `option-vocabulary` (accepted set ≠ reference set).
+- **Fix (APPLIED)**:
+  - `bin/gen_fortran_option_rules.js` evaluates each reference argument check
+    letter by letter (A–Z, LSAME semantics, locals and IF/ELSE cascades,
+    three-valued logic) → `data/fortran-option-rules.json`.
+  - The new `option-rules` conformance check holds `ndarray.js` to it: exact for
+    TRANS*/SIDE/UPLO/DIAG, by count otherwise.
+  - `option-parity` now also fails on options the wrapper takes but never
+    validates; 41 found, e.g. `dpftrs` forwarded `transr` unchecked.
+  - `bin/codemod-option-rules.js` rewrote 104 files and inserted the 41
+    validations.
+  - Fixing them exposed 13 scaffolded tests that passed invalid option values
+    (`transr = 2`, `'no-transpose'` as `direct`) and only passed because the
+    wrapper didn't validate.
+  - `tsc` then narrowed `trans` and flagged 4 now-unreachable `=== 'transpose'`
+    checks in `zgemqrt`/`zlamtsqr`, which were removed.
+- **Not covered**: options `ndarray.js` never validates (88 arguments) are
+  skipped by the check; see tickets/0022.
+
+## 2026-11-18 — Generated LD checks compared against output arguments (tickets/0001)
+
+- **What**: the leading-dimension checks generated earlier the same day gave
+  three wrappers row-major bounds built from the routine's *output* count `M`:
+  - `dstevx`: `LDZ < max( 1, max( 1, M ) )`;
+  - `dtgsna`/`ztgsna`: `LDVL`/`LDVR < max( 1, M )`.
+
+  In `dstevx`/`dtgsna` `M` is an `Int32Array`, so `max( 1, M )` is `NaN` and the
+  check could never fire. In `ztgsna` `M` is a scalar the caller passes and
+  `base.js` overwrites, so the check compared against a meaningless input.
+  Undersized row-major `Z`/`VL`/`VR` were accepted and then read and written
+  out of bounds.
+- **Repro**: `dstevx( 'row-major', 'compute-vectors', 'all', 3, …, Z, 1, … )`
+  returned instead of throwing. Regression tests are in `test.dstevx.js` and
+  `test.dtgsna.js`; both fail on the old checks.
+- **Root cause**: `bin/conformance/ld-rules.js` substituted any same-named
+  wrapper parameter for a Fortran identifier. The `ld-rules` check verifies
+  wrappers against that same translation, so it passed the bad checks. Found by
+  type-checking with stdlib's declarations loaded (tickets/0003): `max` takes
+  `(number, number)`.
+- **Bug class**: `generator-self-validation`, a check that compares code to the
+  output of the generator that produced it inherits the generator's mistakes.
+  Here the specific mistake was output-as-bound.
+- **Fix (APPLIED)**: the translator refuses array-typed parameters (detected
+  from the JSDoc type *or* from `base.js` indexing the parameter, since the JSDoc
+  is unreliable; see tickets/0002) and reference `INTENT(OUT)` arguments. Such a
+  rule is reported unresolved until `COLS` gives the column count:
+  - `stevx`: `range === 'index' ? iu - il + 1 : N`, as for `syevx`;
+  - `tgsna`: `mm`, as for `trsna`.
+
+  Exactly these three wrappers changed.
+
+## 2026-11-20 — Callees handed a literal or another array's stride: 21 call sites in 7 routines walked the wrong elements under any non-default layout (lint `stride-provenance`, CONVENTIONS S13)
+
+- **What**: `base.js` passed one of its own arrays to a callee with a stride
+  that wasn't that array's. Fortran's `X(1,K), 1` (walk a column, unit stride
+  in column-major) was translated literally as `1` instead of the array's row
+  stride, or a vector was handed to a matrix routine with its stride in the
+  wrong slot. With unit-stride, column-major, zero-offset fixtures every one of
+  these is invisible.
+  - `dsterf` (6): `dlascl( …, n, 1, d, 1, strideD, … )`, scaling `d`/`e` as an
+    N×1 matrix with row stride `1`.
+  - `dgees` (4), `zgees` (1): the same pattern on `WR`/`WI`/`W` during sorting.
+  - `ztgsna` (6): `dznrm2( N, VR, 1, … )`, and `zgemv`/`zdotc` on columns of
+    `VR`/`VL` with stride `1`, where the stride should be `strideVR1`/`strideVL1`.
+  - `zgbbrd` (2): `zrot( kumu, AB, 1, …, AB, 1, … )` down a band column; the
+    stride should be `strideAB1`. The sibling call two blocks up was right
+    (`strideAB2 - strideAB1` for `LDAB-1`).
+  - `dorbdb3`, `zunbdb3` (1 each): `X21` rotated with `X11`'s stride
+    `strideX112`. **The reference has the same typo** (`X21(I,I), LDX11`); see
+    those modules' `DIFFERENCES.md`.
+- **Repro**: `lib/lapack/base/<routine>/test/test.layout.js`, via
+  `test/harness/spec-layout.js`. Each one fails on the code before this fix
+  and passes after. On the old code:
+  - `dsterf` row-major returned `info = 4` (no convergence) instead of 0;
+  - `dgees` negative stride gave `WI[1]` −1.8e138 instead of −5.9e149;
+  - `zgees` row-major sorted 3 eigenvalues instead of 5;
+  - `ztgsna` row-major gave `s[0]` 0.544 instead of 0.514;
+  - `zgbbrd` row-major changed `AB`;
+  - `dorbdb3`/`zunbdb3` with distinct leading dimensions returned NaN in `X11`.
+
+  Seeds and sizes are in the tests.
+- **Root cause**: line-by-line translation of Fortran increments. A literal
+  `1` (or `LDx`) in a Fortran call is a statement about column-major storage.
+  In the strided form it has to become the corresponding stride
+  (`1` → `strideX1`, `LDX` → `strideX2`) of *that* array.
+- **Bug class**: `literal-stride` / `foreign-stride`: a callee argument slot
+  for array A's stride, filled with a constant or another array's stride.
+- **Where else**: the rule now checks every `base.js`. 81 more sites had the
+  same shape but were harmless: the column stride of an N×1 view, a length-1
+  `zscal`, `nrhs = 1` extents. They were conformed anyway; the rule has no
+  exemptions. Not yet covered: an element access inside `base.js` that mixes
+  strides of two arrays (rule P2, which needs the one-index-variable-per-array
+  convention first), and calls into routines whose base signature isn't in a
+  spec.
+- **Fix (APPLIED)**:
+  - The 1-D sites were fixed by the rule's autofix: an array with a single
+    stride can only mean that stride.
+  - The 2-D sites were fixed by hand against the Fortran: which stride a
+    callee should walk is a translation judgment.
+- **Harness note**: `spec-layout.js` NaN poison can't see a write that only
+  *scales* a slot (V8 keeps NaN payloads through arithmetic). The `zgees`
+  test therefore uses a magnitude-based `select`: `W` is recomputed afterwards,
+  so the sort decisions are the only observable trace of a mis-scaled `W`.
+- **Separate bug found along the way**: `zgees` returns NaN with `info = 0`
+  for inputs below `smlnum` (about 1e-140). It's not stride-related.
+  tickets/0026.

@@ -1,0 +1,189 @@
+{
+	"routine": "dlasq3",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASQ3( I0, N0, Z, PP, DMIN, SIGMA, DESIG, QMAX, NFAIL,",
+	"returns": {
+		"kind": "array",
+		"param": "z"
+	},
+	"params": [
+		{
+			"name": "i0",
+			"fortran": "I0",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n0",
+			"fortran": "N0",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"4*N0"
+			],
+			"length": {
+				"fortran": "4*N0",
+				"js": "4 * n0"
+			}
+		},
+		{
+			"name": "pp",
+			"fortran": "PP",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "dmin",
+			"fortran": "DMIN",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "desig",
+			"fortran": "DESIG",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "qmax",
+			"fortran": "QMAX",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "nfail",
+			"fortran": "NFAIL",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "iter",
+			"fortran": "ITER",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "ndiv",
+			"fortran": "NDIV",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "ieee",
+			"fortran": "IEEE",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "ttype",
+			"fortran": "TTYPE",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "dmin1",
+			"fortran": "DMIN1",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dmin2",
+			"fortran": "DMIN2",
+			"position": 15,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dn",
+			"fortran": "DN",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dn1",
+			"fortran": "DN1",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "dn2",
+			"fortran": "DN2",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "g",
+			"fortran": "G",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "DLASQ3 documents QMAX as [in] but assigns it (dlasq3.f:317, QMAX = MAX( QMAX, Z( 4*I0+PP-3 ), Z( 4*I0+PP+1 ) )), so it is in/out.",
+			"set": {
+				"params.QMAX.intent": "inout"
+			}
+		}
+	]
+}

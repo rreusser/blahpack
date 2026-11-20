@@ -1,0 +1,120 @@
+{
+	"routine": "dtftri",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DTFTRI( TRANSR, UPLO, DIAG, N, A, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "transr",
+			"fortran": "TRANSR",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "diag",
+			"fortran": "DIAG",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"(NT-1)-(0)+1"
+			],
+			"length": {
+				"fortran": "(NT-1)-(0)+1",
+				"js": null
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 6,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "TRANSR",
+			"kind": "enum",
+			"fortranValues": "NT",
+			"values": [
+				"no-transpose",
+				"transpose"
+			],
+			"fortran": ".NOT.NORMALTRANSR .AND. .NOT.LSAME( TRANSR, 'T' )",
+			"js": "transr !== 'no-transpose' && transr !== 'transpose'"
+		},
+		{
+			"info": -2,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LOWER .AND. .NOT.LSAME( UPLO, 'U' )",
+			"js": "uplo !== 'lower' && uplo !== 'upper'"
+		},
+		{
+			"info": -3,
+			"param": "DIAG",
+			"kind": "enum",
+			"fortranValues": "NU",
+			"values": [
+				"non-unit",
+				"unit"
+			],
+			"fortran": ".NOT.LSAME( DIAG, 'N' ) .AND. .NOT.LSAME( DIAG, 'U' )",
+			"js": "diag !== 'non-unit' && diag !== 'unit'"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	],
+	"untranslated": [
+		"A.length: unknown identifier NT"
+	]
+}

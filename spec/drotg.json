@@ -1,0 +1,45 @@
+{
+	"routine": "drotg",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": null,
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

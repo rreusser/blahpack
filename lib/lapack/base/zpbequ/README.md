@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **s**: `s`.
 -   **strideS**: stride length for `S`.
 
-#### zpbequ.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB, s, strideS, offsetS )
+#### zpbequ.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB, s, strideS, offsetS, scond, amax )
 
 Computes row and column scalings to equilibrate a complex Hermitian positive definite band matrix and reduce its condition number, using alternative indexing semantics.
 

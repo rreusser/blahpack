@@ -30,7 +30,7 @@ limitations under the License.
 var dlaev2 = require( '@stdlib/lapack/base/dlaev2' );
 ```
 
-#### dlaev2( a, b, c )
+#### dlaev2( a, b, c, rt1, rt2, cs1, sn1 )
 
 @license Apache-2.0.
 
@@ -46,7 +46,7 @@ The function has the following parameters:
 -   **b**: `b`.
 -   **c**: `c`.
 
-#### dlaev2.ndarray( a, b, c )
+#### dlaev2.ndarray( a, b, c, rt1, rt2, cs1, sn1 )
 
 @license Apache-2.0, using alternative indexing semantics.
 

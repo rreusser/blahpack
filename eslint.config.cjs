@@ -17,10 +17,12 @@ var lintLibrary = require( './lint/plugin.cjs' );
 
 // Rules for module source files (lib/**, excluding tests/benchmarks/examples).
 var SOURCE_RULES = {
-	// Signatures faithfully expand the reference Fortran signature and stay
-	// consistent across every file of a module.
-	'fortran-signature': 'error',
-	'wrapper-signature': 'error',
+	// Spec ↔ code (exact, derived from spec/<routine>.json): signatures of
+	// the three forms, the validation prologue and its messages, and JSDoc.
+	'spec-signature': 'error',
+	'spec-prologue': 'error',
+	'spec-messages': 'error',
+	'spec-jsdoc': 'error',
 	'module-exports': 'error',
 
 	// Scaffolding remnants and convention defects.
@@ -28,6 +30,7 @@ var SOURCE_RULES = {
 	'no-dprefix-conjugate-transpose': 'error',
 	'no-stub-wrappers': 'error',
 	'no-todo-params': 'error',
+	'no-nary-stdlib-minmax': 'error',
 	'z-prefix-reinterpret': 'error',
 
 	// Workspace strategy: base.js/ndarray.js never allocate a problem-sized
@@ -38,7 +41,11 @@ var SOURCE_RULES = {
 
 	// base.js honors the declared offset of each caller-owned workspace it
 	// uses (drivers sub-allocate one buffer among callees by offset).
-	'workspace-addressing-honored': 'error'
+	'workspace-addressing-honored': 'error',
+
+	// base.js honors every array's strides and offset: element indices use the
+	// array's offset, and callees get the array's own strides (S13).
+	'stride-provenance': 'error'
 };
 
 // Namespace a rule map, failing loudly on any rule the library does not
@@ -95,7 +102,8 @@ module.exports = [
 			'no-compare-neg-zero': 'error',
 			'no-self-assign': 'error',
 			'no-constant-condition': [ 'error', { 'checkLoops': false } ],
-			'no-unused-vars': [ 'error', { 'args': 'none' } ]
+			'no-unused-vars': [ 'error', { 'args': 'none' } ],
+			'no-undef': 'error'
 		}, namespaced( SOURCE_RULES ) )
 	}
 ];

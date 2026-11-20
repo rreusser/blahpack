@@ -57,7 +57,7 @@ The function has the following parameters:
 -   **alphai**: `alphai`.
 -   **beta**: scalar constant.
 
-#### dlagv2.ndarray( A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, alphar, strideALPHAR, offsetALPHAR, alphai, strideALPHAI, offsetALPHAI, beta, strideBETA, offsetBETA )
+#### dlagv2.ndarray( A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, alphar, strideALPHAR, offsetALPHAR, alphai, strideALPHAI, offsetALPHAI, beta, strideBETA, offsetBETA, csl, snl, csr, snr )
 
 Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular, using alternative indexing semantics.
 

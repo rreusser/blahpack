@@ -1,0 +1,88 @@
+{
+	"routine": "dlapmr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAPMR( FORWRD, M, N, X, LDX, K )",
+	"returns": {
+		"kind": "array",
+		"param": "k"
+	},
+	"params": [
+		{
+			"name": "forwrd",
+			"fortran": "FORWRD",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "X",
+			"fortran": "X",
+			"position": 4,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDX",
+				"N"
+			],
+			"ld": "LDX",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldx",
+			"fortran": "LDX",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "k",
+			"fortran": "K",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "inout",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "M.LE.1",
+			"js": "M <= 1"
+		}
+	]
+}

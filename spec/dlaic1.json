@@ -1,0 +1,102 @@
+{
+	"routine": "dlaic1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAIC1( JOB, J, X, SEST, W, GAMMA, SESTPR, S, C )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "job",
+			"fortran": "JOB",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "J",
+			"fortran": "J",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"J"
+			],
+			"length": {
+				"fortran": "J",
+				"js": "J"
+			}
+		},
+		{
+			"name": "sest",
+			"fortran": "SEST",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"J"
+			],
+			"length": {
+				"fortran": "J",
+				"js": "J"
+			}
+		},
+		{
+			"name": "gamma",
+			"fortran": "GAMMA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sestpr",
+			"fortran": "SESTPR",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"option JOB is an INTEGER code in the reference; the JS takes the option string"
+	]
+}

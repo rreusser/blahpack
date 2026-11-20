@@ -1,0 +1,327 @@
+{
+	"routine": "dlaqz4",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQZ4( ILSCHUR, ILQ, ILZ, N, ILO, IHI, NSHIFTS, NBLOCK_DESIRED, SR, SI, SS, A, LDA, B, LDB, Q, LDQ, Z, LDZ, QC, LDQC, ZC, LDZC, WORK, LWORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "ilschur",
+			"fortran": "ILSCHUR",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "ilq",
+			"fortran": "ILQ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "ilz",
+			"fortran": "ILZ",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ilo",
+			"fortran": "ILO",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nshifts",
+			"fortran": "NSHIFTS",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nblock_desired",
+			"fortran": "NBLOCK_DESIRED",
+			"position": 8,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "SR",
+			"fortran": "SR",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "SI",
+			"fortran": "SI",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "SS",
+			"fortran": "SS",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 16,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 17,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 18,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 19,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "QC",
+			"fortran": "QC",
+			"position": 20,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDQC",
+				"NBLOCK_DESIRED"
+			],
+			"ld": "LDQC",
+			"cols": {
+				"fortran": "NBLOCK_DESIRED",
+				"js": "nblock_desired"
+			}
+		},
+		{
+			"name": "ldqc",
+			"fortran": "LDQC",
+			"position": 21,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "QC"
+		},
+		{
+			"name": "ZC",
+			"fortran": "ZC",
+			"position": 22,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZC",
+				"NBLOCK_DESIRED"
+			],
+			"ld": "LDZC",
+			"cols": {
+				"fortran": "NBLOCK_DESIRED",
+				"js": "nblock_desired"
+			}
+		},
+		{
+			"name": "ldzc",
+			"fortran": "LDZC",
+			"position": 23,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "ZC"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )",
+				"source": "doc"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 25,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 26,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -8,
+			"param": "NBLOCK_DESIRED",
+			"kind": "expr",
+			"fortran": "NBLOCK_DESIRED .LT. NSHIFTS+1",
+			"js": "nblock_desired < nshifts + 1"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "NSHIFTS .LT. 2",
+			"js": "nshifts < 2"
+		},
+		{
+			"fortran": "ILO .GE. IHI",
+			"js": "ilo >= ihi"
+		}
+	],
+	"notes": [
+		"workspace check for LWORK not reducible to a minimum: LWORK .LT. N*NBLOCK_DESIRED"
+	]
+}

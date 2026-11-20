@@ -1,0 +1,400 @@
+{
+	"routine": "dla_gbrfsx_extended",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLA_GBRFSX_EXTENDED( PREC_TYPE, TRANS_TYPE, N, KL, KU,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "prec_type",
+			"fortran": "PREC_TYPE",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "trans_type",
+			"fortran": "TRANS_TYPE",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "AFB",
+			"fortran": "AFB",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDAFB",
+				"N"
+			],
+			"ld": "LDAFB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldafb",
+			"fortran": "LDAFB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AFB"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 11,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "colequ",
+			"fortran": "COLEQU",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 13,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "Y",
+			"fortran": "Y",
+			"position": 16,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDY",
+				"NRHS"
+			],
+			"ld": "LDY",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldy",
+			"fortran": "LDY",
+			"position": 17,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		},
+		{
+			"name": "BERR_OUT",
+			"fortran": "BERR_OUT",
+			"position": 18,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "n_norms",
+			"fortran": "N_NORMS",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ERR_BNDS_NORM",
+			"fortran": "ERR_BNDS_NORM",
+			"position": 20,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"NRHS",
+				"N_ERR_BNDS"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			},
+			"cols": {
+				"fortran": "N_ERR_BNDS",
+				"js": null
+			}
+		},
+		{
+			"name": "ERR_BNDS_COMP",
+			"fortran": "ERR_BNDS_COMP",
+			"position": 21,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"NRHS",
+				"N_ERR_BNDS"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			},
+			"cols": {
+				"fortran": "N_ERR_BNDS",
+				"js": null
+			}
+		},
+		{
+			"name": "RES",
+			"fortran": "RES",
+			"position": 22,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "AYB",
+			"fortran": "AYB",
+			"position": 23,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "DY",
+			"fortran": "DY",
+			"position": 24,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Y_TAIL",
+			"fortran": "Y_TAIL",
+			"position": 25,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "rcond",
+			"fortran": "RCOND",
+			"position": 26,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "ithresh",
+			"fortran": "ITHRESH",
+			"position": 27,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "rthresh",
+			"fortran": "RTHRESH",
+			"position": 28,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dz_ub",
+			"fortran": "DZ_UB",
+			"position": 29,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "ignore_cwise",
+			"fortran": "IGNORE_CWISE",
+			"position": 30,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 31,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "INFO.NE.0",
+			"js": "info !== 0"
+		}
+	],
+	"untranslated": [
+		"ERR_BNDS_NORM.cols: unknown identifier N_ERR_BNDS",
+		"ERR_BNDS_COMP.cols: unknown identifier N_ERR_BNDS"
+	],
+	"notes": [
+		"option TRANS_TYPE is an INTEGER code in the reference; the JS takes the option string"
+	]
+}

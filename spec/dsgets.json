@@ -1,0 +1,91 @@
+{
+	"routine": "dsgets",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSGETS( ISHIFT, WHICH, KEV, NP, RITZ, BOUNDS, SHIFTS )",
+	"returns": {
+		"kind": "array",
+		"param": "SHIFTS"
+	},
+	"params": [
+		{
+			"name": "ishift",
+			"fortran": "ISHIFT",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "which",
+			"fortran": "WHICH",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "kev",
+			"fortran": "KEV",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "np",
+			"fortran": "NP",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "RITZ",
+			"fortran": "RITZ",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"KEV+NP"
+			],
+			"length": {
+				"fortran": "KEV+NP",
+				"js": "kev + np"
+			}
+		},
+		{
+			"name": "BOUNDS",
+			"fortran": "BOUNDS",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"KEV+NP"
+			],
+			"length": {
+				"fortran": "KEV+NP",
+				"js": "kev + np"
+			}
+		},
+		{
+			"name": "SHIFTS",
+			"fortran": "SHIFTS",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NP"
+			],
+			"length": {
+				"fortran": "NP",
+				"js": "np"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

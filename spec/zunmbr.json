@@ -1,0 +1,253 @@
+{
+	"routine": "zunmbr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "vect",
+			"fortran": "VECT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "trans",
+			"fortran": "TRANS",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"MIN(NQ,K)"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "NQ",
+				"js": "side === 'left' ? M : N"
+			},
+			"cols": {
+				"fortran": "MIN(NQ,K)",
+				"js": "min( side === 'left' ? M : N, K )"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 9,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"MIN(NQ,K)"
+			],
+			"length": {
+				"fortran": "MIN(NQ,K)",
+				"js": "min( side === 'left' ? M : N, K )"
+			}
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "NW",
+				"js": "side === 'left' ? max( 1, N ) : max( 1, M )",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 13,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "VECT",
+			"kind": "enum",
+			"fortranValues": "PQ",
+			"values": [
+				"apply-P",
+				"apply-Q"
+			],
+			"fortran": ".NOT.APPLYQ .AND. .NOT.LSAME( VECT, 'P' )",
+			"js": "vect !== 'apply-Q' && vect !== 'apply-P'"
+		},
+		{
+			"info": -2,
+			"param": "SIDE",
+			"kind": "enum",
+			"fortranValues": "LR",
+			"values": [
+				"left",
+				"right"
+			],
+			"fortran": ".NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' )",
+			"js": "side !== 'left' && side !== 'right'"
+		},
+		{
+			"info": -3,
+			"param": "TRANS",
+			"kind": "enum",
+			"fortranValues": "CN",
+			"values": [
+				"conjugate-transpose",
+				"no-transpose"
+			],
+			"fortran": ".NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' )",
+			"js": "trans !== 'no-transpose' && trans !== 'conjugate-transpose'"
+		},
+		{
+			"info": -4,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -5,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "K",
+			"kind": "nonnegative",
+			"fortran": "K.LT.0",
+			"js": "K < 0"
+		},
+		{
+			"info": -8,
+			"param": "LDA",
+			"kind": "expr",
+			"fortran": "( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )",
+			"js": "(vect === 'apply-Q' && lda < max( 1, side === 'left' ? M : N )) || (vect !== 'apply-Q' && lda < max( 1, min( side === 'left' ? M : N, K ) ))",
+			"rowMajor": "lda < max( 1, vect === 'apply-Q' ? min( side === 'left' ? M : N, K ) : ( side === 'left' ? M : N ) )"
+		},
+		{
+			"info": -11,
+			"param": "LDC",
+			"kind": "ld",
+			"matrix": "C",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDC.LT.MAX( 1, M )",
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "M.EQ.0 .OR. N.EQ.0",
+			"js": "M === 0 || N === 0"
+		}
+	]
+}

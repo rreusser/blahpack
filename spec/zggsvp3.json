@@ -1,0 +1,439 @@
+{
+	"routine": "zggsvp3",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGGSVP3( JOBU, JOBV, JOBQ, M, P, N, A, LDA, B, LDB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobu",
+			"fortran": "JOBU",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobv",
+			"fortran": "JOBV",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "jobq",
+			"fortran": "JOBQ",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "P",
+			"fortran": "P",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "P",
+				"js": "P"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "tola",
+			"fortran": "TOLA",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "tolb",
+			"fortran": "TOLB",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "k",
+			"fortran": "K",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "l",
+			"fortran": "L",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "U",
+			"fortran": "U",
+			"position": 15,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDU",
+				"M"
+			],
+			"ld": "LDU",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "ldu",
+			"fortran": "LDU",
+			"position": 16,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "U"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 17,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDV",
+				"P"
+			],
+			"ld": "LDV",
+			"rows": {
+				"fortran": "P",
+				"js": "P"
+			},
+			"cols": {
+				"fortran": "P",
+				"js": "P"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 18,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "Q",
+			"fortran": "Q",
+			"position": 19,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDQ",
+				"N"
+			],
+			"ld": "LDQ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq",
+			"fortran": "LDQ",
+			"position": 20,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q"
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 21,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 22,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "TAU",
+			"fortran": "TAU",
+			"position": 23,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": {
+				"fortran": "1",
+				"js": "1",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 25,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 26,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBU",
+			"kind": "enum",
+			"fortranValues": "NU",
+			"values": [
+				"none",
+				"compute-U"
+			],
+			"fortran": ".NOT.( WANTU .OR. LSAME( JOBU, 'N' ) )",
+			"js": "!(jobu === 'compute-U' || jobu === 'none')"
+		},
+		{
+			"info": -2,
+			"param": "JOBV",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"none",
+				"compute-V"
+			],
+			"fortran": ".NOT.( WANTV .OR. LSAME( JOBV, 'N' ) )",
+			"js": "!(jobv === 'compute-V' || jobv === 'none')"
+		},
+		{
+			"info": -3,
+			"param": "JOBQ",
+			"kind": "enum",
+			"fortranValues": "NQ",
+			"values": [
+				"none",
+				"compute-Q"
+			],
+			"fortran": ".NOT.( WANTQ .OR. LSAME( JOBQ, 'N' ) )",
+			"js": "!(jobq === 'compute-Q' || jobq === 'none')"
+		},
+		{
+			"info": -4,
+			"param": "M",
+			"kind": "nonnegative",
+			"fortran": "M.LT.0",
+			"js": "M < 0"
+		},
+		{
+			"info": -5,
+			"param": "P",
+			"kind": "nonnegative",
+			"fortran": "P.LT.0",
+			"js": "P < 0"
+		},
+		{
+			"info": -6,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -8,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "MAX(1,M)",
+				"js": "max( 1, M )"
+			},
+			"fortran": "LDA.LT.MAX( 1, M )",
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
+		},
+		{
+			"info": -10,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,P)",
+				"js": "max( 1, P )"
+			},
+			"fortran": "LDB.LT.MAX( 1, P )",
+			"js": "ldb < max( 1, P )",
+			"rowMajor": "ldb < max( 1, N )"
+		},
+		{
+			"info": -16,
+			"param": "LDU",
+			"kind": "expr",
+			"fortran": "LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )",
+			"js": "ldu < 1 || (jobu === 'compute-U' && ldu < M)"
+		},
+		{
+			"info": -18,
+			"param": "LDV",
+			"kind": "expr",
+			"fortran": "LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )",
+			"js": "ldv < 1 || (jobv === 'compute-V' && ldv < P)"
+		},
+		{
+			"info": -20,
+			"param": "LDQ",
+			"kind": "expr",
+			"fortran": "LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )",
+			"js": "ldq < 1 || (jobq === 'compute-Q' && ldq < N)"
+		}
+	],
+	"quickReturn": [],
+	"notes": [
+		"check INFO=-24 tests LWORK, not argument 24 (WORK): the reference misnumbers it"
+	]
+}

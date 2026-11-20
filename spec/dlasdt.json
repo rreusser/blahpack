@@ -1,0 +1,91 @@
+{
+	"routine": "dlasdt",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASDT( N, LVL, ND, INODE, NDIML, NDIMR, MSUB )",
+	"returns": {
+		"kind": "array",
+		"param": "NDIMR"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "lvl",
+			"fortran": "LVL",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "nd",
+			"fortran": "ND",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "INODE",
+			"fortran": "INODE",
+			"position": 4,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "NDIML",
+			"fortran": "NDIML",
+			"position": 5,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "NDIMR",
+			"fortran": "NDIMR",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "msub",
+			"fortran": "MSUB",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

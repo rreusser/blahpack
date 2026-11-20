@@ -30,7 +30,7 @@ limitations under the License.
 var zlaesy = require( '@stdlib/lapack/base/zlaesy' );
 ```
 
-#### zlaesy( a, b, c )
+#### zlaesy( a, b, c, rt1, rt2, evscal, cs1, sn1 )
 
 Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix.
 
@@ -46,7 +46,7 @@ The function has the following parameters:
 -   **b**: `b`.
 -   **c**: `c`.
 
-#### zlaesy.ndarray( a, b, c )
+#### zlaesy.ndarray( a, b, c, rt1, rt2, evscal, cs1, sn1 )
 
 Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix, using alternative indexing semantics.
 

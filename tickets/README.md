@@ -45,6 +45,15 @@ node bin/tickets.js check
 PR_BODY="$(gh pr view 42 --json body -q .body)" node bin/tickets.js pr-body
 ```
 
+## Numbering across branches
+
+Ids are global but allocated on branches. `new` numbers past the highest id in
+both the checkout and `origin/main` (override with `TICKETS_BASE`), so run
+`git fetch origin main` first. `check` fails when an id created on this branch
+was also created on `origin/main` since the branch forked; renumber this
+branch's ticket and its references. A PR's merge commit also fails `check`
+with a duplicate id. Retitling a ticket is not a collision.
+
 ## Rules
 
 - A known problem is a ticket, not prose (CONVENTIONS P1–P4). `check` fails

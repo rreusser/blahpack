@@ -51,7 +51,11 @@ jobs:
     name: Conformance
     runs-on: ubuntu-latest
     steps:
+      # Full history: `tickets.js check` compares ticket ids with origin/main
+      # and its merge-base (ticket 0050).
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24

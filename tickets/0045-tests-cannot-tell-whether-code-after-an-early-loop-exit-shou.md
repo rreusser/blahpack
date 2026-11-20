@@ -38,6 +38,8 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
   - 60 in already-triaged routines, almost all the new per-break mutants;
   - 28 never surfaced before, including 12 `ainvnm` guards in `*sycon`/`*hecon`/`*spcon` that were previously false kills;
   - 32 one-offs from the earlier backlog.
+- 2026-11-20, after merging main: main's JSDoc codemods shifted line numbers, and 46 of the 59 line-keyed proofs silently stopped matching. Proofs are now keyed by a fingerprint of the loop and the statement after it, so unrelated edits don't affect them; a code change invalidates them exactly when it should. Migrating at the last commit where all 59 matched and re-running on main: 33 proofs are current. 26 (in `*gsvj0`/`*gsvj1`, `dhgeqz`, `dlaein`, `dlaqr0`/`dlaqr4`, `dlasq2`, `dtgsja`/`ztgsja`, `zla_gerfsx_extended`) are about code that main's spec work actually changed, and must be re-verified; `--check` reports them as stale until then. Alongside them, 120 survivors in 62 routines are still unexplained.
+- A tolerated-survivor list would let the check be gated now, but that is a baseline, which CONVENTIONS T5 forbids, so there is none.
 - The check (`bin/break-mutants.mjs`, with its in-memory mutant loader `bin/break-mutants-loader.mjs`) is not in CI; both are classified `ticket` 0045 in `bin/checks.json` (CONVENTIONS P2). It cannot be gated while it fails, so the unexplained survivors must be triaged first; after that, a CI gate (at least on changed routines) keeps this closed.
 - Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 

@@ -30,12 +30,16 @@
 * A SURVIVING mutant means
 * the tests cannot distinguish the two exit semantics at that site. Equivalent
 * mutants (both semantics give identical results by construction) are recorded
-* in `test/break-mutants.equivalent.json` with a reason. An entry whose reason
+* in `test/break-mutants.equivalent.json` with a reason, keyed by
+* `<file>#<fingerprint>:<kind>[@<break index>]` (see `fingerprint`). An entry whose reason
 * starts with `UNREACHABLE` is a mutant that is NOT equivalent but whose path no
 * known input reaches; it is reported as `unreach`, separately from `equiv`.
 *
 * Usage:
 *   node bin/break-mutants.mjs <routine> [<routine> ...]
+*   node bin/break-mutants.mjs --changed [--base <ref>] --check   CI: modules
+*                    changed since the merge-base with <ref> (default origin/main)
+*   node bin/break-mutants.mjs --all
 *   node bin/break-mutants.mjs --json <routine> ...
 *   node bin/break-mutants.mjs --check <routine> ...  exit 1 on unexplained survivors
 */
@@ -43,6 +47,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as espree from 'espree';
@@ -197,7 +202,7 @@ function mutants( src, site ) {
 	// handling (e.g. dpocon: the KASE exit runs S, the overflow bail must not).
 	if ( breaks.length > 1 ) {
 		breaks.forEach( ( b ) => {
-			out.push( { 'kind': 'skip-after-this-break', 'line': b.loc.start.line, 'src': skipOn( src, site, [ b ], nextSrc ) } );
+			out.push( { 'kind': 'skip-after-this-break', 'line': b.loc.start.line, 'bi': site.breaks.indexOf( b ), 'src': skipOn( src, site, [ b ], nextSrc ) } );
 		});
 	}
 
@@ -273,8 +278,18 @@ function loadEquivalent() {
 	return fs.existsSync( EQUIV_PATH ) ? JSON.parse( fs.readFileSync( EQUIV_PATH, 'utf8' ) ) : {};
 }
 
-function key( file, line, kind ) {
-	return path.relative( ROOT, file ) + ':' + line + ':' + kind;
+// Entries are keyed by CONTENT, not line: a fingerprint of the loop and the
+// statement after it (tokens only, so comments and whitespace do not count),
+// plus the mutant kind and, for a per-break mutant, the break's index. A key
+// survives unrelated edits (a codemod elsewhere in the file) and changes exactly
+// when the code a proof is about changes, which is when it must be re-checked.
+function fingerprint( src, site ) {
+	const toks = ( n ) => espree.tokenize( src.slice( n.range[ 0 ], n.range[ 1 ] ), { 'ecmaVersion': 2022, 'sourceType': 'module' } ).map( ( t ) => t.value ).join( ' ' );
+	return createHash( 'sha1' ).update( toks( site.loop ) + '\n' + toks( site.next ) ).digest( 'hex' ).slice( 0, 12 );
+}
+
+function siteKey( file, src, site, m ) {
+	return path.relative( ROOT, file ) + '#' + fingerprint( src, site ) + ':' + m.kind + ( ( m.bi === void 0 ) ? '' : '@' + m.bi );
 }
 
 function analyze( routine, equivalent ) {
@@ -312,8 +327,9 @@ function analyze( routine, equivalent ) {
 					outcome = 'invalid';
 				}
 				const line = m.line || site.breaks[ 0 ].loc.start.line;
-				const k = key( file, line, m.kind );
+				const k = siteKey( file, orig, site, m );
 				results.push({
+					'key': k,
 					'site': path.relative( ROOT, file ) + ':' + line,
 					'kind': m.kind,
 					'next': snippet( orig, site.next ),
@@ -327,10 +343,57 @@ function analyze( routine, equivalent ) {
 	return { 'routine': routine, 'results': results };
 }
 
+// Modules changed since the merge-base with `base`, tracked or untracked.
+// A mutant's fate depends only on its own module (code and tests), so
+// unchanged modules cannot gain survivors.
+function changedRoutines( base ) {
+	const run = ( args ) => spawnSync( 'git', args, { 'cwd': ROOT, 'encoding': 'utf8' } );
+	const mb = run( [ 'merge-base', 'HEAD', base ] );
+	if ( mb.status !== 0 ) {
+		return null;
+	}
+	const files = run( [ 'diff', '--name-only', mb.stdout.trim() ] ).stdout.split( '\n' )
+		.concat( run( [ 'ls-files', '--others', '--exclude-standard', 'lib/' ] ).stdout.split( '\n' ) );
+	const out = new Set();
+	files.forEach( ( f ) => {
+		const m = /^lib\/(?:blas|lapack|arpack)\/base\/([^/]+)\//.exec( f );
+		if ( m && moduleDir( m[ 1 ] ) ) {
+			out.add( m[ 1 ] );
+		}
+	});
+	return [ ...out ].sort();
+}
+
+function allRoutines() {
+	const out = [];
+	for ( const pkg of [ 'blas', 'lapack', 'arpack' ] ) {
+		const d = path.join( ROOT, 'lib', pkg, 'base' );
+		if ( fs.existsSync( d ) ) {
+			fs.readdirSync( d ).forEach( ( r ) => out.push( r ) );
+		}
+	}
+	return out.sort();
+}
+
 function main( argv ) {
 	const asJson = argv.includes( '--json' );
 	const check = argv.includes( '--check' );
-	const routines = argv.filter( ( a ) => !a.startsWith( '--' ) );
+	const bi = argv.indexOf( '--base' );
+	const base = ( bi >= 0 ) ? argv[ bi + 1 ] : 'origin/main';
+	let routines = argv.filter( ( a, i ) => !a.startsWith( '--' ) && argv[ i - 1 ] !== '--base' );
+	if ( argv.includes( '--all' ) ) {
+		routines = allRoutines();
+	} else if ( argv.includes( '--changed' ) ) {
+		routines = changedRoutines( base );
+		if ( routines === null ) {
+			console.error( 'break-mutants: `' + base + '` is not available; fetch it (CI needs full history) or pass --base <ref>' );
+			process.exitCode = 2;
+			return;
+		}
+		if ( !asJson ) {
+			console.log( 'Modules changed since the merge-base with ' + base + ': ' + ( routines.length ? routines.join( ' ' ) : '(none)' ) );
+		}
+	}
 	const equivalent = loadEquivalent();
 	const all = routines.map( ( r ) => {
 		const res = analyze( r, equivalent );
@@ -339,25 +402,43 @@ function main( argv ) {
 				console.log( r + ': ' + res.error );
 			} else {
 				res.results.forEach( ( x ) => {
-					const tag = ( x.outcome === 'invalid' ) ? 'INVALID ' : x.killed ? 'killed  ' : ( x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED' );
+					const tag = ( x.outcome === 'invalid' ) ? 'INVALID ' : x.killed ? 'killed  ' : x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED';
 					console.log( tag + '  ' + x.site + '  ' + x.kind + '  next: ' + x.next );
 				});
 			}
 		}
 		return res;
 	});
+
+	// Equivalence entries for checked modules that no longer describe a
+	// surviving mutant (killed, or its code changed) are stale: each one is a
+	// proof about specific code, and must be re-checked when that code changes.
+	const surviving = new Set( all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed ).map( ( x ) => x.key ) ) );
+	const dirs = routines.map( ( r ) => moduleDir( r ) ).filter( Boolean ).map( ( d ) => path.relative( ROOT, d ) + '/' );
+	const inScope = ( k ) => dirs.some( ( d ) => k.startsWith( d ) );
+	const stale = Object.keys( equivalent ).filter( ( k ) => !k.startsWith( '_' ) && inScope( k ) && !surviving.has( k ) ).map( ( k ) => 'stale equivalence entry (re-check the proof against the current code, then re-key or remove it): ' + k );
+
 	if ( asJson ) {
 		console.log( JSON.stringify( all, null, 1 ) );
 	}
+	const errors = all.filter( ( r ) => r.error ).map( ( r ) => r.routine + ': ' + r.error );
 	const bad = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && ( !x.equivalent || x.outcome === 'invalid' ) ) );
 	if ( !asJson ) {
 		const total = all.reduce( ( n, r ) => n + ( r.results || [] ).length, 0 );
 		const unreach = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && /^UNREACHABLE/.test( x.equivalent || '' ) ) );
-		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors, ' + unreach.length + ' unreachable (not equivalent)' );
+		stale.forEach( ( m ) => console.log( m ) );
+		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors, ' + unreach.length + ' unreachable (not equivalent), ' + stale.length + ' stale entries' );
+		if ( check && bad.length ) {
+			console.log( 'Each SURVIVED mutant marks a `break` whose post-loop code no test checks. Add a test that makes the two choices differ, or record a proven equivalence in test/break-mutants.equivalent.json (see .claude/skills/blahpack-translate, Step 4).' );
+		}
 	}
-	if ( check && bad.length ) {
+	if ( check && ( bad.length || stale.length || errors.length ) ) {
 		process.exitCode = 1;
 	}
 }
 
-main( process.argv.slice( 2 ) );
+if ( import.meta.url === pathToFileURL( process.argv[ 1 ] ).href ) {
+	main( process.argv.slice( 2 ) );
+}
+
+export { sites, mutants, siteKey };

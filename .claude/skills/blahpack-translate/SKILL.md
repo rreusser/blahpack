@@ -166,7 +166,8 @@ This single command:
     `lib/main.js`, `lib/index.js`
   - `test/test.js` (export checks), `test/test.<routine>.js` (layout validation tests),
     `test/test.ndarray.js` (scaffold for computation tests)
-  - `benchmark/benchmark.js`, `benchmark/benchmark.ndarray.js`
+  - `benchmark/benchmark.js`, `benchmark/benchmark.ndarray.js` (throwing stubs
+    until base.js exists — regenerated in Step 7)
   - `docs/types/index.d.ts` (dual signatures), `docs/types/test.ts`
   - `docs/repl.txt`, `README.md`, `examples/index.js`, `package.json` (with keywords)
   - `LEARNINGS.md`
@@ -457,6 +458,20 @@ Code style (ESM, as in every existing module):
   (see `lib/blas/base/daxpy/test/test.js`).
 
 **Gate:** Zero errors on `bin/lint.sh lib/<pkg>/base/<routine>`.
+
+After lint passes, generate the benchmarks. `bin/gen-benchmark.mjs` probes the
+implemented routine for a working argument list and overwrites the scaffold
+stubs (the conformance check `scaffold-noise.benchmark-generated` fails until
+it has run):
+
+```bash
+node bin/gen-benchmark.mjs lib/<package>/base/<routine> --write
+ls lib/<package>/base/<routine>/benchmark/*.js > /tmp/bench-list.txt && bin/bench-smoke.sh /tmp/bench-list.txt
+```
+
+If the smoke run fails because repeated in-place calls grow the data to
+NaN/Inf, fix the inputs in `bin/gen-benchmark.mjs` (norm-preserving values, as
+for `drot`/`dlasr`), not by hand-editing the generated file.
 
 ### Step 8: Write LEARNINGS.md (MANDATORY — DO NOT SKIP)
 

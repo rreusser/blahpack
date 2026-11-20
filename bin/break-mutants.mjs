@@ -31,9 +31,9 @@
 * the tests cannot distinguish the two exit semantics at that site. Equivalent
 * mutants (both semantics give identical results by construction) are recorded
 * in `test/break-mutants.equivalent.json` with a reason, keyed by
-* `<file>#<fingerprint>:<kind>[@<break index>]` (see `fingerprint`). An entry whose reason
-* starts with `UNREACHABLE` is a mutant that is NOT equivalent but whose path no
-* known input reaches; it is reported as `unreach`, separately from `equiv`.
+* `<file>#<fingerprint>:<kind>[@<break index>]` (see `fingerprint`). Only proven
+* equivalence counts: a survivor on a path no known input reaches is a gap
+* (ticket 0051), not an exemption (CONVENTIONS T5).
 *
 * Usage:
 *   node bin/break-mutants.mjs <routine> [<routine> ...]
@@ -402,7 +402,7 @@ function main( argv ) {
 				console.log( r + ': ' + res.error );
 			} else {
 				res.results.forEach( ( x ) => {
-					const tag = ( x.outcome === 'invalid' ) ? 'INVALID ' : x.killed ? 'killed  ' : x.equivalent ? ( /^UNREACHABLE/.test( x.equivalent ) ? 'unreach ' : 'equiv   ' ) : 'SURVIVED';
+					const tag = ( x.outcome === 'invalid' ) ? 'INVALID ' : x.killed ? 'killed  ' : x.equivalent ? 'equiv   ' : 'SURVIVED';
 					console.log( tag + '  ' + x.site + '  ' + x.kind + '  next: ' + x.next );
 				});
 			}
@@ -425,9 +425,8 @@ function main( argv ) {
 	const bad = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && ( !x.equivalent || x.outcome === 'invalid' ) ) );
 	if ( !asJson ) {
 		const total = all.reduce( ( n, r ) => n + ( r.results || [] ).length, 0 );
-		const unreach = all.flatMap( ( r ) => ( r.results || [] ).filter( ( x ) => !x.killed && /^UNREACHABLE/.test( x.equivalent || '' ) ) );
 		stale.forEach( ( m ) => console.log( m ) );
-		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors, ' + unreach.length + ' unreachable (not equivalent), ' + stale.length + ' stale entries' );
+		console.log( '\n' + total + ' mutants, ' + bad.length + ' unexplained survivors, ' + stale.length + ' stale entries' );
 		if ( check && bad.length ) {
 			console.log( 'Each SURVIVED mutant marks a `break` whose post-loop code no test checks. Add a test that makes the two choices differ, or record a proven equivalence in test/break-mutants.equivalent.json (see .claude/skills/blahpack-translate, Step 4).' );
 		}

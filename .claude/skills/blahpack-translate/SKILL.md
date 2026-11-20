@@ -162,8 +162,11 @@ Each `SURVIVED` mutant marks a `break` where the tests cannot tell whether the
 code after the loop should run (`skip-after-this-break`: after that particular
 exit). Add a test that makes the two choices differ (an input that takes the
 exit while the skipped statement would change the result), or, if both choices
-are provably identical, record the site with its reason in
-`test/break-mutants.equivalent.json`.
+are provably identical, record the site with its proof in
+`test/break-mutants.equivalent.json`. Only a proof counts: a path you could not
+reach is a gap (ticket 0051), not an exemption. CI runs this on every module a PR
+changes (X2), and fails on stale proofs too: entries are keyed by the code they
+reason about, so changing that code means re-checking the proof.
 
 ### Step 5: Lint and conformance loop (until clean)
 

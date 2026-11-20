@@ -22,6 +22,8 @@ The JSDoc on `ndarray.js` and the layout wrapper is the public contract, but not
 - `dtgevc` documents `SELECT` as `Float64Array`, but its callers pass `Uint8Array`.
 - 2,225 `@param` descriptions across `lib/` are just the parameter's own name (`rcond - rcond`).
 
+- z-prefix routines whose JSDoc labels complex arrays `{Float64Array}` (PR #20, "Possible lint rules").
+
 ## Reproduce
 
 ```bash

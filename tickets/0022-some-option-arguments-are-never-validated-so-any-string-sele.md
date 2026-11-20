@@ -18,6 +18,7 @@ The `option-rules` check (ticket 0014) skips these arguments because there is no
 - `jobz` in `dsbev`, `dsbevx`, `dsygv`, `dsyevr` and `dspgv`; `range` in `dsygvx` and `dspgvx`; `norm` in `dtrcon`, `dtpcon` and `dtbcon` (reference I/O).
 - `howmny` in `dtgevc`/`dtrevc3`; `transr` in `dpftri`; `normin` in `dlatbs`/`dlatps`; `sort` in `dgges`; `way` in `dsyconv`.
 - In 16 of the 88, `base.js` already compares against as many values as the reference accepts; those could be generated.
+- CONVENTIONS N8 cites this ticket: nothing checks that the strings a validator accepts are the strings `base.js` dispatches on.
 
 ## Reproduce
 

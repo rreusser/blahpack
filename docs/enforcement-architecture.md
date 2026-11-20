@@ -639,7 +639,7 @@ modules; `bin/spec xcheck` reports 912/912.
   `data/fortran-{ld,option}-rules.json` and their generators), and the
   string/dimension/LD/order/parity sub-checks of conventions, implementation
   and workspace.
-- **Open (not gated):** reference checks the generator can't translate yet
+- **Open (not gated, ticket 0035):** reference checks the generator can't translate yet
   (locals defined on some paths, ILATRANS, BALANC/SENSE families) remain as
   hand-written checks after the prologue. The index base of scalar indices is
   not a convention yet (S12 covers arrays only).

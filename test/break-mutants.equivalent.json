@@ -79,5 +79,7 @@
 	"lib/lapack/base/zgbcon/lib/base.js#6afc6f48d94b:skip-after-this-break@1": "Break @1 is the overflow bail (Fortran GO TO 40) and is immediately preceded by `bail = true`, so S = `if ( !bail ) { … }` does nothing on that exit whether it runs or is skipped.",
 	"lib/lapack/base/zgecon/lib/base.js#90458fc66a2d:skip-after-this-break@1": "Break @1 is the overflow bail (Fortran GO TO 20) and is immediately preceded by `bail = true`, so S = `if ( !bail ) { … }` does nothing on that exit whether it runs or is skipped.",
 	"lib/lapack/base/zpocon/lib/base.js#4443500c8ab9:skip-after-this-break@1": "Break @1 is the overflow bail (Fortran GO TO 20) and is immediately preceded by `bail = true`, so S = `if ( !bail ) { … }` does nothing on that exit whether it runs or is skipped.",
-	"lib/lapack/base/zppcon/lib/base.js#e74d7550c03b:skip-after-this-break@1": "Break @1 is the overflow bail (Fortran GO TO 20) and is immediately preceded by `bail = true`, so S = `if ( !bail ) { … }` does nothing on that exit whether it runs or is skipped."
+	"lib/lapack/base/zppcon/lib/base.js#e74d7550c03b:skip-after-this-break@1": "Break @1 is the overflow bail (Fortran GO TO 20) and is immediately preceded by `bail = true`, so S = `if ( !bail ) { … }` does nothing on that exit whether it runs or is skipped.",
+	"lib/arpack/base/dstqrb/lib/base.js#6d8848f119ce:skip-after-this-break@0": "The split loop only breaks at m <= N-2, so the guard `m > N - 2` is false whenever this break is taken (matching Fortran GO TO 30, which skips `M = N`).",
+	"lib/arpack/base/dstqrb/lib/base.js#6d8848f119ce:skip-after-this-break@1": "The split loop only breaks at m <= N-2, so the guard `m > N - 2` is false whenever this break is taken (matching Fortran GO TO 30, which skips `M = N`)."
 }

@@ -1,0 +1,11 @@
+{
+	"routine": "zlarf",
+	"overrides": [
+		{
+			"reason": "Callers pass TAU as an element of their own TAU array (TAU(i) in zgeqr2, zunm2r and the other reflector loops), so it crosses as `tau, offsetTau` instead of a Complex128 every caller would construct (S10 element form).",
+			"set": {
+				"params.TAU.element": true
+			}
+		}
+	]
+}

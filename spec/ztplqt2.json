@@ -174,7 +174,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDB.LT.MAX( 1, M )",
-			"js": "ldb < max( 1, M )"
+			"js": "ldb < max( 1, M )",
+			"rowMajor": "ldb < max( 1, N )"
 		},
 		{
 			"info": -9,

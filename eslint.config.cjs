@@ -17,10 +17,12 @@ var lintLibrary = require( './lint/plugin.cjs' );
 
 // Rules for module source files (lib/**, excluding tests/benchmarks/examples).
 var SOURCE_RULES = {
-	// Signatures faithfully expand the reference Fortran signature and stay
-	// consistent across every file of a module.
-	'fortran-signature': 'error',
-	'wrapper-signature': 'error',
+	// Spec ↔ code (exact, derived from spec/<routine>.json): signatures of
+	// the three forms, the validation prologue and its messages, and JSDoc.
+	'spec-signature': 'error',
+	'spec-prologue': 'error',
+	'spec-messages': 'error',
+	'spec-jsdoc': 'error',
 	'module-exports': 'error',
 
 	// Scaffolding remnants and convention defects.
@@ -96,7 +98,8 @@ module.exports = [
 			'no-compare-neg-zero': 'error',
 			'no-self-assign': 'error',
 			'no-constant-condition': [ 'error', { 'checkLoops': false } ],
-			'no-unused-vars': [ 'error', { 'args': 'none' } ]
+			'no-unused-vars': [ 'error', { 'args': 'none' } ],
+			'no-undef': 'error'
 		}, namespaced( SOURCE_RULES ) )
 	}
 ];

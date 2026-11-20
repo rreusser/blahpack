@@ -226,7 +226,7 @@
 			},
 			"cols": {
 				"fortran": "N",
-				"js": "N"
+				"js": "range === 'index' ? iu - il + 1 : N"
 			}
 		},
 		{
@@ -391,7 +391,8 @@
 				"js": "ka + 1"
 			},
 			"fortran": "LDAB.LT.KA+1",
-			"js": "ldab < ka + 1"
+			"js": "ldab < ka + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		},
 		{
 			"info": -10,
@@ -403,7 +404,8 @@
 				"js": "kb + 1"
 			},
 			"fortran": "LDBB.LT.KB+1",
-			"js": "ldbb < kb + 1"
+			"js": "ldbb < kb + 1",
+			"rowMajor": "ldbb < max( 1, N )"
 		},
 		{
 			"info": -12,
@@ -441,7 +443,8 @@
 			"param": "LDZ",
 			"kind": "expr",
 			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
-			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)",
+			"rowMajor": "ldz<1||(jobz==='compute-vectors'&&ldz<max(1,range==='index'?iu-il+1:N))"
 		}
 	],
 	"quickReturn": [

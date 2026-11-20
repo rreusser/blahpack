@@ -241,7 +241,8 @@
 				"js": "nb"
 			},
 			"fortran": "LDT.LT.NB",
-			"js": "ldt < nb"
+			"js": "ldt < nb",
+			"rowMajor": "ldt < max( 1, K )"
 		},
 		{
 			"info": -12,
@@ -253,7 +254,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [

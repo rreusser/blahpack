@@ -35,8 +35,11 @@ function suffix( p ) {
 	return p.name;
 }
 
+// A 2-D workspace is 2-D only when it has an LD argument (dtrsna's
+// `WORK( LDWORK, N+6 )`); one whose leading extent is computed (dsytri2x's
+// `WORK( N+NB+1, * )`) is caller-owned scratch like any other (D2).
 function isTwoD( p ) {
-	return p.role === 'matrix' || p.role === 'banded' || ( p.role === 'workspace' && p.dims && p.dims.length === 2 );
+	return p.role === 'matrix' || p.role === 'banded' || ( p.role === 'workspace' && p.dims && p.dims.length === 2 && !!p.ld );
 }
 
 function isOneD( p ) {
@@ -51,10 +54,27 @@ function isOffsetScalar( p ) {
 }
 
 // Groups of base.js parameter names, one group per spec param.
+// Params in JS order: Fortran order unless the spec's `jsOrder` (an
+// override) says otherwise.
+function ordered( spec ) {
+	var rank = {};
+	if ( !spec.jsOrder ) {
+		return spec.params;
+	}
+	spec.jsOrder.forEach( function each( n, i ) {
+		rank[ n ] = i;
+	});
+	return spec.params.slice().sort( function s( a, b ) {
+		var ra = ( a.fortran in rank ) ? rank[ a.fortran ] : spec.jsOrder.length + a.position;
+		var rb = ( b.fortran in rank ) ? rank[ b.fortran ] : spec.jsOrder.length + b.position;
+		return ra - rb;
+	});
+}
+
 function baseGroups( spec ) {
 	var groups = [];
 	var taken = {};
-	spec.params.forEach( function each( p ) {
+	ordered( spec ).forEach( function each( p ) {
 		var s;
 		var g;
 		switch ( p.role ) {

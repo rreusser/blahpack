@@ -12,8 +12,8 @@
 			"name": "trans",
 			"fortran": "TRANS",
 			"position": 1,
-			"role": "scalar",
-			"dtype": "int32",
+			"role": "flag",
+			"dtype": "string",
 			"intent": "in"
 		},
 		{
@@ -181,22 +181,30 @@
 		},
 		{
 			"info": 6,
-			"param": "ALPHA",
-			"kind": "expr",
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
 			"fortran": "LDAB.LT.KL+KU+1",
-			"js": "ldab < kl + ku + 1"
+			"js": "ldab < kl + ku + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		},
 		{
 			"info": 8,
-			"param": "LDAB",
-			"kind": "expr",
+			"param": "INCX",
+			"kind": "nonzero",
+			"vector": "X",
 			"fortran": "INCX.EQ.0",
 			"js": "incx === 0"
 		},
 		{
 			"info": 11,
-			"param": "BETA",
-			"kind": "expr",
+			"param": "INCY",
+			"kind": "nonzero",
+			"vector": "Y",
 			"fortran": "INCY.EQ.0",
 			"js": "incy === 0"
 		}
@@ -209,5 +217,11 @@
 	],
 	"untranslated": [
 		"check 1: unsupported call ILATRANS"
+	],
+	"notes": [
+		"option TRANS is an INTEGER code in the reference; the JS takes the option string",
+		"check INFO=6 tests LDAB, not argument 6 (ALPHA): the reference misnumbers it",
+		"check INFO=8 tests INCX, not argument 8 (LDAB): the reference misnumbers it",
+		"check INFO=11 tests INCY, not argument 11 (BETA): the reference misnumbers it"
 	]
 }

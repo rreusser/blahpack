@@ -28,7 +28,7 @@
 			"fortran": "SELECT",
 			"position": 3,
 			"role": "scalar",
-			"dtype": "complex128",
+			"dtype": "function",
 			"intent": "in"
 		},
 		{

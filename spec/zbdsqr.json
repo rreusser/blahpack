@@ -242,7 +242,8 @@
 			"param": "LDVT",
 			"kind": "expr",
 			"fortran": "( NCVT.EQ.0 .AND. LDVT.LT.1 ) .OR. ( NCVT.GT.0 .AND. LDVT.LT.MAX( 1, N ) )",
-			"js": "(ncvt === 0 && ldvt < 1) || (ncvt > 0 && ldvt < max( 1, N ))"
+			"js": "(ncvt === 0 && ldvt < 1) || (ncvt > 0 && ldvt < max( 1, N ))",
+			"rowMajor": "(ncvt===0&&ldvt<1)||(ncvt>0&&ldvt<max(1,ncvt))"
 		},
 		{
 			"info": -11,
@@ -254,14 +255,16 @@
 				"js": "max( 1, nru )"
 			},
 			"fortran": "LDU.LT.MAX( 1, NRU )",
-			"js": "ldu < max( 1, nru )"
+			"js": "ldu < max( 1, nru )",
+			"rowMajor": "ldu < max( 1, N )"
 		},
 		{
 			"info": -13,
 			"param": "LDC",
 			"kind": "expr",
 			"fortran": "( NCC.EQ.0 .AND. LDC.LT.1 ) .OR. ( NCC.GT.0 .AND. LDC.LT.MAX( 1, N ) )",
-			"js": "(ncc === 0 && ldc < 1) || (ncc > 0 && ldc < max( 1, N ))"
+			"js": "(ncc === 0 && ldc < 1) || (ncc > 0 && ldc < max( 1, N ))",
+			"rowMajor": "(ncc===0&&ldc<1)||(ncc>0&&ldc<max(1,ncc))"
 		}
 	],
 	"quickReturn": [

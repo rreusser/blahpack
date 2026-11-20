@@ -227,7 +227,8 @@
 			"param": "LDA",
 			"kind": "expr",
 			"fortran": "( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR. ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) )",
-			"js": "(vect === 'apply-Q' && lda < max( 1, side === 'left' ? M : N )) || (vect !== 'apply-Q' && lda < max( 1, min( side === 'left' ? M : N, K ) ))"
+			"js": "(vect === 'apply-Q' && lda < max( 1, side === 'left' ? M : N )) || (vect !== 'apply-Q' && lda < max( 1, min( side === 'left' ? M : N, K ) ))",
+			"rowMajor": "lda < max( 1, vect === 'apply-Q' ? min( side === 'left' ? M : N, K ) : ( side === 'left' ? M : N ) )"
 		},
 		{
 			"info": -11,
@@ -239,7 +240,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [

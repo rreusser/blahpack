@@ -12,8 +12,8 @@
 			"name": "trans",
 			"fortran": "TRANS",
 			"position": 1,
-			"role": "scalar",
-			"dtype": "int32",
+			"role": "flag",
+			"dtype": "string",
 			"intent": "in"
 		},
 		{
@@ -159,7 +159,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": 8,
@@ -186,5 +187,8 @@
 	],
 	"untranslated": [
 		"check 1: unsupported call ILATRANS"
+	],
+	"notes": [
+		"option TRANS is an INTEGER code in the reference; the JS takes the option string"
 	]
 }

@@ -187,7 +187,8 @@
 				"js": "max( 1, N )"
 			},
 			"fortran": "LDA.LT.MAX( 1, N )",
-			"js": "lda < max( 1, N )"
+			"js": "lda < max( 1, N )",
+			"rowMajor": "lda < max( 1, M )"
 		},
 		{
 			"info": -8,
@@ -199,7 +200,8 @@
 				"js": "max( 1, N )"
 			},
 			"fortran": "LDB.LT.MAX( 1, N )",
-			"js": "ldb < max( 1, N )"
+			"js": "ldb < max( 1, N )",
+			"rowMajor": "ldb < max( 1, P )"
 		}
 	],
 	"quickReturn": []

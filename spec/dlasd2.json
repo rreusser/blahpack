@@ -372,7 +372,8 @@
 				"js": "nl + nr + 1 + sqre"
 			},
 			"fortran": "LDVT2.LT.M",
-			"js": "ldvt2 < nl + nr + 1 + sqre"
+			"js": "ldvt2 < nl + nr + 1 + sqre",
+			"rowMajor": "ldvt2 < max( 1, nl + nr + 1 )"
 		}
 	],
 	"quickReturn": []

@@ -5,7 +5,7 @@
 	"signature": "SUBROUTINE ZLACRT( N, CX, INCX, CY, INCY, C, S )",
 	"returns": {
 		"kind": "array",
-		"param": "CY"
+		"param": "y"
 	},
 	"params": [
 		{
@@ -17,7 +17,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "CX",
+			"name": "x",
 			"fortran": "CX",
 			"position": 2,
 			"role": "vector",
@@ -41,7 +41,7 @@
 			"of": "CX"
 		},
 		{
-			"name": "CY",
+			"name": "y",
 			"fortran": "CY",
 			"position": 4,
 			"role": "vector",

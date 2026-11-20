@@ -74,7 +74,7 @@
 			},
 			"cols": {
 				"fortran": "KA",
-				"js": null
+				"js": "transa === 'no-transpose' ? K : M"
 			}
 		},
 		{
@@ -104,7 +104,7 @@
 			},
 			"cols": {
 				"fortran": "KB",
-				"js": null
+				"js": "transb === 'no-transpose' ? N : K"
 			}
 		},
 		{
@@ -213,7 +213,8 @@
 				"js": "max( 1, transa === 'no-transpose' ? M : K )"
 			},
 			"fortran": "LDA.LT.MAX(1,NROWA)",
-			"js": "lda < max( 1, transa === 'no-transpose' ? M : K )"
+			"js": "lda < max( 1, transa === 'no-transpose' ? M : K )",
+			"rowMajor": "lda < max( 1, transa === 'no-transpose' ? K : M )"
 		},
 		{
 			"info": 10,
@@ -225,7 +226,8 @@
 				"js": "max( 1, transb === 'no-transpose' ? K : N )"
 			},
 			"fortran": "LDB.LT.MAX(1,NROWB)",
-			"js": "ldb < max( 1, transb === 'no-transpose' ? K : N )"
+			"js": "ldb < max( 1, transb === 'no-transpose' ? K : N )",
+			"rowMajor": "ldb < max( 1, transb === 'no-transpose' ? N : K )"
 		},
 		{
 			"info": 13,
@@ -237,7 +239,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX(1,M)",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [

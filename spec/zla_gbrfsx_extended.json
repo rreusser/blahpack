@@ -19,8 +19,8 @@
 			"name": "trans_type",
 			"fortran": "TRANS_TYPE",
 			"position": 2,
-			"role": "scalar",
-			"dtype": "int32",
+			"role": "flag",
+			"dtype": "string",
 			"intent": "in"
 		},
 		{
@@ -398,5 +398,8 @@
 		"AFB.rows: unknown identifier LDAF",
 		"ERR_BNDS_NORM.cols: unknown identifier N_ERR_BNDS",
 		"ERR_BNDS_COMP.cols: unknown identifier N_ERR_BNDS"
+	],
+	"notes": [
+		"option TRANS_TYPE is an INTEGER code in the reference; the JS takes the option string"
 	]
 }

@@ -261,7 +261,11 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": {
+				"fortran": "1",
+				"js": "1",
+				"source": "check"
+			}
 		},
 		{
 			"name": "lwork",
@@ -389,7 +393,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -12,
@@ -401,7 +406,8 @@
 				"js": "max( 1, P )"
 			},
 			"fortran": "LDB.LT.MAX( 1, P )",
-			"js": "ldb < max( 1, P )"
+			"js": "ldb < max( 1, P )",
+			"rowMajor": "ldb < max( 1, N )"
 		},
 		{
 			"info": -16,
@@ -423,17 +429,10 @@
 			"kind": "expr",
 			"fortran": "LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )",
 			"js": "ldq < 1 || (jobq === 'compute-Q' && ldq < N)"
-		},
-		{
-			"info": -24,
-			"param": "IWORK",
-			"kind": "expr",
-			"fortran": "LWORK.LT.1 .AND. .NOT.LQUERY",
-			"js": "lwork < 1 && lwork !== -1"
 		}
 	],
 	"quickReturn": [],
 	"notes": [
-		"no derivable minimum length for workspace WORK"
+		"check INFO=-24 tests LWORK, not argument 24 (IWORK): the reference misnumbers it"
 	]
 }

@@ -19,19 +19,101 @@ var INC_RE = /^INC[A-Z0-9]*$/;
 var BANDED_CODES = { 'gb': 1, 'sb': 1, 'hb': 1, 'pb': 1, 'tb': 1 };
 var RFP_CODES = { 'pf': 1, 'sf': 1, 'hf': 1, 'tf': 1 };
 
-// CONVENTIONS S7: canonical aliases. DX/DY are the real level-1 BLAS
-// vectors (stdlib `x`, `y`).
-var ALIASES = { 'DA': 'alpha', 'DB': 'beta' };
-// DX/DY/SX/SY are the level-1 BLAS vectors (stdlib `x`, `y`) and DPARAM is
+// CONVENTIONS S7: canonical aliases. The level-1 BLAS scalars DA/ZA are
+// stdlib's `alpha`, DB is `beta`.
+var ALIASES = { 'DA': 'alpha', 'DB': 'beta', 'ZA': 'alpha' };
+// DX/DY/SX/SY (and the complex ZX/ZY/CX/CY) are the level-1 BLAS vectors
+// (stdlib `x`, `y`) and DPARAM is
 // stdlib's `param` (drotm); applied unless the alias collides with another
 // argument (dla_gbrfsx_extended has both Y and DY).
-var VECTOR_ALIASES = { 'DX': 'x', 'DY': 'y', 'SX': 'x', 'SY': 'y', 'DPARAM': 'param' };
+var VECTOR_ALIASES = { 'DX': 'x', 'DY': 'y', 'SX': 'x', 'SY': 'y', 'ZX': 'x', 'ZY': 'y', 'CX': 'x', 'CY': 'y', 'DPARAM': 'param' };
+
+// Column counts (CONVENTIONS V5, row-major LD bound) of 2-D arrays whose
+// declared second extent is a doc pseudo-variable (BLAS `KA`, `KB`, `K`), an
+// output (the eigenvector count `M`), or misdocumented. Routine stem → LD
+// argument → JS expression in spec names, or null when the column count is
+// not established (the row-major bound is then not generated).
+var COLS = {
+	'gemm': { 'LDA': "transa === 'no-transpose' ? K : M", 'LDB': "transb === 'no-transpose' ? N : K" },
+	'symm': { 'LDA': "side === 'left' ? M : N" },
+	'hemm': { 'LDA': "side === 'left' ? M : N" },
+	'trmm': { 'LDA': "side === 'left' ? M : N" },
+	'trsm': { 'LDA': "side === 'left' ? M : N" },
+	'syrk': { 'LDA': "trans === 'no-transpose' ? K : N" },
+	'herk': { 'LDA': "trans === 'no-transpose' ? K : N" },
+	'syr2k': { 'LDA': "trans === 'no-transpose' ? K : N", 'LDB': "trans === 'no-transpose' ? K : N" },
+	'her2k': { 'LDA': "trans === 'no-transpose' ? K : N", 'LDB': "trans === 'no-transpose' ? K : N" },
+	'sfrk': { 'LDA': "trans === 'no-transpose' ? K : N" },
+	'hfrk': { 'LDA': "trans === 'no-transpose' ? K : N" },
+	// Reflectors stored rowwise: A is K-by-NQ.
+	'orml2': { 'LDA': "side === 'left' ? M : N" },
+	'ormlq': { 'LDA': "side === 'left' ? M : N" },
+	'ormr2': { 'LDA': "side === 'left' ? M : N" },
+	'ormr3': { 'LDA': "side === 'left' ? M : N" },
+	'ormrq': { 'LDA': "side === 'left' ? M : N" },
+	'ormhr': { 'LDA': "side === 'left' ? M : N" },
+	'ormtr': { 'LDA': "side === 'left' ? M : N" },
+	'orm22': { 'LDQ': "side === 'left' ? M : N" },
+	'unml2': { 'LDA': "side === 'left' ? M : N" },
+	'unmlq': { 'LDA': "side === 'left' ? M : N" },
+	'unmr2': { 'LDA': "side === 'left' ? M : N" },
+	'unmr3': { 'LDA': "side === 'left' ? M : N" },
+	'unmrq': { 'LDA': "side === 'left' ? M : N" },
+	'unmhr': { 'LDA': "side === 'left' ? M : N" },
+	'unmtr': { 'LDA': "side === 'left' ? M : N" },
+	'unm22': { 'LDQ': "side === 'left' ? M : N" },
+	'gemlqt': { 'LDV': "side === 'left' ? M : N" },
+	'lamswlq': { 'LDA': "side === 'left' ? M : N" },
+	'tpmlqt': { 'LDA': "side === 'left' ? N : K" },
+	'tpmqrt': { 'LDA': "side === 'left' ? N : K" },
+	'gesvd': { 'LDU': "jobu === 'all-columns' ? M : min( M, N )" },
+	// LAPACK documents T as (LDT,N); an LQ factorization of M rows has M
+	// reflectors and the code addresses T(1:MB, 1:M).
+	'gelqt3': { 'LDT': 'M' },
+	'tplqt': { 'LDT': 'M' },
+	// WORK( LDWORK, N+6 ) (real) / ( LDWORK, N+1 ) (complex); unused for N < 2.
+	'dtrsna': { 'LDWORK': 'N < 2 ? N : N + 6' },
+	'ztrsna': { 'LDWORK': 'N < 2 ? N : N + 1' },
+	// VL/VR hold MM columns; M (columns used) is an output.
+	'trsna': { 'LDVL': 'mm', 'LDVR': 'mm' },
+	'tgsna': { 'LDVL': 'mm', 'LDVR': 'mm' },
+	// Z( LDZ, max(1,M) ) where M (eigenvalues found) is an output: its largest value.
+	'syevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'syevr': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'stevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'stevr': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'sbevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'spevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'spgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'sygvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'sbgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'heevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'heevr': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'hegvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'hbevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'hbgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'hpevx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" },
+	'hpgvx': { 'LDZ': "range === 'index' ? iu - il + 1 : N" }
+};
+
+// Row-major forms of leading-dimension checks whose array's shape depends on
+// an option in a way the column count alone can't express. Stem → LD → JS.
+var ROW_MAJOR = {
+	// A is (LDA, min(NQ,K)) when applying Q and (LDA, NQ) when applying P**T.
+	'ormbr': { 'LDA': "lda < max( 1, vect === 'apply-Q' ? min( side === 'left' ? M : N, K ) : ( side === 'left' ? M : N ) )" },
+	'unmbr': { 'LDA': "lda < max( 1, vect === 'apply-Q' ? min( side === 'left' ? M : N, K ) : ( side === 'left' ? M : N ) )" }
+};
 
 
 // FORTRAN TYPE FACTS //
 
 function dtypeOf( type ) {
 	var t = String( type || '' ).toUpperCase();
+	// An EXTERNAL procedure argument (dgees's SELECT: "a LOGICAL FUNCTION of
+	// two DOUBLE PRECISION arguments") is a JS callback.
+	if ( /\bFUNCTION\b/.test( t ) ) {
+		return 'function';
+	}
 	if ( /COMPLEX\s*\*\s*16|DOUBLE COMPLEX|COMPLEX\s*\(\s*(KIND\s*=\s*)?(DP|WP|8)\s*\)/.test( t ) ) {
 		return 'complex128';
 	}
@@ -243,6 +325,29 @@ function lworkMin( ast, LW ) {
 	return null;
 }
 
+// Restate `ld < ROWS` / `ld < max( 1, ROWS )` inside a check as the same
+// bound on COLS. Returns null if the check has no such bound.
+function substituteBound( js, ld, rows, cols ) {
+	var flat = js.replace( /\s+/g, '' );
+	var r = rows.replace( /\s+/g, '' );
+	var hit = false;
+	var pats = [ ld + '<max(1,' + r + ')', ld + '<max(1,(' + r + '))', ld + '<' + r, ld + '<(' + r + ')' ];
+	pats.forEach( function each( pat ) {
+		var i = 0;
+		var j;
+		while ( ( j = flat.indexOf( pat, i ) ) >= 0 ) {
+			if ( ( j > 0 && /\w/.test( flat[ j - 1 ] ) ) || /\w/.test( flat[ j + pat.length ] || '' ) ) {
+				i = j + 1;
+				continue;
+			}
+			flat = flat.slice( 0, j ) + ld + '<max(1,' + cols.replace( /\s+/g, '' ) + ')' + flat.slice( j + pat.length );
+			hit = true;
+			i = j + 1;
+		}
+	});
+	return hit ? flat : null;
+}
+
 // BUILD //
 
 function build( routine, sig, facts, options ) {
@@ -389,6 +494,15 @@ function build( routine, sig, facts, options ) {
 			p.role = 'flag';
 			return;
 		}
+		// INTEGER-coded options (the extended-precision la_* routines take
+		// TRANS/UPLO as ILATRANS/ILAUPLO codes; laic1's JOB is 1 or 2). The JS
+		// takes the canonical option string (N1).
+		if ( p.dtype === 'int32' && ( ( /^la_/.test( routine.slice( 1 ) ) && /^(TRANS|TRANS_TYPE|UPLO)$/.test( F ) ) || ( routine.slice( 1 ) === 'laic1' && F === 'JOB' ) ) ) {
+			p.role = 'flag';
+			p.dtype = 'string';
+			notes.push( 'option ' + F + ' is an INTEGER code in the reference; the JS takes the option string' );
+			return;
+		}
 		if ( p.dtype === 'int32' && p.intent === 'in' && ( checkedNonnegative( F ) || inDims( F ) ) ) {
 			p.role = 'dim';
 			return;
@@ -514,10 +628,21 @@ function build( routine, sig, facts, options ) {
 		var p = params[ pos - 1 ];
 		var rec = { 'info': c.info };
 		var ast;
+		var ids;
 		var m;
 		if ( !p ) {
 			untranslated.push( 'check INFO=' + c.info + ': no argument at that position' );
 			return;
+		}
+		// A check that doesn't mention the argument at |INFO| tests the first
+		// argument it does mention (the reference misnumbers some INFO values,
+		// e.g. DLA_GBAMV's LDAB/INCX/INCY checks).
+		if ( !new RegExp( '\\b' + p.fortran + '\\b' ).test( c.cond ) ) {
+			ids = ( c.cond.replace( /'[^']*'/g, '' ).toUpperCase().match( /\b[A-Z][A-Z0-9_]*\b/g ) || [] ).filter( isArg );
+			if ( ids.length ) {
+				notes.push( 'check INFO=' + c.info + ' tests ' + ids[ 0 ] + ', not argument ' + pos + ' (' + p.fortran + '): the reference misnumbers it' );
+				p = byName[ ids[ 0 ] ];
+			}
 		}
 		rec.param = p.fortran;
 		ast = safeParse( c.cond );
@@ -556,6 +681,16 @@ function build( routine, sig, facts, options ) {
 		}
 		var tr = translate( c.guard ? '(' + c.guard + ') .AND. (' + c.cond + ')' : c.cond, 'check ' + c.info );
 		rec.js = tr.js;
+		// An output argument's value on entry is meaningless (dhsein's
+		// `MM.LT.M` tests the M it computed from SELECT; in JS M is an array).
+		ids = ( ( c.guard || '' ) + ' ' + c.cond ).replace( /'[^']*'/g, '' ).toUpperCase().match( /\b[A-Z][A-Z0-9_]*\b/g ) || [];
+		ids = ids.filter( function f( n ) {
+			return isArg( n ) && byName[ n ].intent === 'out' && n !== 'INFO';
+		});
+		if ( rec.js && ids.length ) {
+			rec.js = null;
+			untranslated.push( 'check ' + c.info + ': tests the output argument ' + ids[ 0 ] + ' (its value is computed, not passed in)' );
+		}
 		checks.push( rec );
 	});
 
@@ -602,6 +737,72 @@ function build( routine, sig, facts, options ) {
 			rec.values = null;
 		}
 	}
+
+	// Pass 4b: row-major leading-dimension bounds (CONVENTIONS V5). The
+	// column-major bound is the reference check (on the rows); the row-major
+	// bound is the same check on the array's column count. A check whose
+	// array is square needs no `rowMajor`; `rowMajor: null` means the column
+	// count is not established and only the column-major check exists.
+	var stem = routine.replace( /^[sdcz]/, '' );
+	var colsTable = Object.assign( {}, COLS[ stem ] || {}, COLS[ routine ] || {} );
+	var bySpecName = {};
+	params.forEach( function each( p ) {
+		bySpecName[ p.name ] = p;
+	});
+	function refsOutput( js ) {
+		return ( js.replace( /'[^']*'/g, '' ).match( /\b[A-Za-z_]\w*\b/g ) || [] ).some( function some( id ) {
+			var q = bySpecName[ id ];
+			return q && ( q.intent !== 'in' || q.dims );
+		});
+	}
+	params.forEach( function each( p ) {
+		if ( !p.ld ) {
+			return;
+		}
+		if ( Object.prototype.hasOwnProperty.call( colsTable, p.ld ) ) {
+			p.cols = { 'fortran': p.dims[ 1 ], 'js': colsTable[ p.ld ] };
+			if ( p.cols.js === null ) {
+				untranslated.push( p.fortran + '.cols: the row-major column count is not established' );
+			}
+			return;
+		}
+		if ( p.cols && p.cols.js && refsOutput( p.cols.js ) ) {
+			untranslated.push( p.fortran + '.cols: ' + p.cols.fortran + ' names an output argument' );
+			p.cols.js = null;
+		}
+	});
+	checks.forEach( function each( c ) {
+		var ldp = byName[ c.param ];
+		var arr = ldp && ldp.role === 'ld' ? byName[ ldp.of ] : null;
+		var rm = ROW_MAJOR[ stem ] && ROW_MAJOR[ stem ][ c.param ];
+		var sub;
+		if ( !arr || !c.js ) {
+			return;
+		}
+		if ( rm ) {
+			c.rowMajor = rm;
+			return;
+		}
+		if ( !arr.cols || !arr.cols.js ) {
+			c.rowMajor = null;
+			untranslated.push( 'check ' + c.info + '.rowMajor: the column count of ' + arr.fortran + ' is not established' );
+			return;
+		}
+		if ( arr.rows && arr.rows.js === arr.cols.js ) {
+			return;
+		}
+		if ( c.kind === 'ld' ) {
+			c.rowMajor = ldp.name + ' < max( 1, ' + arr.cols.js + ' )';
+			return;
+		}
+		sub = arr.rows && arr.rows.js ? substituteBound( c.js, ldp.name, arr.rows.js, arr.cols.js ) : null;
+		if ( sub === null ) {
+			c.rowMajor = null;
+			untranslated.push( 'check ' + c.info + '.rowMajor: no `' + ldp.name + ' < ' + ( arr.rows ? arr.rows.js : '?' ) + '` bound to restate on the columns' );
+			return;
+		}
+		c.rowMajor = sub;
+	});
 
 	// Pass 5: workspace minimum lengths.
 	params.forEach( function each( p ) {
@@ -659,8 +860,10 @@ function build( routine, sig, facts, options ) {
 	var returns;
 	if ( ( sig.kind || ( facts && facts.kind ) ) === 'function' ) {
 		returns = { 'kind': 'value', 'dtype': dtypeOf( sig.returns ) };
-		if ( /^complex/.test( returns.dtype ) ) {
-			// S1: a complex FUNCTION writes its result into `out, offsetOut`.
+		// S1: a complex FUNCTION writes its result into `out, offsetOut`,
+		// except the level-1 BLAS dot products, which return a Complex128
+		// as stdlib's do (S1 carve-out, ruled 2026-11-19).
+		if ( /^complex/.test( returns.dtype ) && !/^[cz]dot[cu]$/.test( routine ) ) {
 			out.push( { 'name': 'out', 'fortran': null, 'role': 'result', 'dtype': returns.dtype, 'intent': 'out' } );
 		}
 	} else if ( byName.INFO && byName.INFO.role === 'info' ) {

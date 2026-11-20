@@ -45,7 +45,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"base": 0
 		},
 		{
 			"name": "ihi",
@@ -53,7 +54,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"base": 0
 		},
 		{
 			"name": "H",
@@ -365,5 +367,14 @@
 	"untranslated": [
 		"check -15: local ILQ undefined on some path",
 		"check -17: local ILZ undefined on some path"
+	],
+	"overrides": [
+		{
+			"reason": "The JS API takes ILO and IHI 0-based (dgges, dggev and dggevx pass `ilo - 1`, `ihi - 1`; base.js indexes with them directly), unlike the 1-based ILO/IHI of the other routines.",
+			"set": {
+				"params.ILO.base": 0,
+				"params.IHI.base": 0
+			}
+		}
 	]
 }

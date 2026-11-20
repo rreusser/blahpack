@@ -30,7 +30,7 @@ bin/gen_spec dgetrf          # one routine; also creates the spec for a new rout
 bin/gen_spec --check         # CI: fail if any spec differs from regeneration
 bin/gen_spec --extract       # refresh data/fortran-checks.json (needs `npm run fetch-reference`)
 bin/spec show dgetrf         # the spec and its three signatures
-bin/spec xcheck [--list]     # compare every spec projection with the code
+bin/spec xcheck [--list]     # compare every spec projection with the code (exit 1 on a difference)
 ```
 
 ## What the generator derives (and from where)
@@ -47,7 +47,8 @@ bin/spec xcheck [--list]     # compare every spec projection with the code
 | `minLength` | the LWORK check, else the LWORK doc constraint, else the declared extent |
 | `quickReturn` | top-level `IF( c ) RETURN` / `IF( c ) THEN … RETURN` after the checks |
 | `returns` | S11 |
-| `name` | Fortran name, with these canonical aliases: `DA→alpha`, `DB→beta`, `DX/SX→x`, `DY/SY→y`, `DPARAM→param` (unless the alias collides); in/out `INFO` → `infoIn`. Casing is cosmetic; names compare case-insensitively (S7). |
+| `rowMajor` (LD checks) | the same check on the array's column count (V5); absent when the array is square, `null` when the column count is not established. Column counts the declarations express with doc pseudo-variables (BLAS `KA`/`KB`) or outputs come from the `COLS` table in `bin/spec-gen/build.cjs` |
+| `name` | Fortran name, with these canonical aliases: `DA/ZA→alpha`, `DB→beta`, `DX/SX/ZX/CX→x`, `DY/SY/ZY/CY→y`, `DPARAM→param` (unless the alias collides); in/out `INFO` → `infoIn`. Casing is cosmetic; names compare case-insensitively (S7). |
 
 Expressions carry `fortran` (verbatim) and `js` (locals and constants inlined;
 helpers `max`, `min`, `abs`, `trunc`, `real`, `imag`). When an expression
@@ -65,9 +66,17 @@ pseudo-variables like `KA`), `js` is `null` and the reason is listed in
   "overrides": [ { "reason": "…why the generated fact is wrong…", "set": { "params.INCX.role": "scalar" } } ] }
 ```
 
-Paths are `params.<Fortran or JS name>.<key>`, `checks.<info>.<key>`, or a
+Override keys beyond the generated ones: `params.X.element` (S10 element form), `params.X.base: 0` (a scalar index the JS takes 0-based), and the top-level `jsOrder` (JS parameter order, when it differs from Fortran's). Paths are `params.<Fortran or JS name>.<key>`, `checks.<info>.<key>`, or a
 top-level key; `null` deletes. Applied overrides, with their reasons, are copied
 into the spec. These are errors: a missing reason, an override that changes
 nothing (stale), and an override for a routine with no spec (orphan).
 **An override category that repeats is a generator bug.** Fix the generator
 instead.
+
+## The spec ↔ code gate
+
+The ESLint rules `blahpack/spec-signature`, `spec-prologue`, `spec-messages`
+and `spec-jsdoc` (`lint/rules/spec-*`) hold every module to its spec: the
+three signatures, the validation prologue generated from `checks`
+(`lint/lib/prologue.cjs`), its canonical messages, and the JSDoc. Their fixes
+are codemods: `bin/codemod-spec/{rename,prologue,jsdoc,returns}.cjs`.

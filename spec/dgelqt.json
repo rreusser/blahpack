@@ -152,7 +152,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -7,
@@ -164,7 +165,8 @@
 				"js": "mb"
 			},
 			"fortran": "LDT.LT.MB",
-			"js": "ldt < mb"
+			"js": "ldt < mb",
+			"rowMajor": "ldt < max( 1, min( M, N ) )"
 		}
 	],
 	"quickReturn": [

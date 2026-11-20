@@ -39,22 +39,21 @@ lint/
   README.md                    ← this file
   plugin.cjs                   ← assembles rules/*/rule.cjs into an ESLint plugin
   verify-corpus.cjs            ← runs every rule over all module files (the gate)
-  verify-signatures.cjs        ← exact S3/S4 signature projections (`sig`)
   verify-no-escape-hatches.cjs ← rejects baselines/allowlists/skips (`hatch`)
   no-fortran-source.test.cjs   ← CI never reads vendored Fortran (T6)
   lib/
     fortran-data.cjs           ← loads parsed Fortran argument metadata
-    naming.cjs                 ← shared stride/offset naming-discipline check
-    strided-projection.cjs     ← base.js → <routine>.js projection (S4)
+    spec.cjs                   ← spec/<routine>.json + the three signature projections (S1–S4)
+    spec-target.cjs            ← which spec and form a linted file is
+    prologue.cjs               ← the generated validation prologue (V1, V3–V8)
+    jsdoc-spec.cjs             ← the @param/@throws/@returns a spec implies
     fixture-test.cjs           ← shared fixture runner for rule tests
     require-eslint.cjs         ← resolves eslint locally or globally
   rules/
-    fortran-signature/         ← base.js + ndarray.js params expand the Fortran signature
-      README.md  rule.cjs  derive.cjs
-      fixtures/{pass,fail}/*.js  test.cjs
-      (reads data/fortran-signatures.json — the clean cache from
-       bin/gen_fortran_signatures.js; Fortran facts only)
-    wrapper-signature/         ← <routine>.js strided wrapper keeps stride naming discipline
+    spec-signature/            ← the three signatures equal the spec projections
+    spec-prologue/             ← ndarray.js / <routine>.js prologue equals the generated one
+    spec-messages/             ← prologue error messages are the canonical ones
+    spec-jsdoc/                ← @param / @throws / @returns agree with the spec
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
     module-exports/            ← index.js/main.js expose the default + ndarray surface
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
@@ -65,12 +64,12 @@ lint/
 
 ```bash
 # Run one rule's fixtures
-node --test lint/rules/fortran-signature/test.cjs
+node --test lint/rules/spec-signature/test.cjs
 
 # The gate: run all rules over the whole corpus (must exit 0)
 node lint/verify-corpus.cjs
 node lint/verify-corpus.cjs --list          # every failing file + message
-node lint/verify-corpus.cjs --rule fortran-signature
+node lint/verify-corpus.cjs --rule spec-signature
 ```
 
 The library is wired into the project ESLint config (`eslint.config.cjs`) under
@@ -78,14 +77,18 @@ the `blahpack/` namespace, so the rules also run as part of normal linting.
 
 ## Rules
 
-The first three validate every signature-bearing file of a module (`base.js`,
-`ndarray.js`, `<routine>.js`, `index.js`, `main.js`); the rest enforce the
-workspace strategy and catch scaffolding/convention defects:
+The `spec-*` rules compare every signature-bearing file of a module (`base.js`,
+`ndarray.js`, `<routine>.js`) with what [`spec/<routine>.json`](../spec/README.md)
+plus CONVENTIONS.md produce — exact, derived, no heuristics. `module-exports`
+covers `index.js`/`main.js`; the rest enforce the workspace strategy and catch
+scaffolding/convention defects:
 
 | Rule | Files | Enforces |
 | --- | --- | --- |
-| [`fortran-signature`](rules/fortran-signature/) | `base.js`, `ndarray.js` | The offset-form parameter list faithfully expands the reference Fortran signature (computed from the parsed Fortran, checked against the JS). |
-| [`wrapper-signature`](rules/wrapper-signature/) | `<routine>.js` | Stride naming only (shared strides and Fortran-native `LD*` names accommodated). The exact wrapper shape is `verify-signatures.cjs` (S4). |
+| [`spec-signature`](rules/spec-signature/) | `base.js`, `ndarray.js`, `<routine>.js` | Parameter lists equal the spec projections (`bin/spec show`; CONVENTIONS S1–S5, S7, S10, D1–D3, D5c, W2). |
+| [`spec-prologue`](rules/spec-prologue/) | `ndarray.js`, `<routine>.js` | The validation prologue is the generated one: one check per reference `INFO = -k` check, in reference order (V1, V3–V7). Fix: `bin/codemod-spec/prologue.cjs`. |
+| [`spec-messages`](rules/spec-messages/) | `ndarray.js`, `<routine>.js` | Each prologue error carries its canonical message (V8). |
+| [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `ndarray.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
@@ -97,13 +100,10 @@ workspace strategy and catch scaffolding/convention defects:
 | [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
 | [`no-nary-stdlib-minmax`](rules/no-nary-stdlib-minmax/) | all | stdlib `max`/`min` take exactly two args. |
 
-The offset-form naming logic is shared between `fortran-signature` and
-`wrapper-signature` via [`lib/naming.cjs`](lib/naming.cjs).
-
 New rules' tests are one line calling the shared fixture runner,
 [`lib/fixture-test.cjs`](lib/fixture-test.cjs): fixtures declare their virtual
 path with `// target:` and, for failures, the expected report with `// expect:`.
-(The first three rules predate it and carry their own `test.cjs`.)
+(`module-exports` predates it and carries its own `test.cjs`.)
 
 **No escape hatches.** Every lint rule is a hard CI gate at `error`; there is no
 baseline, known-failures list, or `continue-on-error` (CONVENTIONS T5).

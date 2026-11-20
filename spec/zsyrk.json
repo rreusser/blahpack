@@ -66,7 +66,7 @@
 			},
 			"cols": {
 				"fortran": "KA",
-				"js": null
+				"js": "trans === 'no-transpose' ? K : N"
 			}
 		},
 		{
@@ -166,7 +166,8 @@
 				"js": "max( 1, trans === 'no-transpose' ? N : K )"
 			},
 			"fortran": "LDA.LT.MAX(1,NROWA)",
-			"js": "lda < max( 1, trans === 'no-transpose' ? N : K )"
+			"js": "lda < max( 1, trans === 'no-transpose' ? N : K )",
+			"rowMajor": "lda < max( 1, trans === 'no-transpose' ? K : N )"
 		},
 		{
 			"info": 10,

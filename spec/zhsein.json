@@ -310,21 +310,23 @@
 			"param": "LDVL",
 			"kind": "expr",
 			"fortran": "LDVL.LT.1 .OR. ( LEFTV .AND. LDVL.LT.N )",
-			"js": "ldvl < 1 || ((side === 'left' || side === 'both') && ldvl < N)"
+			"js": "ldvl < 1 || ((side === 'left' || side === 'both') && ldvl < N)",
+			"rowMajor": "ldvl<1||((side==='left'||side==='both')&&ldvl<max(1,mm))"
 		},
 		{
 			"info": -12,
 			"param": "LDVR",
 			"kind": "expr",
 			"fortran": "LDVR.LT.1 .OR. ( RIGHTV .AND. LDVR.LT.N )",
-			"js": "ldvr < 1 || ((side === 'right' || side === 'both') && ldvr < N)"
+			"js": "ldvr < 1 || ((side === 'right' || side === 'both') && ldvr < N)",
+			"rowMajor": "ldvr<1||((side==='right'||side==='both')&&ldvr<max(1,mm))"
 		},
 		{
 			"info": -13,
 			"param": "MM",
 			"kind": "expr",
 			"fortran": "MM.LT.M",
-			"js": "mm < m"
+			"js": null
 		}
 	],
 	"quickReturn": [
@@ -335,7 +337,8 @@
 	],
 	"untranslated": [
 		"check -2: no canonical value for EIGSRC='Q'",
-		"check -3: no canonical value for INITV='N'"
+		"check -3: no canonical value for INITV='N'",
+		"check -13: tests the output argument M (its value is computed, not passed in)"
 	],
 	"notes": [
 		"option EIGSRC accepts 'NQ' but spec/options.json has no canonical value for this family",

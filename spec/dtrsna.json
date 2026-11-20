@@ -94,7 +94,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "m"
+				"js": "mm"
 			}
 		},
 		{
@@ -124,7 +124,7 @@
 			},
 			"cols": {
 				"fortran": "M",
-				"js": "m"
+				"js": "mm"
 			}
 		},
 		{
@@ -200,7 +200,7 @@
 			},
 			"cols": {
 				"fortran": "N+6",
-				"js": "N + 6"
+				"js": "N < 2 ? N : N + 6"
 			}
 		},
 		{
@@ -300,7 +300,7 @@
 			"param": "MM",
 			"kind": "expr",
 			"fortran": "MM.LT.M",
-			"js": "mm < m"
+			"js": null
 		}
 	],
 	"quickReturn": [
@@ -312,7 +312,8 @@
 	"untranslated": [
 		"check -1: no canonical value for JOB='E'",
 		"check -8: no canonical value for JOB='E'",
-		"check -10: no canonical value for JOB='E'"
+		"check -10: no canonical value for JOB='E'",
+		"check -13: tests the output argument M (its value is computed, not passed in)"
 	],
 	"notes": [
 		"option JOB accepts 'BEV' but spec/options.json has no canonical value for this family",

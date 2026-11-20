@@ -157,7 +157,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"base": 0
 		},
 		{
 			"name": "ilst",
@@ -165,7 +166,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"base": 0
 		},
 		{
 			"name": "info",
@@ -245,6 +247,15 @@
 		{
 			"fortran": "IFST.EQ.ILST",
 			"js": "ifst === ilst"
+		}
+	],
+	"overrides": [
+		{
+			"reason": "The JS API takes IFST and ILST 0-based (base.js and its tests index the diagonal with them directly), unlike ztrexc's 1-based IFST/ILST.",
+			"set": {
+				"params.IFST.base": 0,
+				"params.ILST.base": 0
+			}
 		}
 	]
 }

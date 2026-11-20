@@ -7,6 +7,7 @@
 	"additionalProperties": false,
 	"required": [ "routine", "package", "kind", "signature", "returns", "params", "checks", "quickReturn" ],
 	"properties": {
+		"jsOrder": { "type": "array", "items": { "type": "string" }, "description": "Fortran argument names in JS parameter order, when the JS order differs (set only by an override, with its reason)." },
 		"routine": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
 		"package": { "enum": [ "blas", "lapack", "arpack", null ], "description": "Reference source directory (F7); null when the source is not vendored." },
 		"kind": { "enum": [ "subroutine", "function" ] },
@@ -51,7 +52,7 @@
 		}
 	},
 	"definitions": {
-		"dtype": { "enum": [ "float64", "float32", "complex128", "complex64", "int32", "bool", "string", "object" ] },
+		"dtype": { "enum": [ "float64", "float32", "complex128", "complex64", "int32", "bool", "string", "object", "function" ] },
 		"expr": {
 			"type": [ "object", "null" ],
 			"additionalProperties": false,
@@ -78,6 +79,7 @@
 				"dtype": { "$ref": "#/definitions/dtype" },
 				"intent": { "enum": [ "in", "out", "inout" ] },
 				"of": { "type": "string", "description": "ld/inc/lwork: the Fortran array it belongs to." },
+				"base": { "enum": [ 0 ], "description": "scalar index: the JS takes it 0-based (the reference is 1-based); its checks are restated 1-based. Set only by an override." },
 				"element": { "type": "boolean", "description": "scalar: callers pass an element of one of their arrays, read or updated in place, so it crosses as `x, offsetX` (S10). Set only by an override." },
 				"dims": { "type": "array", "items": { "type": "string" }, "description": "Declared Fortran extents (rank from the declaration, extents from the doc comment)." },
 				"ld": { "type": [ "string", "null" ], "description": "Fortran LD argument of a 2-D array." },
@@ -102,7 +104,8 @@
 				"values": { "type": [ "array", "null" ], "items": { "type": [ "string", "null" ] }, "description": "Canonical JS strings (spec/options.json); null when Appendix A has no mapping." },
 				"guard": { "type": "string", "description": "Enclosing Fortran IF condition(s)." },
 				"fortran": { "type": "string" },
-				"js": { "type": [ "string", "null" ], "description": "Rejection condition (guard included) in JS; null = untranslated." }
+				"js": { "type": [ "string", "null" ], "description": "Rejection condition (guard included) in JS; null = untranslated." },
+				"rowMajor": { "type": [ "string", "null" ], "description": "Leading-dimension checks only: the rejection condition for row-major storage, on the array's column count (CONVENTIONS V5). Absent when the array is square (one condition for both layouts); null when the column count is not established (column-major check only)." }
 			}
 		}
 	}

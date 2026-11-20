@@ -131,9 +131,7 @@ function baseWorkIsReal( baseContent, name ) {
 function check( mod ) {
 	var results = [];
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
-	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
 	var baseContent = util.readFile( basePath );
-	var ndarrayContent = util.readFile( ndarrayPath );
 	var fArgsCached = util.fortranArgNames( mod.routine );
 
 	var fArgs;
@@ -231,34 +229,6 @@ function check( mod ) {
 		));
 	} else {
 		results.push( util.pass( ID + '.naming', 'Workspace params use stdlib naming' ) );
-	}
-
-	// 4. ndarray.js parity: same caller-provided workspace, no allocation.
-	if ( !ndarrayContent ) {
-		results.push( util.skip( ID + '.ndarray-parity', 'No ndarray.js' ) );
-	} else if ( workArgs.length === 0 ) {
-		results.push( util.skip( ID + '.ndarray-parity', 'No Fortran workspace array' ) );
-	} else {
-		var ndParams = jsParams( ndarrayContent, mod.routine ).map( function lc( p ) {
-			return p.toLowerCase();
-		});
-		var ndMissing = workArgs.filter( function notInND( a ) {
-			return ndParams.indexOf( a.toLowerCase() ) === -1;
-		});
-		var ndAllocs = internalAllocs( ndarrayContent, 'ndarray.js' );
-		if ( ndMissing.length > 0 || ndAllocs.length > 0 ) {
-			results.push( util.fail(
-				ID + '.ndarray-parity',
-				'ndarray.js exposes the same caller-provided workspace',
-				ndMissing.length + ndAllocs.length,
-				[ path.relative( util.ROOT, ndarrayPath ) ].concat( ndAllocs.map( function loc( h ) {
-					return h.text;
-				}) ),
-				( ndMissing.length > 0 ? 'ndarray.js missing workspace param(s) [' + ndMissing.join( ', ' ).toLowerCase() + ']. ' : '' ) + ( ndAllocs.length > 0 ? 'ndarray.js allocates workspace internally.' : '' )
-			));
-		} else {
-			results.push( util.pass( ID + '.ndarray-parity', 'ndarray.js exposes the same caller-provided workspace' ) );
-		}
 	}
 
 	// 5. z/c-prefix routines must allocate Complex128Array/Complex64Array for

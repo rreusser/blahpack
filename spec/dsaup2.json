@@ -131,7 +131,7 @@
 			"ld": "LDV",
 			"cols": {
 				"fortran": "NEV+NP",
-				"js": "nev + np"
+				"js": null
 			}
 		},
 		{
@@ -213,7 +213,7 @@
 			"ld": "LDQ",
 			"cols": {
 				"fortran": "NEV+NP",
-				"js": "nev + np"
+				"js": null
 			}
 		},
 		{
@@ -290,5 +290,9 @@
 		}
 	],
 	"checks": [],
-	"quickReturn": []
+	"quickReturn": [],
+	"untranslated": [
+		"V.cols: NEV+NP names an output argument",
+		"Q.cols: NEV+NP names an output argument"
+	]
 }

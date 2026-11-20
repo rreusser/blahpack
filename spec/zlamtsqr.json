@@ -246,7 +246,8 @@
 				"js": "max( 1, side === 'left' ? M : N )"
 			},
 			"fortran": "LDA.LT.MAX( 1, Q )",
-			"js": "lda < max( 1, side === 'left' ? M : N )"
+			"js": "lda < max( 1, side === 'left' ? M : N )",
+			"rowMajor": "lda < max( 1, K )"
 		},
 		{
 			"info": -11,
@@ -258,7 +259,8 @@
 				"js": "max( 1, nb )"
 			},
 			"fortran": "LDT.LT.MAX( 1, NB)",
-			"js": "ldt < max( 1, nb )"
+			"js": "ldt < max( 1, nb )",
+			"rowMajor": null
 		},
 		{
 			"info": -13,
@@ -270,7 +272,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDC.LT.MAX( 1, M )",
-			"js": "ldc < max( 1, M )"
+			"js": "ldc < max( 1, M )",
+			"rowMajor": "ldc < max( 1, N )"
 		}
 	],
 	"quickReturn": [
@@ -285,5 +288,8 @@
 				"CALL ZGEMQRT( SIDE, TRANS, M, N, K, NB, A, LDA, T, LDT, C, LDC, WORK, INFO)"
 			]
 		}
+	],
+	"untranslated": [
+		"check -11.rowMajor: the column count of T is not established"
 	]
 }

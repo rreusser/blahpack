@@ -17,7 +17,7 @@
 			"intent": "in"
 		},
 		{
-			"name": "ZX",
+			"name": "x",
 			"fortran": "ZX",
 			"position": 2,
 			"role": "vector",

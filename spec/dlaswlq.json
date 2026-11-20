@@ -172,7 +172,8 @@
 				"js": "max( 1, M )"
 			},
 			"fortran": "LDA.LT.MAX( 1, M )",
-			"js": "lda < max( 1, M )"
+			"js": "lda < max( 1, M )",
+			"rowMajor": "lda < max( 1, N )"
 		},
 		{
 			"info": -8,
@@ -184,7 +185,8 @@
 				"js": "mb"
 			},
 			"fortran": "LDT.LT.MB",
-			"js": "ldt < mb"
+			"js": "ldt < mb",
+			"rowMajor": null
 		}
 	],
 	"quickReturn": [
@@ -201,6 +203,7 @@
 		}
 	],
 	"untranslated": [
-		"T.cols: unknown identifier NUMBER_OF_ROW_BLOCKS"
+		"T.cols: unknown identifier NUMBER_OF_ROW_BLOCKS",
+		"check -8.rowMajor: the column count of T is not established"
 	]
 }

@@ -132,7 +132,8 @@
 				"js": "kl + (ku + kl) + 1"
 			},
 			"fortran": "LDAB.LT.KL+KV+1",
-			"js": "ldab < kl + (ku + kl) + 1"
+			"js": "ldab < kl + (ku + kl) + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		}
 	],
 	"quickReturn": [

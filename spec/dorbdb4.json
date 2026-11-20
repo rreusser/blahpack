@@ -192,9 +192,9 @@
 				"LWORK"
 			],
 			"minLength": {
-				"fortran": "M-Q",
-				"js": "M - Q",
-				"source": "doc"
+				"fortran": "LWORKMIN",
+				"js": null,
+				"source": "check"
 			}
 		},
 		{
@@ -247,7 +247,8 @@
 				"js": "max( 1, p )"
 			},
 			"fortran": "LDX11 .LT. MAX( 1, P )",
-			"js": "ldx11 < max( 1, p )"
+			"js": "ldx11 < max( 1, p )",
+			"rowMajor": "ldx11 < max( 1, Q )"
 		},
 		{
 			"info": -7,
@@ -259,18 +260,15 @@
 				"js": "max( 1, M - p )"
 			},
 			"fortran": "LDX21 .LT. MAX( 1, M-P )",
-			"js": "ldx21 < max( 1, M - p )"
-		},
-		{
-			"info": -14,
-			"param": "WORK",
-			"kind": "expr",
-			"fortran": "LWORK .LT. LWORKMIN .AND. .NOT.LQUERY",
-			"js": null
+			"js": "ldx21 < max( 1, M - p )",
+			"rowMajor": "ldx21 < max( 1, Q )"
 		}
 	],
 	"quickReturn": [],
 	"untranslated": [
-		"check -14: local recursion too deep"
+		"WORK.minLength: local recursion too deep"
+	],
+	"notes": [
+		"check INFO=-14 tests LWORK, not argument 14 (WORK): the reference misnumbers it"
 	]
 }

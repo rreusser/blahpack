@@ -232,7 +232,8 @@
 				"js": "max( 1, P )"
 			},
 			"fortran": "LDX11 .LT. MAX( 1, P )",
-			"js": "ldx11 < max( 1, P )"
+			"js": "ldx11 < max( 1, P )",
+			"rowMajor": "ldx11 < max( 1, Q )"
 		},
 		{
 			"info": -7,
@@ -244,7 +245,8 @@
 				"js": "max( 1, M - P )"
 			},
 			"fortran": "LDX21 .LT. MAX( 1, M-P )",
-			"js": "ldx21 < max( 1, M - P )"
+			"js": "ldx21 < max( 1, M - P )",
+			"rowMajor": "ldx21 < max( 1, Q )"
 		}
 	],
 	"quickReturn": []

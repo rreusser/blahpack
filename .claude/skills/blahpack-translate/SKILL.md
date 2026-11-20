@@ -151,7 +151,7 @@ node --test --experimental-test-coverage lib/<package>/base/<routine>/test/test*
 bin/lint-fix.sh lib/<package>/base/<routine> 2>&1 | tail -20   # codemods + eslint --fix + test verify
 bin/lint.sh lib/<package>/base/<routine> 2>&1 | tail -20
 node bin/conformance.js lib/<package>/base/<routine>
-node lint/verify-signatures.cjs --routine <routine>
+bin/spec xcheck <routine>
 ```
 
 Repeat until all four are clean and conformance reports `complete`. **Fix the

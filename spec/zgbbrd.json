@@ -314,7 +314,8 @@
 				"js": "kl + ku + 1"
 			},
 			"fortran": "LDAB.LT.KLU1",
-			"js": "ldab < kl + ku + 1"
+			"js": "ldab < kl + ku + 1",
+			"rowMajor": "ldab < max( 1, N )"
 		},
 		{
 			"info": -12,
@@ -335,7 +336,8 @@
 			"param": "LDC",
 			"kind": "expr",
 			"fortran": "LDC.LT.1 .OR. WANTC .AND. LDC.LT.MAX( 1, M )",
-			"js": "ldc < 1 || (ncc > 0 && ldc < max( 1, M ))"
+			"js": "ldc < 1 || (ncc > 0 && ldc < max( 1, M ))",
+			"rowMajor": "ldc<1||(ncc>0&&ldc<max(1,ncc))"
 		}
 	],
 	"quickReturn": []

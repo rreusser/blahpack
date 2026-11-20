@@ -1,9 +1,10 @@
 ---
 id: 0045
 title: Tests cannot tell whether code after an early loop exit should run, and coverage hides it
-status: open
+status: resolved
 area: harness
 opened: 2026-11-18
+resolved: 2026-11-20
 ---
 
 ## Problem
@@ -52,3 +53,7 @@ git checkout 57427401~1 -- lib/lapack/base/zlatrs
 node bin/break-mutants.mjs zlatrs   # SURVIVED at base.js:298 (the bug)
 git checkout HEAD -- lib/lapack/base/zlatrs
 ```
+
+## Resolution
+
+The check exists and is gated: bin/break-mutants.mjs builds skip-after-break, skip-after-this-break and drop-guard mutants for every early loop exit. CI job `mutants` runs it on every module a PR changes, with no tolerated-survivor list (CONVENTIONS X2, T5). Proofs are keyed by code fingerprints and fail the gate when stale. The whole-corpus backlog is triaged (2026-11-20, all 912 modules): 539 mutants, 431 killed, 106 proved equivalent, 0 stale. The triage fixed bugs in 15 routines (*latrs/*latps/*latbs, dsterf, dpocon/dppcon/dpbcon/zpbcon, zlasyf_rk, zgsvj1, dhsein, zhbgst) and closed about 140 test gaps. Two survivors remain, iteration-limit exits that no known input reaches (dsterf QR, dlasq2 INFO = 2); they are tracked in ticket 0051 and fail the gate whenever their module changes.

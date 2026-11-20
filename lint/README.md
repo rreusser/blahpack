@@ -98,6 +98,7 @@ scaffolding/convention defects:
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
 | [`no-stub-wrappers`](rules/no-stub-wrappers/) | all but `base.js` | No "not yet implemented" scaffolding stubs. |
 | [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
+| [`stride-provenance`](rules/stride-provenance/) | `base.js` | Element indices use the array's offset; callees get the array's own strides and offset (S13). Autofixes 1-D arrays. |
 | [`no-nary-stdlib-minmax`](rules/no-nary-stdlib-minmax/) | all | stdlib `max`/`min` take exactly two args. |
 
 New rules' tests are one line calling the shared fixture runner,

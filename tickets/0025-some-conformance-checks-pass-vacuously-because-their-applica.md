@@ -18,6 +18,7 @@ A check reports `skip` ("not applicable") when its applicability test does not m
   - `option-rules` passes options it cannot compare: 12 arguments are `undetermined`, and 88 options `ndarray.js` never validates (ticket 0022).
   - `ld-rules` enforces only column-major for the 10 TSQR-family `'skip'` rules (ticket 0012).
 - Most other skips are legitimate: real routines skip complex checks, and routines without workspace skip workspace checks.
+- Dead checks cited in CONVENTIONS: N8 `conf:scaffold-noise.no-wrapper-string-map` matches only `var`, which N4 bans, and T3 `conf:scaffold-noise.ndarray-test-routes-through-validator` matches only `require(`, which ESM tests never contain. Both pass on every module because they never apply.
 
 ## Reproduce
 

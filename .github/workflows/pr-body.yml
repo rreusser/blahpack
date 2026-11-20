@@ -1,0 +1,25 @@
+name: PR description
+
+# CONVENTIONS P1: deferred work is tracked in a ticket, not in prose. Every line
+# of the PR description that defers work ("not in this PR", "known gaps",
+# "follow-up", ...), and every list item under such a heading, cites a ticket
+# (`ticket NNNN`) that exists on the PR branch. Runs again when the
+# description is edited.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  deferrals:
+    name: Deferred work cites tickets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Every deferral in the PR description cites a ticket
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: node bin/tickets.js pr-body

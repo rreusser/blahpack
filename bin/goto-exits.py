@@ -4,7 +4,7 @@ Find Fortran `GO TO`s that leave a DO loop and skip code a plain `break` would r
 
 A forward `GO TO L` out of a loop translates to `break` only when nothing
 executes between the loop's end and label `L`. When something does, `break`
-silently runs it (tickets/0027; the *latrs/*latps/*latbs growth-bound bug ran
+silently runs it (tickets/0045; the *latrs/*latps/*latbs growth-bound bug ran
 `GROW = XBND` this way). This tool lists every such site in the reference
 sources, so each one can be checked against its translation and pinned by a
 test that actually takes the jump.

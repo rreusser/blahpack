@@ -1,5 +1,5 @@
 ---
-id: 0027
+id: 0045
 title: Tests cannot tell whether code after an early loop exit should run, and coverage hides it
 status: open
 area: harness
@@ -20,7 +20,7 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
   - the `*latrs`/`*latps`/`*latbs` growth bound (6 routines);
   - the `dsterf` QR deflation, where a completion guard also fired on a break;
   - the `zgsvj1` convergence threshold;
-  - the `dlaqr4` IPARMQ parameters and the `dlaqr0` shift count (tickets/0028).
+  - the `dlaqr4` IPARMQ parameters and the `dlaqr0` shift count (tickets/0046).
 - About 40 test gaps closed. Examples: `zsteqr` had no scaled-input tests; `dlaein` had no complex-eigenvalue tests; the careful path was untested for 5 of the 6 scaled triangular solvers.
 
 ## Remaining

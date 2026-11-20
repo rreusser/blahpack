@@ -437,7 +437,7 @@ If coverage is low, add targeted test cases:
 `GO TO` out of a loop can be 100% covered and still wrong: the
 `*latrs`/`*latps`/`*latbs` growth-bound exit ran `GROW = XBND`, which the
 Fortran skips, and every test passed because no input made the two choices
-differ (tickets/0027). Run the early-exit mutation check:
+differ (tickets/0045). Run the early-exit mutation check:
 
 ```bash
 python bin/goto-exits.py <routine>          # Fortran exits that skip post-loop code

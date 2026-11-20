@@ -990,7 +990,7 @@ Keep entries short. Newest first.
   re-run — see generalization. **CORRECTION 2026-11-18**: the negative-stride
   part of this holds only on the fast path. On the careful path with
   `normin='no'`, a negative stride still yields zero CNORM because `dzasum`
-  returns 0 for a non-positive stride (tickets/0026).
+  returns 0 for a non-positive stride (tickets/0044).
 - **Bug class**: `storage-mapping` (packed-index-vs-strided-offset conflation) —
   the SAME defect as the zpptri entry below, in a different complex packed routine.
 - **Generalization**: audit every complex packed routine that carries a Float64
@@ -2295,14 +2295,14 @@ Keep entries short. Newest first.
   target lies past code between the loop end and the label. Separately, the
   stress sweep showed that a negative packed/band stride breaks the CNORM
   computation in the whole family, because `dasum`/`dzasum` return 0 for a
-  non-positive stride (tickets/0026).
+  non-positive stride (tickets/0044).
 
 ---
 
 ## 2026-11-18 — zgsvj1 convergence test used the REAL variant's `N*TOL` instead of `SQRT(N)*TOL` → could report convergence one sweep early
 
 - **What**: found while triaging `bin/break-mutants.mjs` survivors in the
-  `*gsvj0`/`*gsvj1` family (tickets/0027). `zgsvj1.f:661` stops sweeping when
+  `*gsvj0`/`*gsvj1` family (tickets/0045). `zgsvj1.f:661` stops sweeping when
   `MXAAPQ < SQRT(DBLE(N))*TOL`; the JS used `mxaapq < N * tol`, the threshold of
   the real `dgsvj0`/`dgsvj1` (`zgsvj0` was already correct).
 - **Effect**: a looser test than the reference, so `info = 0` could come back a
@@ -2326,7 +2326,7 @@ Keep entries short. Newest first.
 
 ## 2026-11-18 — dsterf QR deflation search: a "loop completed" fix-up also fired on a break at `m = lend + 1` → lost a decoupled eigenvalue
 
-- **What**: found by `bin/break-mutants.mjs` (tickets/0027). Its mutants at the
+- **What**: found by `bin/break-mutants.mjs` (tickets/0045). Its mutants at the
   QR search loop survived, and triage showed why: the post-loop code was wrong
   in a way no test could see. The second bug of the GO TO-as-break class today,
   after the `*latrs`/`*latps`/`*latbs` growth bound.
@@ -2356,10 +2356,10 @@ Keep entries short. Newest first.
 
 ---
 
-## 2026-11-18 — dlaqr4 hardcoded its ILAENV tuning values and dlaqr0 mis-rounded the IPARMQ shift count → valid Schur forms in a different order than the reference (tickets/0028)
+## 2026-11-18 — dlaqr4 hardcoded its ILAENV tuning values and dlaqr0 mis-rounded the IPARMQ shift count → valid Schur forms in a different order than the reference (tickets/0046)
 
 - **What**: surfaced while triaging `bin/break-mutants.mjs` survivors in the
-  shift-pairing code (tickets/0027). A bit-exact `dlaqr0` vs `dlaqr4` oracle
+  shift-pairing code (tickets/0045). A bit-exact `dlaqr0` vs `dlaqr4` oracle
   (the reference sources are identical apart from the AED routine) failed
   because `dlaqr4` used `nwr = 4, nsr = 2, nmin = 15, kacc22 = 0` instead of the
   IPARMQ values the reference gets through ILAENV. Separately, `dlaqr0`'s
@@ -2369,21 +2369,21 @@ Keep entries short. Newest first.
 - **Repro**: `dlaqr4` on `test/fortran/test_dlaqr4.f90` tests 9/10 (40×40,
   80×80). The unsorted eigenvalues differed from the reference fixtures by 13.5
   and 30.0 (the sorted ones agreed). Those fixtures existed but were never loaded
-  (tickets/0030). Now within ~4e-13; the tests fail on the old code.
+  (tickets/0048). Now within ~4e-13; the tests fail on the old code.
 - **Fix (APPLIED)**: `dlaqr4` shares `dlaqr0`'s IPARMQ constants and helper;
   the NS formula is `Math.floor( nh / Math.round( log2( nh ) ) )`.
 - **Bug class**: `tuning-parameter-drift`. A wrong ILAENV substitute still yields
   a valid decomposition, so every property test passes; only an unsorted
   comparison against the reference shows it.
 - **Generalization**: `dlaqr3`'s `nmin = 12` (reference 75) and
-  `zlaqr0`/`zlaqr4`'s fixed NWR/NSR remain (tickets/0031).
+  `zlaqr0`/`zlaqr4`'s fixed NWR/NSR remain (tickets/0049).
 
 ---
 
 ## 2026-11-19 — dpocon/dppcon/dpbcon/zpbcon: the overflow bail of the DLACN2 loop fell into the RCOND computation the Fortran skips → rcond ≈ 2.9e-308 instead of 0
 
 - **What**: found while triaging `bin/break-mutants.mjs` survivors in the
-  `*con` family (tickets/0027). The siblings `zpocon`/`zppcon` were correct.
+  `*con` family (tickets/0045). The siblings `zpocon`/`zppcon` were correct.
   These four were not on the triage list and had no survivor at all, because the
   tool treated both exits of the loop alike.
 - **Root cause**: the Fortran leaves the DLACN2 loop on overflow with
@@ -2408,7 +2408,7 @@ Keep entries short. Newest first.
 ## 2026-11-19 — zlasyf_rk mixed two variants of the KP≠KK column interchange → wrong factorization whenever rook pivoting needs a real interchange
 
 - **What**: found while triaging break mutants in the `*sytrf_rk` panel family
-  (tickets/0027). A new residual test (rook-forcing 6×6 matrix, one panel,
+  (tickets/0045). A new residual test (rook-forcing 6×6 matrix, one panel,
   solved with `zsytrs_3`) gave solve errors of 0.16 (upper) and 1.08 (lower),
   against about 2e-15 from the unblocked `zsytf2_rk`.
 - **Root cause**: the reference sets `A(KP,K) = A(KK,K)` and counts the following

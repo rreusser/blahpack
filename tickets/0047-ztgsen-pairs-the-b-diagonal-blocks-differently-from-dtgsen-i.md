@@ -1,5 +1,5 @@
 ---
-id: 0029
+id: 0047
 title: ztgsen pairs the B diagonal blocks differently from dtgsen in its DIF(2) estimate
 status: open
 area: base
@@ -15,7 +15,7 @@ Whether to deviate from the reference is a policy decision (docs/optimization-po
 ## Evidence
 
 - `data/lapack-3.12.0/SRC/ztgsen.f` ~L740 vs `data/lapack-3.12.0/SRC/dtgsen.f` ~L788.
-- Found during break-mutant triage (tickets/0027). The new `ztgsen` DIF(2) test uses equal B diagonal blocks precisely so that it does not depend on this.
+- Found during break-mutant triage (tickets/0045). The new `ztgsen` DIF(2) test uses equal B diagonal blocks precisely so that it does not depend on this.
 - Not yet checked against upstream LAPACK's issue tracker or newer releases.
 
 ## Reproduce

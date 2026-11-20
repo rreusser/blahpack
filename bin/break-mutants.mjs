@@ -8,7 +8,7 @@
 * end and its label, or (when there are none) behaves like a plain `break`.
 * Translating it means deciding, at every exit, whether the post-loop code runs.
 * Getting that wrong is invisible to line coverage: the `*latrs`/`*latps`/
-* `*latbs` growth-bound bug (tickets/0027) was fully covered and passed every
+* `*latbs` growth-bound bug (tickets/0045) was fully covered and passed every
 * test for months, because no input made the two choices disagree.
 *
 * For each loop in `lib/<pkg>/base/<routine>/lib/*.js` that is left by an

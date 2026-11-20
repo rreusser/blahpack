@@ -29,6 +29,8 @@ import Float64Array from '@stdlib/array/float64/lib/index.js';
 // VARIABLES //
 
 const PROBE_N = 10;
+const GROWTH_CALLS = 1000;
+const GROWTH_DRAWS = 4;
 const ORDINALS = [ 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth' ];
 const TENS = { 'twenty': 20, 'thirty': 30, 'forty': 40 };
 
@@ -214,7 +216,11 @@ function buildSpecs( sig, is2d, literals ) {
 		const t = p.type;
 		let kind;
 		let cands;
-		if ( /Array/.test( t ) && !/^Array/.test( t ) ) {
+		if ( n === 's' && t === 'Float64Array' && sig.params.some( ( q ) => q.name === 'c' && q.type === 'number' ) ) {
+			// Complex plane-rotation sine stored as [re, im]; |c|^2 + |s|^2 = 1:
+			kind = 'const';
+			cands = [ 'new Float64Array( [ 0.8, 0.0 ] )' ];
+		} else if ( /Array/.test( t ) && !/^Array/.test( t ) ) {
 			const work = RE_WORK.test( n );
 			kind = 'array';
 			cands = ( is2d ) ? ( work ? WORK_2D : SIZES_2D ) : ( work ? WORK_1D : SIZES_1D );
@@ -280,7 +286,7 @@ function buildSpecs( sig, is2d, literals ) {
 */
 function materialize( spec, N, tier, pad ) {
 	if ( spec.kind === 'array' ) {
-		let len = Function( 'N', `return ${spec.cands[ Math.min( spec.idx + tier, spec.cands.length - 1 ) ]};` )( N );
+		let len = Function( 'N', `return ${arrayLen( spec, tier )};` )( N );
 		if ( pad && spec.type === 'Float64Array' ) {
 			// Distinct padding per array so a failed complex reinterpretation
 			// ("Invalid typed array length: 2*len") identifies the array:
@@ -292,7 +298,18 @@ function materialize( spec, N, tier, pad ) {
 	if ( spec.kind === 'fn' ) {
 		return select;
 	}
-	return Function( 'N', 'Complex128', `return ( ${spec.cands[ spec.idx ]} );` )( N, Complex128 );
+	return Function( 'N', 'Complex128', 'Float64Array', `return ( ${spec.cands[ spec.idx ]} );` )( N, Complex128, Float64Array );
+}
+
+/**
+* Returns an array parameter's length expression.
+*
+* @param {Object} spec - spec
+* @param {integer} tier - array size tier
+* @returns {string} expression in `N`
+*/
+function arrayLen( spec, tier ) {
+	return spec.fixedLen || spec.cands[ Math.min( spec.idx + tier, spec.cands.length - 1 ) ];
 }
 
 /**
@@ -356,6 +373,127 @@ function isBad( v ) {
 }
 
 /**
+* Returns a real-valued view of a typed array (complex arrays reinterpreted).
+*
+* @param {*} v - typed array
+* @returns {*} view
+*/
+function flat( v ) {
+	return ( v instanceof Complex128Array ) ? new Float64Array( v.buffer, v.byteOffset, 2 * v.length ) : v;
+}
+
+/**
+* Returns the names of array arguments that become non-finite under repeated
+* in-place calls (the benchmark would then time Inf/NaN arithmetic).
+*
+* @param {Function} fcn - routine
+* @param {Array<Object>} specs - parameter specs
+* @param {Array} args - working argument list
+* @returns {Array<string>} offending parameter names
+*/
+function nonfinite( fcn, specs, args ) {
+	const fresh = specs.map( ( q, k ) => ( q.refresh ) ? flat( args[ k ] ).slice() : null );
+	try {
+		for ( let k = 0; k < GROWTH_CALLS; k++ ) {
+			fresh.forEach( ( f, j ) => f && flat( args[ j ] ).set( f ) );
+			fcn( ...args );
+		}
+	} catch ( e ) {
+		return [ '(throws on repeat: ' + e.message + ')' ];
+	}
+	const out = [];
+	specs.forEach( ( q, k ) => {
+		const v = args[ k ];
+		if ( q.kind !== 'array' || RE_WORK.test( q.name ) || !v || !v.buffer ) {
+			return;
+		}
+		const view = flat( v );
+		for ( let i = 0; i < view.length; i++ ) {
+			if ( !Number.isFinite( view[ i ] ) ) {
+				out.push( q.name );
+				return;
+			}
+		}
+	});
+	return out;
+}
+
+/**
+* Tests whether a routine never touches array `q` past length `len`.
+*
+* Out-of-bounds typed-array access is silent, so instead run at the full
+* length twice from identical inputs that differ only in `q`'s tail: the tail
+* must come back unchanged (never written), and every output must match bit
+* for bit (never read).
+*
+* @param {Function} fcn - routine
+* @param {Array<Object>} specs - parameter specs
+* @param {integer} tier - array size tier
+* @param {Object} q - spec under test
+* @param {string} len - candidate length expression
+* @returns {boolean} boolean
+*/
+function untouchedTail( fcn, specs, tier, q, len ) {
+	const args = specs.map( ( r ) => materialize( r, PROBE_N, tier, false ) );
+	const k = specs.indexOf( q );
+	const head = Function( 'N', `return ${len};` )( PROBE_N ) * ( flat( args[ k ] ).length / args[ k ].length );
+	const snap = args.map( ( v ) => ( v && v.buffer ) ? flat( v ).slice() : null );
+	const runs = [];
+	for ( let r = 0; r < 2; r++ ) {
+		snap.forEach( ( v, j ) => v && flat( args[ j ] ).set( v ) );
+		const view = flat( args[ k ] );
+		for ( let i = head; i < view.length; i++ ) {
+			view[ i ] = ( r === 0 ) ? 1.0 + ( i % 7 ) : -3.0 - ( i % 5 );
+		}
+		const tail = view.slice( head );
+		const ret = fcn( ...args );
+		if ( !flat( args[ k ] ).slice( head ).every( ( v, i ) => Object.is( v, tail[ i ] ) ) ) {
+			return false;
+		}
+		runs.push( args.map( ( v, j ) => ( snap[ j ] ) ? flat( v ).slice( ( j === k ) ? 0 : 0, ( j === k ) ? head : undefined ) : null ) );
+		runs[ r ].ret = ( ret && ret.buffer ) ? null : ret;
+	}
+	if ( !Object.is( runs[ 0 ].ret, runs[ 1 ].ret ) && !( runs[ 0 ].ret instanceof Complex128 ) ) {
+		return false;
+	}
+	return runs[ 0 ].every( ( v, j ) => !v || v.every( ( x, i ) => Object.is( x, runs[ 1 ][ j ][ i ] ) ) );
+}
+
+/**
+* Shrinks each restored array to the smallest length that still runs cleanly,
+* so restoring it costs O(what the routine touches) rather than O(N^2).
+*
+* @param {Function} fcn - routine
+* @param {Array<Object>} specs - parameter specs
+* @param {integer} tier - array size tier
+*/
+function shrinkRefreshed( fcn, specs, tier ) {
+	for ( const q of specs ) {
+		if ( !q.refresh || q.kind !== 'array' ) {
+			continue;
+		}
+		const was = arrayLen( q, tier );
+		for ( const len of [ 'N', '2 * N' ] ) {
+			if ( len === was ) {
+				break;
+			}
+			try {
+				if ( untouchedTail( fcn, specs, tier, q, len ) ) {
+					q.fixedLen = len;
+					const real = specs.map( ( r ) => materialize( r, PROBE_N, tier, false ) );
+					if ( !nonfinite( fcn, specs, real ).length ) {
+						break;
+					}
+				}
+			} catch ( e ) {
+				// Too small: try the next length.
+			}
+			q.fixedLen = null;
+		}
+	}
+}
+
+/**
 * Probes a function for a working argument list.
 *
 * @param {Function} fcn - routine
@@ -386,7 +524,26 @@ function probe( fcn, specs ) {
 				pad = false;
 				continue;
 			}
-			return { 'ok': true, 'tier': tier };
+			// Growth depends on the draw (e.g. a near-zero pivot), so check several:
+			let bad = nonfinite( fcn, specs, args );
+			for ( let d = 1; d < GROWTH_DRAWS && !/^\(/.test( bad[ 0 ] || '' ); d++ ) {
+				bad = [ ...new Set( [ ...bad, ...nonfinite( fcn, specs, specs.map( ( q ) => materialize( q, PROBE_N, tier, false ) ) ) ] ) ];
+			}
+			if ( bad.length && !/^\(/.test( bad[ 0 ] ) ) {
+				// Restore the growing arrays before every call, then re-check
+				// from freshly materialized inputs:
+				specs.forEach( ( q ) => {
+					q.refresh = bad.includes( q.name );
+				});
+				bad = [];
+				for ( let d = 0; d < GROWTH_DRAWS; d++ ) {
+					bad = [ ...new Set( [ ...bad, ...nonfinite( fcn, specs, specs.map( ( q ) => materialize( q, PROBE_N, tier, false ) ) ) ] ) ];
+				}
+				if ( !bad.length ) {
+					shrinkRefreshed( fcn, specs, tier );
+				}
+			}
+			return { 'ok': true, 'tier': tier, 'nonfinite': bad, 'refreshed': specs.filter( ( q ) => q.refresh ).map( ( q ) => q.name ) };
 		} catch ( e ) {
 			lastErr = String( e && e.message || e );
 			if ( process.env.DEBUG ) {
@@ -483,6 +640,13 @@ function emit( o ) {
 	if ( types.has( 'Float32Array' ) ) {
 		imports.push( "import Float32Array from '@stdlib/array/float32/lib/index.js';" );
 	}
+	const refreshed = specs.filter( ( s ) => s.kind === 'array' && s.refresh );
+	if ( specs.some( ( s ) => s.kind === 'const' ) || refreshed.some( ( s ) => s.type === 'Float64Array' ) ) {
+		imports.push( "import Float64Array from '@stdlib/array/float64/lib/index.js';" );
+	}
+	if ( refreshed.some( ( s ) => s.type === 'Complex128Array' ) ) {
+		imports.push( "import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';" );
+	}
 	if ( specs.some( ( s ) => s.kind === 'cplx' ) || /^Complex128$/.test( ret ) ) {
 		imports.push( "import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';" );
 	}
@@ -508,12 +672,38 @@ function emit( o ) {
 	}
 
 	const decl = [];
+	const restore = [];
+	const taken = new Set( specs.map( ( s ) => s.name ) );
+	const fresh = ( base ) => {
+		let v = base + 'Init';
+		while ( taken.has( v ) ) {
+			v += '0';
+		}
+		taken.add( v );
+		return v;
+	};
 	for ( const s of specs ) {
+		if ( s.kind === 'const' ) {
+			decl.push( `\tconst ${s.name} = ${s.cands[ s.idx ]};` );
+			continue;
+		}
 		if ( s.kind !== 'array' ) {
 			continue;
 		}
-		const len = s.cands[ Math.min( s.idx + tier, s.cands.length - 1 ) ];
-		if ( s.type === 'Complex128Array' ) {
+		const len = arrayLen( s, tier );
+		if ( s.refresh && s.type === 'Complex128Array' ) {
+			const init = fresh( s.name );
+			const view = fresh( s.name + 'View' ).replace( /Init$/, '' );
+			decl.push( `\tconst ${init} = uniform( 2 * ( ${len} ), -10.0, 10.0, options );` );
+			decl.push( `\tconst ${s.name} = new Complex128Array( ${init}.length / 2 );` );
+			decl.push( `\tconst ${view} = reinterpret( ${s.name}, 0 );` );
+			restore.push( `${view}.set( ${init} );` );
+		} else if ( s.refresh && s.type === 'Float64Array' ) {
+			const init = fresh( s.name );
+			decl.push( `\tconst ${init} = uniform( ${len}, -10.0, 10.0, options );` );
+			decl.push( `\tconst ${s.name} = new Float64Array( ${init}.length );` );
+			restore.push( `${s.name}.set( ${init} );` );
+		} else if ( s.type === 'Complex128Array' ) {
 			decl.push( `\tconst ${s.name} = new Complex128Array( uniform( 2 * ( ${len} ), -10.0, 10.0, options ) );` );
 		} else if ( s.type === 'Float64Array' ) {
 			decl.push( `\tconst ${s.name} = uniform( ${len}, -10.0, 10.0, options );` );
@@ -526,7 +716,7 @@ function emit( o ) {
 		}
 	}
 	const args = specs.map( ( s ) => {
-		if ( s.kind === 'array' || s.kind === 'fn' ) {
+		if ( s.kind === 'array' || s.kind === 'fn' || s.kind === 'const' ) {
 			return ( s.kind === 'fn' ) ? 'select' : s.name;
 		}
 		return s.cands[ s.idx ].replace( /^N-1$/, 'N - 1' );
@@ -554,6 +744,10 @@ function emit( o ) {
 		`\t\tif ( ${check.replace( `i % ${rv}.length`, '0' )} ) {`,
 		"\t\t\tb.fail( 'should not return NaN' );",
 		'\t\t}'
+	].join( '\n' ) + '\n' : '';
+	const restoreBlock = ( restore.length ) ? [
+		'\t\t\t// Restore the arrays repeated in-place calls would grow to Inf/NaN:',
+		...restore.map( ( l ) => `\t\t\t${l}` )
 	].join( '\n' ) + '\n' : '';
 	const lets = ( ret === 'void' || ret === 'undefined' ) ? 'let i;' : `let ${rv}, i;`;
 	const call = ( ret === 'void' || ret === 'undefined' ) ? `${importName}( ${args.join( ', ' )} );` : `${rv} = ${importName}( ${args.join( ', ' )} );`;
@@ -593,7 +787,7 @@ ${decl.join( '\n' )}
 
 		b.tic();
 		for ( i = 0; i < b.iterations; i++ ) {
-			${call}
+${restoreBlock}			${call}
 ${loopCheck}		}
 		b.toc();
 ${endCheck}		b.pass( 'benchmark finished' );
@@ -734,7 +928,7 @@ for ( const dir of argv.filter( ( a ) => !a.startsWith( '--' ) ) ) {
 			res = { 'ok': false, 'error': String( e && e.stack || e ).split( '\n' )[ 0 ] };
 		}
 		if ( res.ok ) {
-			console.log( `ok   ${dir} ${kind}` );
+			console.log( `ok   ${dir} ${kind}${( res.refreshed && res.refreshed.length ) ? ` (restores: ${res.refreshed.join( ', ' )})` : ''}${( res.nonfinite && res.nonfinite.length ) ? ` NONFINITE: ${res.nonfinite.join( ', ' )}` : ''}` );
 		} else {
 			failed += 1;
 			console.log( `FAIL ${dir} ${kind}: ${res.error}` );

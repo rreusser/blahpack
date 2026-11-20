@@ -2517,3 +2517,44 @@ Keep entries short. Newest first.
   base as zlartg's in-place `[re, im]` output in hot loops. So the base keeps
   that pair, and the public wrappers (strided, ndarray) convert the documented
   `Complex128` to it. The tests and example now use `Complex128`.
+
+---
+
+## 2026-11-20 — dhsein passed `'infinity'` to dlanhs, which accepts `'inf-norm'` → EPS3 was always SMLNUM, and equal selected eigenvalues could loop forever
+
+- **What**: found by break-mutant triage (ticket 0045, wave 2b). The mutants at
+  the eigenvalue-perturbation loop survived because no test had near-equal
+  selected eigenvalues.
+- **Root cause**: `hnorm = dlanhs( 'infinity', … )`. Base `dlanhs` tests
+  `'max'`, `'one-norm'`, `'inf-norm'` and `'frobenius'`, and returns 0 for
+  anything else. So `eps3 = hnorm * ULP` collapsed to `smlnum`.
+- **Effect**: eigenvalues closer than ||H||·ULP were never perturbed apart.
+  With two exactly equal selected eigenvalues in one block, `wkr += smlnum`
+  leaves `wkr` unchanged and the perturbation loop never ends (repro:
+  `H = [[1,1],[0,1]]`, `WR = [1,1]`, all selected). `dlaein` also received the
+  wrong EPS3.
+- **Fix (APPLIED)**: `'inf-norm'`. The test "EPS3 is scaled by the infinity
+  norm of H" fails on the old code.
+- **Bug class**: `internal-option-string`: a misspelled option between two base
+  functions, where the callee silently defaults.
+- **What allowed it**: public wrappers validate option strings, but nothing
+  checks base-to-base calls (ticket 0056). Fixtures never had near-equal
+  eigenvalues, and EPS3 only shows in the vectors at ULP level.
+
+---
+
+## 2026-11-20 — zhbgst kept a superseded draft line that corrupted AB(1, I-K+KA) before the rotation read it
+
+- **What**: found by break-mutant triage (ticket 0045, wave 2b). The upper
+  kb >= 2 bulge chase ran `Ab[p] = abi*tr + bbr2*ti + abr*Ab[p]; // wrong: ...`
+  before `abr = Ab[p] // save old`, so the rotation (Fortran lines 414–418)
+  used a corrupted value. A dead `while ( true ) { … break; }` scaffold with
+  "Let me restructure" comments sat nearby.
+- **Fix (APPLIED)**: removed both. X for `upper_n7_ka2_kb2_vect` now matches the
+  reference to 5.6e-17 (the test fails on the old code with relErr 1.5e-5).
+- **Not fixed**: AB in the kb >= 2 cases still differs from the reference by up
+  to 1e-1, upper and lower (ticket 0053).
+- **Bug class**: `draft-remnant`: an abandoned first attempt left in the code.
+- **What allowed it**: no check looks for drafting remnants (ticket 0054). The
+  module's kb >= 2 tests were weakened to "info = 0 and finite", and the known
+  discrepancy was recorded in a test comment rather than a ticket (ticket 0055).

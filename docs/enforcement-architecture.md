@@ -70,8 +70,8 @@ BLIS indexing (`stride-provenance.mjs`, a dataflow analysis over `base.js`):
 
 The missing piece so far is a **target**. Translations were written, then
 patched as problems turned up. The conventions they were patched toward lived
-in prose spread across skills, docs, `CLAUDE.md` and `lint/CONVENTIONS.md`, and
-that prose contradicts itself and the code. For example:
+in prose spread across skills, docs, `CLAUDE.md` and `CONVENTIONS.md`, and
+that prose contradicted itself and the code. For example (all fixed in Step 1):
 
 - `blahpack-review/SKILL.md` and `docs/ndarray-conformance.md` still prescribe
   CJS `var x = require( … )` in an ESM codebase.
@@ -318,7 +318,7 @@ Scripts: `docs/enforcement-architecture/measurements/stdlib-{extract,compare,mes
    is a set lookup instead of a heuristic. This replaces the "184 shapes"
    problem with something objective.
 2. **Enum validation uses `*-resolve-str`.**
-3. **Canonical names** follow stdlib (extends `lint/CONVENTIONS.md`'s
+3. **Canonical names** follow stdlib (extends `CONVENTIONS.md`'s
    `DA → alpha` ruling to `zx → x`, `za → alpha`, `d → D`, `transa → transA`).
 4. **Packed routines take `order`**, because packed layout cannot be expressed
    by strides. This fills a real capability gap in blahpack.
@@ -374,7 +374,7 @@ newest one never replaced the older ones. Audit date: 2026-11-17.
 | **Status / progress** | `report.js` → tracked `progress.html`, `audit.py` + `audit.sh`, `gen-queue.js` → `QUEUE.md`, `validation-level.js`, `test-failures.sh`, `run-tests.sh`, `bin/conformance.js` report | 6 |
 | **Sandbox** | `.devcontainer/`, `Dockerfile.sandbox`, `bin/sandbox`, `bin/sandbox-worktree` (worktrees don't work here), `bin/claude-sandbox` | 5 |
 | **Python env** | `env/` (the documented one) and `.venv/` | 2 |
-| **Convention prose** | `.claude/skills/*` (translate skill 1,231 lines), 10 `docs/*.md`, `CLAUDE.md`, `lint/CONVENTIONS.md`, `CONTRIBUTING.md`, `CHECKLIST.template.md`, 914 per-module `LEARNINGS*.md` (29k lines; 202 are mostly "N/A" boilerplate), 41 `DIFFERENCES.md` | — |
+| **Convention prose** | `.claude/skills/*` (translate skill 1,231 lines), 10 `docs/*.md`, `CLAUDE.md`, `CONVENTIONS.md`, `CONTRIBUTING.md`, `CHECKLIST.template.md`, 914 per-module `LEARNINGS*.md` (29k lines; 202 are mostly "N/A" boilerplate), 41 `DIFFERENCES.md` | — |
 
 The "patch after the fact" row is the clearest symptom. `archive/bin/`
 contains five separate sweeps over *validation code alone*. Each one fixed a
@@ -401,7 +401,7 @@ Known debris:
 | Status | `npm run status`: reads the lint gate and harness ledger, and prints the per-module "is it correct" verdict (§2). Output is generated and untracked | `report.js`, `progress.html`, `audit.*`, `gen-queue.js`, `QUEUE.md` |
 | One-shot migrations | none tracked; git history is the archive | `codemods/`, `archive/` |
 | Sandbox | `.devcontainer/` | `Dockerfile.sandbox`, `bin/sandbox*`, `bin/claude-sandbox` (after confirming none is still used) |
-| Conventions | `CONVENTIONS.md` (rules) + `docs/` for *patterns* only (GOTO, complex numbers, performance, optimization policy) + slim skills that cite IDs | `ndarray-conformance.md`, `review-guidelines.md`, `stdlib-style-differences.md`, `blis-comparison.md` (folded in), `lint/CONVENTIONS.md`, `CHECKLIST.template.md` |
+| Conventions | `CONVENTIONS.md` (rules) + `docs/` for *patterns* only (GOTO, complex numbers, performance, optimization policy) + slim skills that cite IDs | `ndarray-conformance.md`, `review-guidelines.md`, `stdlib-style-differences.md`, `blis-comparison.md` (folded in), `CONVENTIONS.md`, `CHECKLIST.template.md` |
 
 Rough size: `bin/` goes from 60 scripts (~20k lines) to about 4 entry points
 plus `bin/translate/`, and `archive/` and `codemods/` disappear.
@@ -482,7 +482,7 @@ records bugs the harness caught, which is a different kind of record.
   replaced with what the gate enforces and the actual ESM style.
 - The review skill's rule names and CJS imports are fixed.
 - CJS/`var` examples in `docs/` are converted to ESM/`const`/`let`.
-- `ndarray-conformance.md` carries a banner naming its open rulings.
+- `ndarray-conformance.md` carries a banner naming its open rulings (it was deleted in Step 1, and its rulings are now `CONVENTIONS.md` V7/V9/V10/V8).
 
 **Corrections to the audit above:**
 - The `lint/` rules *were* already gated in CI through ESLint. What wasn't
@@ -532,7 +532,16 @@ and patchers, and the spec linters delete `bin/conformance`.
 The steps are ordered so that the target exists before anything is enforced
 against it, and enforcement exists before code is conformed to it.
 
-### Step 1: Convention inventory and rulings → `CONVENTIONS.md` v1
+### Step 1: Convention inventory and rulings → `CONVENTIONS.md` v1 — DONE 2026-11-19
+
+**Result:** `CONVENTIONS.md` at the repo root (moved from `lint/`; D1–D5 keep
+their IDs). 548 statements were harvested from skills, docs, `CLAUDE.md`,
+rule READMEs and `bin/conformance/checks`, and tagged keep/discard/conflict. The 54 conflicts are
+resolved in its *Rulings log*. Every rule names an enforcer, marked
+**(warn)** or **(unbuilt)** where nothing gates it yet; those marks are the
+Step 3–4 worklist. The deletion half of Step 7 was done at the same time (see
+there).
+
 
 1. Harvest every convention statement from:
    - `.claude/skills/*` (the translate skill alone is 1,231 lines),
@@ -547,7 +556,41 @@ against it, and enforcement exists before code is conformed to it.
 *Exit:* no unresolved conflicts, and every rule names an enforcer (even if that
 enforcer isn't built yet).
 
-### Step 2: Spec schema and generator
+### Step 2: Spec schema and generator — DONE 2026-11-19
+
+**Result:** 912 specs in `spec/` (schema `spec/schema.json`, usage
+`spec/README.md`). Stage A, `bin/gen_spec --extract`, is developer-time and
+reads the sources into the committed `data/fortran-checks.json`. Stage B,
+`bin/gen_spec`, is a pure function of committed files, so CI runs
+`npm run spec:check` (regenerate and byte-compare) with no sources.
+
+- **Content:** 3,340 argument checks (1,014 nonnegative, 889 ld, 797 enum,
+  66 nonzero, 574 expr; 117 left untranslated), 575 quick returns, and
+  minimum lengths for 503 of 612 workspaces.
+- **What `untranslated` means:** data-dependent or `ILAENV`-driven locals, and
+  doc pseudo-variables such as `KA`. These carry `js: null` and a reason.
+- **Overrides:** 3 one-offs. `dlaswp` and `zlaswp`: `INCX` is a direction, not
+  a consumed increment. `dsband`: the source is outside the vendored dirs.
+- **Generator bugs fixed:** recurring categories that turned out to be
+  generator bugs, not overrides:
+  - argument order and missing args taken from the `SUBROUTINE` statement
+    rather than the doc cache
+  - rank taken from the declarations (the cache truncates multi-line
+    dimensions)
+  - INC linked by adjacency
+  - the BLAS vector aliases
+  - in/out `INFO` → `infoIn`
+- **`bin/spec show <r>`** prints the three signatures (`lint/lib/spec.cjs`).
+- **`bin/spec xcheck`:** 752/912 modules match the spec on all three forms.
+  The remainder are code/convention discrepancies, listed in the PR, not
+  generator bugs.
+- **`lint/verify-signatures.cjs` fixed:** it had silently skipped the 45
+  modules with camelCase function names. It now resolves the function through
+  `export default`, and the 36 wrappers that check exposed are conformed.
+
+Deletes later: `data/fortran-ld-rules.json` and `data/fortran-option-rules.json`
+(plus their generators) are derivable from the spec, and go with the
+conformance checks that read them in Step 3.
 
 1. Define the JSON schema.
 2. Write `bin/gen_spec` with Fortran as input, using
@@ -563,7 +606,44 @@ enforcer isn't built yet).
 *Exit:* 899 specs, an overrides count with a reason for each, and a
 `bin/spec show <routine>` command that prints the three derived signatures.
 
-### Step 3: Spec ↔ code linters (exact, derived)
+### Step 3: Spec ↔ code linters (exact, derived) — DONE 2026-11-19
+
+**Result:** four ESLint rules, all hard `error` gates, clean over all 912
+modules; `bin/spec xcheck` reports 912/912.
+
+- `spec-signature`: `base.js` / `ndarray.js` / `<routine>.js` parameter lists
+  equal the `lint/lib/spec.cjs` projections.
+- `spec-prologue` + `spec-messages`: the validation prologue equals the one
+  `lint/lib/prologue.cjs` generates from `spec.checks` (stdlib validators,
+  Appendix A whitelists, nonnegative/non-zero, per-layout LD bounds from the
+  new `rowMajor` field), with canonical messages. Fix:
+  `bin/codemod-spec/prologue.cjs`.
+- `spec-jsdoc`: `@param` types, the prologue's `@throws`, and the S11
+  `@returns`. Fix: `bin/codemod-spec/jsdoc.cjs`.
+- **Conformance work:** about 1,050 prologues regenerated (the result was
+  cross-checked against the old `ld-rules`/`option-rules` before they were
+  deleted), about 1,800 JSDoc blocks corrected, S11 returns added to about
+  120 functions, and the ratified API breaks done: EQUED as a single-element
+  Array (laq*, svx), packed wrappers (`order`, no `strideAP`), workspace
+  stride/offset (gelqt, pstf2/pstrf), an S1 carve-out for `zdotc`/`zdotu`,
+  complex outputs in `zlaic1`, no invented `RWORK` in `zgetsqrhrt`.
+- **Generator fixes, not overrides:** ZX/ZY/ZA aliases, LD row-major bounds,
+  misnumbered reference INFO values, checks on output arguments left
+  untranslated, EXTERNAL arguments typed as functions, the la_* INTEGER option
+  codes, 2-D workspace without an LD.
+- **New override keys:** `base: 0` (dhgeqz, dtgexc, ztgexc), `element` on inputs
+  (zladiv, zlarf, zlarz), `jsOrder` (dlaswp).
+- **Deleted:** `fortran-signature`, `wrapper-signature`,
+  `lint/verify-signatures.cjs`, `strided-projection.cjs`, `naming.cjs`, the
+  conformance checks `ld-rules`, `option-rules` and `option-parity` (with
+  `data/fortran-{ld,option}-rules.json` and their generators), and the
+  string/dimension/LD/order/parity sub-checks of conventions, implementation
+  and workspace.
+- **Open (not gated, ticket 0035):** reference checks the generator can't translate yet
+  (locals defined on some paths, ILATRANS, BALANC/SENSE families) remain as
+  hand-written checks after the prologue. The index base of scalar indices is
+  not a convention yet (S12 covers arrays only).
+
 
 All of these live in `lint/`. Each compares code to what the spec plus
 conventions produce, with no heuristics:
@@ -577,12 +657,41 @@ conventions produce, with no heuristics:
 - **Module exports:** the existing rule.
 
 Then delete everything this supersedes in `tools/eslint/rules` and
-`bin/conformance/checks`, leaving one gate. Rules that aren't clean yet
-publish worklist counts that can only fall.
+`bin/conformance/checks`, leaving one gate. Every rule is a hard `error` gate
+from the start; the corpus is conformed in the same change.
 
 *Exit:* one gate, no `warn`, and the superseded checks deleted.
 
-### Step 4: Code-quality linters (not spec-derived, still objective)
+### Step 4: Code-quality linters (not spec-derived, still objective) — stride-provenance DONE 2026-11-20
+
+**Done:** `lint/rules/stride-provenance` (P1 + P3, CONVENTIONS **S13**) is a hard
+gate, clean over the corpus.
+- **Call sites:** it reads the callee's spec to know which arguments are
+  which array's strides and offset.
+- **Autofix:** 1-D arrays only. 2-D strides are fixed by hand against the
+  Fortran.
+- **Findings:**
+  - **21 real bugs** in 7 routines (`dsterf`, `ztgsna`, `dgees`,
+    `zgbbrd`, `zgees`, `dorbdb3`, `zunbdb3`). That's 7 more than the
+    prototype found: it never resolved same-package imports, and missed
+    case-differing names.
+  - **81 harmless sites** with the same shape, conformed anyway.
+  - **Each bug has a regression test** (`test/test.layout.js`) that fails on
+    the old code; see `test/harness/LEARNINGS.md` 2026-11-20.
+  - `dorbdb3`/`zunbdb3` copy a reference typo, recorded in their
+    `DIFFERENCES.md`.
+- **Built along the way (the core of Step 6):** `test/harness/spec-layout.js`
+  re-runs any valid call under other layouts, driven by the spec:
+  - `offset` is checked bit-exact;
+  - `row-major`/`negative` are checked to a tolerance, because the
+    layout-adaptive BLAS kernels reorder sums.
+- **Separate bug found:** tickets/0026, `zgees` NaN below `smlnum`.
+
+**Remaining:**
+- P2 + one-index-variable-per-array;
+- the vendored stdlib error rules;
+- skill-hygiene lint.
+
 
 - `stride-provenance` P1–P5 and index-variable-per-array, using the callee
   spec for role-checked calls.
@@ -616,7 +725,14 @@ gate.
 
 *Exit:* every routine with fixtures reaches L3.
 
-### Step 7: Rewrite the skills to match
+### Step 7: Rewrite the skills to match — deletions DONE 2026-11-19
+
+**Done with Step 1:** restated and contradicted rules were stripped from the
+skills, `CLAUDE.md` and `docs/`, and replaced with `CONVENTIONS.md` IDs.
+`docs/ndarray-conformance.md` and `docs/review-guidelines.md` were deleted.
+**Remaining:** the spec-driven translate flow (it needs Step 2) and
+skill-hygiene lint (Step 4).
+
 
 - **`blahpack-translate`:**
   1. generate the spec,

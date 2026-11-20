@@ -1,0 +1,120 @@
+{
+	"routine": "dpbtrf",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DPBTRF( UPLO, N, KD, AB, LDAB, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kd",
+			"fortran": "KD",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 4,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KD+1",
+				"js": "kd + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 5,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 6,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": "( .NOT.LSAME( UPLO, 'U' ) ) .AND. ( .NOT.LSAME( UPLO, 'L' ) )",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -3,
+			"param": "KD",
+			"kind": "nonnegative",
+			"fortran": "KD.LT.0",
+			"js": "kd < 0"
+		},
+		{
+			"info": -5,
+			"param": "LDAB",
+			"kind": "ld",
+			"matrix": "AB",
+			"min": {
+				"fortran": "KD+1",
+				"js": "kd + 1"
+			},
+			"fortran": "LDAB.LT.KD+1",
+			"js": "ldab < kd + 1",
+			"rowMajor": "ldab < max( 1, N )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

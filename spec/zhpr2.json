@@ -1,0 +1,143 @@
+{
+	"routine": "zhpr2",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZHPR2(UPLO,N,ALPHA,X,INCX,Y,INCY,AP)",
+	"returns": {
+		"kind": "array",
+		"param": "AP"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 6,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 7,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 8,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"(N*(N+1))/2"
+			],
+			"length": {
+				"fortran": "(N*(N+1))/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": 2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 5,
+			"param": "INCX",
+			"kind": "nonzero",
+			"vector": "X",
+			"fortran": "INCX.EQ.0",
+			"js": "incx === 0"
+		},
+		{
+			"info": 7,
+			"param": "INCY",
+			"kind": "nonzero",
+			"vector": "Y",
+			"fortran": "INCY.EQ.0",
+			"js": "incy === 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "(N.EQ.0) .OR. (ALPHA.EQ.ZERO)",
+			"js": "N === 0 || (real( alpha ) === 0 && imag( alpha ) === 0)"
+		}
+	]
+}

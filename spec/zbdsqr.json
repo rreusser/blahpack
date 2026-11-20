@@ -1,0 +1,276 @@
+{
+	"routine": "zbdsqr",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZBDSQR( UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ncvt",
+			"fortran": "NCVT",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nru",
+			"fortran": "NRU",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ncc",
+			"fortran": "NCC",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "VT",
+			"fortran": "VT",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDVT",
+				"NCVT"
+			],
+			"ld": "LDVT",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NCVT",
+				"js": "ncvt"
+			}
+		},
+		{
+			"name": "ldvt",
+			"fortran": "LDVT",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VT"
+		},
+		{
+			"name": "U",
+			"fortran": "U",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDU",
+				"N"
+			],
+			"ld": "LDU",
+			"rows": {
+				"fortran": "NRU",
+				"js": "nru"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldu",
+			"fortran": "LDU",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "U"
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"NCC"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NCC",
+				"js": "ncc"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 14,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": "4 * N"
+			},
+			"minLength": {
+				"fortran": "4*N",
+				"js": "4 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 15,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LOWER",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": -2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -3,
+			"param": "NCVT",
+			"kind": "nonnegative",
+			"fortran": "NCVT.LT.0",
+			"js": "ncvt < 0"
+		},
+		{
+			"info": -4,
+			"param": "NRU",
+			"kind": "nonnegative",
+			"fortran": "NRU.LT.0",
+			"js": "nru < 0"
+		},
+		{
+			"info": -5,
+			"param": "NCC",
+			"kind": "nonnegative",
+			"fortran": "NCC.LT.0",
+			"js": "ncc < 0"
+		},
+		{
+			"info": -9,
+			"param": "LDVT",
+			"kind": "expr",
+			"fortran": "( NCVT.EQ.0 .AND. LDVT.LT.1 ) .OR. ( NCVT.GT.0 .AND. LDVT.LT.MAX( 1, N ) )",
+			"js": "(ncvt === 0 && ldvt < 1) || (ncvt > 0 && ldvt < max( 1, N ))",
+			"rowMajor": "(ncvt===0&&ldvt<1)||(ncvt>0&&ldvt<max(1,ncvt))"
+		},
+		{
+			"info": -11,
+			"param": "LDU",
+			"kind": "ld",
+			"matrix": "U",
+			"min": {
+				"fortran": "MAX(1,NRU)",
+				"js": "max( 1, nru )"
+			},
+			"fortran": "LDU.LT.MAX( 1, NRU )",
+			"js": "ldu < max( 1, nru )",
+			"rowMajor": "ldu < max( 1, N )"
+		},
+		{
+			"info": -13,
+			"param": "LDC",
+			"kind": "expr",
+			"fortran": "( NCC.EQ.0 .AND. LDC.LT.1 ) .OR. ( NCC.GT.0 .AND. LDC.LT.MAX( 1, N ) )",
+			"js": "(ncc === 0 && ldc < 1) || (ncc > 0 && ldc < max( 1, N ))",
+			"rowMajor": "(ncc===0&&ldc<1)||(ncc>0&&ldc<max(1,ncc))"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

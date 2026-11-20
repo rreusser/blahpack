@@ -38,7 +38,7 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
   - 60 in already-triaged routines, almost all the new per-break mutants;
   - 28 never surfaced before, including 12 `ainvnm` guards in `*sycon`/`*hecon`/`*spcon` that were previously false kills;
   - 32 one-offs from the earlier backlog.
-- The check is not in CI. A CI gate on changed routines would keep this closed once the backlog is triaged.
+- The check (`bin/break-mutants.mjs`, with its in-memory mutant loader `bin/break-mutants-loader.mjs`) is not in CI; both are classified `ticket` 0045 in `bin/checks.json` (CONVENTIONS P2). It cannot be gated while it fails, so the unexplained survivors must be triaged first; after that, a CI gate (at least on changed routines) keeps this closed.
 - Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 
 ## Reproduce

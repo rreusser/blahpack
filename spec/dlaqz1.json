@@ -1,0 +1,126 @@
+{
+	"routine": "dlaqz1",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQZ1( A, LDA, B, LDB, SR1, SR2, SI, BETA1, BETA2, V )",
+	"returns": {
+		"kind": "array",
+		"param": "v"
+	},
+	"params": [
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 1,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 2,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"cols": {
+				"fortran": "N",
+				"js": null
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "sr1",
+			"fortran": "SR1",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sr2",
+			"fortran": "SR2",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "si",
+			"fortran": "SI",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "beta1",
+			"fortran": "BETA1",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "beta2",
+			"fortran": "BETA2",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": null
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"A.cols: unknown identifier N",
+		"B.cols: unknown identifier N",
+		"V.length: unknown identifier N"
+	]
+}

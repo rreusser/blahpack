@@ -52,7 +52,7 @@ The function has the following parameters:
 -   **dy1**: `dy1`.
 -   **param**: `param`.
 
-#### drotmg.ndarray( D, strideD, offsetD, x1, strideX1, offsetX1, dy1, param, strideParam, offsetParam )
+#### drotmg.ndarray( dd1, dd2, dx1, dy1, param, strideParam, offsetParam )
 
 Constructs a modified Givens plane rotation, using alternative indexing semantics.
 

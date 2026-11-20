@@ -30,7 +30,7 @@ limitations under the License.
 var drotg = require( '@stdlib/blas/base/drotg' );
 ```
 
-#### drotg( ab, strideAB, cs, strideCS )
+#### drotg( a, b, c, s )
 
 Constructs a Givens plane rotation.
 
@@ -51,7 +51,7 @@ The function has the following parameters:
 -   **cs**: `cs`.
 -   **strideCS**: stride length for `CS`.
 
-#### drotg.ndarray( ab, strideAB, offsetAB, cs, strideCS, offsetCS )
+#### drotg.ndarray( a, b, c, s )
 
 Constructs a Givens plane rotation, using alternative indexing semantics.
 

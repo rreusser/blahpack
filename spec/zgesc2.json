@@ -1,0 +1,101 @@
+{
+	"routine": "zgesc2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGESC2( N, A, LDA, RHS, IPIV, JPIV, SCALE )",
+	"returns": {
+		"kind": "array",
+		"param": "RHS"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 2,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 3,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "RHS",
+			"fortran": "RHS",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 5,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "JPIV",
+			"fortran": "JPIV",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "scale",
+			"fortran": "SCALE",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

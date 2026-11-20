@@ -2426,3 +2426,94 @@ Keep entries short. Newest first.
 - **Generalization**: grep of every `kk-1-kp` / `kp-kk-1` site in the
   `*lasyf*`/`*lahef*` routines found zlasyf_rk the only mixed one; `dlasyf_rk`
   and `zlasyf_rook` use the other variant consistently.
+
+---
+
+## 2026-11-20 — Callees handed a literal or another array's stride: 21 call sites in 7 routines walked the wrong elements under any non-default layout (lint `stride-provenance`, CONVENTIONS S13)
+
+- **What**: `base.js` passed one of its own arrays to a callee with a stride
+  that wasn't that array's. Fortran's `X(1,K), 1` (walk a column, unit stride
+  in column-major) was translated literally as `1` instead of the array's row
+  stride, or a vector was handed to a matrix routine with its stride in the
+  wrong slot. With unit-stride, column-major, zero-offset fixtures every one of
+  these is invisible.
+  - `dsterf` (6): `dlascl( …, n, 1, d, 1, strideD, … )`, scaling `d`/`e` as an
+    N×1 matrix with row stride `1`.
+  - `dgees` (4), `zgees` (1): the same pattern on `WR`/`WI`/`W` during sorting.
+  - `ztgsna` (6): `dznrm2( N, VR, 1, … )`, and `zgemv`/`zdotc` on columns of
+    `VR`/`VL` with stride `1`, where the stride should be `strideVR1`/`strideVL1`.
+  - `zgbbrd` (2): `zrot( kumu, AB, 1, …, AB, 1, … )` down a band column; the
+    stride should be `strideAB1`. The sibling call two blocks up was right
+    (`strideAB2 - strideAB1` for `LDAB-1`).
+  - `dorbdb3`, `zunbdb3` (1 each): `X21` rotated with `X11`'s stride
+    `strideX112`. **The reference has the same typo** (`X21(I,I), LDX11`); see
+    those modules' `DIFFERENCES.md`.
+- **Repro**: `lib/lapack/base/<routine>/test/test.layout.js`, via
+  `test/harness/spec-layout.js`. Each one fails on the code before this fix
+  and passes after. On the old code:
+  - `dsterf` row-major returned `info = 4` (no convergence) instead of 0;
+  - `dgees` negative stride gave `WI[1]` −1.8e138 instead of −5.9e149;
+  - `zgees` row-major sorted 3 eigenvalues instead of 5;
+  - `ztgsna` row-major gave `s[0]` 0.544 instead of 0.514;
+  - `zgbbrd` row-major changed `AB`;
+  - `dorbdb3`/`zunbdb3` with distinct leading dimensions returned NaN in `X11`.
+
+  Seeds and sizes are in the tests.
+- **Root cause**: line-by-line translation of Fortran increments. A literal
+  `1` (or `LDx`) in a Fortran call is a statement about column-major storage.
+  In the strided form it has to become the corresponding stride
+  (`1` → `strideX1`, `LDX` → `strideX2`) of *that* array.
+- **Bug class**: `literal-stride` / `foreign-stride`: a callee argument slot
+  for array A's stride, filled with a constant or another array's stride.
+- **Where else**: the rule now checks every `base.js`. 81 more sites had the
+  same shape but were harmless: the column stride of an N×1 view, a length-1
+  `zscal`, `nrhs = 1` extents. They were conformed anyway; the rule has no
+  exemptions. Not yet covered: an element access inside `base.js` that mixes
+  strides of two arrays (rule P2, which needs the one-index-variable-per-array
+  convention first), and calls into routines whose base signature isn't in a
+  spec.
+- **Fix (APPLIED)**:
+  - The 1-D sites were fixed by the rule's autofix: an array with a single
+    stride can only mean that stride.
+  - The 2-D sites were fixed by hand against the Fortran: which stride a
+    callee should walk is a translation judgment.
+- **Harness note**: `spec-layout.js` NaN poison can't see a write that only
+  *scales* a slot (V8 keeps NaN payloads through arithmetic). The `zgees`
+  test therefore uses a magnitude-based `select`: `W` is recomputed afterwards,
+  so the sort decisions are the only observable trace of a mis-scaled `W`.
+- **Separate bug found along the way**: `zgees` returns NaN with `info = 0`
+  for inputs below `smlnum` (about 1e-140). It's not stride-related.
+  tickets/0026.
+
+## 2026-11-20 — `dcabs1` returned NaN for every documented input (found by the benchmark generator)
+
+- **Found by**: `bin/gen-benchmark.mjs lib/blas/base/dcabs1`. The probe passed
+  the documented `{Complex128}` and got `NaN result`. No seed is needed; every
+  input fails: `dcabs1( new Complex128( 3, -4 ) )` returned `NaN`.
+  Scalar complex, no storage scheme, no flags.
+- **Root cause**: the JSDoc codemod (229c433e5) brought the JSDoc in line with
+  `spec/dcabs1.json` (`z`: complex128 scalar). `base.js` still read `z[ 0 ]` /
+  `z[ 1 ]`, i.e. a 2-element `Float64Array`, and the d.ts, repl.txt, README,
+  example and tests all still used that array form. Every public call that
+  followed the spec read `undefined`.
+  The tests passed because they used the old array form too.
+- **Bug class**: `doc-impl-type-drift`: the JSDoc type changed to match the
+  spec, but the implementation and its tests kept the old representation.
+  The tests share the stale assumption, so they can't catch it.
+- **Where else**: any scalar complex parameter (`role: scalar`, `dtype:
+  complex128` in spec/) whose base reads it by index. The benchmark generator
+  probes every public signature with its documented types, so a full
+  `gen-benchmark.mjs` run (no `--write`) surfaces these as `NaN result` or
+  type errors. Only `dcabs1` showed up across all 915 modules. A lint rule
+  could flag `<param>[ 0 ]` in a base.js whose spec says that param is a
+  complex128 scalar.
+- **Fix (APPLIED)**: base reads `real( z )` / `imag( z )`. The tests, example,
+  README, repl.txt and d.ts now take `Complex128`.
+- **Sweep (2026-11-20)**: every spec param with `role: scalar`, `dtype:
+  complex128` checked for `<name>[ 0|1 ]` in its base.js. One more hit:
+  `zrot`'s `s`, where `zrot( N, x, 1, y, 1, c, new Complex128( 0.8, 0 ) )`
+  returned NaN (found the same way, by the generator's NaN-result probe).
+  There, 11 internal callers (ztgsja, zhgeqz, ztrexc, ...) pass `s` to the
+  base as zlartg's in-place `[re, im]` output in hot loops. So the base keeps
+  that pair, and the public wrappers (strided, ndarray) convert the documented
+  `Complex128` to it. The tests and example now use `Complex128`.

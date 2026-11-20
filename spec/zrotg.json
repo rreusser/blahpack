@@ -1,0 +1,56 @@
+{
+	"routine": "zrotg",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": null,
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "inout"
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in",
+			"element": true
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out",
+			"element": true
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "B and C keep `x, offsetX` like A and S so all four ZROTG scalars share one form, matching ZLARTG (S10, ruled 2026-11-19).",
+			"set": {
+				"params.B.element": true,
+				"params.C.element": true
+			}
+		}
+	]
+}

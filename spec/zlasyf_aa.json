@@ -1,0 +1,141 @@
+{
+	"routine": "zlasyf_aa",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLASYF_AA( UPLO, J1, M, NB, A, LDA, IPIV,",
+	"returns": {
+		"kind": "array",
+		"param": "H"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "j1",
+			"fortran": "J1",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nb",
+			"fortran": "NB",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"M"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "IPIV",
+			"fortran": "IPIV",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			}
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"NB"
+			],
+			"ld": "LDH",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "NB",
+				"js": "nb"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"M"
+			],
+			"length": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"minLength": {
+				"fortran": "M",
+				"js": "M",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -1,0 +1,161 @@
+{
+	"routine": "dgetv0",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DGETV0( IDO, BMAT, ITRY, INITV, N, J, V, LDV, RESID, RNORM, IPNTR, WORKD, IERR )",
+	"returns": {
+		"kind": "array",
+		"param": "IPNTR"
+	},
+	"params": [
+		{
+			"name": "state",
+			"fortran": null,
+			"role": "state",
+			"dtype": "object",
+			"intent": "inout"
+		},
+		{
+			"name": "ido",
+			"fortran": "IDO",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "bmat",
+			"fortran": "BMAT",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "itry",
+			"fortran": "ITRY",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "initv",
+			"fortran": "INITV",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "J",
+			"fortran": "J",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDV",
+				"J"
+			],
+			"ld": "LDV",
+			"cols": {
+				"fortran": "J",
+				"js": "J"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "RESID",
+			"fortran": "RESID",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "rnorm",
+			"fortran": "RNORM",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		},
+		{
+			"name": "IPNTR",
+			"fortran": "IPNTR",
+			"position": 11,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"3"
+			],
+			"length": {
+				"fortran": "3",
+				"js": "3"
+			}
+		},
+		{
+			"name": "WORKD",
+			"fortran": "WORKD",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"2*N"
+			],
+			"length": {
+				"fortran": "2*N",
+				"js": "2 * N"
+			},
+			"minLength": {
+				"fortran": "2*N",
+				"js": "2 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "ierr",
+			"fortran": "IERR",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

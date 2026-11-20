@@ -30,7 +30,7 @@ limitations under the License.
 var dlasq5 = require( '@stdlib/lapack/base/dlasq5' );
 ```
 
-#### dlasq5( i0, n0, z, stride, pp, tau, sigma, ieee, eps )
+#### dlasq5( i0, n0, z, stride, pp, tau, sigma, dmin, dmin1, dmin2, dn, dnm1, dnm2, ieee, eps )
 
 Computes one dqds transform in ping-pong form with a shift.
 
@@ -52,7 +52,7 @@ The function has the following parameters:
 -   **ieee**: `ieee`.
 -   **eps**: `eps`.
 
-#### dlasq5.ndarray( i0, n0, z, stride, offset, pp, tau, sigma, ieee, eps )
+#### dlasq5.ndarray( i0, n0, z, stride, offset, pp, tau, sigma, dmin, dmin1, dmin2, dn, dnm1, dnm2, ieee, eps )
 
 Computes one dqds transform in ping-pong form with a shift, using alternative indexing semantics.
 

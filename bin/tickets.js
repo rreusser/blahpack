@@ -8,7 +8,10 @@
 //   node bin/tickets.js new "<problem statement>" [--area <area>]
 //   node bin/tickets.js resolve <id> "<how it was resolved>"
 //   node bin/tickets.js reopen <id> "<why>"
-//   node bin/tickets.js check                         validate every ticket (CI)
+//   node bin/tickets.js check                         validate every ticket, and that every
+//                                                     check and documented gap has one (CI)
+//   PR_BODY=... node bin/tickets.js pr-body           every deferral in a PR description
+//                                                     cites a ticket (CI)
 //
 // A ticket names a PROBLEM — a false or unenforced property of the library —
 // not a task. "Argument counts are inconsistent" is a ticket; "Enforce argument
@@ -17,6 +20,7 @@
 
 var fs = require( 'fs' );
 var path = require( 'path' );
+var coverage = require( './tickets-coverage.js' );
 
 var ROOT = path.join( __dirname, '..' );
 var DIR = path.join( ROOT, 'tickets' );
@@ -209,10 +213,31 @@ function check() {
 			}
 		}
 	});
+	// Coverage: every known gap has a ticket (CONVENTIONS P1).
+	errs = errs.concat( coverage.checkRegistry( byId() ), coverage.checkArtifacts( byId() ), coverage.checkDocs( byId() ) );
 	if ( errs.length ) {
 		die( errs.join( '\n' ) + '\n\n' + errs.length + ' ticket problem(s)' );
 	}
-	console.log( 'tickets ok (' + all().length + ')' );
+	console.log( 'tickets ok (' + all().length + '); every check is gated or ticketed, and every documented gap cites a ticket' );
+}
+
+function byId() {
+	var out = {};
+	all().forEach( function each( t ) {
+		if ( t.meta ) {
+			out[ t.meta.id ] = t;
+		}
+	});
+	return out;
+}
+
+function prBody() {
+	var body = ( process.env.PR_BODY !== void 0 ) ? process.env.PR_BODY : fs.readFileSync( 0, 'utf8' );
+	var errs = coverage.prBody( body, byId() );
+	if ( errs.length ) {
+		die( errs.join( '\n' ) + '\n\nThe PR description defers work without a ticket. Open one (node bin/tickets.js new "<problem>") and cite it as `ticket NNNN` (CONVENTIONS P1).' );
+	}
+	console.log( 'PR description: every deferral cites a ticket' );
 }
 
 // MAIN //
@@ -246,6 +271,9 @@ case 'reopen':
 case 'check':
 	check();
 	break;
+case 'pr-body':
+	prBody();
+	break;
 default:
-	die( 'unknown command ' + cmd + ' (list|open|resolved|all|show|new|resolve|reopen|check)' );
+	die( 'unknown command ' + cmd + ' (list|open|resolved|all|show|new|resolve|reopen|check|pr-body)' );
 }

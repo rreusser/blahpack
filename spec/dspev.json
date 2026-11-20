@@ -1,0 +1,178 @@
+{
+	"routine": "dspev",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSPEV( JOBZ, UPLO, N, AP, W, Z, LDZ, WORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "jobz",
+			"fortran": "JOBZ",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 4,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 8,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"3*N"
+			],
+			"length": {
+				"fortran": "3*N",
+				"js": "3 * N"
+			},
+			"minLength": {
+				"fortran": "3*N",
+				"js": "3 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 9,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOBZ",
+			"kind": "enum",
+			"fortranValues": "NV",
+			"values": [
+				"no-vectors",
+				"compute-vectors"
+			],
+			"fortran": ".NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) )",
+			"js": "!(jobz === 'compute-vectors' || jobz === 'no-vectors')"
+		},
+		{
+			"info": -2,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.( LSAME( UPLO, 'U' ) .OR. LSAME( UPLO, 'L' ) )",
+			"js": "!(uplo === 'upper' || uplo === 'lower')"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -7,
+			"param": "LDZ",
+			"kind": "expr",
+			"fortran": "LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N )",
+			"js": "ldz < 1 || (jobz === 'compute-vectors' && ldz < N)"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		},
+		{
+			"fortran": "N.EQ.1",
+			"js": "N === 1",
+			"sets": [
+				"W( 1 ) = AP( 1 )",
+				"IF( WANTZ ) Z( 1, 1 ) = ONE"
+			]
+		}
+	]
+}

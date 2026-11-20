@@ -1,0 +1,91 @@
+{
+	"routine": "dlaed6",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAED6( KNITER, ORGATI, RHO, D, Z, FINIT, TAU, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "kniter",
+			"fortran": "KNITER",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "orgati",
+			"fortran": "ORGATI",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "rho",
+			"fortran": "RHO",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"3"
+			],
+			"length": {
+				"fortran": "3",
+				"js": "3"
+			}
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"3"
+			],
+			"length": {
+				"fortran": "3",
+				"js": "3"
+			}
+		},
+		{
+			"name": "finit",
+			"fortran": "FINIT",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 8,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

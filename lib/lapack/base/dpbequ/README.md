@@ -54,7 +54,7 @@ The function has the following parameters:
 -   **s**: `s`.
 -   **strideS**: stride length for `S`.
 
-#### dpbequ.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB, s, strideS, offsetS )
+#### dpbequ.ndarray( uplo, N, kd, AB, strideAB1, strideAB2, offsetAB, s, strideS, offsetS, scond, amax )
 
 Computes row and column scalings intended to equilibrate a symmetric positive definite band matrix and reduce its condition number, using alternative indexing semantics.
 

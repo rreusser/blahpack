@@ -16,6 +16,6 @@ If the user asks about the whole codebase, iterate modules individually
 and collect summaries — do NOT glob all test files into one command.
 
 Parse the output and present a summary table of base.js coverage.
-Flag any module with line coverage below 90% as needing attention.
+Flag any module below the CONVENTIONS T4 coverage floor as needing attention.
 If the user asks about a specific module, show its uncovered lines
 and suggest what test cases would cover them.

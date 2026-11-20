@@ -1,0 +1,141 @@
+{
+	"routine": "dlasq4",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASQ4( I0, N0, Z, PP, N0IN, DMIN, DMIN1, DMIN2, DN,",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "i0",
+			"fortran": "I0",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n0",
+			"fortran": "N0",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"4*N0"
+			],
+			"length": {
+				"fortran": "4*N0",
+				"js": "4 * n0"
+			}
+		},
+		{
+			"name": "pp",
+			"fortran": "PP",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n0in",
+			"fortran": "N0IN",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "dmin",
+			"fortran": "DMIN",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dmin1",
+			"fortran": "DMIN1",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dmin2",
+			"fortran": "DMIN2",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dn",
+			"fortran": "DN",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dn1",
+			"fortran": "DN1",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dn2",
+			"fortran": "DN2",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "ttype",
+			"fortran": "TTYPE",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "g",
+			"fortran": "G",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "inout"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "DMIN.LE.ZERO",
+			"js": "dmin <= 0",
+			"sets": [
+				"TAU = -DMIN",
+				"TTYPE = -1"
+			]
+		}
+	]
+}

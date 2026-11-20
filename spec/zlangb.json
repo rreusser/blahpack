@@ -1,0 +1,91 @@
+{
+	"routine": "zlangb",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION ZLANGB( NORM, N, KL, KU, AB, LDAB,",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kl",
+			"fortran": "KL",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ku",
+			"fortran": "KU",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AB",
+			"fortran": "AB",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDAB",
+				"N"
+			],
+			"ld": "LDAB",
+			"rows": {
+				"fortran": "KL+KU+1",
+				"js": "kl + ku + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldab",
+			"fortran": "LDAB",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "AB"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 7,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MAX(1,LWORK)"
+			],
+			"minLength": null
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORK"
+	]
+}

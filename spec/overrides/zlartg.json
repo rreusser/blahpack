@@ -1,0 +1,13 @@
+{
+	"routine": "zlartg",
+	"overrides": [
+		{
+			"reason": "Callers pass F, G and C as elements of their own arrays (AB entries, D(i), RWORK(i) in zhbtrd/zhbgst), which ZLARTG reads or writes in place, so they keep `x, offsetX` like its complex outputs (S10, ruled 2026-11-19).",
+			"set": {
+				"params.F.element": true,
+				"params.G.element": true,
+				"params.C.element": true
+			}
+		}
+	]
+}

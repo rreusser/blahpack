@@ -1,0 +1,15 @@
+{
+	"routine": "zlaqhb",
+	"overrides": [
+		{
+			"reason": "The reference doc labels S as `[out]`, but ZLAQHB only reads it (as DLAQSB and ZLAQSB document): S holds the scale factors computed by ZPBEQU. With S an input, the primary output array (S11) is AB, matching its siblings.",
+			"set": {
+				"params.S.intent": "in",
+				"returns": {
+					"kind": "array",
+					"param": "AB"
+				}
+			}
+		}
+	]
+}

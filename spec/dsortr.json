@@ -1,0 +1,72 @@
+{
+	"routine": "dsortr",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSORTR( WHICH, APPLY, N, X1, X2 )",
+	"returns": {
+		"kind": "array",
+		"param": "X2"
+	},
+	"params": [
+		{
+			"name": "which",
+			"fortran": "WHICH",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "apply",
+			"fortran": "APPLY",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "X1",
+			"fortran": "X1",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"0:N-1"
+			],
+			"length": {
+				"fortran": "0:N-1",
+				"js": null
+			}
+		},
+		{
+			"name": "X2",
+			"fortran": "X2",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"0:N-1"
+			],
+			"length": {
+				"fortran": "0:N-1",
+				"js": null
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"X1.length: trailing tokens in 0:N-1",
+		"X2.length: trailing tokens in 0:N-1"
+	]
+}

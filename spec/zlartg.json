@@ -1,0 +1,66 @@
+{
+	"routine": "zlartg",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARTG( F, G, C, S, R )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "f",
+			"fortran": "F",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in",
+			"element": true
+		},
+		{
+			"name": "g",
+			"fortran": "G",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in",
+			"element": true
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out",
+			"element": true
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "Callers pass F, G and C as elements of their own arrays (AB entries, D(i), RWORK(i) in zhbtrd/zhbgst), which ZLARTG reads or writes in place, so they keep `x, offsetX` like its complex outputs (S10, ruled 2026-11-19).",
+			"set": {
+				"params.F.element": true,
+				"params.G.element": true,
+				"params.C.element": true
+			}
+		}
+	]
+}

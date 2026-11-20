@@ -1,0 +1,140 @@
+{
+	"routine": "dlasq5",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLASQ5( I0, N0, Z, PP, TAU, SIGMA, DMIN, DMIN1, DMIN2, DN,",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "i0",
+			"fortran": "I0",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n0",
+			"fortran": "N0",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": null
+			}
+		},
+		{
+			"name": "pp",
+			"fortran": "PP",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "sigma",
+			"fortran": "SIGMA",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "dmin",
+			"fortran": "DMIN",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "dmin1",
+			"fortran": "DMIN1",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "dmin2",
+			"fortran": "DMIN2",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "dn",
+			"fortran": "DN",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "dnm1",
+			"fortran": "DNM1",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "dnm2",
+			"fortran": "DNM2",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "ieee",
+			"fortran": "IEEE",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "eps",
+			"fortran": "EPS",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "( N0-I0-1 ).LE.0",
+			"js": "n0 - i0 - 1 <= 0"
+		}
+	],
+	"untranslated": [
+		"Z.length: unknown identifier N"
+	]
+}

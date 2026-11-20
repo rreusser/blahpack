@@ -1,0 +1,76 @@
+{
+	"routine": "zlanhf",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION ZLANHF( NORM, TRANSR, UPLO, N, A, WORK )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "transr",
+			"fortran": "TRANSR",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 6,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": null
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORK"
+	]
+}

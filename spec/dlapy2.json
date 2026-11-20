@@ -1,0 +1,30 @@
+{
+	"routine": "dlapy2",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DLAPY2( X, Y )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

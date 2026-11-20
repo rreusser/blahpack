@@ -1,0 +1,220 @@
+{
+	"routine": "dlaeda",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAEDA( N, TLVLS, CURLVL, CURPBM, PRMPTR, PERM, GIVPTR,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "tlvls",
+			"fortran": "TLVLS",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "curlvl",
+			"fortran": "CURLVL",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "curpbm",
+			"fortran": "CURPBM",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "PRMPTR",
+			"fortran": "PRMPTR",
+			"position": 5,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"NLGN"
+			],
+			"length": {
+				"fortran": "NLGN",
+				"js": null
+			}
+		},
+		{
+			"name": "PERM",
+			"fortran": "PERM",
+			"position": 6,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"NLGN"
+			],
+			"length": {
+				"fortran": "NLGN",
+				"js": null
+			}
+		},
+		{
+			"name": "GIVPTR",
+			"fortran": "GIVPTR",
+			"position": 7,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"NLGN"
+			],
+			"length": {
+				"fortran": "NLGN",
+				"js": null
+			}
+		},
+		{
+			"name": "GIVCOL",
+			"fortran": "GIVCOL",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"2",
+				"NLGN"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "2",
+				"js": "2"
+			},
+			"cols": {
+				"fortran": "NLGN",
+				"js": null
+			}
+		},
+		{
+			"name": "GIVNUM",
+			"fortran": "GIVNUM",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"2",
+				"NLGN"
+			],
+			"ld": null,
+			"rows": {
+				"fortran": "2",
+				"js": "2"
+			},
+			"cols": {
+				"fortran": "NLGN",
+				"js": null
+			}
+		},
+		{
+			"name": "q",
+			"fortran": "Q",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N**2"
+			],
+			"length": {
+				"fortran": "N**2",
+				"js": "N**2"
+			}
+		},
+		{
+			"name": "QPTR",
+			"fortran": "QPTR",
+			"position": 11,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "in",
+			"dims": [
+				"N+2"
+			],
+			"length": {
+				"fortran": "N+2",
+				"js": "N + 2"
+			}
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ZTEMP",
+			"fortran": "ZTEMP",
+			"position": 13,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	],
+	"untranslated": [
+		"PRMPTR.length: unknown identifier NLGN",
+		"PERM.length: unknown identifier NLGN",
+		"GIVPTR.length: unknown identifier NLGN",
+		"GIVCOL.cols: unknown identifier NLGN",
+		"GIVNUM.cols: unknown identifier NLGN"
+	]
+}

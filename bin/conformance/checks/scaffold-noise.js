@@ -43,6 +43,14 @@ var OBJECT_KEY_ONLY = /^[^']*'[A-Z]'\s*:[^']*(?:'[A-Z]'\s*:[^']*)*$/;
 // are fine.
 var WRAPPER_MAP_VAR = /^\s*var\s+[A-Z]+_MAP\s*=/;
 
+// Benchmarks still holding scaffold output: the throwing stub written by
+// bin/scaffold.py before base.js exists, or the retired placeholder body
+// (`createBenchmark( len )` that allocates no arrays, so the call passes
+// scalars where arrays belong and measures nothing). Regenerate with
+// `node bin/gen-benchmark.mjs <module> --kind=strided|ndarray --write`.
+var BENCHMARK_STUB = /benchmark not generated/;
+var BENCHMARK_EMPTY_BODY = /function createBenchmark\( len \) \{\s*(?:const N = len;\s*)?return benchmark;/;
+
 function checkSingleCharFlagsInFile( filePath, locs, label ) {
 	var hits = util.grepFile( filePath, SINGLE_CHAR_FLAG );
 	for ( var i = 0; i < hits.length; i++ ) {
@@ -195,6 +203,25 @@ function check( mod ) {
 			'No string-translation `*_MAP` in lib/',
 			locs.length, locs,
 			'Wrappers must pass the same canonical strings base.js dispatches on. Drop the MAP and align both sides on the canonical name.'
+		));
+	}
+
+	// 7. Benchmarks are generated, not scaffold stubs/placeholders.
+	locs = [];
+	for ( i = 1; i < exampleFiles.length; i++ ) {
+		var src = util.readFile( exampleFiles[ i ][ 0 ] );
+		if ( src !== null && ( BENCHMARK_STUB.test( src ) || BENCHMARK_EMPTY_BODY.test( src ) ) ) {
+			locs.push( exampleFiles[ i ][ 1 ] );
+		}
+	}
+	if ( locs.length === 0 ) {
+		results.push( util.pass( ID + '.benchmark-generated', 'Benchmarks are generated (no scaffold stub/placeholder)' ) );
+	} else {
+		results.push( util.fail(
+			ID + '.benchmark-generated',
+			'Benchmarks are generated (no scaffold stub/placeholder)',
+			locs.length, locs,
+			'Run `node bin/gen-benchmark.mjs lib/<pkg>/base/<routine> --kind=strided|ndarray --write` after implementing base.js'
 		));
 	}
 

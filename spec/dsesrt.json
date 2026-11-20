@@ -1,0 +1,91 @@
+{
+	"routine": "dsesrt",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSESRT( WHICH, APPLY, N, X, NA, A, LDA )",
+	"returns": {
+		"kind": "array",
+		"param": "A"
+	},
+	"params": [
+		{
+			"name": "which",
+			"fortran": "WHICH",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "apply",
+			"fortran": "APPLY",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"0:N-1"
+			],
+			"length": {
+				"fortran": "0:N-1",
+				"js": null
+			}
+		},
+		{
+			"name": "na",
+			"fortran": "NA",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"0:N-1"
+			],
+			"ld": "LDA",
+			"cols": {
+				"fortran": "0:N-1",
+				"js": null
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"untranslated": [
+		"X.length: trailing tokens in 0:N-1",
+		"A.cols: trailing tokens in 0:N-1"
+	]
+}

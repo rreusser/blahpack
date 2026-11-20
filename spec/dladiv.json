@@ -1,0 +1,61 @@
+{
+	"routine": "dladiv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLADIV( A, B, C, D, P, Q )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "b",
+			"fortran": "B",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "p",
+			"fortran": "P",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "q",
+			"fortran": "Q",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

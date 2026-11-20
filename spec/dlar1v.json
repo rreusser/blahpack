@@ -1,0 +1,236 @@
+{
+	"routine": "dlar1v",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAR1V( N, B1, BN, LAMBDA, D, L, LD, LLD,",
+	"returns": {
+		"kind": "array",
+		"param": "ISUPPZ"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "b1",
+			"fortran": "B1",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "bn",
+			"fortran": "BN",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "lambda",
+			"fortran": "LAMBDA",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 5,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "l",
+			"fortran": "L",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "LD",
+			"fortran": "LD",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "LLD",
+			"fortran": "LLD",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "pivmin",
+			"fortran": "PIVMIN",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "gaptol",
+			"fortran": "GAPTOL",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "wantnc",
+			"fortran": "WANTNC",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "negcnt",
+			"fortran": "NEGCNT",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "ztz",
+			"fortran": "ZTZ",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "mingma",
+			"fortran": "MINGMA",
+			"position": 15,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "inout"
+		},
+		{
+			"name": "ISUPPZ",
+			"fortran": "ISUPPZ",
+			"position": 17,
+			"role": "index",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"2"
+			],
+			"length": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "nrminv",
+			"fortran": "NRMINV",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "resid",
+			"fortran": "RESID",
+			"position": 19,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "rqcorr",
+			"fortran": "RQCORR",
+			"position": 20,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 21,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"4*N"
+			],
+			"length": {
+				"fortran": "4*N",
+				"js": "4 * N"
+			},
+			"minLength": {
+				"fortran": "4*N",
+				"js": "4 * N",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

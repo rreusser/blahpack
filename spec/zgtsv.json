@@ -1,0 +1,145 @@
+{
+	"routine": "zgtsv",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZGTSV( N, NRHS, DL, D, DU, B, LDB, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "DL",
+			"fortran": "DL",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "DU",
+			"fortran": "DU",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 8,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -2,
+			"param": "NRHS",
+			"kind": "nonnegative",
+			"fortran": "NRHS.LT.0",
+			"js": "nrhs < 0"
+		},
+		{
+			"info": -7,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )",
+			"rowMajor": "ldb < max( 1, nrhs )"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	]
+}

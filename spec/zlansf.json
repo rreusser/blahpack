@@ -1,0 +1,73 @@
+{
+	"routine": "zlansf",
+	"package": null,
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION ZLANSF( NORM, TRANSR, UPLO, N, A, WORK )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "norm",
+			"fortran": "NORM",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "transr",
+			"fortran": "TRANSR",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "n",
+			"fortran": "N",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "a",
+			"fortran": "A",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"*"
+			]
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 6,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"*"
+			],
+			"minLength": null
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORK",
+		"no Fortran source facts (signature-only routine): checks and quick returns unknown"
+	]
+}

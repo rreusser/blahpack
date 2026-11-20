@@ -1,0 +1,279 @@
+{
+	"routine": "zlaqr3",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,",
+	"returns": {
+		"kind": "array",
+		"param": "WV"
+	},
+	"params": [
+		{
+			"name": "wantt",
+			"fortran": "WANTT",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "wantz",
+			"fortran": "WANTZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ktop",
+			"fortran": "KTOP",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "kbot",
+			"fortran": "KBOT",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nw",
+			"fortran": "NW",
+			"position": 6,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "iloz",
+			"fortran": "ILOZ",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihiz",
+			"fortran": "IHIZ",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 11,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"N"
+			],
+			"ld": "LDZ",
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "ns",
+			"fortran": "NS",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "nd",
+			"fortran": "ND",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "SH",
+			"fortran": "SH",
+			"position": 15,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"KBOT"
+			],
+			"length": {
+				"fortran": "KBOT",
+				"js": "kbot"
+			}
+		},
+		{
+			"name": "V",
+			"fortran": "V",
+			"position": 16,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDV",
+				"NW"
+			],
+			"ld": "LDV",
+			"cols": {
+				"fortran": "NW",
+				"js": "nw"
+			}
+		},
+		{
+			"name": "ldv",
+			"fortran": "LDV",
+			"position": 17,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "nh",
+			"fortran": "NH",
+			"position": 18,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 19,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDT",
+				"NW"
+			],
+			"ld": "LDT",
+			"cols": {
+				"fortran": "NW",
+				"js": "nw"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 20,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "nv",
+			"fortran": "NV",
+			"position": 21,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "WV",
+			"fortran": "WV",
+			"position": 22,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDWV",
+				"NW"
+			],
+			"ld": "LDWV",
+			"cols": {
+				"fortran": "NW",
+				"js": "nw"
+			}
+		},
+		{
+			"name": "ldwv",
+			"fortran": "LDWV",
+			"position": 23,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WV"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 24,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": null
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 25,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no derivable minimum length for workspace WORK"
+	]
+}

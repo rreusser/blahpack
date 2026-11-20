@@ -1,0 +1,330 @@
+{
+	"routine": "dppsvx",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DPPSVX( FACT, UPLO, N, NRHS, AP, AFP, EQUED, S, B, LDB,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "fact",
+			"fortran": "FACT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nrhs",
+			"fortran": "NRHS",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "AP",
+			"fortran": "AP",
+			"position": 5,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "AFP",
+			"fortran": "AFP",
+			"position": 6,
+			"role": "packed",
+			"format": "packed",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N*(N+1)/2"
+			],
+			"length": {
+				"fortran": "N*(N+1)/2",
+				"js": "trunc( N * (N + 1) / 2 )"
+			}
+		},
+		{
+			"name": "equed",
+			"fortran": "EQUED",
+			"position": 7,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "inout"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"NRHS"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "X",
+			"fortran": "X",
+			"position": 11,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDX",
+				"NRHS"
+			],
+			"ld": "LDX",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "ldx",
+			"fortran": "LDX",
+			"position": 12,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "rcond",
+			"fortran": "RCOND",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "FERR",
+			"fortran": "FERR",
+			"position": 14,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "BERR",
+			"fortran": "BERR",
+			"position": 15,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"NRHS"
+			],
+			"length": {
+				"fortran": "NRHS",
+				"js": "nrhs"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 16,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"3*N"
+			],
+			"length": {
+				"fortran": "3*N",
+				"js": "3 * N"
+			},
+			"minLength": {
+				"fortran": "3*N",
+				"js": "3 * N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "IWORK",
+			"fortran": "IWORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "int32",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 18,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "FACT",
+			"kind": "enum",
+			"fortranValues": "EFN",
+			"values": [
+				"equilibrate",
+				"factored",
+				"not-factored"
+			],
+			"fortran": ".NOT.NOFACT .AND. .NOT.EQUIL .AND. .NOT.LSAME( FACT, 'F' )",
+			"js": "fact !== 'not-factored' && fact !== 'equilibrate' && fact !== 'factored'"
+		},
+		{
+			"info": -2,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' )",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -4,
+			"param": "NRHS",
+			"kind": "nonnegative",
+			"fortran": "NRHS.LT.0",
+			"js": "nrhs < 0"
+		},
+		{
+			"info": -7,
+			"param": "EQUED",
+			"kind": "expr",
+			"fortran": "LSAME( FACT, 'F' ) .AND. .NOT. ( RCEQU .OR. LSAME( EQUED, 'N' ) )",
+			"js": "fact === 'factored' && !((fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'yes') || equed === 'none')"
+		},
+		{
+			"info": -8,
+			"param": "S",
+			"kind": "expr",
+			"fortran": "SMIN.LE.ZERO",
+			"guard": "RCEQU",
+			"js": null
+		},
+		{
+			"info": -10,
+			"param": "LDB",
+			"kind": "ld",
+			"matrix": "B",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDB.LT.MAX( 1, N )",
+			"js": "ldb < max( 1, N )",
+			"rowMajor": "ldb < max( 1, nrhs )"
+		},
+		{
+			"info": -12,
+			"param": "LDX",
+			"kind": "ld",
+			"matrix": "X",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDX.LT.MAX( 1, N )",
+			"js": "ldx < max( 1, N )",
+			"rowMajor": "ldx < max( 1, nrhs )"
+		}
+	],
+	"quickReturn": [],
+	"untranslated": [
+		"check -8: local SMIN is assigned inside nested control flow"
+	]
+}

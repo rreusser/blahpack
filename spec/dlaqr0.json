@@ -1,0 +1,200 @@
+{
+	"routine": "dlaqr0",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, WR, WI,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "wantt",
+			"fortran": "WANTT",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "wantz",
+			"fortran": "WANTZ",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ilo",
+			"fortran": "ILO",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 5,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "H",
+			"fortran": "H",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDH",
+				"N"
+			],
+			"ld": "LDH",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldh",
+			"fortran": "LDH",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "H"
+		},
+		{
+			"name": "WR",
+			"fortran": "WR",
+			"position": 8,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"IHI"
+			],
+			"length": {
+				"fortran": "IHI",
+				"js": "ihi"
+			}
+		},
+		{
+			"name": "WI",
+			"fortran": "WI",
+			"position": 9,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"IHI"
+			],
+			"length": {
+				"fortran": "IHI",
+				"js": "ihi"
+			}
+		},
+		{
+			"name": "iloz",
+			"fortran": "ILOZ",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihiz",
+			"fortran": "IHIZ",
+			"position": 11,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "Z",
+			"fortran": "Z",
+			"position": 12,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDZ",
+				"IHI"
+			],
+			"ld": "LDZ",
+			"rows": {
+				"fortran": "IHIZ",
+				"js": "ihiz"
+			},
+			"cols": {
+				"fortran": "IHI",
+				"js": "ihi"
+			}
+		},
+		{
+			"name": "ldz",
+			"fortran": "LDZ",
+			"position": 13,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Z"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 14,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"*"
+			],
+			"minLength": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )",
+				"source": "doc"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 15,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 16,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0",
+			"sets": [
+				"WORK( 1 ) = ONE"
+			]
+		}
+	]
+}

@@ -18,6 +18,10 @@
 
 // TypeScript Version: 4.1
 
+/// <reference types="@stdlib/types"/>
+
+import { Complex128 } from '@stdlib/types/complex';
+
 /**
 * Interface describing `dcabs1`.
 */
@@ -28,7 +32,7 @@ interface Routine {
 	* @param z - `z`
 	* @returns result
 	*/
-	( z: number ): number;
+	( z: Complex128 ): number;
 
 	/**
 	* Computes the sum of the absolute values of the real and imaginary parts of a double-precision complex number using alternative indexing semantics.
@@ -36,7 +40,7 @@ interface Routine {
 	* @param z - `z`
 	* @returns result
 	*/
-	ndarray( z: number ): number;
+	ndarray( z: Complex128 ): number;
 }
 
 /**

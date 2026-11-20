@@ -1,0 +1,67 @@
+{
+	"routine": "zla_wwaddw",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLA_WWADDW( N, X, Y, W )",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 2,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "w",
+			"fortran": "W",
+			"position": 4,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -20,9 +20,6 @@ var checkWorkAssert = require( './checks/work-assert.js' );
 var checkWorkAutoalloc = require( './checks/work-autoalloc.js' );
 var checkSyntax = require( './checks/syntax.js' );
 var checkBaseArity = require( './checks/base-arity.js' );
-var checkOptionParity = require( './checks/option-parity.js' );
-var checkLdRules = require( './checks/ld-rules.js' );
-var checkOptionRules = require( './checks/option-rules.js' );
 
 var ALL_CHECKS = [
 	{ name: 'file-structure', fn: checkFileStructure },
@@ -39,9 +36,6 @@ var ALL_CHECKS = [
 	{ name: 'work-autoalloc', fn: checkWorkAutoalloc },
 	{ name: 'syntax', fn: checkSyntax },
 	{ name: 'base-arity', fn: checkBaseArity },
-	{ name: 'option-parity', fn: checkOptionParity },
-	{ name: 'ld-rules', fn: checkLdRules },
-	{ name: 'option-rules', fn: checkOptionRules },
 	{ name: 'lint', fn: checkLint }
 ];
 

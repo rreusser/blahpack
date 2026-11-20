@@ -1,0 +1,53 @@
+{
+	"routine": "dlartg",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARTG( F, G, C, S, R )",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "f",
+			"fortran": "F",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "g",
+			"fortran": "G",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "c",
+			"fortran": "C",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "r",
+			"fortran": "R",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

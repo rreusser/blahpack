@@ -1,0 +1,70 @@
+{
+	"routine": "zlarfgp",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARFGP( N, ALPHA, X, INCX, TAU )",
+	"returns": {
+		"kind": "array",
+		"param": "x"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "inout"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 3,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"1+(N-2)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "1+(N-2)*ABS(INCX)",
+				"js": "1 + (N - 2) * abs( incx )"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 4,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.LE.0",
+			"js": "N <= 0",
+			"sets": [
+				"TAU = ZERO"
+			]
+		}
+	]
+}

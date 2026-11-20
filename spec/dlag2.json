@@ -1,0 +1,121 @@
+{
+	"routine": "dlag2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLAG2( A, LDA, B, LDB, SAFMIN, SCALE1, SCALE2, WR1,",
+	"returns": {
+		"kind": "none"
+	},
+	"params": [
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 1,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"2"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "2",
+				"js": "2"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 2,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 3,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"2"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "2",
+				"js": "2"
+			},
+			"cols": {
+				"fortran": "2",
+				"js": "2"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 4,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "safmin",
+			"fortran": "SAFMIN",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "scale1",
+			"fortran": "SCALE1",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "scale2",
+			"fortran": "SCALE2",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "wr1",
+			"fortran": "WR1",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "wr2",
+			"fortran": "WR2",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "wi",
+			"fortran": "WI",
+			"position": 10,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

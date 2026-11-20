@@ -1,0 +1,170 @@
+{
+	"routine": "dlarfb_gett",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLARFB_GETT( IDENT, M, N, K, T, LDT, A, LDA, B, LDB, WORK, LDWORK )",
+	"returns": {
+		"kind": "array",
+		"param": "B"
+	},
+	"params": [
+		{
+			"name": "ident",
+			"fortran": "IDENT",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "M",
+			"fortran": "M",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDT",
+				"K"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "K",
+				"js": "K"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"LDB",
+				"N"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "M",
+				"js": "M"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 11,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDWORK",
+				"MAX(K,N-K)"
+			],
+			"ld": "LDWORK",
+			"rows": {
+				"fortran": "K",
+				"js": "K"
+			},
+			"cols": {
+				"fortran": "MAX(K,N-K)",
+				"js": "max( K, N - K )"
+			}
+		},
+		{
+			"name": "ldwork",
+			"fortran": "LDWORK",
+			"position": 12,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "M.LT.0 .OR. N.LE.0 .OR. K.EQ.0 .OR. K.GT.N",
+			"js": "((M < 0 || N <= 0) || K === 0) || K > N"
+		}
+	]
+}

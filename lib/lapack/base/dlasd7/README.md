@@ -30,7 +30,7 @@ limitations under the License.
 var dlasd7 = require( '@stdlib/lapack/base/dlasd7' );
 ```
 
-#### dlasd7( order, icompq, nl, nr, sqre, d, strideD, z, strideZ, ZW, strideZW, VF, strideVF, VFW, strideVFW, VL, strideVL, VLW, strideVLW, alpha, beta, DSIGMA, strideDSIGMA, IDX, strideIDX, IDXP, strideIDXP, IDXQ, strideIDXQ, PERM, stridePERM, GIVCOL, LDGIVCOL, GIVNUM, LDGIVNUM )
+#### dlasd7( order, icompq, nl, nr, sqre, k, d, strideD, z, strideZ, ZW, strideZW, VF, strideVF, VFW, strideVFW, VL, strideVL, VLW, strideVLW, alpha, beta, DSIGMA, strideDSIGMA, IDX, strideIDX, IDXP, strideIDXP, IDXQ, strideIDXQ, PERM, stridePERM, givptr, GIVCOL, LDGIVCOL, GIVNUM, LDGIVNUM, c, s )
 
 @license Apache-2.0.
 
@@ -94,7 +94,7 @@ The function has the following parameters:
 -   **GIVNUM**: input array `GIVNUM`.
 -   **LDGIVNUM**: leading dimension of `GIVNUM`.
 
-#### dlasd7.ndarray( icompq, nl, nr, sqre, d, strideD, offsetD, z, strideZ, offsetZ, ZW, strideZW, offsetZW, VF, strideVF, offsetVF, VFW, strideVFW, offsetVFW, VL, strideVL, offsetVL, VLW, strideVLW, offsetVLW, alpha, beta, DSIGMA, strideDSIGMA, offsetDSIGMA, IDX, strideIDX, offsetIDX, IDXP, strideIDXP, offsetIDXP, IDXQ, strideIDXQ, offsetIDXQ, PERM, stridePERM, offsetPERM, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, strideGIVNUM1, strideGIVNUM2, offsetGIVNUM )
+#### dlasd7.ndarray( icompq, nl, nr, sqre, k, d, strideD, offsetD, z, strideZ, offsetZ, ZW, strideZW, offsetZW, VF, strideVF, offsetVF, VFW, strideVFW, offsetVFW, VL, strideVL, offsetVL, VLW, strideVLW, offsetVLW, alpha, beta, DSIGMA, strideDSIGMA, offsetDSIGMA, IDX, strideIDX, offsetIDX, IDXP, strideIDXP, offsetIDXP, IDXQ, strideIDXQ, offsetIDXQ, PERM, stridePERM, offsetPERM, givptr, GIVCOL, strideGIVCOL1, strideGIVCOL2, offsetGIVCOL, GIVNUM, strideGIVNUM1, strideGIVNUM2, offsetGIVNUM, c, s )
 
 @license Apache-2.0, using alternative indexing semantics.
 

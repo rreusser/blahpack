@@ -1,0 +1,240 @@
+{
+	"routine": "dorbdb5",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DORBDB5( M1, M2, N, X1, INCX1, X2, INCX2, Q1, LDQ1, Q2,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "m1",
+			"fortran": "M1",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "m2",
+			"fortran": "M2",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "X1",
+			"fortran": "X1",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"M1"
+			],
+			"length": {
+				"fortran": "M1",
+				"js": "m1"
+			}
+		},
+		{
+			"name": "incx1",
+			"fortran": "INCX1",
+			"position": 5,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X1"
+		},
+		{
+			"name": "X2",
+			"fortran": "X2",
+			"position": 6,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"M2"
+			],
+			"length": {
+				"fortran": "M2",
+				"js": "m2"
+			}
+		},
+		{
+			"name": "incx2",
+			"fortran": "INCX2",
+			"position": 7,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X2"
+		},
+		{
+			"name": "Q1",
+			"fortran": "Q1",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDQ1",
+				"N"
+			],
+			"ld": "LDQ1",
+			"rows": {
+				"fortran": "M1",
+				"js": "m1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq1",
+			"fortran": "LDQ1",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q1"
+		},
+		{
+			"name": "Q2",
+			"fortran": "Q2",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDQ2",
+				"N"
+			],
+			"ld": "LDQ2",
+			"rows": {
+				"fortran": "M2",
+				"js": "m2"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldq2",
+			"fortran": "LDQ2",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Q2"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 12,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LWORK"
+			],
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "check"
+			}
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 13,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "WORK"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 14,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "M1",
+			"kind": "nonnegative",
+			"fortran": "M1 .LT. 0",
+			"js": "m1 < 0"
+		},
+		{
+			"info": -2,
+			"param": "M2",
+			"kind": "nonnegative",
+			"fortran": "M2 .LT. 0",
+			"js": "m2 < 0"
+		},
+		{
+			"info": -3,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N .LT. 0",
+			"js": "N < 0"
+		},
+		{
+			"info": -5,
+			"param": "INCX1",
+			"kind": "expr",
+			"fortran": "INCX1 .LT. 1",
+			"js": "incx1 < 1"
+		},
+		{
+			"info": -7,
+			"param": "INCX2",
+			"kind": "expr",
+			"fortran": "INCX2 .LT. 1",
+			"js": "incx2 < 1"
+		},
+		{
+			"info": -9,
+			"param": "LDQ1",
+			"kind": "ld",
+			"matrix": "Q1",
+			"min": {
+				"fortran": "MAX(1,M1)",
+				"js": "max( 1, m1 )"
+			},
+			"fortran": "LDQ1 .LT. MAX( 1, M1 )",
+			"js": "ldq1 < max( 1, m1 )",
+			"rowMajor": "ldq1 < max( 1, N )"
+		},
+		{
+			"info": -11,
+			"param": "LDQ2",
+			"kind": "ld",
+			"matrix": "Q2",
+			"min": {
+				"fortran": "MAX(1,M2)",
+				"js": "max( 1, m2 )"
+			},
+			"fortran": "LDQ2 .LT. MAX( 1, M2 )",
+			"js": "ldq2 < max( 1, m2 )",
+			"rowMajor": "ldq2 < max( 1, N )"
+		}
+	],
+	"quickReturn": []
+}

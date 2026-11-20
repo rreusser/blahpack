@@ -1,0 +1,137 @@
+{
+	"routine": "zlarz",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZLARZ( SIDE, M, N, L, V, INCV, TAU, C, LDC, WORK )",
+	"returns": {
+		"kind": "array",
+		"param": "C"
+	},
+	"params": [
+		{
+			"name": "side",
+			"fortran": "SIDE",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "L",
+			"fortran": "L",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "v",
+			"fortran": "V",
+			"position": 5,
+			"role": "vector",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"1+(L-1)*ABS(INCV)"
+			],
+			"length": {
+				"fortran": "L",
+				"js": "L"
+			}
+		},
+		{
+			"name": "incv",
+			"fortran": "INCV",
+			"position": 6,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "V"
+		},
+		{
+			"name": "tau",
+			"fortran": "TAU",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in",
+			"element": true
+		},
+		{
+			"name": "C",
+			"fortran": "C",
+			"position": 8,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "inout",
+			"dims": [
+				"LDC",
+				"N"
+			],
+			"ld": "LDC",
+			"rows": {
+				"fortran": "M",
+				"js": "m"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldc",
+			"fortran": "LDC",
+			"position": 9,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "C"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 10,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"overrides": [
+		{
+			"reason": "Callers pass TAU as an element of their own TAU array (TAU(i) in zlatrz, zunmr3), so it crosses as `tau, offsetTau` instead of a Complex128 every caller would construct (S10 element form).",
+			"set": {
+				"params.TAU.element": true
+			}
+		}
+	]
+}

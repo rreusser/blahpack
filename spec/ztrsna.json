@@ -1,0 +1,322 @@
+{
+	"routine": "ztrsna",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE ZTRSNA( JOB, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "job",
+			"fortran": "JOB",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "howmny",
+			"fortran": "HOWMNY",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "SELECT",
+			"fortran": "SELECT",
+			"position": 3,
+			"role": "vector",
+			"dtype": "bool",
+			"intent": "in",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 4,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "T",
+			"fortran": "T",
+			"position": 5,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDT",
+				"N"
+			],
+			"ld": "LDT",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "ldt",
+			"fortran": "LDT",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "T"
+		},
+		{
+			"name": "VL",
+			"fortran": "VL",
+			"position": 7,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDVL",
+				"M"
+			],
+			"ld": "LDVL",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "mm"
+			}
+		},
+		{
+			"name": "ldvl",
+			"fortran": "LDVL",
+			"position": 8,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VL"
+		},
+		{
+			"name": "VR",
+			"fortran": "VR",
+			"position": 9,
+			"role": "matrix",
+			"dtype": "complex128",
+			"intent": "in",
+			"dims": [
+				"LDVR",
+				"M"
+			],
+			"ld": "LDVR",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "M",
+				"js": "mm"
+			}
+		},
+		{
+			"name": "ldvr",
+			"fortran": "LDVR",
+			"position": 10,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "VR"
+		},
+		{
+			"name": "s",
+			"fortran": "S",
+			"position": 11,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MM"
+			],
+			"length": {
+				"fortran": "MM",
+				"js": "mm"
+			}
+		},
+		{
+			"name": "SEP",
+			"fortran": "SEP",
+			"position": 12,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"MM"
+			],
+			"length": {
+				"fortran": "MM",
+				"js": "mm"
+			}
+		},
+		{
+			"name": "mm",
+			"fortran": "MM",
+			"position": 13,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "m",
+			"fortran": "M",
+			"position": 14,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "out"
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 15,
+			"role": "workspace",
+			"dtype": "complex128",
+			"intent": "out",
+			"dims": [
+				"LDWORK",
+				"N+6"
+			],
+			"ld": "LDWORK",
+			"rows": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"cols": {
+				"fortran": "N+6",
+				"js": "N < 2 ? N : N + 1"
+			}
+		},
+		{
+			"name": "ldwork",
+			"fortran": "LDWORK",
+			"position": 16,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "RWORK",
+			"fortran": "RWORK",
+			"position": 17,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			},
+			"minLength": {
+				"fortran": "N",
+				"js": "N",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 18,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [
+		{
+			"info": -1,
+			"param": "JOB",
+			"kind": "enum",
+			"fortranValues": "BEV",
+			"values": null,
+			"fortran": ".NOT.WANTS .AND. .NOT.WANTSP",
+			"js": null
+		},
+		{
+			"info": -2,
+			"param": "HOWMNY",
+			"kind": "enum",
+			"fortranValues": "AS",
+			"values": [
+				"all",
+				"selected"
+			],
+			"fortran": ".NOT.LSAME( HOWMNY, 'A' ) .AND. .NOT.SOMCON",
+			"js": "howmny !== 'all' && howmny !== 'selected'"
+		},
+		{
+			"info": -4,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": -6,
+			"param": "LDT",
+			"kind": "ld",
+			"matrix": "T",
+			"min": {
+				"fortran": "MAX(1,N)",
+				"js": "max( 1, N )"
+			},
+			"fortran": "LDT.LT.MAX( 1, N )",
+			"js": "ldt < max( 1, N )"
+		},
+		{
+			"info": -8,
+			"param": "LDVL",
+			"kind": "expr",
+			"fortran": "LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )",
+			"js": null
+		},
+		{
+			"info": -10,
+			"param": "LDVR",
+			"kind": "expr",
+			"fortran": "LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )",
+			"js": null
+		},
+		{
+			"info": -13,
+			"param": "MM",
+			"kind": "expr",
+			"fortran": "MM.LT.M",
+			"js": null
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		}
+	],
+	"untranslated": [
+		"check -1: no canonical value for JOB='E'",
+		"check -8: no canonical value for JOB='E'",
+		"check -10: no canonical value for JOB='E'",
+		"check -13: tests the output argument M (its value is computed, not passed in)"
+	],
+	"notes": [
+		"option JOB accepts 'BEV' but spec/options.json has no canonical value for this family",
+		"workspace check for LDWORK not reducible to a minimum: LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
+	]
+}

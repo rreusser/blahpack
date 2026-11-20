@@ -1,0 +1,12 @@
+{
+	"routine": "dlarfg",
+	"overrides": [
+		{
+			"reason": "Callers pass ALPHA and TAU as elements of their own arrays (A(i,i) and TAU(i) in dgeqr2 and the other QR/LQ/Hessenberg/bidiagonal reductions), which DLARFG updates in place, so they keep `x, offsetX` instead of a length-1 array every caller would copy in and out (S10, ruled 2026-11-19).",
+			"set": {
+				"params.ALPHA.element": true,
+				"params.TAU.element": true
+			}
+		}
+	]
+}

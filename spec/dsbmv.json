@@ -1,0 +1,193 @@
+{
+	"routine": "dsbmv",
+	"package": "blas",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSBMV(UPLO,N,K,ALPHA,A,LDA,X,INCX,BETA,Y,INCY)",
+	"returns": {
+		"kind": "array",
+		"param": "y"
+	},
+	"params": [
+		{
+			"name": "uplo",
+			"fortran": "UPLO",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "K",
+			"fortran": "K",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "alpha",
+			"fortran": "ALPHA",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 5,
+			"role": "banded",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"N"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "K+1",
+				"js": "K + 1"
+			},
+			"cols": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 6,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "x",
+			"fortran": "X",
+			"position": 7,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"1+(N-1)*ABS(INCX)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incx",
+			"fortran": "INCX",
+			"position": 8,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "beta",
+			"fortran": "BETA",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "y",
+			"fortran": "Y",
+			"position": 10,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"1+(N-1)*ABS(INCY)"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "incy",
+			"fortran": "INCY",
+			"position": 11,
+			"role": "inc",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "Y"
+		}
+	],
+	"checks": [
+		{
+			"info": 1,
+			"param": "UPLO",
+			"kind": "enum",
+			"fortranValues": "LU",
+			"values": [
+				"lower",
+				"upper"
+			],
+			"fortran": ".NOT.LSAME(UPLO,'U') .AND. .NOT.LSAME(UPLO,'L')",
+			"js": "uplo !== 'upper' && uplo !== 'lower'"
+		},
+		{
+			"info": 2,
+			"param": "N",
+			"kind": "nonnegative",
+			"fortran": "N.LT.0",
+			"js": "N < 0"
+		},
+		{
+			"info": 3,
+			"param": "K",
+			"kind": "nonnegative",
+			"fortran": "K.LT.0",
+			"js": "K < 0"
+		},
+		{
+			"info": 6,
+			"param": "LDA",
+			"kind": "ld",
+			"matrix": "A",
+			"min": {
+				"fortran": "K+1",
+				"js": "K + 1"
+			},
+			"fortran": "LDA.LT. (K+1)",
+			"js": "lda < K + 1",
+			"rowMajor": "lda < max( 1, N )"
+		},
+		{
+			"info": 8,
+			"param": "INCX",
+			"kind": "nonzero",
+			"vector": "X",
+			"fortran": "INCX.EQ.0",
+			"js": "incx === 0"
+		},
+		{
+			"info": 11,
+			"param": "INCY",
+			"kind": "nonzero",
+			"vector": "Y",
+			"fortran": "INCY.EQ.0",
+			"js": "incy === 0"
+		}
+	],
+	"quickReturn": [
+		{
+			"fortran": "(N.EQ.0) .OR. ((ALPHA.EQ.ZERO).AND. (BETA.EQ.ONE))",
+			"js": "N === 0 || (alpha === 0 && beta === 1)"
+		}
+	]
+}

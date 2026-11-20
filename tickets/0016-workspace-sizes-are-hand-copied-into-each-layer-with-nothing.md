@@ -17,6 +17,7 @@ The `work-assert` conformance check confirms only that *a* guard exists. The har
 - 17 of 52 LEARNINGS entries are this class: #2, #4, #7–#16, #18, #19, #38, #41 and #49, the largest single class in the file.
 - LEARNINGS.md #49 (2026-11-18): `dgehrd`/`zgehrd` wrappers auto-allocated the unblocked size. The `null` path at blocked sizes is not tested anywhere.
 - About 80 routines call `assertWorkspaceSufficient`; there are 825 LAPACK modules.
+- CONVENTIONS rules that cite this ticket: W3 (`conf:work-assert` checks only the `WORK` guard; nothing checks the `IWORK`/`RWORK` guards) and W5 (nothing checks the required size stated in the `@param` JSDoc text).
 
 ## Reproduce
 

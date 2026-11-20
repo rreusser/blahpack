@@ -16,11 +16,6 @@ var STRING_VALIDATORS = {
 	'diag': 'is-diagonal-type'
 };
 
-// Dimension parameters that should have >= 0 checks
-var DIMENSION_PARAMS = new Set([
-	'M', 'N', 'K', 'nrhs'
-]);
-
 /**
 * Extract the function signature parameters from a file.
 *
@@ -56,99 +51,6 @@ function extractParams( content ) {
 }
 
 /**
-* Whether a routine's `order` param is a storage-layout selector
-* (`'row-major'`/`'column-major'`) rather than a domain mode. A few routines
-* (e.g. DSTEBZ/DLARRD) name a parameter `order` that selects an eigenvalue
-* ORDERING (`'block'`/`'entire'`) and has nothing to do with memory layout;
-* such an `order` is a normal string mode — it does not use `is-layout`, and it
-* legitimately appears on the ndarray signature.
-*
-* @private
-* @param {string} baseContent - base.js source
-* @returns {boolean} true if `order` denotes a storage layout
-*/
-function isLayoutOrder( baseContent ) {
-	if ( !baseContent ) {
-		return true;
-	}
-	var m = baseContent.match( /@param\s*\{string\}\s+order\b[^\n]*/i );
-	if ( !m ) {
-		return true;
-	}
-	return !/block|entire/i.test( m[ 0 ] );
-}
-
-/**
-* Detect which string params a signature has.
-*
-* @private
-* @param {Array} params - parameter names
-* @param {string} [baseContent] - base.js source (to classify an `order` param)
-* @returns {Array} array of { name, validator } objects
-*/
-function detectStringParams( params, baseContent ) {
-	var result = [];
-	var i, lower;
-	for ( i = 0; i < params.length; i++ ) {
-		lower = params[ i ].toLowerCase();
-		// A domain-mode `order` (block/entire ordering) is not a layout param
-		// and does not use the is-layout validator.
-		if ( lower === 'order' && !isLayoutOrder( baseContent ) ) {
-			continue;
-		}
-		if ( STRING_VALIDATORS[ lower ] ) {
-			result.push({
-				name: params[ i ],
-				validator: STRING_VALIDATORS[ lower ]
-			});
-		}
-	}
-	return result;
-}
-
-/**
-* Detect which dimension params a signature has.
-*
-* A name like `K` or `M` that base.js documents as an array (e.g. `Int32Array`)
-* is an OUTPUT, not an input dimension, so it is not range-validated.
-*
-* @private
-* @param {Array} params - parameter names
-* @param {string} [baseContent] - base.js source (used to exclude array-typed outputs)
-* @returns {Array} parameter names that are dimensions
-*/
-function detectDimensionParams( params, baseContent ) {
-	var result = [];
-	var re;
-	var i;
-	for ( i = 0; i < params.length; i++ ) {
-		re = new RegExp( '@param\\s*\\{[^}]*Array[^}]*\\}\\s+' + params[ i ] + '\\b' );
-		if ( DIMENSION_PARAMS.has( params[ i ] ) && !( baseContent && re.test( baseContent ) ) ) {
-			result.push( params[ i ] );
-		}
-	}
-	return result;
-}
-
-/**
-* Detect leading dimension params (LD<X> pattern).
-*
-* @private
-* @param {Array} params - parameter names
-* @returns {Array} leading dimension parameter names
-*/
-function detectLeadingDimParams( params ) {
-	var result = [];
-	var i;
-	for ( i = 0; i < params.length; i++ ) {
-		if ( /^LD[A-Z]+$/.test( params[ i ] ) ) {
-			result.push( params[ i ] );
-		}
-	}
-	return result;
-}
-
-/**
 * Check if content has a throws for a given validator.
 *
 * @private
@@ -158,58 +60,6 @@ function detectLeadingDimParams( params ) {
 */
 function hasValidatorImport( content, validatorName ) {
 	return content.indexOf( validatorName ) >= 0;
-}
-
-/**
-* Check if a string param is validated, either by its stdlib assertion helper or
-* by an explicit `param !== '...' && ...` chain that throws a TypeError.
-*
-* The explicit form is required when LAPACK accepts more than the helper does
-* (e.g. `side = 'both'` in xTREVC/xTGEVC/xHSEIN, `uplo = 'all'` in xLACPY/xLASET);
-* demanding the helper there forced wrappers to reject valid values.
-*
-* @private
-* @param {string} content - file content
-* @param {Object} param - { name, validator }
-* @returns {boolean}
-*/
-function hasStringValidation( content, param ) {
-	var re = new RegExp( 'if \\(\\s*' + param.name + ' !== \'[^\']*\'[^)]*\\) \\{\\s*throw new TypeError' );
-	return hasValidatorImport( content, param.validator ) || re.test( content );
-}
-
-/**
-* Check if content throws TypeError.
-*
-* @private
-* @param {string} content - file content
-* @returns {boolean}
-*/
-function hasTypeError( content ) {
-	return /throw new TypeError/.test( content );
-}
-
-/**
-* Check if content throws RangeError.
-*
-* @private
-* @param {string} content - file content
-* @returns {boolean}
-*/
-function hasRangeError( content ) {
-	return /throw new RangeError/.test( content );
-}
-
-/**
-* Count the number of throw statements.
-*
-* @private
-* @param {string} content - file content
-* @returns {number}
-*/
-function countThrows( content ) {
-	var m = content.match( /throw new /g );
-	return m ? m.length : 0;
 }
 
 /**
@@ -302,73 +152,8 @@ function check( mod ) {
 			));
 		}
 
-		// String param validation
-		var routineStrings = detectStringParams( routineParams, baseContent );
-		if ( routineStrings.length > 0 ) {
-			var missingRoutineValidators = [];
-			var i;
-			for ( i = 0; i < routineStrings.length; i++ ) {
-				if ( !hasStringValidation( routineContent, routineStrings[ i ] ) ) {
-					missingRoutineValidators.push( routineStrings[ i ].name + ' (' + routineStrings[ i ].validator + ')' );
-				}
-			}
-			if ( missingRoutineValidators.length === 0 ) {
-				results.push( util.pass( ID + '.routine-string-validation', mod.routine + '.js validates all string params' ) );
-			} else {
-				results.push( util.fail(
-					ID + '.routine-string-validation',
-					mod.routine + '.js validates all string params',
-					missingRoutineValidators.length,
-					[ mod.routine + '.js' ],
-					'Missing validators for: ' + missingRoutineValidators.join( ', ' )
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.routine-string-validation', 'No string params in ' + mod.routine + '.js' ) );
-		}
-
-		// Dimension validation
-		var routineDims = detectDimensionParams( routineParams, baseContent );
-		if ( routineDims.length > 0 ) {
-			if ( hasRangeError( routineContent ) ) {
-				results.push( util.pass( ID + '.routine-dimension-validation', mod.routine + '.js validates dimensions' ) );
-			} else {
-				results.push( util.fail(
-					ID + '.routine-dimension-validation',
-					mod.routine + '.js validates dimensions',
-					routineDims.length,
-					[ mod.routine + '.js' ],
-					'Has dimension params (' + routineDims.join( ', ' ) + ') but no RangeError throws'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.routine-dimension-validation', 'No dimension params in ' + mod.routine + '.js' ) );
-		}
-
-		// Leading dimension validation
-		var ldParams = detectLeadingDimParams( routineParams );
-		if ( ldParams.length > 0 ) {
-			// Check for LDA/LDB/LDC validation (should check >= max(1, ...))
-			var ldPattern = /LD[A-Z].*<.*max|max.*LD[A-Z]|LD[A-Z]\s*</;
-			if ( ldPattern.test( routineContent ) || /throw.*LD[A-Z]/.test( routineContent ) || countThrows( routineContent ) >= routineStrings.length + routineDims.length + ldParams.length ) {
-				results.push( util.pass( ID + '.routine-ld-validation', mod.routine + '.js validates leading dimensions' ) );
-			} else {
-				results.push( util.warn(
-					ID + '.routine-ld-validation',
-					mod.routine + '.js validates leading dimensions',
-					ldParams.length,
-					[ mod.routine + '.js' ],
-					'Has leading dimension params (' + ldParams.join( ', ' ) + ') but may not validate them'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.routine-ld-validation', 'No leading dimension params' ) );
-		}
 	} else if ( !routineContent ) {
 		results.push( util.skip( ID + '.routine-calls-base', 'No ' + mod.routine + '.js' ) );
-		results.push( util.skip( ID + '.routine-string-validation', 'No ' + mod.routine + '.js' ) );
-		results.push( util.skip( ID + '.routine-dimension-validation', 'No ' + mod.routine + '.js' ) );
-		results.push( util.skip( ID + '.routine-ld-validation', 'No ' + mod.routine + '.js' ) );
 	}
 
 	// ──────────────────────────────────────────
@@ -388,84 +173,8 @@ function check( mod ) {
 			));
 		}
 
-		// String param validation in ndarray.js
-		var ndarrayStrings = detectStringParams( ndarrayParams, baseContent );
-		if ( ndarrayStrings.length > 0 ) {
-			var missingNdarrayValidators = [];
-			var j;
-			for ( j = 0; j < ndarrayStrings.length; j++ ) {
-				if ( !hasStringValidation( ndarrayContent, ndarrayStrings[ j ] ) ) {
-					missingNdarrayValidators.push( ndarrayStrings[ j ].name + ' (' + ndarrayStrings[ j ].validator + ')' );
-				}
-			}
-			if ( missingNdarrayValidators.length === 0 ) {
-				results.push( util.pass( ID + '.ndarray-string-validation', 'ndarray.js validates all string params' ) );
-			} else {
-				results.push( util.warn(
-					ID + '.ndarray-string-validation',
-					'ndarray.js validates all string params',
-					missingNdarrayValidators.length,
-					[ 'ndarray.js' ],
-					'Missing validators for: ' + missingNdarrayValidators.join( ', ' )
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.ndarray-string-validation', 'No string params in ndarray.js' ) );
-		}
-
-		// Dimension validation in ndarray.js
-		var ndarrayDims = detectDimensionParams( ndarrayParams, baseContent );
-		if ( ndarrayDims.length > 0 ) {
-			if ( hasRangeError( ndarrayContent ) ) {
-				results.push( util.pass( ID + '.ndarray-dimension-validation', 'ndarray.js validates dimensions' ) );
-			} else {
-				results.push( util.warn(
-					ID + '.ndarray-dimension-validation',
-					'ndarray.js validates dimensions',
-					ndarrayDims.length,
-					[ 'ndarray.js' ],
-					'Has dimension params (' + ndarrayDims.join( ', ' ) + ') but no RangeError throws'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.ndarray-dimension-validation', 'No dimension params in ndarray.js' ) );
-		}
-
-		// ndarray.js should NOT validate order (that's routine.js's job)
-		if ( isLayoutOrder( baseContent ) && ndarrayParams.some( function( p ) { return p.toLowerCase() === 'order'; }) ) {
-			results.push( util.fail(
-				ID + '.ndarray-no-order',
-				'ndarray.js does not have order param',
-				1, [ 'ndarray.js' ],
-				'ndarray.js should not have an order parameter (that belongs in ' + mod.routine + '.js)'
-			));
-		} else {
-			results.push( util.pass( ID + '.ndarray-no-order', 'ndarray.js does not have order param' ) );
-		}
-
-		// Signature should match base.js
-		if ( baseParams && ndarrayParams ) {
-			var baseSig = baseParams.join( ', ' );
-			var ndarraySig = ndarrayParams.join( ', ' );
-			if ( baseSig === ndarraySig ) {
-				results.push( util.pass( ID + '.ndarray-matches-base-sig', 'ndarray.js signature matches base.js' ) );
-			} else {
-				results.push( util.warn(
-					ID + '.ndarray-matches-base-sig',
-					'ndarray.js signature matches base.js',
-					1, [ 'ndarray.js', 'base.js' ],
-					'Signatures differ — ndarray: (' + ndarraySig + ') vs base: (' + baseSig + ')'
-				));
-			}
-		} else {
-			results.push( util.skip( ID + '.ndarray-matches-base-sig', 'Missing base.js or ndarray.js signature' ) );
-		}
 	} else if ( !ndarrayContent ) {
 		results.push( util.skip( ID + '.ndarray-calls-base', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-string-validation', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-dimension-validation', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-no-order', 'No ndarray.js' ) );
-		results.push( util.skip( ID + '.ndarray-matches-base-sig', 'No ndarray.js' ) );
 	}
 
 	// ──────────────────────────────────────────
@@ -497,48 +206,6 @@ function check( mod ) {
 		}
 	} else {
 		results.push( util.skip( ID + '.base-no-param-validation', 'No base.js' ) );
-	}
-
-	// ──────────────────────────────────────────
-	// No leading-dimension params in the stride tier
-	// ──────────────────────────────────────────
-
-	// base.js and ndarray.js address matrices with BLIS-style two-stride
-	// indexing (strideA1, strideA2, offsetA). A leftover Fortran-style
-	// leading-dimension param (lda, ldT, ldb, ...) is either redundant with
-	// the two strides or a single-stride leak that should be a second
-	// stride (e.g. ldT -> strideT2). The `order`+`LDA` surface belongs only
-	// in the routine wrapper. Flag any `ld`-prefixed param in the kernel tier.
-	var ldTiers = [
-		[ 'base.js', baseParams ],
-		[ 'ndarray.js', ndarrayParams ]
-	];
-	var ldLocs = [];
-	var t, p, name;
-	for ( t = 0; t < ldTiers.length; t++ ) {
-		if ( !ldTiers[ t ][ 1 ] ) {
-			continue;
-		}
-		for ( p = 0; p < ldTiers[ t ][ 1 ].length; p++ ) {
-			name = ldTiers[ t ][ 1 ][ p ];
-			// LAPACK leading dimensions are `ld` + exactly one matrix letter
-			// (lda, ldb, ldc, ldT, ldY, ...). Match that shape only, so a
-			// legitimately-named array param like `ld` (which carries its own
-			// strideLD/offsetLD) is not a false positive.
-			if ( /^ld[A-Za-z]$/.test( name ) ) {
-				ldLocs.push( ldTiers[ t ][ 0 ] + ':' + name );
-			}
-		}
-	}
-	if ( ldLocs.length === 0 ) {
-		results.push( util.pass( ID + '.no-leading-dimension-in-stride-tier', 'No leading-dimension params in base.js/ndarray.js' ) );
-	} else {
-		results.push( util.fail(
-			ID + '.no-leading-dimension-in-stride-tier',
-			'No leading-dimension params in base.js/ndarray.js',
-			ldLocs.length, ldLocs,
-			'Remove redundant leading-dimension params or convert to a second stride (e.g. `ldT` -> `strideT2`); the stride tier uses BLIS-style two-stride indexing'
-		));
 	}
 
 	return results;

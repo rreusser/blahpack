@@ -1,4 +1,4 @@
-{{alias}}( ab, strideAB, cs, strideCS )
+{{alias}}( a, b, c, s )
     Constructs a Givens plane rotation.
 
     Parameters
@@ -25,7 +25,7 @@
     // TODO: Add examples
 
 
-{{alias}}.ndarray( ab, strideAB, offsetAB, cs, strideCS, offsetCS )
+{{alias}}.ndarray( a, b, c, s )
     Constructs a Givens plane rotation using alternative indexing semantics.
 
     Parameters

@@ -4,13 +4,13 @@
 
     Parameters
     ----------
-    z: number
-        `z`.
+    z: Complex128
+        Complex number.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    out: number
+        |Re(z)| + |Im(z)|.
 
     Examples
     --------
@@ -24,13 +24,13 @@
 
     Parameters
     ----------
-    z: number
-        `z`.
+    z: Complex128
+        Complex number.
 
     Returns
     -------
-    out: Float64Array
-        Result.
+    out: number
+        |Re(z)| + |Im(z)|.
 
     Examples
     --------

@@ -1,0 +1,25 @@
+{
+	"routine": "dlamch",
+	"package": null,
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DLAMCH( CMACH )",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "cmach",
+			"fortran": "CMACH",
+			"position": 1,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [],
+	"notes": [
+		"no Fortran source facts (signature-only routine): checks and quick returns unknown"
+	]
+}

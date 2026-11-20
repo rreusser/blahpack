@@ -15,6 +15,7 @@ ILAENV is replaced by hardcoded constants. That is fine when they equal what ref
 - `dlaqr3` (shared `dlaqr23impl` in `lib/lapack/base/dlaqr2/lib/base.js`, ~L180) uses `nmin = 12`; Fortran DLAQR3 gets ILAENV(12) = 75 (`zlaqr3` correctly uses 75).
 - `zlaqr0` and `zlaqr4` hardcode `NWR = 5` and `NSR = 14` instead of the IPARMQ values, which depend on `nh` (2/4/10/… for NS). They agree with each other but not with the reference.
 - Found during break-mutant triage (tickets/0045).
+- Likely root of the `dlaqr3` value: the translate skill's idiom table said `ILAENV(12) → NMIN=12 (dlaqr3 threshold)`, confusing the query number (ISPEC = INMIN = 12) with the value IPARMQ returns (NMIN = 75). Corrected when the branch merged `main`. Nothing checks the skill's idiom table against the reference sources, so a wrong row propagates into every translation that follows it.
 
 ## Reproduce
 

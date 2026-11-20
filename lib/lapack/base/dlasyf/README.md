@@ -30,7 +30,7 @@ limitations under the License.
 var dlasyf = require( '@stdlib/lapack/base/dlasyf' );
 ```
 
-#### dlasyf( order, uplo, N, nb, A, LDA, IPIV, strideIPIV, W, LDW )
+#### dlasyf( order, uplo, N, nb, kb, A, LDA, IPIV, strideIPIV, W, LDW )
 
 Computes a partial factorization of a real symmetric matrix using the Bunch-Kaufman diagonal pivoting method.
 
@@ -58,7 +58,7 @@ The function has the following parameters:
 -   **W**: input array `W`.
 -   **LDW**: leading dimension of `W`.
 
-#### dlasyf.ndarray( uplo, N, nb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
+#### dlasyf.ndarray( uplo, N, nb, kb, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, W, strideW1, strideW2, offsetW )
 
 Computes a partial factorization of a real symmetric matrix using the Bunch-Kaufman diagonal pivoting method, using alternative indexing semantics.
 

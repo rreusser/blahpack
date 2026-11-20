@@ -1,0 +1,106 @@
+{
+	"routine": "dstqrb",
+	"package": "arpack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DSTQRB( N, D, E, Z, WORK, INFO )",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "N",
+			"fortran": "N",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "d",
+			"fortran": "D",
+			"position": 2,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "e",
+			"fortran": "E",
+			"position": 3,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "inout",
+			"dims": [
+				"N-1"
+			],
+			"length": {
+				"fortran": "N-1",
+				"js": "N - 1"
+			}
+		},
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 4,
+			"role": "vector",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
+		},
+		{
+			"name": "WORK",
+			"fortran": "WORK",
+			"position": 5,
+			"role": "workspace",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"2*N-2"
+			],
+			"length": {
+				"fortran": "2*N-2",
+				"js": "2 * N - 2"
+			},
+			"minLength": {
+				"fortran": "2*N-2",
+				"js": "2 * N - 2",
+				"source": "dimension"
+			}
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 6,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "N.EQ.0",
+			"js": "N === 0"
+		},
+		{
+			"fortran": "N.EQ.1",
+			"js": "N === 1",
+			"sets": [
+				"IF( ICOMPZ.EQ.2 ) Z( 1 ) = ONE"
+			]
+		}
+	]
+}

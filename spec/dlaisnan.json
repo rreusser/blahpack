@@ -1,0 +1,30 @@
+{
+	"routine": "dlaisnan",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "LOGICAL FUNCTION DLAISNAN( DIN1, DIN2 )",
+	"returns": {
+		"kind": "value",
+		"dtype": "bool"
+	},
+	"params": [
+		{
+			"name": "din1",
+			"fortran": "DIN1",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "din2",
+			"fortran": "DIN2",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

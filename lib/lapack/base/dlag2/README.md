@@ -30,7 +30,7 @@ limitations under the License.
 var dlag2 = require( '@stdlib/lapack/base/dlag2' );
 ```
 
-#### dlag2( order, A, LDA, B, LDB, safmin )
+#### dlag2( order, A, LDA, B, LDB, safmin, scale1, scale2, wr1, wr2, wi )
 
 Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem `A - w B`, with scaling as necessary to avoid over-/underflow.
 
@@ -53,7 +53,7 @@ The function has the following parameters:
 -   **LDB**: leading dimension of `B`.
 -   **safmin**: `safmin`.
 
-#### dlag2.ndarray( A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, safmin )
+#### dlag2.ndarray( A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB, safmin, scale1, scale2, wr1, wr2, wi )
 
 Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem `A - w B`, with scaling as necessary to avoid over-/underflow, using alternative indexing semantics.
 

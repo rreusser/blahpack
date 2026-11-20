@@ -1,0 +1,199 @@
+{
+	"routine": "dlaln2",
+	"package": "lapack",
+	"kind": "subroutine",
+	"signature": "SUBROUTINE DLALN2( LTRANS, NA, NW, SMIN, CA, A, LDA, D1, D2, B,",
+	"returns": {
+		"kind": "info"
+	},
+	"params": [
+		{
+			"name": "ltrans",
+			"fortran": "LTRANS",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "bool",
+			"intent": "in"
+		},
+		{
+			"name": "na",
+			"fortran": "NA",
+			"position": 2,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "nw",
+			"fortran": "NW",
+			"position": 3,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "smin",
+			"fortran": "SMIN",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "ca",
+			"fortran": "CA",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "A",
+			"fortran": "A",
+			"position": 6,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDA",
+				"NA"
+			],
+			"ld": "LDA",
+			"rows": {
+				"fortran": "NA",
+				"js": "na"
+			},
+			"cols": {
+				"fortran": "NA",
+				"js": "na"
+			}
+		},
+		{
+			"name": "lda",
+			"fortran": "LDA",
+			"position": 7,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "A"
+		},
+		{
+			"name": "d1",
+			"fortran": "D1",
+			"position": 8,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "d2",
+			"fortran": "D2",
+			"position": 9,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "B",
+			"fortran": "B",
+			"position": 10,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "in",
+			"dims": [
+				"LDB",
+				"NW"
+			],
+			"ld": "LDB",
+			"rows": {
+				"fortran": "NA",
+				"js": "na"
+			},
+			"cols": {
+				"fortran": "NW",
+				"js": "nw"
+			}
+		},
+		{
+			"name": "ldb",
+			"fortran": "LDB",
+			"position": 11,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "B"
+		},
+		{
+			"name": "wr",
+			"fortran": "WR",
+			"position": 12,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "wi",
+			"fortran": "WI",
+			"position": 13,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "in"
+		},
+		{
+			"name": "X",
+			"fortran": "X",
+			"position": 14,
+			"role": "matrix",
+			"dtype": "float64",
+			"intent": "out",
+			"dims": [
+				"LDX",
+				"NW"
+			],
+			"ld": "LDX",
+			"rows": {
+				"fortran": "NA",
+				"js": "na"
+			},
+			"cols": {
+				"fortran": "NW",
+				"js": "nw"
+			}
+		},
+		{
+			"name": "ldx",
+			"fortran": "LDX",
+			"position": 15,
+			"role": "ld",
+			"dtype": "int32",
+			"intent": "in",
+			"of": "X"
+		},
+		{
+			"name": "scale",
+			"fortran": "SCALE",
+			"position": 16,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "xnorm",
+			"fortran": "XNORM",
+			"position": 17,
+			"role": "scalar",
+			"dtype": "float64",
+			"intent": "out"
+		},
+		{
+			"name": "info",
+			"fortran": "INFO",
+			"position": 18,
+			"role": "info",
+			"dtype": "int32",
+			"intent": "out"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

@@ -30,7 +30,7 @@ limitations under the License.
 var dlaic1 = require( '@stdlib/lapack/base/dlaic1' );
 ```
 
-#### dlaic1( job, J, x, strideX, sest, w, strideW, gamma, out )
+#### dlaic1( job, J, x, strideX, sest, w, strideW, gamma, sestpr, s, c )
 
 Applies one step of incremental condition estimation. Given a `J`-by-`J` lower triangular matrix `L` with estimated singular value `sest` and approximate singular vector `x`, computes `sestpr`, `s`, and `c` to extend the estimate by one row/column.
 
@@ -57,7 +57,7 @@ The function has the following parameters:
 -   **gamma**: diagonal element.
 -   **out**: output [`Float64Array`][mdn-float64array]; on exit, `out[0]` is `sestpr`, `out[1]` is `s`, `out[2]` is `c`.
 
-#### dlaic1.ndarray( job, J, x, strideX, offsetX, sest, w, strideW, offsetW, gamma, out )
+#### dlaic1.ndarray( job, J, x, strideX, offsetX, sest, w, strideW, offsetW, gamma, sestpr, s, c )
 
 Applies one step of incremental condition estimation, using alternative indexing semantics.
 

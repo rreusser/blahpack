@@ -1,0 +1,22 @@
+{
+	"routine": "dcabs1",
+	"package": "blas",
+	"kind": "function",
+	"signature": "DOUBLE PRECISION FUNCTION DCABS1(Z)",
+	"returns": {
+		"kind": "value",
+		"dtype": "float64"
+	},
+	"params": [
+		{
+			"name": "z",
+			"fortran": "Z",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "complex128",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

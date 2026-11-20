@@ -2291,3 +2291,36 @@ Keep entries short. Newest first.
 - **Separate bug found along the way**: `zgees` returns NaN with `info = 0`
   for inputs below `smlnum` (about 1e-140). It's not stride-related.
   tickets/0026.
+
+## 2026-11-20 — `dcabs1` returned NaN for every documented input (found by the benchmark generator)
+
+- **Found by**: `bin/gen-benchmark.mjs lib/blas/base/dcabs1`. The probe passed
+  the documented `{Complex128}` and got `NaN result`. No seed is needed; every
+  input fails: `dcabs1( new Complex128( 3, -4 ) )` returned `NaN`.
+  Scalar complex, no storage scheme, no flags.
+- **Root cause**: the JSDoc codemod (229c433e5) brought the JSDoc in line with
+  `spec/dcabs1.json` (`z`: complex128 scalar). `base.js` still read `z[ 0 ]` /
+  `z[ 1 ]`, i.e. a 2-element `Float64Array`, and the d.ts, repl.txt, README,
+  example and tests all still used that array form. Every public call that
+  followed the spec read `undefined`.
+  The tests passed because they used the old array form too.
+- **Bug class**: `doc-impl-type-drift`: the JSDoc type changed to match the
+  spec, but the implementation and its tests kept the old representation.
+  The tests share the stale assumption, so they can't catch it.
+- **Where else**: any scalar complex parameter (`role: scalar`, `dtype:
+  complex128` in spec/) whose base reads it by index. The benchmark generator
+  probes every public signature with its documented types, so a full
+  `gen-benchmark.mjs` run (no `--write`) surfaces these as `NaN result` or
+  type errors. Only `dcabs1` showed up across all 915 modules. A lint rule
+  could flag `<param>[ 0 ]` in a base.js whose spec says that param is a
+  complex128 scalar.
+- **Fix (APPLIED)**: base reads `real( z )` / `imag( z )`. The tests, example,
+  README, repl.txt and d.ts now take `Complex128`.
+- **Sweep (2026-11-20)**: every spec param with `role: scalar`, `dtype:
+  complex128` checked for `<name>[ 0|1 ]` in its base.js. One more hit:
+  `zrot`'s `s`, where `zrot( N, x, 1, y, 1, c, new Complex128( 0.8, 0 ) )`
+  returned NaN (found the same way, by the generator's NaN-result probe).
+  There, 11 internal callers (ztgsja, zhgeqz, ztrexc, ...) pass `s` to the
+  base as zlartg's in-place `[re, im]` output in hot loops. So the base keeps
+  that pair, and the public wrappers (strided, ndarray) convert the documented
+  `Complex128` to it. The tests and example now use `Complex128`.

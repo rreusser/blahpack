@@ -29,6 +29,7 @@ import os
 import sys
 import json
 import argparse
+import subprocess
 import textwrap
 
 # Add bin/ to path so we can import signature
@@ -1259,310 +1260,43 @@ console.log( y ); // eslint-disable-line no-console
 """
 
 
-def gen_benchmark_js(routine, package, sig, description):
-    """Generate benchmark/benchmark.js — BLAS-style benchmark."""
-    blas_args, blas_arg_meta, array_ld_map = build_blas_args(sig)
-    arrays_info = sig.get('arrays', {})
-    has_2d = any(info['dim'] == 2 for info in arrays_info.values())
-    is_complex = routine.startswith(('z', 'c'))
-    # Cap N for matrix (N*N) benchmarks so buffers stay ~8 MB per array.
-    # 2D: max=3 → N=1000 → N*N=1e6 doubles = 8 MB. 1D: max=6 → 1e6 doubles = 8 MB.
-    max_exp = 3 if has_2d else 6
-
-    # Build benchmark call args
-    if has_2d:
-        # Matrix benchmark — build a call like dgemm('row-major', 'no-transpose', ..., N, N, N, 1.0, A, N, B, N, 1.0, C, N)
-        call_parts = []
-        for meta in blas_arg_meta:
-            name = meta['name']
-            if name == 'order':
-                call_parts.append("'row-major'")
-            elif name in ('trans', 'transa', 'transb'):
-                call_parts.append("'no-transpose'")
-            elif name == 'uplo':
-                call_parts.append("'upper'")
-            elif name == 'diag':
-                call_parts.append("'non-unit'")
-            elif name == 'side':
-                call_parts.append("'left'")
-            elif meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array'):
-                call_parts.append(name)
-            elif name in ('M', 'N', 'K'):
-                call_parts.append('N')
-            elif name.startswith('LD'):
-                call_parts.append('N')
-            elif name in ('alpha', 'beta'):
-                call_parts.append('1.0')
-            else:
-                call_parts.append('N')
-        call_str = ', '.join(call_parts)
-
-        # Build array creation
-        array_names = [meta['name'] for meta in blas_arg_meta if meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array')]
-        if is_complex:
-            array_creates = '\n'.join(f"\tvar {name} = new Complex128Array( N * N );" for name in array_names)
-        else:
-            array_creates = '\n'.join(f"\tvar {name} = uniform( N * N, -10.0, 10.0, options );" for name in array_names)
-    else:
-        # Vector benchmark
-        call_parts = []
-        for meta in blas_arg_meta:
-            name = meta['name']
-            if name == 'order':
-                call_parts.append("'row-major'")
-            elif name in ('trans', 'transa', 'transb'):
-                call_parts.append("'no-transpose'")
-            elif meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array'):
-                call_parts.append(name)
-            elif name in ('M', 'N', 'K'):
-                call_parts.append('N')
-            elif name.startswith('inc'):
-                call_parts.append('1')
-            elif name in ('alpha', 'beta'):
-                call_parts.append('1.0')
-            else:
-                call_parts.append('N')
-        call_str = ', '.join(call_parts)
-
-        array_names = [meta['name'] for meta in blas_arg_meta if meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array')]
-        if is_complex:
-            array_creates = '\n'.join(f"\tvar {name} = new Complex128Array( N );" for name in array_names)
-        else:
-            array_creates = '\n'.join(f"\tvar {name} = uniform( N, -10.0, 10.0, options );" for name in array_names)
-
-    if is_complex:
-        random_import = "import Complex128Array from '@stdlib/array/complex128/lib/index.js';"
-        options_block = ""
-    else:
-        random_import = "import uniform from '@stdlib/random/array/uniform/lib/index.js';"
-        options_block = "var options = {\n\t'dtype': 'float64'\n};\n\n\n"
-
-    return f"""{LICENSE_HEADER}
-
-// MODULES //
-
-import bench from '@stdlib/bench/lib/index.js';
-{random_import}
-import isnan from '@stdlib/math/base/assert/is-nan/lib/index.js';
-import pow from '@stdlib/math/base/special/pow/lib/index.js';
-import format from '@stdlib/string/format/lib/index.js';
-import {{ name as pkg }} from './../package.json' with {{ type: 'json' }};
-import {routine} from './../lib/{routine}.js';
+BENCHMARK_STUB_MARKER = 'benchmark not generated'
 
 
-// VARIABLES //
+def gen_benchmark_stub(routine, package, kind):
+    """Generate a placeholder benchmark that fails loudly until regenerated.
 
-{options_block}// FUNCTIONS //
+    Benchmarks are produced by `bin/gen-benchmark.mjs`, which probes the real
+    routine for a working argument list. That needs an implemented base.js, so
+    a fresh scaffold gets this stub: it throws (failing `bin/bench-smoke.sh`)
+    and carries a marker the conformance scaffold-noise check reports.
+    """
+    return f"""{LICENSE_HEADER}// MAIN //
 
-/**
-* Creates a benchmark function.
-*
-* @private
-* @param {{PositiveInteger}} len - array length
-* @returns {{Function}} benchmark function
-*/
-function createBenchmark( len ) {{
-\tvar N = len;
-{array_creates}
-\treturn benchmark;
-
-\t/**
-\t* Benchmark function.
-\t*
-\t* @private
-\t* @param {{Benchmark}} b - benchmark instance
-\t*/
-\tfunction benchmark( b ) {{
-\t\tvar y;
-\t\tvar i;
-
-\t\tb.tic();
-\t\tfor ( i = 0; i < b.iterations; i++ ) {{
-\t\t\ty = {routine}( {call_str} );
-\t\t\tif ( isnan( y ) ) {{
-\t\t\t\tb.fail( 'should not return NaN' );
-\t\t\t}}
-\t\t}}
-\t\tb.toc();
-\t\tif ( isnan( y ) ) {{
-\t\t\tb.fail( 'should not return NaN' );
-\t\t}}
-\t\tb.pass( 'benchmark finished' );
-\t\tb.end();
-\t}}
-}}
-
-
-// MAIN //
-
-/**
-* Main execution sequence.
-*
-* @private
-*/
-function main() {{
-\tvar len;
-\tvar min;
-\tvar max;
-\tvar f;
-\tvar i;
-
-\tmin = 1; // 10^min
-\tmax = {max_exp}; // 10^max
-
-\tfor ( i = min; i <= max; i++ ) {{
-\t\tlen = pow( 10, i );
-\t\tf = createBenchmark( len );
-\t\tbench( format( '%s:len=%d', pkg, len ), f );
-\t}}
-}}
-
-main();
+throw new Error( '{BENCHMARK_STUB_MARKER}: run `node bin/gen-benchmark.mjs lib/{package}/base/{routine} --kind={kind} --write` once lib/base.js is implemented' );
 """
 
 
-def gen_benchmark_ndarray_js(routine, package, sig, description):
-    """Generate benchmark/benchmark.ndarray.js — ndarray-style benchmark."""
-    arrays_info = sig.get('arrays', {})
-    has_2d = any(info['dim'] == 2 for info in arrays_info.values())
-    is_complex = routine.startswith(('z', 'c'))
-    # Cap N for matrix benchmarks; see gen_benchmark_js for rationale.
-    max_exp = 3 if has_2d else 6
-    js_args = sig['js_args']
-    js_arg_meta = sig['js_arg_meta']
+def generate_benchmarks(root_dir, out_dir, routine, package):
+    """Write benchmark/*.js via bin/gen-benchmark.mjs, falling back to stubs.
 
-    # Build ndarray benchmark call args
-    call_parts = []
-    for meta in js_arg_meta:
-        name = meta['name']
-        if name in ('trans', 'transa', 'transb'):
-            call_parts.append("'no-transpose'")
-        elif name == 'uplo':
-            call_parts.append("'upper'")
-        elif name == 'diag':
-            call_parts.append("'non-unit'")
-        elif name == 'side':
-            call_parts.append("'left'")
-        elif meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array'):
-            call_parts.append(name)
-        elif name in ('M', 'N', 'K'):
-            call_parts.append('N')
-        elif name.startswith('stride') and name[-1] in ('1', '2'):
-            if name[-1] == '1':
-                call_parts.append('N')
-            else:
-                call_parts.append('1')
-        elif name.startswith('stride'):
-            call_parts.append('1')
-        elif name.startswith('offset'):
-            call_parts.append('0')
-        elif name in ('alpha', 'beta'):
-            call_parts.append('1.0')
-        else:
-            call_parts.append('N')
-    call_str = ', '.join(call_parts)
-
-    # Build array creation
-    array_names = [meta['name'] for meta in js_arg_meta if meta['type'] in ('Float64Array', 'Float32Array', 'Complex128Array', 'Complex64Array')]
-    if is_complex:
-        if has_2d:
-            array_creates = '\n'.join(f"\tvar {name} = new Complex128Array( N * N );" for name in array_names)
-        else:
-            array_creates = '\n'.join(f"\tvar {name} = new Complex128Array( N );" for name in array_names)
-    elif has_2d:
-        array_creates = '\n'.join(f"\tvar {name} = uniform( N * N, -10.0, 10.0, options );" for name in array_names)
-    else:
-        array_creates = '\n'.join(f"\tvar {name} = uniform( N, -10.0, 10.0, options );" for name in array_names)
-
-    if is_complex:
-        random_import = "import Complex128Array from '@stdlib/array/complex128/lib/index.js';"
-        options_block = ""
-    else:
-        random_import = "import uniform from '@stdlib/random/array/uniform/lib/index.js';"
-        options_block = "var options = {\n\t'dtype': 'float64'\n};\n\n\n"
-
-    return f"""{LICENSE_HEADER}
-
-// MODULES //
-
-import bench from '@stdlib/bench/lib/index.js';
-{random_import}
-import isnan from '@stdlib/math/base/assert/is-nan/lib/index.js';
-import pow from '@stdlib/math/base/special/pow/lib/index.js';
-import format from '@stdlib/string/format/lib/index.js';
-import {{ name as pkg }} from './../package.json' with {{ type: 'json' }};
-import {routine} from './../lib/ndarray.js';
-
-
-// VARIABLES //
-
-{options_block}// FUNCTIONS //
-
-/**
-* Creates a benchmark function.
-*
-* @private
-* @param {{PositiveInteger}} len - array length
-* @returns {{Function}} benchmark function
-*/
-function createBenchmark( len ) {{
-\tvar N = len;
-{array_creates}
-\treturn benchmark;
-
-\t/**
-\t* Benchmark function.
-\t*
-\t* @private
-\t* @param {{Benchmark}} b - benchmark instance
-\t*/
-\tfunction benchmark( b ) {{
-\t\tvar y;
-\t\tvar i;
-
-\t\tb.tic();
-\t\tfor ( i = 0; i < b.iterations; i++ ) {{
-\t\t\ty = {routine}( {call_str} );
-\t\t\tif ( isnan( y ) ) {{
-\t\t\t\tb.fail( 'should not return NaN' );
-\t\t\t}}
-\t\t}}
-\t\tb.toc();
-\t\tif ( isnan( y ) ) {{
-\t\t\tb.fail( 'should not return NaN' );
-\t\t}}
-\t\tb.pass( 'benchmark finished' );
-\t\tb.end();
-\t}}
-}}
-
-
-// MAIN //
-
-/**
-* Main execution sequence.
-*
-* @private
-*/
-function main() {{
-\tvar len;
-\tvar min;
-\tvar max;
-\tvar f;
-\tvar i;
-
-\tmin = 1; // 10^min
-\tmax = {max_exp}; // 10^max
-
-\tfor ( i = min; i <= max; i++ ) {{
-\t\tlen = pow( 10, i );
-\t\tf = createBenchmark( len );
-\t\tbench( format( '%s:ndarray:len=%d', pkg, len ), f );
-\t}}
-}}
-
-main();
-"""
+    The generator succeeds when base.js is already implemented (e.g. when
+    re-scaffolding an existing module, since base.js is never overwritten).
+    """
+    rel = os.path.relpath(out_dir, root_dir)
+    for kind, name in (('strided', 'benchmark.js'), ('ndarray', 'benchmark.ndarray.js')):
+        res = subprocess.run(
+            ['node', 'bin/gen-benchmark.mjs', rel, f'--kind={kind}', '--write'],
+            cwd=root_dir, capture_output=True, text=True, timeout=120,
+        )
+        if res.returncode == 0:
+            print(f'  Generated: benchmark/{name}', file=sys.stderr)
+            continue
+        path = os.path.join(out_dir, 'benchmark', name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w') as f:
+            f.write(gen_benchmark_stub(routine, package, kind))
+        print(f'  Stub (regenerate after implementing): benchmark/{name}', file=sys.stderr)
 
 
 def gen_test_ts(routine, package, sig, description):
@@ -1760,8 +1494,6 @@ def main():
         'docs/types/index.d.ts': gen_types_dts(args.routine, args.package, sig, description),
         'docs/types/test.ts': gen_test_ts(args.routine, args.package, sig, description),
         'examples/index.js': gen_examples_js(args.routine, args.package, sig),
-        'benchmark/benchmark.js': gen_benchmark_js(args.routine, args.package, sig, description),
-        'benchmark/benchmark.ndarray.js': gen_benchmark_ndarray_js(args.routine, args.package, sig, description),
         'LEARNINGS.md': gen_learnings_md(args.routine),
     }
 
@@ -1783,6 +1515,7 @@ def main():
             print(f'  Created: {rel_path}', file=sys.stderr)
 
     if not args.dry_run:
+        generate_benchmarks(root_dir, out_dir, args.routine, args.package)
         print(f'\nScaffold written to {out_dir}', file=sys.stderr)
         print(f'Next: implement lib/base.js, then run: node --test {out_dir}/test/test.js', file=sys.stderr)
 

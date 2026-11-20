@@ -77,6 +77,22 @@ jobs:
       - name: Validate problem tickets and ticket coverage
         run: npm run tickets:check
 
+  # Benchmarks: every module benchmark (lib/*/base/*/benchmark/*.js) starts and
+  # runs. Each file gets `timeout 3`; a throw, a `not ok` (e.g. the NaN check),
+  # or a nonzero exit other than the timeout fails. Hard gate (ticket 0027).
+  benchmarks:
+    name: Benchmark smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every module benchmark runs (bin/bench-smoke.sh)
+        run: bin/bench-smoke.sh
+
   # Generated files are in sync + the published package imports and runs.
   package:
     name: Package

@@ -66,6 +66,8 @@ generates a `test.ndarray.js` scaffold if a fixture already exists, and prints
 the remaining commands. Option params need validators that accept exactly the
 reference's values (V3, N1, N8, Appendix A). For a flag not in Appendix A,
 adopt the sister module's canonical values (real ↔ complex pair).
+The benchmarks start as throwing stubs until `lib/base.js` exists; generate
+them after implementing (see Benchmarks below).
 
 ### Step 2: Fortran test and fixtures
 
@@ -175,6 +177,20 @@ It captures what would make the NEXT translation faster:
 LEARNINGS.md is for process, not code issues. A known divergence from the
 reference goes in `DIFFERENCES.md` or a ticket; an uncoverable branch gets a
 plain comment in `base.js` saying why (J5, X6). Bullets, not prose.
+
+**Benchmarks.** After lint passes, generate them. `bin/gen-benchmark.mjs`
+probes the implemented routine for a working argument list and overwrites the
+scaffold stubs (conformance check `scaffold-noise.benchmark-generated` fails
+until it has run):
+
+```bash
+node bin/gen-benchmark.mjs lib/<package>/base/<routine> --write
+ls lib/<package>/base/<routine>/benchmark/*.js > /tmp/bench-list.txt && bin/bench-smoke.sh /tmp/bench-list.txt
+```
+
+Arrays that repeated in-place calls would grow to Inf/NaN are restored before
+each call automatically. If the smoke run still fails, fix the inputs in
+`bin/gen-benchmark.mjs`, not by hand-editing the generated file.
 
 ### Step 7: Validate
 

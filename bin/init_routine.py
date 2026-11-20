@@ -192,8 +192,9 @@ def main():
     print(f'  7. Verify: node --test {test_js} {test_ndarray_js}', file=sys.stderr)
     print(f'  8. Coverage: node --test --experimental-test-coverage {test_js} {test_ndarray_js}', file=sys.stderr)
     print(f'  9. Lint: bin/lint.sh {base_js}', file=sys.stderr)
-    print(f' 10. Write LEARNINGS.md (MANDATORY)', file=sys.stderr)
-    print(f' 11. MANDATORY FINAL GATE: npm run check (must pass with 0 errors, 0 warnings)', file=sys.stderr)
+    print(f' 10. Benchmarks: node bin/gen-benchmark.mjs {module_dir} --write && bin/bench-smoke.sh <(ls {module_dir}/benchmark/*.js)', file=sys.stderr)
+    print(f' 11. Write LEARNINGS.md (MANDATORY)', file=sys.stderr)
+    print(f' 12. MANDATORY FINAL GATE: npm run check (must pass with 0 errors, 0 warnings)', file=sys.stderr)
 
 
 if __name__ == '__main__':

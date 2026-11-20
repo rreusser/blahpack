@@ -1,9 +1,10 @@
 ---
 id: 0027
 title: Module benchmarks are not run by CI, and 90 of 1,824 throw on main
-status: open
+status: resolved
 area: ci
 opened: 2026-11-20
+resolved: 2026-11-20
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ opened: 2026-11-20
 ```bash
 bin/bench-smoke.sh; head -20 .bench-smoke/fail.txt
 ```
+
+## Resolution
+
+PR #29 brought bin/bench-smoke.sh to 0/1824 on the merged tree (regenerated benchmarks; dcabs1 and zrot wrapper bugs fixed) and added it to CI as the 'Benchmark smoke' job (.github/workflows/ci.yml, step 'Every module benchmark runs (bin/bench-smoke.sh)'). bin/checks.json now marks bin/bench-smoke.sh and benchmark/*.js as gates, so a signature change that breaks a benchmark fails CI.

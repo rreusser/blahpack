@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 
+import Complex128 = require( '@stdlib/complex/float64/ctor' );
 import dcabs1 = require( './index' );
 
 
@@ -23,11 +24,12 @@ import dcabs1 = require( './index' );
 
 // The function returns a number...
 {
-	dcabs1( 10 ); // $ExpectType number
+	dcabs1( new Complex128( 3.0, 4.0 ) ); // $ExpectType number
 }
 
-// The compiler throws an error if the function is provided a first argument which is not a number...
+// The compiler throws an error if the function is provided a first argument which is not a complex number...
 {
+	dcabs1( 10 ); // $ExpectError
 	dcabs1( '10' ); // $ExpectError
 	dcabs1( true ); // $ExpectError
 	dcabs1( false ); // $ExpectError

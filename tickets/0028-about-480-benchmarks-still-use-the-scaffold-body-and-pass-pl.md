@@ -14,13 +14,19 @@ This was recorded only as prose ("Not in this PR") in PR #20. The session delega
 
 ## Evidence
 
-- 482 benchmark files contain the scaffold marker `const N = len;`.
-- `bin/scaffold.py:1364` and `:1508` emit `function createBenchmark( len )`.
-- Generated benchmarks (`bin/gen-benchmark.mjs`) pass uniform random matrices, so a Cholesky or other factorization that needs an SPD (or otherwise structured) input takes its early-exit path (PR #20, "Not in this PR").
-- PR #20, "Not in this PR": "About 606 benchmarks pass the smoke run but still use the old scaffold bodies".
+State after PR #29 (`slop/regen-old-benchmarks-8b5f10`):
+
+- 1,413 of 1,824 benchmarks are `bin/gen-benchmark.mjs` output. The generator restores arrays that repeated in-place calls grow to Inf/NaN (337 benchmarks), checks one call at N=100, and rejects NaN results, including NaN in a returned array. `bin/scaffold.py` no longer emits the guessed-argument template: it delegates to the generator or writes a throwing stub, and conformance `scaffold-noise.benchmark-generated` fails on either.
+- 411 hand-written benchmarks were kept unverified. They don't throw (`bin/bench-smoke.sh` is 0/1824), but nothing shows they reach the routine's real code path.
+  - 179 keep the old `createBenchmark( len )` body with real arrays and a custom call.
+  - 197 have custom bodies (block sizes, structured inputs, ARPACK drivers).
+  - 35 are generator files with hand edits (norm-preserving rotations, S10 output scalars).
+  - `grep -l 'const N = len;' lib/*/base/*/benchmark/*.js` lists 108 of them.
+- 32 modules still get unstructured random inputs that go non-finite within one call, even with inputs restored: dlaexc, dlasd2, zherfs, zhprfs, zlarft, zptrfs, zsprfs, zsyrfs, ztgsy2, zung2l, zung2r, zungbr, zunghr, zungl2, zunglq, zungql, zungqr, zungr2, zungtr, zunm2l, zunm2r, zunmbr, zunmhr, zunml2, zunmlq, zunmql, zunmqr, zunmr2, zunmrq, zunmtr, zupgtr, zupmtr. They need structured generators (Schur form, sorted deflation data, unitary c/s, SPD).
 
 ## Reproduce
 
 ```bash
-grep -l 'const N = len;' lib/*/base/*/benchmark/*.js | wc -l; grep -n 'createBenchmark( len )' bin/scaffold.py
+grep -l 'const N = len;' lib/*/base/*/benchmark/*.js | wc -l
+node bin/gen-benchmark.mjs lib/lapack/base/dlaexc lib/lapack/base/dlasd2   # prints NONFINITE: ...
 ```

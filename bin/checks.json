@@ -8,8 +8,7 @@
 			"kind": "gate"
 		},
 		"bin/bench-smoke.sh": {
-			"kind": "ticket",
-			"ticket": "0027"
+			"kind": "gate"
 		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",
@@ -372,8 +371,10 @@
 			"ticket": "0041"
 		},
 		"benchmark/*.js": {
-			"kind": "ticket",
-			"ticket": "0027"
+			"kind": "gate",
+			"by": [
+				"bin/bench-smoke.sh"
+			]
 		},
 		"README.md": {
 			"kind": "ticket",

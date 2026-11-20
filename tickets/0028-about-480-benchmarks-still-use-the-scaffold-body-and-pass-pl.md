@@ -10,7 +10,7 @@ opened: 2026-11-20
 
 The old scaffold benchmark body (`createBenchmark( len ) { const N = len; ... }`) guesses arguments. Many such benchmarks run without throwing but pass meaningless inputs (numbers where arrays go, `len` for every dimension, random non-SPD matrices for factorizations), so they time an early exit or the wrong code path. `bin/scaffold.py` still emits this template for new modules.
 
-This was recorded only as prose ("Not in this PR") in PR #20. The session started to regenerate them with `bin/gen-benchmark.mjs` committed nothing: its worktree `.claude/worktrees/regen-old-benchmarks-8b5f10` (branch `slop/regen-old-benchmarks-8b5f10`) holds 431 uncommitted files, 58 commits behind main.
+This was recorded only as prose ("Not in this PR") in PR #20. The session delegated to regenerate them with `bin/gen-benchmark.mjs` sat idle for two days with 431 uncommitted files in `.claude/worktrees/regen-old-benchmarks-8b5f10` and no record anywhere. It resumed on 2026-11-20 and opened PR #29 (branch `slop/regen-old-benchmarks-8b5f10`), which regenerates 426 benchmarks and makes `scaffold.py` delegate to the generator. PR #29 keeps 231 files that still contain `createBenchmark( len )`. Resolve this ticket when PR #29 merges, if those 231 really do exercise their routines.
 
 ## Evidence
 

@@ -2316,3 +2316,11 @@ Keep entries short. Newest first.
   complex128 scalar.
 - **Fix (APPLIED)**: base reads `real( z )` / `imag( z )`. The tests, example,
   README, repl.txt and d.ts now take `Complex128`.
+- **Sweep (2026-11-20)**: every spec param with `role: scalar`, `dtype:
+  complex128` checked for `<name>[ 0|1 ]` in its base.js. One more hit:
+  `zrot`'s `s`, where `zrot( N, x, 1, y, 1, c, new Complex128( 0.8, 0 ) )`
+  returned NaN (found the same way, by the generator's NaN-result probe).
+  There, 11 internal callers (ztgsja, zhgeqz, ztrexc, ...) pass `s` to the
+  base as zlartg's in-place `[re, im]` output in hot loops. So the base keeps
+  that pair, and the public wrappers (strided, ndarray) convert the documented
+  `Complex128` to it. The tests and example now use `Complex128`.

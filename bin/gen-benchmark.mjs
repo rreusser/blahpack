@@ -265,6 +265,10 @@ function buildSpecs( sig, is2d, literals ) {
 		} else if ( t === 'Complex128' ) {
 			kind = 'cplx';
 			cands = [ 'new Complex128( 1.0, 0.0 )', 'new Complex128( 0.5, 0.5 )', 'new Complex128( 0.0, 0.0 )' ];
+			if ( n === 's' && sig.params.some( ( q ) => q.name === 'c' && q.type === 'number' ) ) {
+				// Complex plane-rotation sine with a real cosine (c = 0.6): c^2 + |s|^2 = 1.
+				cands = [ 'new Complex128( 0.8, 0.0 )', ...cands ];
+			}
 		} else if ( t === 'boolean' ) {
 			kind = 'bool';
 			cands = [ 'true', 'false' ];

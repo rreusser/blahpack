@@ -9,7 +9,8 @@
 //   node bin/tickets.js resolve <id> "<how it was resolved>"
 //   node bin/tickets.js reopen <id> "<why>"
 //   node bin/tickets.js check                         validate every ticket, and that every
-//                                                     check and documented gap has one (CI)
+//                                                     check and documented gap has one, and
+//                                                     that no id collides with origin/main (CI)
 //   PR_BODY=... node bin/tickets.js pr-body           every deferral in a PR description
 //                                                     cites a ticket (CI)
 //
@@ -20,12 +21,18 @@
 
 var fs = require( 'fs' );
 var path = require( 'path' );
+var execFileSync = require( 'child_process' ).execFileSync;
 var coverage = require( './tickets-coverage.js' );
 
 var ROOT = path.join( __dirname, '..' );
 var DIR = path.join( ROOT, 'tickets' );
 var STATUSES = [ 'open', 'resolved' ];
 var REQUIRED_SECTIONS = [ 'Problem', 'Evidence', 'Reproduce' ];
+
+// The branch tickets are merged into. Ticket numbers are allocated past its
+// highest id, and an id created on this branch that the base created too is a
+// collision (ticket 0050). Override with TICKETS_BASE.
+var BASE_REF = process.env.TICKETS_BASE || 'origin/main';
 
 // Titles that start like a to-do item rather than a statement of a problem.
 var IMPERATIVE = /^(add|adopt|audit|automate|build|clean|convert|create|enable|enforce|ensure|extend|fix|generate|implement|improve|investigate|make|migrate|move|refactor|remove|rename|replace|rewrite|switch|tighten|translate|turn|update|validate|verify|wire|write)\b/i;
@@ -114,11 +121,73 @@ function list( which ) {
 	}).join( ', ' ) );
 }
 
+function git( args ) {
+	try {
+		return execFileSync( 'git', args, { 'cwd': ROOT, 'encoding': 'utf8', 'stdio': [ 'ignore', 'pipe', 'ignore' ] } );
+	} catch ( e ) {
+		return null;
+	}
+}
+
+// Ticket ids present at a git revision, as { id: file }, or null if the
+// revision is unavailable (e.g. a shallow CI checkout without the base).
+function idsAt( rev ) {
+	var out = git( [ 'ls-tree', '--name-only', rev, 'tickets/' ] );
+	var ids = {};
+	if ( out === null ) {
+		return null;
+	}
+	out.split( '\n' ).forEach( function each( line ) {
+		var m = /^tickets\/(\d{4})-.*\.md$/.exec( line );
+		if ( m ) {
+			ids[ m[ 1 ] ] = line.slice( 'tickets/'.length );
+		}
+	});
+	return ids;
+}
+
+// Ids created on this branch (absent at the merge-base) that the base branch
+// also created independently. Returns { errors, warning }.
+function collisions() {
+	var base = idsAt( BASE_REF );
+	var mb;
+	var fork;
+	var errs = [];
+	if ( base === null ) {
+		if ( process.env.CI ) {
+			return { 'errors': [ 'ticket collisions: base `' + BASE_REF + '` is not available; fetch it before `tickets.js check` (ticket 0050)' ], 'warning': null };
+		}
+		return { 'errors': [], 'warning': 'warning: `' + BASE_REF + '` is not available, so ticket-number collisions with it were not checked (ticket 0050)' };
+	}
+	mb = git( [ 'merge-base', 'HEAD', BASE_REF ] );
+	fork = ( mb === null ) ? {} : idsAt( mb.trim() ) || {};
+	all().forEach( function each( t ) {
+		var id = t.meta && t.meta.id;
+		if ( id && !fork[ id ] && base[ id ] && base[ id ] !== t.file ) {
+			errs.push( 'tickets/' + t.file + ': id ' + id + ' was also created on ' + BASE_REF + ' as tickets/' + base[ id ] + '; renumber this branch\'s ticket past ' + maxId( base ) + ' and update its references (ticket 0050)' );
+		}
+	});
+	return { 'errors': errs, 'warning': null };
+}
+
+function maxId( ids ) {
+	var n = Object.keys( ids ).map( Number );
+	return String( n.length ? Math.max.apply( null, n ) : 0 ).padStart( 4, '0' );
+}
+
 function create( title, area ) {
 	var problems = titleProblems( title );
 	var ids = all().map( function m( t ) {
 		return t.meta ? Number( t.meta.id ) : 0;
 	});
+	// Allocate past the base branch's tickets too, so a branch never reuses an
+	// id that has already merged (ticket 0050).
+	var base = idsAt( BASE_REF );
+	if ( base ) {
+		ids = ids.concat( Object.keys( base ).map( Number ) );
+	} else {
+		console.error( 'warning: `' + BASE_REF + '` is not available; the new id may collide with tickets created there (ticket 0050)' );
+	}
 	var id = String( ( ids.length ? Math.max.apply( null, ids ) : 0 ) + 1 ).padStart( 4, '0' );
 	var t;
 	if ( problems.length ) {
@@ -215,6 +284,11 @@ function check() {
 	});
 	// Coverage: every known gap has a ticket (CONVENTIONS P1).
 	errs = errs.concat( coverage.checkRegistry( byId() ), coverage.checkArtifacts( byId() ), coverage.checkDocs( byId() ) );
+	var col = collisions();
+	errs = errs.concat( col.errors );
+	if ( col.warning ) {
+		console.error( col.warning );
+	}
 	if ( errs.length ) {
 		die( errs.join( '\n' ) + '\n\n' + errs.length + ' ticket problem(s)' );
 	}

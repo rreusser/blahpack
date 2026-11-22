@@ -1,9 +1,10 @@
 ---
 id: 0050
 title: Ticket numbers are allocated per branch, so parallel branches collide and nothing detects it before merge
-status: open
+status: resolved
 area: process
 opened: 2026-11-20
+resolved: 2026-11-20
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ opened: 2026-11-20
 git log --oneline --grep="Renumber this branch's tickets"
 git ls-tree --name-only origin/main tickets/ | grep -c "^tickets/00[23][0-9]"
 ```
+
+## Resolution
+
+Prevented at three points. (1) `tickets.js new` allocates past the highest id on origin/main as well as the checkout. (2) `tickets.js check` fails when an id created on the branch (absent at the merge-base) was also created on origin/main, and fails in CI if origin/main is missing instead of skipping. (3) In CI, a PR's merge commit contains both tickets, so the existing duplicate-id check blocks the merge. The Conformance job now checks out full history. Simulated: collision flagged, retitle accepted, new id allocated past the base, missing base in CI is an error.

@@ -11,12 +11,11 @@
 			"kind": "gate"
 		},
 		"bin/break-mutants-loader.mjs": {
-			"kind": "ticket",
-			"ticket": "0045"
+			"kind": "part",
+			"of": "bin/break-mutants.mjs"
 		},
 		"bin/break-mutants.mjs": {
-			"kind": "ticket",
-			"ticket": "0045"
+			"kind": "gate"
 		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",

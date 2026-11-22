@@ -47,11 +47,36 @@ jobs:
   # Conformance: the stdlib-conformance checks (file structure, scaffolding,
   # workspace ownership, naming, JSDoc, ...) beyond what lint/unit cover.
   # Hard gate, like every other job.
+  # Early loop exits (CONVENTIONS X2; ticket 0045): for every module this PR
+  # changes, the tests must tell whether code after each `break` should run.
+  # Each surviving mutant needs a test or a proof in
+  # test/break-mutants.equivalent.json; there is no tolerated-survivor list.
+  mutants:
+    name: Early-exit mutants (changed modules)
+    runs-on: ubuntu-latest
+    steps:
+      # Full history: modules are selected by diff against the merge-base with
+      # origin/main.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every early loop exit in a changed module is pinned by a test
+        run: node bin/break-mutants.mjs --changed --check
+
   conformance:
     name: Conformance
     runs-on: ubuntu-latest
     steps:
+      # Full history: `tickets.js check` compares ticket ids with origin/main
+      # and its merge-base (ticket 0050).
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24

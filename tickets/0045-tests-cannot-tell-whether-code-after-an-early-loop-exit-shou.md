@@ -1,9 +1,10 @@
 ---
 id: 0045
 title: Tests cannot tell whether code after an early loop exit should run, and coverage hides it
-status: open
+status: resolved
 area: harness
 opened: 2026-11-18
+resolved: 2026-11-20
 ---
 
 ## Problem
@@ -38,7 +39,10 @@ When a Fortran `GO TO` leaves a loop, the translation has to decide at that exit
   - 60 in already-triaged routines, almost all the new per-break mutants;
   - 28 never surfaced before, including 12 `ainvnm` guards in `*sycon`/`*hecon`/`*spcon` that were previously false kills;
   - 32 one-offs from the earlier backlog.
-- The check (`bin/break-mutants.mjs`, with its in-memory mutant loader `bin/break-mutants-loader.mjs`) is not in CI; both are classified `ticket` 0045 in `bin/checks.json` (CONVENTIONS P2). It cannot be gated while it fails, so the unexplained survivors must be triaged first; after that, a CI gate (at least on changed routines) keeps this closed.
+- 2026-11-20, after merging main: main's JSDoc codemods shifted line numbers, and 46 of the 59 line-keyed proofs silently stopped matching. Proofs are now keyed by a fingerprint of the loop and the statement after it, so unrelated edits don't affect them; a code change invalidates them exactly when it should. Migrating at the last commit where all 59 matched and re-running on main: 33 proofs are current. 26 (in `*gsvj0`/`*gsvj1`, `dhgeqz`, `dlaein`, `dlaqr0`/`dlaqr4`, `dlasq2`, `dtgsja`/`ztgsja`, `zla_gerfsx_extended`) are about code that main's spec work actually changed, and must be re-verified; `--check` reports them as stale until then. Alongside them, 120 survivors in 62 routines are still unexplained.
+- Wave 2a (2026-11-20, branch `slop/gracious-dijkstra-q3yg0i`): the condition-estimator (22 routines), tridiagonal (4), Jacobi SVD (4) and QR/QZ/SVD-driver (13) families are clean, with 0 unexplained and 0 stale. 36 test gaps were closed and every stale proof was re-verified. Two non-convergence deviations went to ticket 0052. One survivor has no known reaching input, the `dsterf` QR iteration-limit exit (ticket 0051); it keeps the gate failing for `dsterf` until that ticket is resolved. Left: wave 2b, 51 survivors and 3 stale proofs in 27 routines (MRRR/dqds helpers and singletons).
+- A tolerated-survivor list would let the check be gated now, but that is a baseline, which CONVENTIONS T5 forbids, so there is none.
+- Gated (2026-11-20): CI job `mutants` runs `node bin/break-mutants.mjs --changed --check` (CONVENTIONS X2). A PR that changes a module must leave no unexplained survivor and no stale proof in it; there is no tolerated-survivor list. What remains of this ticket is everything unchanged since: the 120 untriaged survivors and 26 stale proofs above, which must be triaged before a PR touches their modules or as wave 2. The dlasq2 INFO = 2 survivor is no longer exempted ("UNREACHABLE" was removed as an exemption category); it is tracked as ticket 0051.
 - Equivalence keys use line numbers, so an edit that moves a break re-surfaces its entry as unexplained. That is deliberate (it forces a re-check), but noisy.
 
 ## Reproduce
@@ -49,3 +53,7 @@ git checkout 57427401~1 -- lib/lapack/base/zlatrs
 node bin/break-mutants.mjs zlatrs   # SURVIVED at base.js:298 (the bug)
 git checkout HEAD -- lib/lapack/base/zlatrs
 ```
+
+## Resolution
+
+The check exists and is gated: bin/break-mutants.mjs builds skip-after-break, skip-after-this-break and drop-guard mutants for every early loop exit. CI job `mutants` runs it on every module a PR changes, with no tolerated-survivor list (CONVENTIONS X2, T5). Proofs are keyed by code fingerprints and fail the gate when stale. The whole-corpus backlog is triaged (2026-11-20, all 912 modules): 539 mutants, 431 killed, 106 proved equivalent, 0 stale. The triage fixed bugs in 15 routines (*latrs/*latps/*latbs, dsterf, dpocon/dppcon/dpbcon/zpbcon, zlasyf_rk, zgsvj1, dhsein, zhbgst) and closed about 140 test gaps. Two survivors remain, iteration-limit exits that no known input reaches (dsterf QR, dlasq2 INFO = 2); they are tracked in ticket 0051 and fail the gate whenever their module changes.

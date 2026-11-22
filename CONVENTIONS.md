@@ -140,7 +140,7 @@ of the third:
 | J1 | `base.js` is `@private`; `ndarray.js` is not. | `ndarray.js` is public; `base.js` is internal. | `conf:implementation.ndarray-not-private`; `conf:implementation.base-is-private` (warn) [ticket 0024] |
 | J2 | Public functions document `@param`, `@returns`, and one `@throws` per validation. | stdlib docs. | `lint:spec-jsdoc` |
 | J3 | `base.js` and `ndarray.js` carry a runnable `@example`. | stdlib docs. | `conf:jsdoc.base-example`, `conf:jsdoc.ndarray-example` (warn; 1,716 missing) [ticket 0024] |
-| J4 | No scaffold noise: no `TODO` in `@param`, `{TODO}`, `@returns {*}`, `,.` typos, stray `//` copyright lines, or "not yet implemented" stubs. | Leftover scaffold reads as documentation. | `lint:no-todo-params`, `lint:no-stub-wrappers`, `conf:scaffold-noise.*`, `conf:scaffolding.no-stub-wrappers` (dup) [ticket 0031] |
+| J4 | No scaffold noise: no `TODO` in `@param`, `{TODO}`, `@returns {*}`, `,.` typos, stray `//` copyright lines, "not yet implemented" stubs, or comments in drafting voice ("Let me redo", "Actually,", "Wait -"). | Leftover scaffold reads as documentation. | `lint:no-todo-params`, `lint:no-stub-wrappers`, `lint:no-draft-remnants`, `conf:scaffold-noise.*`, `conf:scaffolding.no-stub-wrappers` (dup) [ticket 0031] |
 | J5 | No `TODO` in `base.js`, `README.md`, or examples. An uncoverable branch gets a plain comment saying why (e.g. `// Unreachable for finite input: …`). Known divergences from the reference go in `DIFFERENCES.md` or a ticket. | TODOs rot; the gate rejects them. | `conf:scaffolding.no-todo-base`, `conf:scaffolding.no-todo-readme`, `conf:scaffolding.examples-filled`, `conf:scaffolding.index-example` |
 
 ## T: Tests and validation

@@ -1,9 +1,10 @@
 ---
 id: 0053
 title: zhbgst's kb >= 2 bulge-chase path returns a transformed matrix that differs from the reference by up to 1e-1
-status: open
+status: resolved
 area: base
 opened: 2026-11-20
+resolved: 2026-11-22
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ In `zhbgst`, the split-Cholesky reduction of a banded Hermitian-definite pencil,
 grep -n "known translation issues" lib/lapack/base/zhbgst/test/test.ndarray.js
 grep -nE "Let me|Actually" lib/lapack/base/zhbgst/lib/base.js
 ```
+
+## Resolution
+
+Fixed 2026-11-22: two bugs in the kb >= 2 bulge chase. (1) At all four rotation sites, ZLARTG's local scalars RA1/RA were aliased onto WORK(1) (a live rotation sine) and onto the AB input element, which ZLARTV then rotated twice. (2) Upper phase-1 ZLARTV rows were off by one (l/l+1 instead of l-1/l). Each bug matters on its own. The six kb >= 2 tests now compare AB and X against the Fortran fixtures at 1e-12 (they were 'info = 0 and finite'); all six fail on the old code, and errors are now below 5e-16. LEARNINGS 2026-11-22. What prevents recurrence: comments that admit a weakened test must cite a ticket (ticket 0055, gated), and drafting remnants are linted (ticket 0054).

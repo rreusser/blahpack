@@ -2558,3 +2558,34 @@ Keep entries short. Newest first.
 - **What allowed it**: no check looks for drafting remnants (ticket 0054). The
   module's kb >= 2 tests were weakened to "info = 0 and finite", and the known
   discrepancy was recorded in a test comment rather than a ticket (ticket 0055).
+
+---
+
+## 2026-11-22 — zhbgst kb >= 2: ZLARTG outputs aliased onto live storage, and upper phase-1 ZLARTV rows off by one (resolves ticket 0053)
+
+- **What**: the kb >= 2 bulge chase of `zhbgst` differed from the reference
+  by up to 6e-2 in AB (and up to 1.8e-2 in X), for both upper and lower. The
+  six affected tests had been weakened to "info = 0 and finite". Found while
+  checking the code behind drafting-remnant comments (ticket 0054).
+- **Bug 1, all four bulge-rotation sites**: the Fortran
+  `ZLARTG( AB(…), RA1, RWORK(…), WORK(…), RA )` uses local scalars RA1 and RA.
+  The JS put RA1 into `WORK(1)`, which holds a live rotation sine, and wrote
+  R back into the AB input element. The later ZLARTV then rotated that
+  element a second time. Fixed with module-level scratch, so ZLARTG writes
+  neither AB nor WORK.
+- **Bug 2, upper phase 1 (Fortran loops 110, 140, 190, 220)**: ZLARTV "from
+  the left" used rows `l`/`l+1` for Fortran `AB(L,…)`/`AB(L+1,…)` instead of
+  `l-1`/`l`. Phase 2 had them right. Each bug matters on its own (bug 2
+  alone leaves 2.7e-2 to 3.4e-2).
+- **Repro / tests**: the six kb >= 2 tests now compare AB and X against the
+  Fortran fixtures at 1e-12. All six fail on the old code. Errors after the
+  fix are below 5e-16.
+- **Bug classes**: `scalar-output-aliased-onto-storage` (a Fortran local mapped
+  onto an array slot) and `off-by-one-index-conversion`.
+- **What allowed it**: tests weakened to finiteness checks (now caught: a
+  comment admitting the gap must cite a ticket, ticket 0055); draft code
+  left in place (now linted, ticket 0054); and no layout-fuzzed harness
+  validation for `zhbgst`.
+- **Where else**: the real sibling `dsbgst` uses local scratch for DLARTG and
+  correct DLARTV rows. Across the corpus, `zgbbrd` and `zhbtrd` also route
+  ZLARTG's R to local scratch, as the reference does.

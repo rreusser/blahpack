@@ -1,9 +1,10 @@
 ---
 id: 0054
 title: Draft-remnant comments and dead scaffolding from translation are not detected in shipped code
-status: open
+status: resolved
 area: conformance
 opened: 2026-11-20
+resolved: 2026-11-22
 ---
 
 ## Problem
@@ -20,3 +21,7 @@ Translations were sometimes left with drafting artifacts: comments like "Let me 
 ```bash
 grep -rnE "//.*(Let me |Actually[,:]|wrong:|redo|Hmm|Wait,|I think|let's )" lib/*/base/*/lib/*.js | wc -l
 ```
+
+## Resolution
+
+lint rule `blahpack/no-draft-remnants` (lint/rules/no-draft-remnants, with fixtures; registered in eslint.config.cjs and run by the CI lint job; CONVENTIONS J4) rejects comments in drafting voice. All 32 sites in 24 files were checked against the Fortran before their comments were rewritten. The code was correct at 30 of them; dead first-draft statements were removed in zhbgst and zlaqr5; and the zhbgst kb >= 2 region held the two bugs behind ticket 0053, now fixed.

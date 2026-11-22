@@ -29,6 +29,7 @@ var SOURCE_RULES = {
 	'jsdoc-backtick-params': 'error',
 	'no-dprefix-conjugate-transpose': 'error',
 	'no-stub-wrappers': 'error',
+	'no-draft-remnants': 'error',
 	'no-todo-params': 'error',
 	'no-nary-stdlib-minmax': 'error',
 	'z-prefix-reinterpret': 'error',

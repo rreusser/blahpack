@@ -69,3 +69,37 @@ test( 'the scope of a deferral heading ends at the next heading or paragraph', f
 test( 'a citation of a resolved ticket is accepted in a PR (the PR may resolve it)', function t() {
 	assert.deepStrictEqual( errs( '## Follow-ups\n- LD rules (ticket 0001).\n' ), [] );
 });
+
+// Code comments (CONVENTIONS P1, ticket 0055)
+
+test( 'a comment admitting a known problem needs a ticket', function t() {
+	const errs = coverage.codeCommentProblems( 'f.js', 'x = 1; // TODO: set correct size\n', TICKETS );
+	assert.strictEqual( errs.length, 1 );
+	assert.match( errs[ 0 ], /^f\.js:1: comment admitting a known problem without a ticket/ );
+});
+
+test( 'a citation on a later line of the same comment block counts', function t() {
+	const src = '\t// The kb >= 2 path still differs from the reference (ticket\n\t// 0027), so AB is checked loosely.\n';
+	assert.deepStrictEqual( coverage.codeCommentProblems( 'f.js', src, TICKETS ), [] );
+});
+
+test( 'a citation in a different comment block does not count', function t() {
+	const src = '// known issue here\nx = 1;\n// see ticket 0027\n';
+	assert.strictEqual( coverage.codeCommentProblems( 'f.js', src, TICKETS ).length, 1 );
+});
+
+test( 'a comment citing a resolved ticket fails (the problem is gone, so update the comment)', function t() {
+	const errs = coverage.codeCommentProblems( 'f.js', '/* FIXME: ticket 0001 */\n', TICKETS );
+	assert.strictEqual( errs.length, 1 );
+	assert.match( errs[ 0 ], /resolved/ );
+});
+
+test( 'block comments and JSDoc lines are scanned', function t() {
+	const src = '/**\n* Does a thing.\n*\n* @param {string} x - `a` (not implemented)\n*/\n';
+	assert.strictEqual( coverage.codeCommentProblems( 'f.js', src, TICKETS ).length, 1 );
+});
+
+test( 'ordinary explanatory comments and strings containing // pass', function t() {
+	const src = '// Solve the transposed system (Fortran GO TO 20).\nconst u = \'https://known issue.example\';\n';
+	assert.deepStrictEqual( coverage.codeCommentProblems( 'f.js', src, TICKETS ), [] );
+});

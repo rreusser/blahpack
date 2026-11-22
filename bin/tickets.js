@@ -283,7 +283,7 @@ function check() {
 		}
 	});
 	// Coverage: every known gap has a ticket (CONVENTIONS P1).
-	errs = errs.concat( coverage.checkRegistry( byId() ), coverage.checkArtifacts( byId() ), coverage.checkDocs( byId() ) );
+	errs = errs.concat( coverage.checkRegistry( byId() ), coverage.checkArtifacts( byId() ), coverage.checkDocs( byId() ), coverage.checkCodeComments( byId() ) );
 	var col = collisions();
 	errs = errs.concat( col.errors );
 	if ( col.warning ) {

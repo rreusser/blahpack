@@ -380,6 +380,89 @@ function checkDocs( tickets ) {
 	return errs;
 }
 
+// Comments in module code that admit a known problem. Such a comment is a
+// record of a problem, so it must cite an open ticket (CONVENTIONS P1). A
+// weakened test with "known translation issues" in a comment and no ticket
+// once hid a 1e-1 error (ticket 0055).
+const KNOWN = /\b(known (translation |numerical )?(issue|bug|problem|limitation|discrepanc\w*|deviation|failure)s?|fixme|xxx|hack|workaround|todo|not (yet )?(implemented|supported|correct|fixed|faithful)|(differs?|deviates?) from (the )?(reference|fortran|lapack)|drift|(is|are) (broken|wrong|incorrect|buggy))\b/i;
+
+function moduleFiles() {
+	const out = [];
+	[ 'blas', 'arpack', 'lapack' ].forEach( function pkg( p ) {
+		const base = path.join( ROOT, 'lib', p, 'base' );
+		if ( !fs.existsSync( base ) ) {
+			return;
+		}
+		fs.readdirSync( base ).sort().forEach( function each( r ) {
+			const walk = function walk( rel ) {
+				fs.readdirSync( path.join( ROOT, rel ) ).sort().forEach( function f( n ) {
+					const sub = rel + '/' + n;
+					if ( fs.statSync( path.join( ROOT, sub ) ).isDirectory() ) {
+						if ( n !== 'fixtures' && n !== 'node_modules' ) {
+							walk( sub );
+						}
+					} else if ( /\.(js|mjs|cjs)$/.test( n ) ) {
+						out.push( sub );
+					}
+				});
+			};
+			walk( 'lib/' + p + '/base/' + r );
+		});
+	});
+	return out;
+}
+
+// Comment blocks: runs of consecutive comment-only lines, plus each trailing
+// `//` comment on a code line. Returns [{ line, text }].
+function commentBlocks( src ) {
+	const blocks = [];
+	let cur = null;
+	src.split( '\n' ).forEach( function each( l, i ) {
+		const t = l.trim();
+		const pure = /^(\/\/|\/\*|\*)/.test( t );
+		if ( pure ) {
+			if ( !cur ) {
+				cur = { 'line': i + 1, 'text': '' };
+				blocks.push( cur );
+			}
+			cur.text += ' ' + t.replace( /^(\/\/+|\/\*+|\*+\/?)/, '' );
+			return;
+		}
+		cur = null;
+		const m = l.match( /\/\/(.*)$/ );
+		if ( m && !/['"`][^'"`]*\/\//.test( l ) ) {
+			blocks.push( { 'line': i + 1, 'text': m[ 1 ] } );
+		}
+	});
+	return blocks;
+}
+
+/**
+* Problems in one source text: every comment block that admits a known problem
+* must cite an open ticket.
+*/
+function codeCommentProblems( where, src, tickets ) {
+	const errs = [];
+	commentBlocks( src ).forEach( function blk( b ) {
+		const text = b.text.replace( /\s+/g, ' ' );
+		if ( KNOWN.test( text ) ) {
+			errs.push.apply( errs, citeProblems( where + ':' + b.line, text, tickets, {
+				'what': 'comment admitting a known problem',
+				'open': true
+			}) );
+		}
+	});
+	return errs;
+}
+
+function checkCodeComments( tickets ) {
+	const errs = [];
+	moduleFiles().forEach( function each( f ) {
+		errs.push.apply( errs, codeCommentProblems( f, read( f ), tickets ) );
+	});
+	return errs;
+}
+
 // PR BODY //
 
 /**
@@ -429,5 +512,7 @@ module.exports = {
 	'checkRegistry': checkRegistry,
 	'checkArtifacts': checkArtifacts,
 	'checkDocs': checkDocs,
+	'checkCodeComments': checkCodeComments,
+	'codeCommentProblems': codeCommentProblems,
 	'prBody': prBody
 };

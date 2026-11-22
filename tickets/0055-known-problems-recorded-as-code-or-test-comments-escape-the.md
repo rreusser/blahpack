@@ -1,9 +1,10 @@
 ---
 id: 0055
 title: Known problems recorded as code or test comments escape the every-problem-is-a-ticket check
-status: open
+status: resolved
 area: process
 opened: 2026-11-20
+resolved: 2026-11-22
 ---
 
 ## Problem
@@ -20,3 +21,7 @@ CONVENTIONS P1 says every known problem is a ticket, and `ci:tickets` enforces i
 ```bash
 grep -rniE "known (translation )?issue|known bug|FIXME" lib/*/base/*/test/*.js | grep -viE "ticket [0-9]{4}"
 ```
+
+## Resolution
+
+Comments in module code are now covered by P1. `tickets.js check` (CI `ci:tickets`) scans every comment block in lib/*/base/*/** (code, tests, examples, benchmarks). A block that admits a known problem (TODO/FIXME/XXX, hack/workaround, "known issue/bug/limitation", "not implemented/supported/correct", "differs from the reference", drift, "is broken/wrong") must cite an open ticket. Implemented as `codeCommentProblems` in bin/tickets-coverage.js, with unit tests in lint/tickets-coverage.test.cjs (gated by test:lint-rules), and recorded in the P1 enforcer column. The first run found 15 untracked admissions: a real bug in 10 public wrappers (ticket 0060), a weakened zgeevx test (ticket 0061), two zhbgst coverage-only tests (now cite ticket 0053), a missing zunhr_col description (written), and dseupd docs that called faithful ARPACK behaviour "not implemented" (rewritten).

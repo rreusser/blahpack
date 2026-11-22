@@ -90,6 +90,18 @@ for ( const sc of [ S.real /*, S.complex for z-routines */ ] ) {
 passes. See `test.harness.js` for full working examples across all three schemes,
 both scalars, and a layout-invariance fuzz.
 
+## Reaching paths no input reaches
+
+Some exits run only when an iteration limit is hit, and real inputs never hit
+it. `importWithConstants( url, constants )` (`constants.js`) imports a module
+with named `const` declarations replaced: for example `{ 'MAXIT': 0 }` makes
+`dsterf` take its iteration-limit exit at once. Each name must appear exactly
+once as `const NAME = …;`, or the import throws. The override is applied by a
+module load hook to whatever source the next hook serves, so it composes with
+`bin/break-mutants.mjs`: tests written this way kill mutants too. Assert what
+the reference guarantees on that exit, e.g. `dlasq2`'s INFO = 2 output is a
+restartable qd array.
+
 ## When a check fails: log it (mandatory)
 
 **Every defect the harness surfaces gets an entry in `LEARNINGS.md` before/with the

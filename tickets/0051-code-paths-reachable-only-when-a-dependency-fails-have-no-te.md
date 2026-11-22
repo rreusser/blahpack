@@ -1,9 +1,10 @@
 ---
 id: 0051
 title: Code paths reachable only when a dependency fails have no tests, because no public input triggers them
-status: open
+status: resolved
 area: harness
 opened: 2026-11-20
+resolved: 2026-11-22
 ---
 
 ## Problem
@@ -23,3 +24,7 @@ Testing these paths needs a way to substitute a failing dependency, such as a te
 ```bash
 node bin/break-mutants.mjs dlasq2 2>&1 | grep -E "SURVIVED|stale"
 ```
+
+## Resolution
+
+Made reachable instead of exempted: test/harness/constants.js `importWithConstants( url, { NAME: value } )` imports a module with named `const` declarations replaced. A module load hook applies the override to whatever source the next hook serves, so it composes with bin/break-mutants.mjs and these tests kill mutants (verified: the dsterf QR iteration-limit survivor and the dlasq2 INFO = 2 survivor are both killed, and the dlasq2 one survives again without its new test). dlasq2's inline iteration limit is named NBIG_FACTOR for this. Documented in test/harness/README.md and the translate skill (Step 4). No case that needs a callee to fail is known; module substitution through the same hook would cover one.

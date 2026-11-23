@@ -694,6 +694,27 @@ function build( routine, sig, facts, options ) {
 		checks.push( rec );
 	});
 
+	// An option inlined as a code (`ICOMPZ = 0/1/2`, else -1) is first checked
+	// for validity (`ICOMPZ.LT.0`); every later check runs only for a valid
+	// option, so its `: -1` arm can never be taken (dsteqr's LDZ check). Drop
+	// that arm there: the innermost `(x === 'v' ? k : -1)` becomes `k`, which is
+	// the same value for every option the validity check lets through.
+	checks.forEach( function each( rec, i ) {
+		var m;
+		if ( !rec.js || !/<\s*0\s*$/.test( rec.js ) ) {
+			return;
+		}
+		m = /\(\w+ === '[^']+' \? (-?\d+) : -1\)/.exec( rec.js );
+		if ( !m ) {
+			return;
+		}
+		checks.slice( i + 1 ).forEach( function later( r ) {
+			if ( r.js && r.js.indexOf( m[ 0 ] ) >= 0 ) {
+				r.js = r.js.split( m[ 0 ] ).join( m[ 1 ] );
+			}
+		});
+	});
+
 	// An option check whose verdict is definite for every letter (given the
 	// routine's locals) is an enum; record the accepted set.
 	function enumCheck( rec, p, ast ) {

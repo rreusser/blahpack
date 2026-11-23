@@ -95,7 +95,8 @@ function role( r, file ) {
 	return 'other';
 }
 
-// Parse an lcov file into { file: { lf, lh, brf, brh, uncovered: [lines] } }.
+// Parse an lcov file into { file: { lf, lh, brf, brh, uncovered, uncoveredBranches } },
+// counting a line or branch covered if any record for the file covers it.
 function parseLcov( text ) {
 	const out = {};
 	let cur = null;
@@ -104,29 +105,40 @@ function parseLcov( text ) {
 		const k = ( i < 0 ) ? line : line.slice( 0, i );
 		const v = ( i < 0 ) ? '' : line.slice( i + 1 );
 		if ( k === 'SF' ) {
-			cur = { 'lf': 0, 'lh': 0, 'brf': 0, 'brh': 0, 'uncovered': [], 'uncoveredBranches': [] };
-			out[ path.relative( ROOT, path.resolve( ROOT, v ) ) ] = cur;
+			// One file can appear in several records (a test that re-imports
+			// it through importWithConstants gets its own copy): merge them.
+			const key = path.relative( ROOT, path.resolve( ROOT, v ) );
+			cur = out[ key ] || { 'lines': new Map(), 'branches': new Map() };
+			cur.seen = {};
+			out[ key ] = cur;
 		} else if ( !cur ) {
 			// ignore
-		} else if ( k === 'LF' ) {
-			cur.lf = Number( v );
-		} else if ( k === 'LH' ) {
-			cur.lh = Number( v );
-		} else if ( k === 'BRF' ) {
-			cur.brf = Number( v );
-		} else if ( k === 'BRH' ) {
-			cur.brh = Number( v );
-		} else if ( k === 'BRDA' ) {
-			const parts = v.split( ',' );
-			if ( parts[ 3 ] === '0' || parts[ 3 ] === '-' ) {
-				cur.uncoveredBranches.push( Number( parts[ 0 ] ) );
-			}
 		} else if ( k === 'DA' ) {
 			const [ ln, hits ] = v.split( ',' );
-			if ( Number( hits ) === 0 ) {
-				cur.uncovered.push( Number( ln ) );
-			}
+			cur.lines.set( Number( ln ), Math.max( cur.lines.get( Number( ln ) ) || 0, Number( hits ) ) );
+		} else if ( k === 'BRDA' ) {
+			// Block numbers differ between copies of one file, so key a branch
+			// by its line and its position among that record's branches on it.
+			const parts = v.split( ',' );
+			cur.seen = cur.seen || {};
+			cur.seen[ parts[ 0 ] ] = ( cur.seen[ parts[ 0 ] ] || 0 ) + 1;
+			const id = parts[ 0 ] + ',' + cur.seen[ parts[ 0 ] ];
+			const hits = ( parts[ 3 ] === '-' ) ? 0 : Number( parts[ 3 ] );
+			cur.branches.set( id, Math.max( cur.branches.get( id ) || 0, hits ) );
 		}
+	});
+	Object.keys( out ).forEach( ( f ) => {
+		const c = out[ f ];
+		const lines = [ ...c.lines.entries() ];
+		const branches = [ ...c.branches.entries() ];
+		out[ f ] = {
+			'lf': lines.length,
+			'lh': lines.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'brf': branches.length,
+			'brh': branches.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'uncovered': lines.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] ).sort( ( a, b ) => a - b ),
+			'uncoveredBranches': branches.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => Number( e[ 0 ].split( ',' )[ 0 ] ) )
+		};
 	});
 	return out;
 }

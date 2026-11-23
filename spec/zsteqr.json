@@ -138,7 +138,7 @@
 			"param": "LDZ",
 			"kind": "expr",
 			"fortran": "( LDZ.LT.1 ) .OR. ( ICOMPZ.GT.0 .AND. LDZ.LT.MAX( 1, N ) )",
-			"js": "ldz < 1 || ((compz === 'none' ? 0 : (compz === 'update' ? 1 : (compz === 'initialize' ? 2 : -1))) > 0 && ldz < max( 1, N ))"
+			"js": "ldz < 1 || ((compz === 'none' ? 0 : (compz === 'update' ? 1 : 2)) > 0 && ldz < max( 1, N ))"
 		}
 	],
 	"quickReturn": [

@@ -55,7 +55,11 @@ globalThis.__replayRecord = function replayRecord( fn ) {
 process.on( 'exit', function onExit() {
 	const dir = process.env.REPLAY_OUT;
 	if ( dir && records.length ) {
-		fs.writeFileSync( path.join( dir, process.pid + '.bin' ), v8.serialize( records ) );
+		// Named after the test file (not the pid), so the replay reads records in
+		// a deterministic order and samples the same calls on every machine.
+		const file = process.argv.find( ( a ) => /test[^/]*\.js$/.test( a ) );
+		const name = ( file ? path.basename( file ) : 'unknown' ) + '.' + process.pid;
+		fs.writeFileSync( path.join( dir, name + '.bin' ), v8.serialize( records ) );
 	}
 });
 

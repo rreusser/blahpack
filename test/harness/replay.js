@@ -60,7 +60,8 @@ const require = createRequire( import.meta.url );
 const specLib = require( '../../lint/lib/spec.cjs' );
 const HERE = path.dirname( fileURLToPath( import.meta.url ) );
 const RECORDER = path.join( HERE, 'replay-record.mjs' );
-const MAX_CALLS = 40;
+// REPLAY_MAX_CALLS raises the sample size (e.g. to replay every call).
+const MAX_CALLS = Number( process.env.REPLAY_MAX_CALLS ) || 40;
 const SAME = Symbol( 'same-storage return' );
 
 // --- argument encoding ---------------------------------------------------
@@ -140,7 +141,8 @@ function record( dir, routine ) {
 	delete env.NODE_TEST_CONTEXT;
 	spawnSync( process.execPath, [ '--test', '--test-reporter=dot', ...files ], { 'env': env, 'encoding': 'utf8', 'timeout': 600000 } );
 	let recs = [];
-	fs.readdirSync( out ).forEach( ( f ) => {
+	// Sorted by test file name (see replay-record.mjs): deterministic order.
+	fs.readdirSync( out ).sort( ( a, b ) => a.replace( /\.\d+\.bin$/, '' ).localeCompare( b.replace( /\.\d+\.bin$/, '' ) ) ).forEach( ( f ) => {
 		recs = recs.concat( v8.deserialize( fs.readFileSync( path.join( out, f ) ) ) );
 	});
 	fs.rmSync( out, { 'recursive': true, 'force': true } );
@@ -899,7 +901,9 @@ async function replayModule( dir, options ) {
 		// matrix copied into row-major storage (exercises the wrapper's other
 		// `order` branch). Bit-identical: base sees the same logical matrices.
 		const mats = groups.filter( ( g ) => kindOf( g ) === 'matrix' );
-		if ( order === 'column-major' && mats.length && mats.every( ( g ) => g.param.role === 'matrix' ) ) {
+		// Like `exact`, only calls whose recorded LDs cover the spec's rows can
+		// be expressed through the wrapper (a 3-by-1 C recorded with LD 1 cannot).
+		if ( ldCoversRows && order === 'column-major' && mats.length && mats.every( ( g ) => g.param.role === 'matrix' ) ) {
 			const tArgs = rec.map( decode );
 			const shapes = [];
 			mats.forEach( function eachMat( g ) {
@@ -1002,7 +1006,7 @@ async function replayModule( dir, options ) {
 
 		// zero-size: each dimension set to 0 in turn (first few calls only);
 		// the wrapper and ndarray.js must agree, including on quick returns.
-		if ( report.replayed <= 4 ) {
+		if ( ldCoversRows && report.replayed <= 4 ) {
 			groups.forEach( function eachDim( g ) {
 				if ( g.param.role !== 'dim' || g.names.length !== 1 || !( plain[ g.at ] > 0 ) ) {
 					return;

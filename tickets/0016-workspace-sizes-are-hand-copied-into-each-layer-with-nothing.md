@@ -19,6 +19,8 @@ The `work-assert` conformance check confirms only that *a* guard exists. The har
 - About 80 routines call `assertWorkspaceSufficient`; there are 825 LAPACK modules.
 - CONVENTIONS rules that cite this ticket: W3 (`conf:work-assert` checks only the `WORK` guard; nothing checks the `IWORK`/`RWORK` guards) and W5 (nothing checks the required size stated in the `@param` JSDoc text).
 
+- Ticket 0072's fixes (2026-11-23) size seven orthogonal-generator wrappers' `WORK = null` allocation as `LDWORK*32` when blocked. That 32 must equal the `NB` constant in each delegate's `base.js` (dorglq, dorgrq, dorgtr, zunglq, zungqr, zungtr, as zungbr already did). Nothing ties the literal to the constant; exporting a workspace-size function from `base.js` would.
+
 ## Reproduce
 
 ```bash

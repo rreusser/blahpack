@@ -195,6 +195,9 @@
 		"bin/workspace-guard.mjs": {
 			"kind": "gate"
 		},
+		"bin/wrapper-replay.mjs": {
+			"kind": "gate"
+		},
 		"lint/no-fortran-source.test.cjs": {
 			"kind": "gate"
 		},

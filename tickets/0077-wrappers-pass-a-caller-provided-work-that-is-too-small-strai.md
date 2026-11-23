@@ -17,6 +17,8 @@ When the caller supplies `WORK` (non-null) to a `<routine>.js` wrapper, some wra
 
 - `zpbsvx`'s `ndarray.js` checks the length of WORK but not of RWORK, which needs N: `RWORK = new Float64Array( 1 )` with N = 3 raises no error. Reported by a wave-3 agent.
 
+- `dgelss.js` and `zgelss.js` pass a caller's WORK to `base.js` with no length check, while `ndarray.js` requires `computeWorkSize( M, N, nrhs )`. `zgelss( 'column-major', 5, 4, 40, A, 5, B, 5, S, 1, -1, [0], new Complex128Array( 100 ), null )` runs through the wrapper and throws through `ndarray.js`. Reported by a wave-3 agent.
+
 ## Reproduce
 
 ```bash

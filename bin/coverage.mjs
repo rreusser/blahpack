@@ -4,7 +4,10 @@
 * Per-file test coverage of modules (ticket 0064).
 *
 * For each module, runs all of its `test/test*.js` once under node's
-* coverage, restricted to the module's own `lib/` files, and reports line
+* coverage, together with the wrapper replay (test/harness/replay-coverage.mjs:
+* every recorded `ndarray.js` call replayed through the wrapper, in both
+* orders and with `WORK = null`), restricted to the module's own `lib/`
+* files, and reports line
 * and branch coverage for EVERY file there: `base.js`, `ndarray.js`, the
 * `<routine>.js` wrapper, `main.js`, `index.js`. The wrapper is where the
 * convenience logic lives (`order`/LD mapping, `WORK = null` allocation),
@@ -29,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve( path.dirname( fileURLToPath( import.meta.url ) ), '..' );
 const PKGS = [ 'blas', 'lapack', 'arpack' ];
+const REPLAY_COVERAGE = path.join( ROOT, 'test', 'harness', 'replay-coverage.mjs' );
 
 // Minimum line and branch coverage (percent) per file role.
 const THRESHOLDS = {
@@ -133,6 +137,11 @@ function measure( r ) {
 	if ( !tests.length ) {
 		return { 'routine': r, 'error': 'no test files', 'files': [] };
 	}
+	// The wrapper replay (ticket 0065) runs in the same coverage run, so the
+	// wrapper lines its replayed ndarray calls reach count as covered.
+	if ( fs.existsSync( path.join( dir, 'lib', r + '.js' ) ) && fs.existsSync( path.join( ROOT, 'spec', r + '.json' ) ) ) {
+		tests.push( REPLAY_COVERAGE );
+	}
 	const rel = path.relative( ROOT, dir );
 	const tmp = fs.mkdtempSync( path.join( os.tmpdir(), 'cov-' ) );
 	const lcov = path.join( tmp, 'lcov.info' );
@@ -142,7 +151,7 @@ function measure( r ) {
 		'--test-coverage-include=' + rel + '/lib/**',
 		'--test-reporter=lcov', '--test-reporter-destination=' + lcov,
 		'--test-reporter=dot', '--test-reporter-destination=' + path.join( tmp, 'dot.txt' )
-	].concat( tests ), { 'cwd': ROOT, 'encoding': 'utf8', 'timeout': 600000 } );
+	].concat( tests ), { 'cwd': ROOT, 'encoding': 'utf8', 'timeout': 600000, 'env': Object.assign( {}, process.env, { 'REPLAY_MODULE': dir } ) } );
 	const text = fs.existsSync( lcov ) ? fs.readFileSync( lcov, 'utf8' ) : '';
 	fs.rmSync( tmp, { 'recursive': true, 'force': true } );
 	if ( !text ) {

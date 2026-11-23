@@ -17,6 +17,9 @@
 *         size its blocking from the workspace it gets, so rounding-level
 *         differences are recorded (`rounding`) but not failures; NaN, a
 *         changed integer output or info, or a large difference fails.
+*     -   `transposed`: a column-major call replayed in row-major, each
+*         general matrix copied into row-major storage; workspaces `null`.
+*         Same tolerance as `null-work`.
 *     -   length audit: the wrapper runs with its `stride2offset( n, stride )`
 *         calls instrumented (test/harness/replay-offsets.mjs), giving the
 *         length `n` it assumes for each vector. The call's actual extent is
@@ -451,7 +454,8 @@ function classifyDiff( exp, act ) {
 * @param {string} dir - module directory (lib/<pkg>/base/<routine>)
 * @returns {Promise<Object>} report
 */
-async function replayModule( dir ) {
+async function replayModule( dir, options ) {
+	const opts = Object.assign( { 'probe': true, 'recs': null }, options );
 	const routine = path.basename( dir );
 	const report = { 'routine': routine, 'recorded': 0, 'replayed': 0, 'variants': 0, 'mismatches': [], 'rejected': [], 'lengths': [], 'rounding': 0, 'skipped': {} };
 	const skip = function skipReason( why ) {
@@ -481,7 +485,7 @@ async function replayModule( dir ) {
 	});
 	const lens = globalThis.__replayLens;
 	const probed = {};
-	const recs = record( dir, routine );
+	const recs = opts.recs || record( dir, routine );
 	report.recorded = recs.length;
 	for ( const rec of sample( recs ) ) {
 		if ( rec.length !== baseNames.length ) {
@@ -565,6 +569,103 @@ async function replayModule( dir ) {
 			}
 		}
 
+		// transposed: a column-major call replayed in row-major, every general
+		// matrix copied into row-major storage (exercises the wrapper's other
+		// `order` branch). Bit-identical: base sees the same logical matrices.
+		const mats = groups.filter( ( g ) => kindOf( g ) === 'matrix' );
+		if ( order === 'column-major' && mats.length && mats.every( ( g ) => g.param.role === 'matrix' ) ) {
+			const tArgs = rec.map( decode );
+			const shapes = [];
+			mats.forEach( function eachMat( g ) {
+				const A = tArgs[ g.at ];
+				const ld = tArgs[ g.at + 2 ];
+				const o = tArgs[ g.at + 3 ];
+				// Columns: what the storage holds, but at least the spec's
+				// column count (a zero-size call can hold fewer, yet a
+				// row-major LD must still cover N).
+				// The spec's column count can be flattened (dgemm's A is K-by-M
+				// under transa; ticket 0062), and a wider row-major LD is always
+				// valid, so also cover every dimension argument.
+				const specCols = evalSpec( g.param.cols && g.param.cols.js, baseNames, plain );
+				const dims = groups.filter( ( h ) => h.param.role === 'dim' && h.names.length === 1 ).map( ( h ) => plain[ h.at ] ).filter( ( v ) => typeof v === 'number' );
+				const cols = Math.max( 1, Math.ceil( ( A.length - o ) / ld ), specCols || 0, ...dims );
+				const R = new A.constructor( ld * cols );
+				const c = isComplexArray( A ) ? 2 : 1;
+				const fa = flat( A );
+				const fr = flat( R );
+				for ( let i = 0; i < ld; i++ ) {
+					for ( let j = 0; j < cols; j++ ) {
+						const src = o + i + ( j * ld );
+						for ( let q = 0; q < c; q++ ) {
+							fr[ ( ( ( i * cols ) + j ) * c ) + q ] = ( src < A.length ) ? fa[ ( src * c ) + q ] : 0;
+						}
+					}
+				}
+				shapes.push( { 'g': g, 'ld': ld, 'cols': cols, 'o': o, 'R': R } );
+				tArgs[ g.at ] = R;
+				tArgs[ g.at + 1 ] = cols;
+				tArgs[ g.at + 2 ] = 1;
+				tArgs[ g.at + 3 ] = 0;
+			});
+			const wt = toWrapper( spec, groups, tArgs, 'row-major', null, false );
+			if ( wt ) {
+				report.variants += 1;
+				let tRet;
+				let threw = null;
+				try {
+					tRet = wrapper( ...wt );
+				} catch ( e ) {
+					threw = e;
+				}
+				if ( threw ) {
+					if ( ldCoversRows ) {
+						report.rejected.push( { 'variant': 'transposed row-major', 'detail': String( threw.message ).slice( 0, 200 ) } );
+					}
+				} else {
+					// Map each row-major matrix back into the recorded layout.
+					const back = rec.map( decode );
+					// Carry over every non-matrix argument (vector outputs etc.).
+					// A group's arguments are `names.length` positions from
+					// `at`; an LD group has none and shares its `at` with the
+					// next group.
+					groups.forEach( ( g ) => {
+						if ( kindOf( g ) !== 'matrix' ) {
+							for ( let q = 0; q < g.names.length; q++ ) {
+								back[ g.at + q ] = tArgs[ g.at + q ];
+							}
+						}
+					});
+					shapes.forEach( function eachShape( sh ) {
+						const A = back[ sh.g.at ];
+						const c = isComplexArray( A ) ? 2 : 1;
+						const fa = flat( A );
+						const fr = flat( sh.R );
+						for ( let i = 0; i < sh.ld; i++ ) {
+							for ( let j = 0; j < sh.cols; j++ ) {
+								const dst = sh.o + i + ( j * sh.ld );
+								if ( dst < A.length ) {
+									for ( let q = 0; q < c; q++ ) {
+										fa[ ( dst * c ) + q ] = fr[ ( ( ( i * sh.cols ) + j ) * c ) + q ];
+									}
+								}
+							}
+						}
+					});
+					const act = snapshot( back, workspaceIdx );
+					const d = diff( exp, act, SAME, tRet, baseNames );
+					const retOk = isArrayArg( expRet ) || retEqual( expRet, tRet ) || ( typeof expRet === 'object' && typeof tRet === 'object' );
+					if ( d || !retOk ) {
+						const cls = retOk ? classifyDiff( exp, act ) : 'fail';
+						if ( cls === 'rounding' ) {
+							report.rounding += 1;
+						} else {
+							report.mismatches.push( { 'variant': 'transposed row-major', 'detail': d || ( 'return value ' + JSON.stringify( tRet ) + ' (expected ' + JSON.stringify( expRet ) + ')' ), 'call': describe( rec, baseNames ) } );
+						}
+					}
+				}
+			}
+		}
+
 		// length audit: the wrapper's assumed vector lengths vs the measured
 		// extent (lower bound) and the spec.
 		const used = ex ? ex.lens : [];
@@ -584,7 +685,7 @@ async function replayModule( dir ) {
 				report.lengths.push( { 'kind': 'disagrees-with-spec', 'param': g.param.name, 'wrapper': hit.n, 'spec': nSpec } );
 			}
 			probed[ g.param.name ] = ( probed[ g.param.name ] || 0 ) + 1;
-			if ( !( s > 0 ) || !isFloat( plain[ ai ] ) || probed[ g.param.name ] > 6 ) {
+			if ( !opts.probe || !( s > 0 ) || !isFloat( plain[ ai ] ) || probed[ g.param.name ] > 6 ) {
 				return;
 			}
 			const o = plain[ ai + 2 ];

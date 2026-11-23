@@ -504,6 +504,30 @@ async function validators() {
 	return VALIDATORS;
 }
 
+// Every default import of a module file (`import isInteger from '…'`), so
+// a validation statement is evaluated with the helpers it actually calls
+// (hand-written type checks use many stdlib asserts).
+async function moduleImports( file ) {
+	const out = {};
+	const src = fs.readFileSync( file, 'utf8' );
+	for ( const m of src.matchAll( /^import ([\w$]+) from '([^']+)';/gm ) ) {
+		const spec = ( m[ 2 ].startsWith( '.' ) ) ? pathToFileURL( path.resolve( path.dirname( file ), m[ 2 ] ) ).href : m[ 2 ];
+		try {
+			out[ m[ 1 ] ] = ( await import( spec ) ).default;
+		} catch ( e ) {
+			// unavailable: checks that call it stay unevaluable
+		}
+	}
+	// Module-level rebindings of an import (`const isInteger =
+	// isInteger$cjs.isPrimitive;`).
+	for ( const m of src.matchAll( /^const (\w+) = ([\w$]+)\.(\w+);/gm ) ) {
+		if ( out[ m[ 2 ] ] && out[ m[ 2 ] ][ m[ 3 ] ] !== void 0 ) {
+			out[ m[ 1 ] ] = out[ m[ 2 ] ][ m[ 3 ] ];
+		}
+	}
+	return out;
+}
+
 function evalTest( test, names, args, fns, prelude ) {
 	const keys = names.concat( Object.keys( fns ) );
 	const vals = args.concat( Object.keys( fns ).map( ( k ) => fns[ k ] ) );
@@ -581,11 +605,16 @@ function candidates( v ) {
 	if ( typeof v === 'string' ) {
 		return [ '__invalid__' ];
 	}
+	// The last candidate of each kind has the wrong type, for hand-written
+	// type checks (`!isNumber( lambda )`).
 	if ( typeof v === 'number' ) {
-		return [ -1, 0, v - 1, v + 1, 1, -2, ( 2 * v ) + 1, 1e6 ];
+		return [ -1, 0, v - 1, v + 1, 1, -2, ( 2 * v ) + 1, 1e6, '__invalid__' ];
+	}
+	if ( typeof v === 'boolean' ) {
+		return [ '__invalid__' ];
 	}
 	if ( v && ( ArrayBuffer.isView( v ) || isComplexArray( v ) ) ) {
-		return [ null, new v.constructor( 0 ) ];
+		return [ null, new v.constructor( 0 ), '__invalid__' ];
 	}
 	// An in/out option held in a one-element array (zposvx's `equed`).
 	if ( Array.isArray( v ) && v.length && typeof v[ 0 ] === 'string' ) {
@@ -728,6 +757,8 @@ async function replayModule( dir, options ) {
 	const lens = globalThis.__replayLens;
 	const ndNames = paramNames( nd );
 	const wNames = paramNames( wrapper );
+	const ndImports = await moduleImports( path.join( dir, 'lib', 'ndarray.js' ) );
+	const wImports = await moduleImports( wrapperFile );
 	const ndChecks = codeChecks( nd );
 	const wChecks = codeChecks( wrapper );
 	// Every option value any recorded call used, by parameter name.
@@ -977,14 +1008,15 @@ async function replayModule( dir, options ) {
 		// validation: every generated prologue check of both forms must throw
 		// its documented error when only its argument is made invalid.
 		{
-			const fns = await validators();
+			const fns = Object.assign( {}, await validators(), ndImports );
+			const wFns = Object.assign( {}, await validators(), wImports );
 			const ndArgs = rec.map( decode );
 			valFindings.push( ...validate( nd, ndNames, ndArgs, ndChecks, fns, ndDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'ndarray' }, f ) ) );
 			// Recorded workspaces (not null), so a workspace can be the
 			// argument made invalid.
 			const wArgs = toWrapper( spec, groups, rec.map( decode ), order, null, true ) || toWrapper( spec, groups, rec.map( decode ), order, null, false );
 			if ( wArgs ) {
-				valFindings.push( ...validate( wrapper, wNames, wArgs, wChecks, fns, wDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'wrapper' }, f ) ) );
+				valFindings.push( ...validate( wrapper, wNames, wArgs, wChecks, wFns, wDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'wrapper' }, f ) ) );
 			}
 		}
 

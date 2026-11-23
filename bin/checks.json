@@ -45,7 +45,8 @@
 			"why": "codemod: mechanical test-file fixes"
 		},
 		"bin/codemod-vector-lengths.mjs": {
-			"kind": "tool"
+			"kind": "tool",
+			"why": "one-shot codemod: rewrites wrapper vector-length expressions to the spec’s; its result is checked by bin/wrapper-replay.mjs"
 		},
 		"bin/conformance.js": {
 			"kind": "gate"

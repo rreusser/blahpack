@@ -88,8 +88,8 @@
 				"M-1"
 			],
 			"length": {
-				"fortran": "M-1",
-				"js": "M - 1"
+				"fortran": "(M-1) if SIDE = 'L' or (N-1) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? M - 1 : N - 1"
 			}
 		},
 		{

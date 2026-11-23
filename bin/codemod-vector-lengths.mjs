@@ -43,11 +43,16 @@ function wrapperPath( r ) {
 // Rewrite `expr` with the wrapper's own parameter spelling (the spec may say
 // `P` where the wrapper says `p`); null if it names anything else.
 function inWrapperTerms( expr, params ) {
-	if ( !/^[\w\s(),+\-*]+$/.test( expr ) ) {
+	// Arithmetic, min/max, and option conditionals (`( side === 'left' ) ? M
+	// : N`, ticket 0062); quoted option values are not identifiers.
+	if ( !/^(?:[\w\s(),+\-*?:=]|'[a-z-]+')+$/.test( expr ) ) {
 		return null;
 	}
 	let ok = true;
-	const out = expr.replace( /[A-Za-z_]\w*/g, ( id ) => {
+	const out = expr.replace( /'[a-z-]+'|[A-Za-z_]\w*/g, ( id ) => {
+		if ( id.charAt( 0 ) === "'" ) {
+			return id;
+		}
 		if ( id === 'min' || id === 'max' ) {
 			return id;
 		}

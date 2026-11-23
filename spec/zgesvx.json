@@ -369,7 +369,7 @@
 			"param": "EQUED",
 			"kind": "expr",
 			"fortran": "LSAME( FACT, 'F' ) .AND. .NOT. ( ROWEQU .OR. COLEQU .OR. LSAME( EQUED, 'N' ) )",
-			"js": "fact === 'factored' && !(((fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'row' || equed === 'both') || (fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'column' || equed === 'both')) || equed === 'none')"
+			"js": "fact === 'factored' && !(((equed === 'row' || equed === 'both') || (equed === 'column' || equed === 'both')) || equed === 'none')"
 		},
 		{
 			"info": -11,

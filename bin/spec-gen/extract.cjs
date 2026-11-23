@@ -425,12 +425,50 @@ function closeBlock( st, xer ) {
 // (also >, <=, <) in that argument's `\\param` block, verbatim. These name the
 // dimensions (`M >= 0`), leading-dimension rows (`LDA >= max(1,M)`) and
 // workspace minimums (`LWORK >= max(1,3*N-1)`).
-function docConstraints( src, names, arrays, dims ) {
+function docConstraints( src, names, arrays, dims, condDims ) {
 	var out = {};
 	var re = /^\*>\s*\\param\[[^\]]*\]\s*(\w+)\s*$/;
 	var lines = src.split( '\n' );
 	var cur = null;
 	var buf = [];
+	// A flag-conditional extent: `(N) if SIDE = 'L' or (M) if SIDE = 'R'`
+	// (dlarf V/WORK, dormtr TAU). Every alternative must name the same flag.
+	function conditional( text ) {
+		// Parse the dimension phrase itself, from its first parenthesis:
+		// `(A) if FLAG = 'x'` alternatives joined by `,`/`or`/`and [at least]`,
+		// optionally ending `(B) otherwise`. Anything else (a later sentence
+		// such as dlatrd's `TAU(n-nb:n-1) if UPLO = 'U'`) is not an extent.
+		var alt = /\(((?:[^():]|\((?:[^():]|\([^():]*\))*\))*)\)\s*,?\s*(?:if|when)\s+(\w+)\s*(?:=|\.EQ\.)\s*'(\w)'(?:\s*or\s*'\w')?/iy;
+		var other = /\(((?:[^():]|\((?:[^():]|\([^():]*\))*\))*)\)\s*otherwise/iy;
+		var sep = /[\s,;]*(?:(?:or|and)\b)?\s*(?:at\s+least\b)?\s*/iy;
+		var cases = {};
+		var flag = null;
+		var pos = 0;
+		var c;
+		for ( ;; ) {
+			alt.lastIndex = pos;
+			c = alt.exec( text );
+			if ( !c ) {
+				break;
+			}
+			if ( flag && flag !== c[ 2 ].toUpperCase() ) {
+				return;
+			}
+			flag = c[ 2 ].toUpperCase();
+			cases[ c[ 3 ].toUpperCase() ] = '(' + c[ 1 ].replace( /\s+/g, '' ) + ')';
+			sep.lastIndex = alt.lastIndex;
+			sep.exec( text );
+			pos = sep.lastIndex;
+		}
+		other.lastIndex = pos;
+		c = other.exec( text );
+		if ( c && flag ) {
+			cases[ '*' ] = '(' + c[ 1 ].replace( /\s+/g, '' ) + ')';
+		}
+		if ( condDims && flag && Object.keys( cases ).length >= 2 ) {
+			condDims[ cur ] = { 'flag': flag, 'cases': cases };
+		}
+	}
 	function flush() {
 		var text;
 		var m;
@@ -440,6 +478,7 @@ function docConstraints( src, names, arrays, dims ) {
 			m = /\bdimension\s*(?:at least\s*)?\(/i.exec( text );
 			if ( m ) {
 				dims[ cur ] = balanced( text.slice( m.index + m[ 0 ].length - 1 ) );
+				conditional( text.slice( m.index + m[ 0 ].length - 1 ) );
 			}
 		}
 		if ( cur && names[ cur ] ) {
@@ -599,7 +638,8 @@ function extractOne( src, free, sig ) {
 	}
 	var decl = declarations( st, start, argset );
 	var docDims = {};
-	var doc = docConstraints( src, names, decl, docDims );
+	var docDimsCond = {};
+	var doc = docConstraints( src, names, decl, docDims, docDimsCond );
 	if ( Object.keys( doc ).length ) {
 		rec.doc = doc;
 	}
@@ -608,6 +648,9 @@ function extractOne( src, free, sig ) {
 	}
 	if ( Object.keys( docDims ).length ) {
 		rec.docDims = docDims;
+	}
+	if ( Object.keys( docDimsCond ).length ) {
+		rec.docDimsCond = docDimsCond;
 	}
 	// PARAMETER constants are locals too (string value = the literal).
 	st.slice( 0, start ).forEach( function each( d ) {

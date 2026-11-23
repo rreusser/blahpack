@@ -1169,6 +1169,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "(1.0E+0,0.0E+0)",
@@ -6359,6 +6375,15 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -6542,6 +6567,15 @@
 			"C": "(LDC,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,M)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(LDV,M)",
+					"R": "(LDV,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -7187,6 +7221,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -27814,6 +27864,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "1.0E+0",
@@ -28372,6 +28438,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -32485,6 +32567,15 @@
 			"T": null,
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -35935,6 +36026,22 @@
 			"V": "(1+(M-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(1+(M-1)*abs(INCV))",
+					"R": "(1+(N-1)*abs(INCV))"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -36013,6 +36120,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -36252,6 +36368,15 @@
 			"TAU": "(K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -36305,6 +36430,22 @@
 			"C": "(LDC,N)",
 			"V": "(M)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(M)",
+					"R": "(N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -36768,6 +36909,15 @@
 			"V": "(1+(L-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -36933,6 +37083,15 @@
 			"T": "(LDT,K)",
 			"TAU": "(K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -37230,6 +37389,22 @@
 			"A": "(LDA,N)",
 			"C": "(M-1)",
 			"S": "(M-1)"
+		},
+		"docDimsCond": {
+			"C": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"S": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -51592,6 +51767,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LDAQ": [
@@ -51772,6 +51956,15 @@
 			"B": "(LDB,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -52213,6 +52406,29 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			},
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(LDWORK,N)",
+					"R": "(LDWORK,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -57161,6 +57377,15 @@
 			"TAU": "(MIN(M,K))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"TAU": {
+				"cases": {
+					"P": "(min(N,K))",
+					"Q": "(min(M,K))"
+				},
+				"flag": "VECT"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -58399,6 +58624,15 @@
 			"Q": "(LDQ,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"Q": {
+				"cases": {
+					"L": "(LDQ,M)",
+					"R": "(LDQ,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -58545,6 +58779,15 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -58677,6 +58920,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -58826,6 +59078,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(MIN(NQ,K))",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"P": "(LDA,nq)",
+					"Q": "(LDA,min(nq,K))"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -59000,6 +59261,22 @@
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -59152,6 +59429,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -59292,6 +59585,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -59762,6 +60064,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -59902,6 +60220,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -60044,6 +60378,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -60212,6 +60555,15 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -60369,6 +60721,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -60588,6 +60956,29 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"AP": {
+				"cases": {
+					"L": "(M*(M+1)/2)",
+					"R": "(N*(N+1)/2)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -62246,6 +62637,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -67269,6 +67676,15 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -67452,6 +67868,15 @@
 			"C": "(LDC,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,M)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(LDV,M)",
+					"R": "(LDV,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -68085,6 +68510,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -77487,6 +77928,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "1.0D+0",
@@ -77936,6 +78393,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -82036,6 +82509,15 @@
 			"T": null,
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -85505,6 +85987,22 @@
 			"V": "(1+(M-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(1+(M-1)*abs(INCV))",
+					"R": "(1+(N-1)*abs(INCV))"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -85583,6 +86081,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -85822,6 +86329,15 @@
 			"TAU": "(K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -85875,6 +86391,22 @@
 			"C": "(LDC,N)",
 			"V": "(M)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(M)",
+					"R": "(N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -87147,6 +87679,15 @@
 			"V": "(1+(L-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -87312,6 +87853,15 @@
 			"T": "(LDT,K)",
 			"TAU": "(K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -89418,6 +89968,22 @@
 			"C": "(M-1)",
 			"S": "(M-1)"
 		},
+		"docDimsCond": {
+			"C": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"S": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -91156,6 +91722,29 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"AP": {
+				"cases": {
+					"L": "(M*(M+1)/2)",
+					"R": "(N*(N+1)/2)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -93299,6 +93888,15 @@
 			"TAU": "(MIN(M,K))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"TAU": {
+				"cases": {
+					"P": "(min(N,K))",
+					"Q": "(min(M,K))"
+				},
+				"flag": "VECT"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -94537,6 +95135,15 @@
 			"Q": "(LDQ,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"Q": {
+				"cases": {
+					"L": "(LDQ,M)",
+					"R": "(LDQ,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -94683,6 +95290,15 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -94815,6 +95431,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -94963,6 +95588,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(MIN(NQ,K))",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"P": "(LDA,nq)",
+					"Q": "(LDA,min(nq,K))"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -95137,6 +95771,22 @@
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -95289,6 +95939,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -95429,6 +96095,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -95901,6 +96576,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -96041,6 +96732,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -96183,6 +96890,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -96351,6 +97067,15 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -96510,6 +97235,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -103163,6 +103904,10 @@
 				"*"
 			]
 		},
+		"docDims": {
+			"SX": "(N)",
+			"SY": "(N)"
+		},
 		"kind": "function",
 		"package": "blas",
 		"quick": [
@@ -103249,7 +103994,7 @@
 			"LDA": "INTEGER",
 			"N": "INTEGER",
 			"NA": "INTEGER",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"X": "DOUBLE PRECISION"
 		}
 	},
@@ -103598,7 +104343,7 @@
 			"NP": "INTEGER",
 			"RITZ": "DOUBLE PRECISION",
 			"SHIFTS": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER"
+			"WHICH": "CHARACTER*2"
 		}
 	},
 	"dsortr": {
@@ -103624,7 +104369,7 @@
 		"types": {
 			"APPLY": "LOGICAL",
 			"N": "INTEGER",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"X1": "DOUBLE PRECISION",
 			"X2": "DOUBLE PRECISION"
 		}
@@ -117172,6 +117917,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LDAQ": [
@@ -117352,6 +118106,15 @@
 			"B": "(LDB,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -117793,6 +118556,29 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			},
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(LDWORK,N)",
+					"R": "(LDWORK,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -123263,6 +124049,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "1.0E+0",
@@ -128279,6 +129081,15 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -128462,6 +129273,15 @@
 			"C": "(LDC,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,M)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(LDV,M)",
+					"R": "(LDV,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -129095,6 +129915,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -138450,6 +139286,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "1.0E+0",
@@ -138902,6 +139754,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -143002,6 +143870,15 @@
 			"T": null,
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -146471,6 +147348,22 @@
 			"V": "(1+(M-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(1+(M-1)*abs(INCV))",
+					"R": "(1+(N-1)*abs(INCV))"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -146549,6 +147442,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -146788,6 +147690,15 @@
 			"TAU": "(K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -146841,6 +147752,22 @@
 			"C": "(LDC,N)",
 			"V": "(M)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(M)",
+					"R": "(N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -148112,6 +149039,15 @@
 			"V": "(1+(L-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -148277,6 +149213,15 @@
 			"T": "(LDT,K)",
 			"TAU": "(K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -150383,6 +151328,22 @@
 			"C": "(M-1)",
 			"S": "(M-1)"
 		},
+		"docDimsCond": {
+			"C": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"S": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -152071,6 +153032,29 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"AP": {
+				"cases": {
+					"L": "(M*(M+1)/2)",
+					"R": "(N*(N+1)/2)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -154214,6 +155198,15 @@
 			"TAU": "(MIN(M,K))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"TAU": {
+				"cases": {
+					"P": "(min(N,K))",
+					"Q": "(min(M,K))"
+				},
+				"flag": "VECT"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -155452,6 +156445,15 @@
 			"Q": "(LDQ,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"Q": {
+				"cases": {
+					"L": "(LDQ,M)",
+					"R": "(LDQ,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -155598,6 +156600,15 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -155730,6 +156741,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -155878,6 +156898,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(MIN(NQ,K))",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"P": "(LDA,nq)",
+					"Q": "(LDA,min(nq,K))"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -156052,6 +157081,22 @@
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -156204,6 +157249,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -156344,6 +157405,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -156816,6 +157886,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -156956,6 +158042,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -157098,6 +158200,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -157266,6 +158377,15 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -157423,6 +158543,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -177263,6 +178399,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LDAQ": [
@@ -177443,6 +178588,15 @@
 			"B": "(LDB,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -177884,6 +179038,29 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			},
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(LDWORK,N)",
+					"R": "(LDWORK,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -182307,6 +183484,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -187498,6 +188691,15 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -187681,6 +188883,15 @@
 			"C": "(LDC,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,M)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(LDV,M)",
+					"R": "(LDV,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -188326,6 +189537,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -208953,6 +210180,22 @@
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
 		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"ONE": "1.0D+0",
@@ -209511,6 +210754,22 @@
 			"A": "(LDA,N)",
 			"X": "(1+(N-1)*ABS(INCX))",
 			"Y": "(1+(M-1)*ABS(INCY))"
+		},
+		"docDimsCond": {
+			"X": {
+				"cases": {
+					"*": "(1+(m-1)*abs(INCX))",
+					"N": "(1+(n-1)*abs(INCX))"
+				},
+				"flag": "TRANS"
+			},
+			"Y": {
+				"cases": {
+					"*": "(1+(n-1)*abs(INCY))",
+					"N": "(1+(m-1)*abs(INCY))"
+				},
+				"flag": "TRANS"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -213627,6 +214886,15 @@
 			"T": null,
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -217077,6 +218345,22 @@
 			"V": "(1+(M-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(1+(M-1)*abs(INCV))",
+					"R": "(1+(N-1)*abs(INCV))"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -217155,6 +218439,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -217394,6 +218687,15 @@
 			"TAU": "(K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -217447,6 +218749,22 @@
 			"C": "(LDC,N)",
 			"V": "(M)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"L": "(M)",
+					"R": "(N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -217910,6 +219228,15 @@
 			"V": "(1+(L-1)*ABS(INCV))",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -218075,6 +219402,15 @@
 			"T": "(LDT,K)",
 			"TAU": "(K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,N)"
+				},
+				"flag": "STOREV"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -218372,6 +219708,22 @@
 			"A": "(LDA,N)",
 			"C": "(M-1)",
 			"S": "(M-1)"
+		},
+		"docDimsCond": {
+			"C": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"S": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -232664,6 +234016,15 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LDAQ": [
@@ -232844,6 +234205,15 @@
 			"B": "(LDB,N)",
 			"T": "(LDT,K)",
 			"V": "(LDV,K)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -233285,6 +234655,29 @@
 			"T": "(LDT,K)",
 			"V": "(LDV,K)",
 			"WORK": "(LDWORK,N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,N)",
+					"R": "(LDA,K)"
+				},
+				"flag": "SIDE"
+			},
+			"V": {
+				"cases": {
+					"C": "(LDV,K)",
+					"R": "(LDV,M)"
+				},
+				"flag": "STOREV"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(LDWORK,N)",
+					"R": "(LDWORK,K)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"package": "lapack",
@@ -238233,6 +239626,15 @@
 			"TAU": "(MIN(M,K))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"TAU": {
+				"cases": {
+					"P": "(min(N,K))",
+					"Q": "(min(M,K))"
+				},
+				"flag": "VECT"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -239471,6 +240873,15 @@
 			"Q": "(LDQ,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"Q": {
+				"cases": {
+					"L": "(LDQ,M)",
+					"R": "(LDQ,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -239617,6 +241028,15 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -239749,6 +241169,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -239898,6 +241327,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(MIN(NQ,K))",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"P": "(LDA,nq)",
+					"Q": "(LDA,min(nq,K))"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -240072,6 +241510,22 @@
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -240224,6 +241678,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -240364,6 +241834,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -240836,6 +242315,22 @@
 			"TAU": "(K)",
 			"WORK": "(N)"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -240976,6 +242471,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -241118,6 +242629,15 @@
 			"C": "(LDC,N)",
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -241286,6 +242806,15 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -241443,6 +242972,22 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"A": {
+				"cases": {
+					"L": "(LDA,M)",
+					"R": "(LDA,N)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -241662,6 +243207,29 @@
 			"C": "(LDC,N)",
 			"TAU": "(M-1)",
 			"WORK": "(N)"
+		},
+		"docDimsCond": {
+			"AP": {
+				"cases": {
+					"L": "(M*(M+1)/2)",
+					"R": "(N*(N+1)/2)"
+				},
+				"flag": "SIDE"
+			},
+			"TAU": {
+				"cases": {
+					"L": "(M-1)",
+					"R": "(N-1)"
+				},
+				"flag": "SIDE"
+			},
+			"WORK": {
+				"cases": {
+					"L": "(N)",
+					"R": "(M)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {

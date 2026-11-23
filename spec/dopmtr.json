@@ -59,8 +59,8 @@
 				"M*(M+1)/2"
 			],
 			"length": {
-				"fortran": "M*(M+1)/2",
-				"js": "trunc( M * (M + 1) / 2 )"
+				"fortran": "(M*(M+1)/2) if SIDE = 'L' or (N*(N+1)/2) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )"
 			}
 		},
 		{
@@ -74,8 +74,8 @@
 				"M-1"
 			],
 			"length": {
-				"fortran": "M-1",
-				"js": "M - 1"
+				"fortran": "(M-1) if SIDE = 'L' or (N-1) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? M - 1 : N - 1"
 			}
 		},
 		{
@@ -119,8 +119,8 @@
 				"N"
 			],
 			"length": {
-				"fortran": "N",
-				"js": "N"
+				"fortran": "(N) if SIDE = 'L' or (M) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? N : M"
 			},
 			"minLength": {
 				"fortran": "N",

@@ -400,7 +400,8 @@ function evalSpec( expr, names, args ) {
 	}
 	const env = {};
 	names.forEach( ( n, i ) => {
-		if ( typeof args[ i ] === 'number' ) {
+		// Numbers and option strings (a flag-conditional length, ticket 0062).
+		if ( typeof args[ i ] === 'number' || typeof args[ i ] === 'string' ) {
 			env[ n ] = args[ i ];
 			env[ n.toLowerCase() ] = args[ i ];
 			env[ n.toUpperCase() ] = args[ i ];
@@ -585,6 +586,10 @@ function candidates( v ) {
 	}
 	if ( v && ( ArrayBuffer.isView( v ) || isComplexArray( v ) ) ) {
 		return [ null, new v.constructor( 0 ) ];
+	}
+	// An in/out option held in a one-element array (zposvx's `equed`).
+	if ( Array.isArray( v ) && v.length && typeof v[ 0 ] === 'string' ) {
+		return [ [ '__invalid__' ] ];
 	}
 	return [];
 }

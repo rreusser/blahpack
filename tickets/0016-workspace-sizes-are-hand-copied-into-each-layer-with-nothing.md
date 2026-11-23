@@ -21,6 +21,8 @@ The `work-assert` conformance check confirms only that *a* guard exists. The har
 
 - Ticket 0072's fixes (2026-11-23) size seven orthogonal-generator wrappers' `WORK = null` allocation as `LDWORK*32` when blocked. That 32 must equal the `NB` constant in each delegate's `base.js` (dorglq, dorgrq, dorgtr, zunglq, zungqr, zungtr, as zungbr already did). Nothing ties the literal to the constant; exporting a workspace-size function from `base.js` would.
 
+- The JS dgehrd, dormqr, zgehrd and zunmqr choose their blocked code from NB = 32 alone and ignore LWORK. So the reference minimum LWORK of their callers is not enough in JS. Example: dlaqr2/dlaqr3/zlaqr3 at 2*NW. An ndarray call with exactly that WORK and NS > 33 returns NaN (dlaqr2, N = 50, nw = 40, WORK of 80). The wrappers now allocate 33*nw + 2080 to cover the blocked path (ticket 0072), but `ndarray.js` still accepts 2*nw, and the JSDoc still states it. zlaqr4 sizes its tuning from `WORK.length`, so its results depend on the caller's buffer size rather than on an explicit LWORK. Reported by a wave-3 agent.
+
 ## Reproduce
 
 ```bash

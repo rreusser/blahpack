@@ -47,6 +47,9 @@
 		"bin/conformance.js": {
 			"kind": "gate"
 		},
+		"bin/coverage.mjs": {
+			"kind": "gate"
+		},
 		"bin/deps.py": {
 			"kind": "tool",
 			"why": "prints a routine dependency tree"
@@ -238,7 +241,7 @@
 		},
 		"npm:conformance:full": {
 			"kind": "ticket",
-			"ticket": "0033"
+			"ticket": "0069"
 		},
 		"npm:dev": {
 			"kind": "tool",

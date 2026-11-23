@@ -87,6 +87,26 @@ jobs:
       - name: Every WORK = null allocation in a changed wrapper is sufficient
         run: node bin/workspace-guard.mjs --changed --check
 
+  # CONVENTIONS T3/T4 (tickets 0033, 0064): every changed module's lib/ files
+  # meet their per-file coverage floor under the module's own tests. The
+  # wrapper and ndarray.js must be fully covered (both orders, the
+  # WORK = null branch, every validation throw); base.js >= 90% lines and
+  # >= 85% branches.
+  coverage:
+    name: Coverage (changed modules)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every lib/ file of a changed module meets its coverage floor
+        run: node bin/coverage.mjs --changed --check --uncovered
+
   conformance:
     name: Conformance
     runs-on: ubuntu-latest

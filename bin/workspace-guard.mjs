@@ -14,8 +14,10 @@
 * region of sentinels past its end. A changed sentinel means the routine
 * wrote past what the wrapper allocated. Test failures caused by forcing
 * null (a test reading WORK as output, say) are ignored; only guard
-* violations count. A module whose tests never reach the allocation is
-* reported as unexercised.
+* violations count. A module is reported as unexercised unless the
+* allocation is reached from a test that passes and does not expect a throw
+* (each top-level `test()` in the module's test files is wrapped to record
+* this; ticket 0066).
 *
 * Usage:
 *   node bin/workspace-guard.mjs <routine> [...]
@@ -84,13 +86,17 @@ function analyze( r ) {
 	const env = Object.assign( {}, process.env, {
 		'NODE_OPTIONS': ( ( process.env.NODE_OPTIONS || '' ) + ' --import=' + pathToFileURL( LOADER ).href ).trim(),
 		'WS_GUARD_TARGET': pathToFileURL( wrapper ).href,
-		'WS_GUARD_REPORT': report
+		'WS_GUARD_REPORT': report,
+		'WS_GUARD_TESTDIR': pathToFileURL( tdir ).href + '/'
 	});
 	spawnSync( process.execPath, [ '--test', '--test-reporter=dot', ...files ], { 'cwd': ROOT, 'timeout': 180000, 'encoding': 'utf8', 'env': env } );
 	const rows = fs.existsSync( report ) ? fs.readFileSync( report, 'utf8' ).trim().split( '\n' ).filter( Boolean ).map( ( l ) => JSON.parse( l ) ) : [];
 	fs.rmSync( path.dirname( report ), { 'recursive': true, 'force': true } );
 	const bad = rows.filter( ( x ) => x.overrun );
-	return { 'routine': r, 'exercised': rows.length, 'overruns': bad };
+	// `reached`: allocations made at all (including from throw tests and
+	// failing tests); `exercised`: allocations made inside a passing test that
+	// does not expect a throw (ticket 0066).
+	return { 'routine': r, 'reached': rows.length, 'exercised': rows.filter( ( x ) => x.verified ).length, 'overruns': bad };
 }
 
 function main( argv ) {
@@ -120,7 +126,7 @@ function main( argv ) {
 			const o = x.overruns[ 0 ];
 			console.log( 'INSUFFICIENT  ' + o.tag + '  allocated ' + o.n + ', written up to ' + ( o.n + o.lastBeyond + 1 ) + ' elements (' + x.overruns.length + ' call(s))' );
 		});
-		unexercised.forEach( ( x ) => console.log( 'unexercised   ' + x.routine + '  (no test reaches the null-workspace allocation)' ) );
+		unexercised.forEach( ( x ) => console.log( 'unexercised   ' + x.routine + '  (' + ( x.reached ? 'reached only from throw tests or failing tests' : 'no test reaches the null-workspace allocation' ) + ')' ) );
 		console.log( '\n' + res.length + ' wrappers with null-workspace allocations, ' + bad.length + ' insufficient, ' + unexercised.length + ' unexercised' );
 	}
 	if ( check && bad.length ) {

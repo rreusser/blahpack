@@ -65,8 +65,41 @@ globalThis.__wsGuard = function wsGuard( Ctor, size, tag ) {
 	for ( let i = g.from; i < g.end; i++ ) {
 		g.view[ i ] = g.sentinel;
 	}
-	allocs.push( { 'tag': tag, 'n': n, 'g': g } );
+	allocs.push( { 'tag': tag, 'n': n, 'g': g, 'test': globalThis.__wsCurrentTest || null } );
 	return clampLength( arr, n );
+};
+
+// Wraps each top-level `test( name, fn )` of the module's own test files
+// (rewritten by the load hook below), so an allocation knows which test made
+// it. Only an allocation made inside a test that PASSED and does not expect a
+// throw counts as verified: a throw test that happens to get past validation
+// with junk inputs reaches the allocation but checks nothing (ticket 0066).
+globalThis.__wsTestWrap = function wsTestWrap( expectsThrow, fn ) {
+	return function wrapped( ...args ) {
+		const ctx = { 'expectsThrow': expectsThrow, 'passed': false };
+		const prev = globalThis.__wsCurrentTest;
+		globalThis.__wsCurrentTest = ctx;
+		let out;
+		try {
+			out = fn.apply( this, args );
+		} catch ( err ) {
+			globalThis.__wsCurrentTest = prev;
+			throw err;
+		}
+		if ( out && typeof out.then === 'function' ) {
+			return out.then( function onPass( v ) {
+				ctx.passed = true;
+				globalThis.__wsCurrentTest = prev;
+				return v;
+			}, function onFail( err ) {
+				globalThis.__wsCurrentTest = prev;
+				throw err;
+			});
+		}
+		ctx.passed = true;
+		globalThis.__wsCurrentTest = prev;
+		return out;
+	};
 };
 
 process.on( 'exit', function onExit() {
@@ -85,7 +118,8 @@ process.on( 'exit', function onExit() {
 				last = i;
 			}
 		}
-		return JSON.stringify( { 'tag': a.tag, 'n': a.n, 'overrun': first >= 0, 'firstBeyond': first - a.g.from, 'lastBeyond': last - a.g.from } );
+		const verified = Boolean( a.test && a.test.passed && !a.test.expectsThrow );
+		return JSON.stringify( { 'tag': a.tag, 'n': a.n, 'verified': verified, 'overrun': first >= 0, 'firstBeyond': first - a.g.from, 'lastBeyond': last - a.g.from } );
 	});
 	if ( lines.length ) {
 		fs.appendFileSync( out, lines.join( '\n' ) + '\n' );
@@ -94,13 +128,43 @@ process.on( 'exit', function onExit() {
 
 // The hook runs in the loader thread; it rewrites the target wrapper's source.
 if ( isMainThread && process.env.WS_GUARD_TARGET ) {
-	register( new URL( import.meta.url ), { 'data': { 'target': process.env.WS_GUARD_TARGET } } );
+	register( new URL( import.meta.url ), { 'data': { 'target': process.env.WS_GUARD_TARGET, 'testDir': process.env.WS_GUARD_TESTDIR } } );
 }
 
 let target = null;
+let testDir = null;
 
 export async function initialize( data ) {
 	target = data && data.target;
+	testDir = data && data.testDir;
+}
+
+// Rewrites `test( name, fn )` at the top level of a test file into
+// `test( name, globalThis.__wsTestWrap( expectsThrow, fn ) )`, where
+// expectsThrow says whether fn's source asserts a throw.
+function wrapTests( src ) {
+	const ast = espree.parse( src, { 'ecmaVersion': 2022, 'sourceType': 'module', 'range': true } );
+	const edits = [];
+	ast.body.forEach( function each( st ) {
+		const c = st.type === 'ExpressionStatement' && st.expression;
+		if ( !c || c.type !== 'CallExpression' || c.callee.type !== 'Identifier' || c.callee.name !== 'test' ) {
+			return;
+		}
+		const fn = c.arguments[ c.arguments.length - 1 ];
+		if ( !fn || ( fn.type !== 'FunctionExpression' && fn.type !== 'ArrowFunctionExpression' ) ) {
+			return;
+		}
+		const body = src.slice( fn.range[ 0 ], fn.range[ 1 ] );
+		const expectsThrow = /\.(throws|rejects)\s*\(/.test( body );
+		edits.push( [ fn.range[ 1 ], fn.range[ 1 ], ' )' ] );
+		edits.push( [ fn.range[ 0 ], fn.range[ 0 ], 'globalThis.__wsTestWrap( ' + expectsThrow + ', ' ] );
+	});
+	edits.sort( ( a, b ) => b[ 0 ] - a[ 0 ] );
+	let out = src;
+	for ( const e of edits ) {
+		out = out.slice( 0, e[ 0 ] ) + e[ 2 ] + out.slice( e[ 1 ] );
+	}
+	return out;
 }
 
 const WORKSPACE = /^[A-Z]*WORK$/;
@@ -163,6 +227,10 @@ export async function load( url, context, nextLoad ) {
 		const res = await nextLoad( url, context );
 		const tag = url.replace( /^.*\/lib\/[a-z]+\/base\//, '' ).replace( /\/lib\/.*$/, '' );
 		return { 'format': 'module', 'source': transform( String( res.source ), tag ), 'shortCircuit': true };
+	}
+	if ( testDir && url.startsWith( testDir ) && /\/test[^/]*\.js$/.test( url ) ) {
+		const res = await nextLoad( url, context );
+		return { 'format': 'module', 'source': wrapTests( String( res.source ) ), 'shortCircuit': true };
 	}
 	return nextLoad( url, context );
 }

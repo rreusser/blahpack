@@ -1,9 +1,10 @@
 ---
 id: 0033
 title: The `base.js` coverage floor (T4) is not checked in CI
-status: open
+status: resolved
 area: ci
 opened: 2026-11-20
+resolved: 2026-11-23
 ---
 
 ## Problem
@@ -23,3 +24,7 @@ CONVENTIONS T4 sets a floor of 90% lines and 85% branches for `base.js`. Its enf
 ```bash
 grep -n 'conformance' .github/workflows/ci.yml; npm run -s conformance:full 2>&1 | tail -5
 ```
+
+## Resolution
+
+The T4 floor is checked in CI by the new 'coverage' job (bin/coverage.mjs --changed --check), per file. The clustered numbers were a measurement bug: the old check ran only test/test.js (two export-shape tests). Unchanged modules below the floor: ticket 0069.

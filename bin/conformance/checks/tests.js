@@ -80,68 +80,46 @@ function check( mod, opts ) {
 		results.push( util.fail( ID + '.no-scaffold-markers', 'No scaffold assertion markers', scaffoldHits.length, locs ) );
 	}
 
-	// 3. Coverage (opt-in, expensive)
+	// 3. Coverage (opt-in, expensive). Measured by bin/coverage.mjs over ALL
+	// of the module's tests, per file in lib/ (wrapper and ndarray included;
+	// ticket 0064). It used to run only test/test.js (two export-shape tests)
+	// and read only the base.js row, so it never measured anything real.
 	if ( opts && opts.coverage ) {
+		var cov = childProcess.spawnSync( process.execPath, [ path.join( util.ROOT, 'bin', 'coverage.mjs' ), '--json', path.basename( mod.dir ) ], {
+			cwd: util.ROOT,
+			encoding: 'utf8',
+			timeout: 600000
+		});
+		var measured = null;
 		try {
-			var output = childProcess.execSync(
-				'node --test --experimental-test-coverage ' + JSON.stringify( testPath ),
-				{
-					cwd: util.ROOT,
-					encoding: 'utf8',
-					timeout: 120000,
-					stdio: [ 'pipe', 'pipe', 'pipe' ]
-				}
-			);
-			var stderr = '';
-			try {
-				stderr = childProcess.execSync(
-					'node --test --experimental-test-coverage ' + JSON.stringify( testPath ),
-					{
-						cwd: util.ROOT,
-						encoding: 'utf8',
-						timeout: 120000,
-						stdio: [ 'pipe', 'pipe', 'pipe' ]
-					}
-				);
-			} catch ( e2 ) {
-				stderr = ( e2.stderr || '' ) + ( e2.stdout || '' );
-			}
-			var allOutput = output + '\n' + stderr;
-
-			// Parse coverage from output — look for base.js line coverage
-			var lineMatch = allOutput.match( /base\.js\s*\|\s*([\d.]+)/);
-			var branchMatch = allOutput.match( /base\.js\s*\|[\s\d.]+\|\s*([\d.]+)/);
-			var lineCov = lineMatch ? parseFloat( lineMatch[ 1 ] ) : -1;
-			var branchCov = branchMatch ? parseFloat( branchMatch[ 1 ] ) : -1;
-
-			if ( lineCov >= 90 ) {
-				results.push( util.pass( ID + '.coverage-line', 'Line coverage >= 90% (' + lineCov.toFixed( 1 ) + '%)' ) );
-			} else if ( lineCov >= 0 ) {
-				results.push( util.fail(
-					ID + '.coverage-line',
-					'Line coverage >= 90%',
-					1, [ 'base.js' ],
-					'Line coverage: ' + lineCov.toFixed( 1 ) + '%'
-				));
-			} else {
-				results.push( util.warn( ID + '.coverage-line', 'Line coverage >= 90%', 1, [], 'Could not parse coverage' ) );
-			}
-
-			if ( branchCov >= 85 ) {
-				results.push( util.pass( ID + '.coverage-branch', 'Branch coverage >= 85% (' + branchCov.toFixed( 1 ) + '%)' ) );
-			} else if ( branchCov >= 0 ) {
-				results.push( util.fail(
-					ID + '.coverage-branch',
-					'Branch coverage >= 85%',
-					1, [ 'base.js' ],
-					'Branch coverage: ' + branchCov.toFixed( 1 ) + '%'
-				));
-			} else {
-				results.push( util.warn( ID + '.coverage-branch', 'Branch coverage >= 85%', 1, [], 'Could not parse coverage' ) );
-			}
+			measured = JSON.parse( cov.stdout )[ 0 ];
 		} catch ( e ) {
-			results.push( util.warn( ID + '.coverage-line', 'Line coverage >= 90%', 1, [], 'Coverage run failed' ) );
-			results.push( util.warn( ID + '.coverage-branch', 'Branch coverage >= 85%', 1, [], 'Coverage run failed' ) );
+			measured = null;
+		}
+		if ( !measured || measured.error ) {
+			results.push( util.warn( ID + '.coverage-line', 'Per-file line coverage', 1, [], 'Coverage run failed' + ( measured && measured.error ? ': ' + measured.error : '' ) ) );
+			results.push( util.warn( ID + '.coverage-branch', 'Per-file branch coverage', 1, [], 'Coverage run failed' ) );
+		} else {
+			var lowLines = measured.files.filter( function low( f ) {
+				return f.lines < f.min.lines;
+			});
+			var lowBranches = measured.files.filter( function low( f ) {
+				return f.branches < f.min.branches;
+			});
+			if ( lowLines.length === 0 ) {
+				results.push( util.pass( ID + '.coverage-line', 'Per-file line coverage at threshold' ) );
+			} else {
+				results.push( util.fail( ID + '.coverage-line', 'Per-file line coverage at threshold', lowLines.length, lowLines.map( function loc( f ) {
+					return path.basename( f.file ) + ' (' + f.lines.toFixed( 1 ) + '% < ' + f.min.lines + '%; uncovered ' + f.uncovered.join( ',' ) + ')';
+				})));
+			}
+			if ( lowBranches.length === 0 ) {
+				results.push( util.pass( ID + '.coverage-branch', 'Per-file branch coverage at threshold' ) );
+			} else {
+				results.push( util.fail( ID + '.coverage-branch', 'Per-file branch coverage at threshold', lowBranches.length, lowBranches.map( function loc( f ) {
+					return path.basename( f.file ) + ' (' + f.branches.toFixed( 1 ) + '% < ' + f.min.branches + '%)';
+				})));
+			}
 		}
 	}
 

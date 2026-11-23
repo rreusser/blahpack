@@ -438,9 +438,9 @@ function docConstraints( src, names, arrays, dims, condDims ) {
 		// `(A) if FLAG = 'x'` alternatives joined by `,`/`or`/`and [at least]`,
 		// optionally ending `(B) otherwise`. Anything else (a later sentence
 		// such as dlatrd's `TAU(n-nb:n-1) if UPLO = 'U'`) is not an extent.
-		var alt = /\(((?:[^():]|\((?:[^():]|\([^():]*\))*\))*)\)\s*,?\s*(?:if|when)\s+(\w+)\s*(?:=|\.EQ\.)\s*'(\w)'(?:\s*or\s*'\w')?/iy;
+		var alt = /\(((?:[^():]|\((?:[^():]|\([^():]*\))*\))*)\)\s*,?\s*(?:if|when)\s+(\w+)\s*(?:=|\.EQ\.)\s*'(\w)'(?:\s*or\s*'(\w)')?/iy;
 		var other = /\(((?:[^():]|\((?:[^():]|\([^():]*\))*\))*)\)\s*otherwise/iy;
-		var sep = /[\s,;]*(?:(?:or|and)\b)?\s*(?:at\s+least\b)?\s*/iy;
+		var sep = /[\s,;]*(?:(?:or|and)\b)?\s*(?:dimension\b)?\s*(?:at\s+least\b)?\s*/iy;
 		var cases = {};
 		var flag = null;
 		var pos = 0;
@@ -456,6 +456,11 @@ function docConstraints( src, names, arrays, dims, condDims ) {
 			}
 			flag = c[ 2 ].toUpperCase();
 			cases[ c[ 3 ].toUpperCase() ] = '(' + c[ 1 ].replace( /\s+/g, '' ) + ')';
+			// `if JOB = 'L' or 'R'` names two letters (ddisna); `or 'n'` is
+			// the same letter in lower case (BLAS TRANS).
+			if ( c[ 4 ] && c[ 4 ].toUpperCase() !== c[ 3 ].toUpperCase() ) {
+				cases[ c[ 4 ].toUpperCase() ] = cases[ c[ 3 ].toUpperCase() ];
+			}
 			sep.lastIndex = alt.lastIndex;
 			sep.exec( text );
 			pos = sep.lastIndex;

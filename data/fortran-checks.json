@@ -729,6 +729,22 @@
 			"RWORK": "(MAX(M,N))",
 			"WORK": "(MAX(M,N))"
 		},
+		"docDimsCond": {
+			"PT": {
+				"cases": {
+					"B": "(LDPT,N)",
+					"P": "(LDPT,N)"
+				},
+				"flag": "VECT"
+			},
+			"Q": {
+				"cases": {
+					"B": "(LDQ,M)",
+					"Q": "(LDQ,M)"
+				},
+				"flag": "VECT"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"KLU1": [
@@ -12833,6 +12849,22 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(2)",
+					"E": "(2)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(2)",
+					"V": "(2)"
+				},
+				"flag": "SENSE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -13566,6 +13598,22 @@
 			"VL": "(LDVL,N)",
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(N)",
+					"E": "(N)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(N)",
+					"V": "(N)"
+				},
+				"flag": "SENSE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -27559,6 +27607,22 @@
 			"VR": "(LDVR,MM)",
 			"W": "(N)",
 			"WORK": "(N*N)"
+		},
+		"docDimsCond": {
+			"IFAILL": {
+				"cases": {
+					"B": "(MM)",
+					"L": "(MM)"
+				},
+				"flag": "SIDE"
+			},
+			"IFAILR": {
+				"cases": {
+					"B": "(MM)",
+					"R": "(MM)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -50902,6 +50966,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"DIF": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -54306,6 +54400,36 @@
 			"VL": "(LDVL,M)",
 			"VR": "(LDVR,M)",
 			"WORK": "(LDWORK,N+6)"
+		},
+		"docDimsCond": {
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -61949,6 +62073,24 @@
 			"D": "(M)",
 			"SEP": "(M)"
 		},
+		"docDimsCond": {
+			"D": {
+				"cases": {
+					"E": "(M)",
+					"L": "(min(M,N))",
+					"R": "(min(M,N))"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"E": "(M)",
+					"L": "(min(M,N))",
+					"R": "(min(M,N))"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"DECR": [
@@ -62198,6 +62340,22 @@
 			"PT": "(LDPT,N)",
 			"Q": "(LDQ,M)",
 			"WORK": "(2*MAX(M,N))"
+		},
+		"docDimsCond": {
+			"PT": {
+				"cases": {
+					"B": "(LDPT,N)",
+					"P": "(LDPT,N)"
+				},
+				"flag": "VECT"
+			},
+			"Q": {
+				"cases": {
+					"B": "(LDQ,M)",
+					"Q": "(LDQ,M)"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -65781,6 +65939,15 @@
 			"WI": "(N)",
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
+		},
+		"docDimsCond": {
+			"IWORK": {
+				"cases": {
+					"E": "(2*N-2)",
+					"N": "(2*N-2)"
+				},
+				"flag": "SENSE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -74077,6 +74244,22 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(2)",
+					"E": "(2)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(2)",
+					"V": "(2)"
+				},
+				"flag": "SENSE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -74811,6 +74994,22 @@
 			"VL": "(LDVL,N)",
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(N)",
+					"E": "(N)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(N)",
+					"V": "(N)"
+				},
+				"flag": "SENSE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -77601,6 +77800,22 @@
 			"WI": "(N)",
 			"WORK": "((N+2)*N)",
 			"WR": "(N)"
+		},
+		"docDimsCond": {
+			"IFAILL": {
+				"cases": {
+					"B": "(MM)",
+					"L": "(MM)"
+				},
+				"flag": "SIDE"
+			},
+			"IFAILR": {
+				"cases": {
+					"B": "(MM)",
+					"R": "(MM)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -117036,6 +117251,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"DIF": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -120503,6 +120748,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(LDWORK,N+6)"
 		},
+		"docDimsCond": {
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"M": [
@@ -123319,6 +123594,24 @@
 			"D": "(M)",
 			"SEP": "(M)"
 		},
+		"docDimsCond": {
+			"D": {
+				"cases": {
+					"E": "(M)",
+					"L": "(min(M,N))",
+					"R": "(min(M,N))"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"E": "(M)",
+					"L": "(min(M,N))",
+					"R": "(min(M,N))"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"DECR": [
@@ -123609,6 +123902,22 @@
 			"PT": "(LDPT,N)",
 			"Q": "(LDQ,M)",
 			"WORK": "(2*MAX(M,N))"
+		},
+		"docDimsCond": {
+			"PT": {
+				"cases": {
+					"B": "(LDPT,N)",
+					"P": "(LDPT,N)"
+				},
+				"flag": "VECT"
+			},
+			"Q": {
+				"cases": {
+					"B": "(LDQ,M)",
+					"Q": "(LDQ,M)"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -127190,6 +127499,15 @@
 			"WI": "(N)",
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
+		},
+		"docDimsCond": {
+			"IWORK": {
+				"cases": {
+					"E": "(2*N-2)",
+					"N": "(2*N-2)"
+				},
+				"flag": "SENSE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -135429,6 +135747,22 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(2)",
+					"E": "(2)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(2)",
+					"V": "(2)"
+				},
+				"flag": "SENSE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -136163,6 +136497,22 @@
 			"VL": "(LDVL,N)",
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(N)",
+					"E": "(N)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(N)",
+					"V": "(N)"
+				},
+				"flag": "SENSE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -138959,6 +139309,22 @@
 			"WI": "(N)",
 			"WORK": "((N+2)*N)",
 			"WR": "(N)"
+		},
+		"docDimsCond": {
+			"IFAILL": {
+				"cases": {
+					"B": "(MM)",
+					"L": "(MM)"
+				},
+				"flag": "SIDE"
+			},
+			"IFAILR": {
+				"cases": {
+					"B": "(MM)",
+					"R": "(MM)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -177518,6 +177884,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"DIF": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -180985,6 +181381,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(LDWORK,N+6)"
 		},
+		"docDimsCond": {
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"M": [
@@ -183044,6 +183470,22 @@
 			"Q": "(LDQ,M)",
 			"RWORK": "(MAX(M,N))",
 			"WORK": "(MAX(M,N))"
+		},
+		"docDimsCond": {
+			"PT": {
+				"cases": {
+					"B": "(LDPT,N)",
+					"P": "(LDPT,N)"
+				},
+				"flag": "VECT"
+			},
+			"Q": {
+				"cases": {
+					"B": "(LDQ,M)",
+					"Q": "(LDQ,M)"
+				},
+				"flag": "VECT"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -195149,6 +195591,22 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(2)",
+					"E": "(2)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(2)",
+					"V": "(2)"
+				},
+				"flag": "SENSE"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -195882,6 +196340,22 @@
 			"VL": "(LDVL,N)",
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
+		},
+		"docDimsCond": {
+			"RCONDE": {
+				"cases": {
+					"B": "(N)",
+					"E": "(N)"
+				},
+				"flag": "SENSE"
+			},
+			"RCONDV": {
+				"cases": {
+					"B": "(N)",
+					"V": "(N)"
+				},
+				"flag": "JOB"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -209875,6 +210349,22 @@
 			"VR": "(LDVR,MM)",
 			"W": "(N)",
 			"WORK": "(N*N)"
+		},
+		"docDimsCond": {
+			"IFAILL": {
+				"cases": {
+					"B": "(MM)",
+					"L": "(MM)"
+				},
+				"flag": "SIDE"
+			},
+			"IFAILR": {
+				"cases": {
+					"B": "(MM)",
+					"R": "(MM)"
+				},
+				"flag": "SIDE"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {
@@ -233151,6 +233641,36 @@
 			"VR": "(LDVR,M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"docDimsCond": {
+			"DIF": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
+		},
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -236555,6 +237075,36 @@
 			"VL": "(LDVL,M)",
 			"VR": "(LDVR,M)",
 			"WORK": "(LDWORK,N+6)"
+		},
+		"docDimsCond": {
+			"S": {
+				"cases": {
+					"B": "(MM)",
+					"E": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"SEP": {
+				"cases": {
+					"B": "(MM)",
+					"V": "(MM)"
+				},
+				"flag": "JOB"
+			},
+			"VL": {
+				"cases": {
+					"B": "(LDVL,M)",
+					"E": "(LDVL,M)"
+				},
+				"flag": "JOB"
+			},
+			"VR": {
+				"cases": {
+					"B": "(LDVR,M)",
+					"E": "(LDVR,M)"
+				},
+				"flag": "JOB"
+			}
 		},
 		"kind": "subroutine",
 		"locals": {

@@ -637,9 +637,17 @@ function build( routine, sig, facts, options ) {
 		if ( !ok || parts.length < 2 ) {
 			return false;
 		}
+		// Branches with the same value as the fallback add nothing.
 		js = parts[ parts.length - 1 ].js;
 		for ( var i = parts.length - 2; i >= 0; i-- ) {
-			js = '( ' + flag.name + ' === \'' + parts[ i ].value + '\' ) ? ' + parts[ i ].js + ' : ' + js;
+			if ( parts[ i ].js !== js ) {
+				js = '( ' + flag.name + ' === \'' + parts[ i ].value + '\' ) ? ' + parts[ i ].js + ' : ' + js;
+			}
+		}
+		if ( js === parts[ parts.length - 1 ].js && parts.every( function same( q ) {
+			return q.js === js;
+		}) ) {
+			return false;
 		}
 		p.length = {
 			'fortran': parts.map( function f( q ) {

@@ -1,9 +1,10 @@
 ---
 id: 0060
 title: Workspace-allocating wrappers can allocate too little, because nothing checks that the size is sufficient (D5c)
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-22
+resolved: 2026-11-22
 ---
 
 ## Problem
@@ -22,3 +23,7 @@ CONVENTIONS D5c: a `<routine>.js` wrapper "must accept `null` and then allocate 
 ```bash
 grep -rn "set correct size" lib/*/base/*/lib/*.js | wc -l
 ```
+
+## Resolution
+
+D5c sufficiency now has an enforcer: bin/workspace-guard.mjs (CI job workspace) reruns each changed module's own tests with every null-allocated workspace forced to null and sentinel-guarded, and fails on any write past the allocation. Fixed the 10 length-1 placeholders using the reference's SIDE-conditional sizes (dlarf, dopmtr, dorm2l, dorm2r, dorml2, dormr2, dormr3, dtpmqrt, dtprfb, zgemqrt), plus ztrsen (size did not depend on JOB or M; found in the same survey) and four undersized allocations the guard found: ztgsen (WORK and IWORK of length 1), dorbdb2 and zunbdb2 (M-Q instead of 1+MAX(P-1,M-P,Q-1)), dlaqz4 (N instead of N*NBLOCK_DESIRED). Each of the 12 with a direct test (test/harness/nullwork.js) fails on the old code; across 420 allocating wrappers the corpus run reports 0 overruns. Root causes: spec flattening of SIDE-conditional sizes (ticket 0062) and wrappers with no valid-input tests, 270 unexercised (ticket 0063).

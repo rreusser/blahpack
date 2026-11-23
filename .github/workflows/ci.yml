@@ -68,6 +68,25 @@ jobs:
       - name: Every early loop exit in a changed module is pinned by a test
         run: node bin/break-mutants.mjs --changed --check
 
+  # CONVENTIONS D5c (ticket 0060): a wrapper given WORK = null must allocate
+  # enough. For every changed module, the module's own tests are rerun with
+  # each null-allocated workspace forced to null and guarded by a sentinel
+  # region; any write past the allocation fails the job.
+  workspace:
+    name: Workspace allocation (changed modules)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every WORK = null allocation in a changed wrapper is sufficient
+        run: node bin/workspace-guard.mjs --changed --check
+
   conformance:
     name: Conformance
     runs-on: ubuntu-latest

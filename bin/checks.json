@@ -185,6 +185,13 @@
 			"kind": "ticket",
 			"ticket": "0034"
 		},
+		"bin/workspace-guard-loader.mjs": {
+			"kind": "part",
+			"of": "bin/workspace-guard.mjs"
+		},
+		"bin/workspace-guard.mjs": {
+			"kind": "gate"
+		},
 		"lint/no-fortran-source.test.cjs": {
 			"kind": "gate"
 		},

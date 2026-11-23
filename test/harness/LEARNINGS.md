@@ -2589,3 +2589,58 @@ Keep entries short. Newest first.
 - **Where else**: the real sibling `dsbgst` uses local scratch for DLARTG and
   correct DLARTV rows. Across the corpus, `zgbbrd` and `zhbtrd` also route
   ZLARTG's R to local scratch, as the reference does.
+
+## 2026-11-22 — Public wrappers given `WORK = null` allocated too little, and typed arrays dropped the overflow silently (resolves ticket 0060)
+
+- **What**: 15 `<routine>.js` wrappers allocated an insufficient workspace
+  when the caller passed `null`. Writes past a typed array's end are no-ops
+  and reads return `undefined`, so results were NaN or quietly wrong with no
+  error. Example: `dlarf( 'column-major', 'left', 3, 3, v, 1, 1.5, C, 3, null )`
+  returned NaN in 6 of 9 outputs.
+- **Instances**:
+  - Ten length-1 placeholders left by the caller-owns-WORK codemod
+    (d9987da56), each under a "set correct size" comment: `dlarf`, `dopmtr`,
+    `dorm2l`, `dorm2r`, `dorml2`, `dormr2`, `dormr3`, `dtpmqrt`, `dtprfb`,
+    `zgemqrt`. The reference size depends on SIDE: `(N)` if SIDE = 'L', `(M)`
+    if SIDE = 'R'.
+  - `ztrsen`, length 1; the reference LWORK depends on JOB and on M, the
+    number of selected eigenvalues.
+  - Four found by the new guard: `ztgsen` (WORK and IWORK of length 1);
+    `dorbdb2`/`zunbdb2` (M-Q instead of LWORKMIN = 1+MAX(P-1,M-P,Q-1)); and
+    `dlaqz4` (N instead of N*NBLOCK_DESIRED).
+- **Repro / tests**: `test/harness/nullwork.js` calls a wrapper on identical
+  inputs with `WORK = null` and with an ample workspace, and requires
+  bit-identical outputs. Tests in the 12 wrappers without one (both sides; every JOB of
+  `ztrsen`; IJOB 0-5 of `ztgsen` with a proper subset selected) fail on the
+  old code. `dorbdb2`, `zunbdb2` and `dlaqz4` were already exercised by their
+  own tests, so the guard covers them.
+- **Bug class**: `workspace-undersized-on-null` (an allocation copied from
+  one branch of a conditional reference size, or a placeholder never sized).
+- **What allowed it**: CONVENTIONS D5c says "sufficient", but its enforcers
+  checked only that a null branch exists. The spec records one branch of
+  SIDE-conditional sizes (ticket 0062), so it could not serve as the
+  reference. The wrapper tests only checked argument errors, so no test
+  called the null branch (ticket 0063: 270 of 420 allocating wrappers are
+  still unexercised).
+- **Enforcer**: `bin/workspace-guard.mjs` (CI job `workspace`, changed
+  modules). It reruns a module's own tests with each null-allocated workspace
+  forced to `null` and allocated through a sentinel guard region. Any changed
+  sentinel fails the job.
+- **Harness lessons (the guard's own bugs, found before it shipped)**:
+  1. Routines that size their blocking from `WORK.length` (`zgebrd`'s lwork)
+     legitimately used the guard region. That gave false overruns in
+     `zgelss`, `dorbdb2`, `zunbdb2` and `dlaqz4`. Fix: the guarded array
+     reports `length = n`.
+  2. `zgelss` re-bases with `WORK.subarray( offsetWork )`, which rebuilt the
+     full length. Fix: `subarray` keeps the clamp but still extends into the
+     guard.
+  3. Clamping `length` also cut short the exit scan for real arrays (the
+     scan looped to `view.length`), so the guard missed everything real-typed
+     until the old `dlarf` was checked again. Fix: record the real extent
+     before clamping.
+
+  Every guard change was re-verified against a known-bad wrapper: run the
+  old code and require the guard to fail.
+- **Where else**: any wrapper that sizes a workspace from a conditional
+  reference formula. The corpus run (420 wrappers) reports 0 overruns in the
+  150 that are exercised. The other 270 are unchecked until ticket 0063.

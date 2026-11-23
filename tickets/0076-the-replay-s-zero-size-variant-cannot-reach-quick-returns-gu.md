@@ -14,6 +14,8 @@ The wrapper replay's `zero-size` variant sets one dimension to 0 and requires th
 
 - `zgehrd`'s `ndarray.js` returned `undefined` for N = 0, while `base.js` and the wrapper return 0. `node bin/wrapper-replay.mjs zgehrd --check` passed on that code. A wave-1 agent found it through coverage (the `N === 0` branch was never taken) and fixed it in the branch for ticket 0068.
 
+- Quick-return bugs that both layers share are invisible to the zero-size variant, because `ndarray.js` and the wrapper share `base.js` and agree. dgbsvx, dpbsvx and zpbsvx returned early for N = 0 or NRHS = 0, where the reference has no quick return. A was not factored and RCOND, FERR and BERR were left unset (fixed by a wave-3 agent, tests fail on the old code). Catching this class needs the reference's zero-size outputs (for example RCOND = 1 and FERR = BERR = 0 for the expert drivers), e.g. from Fortran fixtures at N = 0.
+
 ## Reproduce
 
 ```bash

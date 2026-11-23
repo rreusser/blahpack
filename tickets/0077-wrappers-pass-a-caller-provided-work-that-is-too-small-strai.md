@@ -15,6 +15,8 @@ When the caller supplies `WORK` (non-null) to a `<routine>.js` wrapper, some wra
 - `dormql`, `dormrq`, `dormtr` and `zunmtr` wrappers (`lib/lapack/base/<r>/lib/<r>.js`) pass a non-null `WORK` to `base.js` unchecked; reported by the wave-1 agent for ticket 0072.
 - `zunmlq.js` and `zunmrq.js` check the length and throw RangeError.
 
+- `zpbsvx`'s `ndarray.js` checks the length of WORK but not of RWORK, which needs N: `RWORK = new Float64Array( 1 )` with N = 3 raises no error. Reported by a wave-3 agent.
+
 ## Reproduce
 
 ```bash

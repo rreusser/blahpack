@@ -15,6 +15,12 @@ opened: 2026-11-23
 - 125 checks across the specs have `js: null`.
 - `spec/dstebz.json` check INFO = -1 (`IRANGE.LE.0`, where IRANGE is decoded from RANGE) has no JS. dstebz's `ndarray.js` and wrapper check RANGE by hand, after ORDER and N rather than first as in the reference, and the wrapper does so after allocating its workspace. Reported by a wave-2 agent for ticket 0069.
 
+- The expert drivers' scale-factor checks are missing from the generated prologues:
+  - dgbsvx INFO = -13 and -14 (with FACT = 'F', R or C must be > 0 when EQUED calls for it; dgbsvx.f lines 459 and 474);
+  - dpbsvx and zpbsvx INFO = -11 (S > 0 when FACT = 'F', EQUED = 'Y').
+
+  A zero scale factor is accepted and the solve continues with it. Reported by a wave-3 agent.
+
 ## Reproduce
 
 ```bash

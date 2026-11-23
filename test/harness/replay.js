@@ -8,21 +8,26 @@
 * 2.  Map: `lint/lib/spec.cjs` projects the spec into both signatures
 *     (`baseGroups`), so each `ndarray` argument group (matrix: A, s1, s2,
 *     o; vector: x, s, o; workspace) maps onto its wrapper arguments
-*     (A, LDA; x, stride; WORK).
-* 3.  Replay each call through the wrapper and require BIT-IDENTICAL results
-*     (every non-workspace array and the return value) in these variants:
+*     (A, LDA; x, stride; WORK). `order` comes from the matrix strides.
+* 3.  Replay each sampled call through the wrapper:
 *
-*     -   `native`: same storage, `order` taken from the matrix strides, every
-*         workspace `null` (the wrapper must allocate enough, CONVENTIONS D5c).
-*     -   `negative-stride:<x>`: one vector at a time is rebuilt with a
-*         negative stride. Its true length is measured (which elements the
-*         call reads or writes), the expected result is `ndarray` with the
-*         offset that length implies, and the wrapper must compute the same
-*         offset itself. Unused storage is NaN, so a wrong offset is loud.
-*     -   `transposed`: matrices copied into the other storage order.
+*     -   `exact`: the recorded workspaces are passed. Every non-workspace
+*         array and the return value must be BIT-IDENTICAL.
+*     -   `null-work`: every workspace `null` (CONVENTIONS D5c). A routine may
+*         size its blocking from the workspace it gets, so rounding-level
+*         differences are recorded (`rounding`) but not failures; NaN, a
+*         changed integer output or info, or a large difference fails.
+*     -   length audit: the wrapper runs with its `stride2offset( n, stride )`
+*         calls instrumented (test/harness/replay-offsets.mjs), giving the
+*         length `n` it assumes for each vector. The call's actual extent is
+*         measured by poisoning (a lower bound on the true length). A wrapper
+*         length below it is a bug: with a negative stride the wrapper would
+*         address the wrong elements. A wrapper length that differs from the
+*         spec's is reported as a disagreement.
 *
-* A wrapper that throws on a call `ndarray` accepted is reported as
-* `rejected` (its validation is stricter than the routine's contract).
+* A wrapper that throws on a call `ndarray` accepted is `rejected`, unless
+* the recorded leading dimension is below the spec's row count (a storage
+* the wrapper cannot express, e.g. a one-column matrix with LD 1).
 */
 
 import fs from 'node:fs';
@@ -197,7 +202,7 @@ function orderOf( groups, args ) {
 // `vecOverride[k]` replaces vector group k with { x, stride } (already laid
 // out for the wrapper's own offset computation). Returns null if the call
 // cannot be expressed through the wrapper.
-function toWrapper( spec, groups, args, order, vecOverride ) {
+function toWrapper( spec, groups, args, order, vecOverride, keepWork ) {
 	const out = [];
 	for ( let k = 0; k < groups.length; k++ ) {
 		const g = groups[ k ];
@@ -210,7 +215,14 @@ function toWrapper( spec, groups, args, order, vecOverride ) {
 			out.push( a[ 0 ].subarray( a[ 3 ] ), ( order === 'column-major' ) ? a[ 2 ] : a[ 1 ] );
 			break;
 		case 'workspace':
-			out.push( null );
+			if ( keepWork ) {
+				if ( a[ 1 ] !== 1 ) {
+					return null;
+				}
+				out.push( a[ 0 ].subarray( a[ 2 ] ) );
+			} else {
+				out.push( null );
+			}
 			break;
 		case 'packed':
 			if ( a[ 1 ] !== 1 ) {
@@ -285,7 +297,11 @@ function outputsExcept( args, ret, ai, upto ) {
 		const f = Array.from( flat( x ) );
 		return ( i === ai ) ? f.slice( 0, upto * ( isComplexArray( x ) ? 2 : 1 ) ) : f;
 	});
-	parts.push( isArrayArg( ret ) ? Array.from( flat( ret ) ) : [ ret ] );
+	// A returned argument (BLAS `daxpy` returns `y`) is compared as that
+	// argument, not again as a return value (it would include the poison).
+	if ( !args.includes( ret ) ) {
+		parts.push( isArrayArg( ret ) ? Array.from( flat( ret ) ) : [ ret ] );
+	}
 	return [].concat( ...parts );
 }
 
@@ -341,17 +357,103 @@ function touchedHigh( nd, rec, ai ) {
 	return Math.max( lo - 1, wrote, o );
 }
 
+// Compact description of a recorded call (scalars, array types/lengths).
+function describe( rec, names ) {
+	return rec.map( ( e, i ) => {
+		let v;
+		if ( 'v' in e ) {
+			v = JSON.stringify( e.v );
+		} else if ( e.c ) {
+			v = e.c + '(' + ( e.d.length / 2 ) + ')';
+		} else if ( e.z ) {
+			v = e.z + '(' + e.re + ',' + e.im + ')';
+		} else if ( e.t ) {
+			v = e.t.constructor.name + '(' + e.t.length + ')' + ( ( e.t.length <= 6 ) ? '[' + Array.from( e.t ).join( ',' ) + ']' : '' );
+		} else {
+			v = 'Array(' + e.a.length + ')';
+		}
+		return names[ i ] + '=' + v;
+	}).join( ' ' );
+}
+
+// --- spec expressions --------------------------------------------------
+
+// Evaluate a spec `js` expression (`M`, `max(1,N)`, `min(M,N)`) with the
+// call's scalar arguments; null if it cannot be evaluated.
+function evalSpec( expr, names, args ) {
+	if ( !expr || typeof expr !== 'string' ) {
+		return null;
+	}
+	const env = {};
+	names.forEach( ( n, i ) => {
+		if ( typeof args[ i ] === 'number' ) {
+			env[ n ] = args[ i ];
+			env[ n.toLowerCase() ] = args[ i ];
+			env[ n.toUpperCase() ] = args[ i ];
+		}
+	});
+	const fns = { 'max': Math.max, 'min': Math.min, 'abs': Math.abs, 'floor': Math.floor, 'ceil': Math.ceil };
+	Object.keys( fns ).forEach( ( k ) => {
+		env[ k ] = fns[ k ];
+		env[ k.toUpperCase() ] = fns[ k ];
+	});
+	const keys = Object.keys( env );
+	try {
+		const v = Function( ...keys, '"use strict"; return (' + expr + ');' )( ...keys.map( ( k ) => env[ k ] ) );
+		return ( typeof v === 'number' && Number.isFinite( v ) ) ? v : null;
+	} catch ( e ) {
+		return null;
+	}
+}
+
+// --- comparison with tolerance (null-work) -------------------------------
+
+function classifyDiff( exp, act ) {
+	let worst = 0;
+	for ( let i = 0; i < exp.length; i++ ) {
+		const e = exp[ i ];
+		const a = act[ i ];
+		if ( e === null ) {
+			continue;
+		}
+		if ( a.length !== e.length ) {
+			return 'fail';
+		}
+		let scale = 0;
+		for ( let k = 0; k < e.length; k++ ) {
+			if ( Number.isFinite( e[ k ] ) ) {
+				scale = Math.max( scale, Math.abs( e[ k ] ) );
+			}
+		}
+		for ( let k = 0; k < e.length; k++ ) {
+			if ( Object.is( e[ k ], a[ k ] ) ) {
+				continue;
+			}
+			if ( !Number.isFinite( e[ k ] ) || !Number.isFinite( a[ k ] ) || Number.isInteger( e[ k ] ) !== Number.isInteger( a[ k ] ) ) {
+				return 'fail';
+			}
+			worst = Math.max( worst, Math.abs( e[ k ] - a[ k ] ) / Math.max( scale, 1e-300 ) );
+		}
+	}
+	if ( worst === 0 ) {
+		return 'same';
+	}
+	return ( worst < 1e-10 ) ? 'rounding' : 'fail';
+}
+
 // --- replay --------------------------------------------------------------
 
 /**
-* Replays a module's recorded ndarray calls through its wrapper.
+* Replays a module's recorded ndarray calls through its wrapper. Must run in
+* a process where test/harness/replay-offsets.mjs instruments the wrapper
+* (see runReplay), or the length audit is skipped.
 *
 * @param {string} dir - module directory (lib/<pkg>/base/<routine>)
 * @returns {Promise<Object>} report
 */
 async function replayModule( dir ) {
 	const routine = path.basename( dir );
-	const report = { 'routine': routine, 'recorded': 0, 'replayed': 0, 'variants': 0, 'mismatches': [], 'rejected': [], 'skipped': {} };
+	const report = { 'routine': routine, 'recorded': 0, 'replayed': 0, 'variants': 0, 'mismatches': [], 'rejected': [], 'lengths': [], 'rounding': 0, 'skipped': {} };
 	const skip = function skipReason( why ) {
 		report.skipped[ why ] = ( report.skipped[ why ] || 0 ) + 1;
 	};
@@ -370,7 +472,6 @@ async function replayModule( dir ) {
 		return report;
 	}
 	const groups = layout( spec );
-	const nBase = specLib.base( spec ).length;
 	const baseNames = specLib.base( spec );
 	const workspaceIdx = new Set();
 	groups.forEach( ( g ) => {
@@ -378,14 +479,15 @@ async function replayModule( dir ) {
 			workspaceIdx.add( g.at );
 		}
 	});
+	const lens = globalThis.__replayLens;
+	const probed = {};
 	const recs = record( dir, routine );
 	report.recorded = recs.length;
 	for ( const rec of sample( recs ) ) {
-		if ( rec.length !== nBase ) {
+		if ( rec.length !== baseNames.length ) {
 			skip( 'argument count differs from the spec' );
 			continue;
 		}
-		// Expected: ndarray on the recorded arguments.
 		const expArgs = rec.map( decode );
 		let expRet;
 		try {
@@ -401,98 +503,120 @@ async function replayModule( dir ) {
 			continue;
 		}
 		report.replayed += 1;
+		const plain = rec.map( decode );
 
-		// Variant 1: native order, WORK = null.
-		const actArgs = rec.map( decode );
-		const wargs = toWrapper( spec, groups, actArgs, order, null );
-		if ( wargs === null ) {
-			skip( 'call not expressible through the wrapper' );
-		} else {
+		// Rejection is only meaningful if every recorded LD covers the spec's rows.
+		const ldCoversRows = groups.filter( ( g ) => kindOf( g ) === 'matrix' ).every( ( g ) => {
+			const rows = evalSpec( g.param.rows && g.param.rows.js, baseNames, plain );
+			const ld = ( order === 'column-major' ) ? plain[ g.at + 2 ] : plain[ g.at + 1 ];
+			const cols = evalSpec( g.param.cols && g.param.cols.js, baseNames, plain );
+			const need = ( order === 'column-major' ) ? rows : cols;
+			return need === null || ld >= Math.max( 1, need );
+		});
+		const run = function run( variant, keepWork ) {
+			const actArgs = rec.map( decode );
+			const wargs = toWrapper( spec, groups, actArgs, order, null, keepWork );
+			if ( wargs === null ) {
+				skip( 'call not expressible through the wrapper (' + variant + ')' );
+				return null;
+			}
 			report.variants += 1;
+			if ( lens ) {
+				lens.length = 0;
+			}
 			let actRet;
 			try {
 				actRet = wrapper( ...wargs );
-				const er = sameStorageReturn( expArgs, expRet, actArgs, actRet ) ? SAME : expRet;
-				const d = diff( exp, snapshot( actArgs, workspaceIdx ), er, actRet, baseNames );
-				if ( d ) {
-					report.mismatches.push( { 'variant': 'native ' + order, 'detail': d } );
-				}
 			} catch ( e ) {
-				report.rejected.push( { 'variant': 'native ' + order, 'detail': String( e.message ).slice( 0, 200 ) } );
+				if ( ldCoversRows ) {
+					report.rejected.push( { 'variant': variant + ' ' + order, 'detail': String( e.message ).slice( 0, 200 ) } );
+				} else {
+					skip( 'recorded LD below the spec row count' );
+				}
+				return null;
+			}
+			const er = sameStorageReturn( expArgs, expRet, actArgs, actRet ) ? SAME : expRet;
+			return { 'act': snapshot( actArgs, workspaceIdx ), 'ret': actRet, 'er': er, 'lens': lens ? lens.slice() : [] };
+		};
+
+		// exact: recorded workspaces, bit-identical.
+		const ex = run( 'exact', true );
+		if ( ex ) {
+			const d = diff( exp, ex.act, ex.er, ex.ret, baseNames );
+			if ( d ) {
+				report.mismatches.push( { 'variant': 'exact ' + order, 'detail': d, 'call': describe( rec, baseNames ) } );
 			}
 		}
 
-		// Variant 2: each float vector with a positive stride, rebuilt with a
-		// negative stride.
-		groups.forEach( function eachGroup( g, k ) {
-			if ( kindOf( g ) !== 'vector' || wargs === null ) {
+		// null-work: workspaces allocated by the wrapper.
+		if ( workspaceIdx.size ) {
+			const nw = run( 'null-work', false );
+			if ( nw ) {
+				const d = diff( exp, nw.act, nw.er, nw.ret, baseNames );
+				if ( d ) {
+					const retOk = ( nw.er === SAME ) || retEqual( expRet, nw.ret ) || ( typeof expRet === 'object' && typeof nw.ret === 'object' );
+					const cls = retOk ? classifyDiff( exp, nw.act ) : 'fail';
+					if ( cls === 'rounding' ) {
+						report.rounding += 1;
+					} else {
+						report.mismatches.push( { 'variant': 'null-work ' + order, 'detail': d, 'call': describe( rec, baseNames ) } );
+					}
+				}
+			}
+		}
+
+		// length audit: the wrapper's assumed vector lengths vs the measured
+		// extent (lower bound) and the spec.
+		const used = ex ? ex.lens : [];
+		groups.forEach( function eachGroup( g ) {
+			if ( kindOf( g ) !== 'vector' ) {
 				return;
 			}
 			const ai = g.at;
-			const x0 = rec[ ai ];
-			const s = rec[ ai + 1 ].v;
-			const o = rec[ ai + 2 ].v;
-			const probe = decode( x0 );
-			if ( !isFloat( probe ) || !( s > 0 ) ) {
+			const strideName = g.names[ 1 ];
+			const hit = used.find( ( u ) => u.stride === strideName );
+			if ( !hit ) {
 				return;
 			}
+			const s = plain[ ai + 1 ];
+			const nSpec = evalSpec( g.param.length && g.param.length.js, baseNames, plain );
+			if ( nSpec !== null && nSpec !== hit.n ) {
+				report.lengths.push( { 'kind': 'disagrees-with-spec', 'param': g.param.name, 'wrapper': hit.n, 'spec': nSpec } );
+			}
+			probed[ g.param.name ] = ( probed[ g.param.name ] || 0 ) + 1;
+			if ( !( s > 0 ) || !isFloat( plain[ ai ] ) || probed[ g.param.name ] > 6 ) {
+				return;
+			}
+			const o = plain[ ai + 2 ];
 			const high = touchedHigh( nd, rec, ai );
 			if ( high < 0 || ( high - o ) % s !== 0 ) {
-				skip( 'vector extent not measurable' );
 				return;
 			}
-			const n = ( ( high - o ) / s ) + 1;
-			if ( n < 2 ) {
-				return;
-			}
-			const build = function build() {
-				const src = decode( x0 );
-				const y = new src.constructor( ( ( n - 1 ) * s ) + 1 );
-				poison( y, 0, y.length );
-				const fs2 = flat( src );
-				const fy = flat( y );
-				const c = isComplexArray( src ) ? 2 : 1;
-				for ( let j = 0; j < n; j++ ) {
-					for ( let q = 0; q < c; q++ ) {
-						fy[ ( ( ( n - 1 - j ) * s ) * c ) + q ] = fs2[ ( ( o + ( j * s ) ) * c ) + q ];
-					}
-				}
-				return y;
-			};
-			const eArgs = rec.map( decode );
-			eArgs[ ai ] = build();
-			eArgs[ ai + 1 ] = -s;
-			eArgs[ ai + 2 ] = ( n - 1 ) * s;
-			let eRet;
-			try {
-				eRet = nd( ...eArgs );
-			} catch ( e ) {
-				return;
-			}
-			const e2 = snapshot( eArgs, workspaceIdx );
-			const aArgs = rec.map( decode );
-			const y = build();
-			aArgs[ ai ] = y;
-			const over = {};
-			over[ k ] = { 'x': y, 'stride': -s };
-			const w2 = toWrapper( spec, groups, aArgs, order, over );
-			if ( w2 === null ) {
-				return;
-			}
-			report.variants += 1;
-			try {
-				const aRet = wrapper( ...w2 );
-				const er = sameStorageReturn( eArgs, eRet, aArgs, aRet ) ? SAME : eRet;
-				const d = diff( e2, snapshot( aArgs, workspaceIdx ), er, aRet, baseNames );
-				if ( d ) {
-					report.mismatches.push( { 'variant': 'negative-stride:' + g.param.name + ' (n = ' + n + ')', 'detail': d } );
-				}
-			} catch ( e ) {
-				report.rejected.push( { 'variant': 'negative-stride:' + g.param.name, 'detail': String( e.message ).slice( 0, 200 ) } );
+			const nTouched = ( ( high - o ) / s ) + 1;
+			if ( hit.n < nTouched && nTouched > 1 ) {
+				report.lengths.push( { 'kind': 'shorter-than-touched', 'param': g.param.name, 'wrapper': hit.n, 'touched': nTouched } );
 			}
 		});
 	}
 	return report;
 }
 
-export { replayModule };
+/**
+* Runs replayModule for one module in a child process with the wrapper's
+* offsets instrumented and a timeout.
+*
+* @param {string} dir - module directory
+* @param {number} [timeout=180000] - milliseconds
+* @returns {Object} report
+*/
+function runReplay( dir, timeout ) {
+	const env = Object.assign( {}, process.env, { 'REPLAY_WRAPPER': pathToFileURL( path.join( dir, 'lib', path.basename( dir ) + '.js' ) ).href } );
+	delete env.NODE_TEST_CONTEXT;
+	const res = spawnSync( process.execPath, [ '--import=' + pathToFileURL( path.join( HERE, 'replay-offsets.mjs' ) ).href, path.join( HERE, 'replay-run.mjs' ), dir ], { 'env': env, 'encoding': 'utf8', 'timeout': timeout || 180000, 'maxBuffer': 64 * 1024 * 1024 } );
+	if ( res.error || res.status !== 0 ) {
+		return { 'routine': path.basename( dir ), 'error': ( res.error && res.error.code === 'ETIMEDOUT' ) ? 'timed out' : ( 'exit ' + res.status + ': ' + String( res.stderr ).slice( -300 ) ), 'mismatches': [], 'rejected': [], 'lengths': [], 'variants': 0 };
+	}
+	return JSON.parse( res.stdout );
+}
+
+export { replayModule, runReplay };

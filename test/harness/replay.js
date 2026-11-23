@@ -20,6 +20,12 @@
 *     -   `transposed`: a column-major call replayed in row-major, each
 *         general matrix copied into row-major storage; workspaces `null`.
 *         Same tolerance as `null-work`.
+*     -   `zero-size`: for the first few calls, each dimension set to 0 in
+*         turn; the wrapper and ndarray.js must agree (quick returns).
+*     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of
+*         both forms (generated prologue checks and hand-written ones), a
+*         recorded call with only one argument that statement names made
+*         invalid, swept over the option values it names, must throw E.
 *     -   length audit: the wrapper runs with its `stride2offset( n, stride )`
 *         calls instrumented (test/harness/replay-offsets.mjs), giving the
 *         length `n` it assumes for each vector. The call's actual extent is
@@ -40,6 +46,7 @@ import v8 from 'node:v8';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import * as espree from 'espree';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Complex64Array from '@stdlib/array/complex64/lib/index.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
@@ -444,6 +451,211 @@ function classifyDiff( exp, act ) {
 	return ( worst < 1e-10 ) ? 'rounding' : 'fail';
 }
 
+// --- validation (generated prologue checks) -------------------------------
+
+const VALIDATOR_PATHS = {
+	'isLayout': '@stdlib/blas/base/assert/is-layout/lib/index.js',
+	'isTransposeOperation': '@stdlib/blas/base/assert/is-transpose-operation/lib/index.js',
+	'isMatrixTriangle': '@stdlib/blas/base/assert/is-matrix-triangle/lib/index.js',
+	'isOperationSide': '@stdlib/blas/base/assert/is-operation-side/lib/index.js',
+	'isDiagonalType': '@stdlib/blas/base/assert/is-diagonal-type/lib/index.js',
+	'max': '@stdlib/math/base/special/fast/max/lib/index.js',
+	'min': '@stdlib/math/base/special/fast/min/lib/index.js',
+	'abs': '@stdlib/math/base/special/abs/lib/index.js',
+	'trunc': '@stdlib/math/base/special/trunc/lib/index.js',
+	'real': '@stdlib/complex/float64/real/lib/index.js',
+	'imag': '@stdlib/complex/float64/imag/lib/index.js'
+};
+let VALIDATORS = null;
+
+async function validators() {
+	if ( !VALIDATORS ) {
+		VALIDATORS = {};
+		for ( const k of Object.keys( VALIDATOR_PATHS ) ) {
+			VALIDATORS[ k ] = ( await import( VALIDATOR_PATHS[ k ] ) ).default;
+		}
+	}
+	return VALIDATORS;
+}
+
+function evalTest( test, names, args, fns, prelude ) {
+	const keys = names.concat( Object.keys( fns ) );
+	const vals = args.concat( Object.keys( fns ).map( ( k ) => fns[ k ] ) );
+	try {
+		return Boolean( Function( ...keys, '"use strict"; ' + ( prelude || '' ) + 'return (' + test + ');' )( ...vals ) );
+	} catch ( e ) {
+		return null;
+	}
+}
+
+// The function's own validation statements: every top-level
+// `if ( <cond> ) { throw new <Ctor>( ... ); }` in its body, as
+// { test, ctor, src, idents } (covers hand-written checks the spec prologue
+// does not generate, e.g. non-zero strides).
+function codeChecks( fn ) {
+	const src = '(' + fn.toString() + ')';
+	let ast;
+	try {
+		ast = espree.parse( src, { 'ecmaVersion': 2022, 'range': true } );
+	} catch ( e ) {
+		return [];
+	}
+	const out = [];
+	const text = ( n ) => src.slice( n.range[ 0 ], n.range[ 1 ] );
+	// Walk a block: declarations and assignments become the prelude of later
+	// checks; `if ( c ) { throw … }` is a check; `if ( c ) { … }` without an
+	// else is walked with `c` as a guard on everything inside.
+	( function walk( stmts, guard, prelude ) {
+		stmts.forEach( function each( st ) {
+			// Each prelude statement is independent: a local whose initializer
+			// calls something unavailable here (`stride2offset`) stays
+			// undefined instead of making every later check unevaluable.
+			if ( st.type === 'VariableDeclaration' ) {
+				st.declarations.forEach( ( d ) => {
+					if ( d.id.type === 'Identifier' ) {
+						prelude += 'var ' + d.id.name + ';' + ( d.init ? ' try { ' + d.id.name + ' = ' + text( d.init ) + '; } catch ( e ) {}' : '' ) + '\n';
+					}
+				});
+				return;
+			}
+			if ( st.type === 'ExpressionStatement' && st.expression.type === 'AssignmentExpression' ) {
+				prelude += 'try { ' + text( st ) + ' } catch ( e ) {}\n';
+				return;
+			}
+			if ( st.type !== 'IfStatement' || st.alternate ) {
+				return;
+			}
+			const c = st.consequent;
+			const inner = ( c.type === 'BlockStatement' ) ? c.body : [ c ];
+			const th = ( inner.length === 1 ) ? inner[ 0 ] : null;
+			const cond = guard ? '( ' + guard + ' ) && ( ' + text( st.test ) + ' )' : text( st.test );
+			if ( inner.some( ( x ) => x.type === 'ReturnStatement' ) ) {
+				// An early return: later statements run only when it is not taken.
+				guard = guard ? '( ' + guard + ' ) && !( ' + text( st.test ) + ' )' : '!( ' + text( st.test ) + ' )';
+				return;
+			}
+			if ( th && th.type === 'ThrowStatement' && th.argument.type === 'NewExpression' && th.argument.callee.type === 'Identifier' ) {
+				out.push( {
+					'prelude': prelude,
+					'test': cond,
+					'ctor': th.argument.callee.name,
+					'literals': [ ...text( st ).matchAll( /'([a-z][a-z-]*)'/g ) ].map( ( m ) => m[ 1 ] ),
+					'idents': [ ...new Set( ( text( st ) + ' ' + ( guard || '' ) ).match( /[A-Za-z_]\w*/g ) || [] ) ]
+				});
+				return;
+			}
+			walk( inner, cond, prelude );
+		});
+	})( ast.body[ 0 ].expression.body.body, '', '' );
+	return out;
+}
+
+// Candidate values that may violate a check on argument value `v`.
+function candidates( v ) {
+	if ( typeof v === 'string' ) {
+		return [ '__invalid__' ];
+	}
+	if ( typeof v === 'number' ) {
+		return [ -1, 0, v - 1, v + 1, 1, -2, ( 2 * v ) + 1, 1e6 ];
+	}
+	if ( v && ( ArrayBuffer.isView( v ) || isComplexArray( v ) ) ) {
+		return [ null, new v.constructor( 0 ) ];
+	}
+	return [];
+}
+
+/**
+* For each validation statement of one form, starting from `args` (a valid
+* call in that form), find argument lists where ONLY this statement fires:
+* one argument it names made invalid, swept over the values of every option
+* argument it names (so branches inside its message are reached too). Call
+* `fn` and require the statement's error type.
+*
+* @returns {Array} findings `{ check, detail }` (empty if all pass)
+*/
+function validate( fn, names, args, checks, fns, done, optionValues ) {
+	const out = [];
+	const orderIdx = names.indexOf( 'order' );
+	checks.forEach( function each( c, ci ) {
+		const params = names.map( ( n, i ) => i ).filter( ( i ) => c.idents.includes( names[ i ] ) );
+		const flags = params.filter( ( i ) => typeof args[ i ] === 'string' && i !== orderIdx );
+		// Option sweeps: one value set per mentioned option argument.
+		let combos = [ {} ];
+		flags.forEach( ( fi ) => {
+			const vals = [ ...new Set( [ args[ fi ] ].concat( optionValues[ names[ fi ] ] || [], c.literals ) ) ];
+			const next = [];
+			combos.forEach( ( cb ) => vals.forEach( ( v ) => next.push( Object.assign( {}, cb, { [ fi ]: v } ) ) ) );
+			combos = next.slice( 0, 16 );
+		});
+		// Also an unpinned attempt, so an option argument can itself be the
+		// one made invalid.
+		combos.unshift( {} );
+		let failure = null;
+		combos.forEach( function eachCombo( cb ) {
+			for ( const target of params ) {
+				const key = ci + ':' + target + ':' + JSON.stringify( cb );
+				if ( done.has( key ) ) {
+					return;
+				}
+				const orders = ( orderIdx >= 0 && orderIdx !== target && c.idents.includes( 'order' ) ) ? [ 'column-major', 'row-major' ] : [ null ];
+				for ( const ord of orders ) {
+					for ( const cand of candidates( args[ target ] ) ) {
+						const trial = args.slice();
+						Object.keys( cb ).forEach( ( k ) => {
+							trial[ k ] = cb[ k ];
+						});
+						if ( Object.prototype.hasOwnProperty.call( cb, target ) ) {
+							continue;
+						}
+						trial[ target ] = cand;
+						if ( ord !== null ) {
+							trial[ orderIdx ] = ord;
+							names.forEach( ( n, i ) => {
+								if ( i !== target && /^LD/i.test( n ) && typeof trial[ i ] === 'number' ) {
+									trial[ i ] = 1e6;
+								}
+							});
+						}
+						if ( evalTest( c.test, names, trial, fns, c.prelude ) !== true ) {
+							continue;
+						}
+						let earlier = false;
+						for ( let k = 0; k < ci; k++ ) {
+							if ( evalTest( checks[ k ].test, names, trial, fns, checks[ k ].prelude ) !== false ) {
+								earlier = true;
+								break;
+							}
+						}
+						if ( earlier ) {
+							continue;
+						}
+						let threw = null;
+						try {
+							fn( ...trial );
+						} catch ( e ) {
+							threw = e;
+						}
+						if ( threw && threw.constructor.name === c.ctor ) {
+							done.add( key );
+							done.add( 'check:' + ci );
+							failure = null;
+							return;
+						}
+						// The evaluation does not model every statement before the
+						// check (a wrapper replaces `null` by an allocation), so
+						// keep trying; report only if no candidate throws.
+						failure = failure || { 'check': c.test, 'detail': ( threw ) ? 'threw ' + threw.constructor.name + ' (expected ' + c.ctor + '): ' + String( threw.message ).slice( 0, 120 ) : 'did not throw' };
+					}
+				}
+			}
+		});
+		if ( failure && !done.has( 'check:' + ci ) ) {
+			out.push( failure );
+		}
+	});
+	return out;
+}
+
 // --- replay --------------------------------------------------------------
 
 /**
@@ -484,9 +696,26 @@ async function replayModule( dir, options ) {
 		}
 	});
 	const lens = globalThis.__replayLens;
+	const ndNames = paramNames( nd );
+	const wNames = paramNames( wrapper );
+	const ndChecks = codeChecks( nd );
+	const wChecks = codeChecks( wrapper );
+	// Every option value any recorded call used, by parameter name.
+	const optionValues = {};
+	const ndDone = new Set();
+	const wDone = new Set();
+	const valFindings = [];
 	const probed = {};
 	const recs = opts.recs || record( dir, routine );
 	report.recorded = recs.length;
+	recs.forEach( ( rec ) => rec.forEach( ( e, i ) => {
+		if ( e && typeof e.v === 'string' && baseNames[ i ] ) {
+			( optionValues[ baseNames[ i ] ] = optionValues[ baseNames[ i ] ] || new Set() ).add( e.v );
+		}
+	}));
+	Object.keys( optionValues ).forEach( ( k ) => {
+		optionValues[ k ] = [ ...optionValues[ k ] ];
+	});
 	for ( const rec of sample( recs ) ) {
 		if ( rec.length !== baseNames.length ) {
 			skip( 'argument count differs from the spec' );
@@ -666,6 +895,64 @@ async function replayModule( dir, options ) {
 			}
 		}
 
+		// zero-size: each dimension set to 0 in turn (first few calls only);
+		// the wrapper and ndarray.js must agree, including on quick returns.
+		if ( report.replayed <= 4 ) {
+			groups.forEach( function eachDim( g ) {
+				if ( g.param.role !== 'dim' || g.names.length !== 1 || !( plain[ g.at ] > 0 ) ) {
+					return;
+				}
+				const zArgs = rec.map( decode );
+				zArgs[ g.at ] = 0;
+				let zRet;
+				let zThrew = null;
+				try {
+					zRet = nd( ...zArgs );
+				} catch ( e ) {
+					zThrew = e;
+				}
+				const aArgs = rec.map( decode );
+				aArgs[ g.at ] = 0;
+				const w0 = toWrapper( spec, groups, aArgs, order, null, true );
+				if ( !w0 ) {
+					return;
+				}
+				report.variants += 1;
+				let aRet;
+				let aThrew = null;
+				try {
+					aRet = wrapper( ...w0 );
+				} catch ( e ) {
+					aThrew = e;
+				}
+				if ( zThrew || aThrew ) {
+					if ( Boolean( zThrew ) !== Boolean( aThrew ) ) {
+						report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0', 'detail': ( zThrew ? 'ndarray.js threw (' + zThrew.message.slice( 0, 80 ) + ') but the wrapper did not' : 'the wrapper threw (' + aThrew.message.slice( 0, 80 ) + ') but ndarray.js did not' ), 'call': describe( rec, baseNames ) } );
+					}
+					return;
+				}
+				const er = sameStorageReturn( zArgs, zRet, aArgs, aRet ) ? SAME : zRet;
+				const d = diff( snapshot( zArgs, workspaceIdx ), snapshot( aArgs, workspaceIdx ), er, aRet, baseNames );
+				if ( d ) {
+					report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0', 'detail': d, 'call': describe( rec, baseNames ) } );
+				}
+			});
+		}
+
+		// validation: every generated prologue check of both forms must throw
+		// its documented error when only its argument is made invalid.
+		{
+			const fns = await validators();
+			const ndArgs = rec.map( decode );
+			valFindings.push( ...validate( nd, ndNames, ndArgs, ndChecks, fns, ndDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'ndarray' }, f ) ) );
+			// Recorded workspaces (not null), so a workspace can be the
+			// argument made invalid.
+			const wArgs = toWrapper( spec, groups, rec.map( decode ), order, null, true ) || toWrapper( spec, groups, rec.map( decode ), order, null, false );
+			if ( wArgs ) {
+				valFindings.push( ...validate( wrapper, wNames, wArgs, wChecks, fns, wDone, optionValues ).map( ( f ) => Object.assign( { 'form': 'wrapper' }, f ) ) );
+			}
+		}
+
 		// length audit: the wrapper's assumed vector lengths vs the measured
 		// extent (lower bound) and the spec.
 		const used = ex ? ex.lens : [];
@@ -699,6 +986,10 @@ async function replayModule( dir, options ) {
 			}
 		});
 	}
+	report.validation = valFindings;
+	const reached = ( done, list ) => list.filter( ( c, i ) => done.has( 'check:' + i ) ).length;
+	report.validationCovered = { 'ndarray': reached( ndDone, ndChecks ) + '/' + ndChecks.length, 'wrapper': reached( wDone, wChecks ) + '/' + wChecks.length };
+	report.validationUnreached = ndChecks.filter( ( c, i ) => !ndDone.has( 'check:' + i ) ).map( ( c ) => 'ndarray: ' + c.test ).concat( wChecks.filter( ( c, i ) => !wDone.has( 'check:' + i ) ).map( ( c ) => 'wrapper: ' + c.test ) );
 	return report;
 }
 

@@ -64,7 +64,7 @@ function changedRoutines( base ) {
 }
 
 function failed( r ) {
-	return Boolean( r.unmapped || r.error ) || r.mismatches.length > 0 || r.rejected.length > 0 || r.lengths.length > 0 || r.variants === 0;
+	return Boolean( r.unmapped || r.error ) || r.mismatches.length > 0 || r.rejected.length > 0 || r.lengths.length > 0 || ( r.validation || [] ).length > 0 || r.variants === 0;
 }
 
 async function main() {
@@ -100,6 +100,7 @@ async function main() {
 			}
 			r.mismatches.slice( 0, 3 ).forEach( ( m ) => console.log( 'MISMATCH   ' + r.routine + '  ' + m.variant + ': ' + m.detail ) );
 			r.rejected.slice( 0, 3 ).forEach( ( m ) => console.log( 'REJECTED   ' + r.routine + '  ' + m.variant + ': ' + m.detail ) );
+			( r.validation || [] ).slice( 0, 3 ).forEach( ( v ) => console.log( 'VALIDATION ' + r.routine + '  ' + v.form + ' `' + v.check + '`: ' + v.detail ) );
 			const seen = new Set();
 			r.lengths.forEach( ( l ) => {
 				const key = l.kind + l.param + l.wrapper + ( l.spec ?? l.touched );

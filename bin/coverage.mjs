@@ -104,7 +104,7 @@ function parseLcov( text ) {
 		const k = ( i < 0 ) ? line : line.slice( 0, i );
 		const v = ( i < 0 ) ? '' : line.slice( i + 1 );
 		if ( k === 'SF' ) {
-			cur = { 'lf': 0, 'lh': 0, 'brf': 0, 'brh': 0, 'uncovered': [] };
+			cur = { 'lf': 0, 'lh': 0, 'brf': 0, 'brh': 0, 'uncovered': [], 'uncoveredBranches': [] };
 			out[ path.relative( ROOT, path.resolve( ROOT, v ) ) ] = cur;
 		} else if ( !cur ) {
 			// ignore
@@ -116,6 +116,11 @@ function parseLcov( text ) {
 			cur.brf = Number( v );
 		} else if ( k === 'BRH' ) {
 			cur.brh = Number( v );
+		} else if ( k === 'BRDA' ) {
+			const parts = v.split( ',' );
+			if ( parts[ 3 ] === '0' || parts[ 3 ] === '-' ) {
+				cur.uncoveredBranches.push( Number( parts[ 0 ] ) );
+			}
 		} else if ( k === 'DA' ) {
 			const [ ln, hits ] = v.split( ',' );
 			if ( Number( hits ) === 0 ) {
@@ -170,6 +175,7 @@ function measure( r ) {
 			'lines': lines,
 			'branches': branches,
 			'uncovered': c.uncovered,
+			'uncoveredBranches': [ ...new Set( c.uncoveredBranches ) ],
 			'min': t,
 			'ok': lines >= t.lines && branches >= t.branches
 		};
@@ -205,7 +211,7 @@ function main() {
 			}
 			m.files.filter( ( f ) => !f.ok ).forEach( ( f ) => {
 				const t = THRESHOLDS[ f.role ];
-				console.log( 'BELOW  ' + f.file + '  lines ' + f.lines.toFixed( 1 ) + '% (min ' + t.lines + '), branches ' + f.branches.toFixed( 1 ) + '% (min ' + t.branches + ')' + ( flag( '--uncovered' ) && f.uncovered.length ? '\n       uncovered lines: ' + f.uncovered.join( ' ' ) : '' ) );
+				console.log( 'BELOW  ' + f.file + '  lines ' + f.lines.toFixed( 1 ) + '% (min ' + t.lines + '), branches ' + f.branches.toFixed( 1 ) + '% (min ' + t.branches + ')' + ( flag( '--uncovered' ) && f.uncovered.length ? '\n       uncovered lines: ' + f.uncovered.join( ' ' ) : '' ) + ( flag( '--uncovered' ) && f.uncoveredBranches.length ? '\n       branches not taken at lines: ' + f.uncoveredBranches.join( ' ' ) : '' ) );
 			});
 		});
 		const bad = results.filter( ( m ) => m.error || m.files.some( ( f ) => !f.ok ) );

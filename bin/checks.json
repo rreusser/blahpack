@@ -44,6 +44,9 @@
 			"kind": "tool",
 			"why": "codemod: mechanical test-file fixes"
 		},
+		"bin/codemod-vector-lengths.mjs": {
+			"kind": "tool"
+		},
 		"bin/conformance.js": {
 			"kind": "gate"
 		},

@@ -30,3 +30,9 @@ From `node bin/wrapper-replay.mjs --all` on branch `slop/gracious-dijkstra-q3yg0
 ```bash
 node bin/wrapper-replay.mjs zunglq zunmbr dorm22
 ```
+
+## Corpus rerun 2026-11-24
+
+`node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
+
+`null-work` mismatches, 15 modules: dgecon dlasd5 dlatrs3 dlatrz dorbdb4 dorm22 dormbr dpocon dsytri2x dtgsna zgsvj0 zgsvj1 zlarz zungrq zunmbr. New since the timeouts were removed: dsytri2x (NaN in A, so the wrapper's allocation is undersized).

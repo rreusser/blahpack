@@ -48,6 +48,8 @@ import os from 'node:os';
 import path from 'node:path';
 import v8 from 'node:v8';
 import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
+import { testConcurrency } from '../../bin/lib/corpus.mjs';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as espree from 'espree';
@@ -62,6 +64,49 @@ const HERE = path.dirname( fileURLToPath( import.meta.url ) );
 const RECORDER = path.join( HERE, 'replay-record.mjs' );
 // REPLAY_MAX_CALLS raises the sample size (e.g. to replay every call).
 const MAX_CALLS = Number( process.env.REPLAY_MAX_CALLS ) || 40;
+
+// --- bounded calls ---------------------------------------------------------
+
+// Every call the replay makes runs under a watchdog. A probe (a dimension set
+// to 0, poisoned storage) can take an iterative routine outside its domain
+// (dlasyf with nb = 0, dlarrb bisecting NaN), where it never returns. Without
+// a bound one such call used up the module's whole timeout and the module
+// reported nothing at all (ticket 0070). `vm`'s timeout interrupts any
+// synchronous JavaScript, including module functions called from the script.
+const VM_CONTEXT = vm.createContext( {} );
+const VM_CALL = new vm.Script( '__fn( ...__args )' );
+const MIN_BUDGET_MS = Number( process.env.REPLAY_CALL_MS ) || 2000;
+let budgetMs = MIN_BUDGET_MS;
+
+// The length audit's poisoned-storage trials get a tight budget: a timeout
+// there only means "length unknown" (no finding), never a false finding,
+// and an iterative routine fed NaN (dlarrb) can take most of a second per
+// trial over hundreds of trials.
+let probeMs = 100;
+
+class CallTimeout extends Error {
+	constructor( ms ) {
+		super( 'did not return within ' + ms + ' ms' );
+		this.name = 'CallTimeout';
+	}
+}
+
+function bounded( fn, args, ms ) {
+	const limit = ms || budgetMs;
+	VM_CONTEXT.__fn = fn;
+	VM_CONTEXT.__args = args;
+	try {
+		return VM_CALL.runInContext( VM_CONTEXT, { 'timeout': limit } );
+	} catch ( e ) {
+		if ( e && e.code === 'ERR_SCRIPT_EXECUTION_TIMEOUT' ) {
+			throw new CallTimeout( limit );
+		}
+		throw e;
+	} finally {
+		VM_CONTEXT.__fn = null;
+		VM_CONTEXT.__args = null;
+	}
+}
 const SAME = Symbol( 'same-storage return' );
 
 // --- argument encoding ---------------------------------------------------
@@ -139,7 +184,7 @@ function record( dir, routine ) {
 		'REPLAY_OUT': out
 	});
 	delete env.NODE_TEST_CONTEXT;
-	spawnSync( process.execPath, [ '--test', '--test-reporter=dot', ...files ], { 'env': env, 'encoding': 'utf8', 'timeout': 600000 } );
+	spawnSync( process.execPath, [ '--test', ...testConcurrency(), '--test-reporter=dot', ...files ], { 'env': env, 'encoding': 'utf8', 'timeout': 600000 } );
 	let recs = [];
 	// Sorted by test file name (see replay-record.mjs): deterministic order.
 	fs.readdirSync( out ).sort( ( a, b ) => a.replace( /\.\d+\.bin$/, '' ).localeCompare( b.replace( /\.\d+\.bin$/, '' ) ) ).forEach( ( f ) => {
@@ -223,7 +268,33 @@ function toWrapper( spec, groups, args, order, vecOverride, keepWork ) {
 	for ( let k = 0; k < groups.length; k++ ) {
 		const g = groups[ k ];
 		const a = args.slice( g.at, g.at + g.names.length );
-		switch ( kindOf( g ) ) {
+		const kind = kindOf( g );
+		// A recorded call may pass `null` for an array the routine does not
+		// touch (ztgevc's VL when SIDE = 'right'); a caller of the wrapper
+		// passes `null` there too, with the same LD or stride.
+		if ( g.names.length > 1 && a[ 0 ] === null ) {
+			if ( kind === 'matrix' ) {
+				out.push( null, ( order === 'column-major' ) ? a[ 2 ] : a[ 1 ] );
+			} else if ( kind === 'vector' ) {
+				out.push( null, a[ 1 ] );
+			} else {
+				out.push( null );
+			}
+			continue;
+		}
+		if ( g.names.length > 1 && Array.isArray( a[ 0 ] ) ) {
+			// A plain array (ztgevc's boolean SELECT) has no subarray view:
+			// expressible only at offset 0.
+			if ( kind !== 'vector' || a[ 2 ] !== 0 || a[ 1 ] < 0 ) {
+				return null;
+			}
+			out.push( a[ 0 ], a[ 1 ] );
+			continue;
+		}
+		if ( g.names.length > 1 && !( a[ 0 ] && typeof a[ 0 ].subarray === 'function' ) ) {
+			return null;
+		}
+		switch ( kind ) {
 		case 'matrix':
 			if ( order === 'column-major' && a[ 1 ] !== 1 && a[ 2 ] !== 1 ) {
 				return null;
@@ -328,7 +399,7 @@ function touchedHigh( nd, rec, ai ) {
 	const before = Array.from( flat( base[ ai ] ) );
 	let ret;
 	try {
-		ret = nd( ...base );
+		ret = bounded( nd, base );
 	} catch ( e ) {
 		return -1;
 	}
@@ -351,24 +422,36 @@ function touchedHigh( nd, rec, ai ) {
 		poison( a[ ai ], T, len );
 		let r;
 		try {
-			r = nd( ...a );
+			r = bounded( nd, a, probeMs );
 		} catch ( e ) {
+			if ( e instanceof CallTimeout ) {
+				// Poisoned input the routine does not return from: every later
+				// trial would cost a full budget too, so give up on this probe.
+				throw e;
+			}
 			return false;
 		}
 		const out = outputsExcept( a, r, ai, T );
 		const refT = outputsExcept( base, ret, ai, T );
 		return sameValues( refT, out ) === -1 && ref.length >= 0;
 	};
-	if ( !unchanged( hi ) ) {
-		return -1;
-	}
-	while ( lo < hi ) {
-		const mid = ( lo + hi ) >> 1;
-		if ( unchanged( mid ) ) {
-			hi = mid;
-		} else {
-			lo = mid + 1;
+	try {
+		if ( !unchanged( hi ) ) {
+			return -1;
 		}
+		while ( lo < hi ) {
+			const mid = ( lo + hi ) >> 1;
+			if ( unchanged( mid ) ) {
+				hi = mid;
+			} else {
+				lo = mid + 1;
+			}
+		}
+	} catch ( e ) {
+		if ( e instanceof CallTimeout ) {
+			return -1;
+		}
+		throw e;
 	}
 	return Math.max( lo - 1, wrote, o );
 }
@@ -692,7 +775,7 @@ function validate( fn, names, args, checks, fns, done, optionValues ) {
 						}
 						let threw = null;
 						try {
-							fn( ...trial );
+							bounded( fn, trial );
 						} catch ( e ) {
 							threw = e;
 						}
@@ -786,12 +869,18 @@ async function replayModule( dir, options ) {
 		}
 		const expArgs = rec.map( decode );
 		let expRet;
+		// The recorded call's own time sets the budget of every call made
+		// from it (min MIN_BUDGET_MS).
+		budgetMs = 60000;
+		const t0 = Date.now();
 		try {
-			expRet = nd( ...expArgs );
+			expRet = bounded( nd, expArgs );
 		} catch ( e ) {
-			skip( 'ndarray threw on replay' );
+			skip( ( e instanceof CallTimeout ) ? 'ndarray did not return on replay' : 'ndarray threw on replay' );
 			continue;
 		}
+		budgetMs = Math.max( MIN_BUDGET_MS, 50 * ( Date.now() - t0 ) );
+		probeMs = Math.max( 100, 10 * ( Date.now() - t0 ) );
 		const exp = snapshot( expArgs, workspaceIdx );
 		const intIdx = new Set( expArgs.map( ( x, i ) => ( ( x instanceof Int32Array || x instanceof Int8Array || x instanceof Int16Array || x instanceof Uint8Array || x instanceof Uint32Array || Array.isArray( x ) ) ? i : -1 ) ).filter( ( i ) => i >= 0 ) );
 		const order = orderOf( groups, rec.map( decode ) );
@@ -823,7 +912,7 @@ async function replayModule( dir, options ) {
 			}
 			let actRet;
 			try {
-				actRet = wrapper( ...wargs );
+				actRet = bounded( wrapper, wargs );
 			} catch ( e ) {
 				if ( ldCoversRows ) {
 					report.rejected.push( { 'variant': variant + ' ' + order, 'detail': String( e.message ).slice( 0, 200 ) } );
@@ -867,13 +956,15 @@ async function replayModule( dir, options ) {
 					}
 					const hit = allocs.find( ( a ) => a.name.toLowerCase() === g.param.name.toLowerCase() );
 					if ( hit ) {
-						sized[ g.at ] = new sized[ g.at ].constructor( hit.length );
+						// The recorded call may have passed `null` (ztgsyl): use the
+						// wrapper's own array type.
+						sized[ g.at ] = new hit.ctor( hit.length );
 						sized[ g.at + 1 ] = 1;
 						sized[ g.at + 2 ] = 0;
 					}
 				});
 				try {
-					nwExpRet = nd( ...sized );
+					nwExpRet = bounded( nd, sized );
 				} catch ( e ) {
 					ok = false;
 				}
@@ -947,7 +1038,7 @@ async function replayModule( dir, options ) {
 				let tRet;
 				let threw = null;
 				try {
-					tRet = wrapper( ...wt );
+					tRet = bounded( wrapper, wt );
 				} catch ( e ) {
 					threw = e;
 				}
@@ -1016,9 +1107,14 @@ async function replayModule( dir, options ) {
 				let zRet;
 				let zThrew = null;
 				try {
-					zRet = nd( ...zArgs );
+					zRet = bounded( nd, zArgs );
 				} catch ( e ) {
 					zThrew = e;
+				}
+				if ( zThrew instanceof CallTimeout ) {
+					// The reference does not return: outside the routine's domain.
+					skip( 'zero-size probe outside the domain (ndarray did not return)' );
+					return;
 				}
 				const aArgs = rec.map( decode );
 				aArgs[ g.at ] = 0;
@@ -1030,7 +1126,7 @@ async function replayModule( dir, options ) {
 				let aRet;
 				let aThrew = null;
 				try {
-					aRet = wrapper( ...w0 );
+					aRet = bounded( wrapper, w0 );
 				} catch ( e ) {
 					aThrew = e;
 				}

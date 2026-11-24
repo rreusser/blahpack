@@ -28,3 +28,9 @@ grep -n "stride2offset" lib/lapack/base/dlarf/lib/dlarf.js
 ## Direction
 
 Use a generic wrapper test that replays the same inputs through `<routine>.js` and through `ndarray.js` with explicit offsets. Sweep negative strides and both values of every flag that changes a vector length, and require bit-identical results. It shares its machinery with ticket 0065.
+
+## Corpus rerun 2026-11-24
+
+`node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
+
+Length findings, 6 modules: dlaed2 dlarrb dlarrj dormbr zlaswp zunmbr. dlarrb and dlarrj were hidden behind timeouts before.

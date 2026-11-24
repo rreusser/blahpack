@@ -20,3 +20,9 @@ opened: 2026-11-23
 ```bash
 node bin/wrapper-replay.mjs dgees dlarrb ztgevc
 ```
+
+## Corpus rerun 2026-11-24
+
+`node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
+
+Still untested, 11 modules: dgees dgetv0 dgges dlamch dlaqr4 dsaitr dsaup2 dsaupd dtgex2 zgees zgges. dlaqr4 and dtgex2: the recorded argument count differs from the spec. dseupd and ztgevc are now replayed: a recorded `null` array and a plain boolean array are passed through.

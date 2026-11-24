@@ -2733,3 +2733,23 @@ Keep entries short. Newest first.
   - caller-provided undersized WORK passed through unchecked (ticket
     0077);
   - quick returns guarded by related arguments (ticket 0076).
+
+## 2026-11-24 — Wrapper replay: one probe that never returned hid every finding of 20 modules, and cost 180 s each per corpus run (ticket 0070)
+
+- **Symptom**: a cold `node bin/wrapper-replay.mjs --all` reported 20 modules as `timed out` (dlaqr5, dlarrb, dlarrj, dlasyf, dlasyf_rk, dlasyf_rook, dsytri2x, dsytri_3x, zgeev, zhetrd_he2hb, zhetri2x, zhetri_3x, zlahef, zlahef_rk, zlahef_rook, zlasyf, zlasyf_rk, zlasyf_rook, zsytri2x, zsytri_3x). Their tests take under a second. Because errors are never cached, every warm rerun paid 20 × 180 s again.
+- **Reproduce**: on the parent of this commit, `node bin/wrapper-replay.mjs dlasyf` (180 s, then `timed out`).
+- **Root cause**: the replay's probes run a routine outside its domain, and the harness called it with no bound. A paused debugger (`node --inspect` with `Debugger.pause`) showed:
+  - zero-size probe with `nb = 0`: dlasyf and dsytri2x loop forever (`eachDim` → dgemm/dtrmm);
+  - the length audit's NaN-poisoned storage: dlarrb bisects NaN for most of a second per trial, over hundreds of trials (`touchedHigh`).
+
+  The child-process timeout then threw away every result of the module: valid findings sat behind the hang, for example dsytri2x's `null-work` giving NaN (an undersized wrapper allocation).
+- **Fix**:
+  - Every call the replay makes goes through `bounded()` (`vm.Script.runInContext` with `timeout`, which interrupts synchronous module code). The budget is at least 2 s, or 50 × the recorded call's own time.
+  - If `ndarray.js` does not return on a zero-size probe, the input is outside the domain: the probe is skipped and counted under `skipped`.
+  - If `ndarray.js` returns but the wrapper does not, that is reported.
+  - The length audit's trials get a tight budget (100 ms, or 10 × the recorded call), and the first timeout ends that parameter's audit: a timeout there can only mean "unknown", never a finding.
+- **Bug class**: a check whose own failure mode (hang → whole-module timeout) hides all of its results. It is a check that can fail silently in the coarsest possible unit.
+- **What allowed it**:
+  - Only the per-module wall-clock timeout bounded the replay. A timeout was an error with no detail, and no run had ever been done over the whole corpus with the pool and the cache, where such modules stand out (every warm run recomputed them).
+- **Where else**:
+  - `bin/workspace-guard.mjs` and `bin/coverage.mjs` also bound only the whole test run, so a hanging test loses that module's whole report. They run only the module's own tests, which pass in the unit suite, so a hang there would already fail `npm run test:unit`; the guard's forced `WORK = null` is the exception (a hang under it shows as an error, not a finding).

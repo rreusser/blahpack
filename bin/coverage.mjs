@@ -4,7 +4,10 @@
 * Per-file test coverage of modules (ticket 0064).
 *
 * For each module, runs all of its `test/test*.js` once under node's
-* coverage, restricted to the module's own `lib/` files, and reports line
+* coverage, together with the wrapper replay (test/harness/replay-coverage.mjs:
+* every recorded `ndarray.js` call replayed through the wrapper, in both
+* orders and with `WORK = null`), restricted to the module's own `lib/`
+* files, and reports line
 * and branch coverage for EVERY file there: `base.js`, `ndarray.js`, the
 * `<routine>.js` wrapper, `main.js`, `index.js`. The wrapper is where the
 * convenience logic lives (`order`/LD mapping, `WORK = null` allocation),
@@ -29,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve( path.dirname( fileURLToPath( import.meta.url ) ), '..' );
 const PKGS = [ 'blas', 'lapack', 'arpack' ];
+const REPLAY_COVERAGE = path.join( ROOT, 'test', 'harness', 'replay-coverage.mjs' );
 
 // Minimum line and branch coverage (percent) per file role.
 const THRESHOLDS = {
@@ -91,7 +95,8 @@ function role( r, file ) {
 	return 'other';
 }
 
-// Parse an lcov file into { file: { lf, lh, brf, brh, uncovered: [lines] } }.
+// Parse an lcov file into { file: { lf, lh, brf, brh, uncovered, uncoveredBranches } },
+// counting a line or branch covered if any record for the file covers it.
 function parseLcov( text ) {
 	const out = {};
 	let cur = null;
@@ -100,24 +105,40 @@ function parseLcov( text ) {
 		const k = ( i < 0 ) ? line : line.slice( 0, i );
 		const v = ( i < 0 ) ? '' : line.slice( i + 1 );
 		if ( k === 'SF' ) {
-			cur = { 'lf': 0, 'lh': 0, 'brf': 0, 'brh': 0, 'uncovered': [] };
-			out[ path.relative( ROOT, path.resolve( ROOT, v ) ) ] = cur;
+			// One file can appear in several records (a test that re-imports
+			// it through importWithConstants gets its own copy): merge them.
+			const key = path.relative( ROOT, path.resolve( ROOT, v ) );
+			cur = out[ key ] || { 'lines': new Map(), 'branches': new Map() };
+			cur.seen = {};
+			out[ key ] = cur;
 		} else if ( !cur ) {
 			// ignore
-		} else if ( k === 'LF' ) {
-			cur.lf = Number( v );
-		} else if ( k === 'LH' ) {
-			cur.lh = Number( v );
-		} else if ( k === 'BRF' ) {
-			cur.brf = Number( v );
-		} else if ( k === 'BRH' ) {
-			cur.brh = Number( v );
 		} else if ( k === 'DA' ) {
 			const [ ln, hits ] = v.split( ',' );
-			if ( Number( hits ) === 0 ) {
-				cur.uncovered.push( Number( ln ) );
-			}
+			cur.lines.set( Number( ln ), Math.max( cur.lines.get( Number( ln ) ) || 0, Number( hits ) ) );
+		} else if ( k === 'BRDA' ) {
+			// Block numbers differ between copies of one file, so key a branch
+			// by its line and its position among that record's branches on it.
+			const parts = v.split( ',' );
+			cur.seen = cur.seen || {};
+			cur.seen[ parts[ 0 ] ] = ( cur.seen[ parts[ 0 ] ] || 0 ) + 1;
+			const id = parts[ 0 ] + ',' + cur.seen[ parts[ 0 ] ];
+			const hits = ( parts[ 3 ] === '-' ) ? 0 : Number( parts[ 3 ] );
+			cur.branches.set( id, Math.max( cur.branches.get( id ) || 0, hits ) );
 		}
+	});
+	Object.keys( out ).forEach( ( f ) => {
+		const c = out[ f ];
+		const lines = [ ...c.lines.entries() ];
+		const branches = [ ...c.branches.entries() ];
+		out[ f ] = {
+			'lf': lines.length,
+			'lh': lines.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'brf': branches.length,
+			'brh': branches.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'uncovered': lines.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] ).sort( ( a, b ) => a - b ),
+			'uncoveredBranches': branches.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => Number( e[ 0 ].split( ',' )[ 0 ] ) )
+		};
 	});
 	return out;
 }
@@ -133,6 +154,11 @@ function measure( r ) {
 	if ( !tests.length ) {
 		return { 'routine': r, 'error': 'no test files', 'files': [] };
 	}
+	// The wrapper replay (ticket 0065) runs in the same coverage run, so the
+	// wrapper lines its replayed ndarray calls reach count as covered.
+	if ( fs.existsSync( path.join( dir, 'lib', r + '.js' ) ) && fs.existsSync( path.join( ROOT, 'spec', r + '.json' ) ) ) {
+		tests.push( REPLAY_COVERAGE );
+	}
 	const rel = path.relative( ROOT, dir );
 	const tmp = fs.mkdtempSync( path.join( os.tmpdir(), 'cov-' ) );
 	const lcov = path.join( tmp, 'lcov.info' );
@@ -142,7 +168,7 @@ function measure( r ) {
 		'--test-coverage-include=' + rel + '/lib/**',
 		'--test-reporter=lcov', '--test-reporter-destination=' + lcov,
 		'--test-reporter=dot', '--test-reporter-destination=' + path.join( tmp, 'dot.txt' )
-	].concat( tests ), { 'cwd': ROOT, 'encoding': 'utf8', 'timeout': 600000 } );
+	].concat( tests ), { 'cwd': ROOT, 'encoding': 'utf8', 'timeout': 600000, 'env': Object.assign( {}, process.env, { 'REPLAY_MODULE': dir } ) } );
 	const text = fs.existsSync( lcov ) ? fs.readFileSync( lcov, 'utf8' ) : '';
 	fs.rmSync( tmp, { 'recursive': true, 'force': true } );
 	if ( !text ) {
@@ -161,6 +187,7 @@ function measure( r ) {
 			'lines': lines,
 			'branches': branches,
 			'uncovered': c.uncovered,
+			'uncoveredBranches': [ ...new Set( c.uncoveredBranches ) ],
 			'min': t,
 			'ok': lines >= t.lines && branches >= t.branches
 		};
@@ -196,7 +223,7 @@ function main() {
 			}
 			m.files.filter( ( f ) => !f.ok ).forEach( ( f ) => {
 				const t = THRESHOLDS[ f.role ];
-				console.log( 'BELOW  ' + f.file + '  lines ' + f.lines.toFixed( 1 ) + '% (min ' + t.lines + '), branches ' + f.branches.toFixed( 1 ) + '% (min ' + t.branches + ')' + ( flag( '--uncovered' ) && f.uncovered.length ? '\n       uncovered lines: ' + f.uncovered.join( ' ' ) : '' ) );
+				console.log( 'BELOW  ' + f.file + '  lines ' + f.lines.toFixed( 1 ) + '% (min ' + t.lines + '), branches ' + f.branches.toFixed( 1 ) + '% (min ' + t.branches + ')' + ( flag( '--uncovered' ) && f.uncovered.length ? '\n       uncovered lines: ' + f.uncovered.join( ' ' ) : '' ) + ( flag( '--uncovered' ) && f.uncoveredBranches.length ? '\n       branches not taken at lines: ' + f.uncoveredBranches.join( ' ' ) : '' ) );
 			});
 		});
 		const bad = results.filter( ( m ) => m.error || m.files.some( ( f ) => !f.ok ) );

@@ -24,8 +24,12 @@
 			"dtype": "float64",
 			"intent": "in",
 			"dims": [
-				"*"
-			]
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
 		},
 		{
 			"name": "incx",
@@ -44,8 +48,12 @@
 			"dtype": "float64",
 			"intent": "in",
 			"dims": [
-				"*"
-			]
+				"N"
+			],
+			"length": {
+				"fortran": "N",
+				"js": "N"
+			}
 		},
 		{
 			"name": "incy",

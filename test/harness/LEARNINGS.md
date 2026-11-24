@@ -2644,3 +2644,92 @@ Keep entries short. Newest first.
 - **Where else**: any wrapper that sizes a workspace from a conditional
   reference formula. The corpus run (420 wrappers) reports 0 overruns in the
   150 that are exercised. The other 270 are unchecked until ticket 0063.
+
+## 2026-11-23 — Wrapper replay: public wrappers disagreed with ndarray.js in about 235 of 912 modules (tickets 0065, 0068, 0072–0074)
+
+- **What**: `bin/wrapper-replay.mjs` (test/harness/replay.js) records every
+  valid `ndarray.js` call a module's own tests make. It replays each call
+  through `<routine>.js` in several variants:
+  - exact, with the recorded workspaces;
+  - `WORK = null`;
+  - transposed (row-major);
+  - zero-size;
+  - validation (each throw statement, one argument made invalid).
+
+  It also audits each vector length the wrapper assumes, by instrumenting
+  its `stride2offset` calls. The first whole-corpus run flagged 235
+  modules.
+- **Bug classes found** (each with tests that fail on the old code):
+  - `wrapper-vector-length`: a wrapper computed a negative-stride offset
+    from the main dimension instead of the vector's length:
+    - TAU uses `min(M,N)` or K;
+    - off-diagonals use N-1;
+    - FERR/BERR use NRHS;
+    - SIDE- and TRANS-dependent lengths (`dlarf` v, `dgemv`/`dgbmv` x and
+      y, `dormtr` TAU).
+
+    161 wrappers were fixed by `bin/codemod-vector-lengths.mjs`, verified
+    by the replay; more followed by hand and in agent waves. With a
+    negative stride the old offset addressed the wrong elements, giving
+    NaN (`dlarf`, `dgbmv`: y = [NaN, NaN, NaN, 86, 88]).
+  - `workspace-undersized-on-null` again (ticket 0072): `base.js` blocks
+    with NB = 32 and needs LDWORK*NB (+ the T block), while the wrapper
+    allocated the unblocked minimum. Affected:
+    - `dorglq`, `dorgrq`, `dorgtr`, `zunglq`, `zungqr`, `zungtr`;
+    - `dormql`, `dormrq`, `dormtr`, `zunmtr`;
+    - `zungtr` at N = 0 (`new Complex128Array(-1)`).
+  - `layers-disagree` (ticket 0074): `ndarray.js` and the wrapper behaved
+    differently on the same call:
+    - `dlacn2`'s `ndarray.js` had an N = 0 quick return the reference
+      lacks;
+    - `zgehrd`'s `ndarray.js` returned undefined for N = 0;
+    - `zlar1v` skipped its WORK check at N = 0 although base reads
+      WORK[0].
+  - `wrapper-rejects-valid-call` (ticket 0073):
+    - `dlabrd`/`zlabrd` checked LDX/LDY against the wrong dimension;
+    - `ddisna` threw for N < 0 where the reference returns INFO = -3 only
+      when K < 0.
+  - `undersized-test-output`: `dgesvd`'s own test passed a 1-element U for
+    jobu = 'all-columns' (3-by-3); typed arrays drop the writes, so the
+    test passed.
+- **Spec generator fixes the replay forced**:
+  - flag-conditional 1-D extents (`(N) if SIDE = 'L' or (M) if SIDE =
+    'R'`, BLAS `… otherwise`; ticket 0062, 2-D still open);
+  - an unreachable `: -1` option-code arm (dsteqr LDZ);
+  - option tests folded inside a guarded check (the expert drivers'
+    EQUED).
+
+  Each had left generated code with a branch no input can take.
+- **What allowed it**:
+  - The wrapper layer had no valid-input tests: 299 of 420 allocating
+    wrappers had only shape and throw tests (ticket 0065).
+  - The coverage check measured only `test.js` and `base.js` (ticket
+    0064).
+  - The spec flattened conditional sizes, so it could not serve as an
+    oracle (ticket 0062).
+  - Nothing compared the layers with each other.
+- **Harness lessons (the replay's own false positives, each fixed before
+  trusting a finding)**:
+  - LD groups share their offset with the next group (the map-back
+    overwrote a matrix with its row-major copy).
+  - A returned argument (`daxpy`'s y) must not count as an extra output
+    when probing.
+  - Workspace-dependent blocking changes rounding, so `WORK = null` needs
+    a tolerance.
+  - Col/row kernel switches reorder arithmetic, so the transposed variant
+    checks structure only.
+  - Error-estimate outputs (FERR/BERR) are compared within a factor 2.
+  - Integer-typed outputs are compared exactly, floats are not.
+  - A wrapper replaces `null` by an allocation before its checks, so a
+    violation counts only once some candidate actually throws.
+  - Lint-enforced code may contain branches no input can take; that is
+    fixed at the generator.
+
+  Every change was re-checked against a known-bad module.
+- **Where else**:
+  - negative strides inside `base.js` itself (`dlassq`/`zlassq` re-apply
+    the BLAS start index; ticket 0078; the replay cannot see these because
+    both layers share `base.js`);
+  - caller-provided undersized WORK passed through unchecked (ticket
+    0077);
+  - quick returns guarded by related arguments (ticket 0076).

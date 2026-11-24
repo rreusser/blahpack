@@ -43,8 +43,8 @@
 				"1+(M-1)*ABS(INCV)"
 			],
 			"length": {
-				"fortran": "M",
-				"js": "M"
+				"fortran": "(M) if SIDE = 'L' or (N) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? M : N"
 			}
 		},
 		{
@@ -105,8 +105,8 @@
 				"N"
 			],
 			"length": {
-				"fortran": "N",
-				"js": "N"
+				"fortran": "(N) if SIDE = 'L' or (M) if SIDE = 'R'",
+				"js": "( side === 'left' ) ? N : M"
 			},
 			"minLength": {
 				"fortran": "N",

@@ -583,6 +583,9 @@ function build( routine, sig, facts, options ) {
 		}
 		// 1-D: logical length. `1+(N-1)*ABS(INCX)` is a strided extent of N.
 		t = p.dims[ 0 ];
+		if ( conditionalLength( p ) ) {
+			return;
+		}
 		m = /^\(?1\+\((.+)-1\)\*ABS\((INC\w*)\)\)?$/.exec( t );
 		if ( m ) {
 			p.length = translate( m[ 1 ], p.fortran + '.length' );
@@ -592,6 +595,68 @@ function build( routine, sig, facts, options ) {
 			p.length = translate( t, p.fortran + '.length' );
 		}
 	});
+
+	// A 1-D extent that depends on an option (`(N) if SIDE = 'L' or (M) if
+	// SIDE = 'R'`; ticket 0062): its length is a JS conditional on the option's
+	// canonical value. Returns false (first-alternative fallback) unless every
+	// alternative is 1-D, translatable, and the option has canonical values.
+	function conditionalLength( p ) {
+		var c = facts && facts.docDimsCond && facts.docDimsCond[ p.fortran ];
+		var flag;
+		var vals;
+		var parts = [];
+		var letters;
+		var ok = true;
+		var js;
+		if ( !c || !byName[ c.flag ] ) {
+			return false;
+		}
+		flag = byName[ c.flag ];
+		vals = lookupOption( routine, c.flag );
+		letters = Object.keys( c.cases );
+		letters.forEach( function each( L ) {
+			var d = dimsOf( 'dimension ' + c.cases[ L ] );
+			var mm;
+			var tr;
+			if ( !ok || !d || d.length !== 1 || !vals || ( L !== '*' && !vals[ L ] ) ) {
+				ok = false;
+				return;
+			}
+			mm = /^\(?1\+\((.+)-1\)\*ABS\((INC\w*)\)\)?$/i.exec( d[ 0 ] );
+			tr = translate( mm ? mm[ 1 ] : d[ 0 ], p.fortran + '.length' );
+			if ( !tr.js ) {
+				ok = false;
+				return;
+			}
+			parts.push( { 'value': vals[ L ], 'letter': L, 'fortran': tr.fortran, 'js': tr.js } );
+		});
+		// `otherwise` is the fallback: last.
+		parts.sort( function s( a, b ) {
+			return ( a.letter === '*' ) - ( b.letter === '*' );
+		});
+		if ( !ok || parts.length < 2 ) {
+			return false;
+		}
+		// Branches with the same value as the fallback add nothing.
+		js = parts[ parts.length - 1 ].js;
+		for ( var i = parts.length - 2; i >= 0; i-- ) {
+			if ( parts[ i ].js !== js ) {
+				js = '( ' + flag.name + ' === \'' + parts[ i ].value + '\' ) ? ' + parts[ i ].js + ' : ' + js;
+			}
+		}
+		if ( js === parts[ parts.length - 1 ].js && parts.every( function same( q ) {
+			return q.js === js;
+		}) ) {
+			return false;
+		}
+		p.length = {
+			'fortran': parts.map( function f( q ) {
+				return '(' + q.fortran + ')' + ( ( q.letter === '*' ) ? ' otherwise' : ' if ' + c.flag + " = '" + q.letter + "'" );
+			}).join( ' or ' ),
+			'js': js
+		};
+		return true;
+	}
 
 	// Storage rows of a 2-D array: from its LD check, else its LD doc.
 	function rowsOf( p ) {
@@ -692,6 +757,56 @@ function build( routine, sig, facts, options ) {
 			untranslated.push( 'check ' + c.info + ': tests the output argument ' + ids[ 0 ] + ' (its value is computed, not passed in)' );
 		}
 		checks.push( rec );
+	});
+
+	// An option inlined as a code (`ICOMPZ = 0/1/2`, else -1) is first checked
+	// for validity (`ICOMPZ.LT.0`); every later check runs only for a valid
+	// option, so its `: -1` arm can never be taken (dsteqr's LDZ check). Drop
+	// that arm there: the innermost `(x === 'v' ? k : -1)` becomes `k`, which is
+	// the same value for every option the validity check lets through.
+	checks.forEach( function each( rec, i ) {
+		var m;
+		if ( !rec.js || !/<\s*0\s*$/.test( rec.js ) ) {
+			return;
+		}
+		m = /\(\w+ === '[^']+' \? (-?\d+) : -1\)/.exec( rec.js );
+		if ( !m ) {
+			return;
+		}
+		checks.slice( i + 1 ).forEach( function later( r ) {
+			if ( r.js && r.js.indexOf( m[ 0 ] ) >= 0 ) {
+				r.js = r.js.split( m[ 0 ] ).join( m[ 1 ] );
+			}
+		});
+	});
+
+	// A check guarded by one option value (`fact === 'factored' && ( … )`)
+	// runs only for that value, so an inlined local that tests the same option
+	// inside it is decided: `( fact === 'not-factored' || fact === 'equilibrate'
+	// ? false : e )` is `( e )` (zgesvx's EQUED check). Fold those, so the
+	// generated prologue has no branch that no input can take.
+	checks.forEach( function each( rec ) {
+		var g;
+		if ( !rec.js ) {
+			return;
+		}
+		g = /^(\w+) === '([^']+)' && /.exec( rec.js );
+		if ( !g ) {
+			return;
+		}
+		rec.js = rec.js.replace( /\(((?:\w+ === '[^']+'(?: \|\| )?)+) \? (true|false) : ([^()]*)\)/g, function fold( whole, test, t, e ) {
+			var terms = test.split( ' || ' ).map( function m( x ) {
+				return /^(\w+) === '([^']+)'$/.exec( x );
+			});
+			if ( !terms.every( function ok( x ) {
+				return x && x[ 1 ] === g[ 1 ];
+			}) ) {
+				return whole;
+			}
+			return ( terms.some( function hit( x ) {
+				return x[ 2 ] === g[ 2 ];
+			}) ) ? t : '(' + e + ')';
+		});
 	});
 
 	// An option check whose verdict is definite for every letter (given the

@@ -355,7 +355,7 @@
 			"param": "EQUED",
 			"kind": "expr",
 			"fortran": "LSAME( FACT, 'F' ) .AND. .NOT. ( RCEQU .OR. LSAME( EQUED, 'N' ) )",
-			"js": "fact === 'factored' && !((fact === 'not-factored' || fact === 'equilibrate' ? false : equed === 'yes') || equed === 'none')"
+			"js": "fact === 'factored' && !((equed === 'yes') || equed === 'none')"
 		},
 		{
 			"info": -11,

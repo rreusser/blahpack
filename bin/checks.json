@@ -44,6 +44,10 @@
 			"kind": "tool",
 			"why": "codemod: mechanical test-file fixes"
 		},
+		"bin/codemod-vector-lengths.mjs": {
+			"kind": "tool",
+			"why": "one-shot codemod: rewrites wrapper vector-length expressions to the spec’s; its result is checked by bin/wrapper-replay.mjs"
+		},
 		"bin/conformance.js": {
 			"kind": "gate"
 		},
@@ -193,6 +197,9 @@
 			"of": "bin/workspace-guard.mjs"
 		},
 		"bin/workspace-guard.mjs": {
+			"kind": "gate"
+		},
+		"bin/wrapper-replay.mjs": {
 			"kind": "gate"
 		},
 		"lint/no-fortran-source.test.cjs": {

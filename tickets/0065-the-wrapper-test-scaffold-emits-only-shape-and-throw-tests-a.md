@@ -1,9 +1,10 @@
 ---
 id: 0065
 title: The wrapper test scaffold emits only shape and throw tests, and valid-input tests pass oversized workspaces
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-22
+resolved: 2026-11-23
 ---
 
 ## Problem
@@ -30,3 +31,7 @@ git show d52a3a15b~1:lib/lapack/base/dlarf/test/test.dlarf.js | grep "^test("
 ## Direction
 
 The scaffold should emit a wrapper test that replays a fixture case through `<routine>.js` with every workspace `null`, and compares it bit-exactly with `ndarray.js` on the same inputs. That checks both the allocation and the `order`/LD mapping (`test/harness/nullwork.js` is the null-vs-ample half). The backlog is the 390 wrappers without a `null` test; related to ticket 0063.
+
+## Resolution
+
+The wrapper replay (bin/wrapper-replay.mjs, CI job replay on changed modules; test/harness/replay.js) turns every valid ndarray.js call a module's tests make into wrapper tests: exact with recorded workspaces, WORK = null, row-major (transposed), zero-size and validation variants, plus a vector-length audit. It also runs inside bin/coverage.mjs, so those calls count toward the wrapper's T4 floor; new modules are changed modules, so the scaffold's shape-only tests are no longer the wrapper's only tests. Remaining wrapper debt in unchanged modules: ticket 0069.

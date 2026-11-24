@@ -107,6 +107,26 @@ jobs:
       - name: Every lib/ file of a changed module meets its coverage floor
         run: node bin/coverage.mjs --changed --check --uncovered
 
+  # Tickets 0065/0068: every valid ndarray.js call a changed module's tests
+  # make is replayed through its <routine>.js wrapper (recorded workspaces:
+  # bit-identical; WORK = null: same up to rounding), and every vector
+  # length the wrapper assumes is checked against what the call touches and
+  # against the spec.
+  replay:
+    name: Wrapper replay (changed modules)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every changed wrapper computes what its ndarray.js computes
+        run: node bin/wrapper-replay.mjs --changed --check
+
   conformance:
     name: Conformance
     runs-on: ubuntu-latest

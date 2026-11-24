@@ -143,7 +143,11 @@ export async function initialize( data ) {
 // `test( name, globalThis.__wsTestWrap( expectsThrow, fn ) )`, where
 // expectsThrow says whether fn's source asserts a throw.
 function wrapTests( src ) {
-	const ast = espree.parse( src, { 'ecmaVersion': 2022, 'sourceType': 'module', 'range': true } );
+	// espree 9 cannot parse import attributes (`with { type: 'json' }`, used
+	// by JSON-fixture imports); parse a copy with them blanked to the same
+	// length, so every range still points into `src`.
+	const parseable = src.replace( /\bwith\s*\{[^}]*\}(?=\s*;)/g, ( m ) => ' '.repeat( m.length ) );
+	const ast = espree.parse( parseable, { 'ecmaVersion': 2022, 'sourceType': 'module', 'range': true } );
 	const edits = [];
 	ast.body.forEach( function each( st ) {
 		const c = st.type === 'ExpressionStatement' && st.expression;

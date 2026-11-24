@@ -97,8 +97,8 @@
 				"1+(N-1)*ABS(INCX)"
 			],
 			"length": {
-				"fortran": "N",
-				"js": "N"
+				"fortran": "(N) if TRANS = 'N' or (M) otherwise",
+				"js": "( trans === 'no-transpose' ) ? N : M"
 			}
 		},
 		{
@@ -129,8 +129,8 @@
 				"1+(M-1)*ABS(INCY)"
 			],
 			"length": {
-				"fortran": "M",
-				"js": "M"
+				"fortran": "(M) if TRANS = 'N' or (N) otherwise",
+				"js": "( trans === 'no-transpose' ) ? M : N"
 			}
 		},
 		{

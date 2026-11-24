@@ -80,8 +80,8 @@
 				"MIN(M,K)"
 			],
 			"length": {
-				"fortran": "MIN(M,K)",
-				"js": "min( M, K )"
+				"fortran": "(MIN(N,K)) if VECT = 'P' or (MIN(M,K)) if VECT = 'Q'",
+				"js": "( vect === 'apply-P' ) ? min( N, K ) : min( M, K )"
 			}
 		},
 		{

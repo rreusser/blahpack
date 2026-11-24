@@ -15,6 +15,10 @@ A `<routine>.js` wrapper converts each vector stride into a starting offset with
 - `lib/lapack/base/dlarf/lib/dlarf.js` uses `stride2offset( N, strideV )`, but V has M elements when SIDE = 'L' (`dlarf.f`: `(1 + (M-1)*abs(INCV)) if SIDE = 'L'`). The call `dlarf( 'column-major', 'left', 4, 2, v, -1, 1.5, C, 4, null )` returns all NaN. `base.js` with offset M-1 returns finite, correct values.
 - Wrappers make 1,767 `stride2offset` calls. The `n` in each comes from the spec, which flattens flag-conditional sizes (ticket 0062).
 
+- Whole corpus (`node bin/wrapper-replay.mjs --all`, which instruments every wrapper's `stride2offset` calls):
+  - 16 modules use a length below what a valid call actually touches (definite bugs): `dger`, `dlarf`, `zunmql`, `ddisna`, `dgemv`, `dgerfs`, `dlaed2`, `dlasq2`, `zlarf`, `zsyrfs`, `dlarfx`, `zgerc`, `zgesvx`, `zhesvx`, `dgtsvx`, `zlarfx`. Examples: `zunmql` TAU 2 vs 33, `dlasq2` z N vs 4N, `FERR`/`BERR` 1 vs NRHS.
+  - 275 vector parameters in 170 modules use a length other than the spec's; the commonest are TAU 63, e 39, DL/DU 18 each, FERR/BERR 15 each. The usual pattern is the main dimension N used for every vector.
+
 ## Reproduce
 
 ```bash

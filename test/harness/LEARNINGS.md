@@ -2873,3 +2873,11 @@ Keep entries short. Newest first.
 - **Bug class**: machine-constant query mismatched with the reference. Typos fail silently (the value is 0, not an error); class swaps move thresholds, which residual and fixture tests rarely cross.
 - **What allowed it**: `cmach` was typed `{string}`, so neither lint nor `tsc` saw the keys; nothing compared constants with the reference; derived constants were written as values.
 - **Now enforced**: `cmach` is typed `MachineParameter`, the union of the canonical values (spec/options.json family `type`), so `tsc` rejects any other key. `conf:machine-constants` fails a module whose epsilon is a class its reference never queries, reading `dlamch` letters that bin/spec-gen/extract.cjs records in data/fortran-checks.json. CONVENTIONS X4 asks for derived constants as formulas.
+
+## 2026-11-25 — dlasq1 left E(N) stale when dlasq2 does not converge (INFO = 2)
+
+- **Found by**: a coverage agent for the ticket 0089 gate. It stubbed dlasq2 to return 2 via `importWithDependencies` and compared the result with dlasq1.f's INFO.EQ.2 branch.
+- **Root cause**: dlasq1.f copies `D(I) = SQRT(WORK(2I-1))` and `E(I) = SQRT(WORK(2I))` for I = 1..N, then rescales N elements of each. The JS skipped `E(N)` (`if ( i < N - 1 )`) but still rescaled N elements, so the caller's stale `e[N-1]` was scaled by SIGMX/SCALE instead of being replaced with 0. `ndarray.js` also documented `e` as length N−1, where the reference and spec/dlasq1.json say N.
+- **Why the first test missed it**: the stale value 99 was scaled to about 1.6e-145, which an absolute tolerance of 1e-14 accepts as 0. A test of a value that should be exactly zero has to assert it exactly.
+- **Bug class**: a loop bound taken from the input contract (E(1:N−1) holds the off-diagonal) rather than from the output contract (E has dimension N and is overwritten). It hides on rarely reached failure branches.
+- **Where else**: other routines whose E argument is dimension N but carries N−1 values (dlasq2's callers, dbdsqr, the d/zstein family) on their failure or non-convergence paths.

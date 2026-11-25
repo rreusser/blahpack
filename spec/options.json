@@ -45,6 +45,14 @@
 		{ "params": [ "ID" ], "routines": "^dlasrt$", "values": { "I": "increasing", "D": "decreasing" } },
 		{ "params": [ "JOB" ], "routines": "^[dz](tgsna|trsna)$", "values": { "E": "eigenvalues", "V": "eigenvectors", "B": "both" } },
 		{ "params": [ "JOB" ], "routines": "^[dz]trsen$", "values": { "N": "none", "E": "eigenvalues", "V": "subspace", "B": "both" } },
+		{ "params": [ "BMAT" ], "values": { "I": "standard", "G": "generalized" } },
+		{ "params": [ "WHICH" ], "routines": "^ds(ortr|esrt)$", "values": { "LM": "LM", "SM": "SM", "LA": "LA", "SA": "SA" } },
+		{ "params": [ "WHICH" ], "values": { "LM": "LM", "SM": "SM", "LA": "LA", "SA": "SA", "BE": "BE" } },
+		{ "params": [ "HOWMNY" ], "routines": "^dseupd$", "values": { "A": "all", "P": "partial", "S": "select" } },
+		{ "params": [ "HOWMNY" ], "routines": "^dsband$", "values": { "A": "all", "S": "select" } },
+		{ "params": [ "JOB" ], "routines": "^[dz]laic1$", "values": { "1": "largest-singular-value", "2": "smallest-singular-value" } },
+		{ "params": [ "IDENT" ], "values": { "I": "identity", "N": "not-identity" } },
+		{ "params": [ "JOBT" ], "routines": "^dlarrc$", "values": { "T": "tridiagonal", "L": "ldl" } },
 		{ "params": [ "CMACH" ], "routines": "^dlamch$", "values": { "E": "epsilon", "S": "safe-minimum", "P": "precision", "B": "base", "N": "digits", "R": "rounding", "M": "min-exponent", "U": "underflow", "L": "max-exponent", "O": "overflow" } }
 	]
 }

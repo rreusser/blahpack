@@ -91,8 +91,18 @@ class CallTimeout extends Error {
 	}
 }
 
+// Fortran SAVE state (dlacon, zlacon): a base.js that keeps it exports it as
+// `SAVE`. Each call made from one recorded call starts from the state
+// snapshotted before that record's first call, so ndarray.js and the wrapper
+// see the same state (ticket 0074).
+let SAVED = null;
+let SAVED_AT = null;
+
 function bounded( fn, args, ms ) {
 	const limit = ms || budgetMs;
+	if ( SAVED && SAVED_AT ) {
+		Object.assign( SAVED, SAVED_AT );
+	}
 	VM_CONTEXT.__fn = fn;
 	VM_CONTEXT.__args = args;
 	try {
@@ -856,6 +866,9 @@ async function replayModule( dir, options ) {
 		return report;
 	}
 	const nd = ( await import( pathToFileURL( path.join( dir, 'lib', 'ndarray.js' ) ).href ) ).default;
+	const baseNs = await import( pathToFileURL( path.join( dir, 'lib', 'base.js' ) ).href );
+	SAVED = ( baseNs.SAVE && typeof baseNs.SAVE === 'object' ) ? baseNs.SAVE : null;
+	SAVED_AT = null;
 	const wrapper = ( await import( pathToFileURL( wrapperFile ).href ) ).default;
 	const want = specLib.strided( spec ).map( ( s ) => s.toLowerCase() );
 	const have = paramNames( wrapper ).map( ( s ) => s.toLowerCase() );
@@ -901,6 +914,7 @@ async function replayModule( dir, options ) {
 		}
 		const expArgs = rec.map( decode );
 		let expRet;
+		SAVED_AT = SAVED ? Object.assign( {}, SAVED ) : null;
 		// The recorded call's own time sets the budget of every call made
 		// from it (min MIN_BUDGET_MS).
 		budgetMs = 60000;

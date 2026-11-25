@@ -1,5 +1,5 @@
 {
-	"$comment": "Machine-readable CONVENTIONS.md Appendix A: Fortran option letter -> canonical JS string, per option family. `params` are Fortran argument names; `routines` (optional) restricts a row to a routine family by regex over the routine name. The first matching row wins. Read by bin/gen_spec.",
+	"$comment": "Machine-readable CONVENTIONS.md Appendix A: Fortran option letter -> canonical JS string, per option family. `params` are Fortran argument names; `routines` (optional) restricts a row to a routine family by regex over the routine name. The first matching row wins. Read by bin/gen_spec. `type` (optional) names an alias in types/jsdoc-aliases.d.ts, the union of the family's values, that the generated JSDoc uses for the option instead of `string` (pinned by lint/typecheck-config.test.cjs).",
 	"families": [
 		{ "params": [ "UPLO" ], "values": { "U": "upper", "L": "lower" } },
 		{ "params": [ "TRANS", "TRANSA", "TRANSB", "TRANSR", "TRANA", "TRANB" ], "values": { "N": "no-transpose", "T": "transpose", "C": "conjugate-transpose" } },
@@ -34,6 +34,6 @@
 		{ "params": [ "JOB" ], "routines": "^[dz](gebal|gebak|ggbal|ggbak)$", "values": { "N": "none", "P": "permute", "S": "scale", "B": "both" } },
 		{ "params": [ "JOB" ], "routines": "^[dz](hseqr|hgeqz)$", "values": { "E": "eigenvalues", "S": "schur" } },
 		{ "params": [ "JOB" ], "routines": "^ddisna$", "values": { "E": "eigenvalues", "L": "left-vectors", "R": "right-vectors" } },
-		{ "params": [ "CMACH" ], "routines": "^dlamch$", "values": { "E": "epsilon", "S": "safe-minimum", "P": "precision", "B": "base", "N": "digits", "R": "rounding", "M": "min-exponent", "U": "underflow", "L": "max-exponent", "O": "overflow" } }
+		{ "params": [ "CMACH" ], "routines": "^dlamch$", "type": "MachineParameter", "values": { "E": "epsilon", "S": "safe-minimum", "P": "precision", "B": "base", "N": "digits", "R": "rounding", "M": "min-exponent", "U": "underflow", "L": "max-exponent", "O": "overflow" } }
 	]
 }

@@ -2853,3 +2853,12 @@ Keep entries short. Newest first.
 - **Bug class**: an off-by-one count in a 0-based translation of a 1-based `IAMAX( K-IMAX, A(IMAX,IMAX+1), LDA )`. The same line is correct in dsytf2 and in every `_rook`/`_rk` variant; only the two complex Bunch-Kaufman routines had it. Its lower-triangle twin was right.
 - **What allowed it**: the fixtures never put the row maximum in column K for the upper path. The existing tests reached neither branch's interchange code (lines 142–167 and 344–369 uncovered).
 - **Tests**: a regression test in each module fails before the fix.
+
+## 2026-11-25 — The wrong machine epsilon: dlatrs/dlatbs/dlatps hard-coded DLAMCH('E') where the reference uses 'P'; 33 more modules choose the wrong dlamch argument (ticket 0089)
+
+- **Found by**: a coverage agent comparing dlatrs's scale with the reference formula.
+- **Reproduce**: dlatrs with N = 1, A = [1], b = [1e300], upper / no-transpose / non-unit, normin 'no'. JS gave scale 4.99e-9; the reference gives BIGNUM/xmax = 9.98e-9. Both satisfy A·x = scale·b, so residual tests cannot tell them apart.
+- **Root cause**: `const SMLNUM = 2.2250738585072014e-308 / 1.1102230246251565e-16`. That divides by `DLAMCH('E')` (2^-53), where `dlatrs.f:316` has `DLAMCH( 'Safe minimum' ) / DLAMCH( 'Precision' )` (2^-52).
+- **Bug class**: LAPACK's two epsilons, 'E' (the rounding unit) and 'P' (eps·base), confused in translation. Thresholds built from them (SMLNUM, BIGNUM, RMIN/RMAX, tolerances) are then off by 2x or √2. A borderline input takes a different path; the answer stays acceptable but no longer matches the reference.
+- **Where else**: 32 modules call `dlamch( 'epsilon' )` where their reference uses only 'Precision' (the eigen drivers, the equilibration routines laq*, zlatrs, zlatbs, dlaqr5), and dtgevc does the reverse. Listed in ticket 0089, with a proposed check comparing each module's machine constants with its Fortran source.
+- **What allowed it**: nothing compares constants with the reference. Fixtures exercise the normal range, where the choice does not change the path taken.

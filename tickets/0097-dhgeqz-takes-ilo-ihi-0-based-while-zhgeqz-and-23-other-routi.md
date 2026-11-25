@@ -30,6 +30,8 @@ The ticket 0094 part-07 agent found that dlaqr5's `ktop`, `kbot`, `iloz` and `ih
 
 This widens the problem. A scalar index's base is declared only by a spec override, and nothing compares that declaration with what `base.js` actually does. A test that called each such routine at the boundary index (e.g. `ihiz = N` for a 1-based routine) would expose any mismatch.
 
+- dtgex2's `j1`: `lib/lapack/base/dtgex2/lib/ndarray.js:41` documents "1 <= J1 <= N", but the code is 0-based (`base.js:73`); found by the ticket 0094 part-12 agent.
+
 ## Reproduce
 
 ```bash

@@ -1034,6 +1034,64 @@ async function replayModule( dir, options ) {
 			}
 		}
 
+		// min-work: each workspace cut to the minimum ndarray.js itself
+		// demands (ticket 0096). The minimum is read from the RangeError
+		// ndarray.js throws for an empty workspace; the call is replayed with
+		// the recorded workspace's leading `min` elements (a workspace can
+		// carry state: ARPACK's workd/workl, ticket 0082). Results must agree
+		// as for `null-work`: a minimum too small for what base.js touches
+		// silently drops writes past the end of the typed array.
+		groups.forEach( ( g ) => {
+			if ( kindOf( g ) !== 'workspace' ) {
+				return;
+			}
+			const W = expArgs[ g.at ];
+			if ( !W || typeof W.length !== 'number' || typeof expArgs[ g.at + 2 ] !== 'number' || expArgs[ g.at + 1 ] !== 1 ) {
+				return;
+			}
+			const have = W.length - expArgs[ g.at + 2 ];
+			const probe = rec.map( decode );
+			probe[ g.at ] = new W.constructor( 0 );
+			probe[ g.at + 2 ] = 0;
+			let min = null;
+			try {
+				bounded( nd, probe );
+			} catch ( e ) {
+				const m = /\b(\w+) array must have at least (\d+) elements/.exec( String( e && e.message ) );
+				if ( e instanceof RangeError && m && m[ 1 ].toLowerCase() === g.param.name.toLowerCase() ) {
+					min = Number( m[ 2 ] );
+				}
+			}
+			if ( min === null || min >= have ) {
+				return;
+			}
+			const mArgs = rec.map( decode );
+			const src = mArgs[ g.at ];
+			const o = mArgs[ g.at + 2 ];
+			mArgs[ g.at ] = isComplexArray( src ) ? new src.constructor( flat( src ).slice( 2 * o, 2 * ( o + min ) ) ) : src.slice( o, o + min );
+			mArgs[ g.at + 2 ] = 0;
+			report.variants += 1;
+			let mRet;
+			try {
+				mRet = bounded( nd, mArgs );
+			} catch ( e ) {
+				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'ndarray.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
+				return;
+			}
+			const mAct = snapshot( mArgs, workspaceIdx );
+			const mEr = sameStorageReturn( expArgs, expRet, mArgs, mRet ) ? SAME : expRet;
+			const d = diff( exp, mAct, mEr, mRet, baseNames );
+			if ( d ) {
+				const retOk = ( mEr === SAME ) || retEqual( expRet, mRet ) || ( typeof expRet === 'object' && typeof mRet === 'object' );
+				const cls = retOk ? classifyDiff( exp, mAct, intIdx ) : 'fail';
+				if ( cls === 'rounding' ) {
+					report.rounding += 1;
+				} else {
+					report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min + ' (of ' + have + ')', 'detail': d + ' [' + cls + ']', 'call': describe( rec, baseNames ) } );
+				}
+			}
+		});
+
 		// transposed: a column-major call replayed in row-major, every general
 		// matrix copied into row-major storage (exercises the wrapper's other
 		// `order` branch). Bit-identical: base sees the same logical matrices.

@@ -29,7 +29,9 @@
 *         workspace), keeping the recorded leading elements. Results must
 *         agree as for `null-work`: a declared minimum below what base.js
 *         touches passes validation and then silently drops writes past the
-*         end of the typed array (ticket 0096).
+*         end of the typed array (ticket 0096). An output the spec marks
+*         `workDependent` (the reference's own result depends on LWORK, with
+*         the reason in an override) is not compared.
 *     -   `zero-size`: for the first few calls, each dimension set to 0 in
 *         turn; the wrapper and ndarray.js must agree (quick returns).
 *     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of
@@ -1047,6 +1049,12 @@ async function replayModule( dir, options ) {
 		// carry state: ARPACK's workd/workl, ticket 0082). Results must agree
 		// as for `null-work`: a minimum too small for what base.js touches
 		// silently drops writes past the end of the typed array.
+		const workDependentIdx = new Set( workspaceIdx );
+		groups.forEach( ( g ) => {
+			if ( g.param.workDependent ) {
+				workDependentIdx.add( g.at );
+			}
+		});
 		groups.forEach( ( g ) => {
 			if ( kindOf( g ) !== 'workspace' ) {
 				return;
@@ -1084,12 +1092,17 @@ async function replayModule( dir, options ) {
 				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'ndarray.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
 				return;
 			}
-			const mAct = snapshot( mArgs, workspaceIdx );
+			// An output the reference itself makes depend on the workspace
+			// (spec `workDependent`, set by an override with its reason) is
+			// not compared: dgelss's path, chosen from LWORK, changes which
+			// singular vectors A returns.
+			const mAct = snapshot( mArgs, workDependentIdx );
+			const mExp = snapshot( expArgs, workDependentIdx );
 			const mEr = sameStorageReturn( expArgs, expRet, mArgs, mRet ) ? SAME : expRet;
-			const d = diff( exp, mAct, mEr, mRet, baseNames );
+			const d = diff( mExp, mAct, mEr, mRet, baseNames );
 			if ( d ) {
 				const retOk = ( mEr === SAME ) || retEqual( expRet, mRet ) || ( typeof expRet === 'object' && typeof mRet === 'object' );
-				const cls = retOk ? classifyDiff( exp, mAct, intIdx ) : 'fail';
+				const cls = retOk ? classifyDiff( mExp, mAct, intIdx ) : 'fail';
 				if ( cls === 'rounding' ) {
 					report.rounding += 1;
 				} else {

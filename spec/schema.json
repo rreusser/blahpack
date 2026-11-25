@@ -80,6 +80,7 @@
 				"intent": { "enum": [ "in", "out", "inout" ] },
 				"of": { "type": "string", "description": "ld/inc/lwork: the Fortran array it belongs to." },
 				"base": { "enum": [ 0 ], "description": "scalar index: the JS takes it 0-based (the reference is 1-based); its checks are restated 1-based. Set only by an override." },
+				"workDependent": { "type": "string", "minLength": 20, "description": "An output whose exact contents the reference itself makes depend on the workspace it is given (the path LWORK selects), with why; the wrapper replay's workspace-size variants do not compare it (ticket 0096). Set only by an override." },
 				"element": { "type": "boolean", "description": "scalar: callers pass an element of one of their arrays, read or updated in place, so it crosses as `x, offsetX` (S10). Set only by an override." },
 				"dims": { "type": "array", "items": { "type": "string" }, "description": "Declared Fortran extents (rank from the declaration, extents from the doc comment)." },
 				"ld": { "type": [ "string", "null" ], "description": "Fortran LD argument of a 2-D array." },

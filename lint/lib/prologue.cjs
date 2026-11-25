@@ -18,7 +18,8 @@
 //   }
 //
 // The order is: the layout flag `order` (strided form, D1/V6), then the spec's
-// checks in reference order (|INFO|). A leading-dimension check whose bound
+// checks in reference order (|INFO|), with an enum check for each input option
+// the spec has none for (ticket 0092) at that option's position. A leading-dimension check whose bound
 // differs between layouts becomes two statements (column-major: the reference
 // bound on the rows; row-major: the column count, V5). A check that names an
 // argument the form does not have (an LD in ndarray.js, or a workspace length)
@@ -342,6 +343,40 @@ function ldStatement( c, p, ld, pos, layout, test ) {
 	return s;
 }
 
+// Enum checks for the input options the reference never checks (S14,
+// ticket 0092). The reference reads such an option as "this letter, else the
+// remaining case"; a JS string has no letter, so every input option accepts
+// exactly the strings of its type (spec/options.json, plus the family's
+// `other`) and throws on any other. Ordered by the option's position, as the
+// reference orders its own checks; `info` is that position, negated.
+function optionChecks( spec ) {
+	var checked = {};
+	var out = [];
+	spec.checks.forEach( function each( c ) {
+		if ( c.js ) {
+			checked[ c.param ] = true; // an untranslated check generates nothing
+		}
+	});
+	spec.params.forEach( function each( p, i ) {
+		var vals;
+		if ( p.role !== 'flag' || p.intent !== 'in' || checked[ p.fortran ] ) {
+			return;
+		}
+		vals = specLib.optionValues( spec, p.fortran );
+		if ( !vals ) {
+			return;
+		}
+		out.push({
+			'info': -( i + 1 ),
+			'param': p.fortran,
+			'kind': 'enum',
+			'values': vals,
+			'js': true
+		});
+	});
+	return out;
+}
+
 function prologue( spec, form, actual ) {
 	var nm = nameMap( spec, form, actual );
 	var out = [];
@@ -357,7 +392,7 @@ function prologue( spec, form, actual ) {
 			'doc': 'first argument must be a valid order'
 		});
 	}
-	checks = spec.checks.slice().sort( function s( a, b ) {
+	checks = spec.checks.concat( optionChecks( spec ) ).sort( function s( a, b ) {
 		return Math.abs( a.info ) - Math.abs( b.info );
 	});
 	checks.forEach( function each( c ) {
@@ -388,6 +423,7 @@ function prologue( spec, form, actual ) {
 			out.push({
 				'param': c.param,
 				'kind': 'enum',
+				'values': c.values,
 				'ctor': 'TypeError',
 				'test': v ? '!' + v.fn + '( ' + name + ' )' : rename( c.values.map( function m( x ) {
 					return p.name + ' !== \'' + x + '\'';

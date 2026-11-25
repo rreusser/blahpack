@@ -27,14 +27,10 @@ function flagValues( spec, form ) {
 	var out = {};
 	P.prologue( spec, form, names ).forEach( function each( c ) {
 		var i = names.indexOf( c.args[ 0 ] );
-		var s;
 		if ( c.kind === 'order' ) {
 			out[ i ] = 'column-major';
 		} else if ( c.kind === 'enum' && i >= 0 ) {
-			s = spec.checks.filter( function f( x ) {
-				return x.param === c.param;
-			})[ 0 ];
-			out[ i ] = s.values[ 0 ];
+			out[ i ] = c.values[ 0 ];
 		}
 	});
 	return out;

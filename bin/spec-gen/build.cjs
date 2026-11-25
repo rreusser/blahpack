@@ -932,8 +932,11 @@ function build( routine, sig, facts, options ) {
 		rec.kind = 'enum';
 		rec.fortranValues = acc.join( '' );
 		var vals = lookupOption( routine, p.fortran );
+		// Letters that alias one value ('1' and 'O': one-norm) give it once.
 		rec.values = vals ? acc.map( function m( L ) {
 			return vals[ L ] || null;
+		}).filter( function u( v, i, a ) {
+			return v === null || a.indexOf( v ) === i;
 		}) : null;
 		if ( !vals || rec.values.indexOf( null ) >= 0 ) {
 			notes.push( 'option ' + p.fortran + ' accepts \'' + rec.fortranValues + '\' but spec/options.json has no canonical value for ' + ( vals ? acc.filter( function f( L ) {

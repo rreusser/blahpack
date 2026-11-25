@@ -31,7 +31,6 @@ var SCALAR_IN = {
 	'object': 'Object'
 };
 
-var OPTIONS = null;
 var ALIASES = null;
 
 // Alias name per literal-union alias in types/jsdoc-aliases.d.ts, keyed by
@@ -51,48 +50,13 @@ function aliases() {
 	return ALIASES;
 }
 
-// The strings an input option accepts, in spec/options.json order: the
-// values of its spec enum check (what the reference accepts for this
-// routine), else every value of its options family (plus its `other`),
-// else null.
-function optionValues( spec, fortran ) {
-	var checked = null;
-	var fam = null;
-	var all;
-	var i;
-	( spec.checks || [] ).forEach( function each( c ) {
-		if ( c.kind === 'enum' && c.param === fortran && c.values ) {
-			checked = c.values;
-		}
-	});
-	if ( OPTIONS === null ) {
-		OPTIONS = JSON.parse( fs.readFileSync( path.join( __dirname, '..', '..', 'spec', 'options.json' ), 'utf8' ) ).families;
-	}
-	for ( i = 0; i < OPTIONS.length && !fam; i++ ) {
-		if ( OPTIONS[ i ].params.indexOf( fortran ) >= 0 && ( !OPTIONS[ i ].routines || new RegExp( OPTIONS[ i ].routines ).test( spec.routine ) ) ) {
-			fam = OPTIONS[ i ];
-		}
-	}
-	all = ( fam ) ? Object.keys( fam.values ).map( function v( k ) {
-		return fam.values[ k ];
-	}).concat( ( fam.other ) ? [ fam.other ] : [] ) : [];
-	if ( checked ) {
-		return all.filter( function f( v ) {
-			return checked.indexOf( v ) >= 0;
-		}).concat( checked.filter( function f( v ) {
-			return all.indexOf( v ) < 0;
-		}) );
-	}
-	return ( fam ) ? all : null;
-}
-
 // The JSDoc type of an input option: the literal union of the strings it
 // accepts (CONVENTIONS S14), so `tsc` rejects any other string at a call
 // and any comparison against one in base.js. Spelled as the alias in
 // types/jsdoc-aliases.d.ts with exactly those values when there is one.
 // `string` only when the option has no known values (ticket 0022).
 function optionType( spec, fortran ) {
-	var vals = optionValues( spec, fortran );
+	var vals = specLib.optionValues( spec, fortran );
 	var key;
 	if ( !vals ) {
 		return 'string';

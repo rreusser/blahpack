@@ -110,3 +110,43 @@ test( 'every input option is typed as the literal union of its values (tickets 0
 	assert.ok( opts.families.length > 0 );
 	assert.deepStrictEqual( loose, [], 'option parameters not typed as literal unions' );
 });
+
+test( 'every input option is checked at runtime against the values of its type (ticket 0092)', function t() {
+	// A plain-JS caller has no tsc, so the generated prologue of ndarray.js
+	// and <routine>.js (lint/lib/prologue.cjs, kept in lib/ by spec-prologue)
+	// must reject exactly the strings the type rejects. An option the
+	// reference checks itself keeps that check; every other option gets an
+	// enum check over the values of its type.
+	var P = require( './lib/prologue.cjs' );
+	var specLib = require( './lib/spec.cjs' );
+	var missing = [];
+	var differ = [];
+	var n = 0;
+	fs.readdirSync( path.join( ROOT, 'spec' ) ).forEach( function each( f ) {
+		var spec;
+		var checks;
+		if ( !/^[a-z].*\.json$/.test( f ) || f === 'options.json' || f === 'schema.json' ) {
+			return;
+		}
+		spec = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', f ), 'utf8' ) );
+		checks = P.prologue( spec, 'ndarray', specLib.base( spec ) );
+		( spec.params || [] ).forEach( function each( p ) {
+			var c;
+			if ( p.role !== 'flag' || p.intent !== 'in' || specLib.base( spec ).indexOf( p.name ) < 0 ) {
+				return;
+			}
+			n += 1;
+			c = checks.filter( function f( x ) {
+				return x.param === p.fortran;
+			})[ 0 ];
+			if ( !c ) {
+				missing.push( spec.routine + '.' + p.name );
+			} else if ( c.kind === 'enum' && c.values.slice().sort().join( '|' ) !== specLib.optionValues( spec, p.fortran ).slice().sort().join( '|' ) ) {
+				differ.push( spec.routine + '.' + p.name );
+			}
+		});
+	});
+	assert.ok( n > 900, 'only ' + n + ' option parameters seen' );
+	assert.deepStrictEqual( missing, [], 'input options with no runtime check' );
+	assert.deepStrictEqual( differ, [], 'input options whose runtime values differ from their type' );
+});

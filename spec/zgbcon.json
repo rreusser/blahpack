@@ -157,7 +157,6 @@
 			"fortranValues": "IO1",
 			"values": [
 				"inf-norm",
-				"one-norm",
 				"one-norm"
 			],
 			"fortran": ".NOT.ONENRM .AND. .NOT.LSAME( NORM, 'I' )",

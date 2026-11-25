@@ -88,7 +88,7 @@ of the third:
 
 | ID | Rule | Rationale | Enforcer |
 |---|---|---|---|
-| V1 | Public entry points (`ndarray.js`, `<routine>.js`) reject what the reference rejects (its `INFO = -k` checks), with `TypeError` for options and `RangeError` for numbers. | Supported ⇒ honored, unsupported ⇒ rejected, with Fortran as the arbiter. | `lint:spec-prologue` (generated from the spec's checks) |
+| V1 | Public entry points (`ndarray.js`, `<routine>.js`) reject what the reference rejects (its `INFO = -k` checks), with `TypeError` for options and `RangeError` for numbers. They also reject any string outside an input option's type when the reference does not check that option: the reference reads such an option as "this letter, else the remaining case", and a JS string has no letter. | Supported ⇒ honored, unsupported ⇒ rejected, with Fortran as the arbiter. A plain-JS caller has no `tsc`, so without the option check a typo silently takes the remaining case (`dlansf( 'one_norm', … )` returned 0; ticket 0092). | `lint:spec-prologue` (generated from the spec's checks, plus an enum check over the type's values for every input option the spec has no translated check for); `ci:test:lint-rules` (`lint/typecheck-config.test.cjs`: every input option has a runtime check over exactly its type's values) |
 | V2 | `base.js` does no argument validation and imports no validators. | Validate once, at the boundary. Internal callers pass known-good args. | `conf:conventions.base-no-param-validation` (warn) [ticket 0024] |
 | V3 | Each option param is validated, and accepts exactly the values the reference accepts. `ndarray.js` and `<routine>.js` accept the same set. | No silently-misread flags. | `lint:spec-prologue` |
 | V4 | Dimension params (`M`, `N`, `K`, `nrhs`, …) are checked `≥ 0` with `RangeError` in both entry points. | Reference `INFO` checks. | `lint:spec-prologue` |
@@ -195,13 +195,14 @@ Used everywhere: `base.js` dispatch, both validators, tests, examples, and the R
 Fortran letters map to these values. The machine-readable letter → value map is
 `spec/options.json` (read by `bin/gen_spec`); `lint/spec-schema.test.cjs` fails if it uses
 a value this table doesn't list. Each option parameter's JSDoc type is the literal union of
-the values its routine accepts (S14), so `tsc` rejects any other string.
+the values its routine accepts (S14), so `tsc` rejects any other string, and both
+validators reject any other string at runtime (V1).
 
 | Param family | Canonical values |
 |--------------|------------------|
 | `order` | `'row-major'`, `'column-major'` |
 | `uplo` | `'upper'`, `'lower'`; `'all'` (lacpy/laset/lacp2, where the reference treats any other letter as the whole matrix) |
-| `trans`, `transa`, `transb`, `transr`, `trans_type` | `'no-transpose'`, `'transpose'`, `'conjugate-transpose'` |
+| `trans`, `transa`, `transb`, `transr`, `trans_type` | `'no-transpose'`, `'transpose'`, `'conjugate-transpose'`; `transr` (RFP) is `'no-transpose'` and `'transpose'` for `d`, `'no-transpose'` and `'conjugate-transpose'` for `z` |
 | `side` | `'left'`, `'right'`; `'both'` (trevc/tgevc/hsein) |
 | `diag` | `'unit'`, `'non-unit'` |
 | `direct` | `'forward'`, `'backward'` |

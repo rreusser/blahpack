@@ -29,3 +29,12 @@ How it is permitted:
 ```bash
 grep -ln "const NB = \|DEFAULT_NB = \|const nb = [0-9]" lib/lapack/base/*/lib/base.js | wc -l
 ```
+
+## Evidence 2026-11-25 (2)
+
+- The same pattern one level up: dlaqr0, dlaqr4, zlaqr0 and zlaqr4 cap their AED window from the WORK length (`nw <= lwork/2`), assuming the callee needs only 2·nw. The JS dlaqr2/dlaqr3 need `33*JW + 2080` once JW > 32, a window that is reachable when AED stalls. The cyclic-shift matrix reaches it at N = 300 (real) and N = 120 (complex). Their minimums now cover the largest window that can be reached. dhseqr/zhseqr, which hand their WORK to dlaqr0/zlaqr0, are being fixed in the same PR.
+- Tuning constants differ from the reference's ILAENV in places:
+  - the JS dlaqr3 switches between dlaqr4 and dlahqr at `nmin = 12`, where ILAENV(12) = 75;
+  - zlaqr0 and zlaqr4 hard-code NWR = 5 rather than taking IPARMQ's value.
+
+  Neither breaks workspace safety, but each changes which path a given size takes.

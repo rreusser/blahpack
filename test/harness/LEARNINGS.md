@@ -2934,3 +2934,21 @@ Keep entries short. Newest first.
   - The replay compares the two entry points with each other, so a quick return both share is invisible to it (ticket 0099).
   - The existing zero-size tests started `tau` and `rank` at 0, so a skipped write of 0 passed them.
 - **Where else**: ticket 0099's reproduce lists five more `ndarray.js` quick returns whose spec says the reference sets an output.
+
+## 2026-11-25 — Declared workspace minimums too small for what base.js uses, in 29 modules (ticket 0096)
+
+- **Found by**: the new `min-work` replay variant, which replays every recorded `ndarray.js` call with each workspace cut to the minimum `ndarray.js` itself demands. dggsvd3 was found first, while its example was being written (ticket 0094). Then direct tests at sizes past the blocking threshold, which the replay cannot reach. Each fix has a regression test that fails, or hangs, on the old code.
+- **Reproduce** (dggsvd3): M = N = P = 3, A = [1,2,3,4,5,6,7,8,10], B = [2,0,1,1,3,0,0,1,4] column-major. With WORK of 6 it returned info = 0, L = 1 and alpha = 0; with WORK of 11 or more, L = 3.
+- **Bug classes**:
+  - **A callee assumed to allocate its own workspace**: dggsvp3 and zggsvp3 believed xGEQP3 allocates internally, and checked only max(1, M, N, p).
+  - **A partitioned WORK whose minimum covered one use, not the offset plus the sub-call**: dggsvd3 and zggsvd3 (TAU at WORK[0:N], then dggsvp3 at WORK[N:]).
+  - **The reference's documented LWORK copied, where the code enforces a larger LWORKMIN**: dorbdb2, dorbdb3, zunbdb2, zunbdb3 and zunbdb4 (`LWORK >= M-Q`, but the code requires `max(ILARF+LLARF-1, IORBDB5+LORBDB5-1)`). Also dorm22 and zunm22: they accepted 1 and left the reference's `LWORK >= NQ` check to base's silent INFO = -12.
+  - **A minimum computed without a size known only inside base**: dtrsen and ztrsen accepted 1 for every job. The condition-number paths need M(N-M) or 2M(N-M), with M counted from SELECT. dtrsen's IWORK was never checked.
+  - **The reference minimum assumes the blocked callee shrinks NB, but the JS callee always blocks at NB = 32** (ticket 0100):
+    - dgeev, dgees, zgees, dgeevx, zgeevx and zgeev (through dgehrd/zgehrd), dgelss and zgelss, dormlq, the dlaqr2/3 family, and the dlaqr0/4 family (whose AED window cap assumes a 2·nw callee);
+    - the overrun reads `undefined`, which becomes NaN, and the QR iteration then spins to itmax, so zgeev showed up as a replay timeout.
+- **What allowed it**:
+  - `workspace-guard` checks only that the wrapper allocates at least the `ndarray.js` minimum;
+  - `harness:assertWorkspaceSufficient` ran only where a test called it;
+  - a typed array silently drops writes past its end, so a short WORK never throws.
+- **Where else**: the `min-work` variant now gates every module, but only at the sizes its tests reach. Blocked paths start past about 33, where most tests don't go (ticket 0100).

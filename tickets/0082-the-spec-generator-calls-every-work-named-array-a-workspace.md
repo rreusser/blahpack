@@ -31,3 +31,10 @@ node bin/wrapper-replay.mjs dseupd
 
 - Assign `workspace` only when the intent is `out` (pure scratch). Classify a WORK-named array with intent `in`/`inout` by its dims, like any other array.
 - Regenerate the affected specs, and let the spec rules (`spec-prologue`, `spec-jsdoc`) and the replay re-check the ARPACK wrappers.
+
+## Update 2026-11-25
+
+- **Replay:** the wrapper replay no longer passes `null` for a workspace whose intent is `in`/`inout`. Its `null-work` variant now keeps the caller's contents for those arrays, so `dseupd` replays cleanly. This is independent of the role question below.
+- **Generator, tried and reverted:** assigning `workspace` only for intent `out` reclassified 10 arrays in 6 specs (dgetv0, dsaitr, dsaup2, dsaupd, dsband, dseupd). The strided projection then gives each of them a stride, which changes 6 public wrapper signatures. It also moved dgetv0's S11 return from `IPNTR` to `WORKD`, which would need an override.
+- **dsband does not fit the rule.** It is a driver, not a reverse-communication step: for its caller, WORKD/WORKL/IWORK really are scratch (its wrapper allocates them when given `null`), but the extracted intent is `inout`. Intent alone cannot tell "carries state between the caller's calls" from "scratch for a driver".
+- **Decision needed:** whether the six signatures change, and what marks a driver's arrays as scratch, probably a spec override with a reason.

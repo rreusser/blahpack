@@ -26,3 +26,8 @@ node bin/wrapper-replay.mjs dgees dlarrb ztgevc
 `node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
 
 Still untested, 11 modules: dgees dgetv0 dgges dlamch dlaqr4 dsaitr dsaup2 dsaupd dtgex2 zgees zgges. dlaqr4 and dtgex2: the recorded argument count differs from the spec. dseupd and ztgevc are now replayed: a recorded `null` array and a plain boolean array are passed through.
+
+## Update 2026-11-25
+
+- Callbacks are now recorded by their source and rebuilt on replay (test/harness/replay-record.mjs, `decode` in replay.js). A callback that needs its closure throws on replay, and the call is skipped. dgees, zgees and zgges had recorded nothing, because their `select`/`selctg` callback could not be serialized; they now replay 15, 4 and 13 calls.
+- Still untested: dgetv0 and dsaitr record 0 calls (reverse communication through a state object); dlaqr4 and dtgex2 have an argument count that differs from the spec.

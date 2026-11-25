@@ -2753,3 +2753,28 @@ Keep entries short. Newest first.
   - Only the per-module wall-clock timeout bounded the replay. A timeout was an error with no detail, and no run had ever been done over the whole corpus with the pool and the cache, where such modules stand out (every warm run recomputed them).
 - **Where else**:
   - `bin/workspace-guard.mjs` and `bin/coverage.mjs` also bound only the whole test run, so a hanging test loses that module's whole report. They run only the module's own tests, which pass in the unit suite, so a hang there would already fail `npm run test:unit`; the guard's forced `WORK = null` is the exception (a hang under it shows as an error, not a finding).
+
+## 2026-11-25 — An ungated type check: 22 type errors in 13 modules, including two wrong results (tickets 0029, 0003)
+
+- **Found by**: `npm run typecheck` (`tsc --checkJs`), with stdlib imports now resolved to stdlib's own `docs/types/index.d.ts` (`paths` in tsconfig.json; previously every stdlib value was `any`). The check had existed since PR #21 but was never run in CI, and had drifted to 19 errors (22 with stdlib's types).
+- **Wrong results**:
+  - **dseupd**: `select` is documented as a `Uint8Array`, but the code stored `true`/`false` and tested `select[ r ] === false`. A `Uint8Array` stores `false` as `0`, and `0 === false` is false, so the reorder loop swapped columns it should have skipped. The Fortran is `.NOT.SELECT(RGHTPTR)`. Every test passed a plain boolean `Array`, which hid it. With a `Uint8Array`, none of the 9 reorders in the fixtures reaches the divergent step (both ends unselected), so no fixture shows it; the type check is the enforcer. The tests now run every case with both array kinds.
+  - **zgges**: the `ztgsen` status was wrapped in `{ info, m, pl, pr }` and then compared `=== 1`. So a failed reordering never set `INFO = N+3` and returned success. dgges was correct. Shown by a test that substitutes a failing ztgsen (new `importWithDependencies`, test/harness/constants.js, the module substitution ticket 0051 anticipated). It fails before the fix.
+- **Checks that could not work**:
+  - **ztgsen ndarray.js** sized WORK/IWORK from `M * ( N - M )` with `M` the output array. A length-1 array coerces to its element, so this read whatever the caller left in `M[ 0 ]` (usually 0), and the size check almost never applied. It now counts `SELECT`, as the wrapper does, and only for `IJOB > 0`. A new test rejects WORK/IWORK one element short.
+  - **dtgsen, ztgevc wrappers**: `M < 0` on an `Int32Array` output, plus two tests that passed `M = -1`, a number, where the contract is an array. Test files are outside lint and the type check (tickets 0081, 0004), which is how those tests got in.
+- **Latent, right only by coercion**:
+  - **dlasq3 wrapper**: `stride2offset( 4 * n0, strideZ )` with `n0` an `Int32Array`: `4 * new Int32Array( [ 4 ] )` is `16`. The root cause is `bin/codemod-vector-lengths.mjs` (ticket 0068), which copied the spec length `4 * n0` without the name map the generated prologue uses (`n0[ 0 ]` for an output or input/output scalar, S10). The codemod now shares `lint/lib/prologue.cjs`'s `nameMap`/`rename`. A scan of every wrapper's `stride2offset` lengths found no other such case.
+  - **dgees, zgees**: the `M` output of dtrsen/ztrsen was allocated as a `Float64Array`.
+  - **zggev, zggevx**: the `M` output was passed as a plain `[ 0 ]`.
+  - **dtrevc, dtrevc3**: booleans were stored into `SELECT` (read only by truthiness).
+  - **dtgsna**: an integer status was wrapped in an object and unwrapped by `typeof`.
+- **Bug class**: a value of the wrong kind that still runs. JS coerces one-element arrays, `Uint8Array` coerces booleans, and an object compared with `===` is just unequal. The result is right by accident, or silently wrong on one path.
+- **What allowed it**: the only check that sees kinds was ungated. Each fix was found once, by hand, and nothing stopped the next. Lint (S9 `base-arity`) checks the argument count into `base()` only. Test files are checked by neither.
+- **Gate**: `npm run typecheck` now runs in CI's lint job (CONVENTIONS S14), and `lint/verify-no-escape-hatches.cjs` rejects `@ts-ignore`/`@ts-nocheck`/`@ts-expect-error`. The check is still non-strict and complex arrays are still `any` (ticket 0023, next). Test files are not yet checked (ticket 0004).
+- **Where else**: anything typed `any` in `types/jsdoc-aliases.d.ts` (Complex128Array, TypedArray, option strings) can still hide the same class.
+- **Replay gaps found on the way** (the changed modules must pass the replay gate):
+  - dgees, zgees and zgges recorded no calls, because their callback argument could not be serialized. Callbacks are now recorded as source and rebuilt (ticket 0075).
+  - `null-work` passed `null` for dseupd's WORKL, which carries dsaupd's state. A workspace with intent `in`/`inout` now keeps its contents (ticket 0082).
+  - The replay exposed a real wrapper bug: dtgsna allocated `max(1, N)` WORK for every `job`, but `job` = `'eigenvectors'`/`'both'` needs `2*N*(N+2)+16`. `s` and `DIF` came back 0. ndarray.js already checked the right size; the wrapper now allocates it, and a test compares it with the reference fixture (ticket 0072).
+

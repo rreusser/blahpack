@@ -24,6 +24,7 @@ import * as espree from 'espree';
 
 const require = createRequire( import.meta.url );
 const specLib = require( '../lint/lib/spec.cjs' );
+const prologueLib = require( '../lint/lib/prologue.cjs' );
 const ROOT = path.resolve( path.dirname( fileURLToPath( import.meta.url ) ), '..' );
 const IMPORTS = {
 	'min': "import min from '@stdlib/math/base/special/fast/min/lib/index.js';",
@@ -40,29 +41,14 @@ function wrapperPath( r ) {
 	return null;
 }
 
-// Rewrite `expr` with the wrapper's own parameter spelling (the spec may say
-// `P` where the wrapper says `p`); null if it names anything else.
-function inWrapperTerms( expr, params ) {
-	// Arithmetic, min/max, and option conditionals (`( side === 'left' ) ? M
-	// : N`, ticket 0062); quoted option values are not identifiers.
-	if ( !/^(?:[\w\s(),+\-*?:=]|'[a-z-]+')+$/.test( expr ) ) {
-		return null;
-	}
-	let ok = true;
-	const out = expr.replace( /'[a-z-]+'|[A-Za-z_]\w*/g, ( id ) => {
-		if ( id.charAt( 0 ) === "'" ) {
-			return id;
-		}
-		if ( id === 'min' || id === 'max' ) {
-			return id;
-		}
-		const hit = params.find( ( p ) => p.toLowerCase() === id.toLowerCase() );
-		if ( !hit ) {
-			ok = false;
-		}
-		return hit || id;
-	});
-	return ok ? out : null;
+// Rewrite a spec expression in the wrapper's own terms, through the same
+// name map the generated prologue uses: the wrapper's spelling (`P` vs `p`),
+// and an output or input/output scalar read from its length-1 array (S10;
+// dlasq3's `4 * n0` used the array itself, right only by coercion).
+// Null if it names anything the wrapper does not have.
+function inWrapperTerms( expr, spec, params ) {
+	const nm = prologueLib.nameMap( spec, 'strided', params );
+	return prologueLib.rename( expr, nm.expr );
 }
 
 function wrapperParams( src, routine ) {
@@ -105,7 +91,7 @@ function main() {
 				const g = groups.find( ( x ) => x.names.length === 3 && x.names[ 1 ] === strideName );
 				if ( g && want[ g.param.name ] ) {
 					const specExpr = g.param.length && g.param.length.js;
-					const expr = specExpr && inWrapperTerms( specExpr, params );
+					const expr = specExpr && inWrapperTerms( specExpr, spec, params );
 					const a0 = n.arguments[ 0 ];
 					if ( !expr ) {
 						summary.skipped.push( r.routine + '.' + g.param.name + ': spec length ' + JSON.stringify( specExpr ) + ' not expressible' );

@@ -348,14 +348,14 @@
 			"param": "LDQ",
 			"kind": "expr",
 			"fortran": "LDQ.LT.1 .OR. ( ILQ .AND. LDQ.LT.N )",
-			"js": "ldq < 1 || ((compq === 'none' ? false : (compq === 'update' ? true : (compq === 'initialize' ? true : true))) && ldq < N)"
+			"js": "ldq < 1 || ((compq === 'initialize' || compq === 'update') && ldq < N)"
 		},
 		{
 			"info": -16,
 			"param": "LDZ",
 			"kind": "expr",
 			"fortran": "LDZ.LT.1 .OR. ( ILZ .AND. LDZ.LT.N )",
-			"js": "ldz < 1 || ((compz === 'none' ? false : (compz === 'update' ? true : (compz === 'initialize' ? true : true))) && ldz < N)"
+			"js": "ldz < 1 || ((compz === 'initialize' || compz === 'update') && ldz < N)"
 		}
 	],
 	"quickReturn": [

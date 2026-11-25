@@ -1,5 +1,6 @@
 /**
-* Module load hook behind `importWithConstants` (constants.js). It serves
+* Module load hook behind `importWithConstants` and `importWithDependencies`
+* (constants.js). It serves
 * `<module>.js?constants=<json>` as the module's source with the named
 * `const` declarations replaced.
 *
@@ -10,8 +11,31 @@
 */
 
 const MARK = '?constants=';
+const DEPS = '?deps=';
+
+// `<module>.js?deps=<json>`: each named import specifier is replaced by a
+// module whose default export is the test's function (importWithDependencies).
+async function loadWithDeps( url, context, nextLoad ) {
+	const i = url.indexOf( DEPS );
+	const base = url.slice( 0, i );
+	const ids = JSON.parse( decodeURIComponent( url.slice( i + DEPS.length ) ) );
+	const res = await nextLoad( base, { ...context, 'format': 'module' } );
+	let src = String( res.source );
+	for ( const [ spec, id ] of Object.entries( ids ) ) {
+		const quoted = "'" + spec + "'";
+		const n = src.split( quoted ).length - 1;
+		if ( n !== 1 ) {
+			throw new Error( 'importWithDependencies: expected exactly one import of `' + spec + '` in ' + base + ', found ' + n );
+		}
+		src = src.replace( quoted, "'data:text/javascript,export default globalThis.__harnessDeps[" + Number( id ) + "];'" );
+	}
+	return { 'format': 'module', 'source': src, 'shortCircuit': true };
+}
 
 export async function load( url, context, nextLoad ) {
+	if ( url.indexOf( DEPS ) >= 0 && !url.startsWith( 'data:' ) ) {
+		return loadWithDeps( url, context, nextLoad );
+	}
 	const i = url.indexOf( MARK );
 	if ( i < 0 ) {
 		return nextLoad( url, context );

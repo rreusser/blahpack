@@ -96,12 +96,14 @@ files.filter( function isWorkflow( f ) {
 	});
 })();
 
-// 4. Source and tests: no suppressed project rules, no skipped or focused tests.
+// 4. Source and tests: no suppressed project rules or type checks, no skipped
+// or focused tests.
 files.filter( function isJS( f ) {
 	return /[\\/](lib|test|lint|bin)[\\/].+\.(c|m)?js$/.test( f ) && f.indexOf( 'verify-no-escape-hatches' ) === -1 && f.indexOf( path.join( 'lint', 'rules' ) ) === -1;
 }).forEach( function each( f ) {
 	scanLines( f, [
 		{ 're': /eslint-disable[^\n]*blahpack\//, 'what': 'project lint rule suppressed' },
+		{ 're': /@ts-(ignore|nocheck|expect-error)\b/, 'what': 'type check suppressed' },
 		{ 're': /\b(test|it|describe)\.(skip|todo|only)\s*\(/, 'what': 'test skipped / focused' },
 		{ 're': /[{,]\s*'?(skip|todo|only)'?\s*:\s*(true|'[^']*'|"[^"]*")/, 'what': 'test skipped / focused via options' }
 	]);

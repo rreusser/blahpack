@@ -111,9 +111,31 @@ const SAME = Symbol( 'same-storage return' );
 
 // --- argument encoding ---------------------------------------------------
 
+// A recorded callback (replay-record.mjs) rebuilt from its source. One that
+// cannot be rebuilt, or needs its closure, throws when called, so the call
+// counts as rejected by ndarray.js and is skipped.
+const CALLBACKS = new Map();
+function callback( src ) {
+	if ( !CALLBACKS.has( src ) ) {
+		let fn;
+		try {
+			fn = ( 0, eval )( '(' + src + ')' ); // eslint-disable-line no-eval
+		} catch ( e ) {
+			fn = null;
+		}
+		CALLBACKS.set( src, ( typeof fn === 'function' ) ? fn : function unrebuildable() {
+			throw new Error( 'recorded callback could not be rebuilt' );
+		});
+	}
+	return CALLBACKS.get( src );
+}
+
 function decode( e ) {
 	if ( 'v' in e ) {
 		return e.v;
+	}
+	if ( e.f ) {
+		return callback( e.f );
 	}
 	if ( e.c ) {
 		const C = ( e.c === 'Complex128Array' ) ? Complex128Array : Complex64Array;
@@ -302,7 +324,10 @@ function toWrapper( spec, groups, args, order, vecOverride, keepWork ) {
 			out.push( a[ 0 ].subarray( a[ 3 ] ), ( order === 'column-major' ) ? a[ 2 ] : a[ 1 ] );
 			break;
 		case 'workspace':
-			if ( keepWork ) {
+			// `null` stands for scratch only. A workspace the routine reads
+			// (intent in/inout: dseupd's WORKL holds dsaupd's state) keeps
+			// the caller's contents in every variant (ticket 0082).
+			if ( keepWork || g.param.intent !== 'out' ) {
 				if ( a[ 1 ] !== 1 ) {
 					return null;
 				}

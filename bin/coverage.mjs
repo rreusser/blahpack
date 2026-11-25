@@ -33,6 +33,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { ROOT, moduleDir, selectRoutines, testConcurrency, isWorker, workerMain, runCorpus } from './lib/corpus.mjs';
+import { parseLcov } from './lib/lcov.mjs';
 
 const ENTRY = fileURLToPath( import.meta.url );
 const REPLAY_COVERAGE = path.join( ROOT, 'test', 'harness', 'replay-coverage.mjs' );
@@ -57,54 +58,6 @@ function role( r, file ) {
 		return 'base';
 	}
 	return 'other';
-}
-
-// Parse an lcov file into { file: { lf, lh, brf, brh, uncovered, uncoveredBranches } },
-// counting a line or branch covered if any record for the file covers it.
-function parseLcov( text ) {
-	const out = {};
-	let cur = null;
-	text.split( '\n' ).forEach( ( line ) => {
-		const i = line.indexOf( ':' );
-		const k = ( i < 0 ) ? line : line.slice( 0, i );
-		const v = ( i < 0 ) ? '' : line.slice( i + 1 );
-		if ( k === 'SF' ) {
-			// One file can appear in several records (a test that re-imports
-			// it through importWithConstants gets its own copy): merge them.
-			const key = path.relative( ROOT, path.resolve( ROOT, v ) );
-			cur = out[ key ] || { 'lines': new Map(), 'branches': new Map() };
-			cur.seen = {};
-			out[ key ] = cur;
-		} else if ( !cur ) {
-			// ignore
-		} else if ( k === 'DA' ) {
-			const [ ln, hits ] = v.split( ',' );
-			cur.lines.set( Number( ln ), Math.max( cur.lines.get( Number( ln ) ) || 0, Number( hits ) ) );
-		} else if ( k === 'BRDA' ) {
-			// Block numbers differ between copies of one file, so key a branch
-			// by its line and its position among that record's branches on it.
-			const parts = v.split( ',' );
-			cur.seen = cur.seen || {};
-			cur.seen[ parts[ 0 ] ] = ( cur.seen[ parts[ 0 ] ] || 0 ) + 1;
-			const id = parts[ 0 ] + ',' + cur.seen[ parts[ 0 ] ];
-			const hits = ( parts[ 3 ] === '-' ) ? 0 : Number( parts[ 3 ] );
-			cur.branches.set( id, Math.max( cur.branches.get( id ) || 0, hits ) );
-		}
-	});
-	Object.keys( out ).forEach( ( f ) => {
-		const c = out[ f ];
-		const lines = [ ...c.lines.entries() ];
-		const branches = [ ...c.branches.entries() ];
-		out[ f ] = {
-			'lf': lines.length,
-			'lh': lines.filter( ( e ) => e[ 1 ] > 0 ).length,
-			'brf': branches.length,
-			'brh': branches.filter( ( e ) => e[ 1 ] > 0 ).length,
-			'uncovered': lines.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] ).sort( ( a, b ) => a - b ),
-			'uncoveredBranches': branches.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => Number( e[ 0 ].split( ',' )[ 0 ] ) )
-		};
-	});
-	return out;
 }
 
 function pct( hit, found ) {
@@ -139,7 +92,7 @@ function measure( r ) {
 	if ( !text ) {
 		return { 'routine': r, 'error': 'no coverage produced (exit ' + res.status + ')', 'files': [] };
 	}
-	const parsed = parseLcov( text );
+	const parsed = parseLcov( text, ROOT );
 	const files = Object.keys( parsed ).sort().map( ( f ) => {
 		const c = parsed[ f ];
 		const ro = role( r, f );

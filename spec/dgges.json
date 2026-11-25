@@ -347,14 +347,14 @@
 			"param": "LDVSL",
 			"kind": "expr",
 			"fortran": "LDVSL.LT.1 .OR. ( ILVSL .AND. LDVSL.LT.N )",
-			"js": "ldvsl < 1 || ((jobvsl === 'no-vectors' ? false : (jobvsl === 'compute-vectors' ? true : false)) && ldvsl < N)"
+			"js": "ldvsl < 1 || ((jobvsl === 'compute-vectors') && ldvsl < N)"
 		},
 		{
 			"info": -17,
 			"param": "LDVSR",
 			"kind": "expr",
 			"fortran": "LDVSR.LT.1 .OR. ( ILVSR .AND. LDVSR.LT.N )",
-			"js": "ldvsr < 1 || ((jobvsr === 'no-vectors' ? false : (jobvsr === 'compute-vectors' ? true : false)) && ldvsr < N)"
+			"js": "ldvsr < 1 || ((jobvsr === 'compute-vectors') && ldvsr < N)"
 		}
 	],
 	"quickReturn": [

@@ -343,8 +343,7 @@
 			"kind": "gate"
 		},
 		"npm:typecheck": {
-			"kind": "ticket",
-			"ticket": "0029"
+			"kind": "gate"
 		}
 	},
 	"artifacts": {

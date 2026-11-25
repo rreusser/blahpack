@@ -809,6 +809,81 @@ function build( routine, sig, facts, options ) {
 		});
 	});
 
+	// A boolean chain over one option, `( X === 'a' ? false : ( X === 'b' ?
+	// true : false ) )` (an inlined LOGICAL local such as zgges's ILVSL), is
+	// decided for every value X's own enum check accepts, so its final arm
+	// is unreachable: no input could take that branch of the generated
+	// prologue. Fold it to `( X === 'b' )` (or `true`/`false`).
+	function foldOptionChains() {
+		var accepted = {};
+		checks.forEach( function each( rec ) {
+			var p = byName[ rec.param ];
+			if ( rec.kind === 'enum' && rec.values && p ) {
+				accepted[ p.name ] = rec.values;
+			}
+		});
+		var CHAIN = /^\((\w+) === '([^']+)' \? (true|false) : /;
+		// Parse a chain at `i` (an opening parenthesis); null if not one.
+		function chain( js, i ) {
+			var m = CHAIN.exec( js.slice( i ) );
+			var arms = [];
+			var name;
+			var rest;
+			var end;
+			if ( !m ) {
+				return null;
+			}
+			name = m[ 1 ];
+			arms.push( [ m[ 2 ], m[ 3 ] === 'true' ] );
+			rest = i + m[ 0 ].length;
+			if ( /^(true|false)\)/.test( js.slice( rest ) ) ) {
+				end = rest + js.slice( rest ).indexOf( ')' ) + 1;
+				return { 'name': name, 'arms': arms, 'otherwise': js.slice( rest ).startsWith( 'true' ), 'end': end };
+			}
+			var inner = chain( js, rest );
+			if ( !inner || inner.name !== name || js.charAt( inner.end ) !== ')' ) {
+				return null;
+			}
+			return { 'name': name, 'arms': arms.concat( inner.arms ), 'otherwise': inner.otherwise, 'end': inner.end + 1 };
+		}
+		checks.forEach( function each( rec ) {
+			var i;
+			var c;
+			var vals;
+			var yes;
+			var rep;
+			if ( !rec.js || rec.kind === 'enum' ) {
+				return;
+			}
+			for ( i = 0; i < rec.js.length; i++ ) {
+				if ( rec.js.charAt( i ) !== '(' ) {
+					continue;
+				}
+				c = chain( rec.js, i );
+				vals = c && accepted[ c.name ];
+				if ( !vals ) {
+					continue;
+				}
+				yes = vals.filter( function decided( v ) {
+					var hit = c.arms.find( function f( a ) {
+						return a[ 0 ] === v;
+					});
+					return hit ? hit[ 1 ] : c.otherwise;
+				});
+				if ( yes.length === vals.length ) {
+					rep = 'true';
+				} else if ( yes.length === 0 ) {
+					rep = 'false';
+				} else {
+					rep = '(' + yes.map( function eq( v ) {
+						return c.name + ' === \'' + v + '\'';
+					}).join( ' || ' ) + ')';
+				}
+				rec.js = rec.js.slice( 0, i ) + rep + rec.js.slice( c.end );
+			}
+		});
+	}
+
 	// An option check whose verdict is definite for every letter (given the
 	// routine's locals) is an enum; record the accepted set.
 	function enumCheck( rec, p, ast ) {
@@ -852,6 +927,8 @@ function build( routine, sig, facts, options ) {
 			rec.values = null;
 		}
 	}
+
+	foldOptionChains();
 
 	// Pass 4b: row-major leading-dimension bounds (CONVENTIONS V5). The
 	// column-major bound is the reference check (on the rows); the row-major

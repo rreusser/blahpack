@@ -2773,3 +2773,8 @@ Keep entries short. Newest first.
 - **What allowed it**: the only check that sees kinds was ungated. Each fix was found once, by hand, and nothing stopped the next. Lint (S9 `base-arity`) checks the argument count into `base()` only. Test files are checked by neither.
 - **Gate**: `npm run typecheck` now runs in CI's lint job (CONVENTIONS S14), and `lint/verify-no-escape-hatches.cjs` rejects `@ts-ignore`/`@ts-nocheck`/`@ts-expect-error`. The check is still non-strict and complex arrays are still `any` (ticket 0023, next). Test files are not yet checked (ticket 0004).
 - **Where else**: anything typed `any` in `types/jsdoc-aliases.d.ts` (Complex128Array, TypedArray, option strings) can still hide the same class.
+- **Replay gaps found on the way** (the changed modules must pass the replay gate):
+  - dgees, zgees and zgges recorded no calls, because their callback argument could not be serialized. Callbacks are now recorded as source and rebuilt (ticket 0075).
+  - `null-work` passed `null` for dseupd's WORKL, which carries dsaupd's state. A workspace with intent `in`/`inout` now keeps its contents (ticket 0082).
+  - The replay exposed a real wrapper bug: dtgsna allocated `max(1, N)` WORK for every `job`, but `job` = `'eigenvectors'`/`'both'` needs `2*N*(N+2)+16`. `s` and `DIF` came back 0. ndarray.js already checked the right size; the wrapper now allocates it, and a test compares it with the reference fixture (ticket 0072).
+

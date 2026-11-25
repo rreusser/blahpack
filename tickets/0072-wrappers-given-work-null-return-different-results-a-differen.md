@@ -36,3 +36,7 @@ node bin/wrapper-replay.mjs zunglq zunmbr dorm22
 `node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
 
 `null-work` mismatches, 15 modules: dgecon dlasd5 dlatrs3 dlatrz dorbdb4 dorm22 dormbr dpocon dsytri2x dtgsna zgsvj0 zgsvj1 zlarz zungrq zunmbr. New since the timeouts were removed: dsytri2x (NaN in A, so the wrapper's allocation is undersized).
+
+## Update 2026-11-25
+
+dtgsna is fixed: the wrapper now allocates the reference LWMIN for `job = eigenvectors/both`, and a wrapper test with `WORK = null` matches the fixture.

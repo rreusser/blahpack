@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blahpack Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+	<div class="brand">blahpack <span>dev dashboard</span></div>
+	<div class="git" id="git"></div>
+	<div class="actions">
+		<span class="live" id="live" title="Live connection to the local server">●</span>
+		<span id="activity" class="activity"></span>
+		<button id="run-all" class="btn primary">Run all gates</button>
+		<button id="stop-all" class="btn" hidden>Stop all</button>
+	</div>
+</header>
+<nav class="tabs" id="tabs">
+	<a href="#overview" data-tab="overview">Overview</a>
+	<a href="#gates" data-tab="gates">Gates <span class="count" id="n-gates"></span></a>
+	<a href="#lint" data-tab="lint">Lint rules <span class="count" id="n-lint"></span></a>
+	<a href="#tickets" data-tab="tickets">Tickets <span class="count" id="n-tickets"></span></a>
+	<a href="#conventions" data-tab="conventions">Conventions <span class="count" id="n-conv"></span></a>
+</nav>
+<main id="main"></main>
+<script src="app.js" type="module"></script>
+</body>
+</html>

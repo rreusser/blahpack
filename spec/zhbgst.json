@@ -192,9 +192,12 @@
 			"param": "VECT",
 			"kind": "enum",
 			"fortranValues": "NV",
-			"values": null,
+			"values": [
+				"none",
+				"update"
+			],
 			"fortran": ".NOT.WANTX .AND. .NOT.LSAME( VECT, 'N' )",
-			"js": null
+			"js": "vect !== 'update' && vect !== 'none'"
 		},
 		{
 			"info": -2,
@@ -260,7 +263,7 @@
 			"param": "LDX",
 			"kind": "expr",
 			"fortran": "LDX.LT.1 .OR. WANTX .AND. LDX.LT.MAX( 1, N )",
-			"js": null
+			"js": "ldx < 1 || (vect === 'update' && ldx < max( 1, N ))"
 		}
 	],
 	"quickReturn": [
@@ -268,12 +271,5 @@
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
 		}
-	],
-	"untranslated": [
-		"check -1: no canonical value for VECT='V'",
-		"check -11: no canonical value for VECT='V'"
-	],
-	"notes": [
-		"option VECT accepts 'NV' but spec/options.json has no canonical value for this family"
 	]
 }

@@ -20,6 +20,7 @@
 		{ "params": [ "JOBQ" ], "routines": "^[dz]tgsja$", "values": { "Q": "compute-vectors", "I": "initialize", "N": "none" } },
 		{ "params": [ "VECT" ], "routines": "^[dz](orgbr|ormbr|ungbr|unmbr)$", "values": { "Q": "apply-Q", "P": "apply-P" } },
 		{ "params": [ "VECT" ], "routines": "^[dz](sbtrd|hbtrd)$", "values": { "N": "none", "V": "initialize", "U": "update" } },
+		{ "params": [ "VECT" ], "routines": "^[dz](sbgst|hbgst)$", "values": { "N": "none", "V": "update" } },
 		{ "params": [ "VECT" ], "routines": "^[dz]gbbrd$", "values": { "N": "no-vectors", "Q": "q-only", "P": "p-only", "B": "both" } },
 		{ "params": [ "RANGE" ], "values": { "A": "all", "V": "value", "I": "index" } },
 		{ "params": [ "HOWMNY" ], "routines": "^[dz](tgevc|trevc|trevc3|tgsna|trsna)$", "values": { "A": "all", "B": "backtransform", "S": "selected" } },

@@ -5,7 +5,8 @@
 // Checks the export surface of the two plumbing files that carry no parameter
 // list of their own but define how the module is consumed:
 //
-//   main.js  — must expose the routine with its ndarray variant attached
+//   main.js  — must expose the routine with its ndarray variant attached, and
+//              type the default export with it (ticket 0094)
 //              (`setReadOnly( routine, 'ndarray', ndarray )`) and export it as
 //              the default.
 //   index.js — must export a default AND make the `ndarray` variant reachable,
@@ -40,6 +41,7 @@ var rule = {
 		'messages': {
 			'mainNoDefault': 'main.js must export a default (the routine).',
 			'mainNoNdarray': 'main.js must attach the ndarray variant: setReadOnly( <routine>, \'ndarray\', ndarray ) or <routine>.ndarray = ndarray.',
+			'mainUntyped': 'main.js must type its default export with the ndarray it attaches, so tsc checks callers\' `<routine>.ndarray( … )`: export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> ); (fix: node bin/codemod-spec/main-type.cjs; ticket 0094)',
 			'indexNoDefault': 'index.js must export a default (the strided entry point).',
 			'indexNoNdarray': 'index.js must expose the ndarray variant — a named `ndarray` export, or re-export main.js\'s default (which carries `.ndarray`).'
 		}
@@ -61,6 +63,8 @@ var rule = {
 		var defaultFromMain = false;
 		var ndarrayAttached = false;
 		var mainLocalNames = {}; // local identifiers imported (as default) from './main.js'
+		var defaultTyped = false;
+		var sourceCode = context.sourceCode || context.getSourceCode();
 
 		return {
 			'ImportDeclaration': function onImport( node ) {
@@ -74,6 +78,10 @@ var rule = {
 			},
 			'ExportDefaultDeclaration': function onDefault( node ) {
 				hasDefaultExport = true;
+				// `export default /** @type {typeof f & { ndarray: typeof g }} */ ( f );`
+				if ( /^export default \/\*\* @type \{typeof ([\w$]+) & \{ ndarray: typeof [\w$]+ \}\} \*\/ \( \1 \);$/.test( sourceCode.getText( node ) ) ) {
+					defaultTyped = true;
+				}
 				// `export default main;` where main is the default import of ./main.js
 				if ( node.declaration && node.declaration.type === 'Identifier' && mainLocalNames[ node.declaration.name ] ) {
 					defaultFromMain = true;
@@ -118,6 +126,8 @@ var rule = {
 					}
 					if ( !ndarrayAttached ) {
 						context.report({ 'node': programNode, 'messageId': 'mainNoNdarray' });
+					} else if ( hasDefaultExport && !defaultTyped ) {
+						context.report({ 'node': programNode, 'messageId': 'mainUntyped' });
 					}
 				} else {
 					if ( !hasDefaultExport ) {

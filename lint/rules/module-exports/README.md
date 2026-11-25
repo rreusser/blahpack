@@ -10,7 +10,7 @@ This rule enforces:
 
 | File | Contract |
 | --- | --- |
-| `main.js` | Attaches the ndarray variant to the routine (`setReadOnly( <routine>, 'ndarray', ndarray )`, or `<routine>.ndarray = ndarray`) **and** exports it as the default. |
+| `main.js` | Attaches the ndarray variant to the routine (`setReadOnly( <routine>, 'ndarray', ndarray )`, or `<routine>.ndarray = ndarray`) **and** exports it as the default, typed with that variant: `export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );`. `tsc` cannot see a property a call adds, so without the type no caller's `<routine>.ndarray( … )` is checked (ticket 0094; fix: `node bin/codemod-spec/main-type.cjs`). |
 | `index.js` | Exports a `default` (the strided entry point) **and** exposes `ndarray` — either as a named `ndarray` export (the common form) or by re-exporting `main.js`'s default, which already carries `.ndarray`. |
 
 Both index.js forms are accepted because both leave `ndarray` reachable:
@@ -31,7 +31,7 @@ export default main;
 | --- | --- |
 | `rule.cjs` | AST checks over `main.js` and `index.js` export surfaces. |
 | `fixtures/pass/*.js` | Canonical + variant index.js, and a well-formed main.js. |
-| `fixtures/fail/*.js` | index.js missing ndarray; main.js missing the ndarray attach. |
+| `fixtures/fail/*.js` | index.js missing ndarray; main.js missing the ndarray attach; main.js exporting the routine untyped. |
 | `test.cjs` | Runs the rule over every fixture (`node --test`). |
 
 ## Changing the rule

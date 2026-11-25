@@ -3,4 +3,4 @@ import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/l
 import ddot from './ddot.js';
 import ndarray from './ndarray.js';
 setReadOnly( ddot, 'ndarray', ndarray );
-export default ddot;
+export default /** @type {typeof ddot & { ndarray: typeof ndarray }} */ ( ddot );

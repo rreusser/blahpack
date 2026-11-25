@@ -17,6 +17,10 @@
 		"bin/break-mutants.mjs": {
 			"kind": "gate"
 		},
+		"bin/changed-modules.mjs": {
+			"kind": "part",
+			"of": "bin/bench-smoke.sh"
+		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",
 			"ticket": "0030"

@@ -79,7 +79,7 @@ node bin/wrapper-replay.mjs --all     # Per-module corpus checks (also coverage.
                                       #   are cached in .cache/checks/ per module, keyed on
                                       #   every input; reruns redo only what changed.
                                       #   --no-cache, --jobs <n>, --slowest <n>
-npm run check:modules                 # The four per-module CI gates on modules changed vs origin/main
+npm run check:modules                 # The per-module CI gates (incl. benchmark smoke) on modules changed vs origin/main
 ```
 
 ## Context Efficiency

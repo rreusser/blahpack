@@ -9,13 +9,14 @@ CONVENTIONS J2, C1, C4, S10, S11):
 
   | Parameter | Type |
   | --- | --- |
-  | array (matrix, banded, packed, vector, index, workspace, output scalar) | by dtype: `Float64Array`, `Complex128Array`, `Int32Array`, `Uint8Array` (logical), `Float32Array`, `Complex64Array`; an output option (EQUED) `Array` |
+  | array (matrix, banded, packed, vector, index, workspace, output scalar) | by dtype: `Float64Array`, `Complex128Array`, `Int32Array`, `Uint8Array` (logical), `Float32Array`, `Complex64Array`; an output option (EQUED) `Array<string>` |
   | wrapper workspace | `(Float64Array\|null)` etc. (D5c) |
   | stride | `integer` |
   | offset, dimension | `NonNegativeInteger` |
   | leading dimension | `PositiveInteger` |
   | option, `order` | `string` |
   | input scalar | `number`, `integer`, `boolean`, `Complex128`, `Function` |
+  | reverse-communication state | `Object`, or the name of a `@typedef {Object}` declared in the same file (its properties) |
 
 - **`@throws`** (`ndarray.js`, `<routine>.js`): the leading `@throws` tags are
   the generated prologue's, one per check, in order

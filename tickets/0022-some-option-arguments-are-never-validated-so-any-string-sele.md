@@ -34,3 +34,7 @@ for(const pkg of ["blas","lapack","arpack"]){const d="lib/"+pkg+"/base";if(!fs.e
   for(const P in R[r]){if(R[r][P].accepts!=="undetermined"&&!S[P.toLowerCase()]){n++;console.log(r+"."+P.toLowerCase(),R[r][P].accepts);}}}}
 console.log(n,"unvalidated");' | tail -5
 ```
+
+## Evidence 2026-11-25
+
+`dlansf` and `zlansf`: `ndarray.js` does not validate `norm`, so an unrecognised value reaches `base.js`, which returns 0. Tests added under ticket 0069 assert that current behaviour ("an unrecognized norm returns zero"). When validation is added here, those tests must change to expect the TypeError.

@@ -2792,3 +2792,34 @@ Keep entries short. Newest first.
 - **Gate**: `lint/typecheck-config.test.cjs` pins the tightened aliases and flags, so they cannot be loosened without a visible change to that test.
 - **Where else**: complex scalars (ticket 0085); option parameters documented as `{string}` (ticket 0056).
 
+## 2026-11-25 — noImplicitAny on; the replay can now check ARPACK, which exposed a stale test argument and a wrapper length bug (tickets 0023, 0075, 0004)
+
+- **Type check**: `noImplicitAny` had 2,675 errors in 64 modules, almost all one cause: `let a, b, c;` read inside nested helper functions, where control-flow typing cannot follow. `bin/codemod-implicit-any.mjs` annotates them from the checker's own inference; see ticket 0023.
+- **Replay, ARPACK**: the recorder encoded only arrays, numbers, strings and callbacks, so every call taking ARPACK's plain-object state was dropped. dgetv0, dsaitr, dsaup2 and dsaupd were never checked. Plain objects are now encoded property by property.
+  - dsaup2 then failed `null-work`: its spec gave WORKL intent `out`, but WORKL carries the Lanczos state between calls. Fixed by a spec override (ticket 0082).
+- **dlaqr4**: its tests passed a stale trailing `lwork` in 16 calls, which JS ignores. The replay skipped every call because the argument count differed from the spec. Without the stale argument, the replay found the wrapper sizing the negative-stride offsets of WR/WI from `N`, where the reference length is `IHI` (ticket 0068 class).
+- **dlamch**: `test.ndarray.js` imported `index.js`, so `ndarray.js` was untested.
+- **Bug class**: a check that silently skips what it cannot encode ("untested" is reported, but whole families sat there), and test files that nothing checks (ticket 0004).
+- **What allowed it**: the gate fails on "untested", but only for changed modules, and these modules had not changed since the replay existed.
+
+
+## 2026-11-25 — importWithDependencies (and longer importWithConstants values) attributed coverage to the wrong lines (harness)
+
+- **Found by**: a coverage agent for zlaqr0/zlaqr4 (ticket 0069). The lcov records of modules loaded through `importWithDependencies` showed hits on lines those copies never ran (an iteration-limit return), and no hits on lines they did run.
+- **Root cause**: node records V8 coverage by character offset into the source it ran, and maps it onto the file on disk. The hook replaced an import specifier (`'../../zlahqr/lib/base.js'`) with a much longer `data:` URL, so every later offset in the copy pointed into the wrong part of the file. `importWithConstants` had the same flaw whenever the new value's text was longer or shorter than the original expression. Earlier tests happened to set `0` in place of a one-digit or longer number, which shifted later lines by a few characters.
+- **Effect**: coverage of a module tested this way was partly fictional, both too high and too low. `bin/lib/lcov.mjs` merges copies by maximum, so the false hits counted. zlaqr0 read 100% lines; the honest figure before the fix was 90.1%.
+- **Fix**:
+  - `importWithDependencies` no longer edits the source: a `resolve` hook redirects the named specifier when the importing module's URL carries `?deps=`.
+  - `importWithConstants` pads a shorter value to the original length, and throws for a longer one, saying why.
+  - The source still comes from the next hook for the bare URL, so both still compose with bin/break-mutants.mjs.
+- **Bug class**: a test-time source rewrite that changes character offsets silently corrupts every offset-based measurement of that module (coverage, and anything else that maps positions back to the file).
+- **Where else**: any loader that rewrites source. `test/harness/replay-offsets.mjs` and `bin/workspace-guard-loader.mjs` wrap expressions, but their runs are not used for coverage. `replay-record.mjs` rewrites `export default x` → `export default globalThis.__replayRecord( x )` on the last line only, so nothing after it shifts.
+
+## 2026-11-25 — dtrsyl set INFO from dlasy2's scale factor instead of its return code (2x2-by-2x2 blocks, all four trana/tranb branches)
+
+- **Found by**: a coverage agent bringing dtrsyl to its floor (ticket 0069). It wrote the reference INFO into a near-singular test, and that test failed.
+- **Reproduce**: M = N = 2, A = [[1,1],[-1,1]] (eigenvalues 1±i), B = [[-1,1],[-1,-1]] (eigenvalues -1±i), isgn = +1, C = [1,2,3,4]. Since λ(A) + μ(B) = 0, dlasy2 perturbs and returns IERR = 1 with scale 1. dtrsyl returned INFO = 0; the reference returns 1. Conversely, A = B = [[1e-3,1e-3],[-1e-3,1e-3]] with C = 1e300 everywhere: dlasy2 scales (6.25e-302) and returns IERR = 0, but dtrsyl returned INFO = 1.
+- **Root cause**: `dlasy2( ... ); if ( SCALOC_ARR[ 0 ] !== ONE ) { info = 1; }` discarded dlasy2's return value and tested the scale factor instead. `dtrsyl.f` does `CALL DLASY2( ..., IERR ); IF( IERR.NE.0 ) INFO = 1`. The dlaln2 calls in the same file were translated correctly.
+- **Bug class**: a callee's status replaced by a correlated, but different, output. The two usually agree on the happy path, which is the only path the fixture tests covered.
+- **Where else**: every other base.js call to dlasy2/dlaln2 discards the status (dlaexc, dtgevc, dtrevc, dtrevc3). The reference ignores IERR/IINFO there as well, so those translations are faithful.
+- **What allowed it**: no test reached the near-singular or scaling paths (dtrsyl base.js was at 80.7% lines). The coverage floor, applied because the PR touched dtrsyl's JSDoc, is what forced a test there.

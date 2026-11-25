@@ -26,3 +26,7 @@ CONVENTIONS rows marked (dup), with the conformance check that duplicates the li
 ```bash
 grep -n '(dup' CONVENTIONS.md
 ```
+
+## Evidence 2026-11-25
+
+N2 (d-prefix routines never use `'conjugate-transpose'`): `lint:no-dprefix-conjugate-transpose` checks code only. PR #42 put the value into the JSDoc of 14 d-prefix modules, and only `bin/audit.sh` caught it, after the merge, which turned main's CI red. PR #41 removed the 14 mentions. The lint rule should cover JSDoc, which would make the audit check a true duplicate to delete.

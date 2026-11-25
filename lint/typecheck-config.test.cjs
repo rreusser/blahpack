@@ -150,3 +150,18 @@ test( 'every input option is checked at runtime against the values of its type (
 	assert.deepStrictEqual( missing, [], 'input options with no runtime check' );
 	assert.deepStrictEqual( differ, [], 'input options whose runtime values differ from their type' );
 });
+
+test( 'tsconfig.callers.json checks every benchmark and example, with noImplicitAny (ticket 0094)', function t() {
+	// A caller's value tsc cannot type is `any`, and a call passing it is
+	// unchecked; dropping a directory from `include` would leave its calls
+	// unchecked without any error.
+	var cfg = JSON.parse( fs.readFileSync( path.join( ROOT, 'tsconfig.callers.json' ), 'utf8' ) );
+	assert.strictEqual( cfg.extends, './tsconfig.json' );
+	assert.strictEqual( cfg.compilerOptions.noImplicitAny, true, 'noImplicitAny' );
+	[ 'lib/*/base/*/benchmark/*.js', 'lib/*/base/*/examples/*.js', 'lib/*/base/*/lib/*.js' ].forEach( function each( g ) {
+		assert.ok( cfg.include.indexOf( g ) >= 0, 'include has ' + g );
+	});
+	Object.keys( JSON.parse( fs.readFileSync( path.join( ROOT, 'tsconfig.json' ), 'utf8' ) ).compilerOptions.paths ).forEach( function each( k ) {
+		assert.ok( k in cfg.compilerOptions.paths, 'callers paths repeat tsconfig.json\'s ' + k );
+	});
+});

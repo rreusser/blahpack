@@ -24,8 +24,9 @@ type Layout = 'row-major' | 'column-major';
 type TransposeOperation = 'no-transpose' | 'transpose' | 'conjugate-transpose';
 type DiagonalType = 'unit' | 'non-unit';
 type OperationSide = 'left' | 'right';
-// dlamch's `cmach` (spec/options.json family `type`): exactly its values (pinned by
-// lint/typecheck-config.test.cjs). Any other string returns 0 (ticket 0089).
+// dlamch's `cmach` (spec/options.json family CMACH): exactly its values (pinned by
+// lint/typecheck-config.test.cjs). The public entry points throw on any other
+// string; base.js returns 0, as the reference does (tickets 0089, 0092).
 type MachineParameter = 'epsilon' | 'safe-minimum' | 'precision' | 'base' | 'digits' | 'rounding' | 'min-exponent' | 'underflow' | 'max-exponent' | 'overflow';
 
 declare var require: any;

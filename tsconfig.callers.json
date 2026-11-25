@@ -1,0 +1,35 @@
+{
+	"$comment": "Checks the code that calls the library (benchmarks, examples) against the library's declared types (ticket 0094): every call's argument count, array types and option strings. `noImplicitAny`, because a value tsc cannot type is `any`, and a call passing it goes unchecked (a bare `let` captured by the benchmark closure; a JSDoc `{Object}`). The rest of `strict` (null checks and the like) is off: those flags check a caller's own logic, not its calls into lib/. lib/ itself is checked by tsconfig.json under `strict`. types/callers/ narrows three stdlib declarations that are too loose (uniform/discreteUniform return a union whatever the dtype) or that reject stdlib's own benchmark convention (bench); `paths` here replaces tsconfig.json's, so it repeats them.",
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"strict": false,
+		"noImplicitAny": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"paths": {
+			"@stdlib/bench/lib/index.js": [
+				"./types/callers/bench.d.ts"
+			],
+			"@stdlib/random/array/uniform/lib/index.js": [
+				"./types/callers/random-array-uniform.d.ts"
+			],
+			"@stdlib/random/array/discrete-uniform/lib/index.js": [
+				"./types/callers/random-array-discrete-uniform.d.ts"
+			],
+			"@stdlib/*/lib/index.js": [
+				"./node_modules/@stdlib/*/docs/types/index.d.ts"
+			],
+			"@stdlib/*": [
+				"./node_modules/@stdlib/*/docs/types/index.d.ts"
+			]
+		}
+	},
+	"include": [
+		"types/jsdoc-aliases.d.ts",
+		"types/callers/globals.d.ts",
+		"lib/*/base/*/lib/*.js",
+		"lib/*/base/*/benchmark/*.js",
+		"lib/*/base/*/examples/*.js"
+	]
+}

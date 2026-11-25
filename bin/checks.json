@@ -63,6 +63,9 @@
 		"bin/conformance.js": {
 			"kind": "gate"
 		},
+		"bin/examples-smoke.sh": {
+			"kind": "gate"
+		},
 		"bin/coverage.mjs": {
 			"kind": "gate"
 		},
@@ -371,6 +374,15 @@
 		},
 		"npm:typecheck": {
 			"kind": "gate"
+		},
+		"npm:typecheck:callers": {
+			"kind": "gate"
+		},
+		"npm:examples:smoke": {
+			"kind": "alias",
+			"of": [
+				"bin/examples-smoke.sh"
+			]
 		}
 	},
 	"artifacts": {
@@ -437,13 +449,17 @@
 			]
 		},
 		"examples/index.js": {
-			"kind": "ticket",
-			"ticket": "0041"
+			"kind": "gate",
+			"by": [
+				"npm:typecheck:callers",
+				"bin/examples-smoke.sh"
+			]
 		},
 		"benchmark/*.js": {
 			"kind": "gate",
 			"by": [
-				"bin/bench-smoke.sh"
+				"bin/bench-smoke.sh",
+				"npm:typecheck:callers"
 			]
 		},
 		"README.md": {

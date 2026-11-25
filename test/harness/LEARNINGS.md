@@ -2921,3 +2921,16 @@ Keep entries short. Newest first.
 - **Bug class**: a wrapper is a second implementation of argument handling: workspace sizes, vector extents and quick returns. Each one diverged where its author copied a documented size, or a matrix dimension, rather than what base.js actually touches.
 - **What allowed it**: wrapper paths were untested (ticket 0069). The replay audits only the calls the tests make, so a module's own coverage decides what it can see.
 - **The d/z twins**: the replay flagged only the variant whose tests reached the bad path. A review of the twins of every fixed module found the same bugs in zgbtf2/zgbtrf (IPIV), zungbr (TAU; harmless, since the argument checks make the two lengths equal), zunm22 and zunbdb4 (WORK). Each was fixed with a test that fails on the old code where a valid input can tell the old and new versions apart. When fixing a wrapper, check its d/z twin.
+
+## 2026-11-25 — Corpus-wide wrapper replay and coverage on the ticket 0094 PR: vector lengths, a never-allocated WORK, and stale zero-size outputs (tickets 0068, 0074, 0099)
+
+- **Found by**: `bin/wrapper-replay.mjs --changed` and `bin/coverage.mjs --changed`. The ticket 0094 PR changes every module's `main.js`, so for the first time both checks ran over all 912 modules. Each fix has a regression test that fails on the old code.
+- **Wrong `stride2offset` length that hangs instead of failing**: dlarrb's LLD and dlarrj's E2 have N-1 elements, but the wrapper offset them by N. With a negative stride the routine reads one element past the end. In these bisection routines the NaN it reads makes the loop run forever, so the old code hangs rather than throwing. The regression tests wrap the array in a guard that throws on an out-of-bounds read.
+- **A spec length that copied the reference's docs, not its code**: dlarrb's WGAP is documented as (N-1), but `RGAP = WGAP( II )` reaches WGAP(N) on a valid call (ILAST = N, OFFSET = 0). The caller dlarrv documents it as (N). `spec/overrides/dlarrb.json` now records N. Where a reference's argument docs and its code disagree on a length, the code (and the caller's docs) decide.
+- **A nullable WORK that was never allocated**: dstqrb documented `WORK` as `(Float64Array|null)`, but it only validated the length and threw on null. This is the dsapps/dseigt class from the ticket 0022 PR.
+- **A stale zero-size output**: dlarfg, zlarfg and zlarfgp (`tau`), and dgelss (`rank`), repeated the quick return in `ndarray.js` (and zlarfgp's wrapper) without the reference's `TAU = ZERO` / `RANK = 0`. A caller's previous value came back.
+- **What allowed it**:
+  - Both checks ran only on modules a PR touched, so these modules' wrapper paths had never been replayed.
+  - The replay compares the two entry points with each other, so a quick return both share is invisible to it (ticket 0099).
+  - The existing zero-size tests started `tau` and `rank` at 0, so a skipped write of 0 passed them.
+- **Where else**: ticket 0099's reproduce lists five more `ndarray.js` quick returns whose spec says the reference sets an output.

@@ -546,7 +546,7 @@ setReadOnly( {routine}, 'ndarray', ndarray );
 
 // EXPORTS //
 
-export default {routine};
+export default /** @type {{typeof {routine} & {{ ndarray: typeof ndarray }}}} */ ( {routine} );
 """
 
 

@@ -45,6 +45,8 @@ jobs:
         run: npm run test:lint
       - name: Type check (tsc over lib/, with stdlib's own type definitions)
         run: npm run typecheck
+      - name: Type check callers (benchmarks and examples against lib/'s declared types; ticket 0094)
+        run: npm run typecheck:callers
       - name: Per-rule corpus report is clean
         run: npm run lint:corpus
 
@@ -180,6 +182,20 @@ jobs:
       - run: npm ci
       - name: Every module benchmark runs (bin/bench-smoke.sh)
         run: bin/bench-smoke.sh
+
+  # Every module example runs to completion (ticket 0041).
+  examples:
+    name: Examples smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every module example runs (bin/examples-smoke.sh)
+        run: bin/examples-smoke.sh
 
   # Generated files are in sync + the published package imports and runs.
   package:

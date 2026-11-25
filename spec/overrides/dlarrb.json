@@ -1,0 +1,11 @@
+{
+	"routine": "dlarrb",
+	"overrides": [
+		{
+			"reason": "WGAP is documented as dimension (N-1), but dlarrb.f reads RGAP = WGAP( II ) for II up to ILAST-OFFSET (lines 263, 270), which is WGAP(N) when ILAST = N and OFFSET = 0, a valid call. The caller dlarrv documents WGAP as dimension (N) (dlarrv.f:177). The JS wrapper must size WGAP by what the code touches, N (ticket 0068).",
+			"set": {
+				"params.WGAP.length": { "fortran": "N", "js": "N" }
+			}
+		}
+	]
+}

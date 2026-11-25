@@ -270,6 +270,18 @@
 			"kind": "tool",
 			"why": "local dev server"
 		},
+		"npm:docs:build": {
+			"kind": "tool",
+			"why": "generator: the API reference site (bin/docs), built into dist/ by deploy.yml"
+		},
+		"npm:docs:examples": {
+			"kind": "ticket",
+			"ticket": "0086"
+		},
+		"npm:docs:serve": {
+			"kind": "tool",
+			"why": "builds the API reference and serves it locally for preview"
+		},
 		"npm:fetch-reference": {
 			"kind": "tool",
 			"why": "downloads the reference Fortran into data/"

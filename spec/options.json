@@ -25,7 +25,7 @@
 		{ "params": [ "HOWMNY" ], "routines": "^[dz](tgevc|trevc|trevc3|tgsna|trsna)$", "values": { "A": "all", "B": "backtransform", "S": "selected" } },
 		{ "params": [ "ORDER" ], "routines": "^d(larrd|stebz)$", "values": { "B": "block", "E": "entire" } },
 		{ "params": [ "FACT" ], "values": { "N": "not-factored", "E": "equilibrate", "F": "factored" } },
-		{ "params": [ "EQUED" ], "routines": "^[dz](pbsvx|ppsvx|posvx)$", "values": { "Y": "yes", "N": "none" } },
+		{ "params": [ "EQUED" ], "routines": "^[dz](pbsvx|ppsvx|posvx|laqsy|laqsp|laqsb|laqhe|laqhp|laqhb)$", "values": { "Y": "yes", "N": "none" } },
 		{ "params": [ "EQUED" ], "values": { "N": "none", "R": "row", "C": "column", "B": "both" } },
 		{ "params": [ "SORT" ], "values": { "N": "none", "S": "sort" } },
 		{ "params": [ "NORMIN" ], "values": { "N": "no", "Y": "yes" } },

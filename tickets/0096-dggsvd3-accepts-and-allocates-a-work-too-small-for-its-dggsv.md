@@ -1,9 +1,10 @@
 ---
 id: 0096
 title: dggsvd3 accepts and allocates a WORK too small for its dggsvp3 call, and returns a wrong decomposition
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-25
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -53,4 +54,22 @@ How the class was permitted:
 - `bin/workspace-guard.mjs` checks only that the wrapper allocates at least what `ndarray.js` demands;
 - `harness:assertWorkspaceSufficient` runs only where a test calls it;
 - nothing checked the declared minimum against what `base.js` touches.
+
+## Resolution
+
+Fixed on branch `slop/gracious-dijkstra-q3yg0i` (ticket 0096 PR).
+
+- **The check:** a new `min-work` variant of the wrapper replay (`test/harness/replay.js`, in CI through `check:modules`) replays every recorded `ndarray.js` call with each workspace cut to the minimum `ndarray.js` itself demands. It requires the same results. CONVENTIONS W3 names it as an enforcer.
+  - An output that the reference itself makes depend on LWORK is marked `workDependent` in the spec, by an override with its reason: dgelss's and zgelss's A (singular vectors, determined only up to sign) and B's residual rows. Such outputs are not compared.
+- **What it and direct tests at sizes past the blocking threshold found:** 32 modules whose declared minimum was below what `base.js` uses. All are fixed, each with a regression test that fails, or hangs, on the old code:
+  - **dggsvp3, zggsvp3, dggsvd3, zggsvd3:** this ticket's bug, and its twin and callee.
+  - **dgelss, zgelss.**
+  - **dorbdb2, dorbdb3, zunbdb2, zunbdb3, zunbdb4.**
+  - **dorm22, zunm22, dormlq.**
+  - **dtrsen, ztrsen.**
+  - **dlaqr2, dlaqr3, zlaqr2, zlaqr3; dlaqr0, dlaqr4, zlaqr0, zlaqr4.**
+  - **dgeev, zgeev, dgees, zgees, dgeevx, zgeevx; dhseqr, zhseqr.**
+
+  `test/harness/LEARNINGS.md` lists the bug classes.
+- **Left open:** the structural cause behind most of these is that blocked JS routines always block, so the minimums are larger than the reference's. That is ticket 0100, as is the replay's limit to the sizes the tests reach.
 

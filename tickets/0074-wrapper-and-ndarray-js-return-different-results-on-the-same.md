@@ -36,3 +36,9 @@ Mismatches outside `null-work`, by variant:
 ## Update 2026-11-25
 
 `zlahef_rook`'s transposed mismatch was a test, not a library bug. "upper path with row swaps" passed a 16-element `W` for `nb = 8`, which needs `N*nb = 32`, so the routine read past the end and returned NaN. The test asserted only `kb = N`. It is fixed in the strict-mode PR. That `ndarray.js` accepts an undersized caller `W` is ticket 0077.
+
+## Update 2026-11-25 (ticket 0089 PR)
+
+- **zlacon, dlacon:** the exact and zero-size mismatches came from Fortran `SAVE` state in module-level variables. Replay runs `ndarray.js` and then the wrapper on the same recorded call, so the wrapper started from the state the first call left. The state now lives in one exported object, `SAVE`, in `base.js`. `test/harness/replay.js` snapshots it before each recorded call and restores it before every call it makes from that record. Both modules replay clean.
+- **dlacon:** `ndarray.js` also had an N = 0 quick return that the reference lacks (with KASE = 0, dlacon.f sets KASE = 1 for any N). It is removed, and the test that asserted KASE = 0 now asserts the reference behavior.
+- **Still open:** dlacn2 has the same N = 0 deviation (KASE 0 against the reference's 1). dgecon, dpocon and dsyconvf, and the zero-size and transposed lists above, are unchanged.

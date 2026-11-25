@@ -22,3 +22,4 @@ test/.validation-ledger/
 
 # Generated API reference (npm run docs:build)
 site/
+tsconfig.probe.json

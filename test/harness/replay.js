@@ -24,6 +24,12 @@
 *         this variant checks structure only: the same NaN pattern and return
 *         value (integer outputs too may differ, by pivot ties). Numeric cross-order agreement is the
 *         property harness's job (CONVENTIONS T7).
+*     -   `min-work`: each workspace cut to the minimum `ndarray.js` itself
+*         demands (read from the RangeError it throws for an empty
+*         workspace), keeping the recorded leading elements. Results must
+*         agree as for `null-work`: a declared minimum below what base.js
+*         touches passes validation and then silently drops writes past the
+*         end of the typed array (ticket 0096).
 *     -   `zero-size`: for the first few calls, each dimension set to 0 in
 *         turn; the wrapper and ndarray.js must agree (quick returns).
 *     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of

@@ -34,3 +34,23 @@ for ( const lw of [ 6, 11, 256 ] ) {
 	console.log( 'lwork', lw, 'info', info, 'K', K[ 0 ], 'L', L[ 0 ], 'alpha', Array.from( al ).map( ( x ) => x.toFixed( 4 ) ) );
 }
 ```
+
+## Evidence 2026-11-25 (2): the class, corpus-wide
+
+`test/harness/replay.js` now has a `min-work` variant. It replays every recorded `ndarray.js` call with each workspace cut to the minimum `ndarray.js` itself demands, which it reads from the RangeError for an empty workspace, and requires the same results.
+
+Over all 912 modules (main `0a9cd465b`) it flags 17 modules. At the declared minimum, these return NaN or wrong results:
+- dggsvd3, zggsvd3 and dggsvp3 (the cause: dggsvp3 assumed dgeqp3 allocates its own workspace);
+- dorbdb2, dorbdb3, zunbdb2, zunbdb3 and zunbdb4;
+- dorm22 and zunm22;
+- dormlq;
+- dlaqr2 and zlaqr3;
+- dtrsen and ztrsen.
+
+dgelss and zgelss choose their path by workspace size, so their findings may be legitimate. zgeev timed out.
+
+How the class was permitted:
+- `bin/workspace-guard.mjs` checks only that the wrapper allocates at least what `ndarray.js` demands;
+- `harness:assertWorkspaceSufficient` runs only where a test calls it;
+- nothing checked the declared minimum against what `base.js` touches.
+

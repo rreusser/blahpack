@@ -1,9 +1,10 @@
 ---
 id: 0089
 title: 33 modules use dlamch('epsilon') where the reference uses DLAMCH('Precision') (or the reverse)
-status: open
+status: resolved
 area: base
 opened: 2026-11-25
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -49,4 +50,14 @@ for d in lib/*/base/*; do r=$(basename $d); F=data/lapack-3.12.0/SRC/$r.f; [ -f 
 - **dlanv2:** `Math.floor` → `Math.trunc` for Fortran `INT` (no value change).
 - **Tests whose oracle copied the bug:** dsbevx, zhbevx, zheevx and zhpevx.
 
-**Left:** a regression test per routine family at the boundary where the two constants differ.
+
+## Resolution
+
+Every fixed module has a regression test at the boundary where the two constants differ. Each test fails on the old code and passes now, and the expected values come from the reference (formulas written as powers of two, or the compiled reference Fortran):
+- **laq\* (13 modules):** AMAX = 1.5·2^-970 and 1.5·2^969 give equed 'none' and leave A unchanged.
+- **Eigen drivers (16):** a norm between RMIN (and RMAX, where it depends on EPS) for 'P' and for 'E' is not rescaled. A spy on dscal/dlascl/zlascl/zdscal observes the rescale.
+- **zlatrs, zlatbs:** careful-path scale 2^969/7e299.
+- **Zero-valued keys (7):** the old dtgsna and dtgsen returned NaN for a 2x2 block with B(1,1) = 0; the old ztgsen normalized a subnormal B(k,k); the old dlarrf recorded growth above 1/SAFMIN; the old dggsvd3 and zggsvd3 gave rank 2 to a subnormal A; the old zla_herfsx_extended ran an extra refinement step.
+- **Others:** dlaqr5 (deflation at SMLNUM), dlarrr, dlartgp, dlartgs, dlasd2, dtgevc, dla_gbrfsx_extended and zlargv. For dlartgp and zlargv the power-of-two rescale is exact unless an intermediate is subnormal, so their inputs push one there.
+
+Enforcement is the `MachineParameter` type for `cmach` and `conf:machine-constants` (CONVENTIONS X4).

@@ -38,7 +38,7 @@ function leadType( p, form, g ) {
 	switch ( p.role ) {
 	case 'flag':
 		// An output option (EQUED of the svx drivers) is a single-element Array.
-		return ( p.intent === 'in' ) ? 'string' : 'Array';
+		return ( p.intent === 'in' ) ? 'string' : 'Array<string>';
 	case 'dim':
 		return 'NonNegativeInteger';
 	case 'info':

@@ -15,9 +15,9 @@ var assert = require( 'node:assert' );
 
 var ROOT = path.join( __dirname, '..' );
 
-// Strict-family flags that must be on. noImplicitAny and strictNullChecks
-// are not on yet (ticket 0023).
-var FLAGS = [ 'checkJs', 'strictFunctionTypes', 'strictBindCallApply', 'noImplicitThis', 'useUnknownInCatchVariables', 'alwaysStrict', 'esModuleInterop' ];
+// Strict-family flags that must be on. strictNullChecks is not on yet
+// (ticket 0023).
+var FLAGS = [ 'checkJs', 'noImplicitAny', 'strictFunctionTypes', 'strictBindCallApply', 'noImplicitThis', 'useUnknownInCatchVariables', 'alwaysStrict', 'esModuleInterop' ];
 
 // Aliases still allowed to be `any`, each with the ticket that removes it.
 var LOOSE = {

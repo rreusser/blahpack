@@ -231,7 +231,7 @@
 			"position": 21,
 			"role": "workspace",
 			"dtype": "float64",
-			"intent": "out",
+			"intent": "inout",
 			"dims": [
 				"3*(NEV+NP)"
 			],
@@ -294,5 +294,13 @@
 	"untranslated": [
 		"V.cols: NEV+NP names an output argument",
 		"Q.cols: NEV+NP names an output argument"
+	],
+	"overrides": [
+		{
+			"reason": "WORKL carries the Lanczos state (H, the Ritz values and their bounds, Q) across dsaup2's reverse-communication calls; it is read on re-entry, so it is not scratch. The reference documents it as `(workspace/output)`, which extracts as intent `out` (ticket 0082).",
+			"set": {
+				"params.WORKL.intent": "inout"
+			}
+		}
 	]
 }

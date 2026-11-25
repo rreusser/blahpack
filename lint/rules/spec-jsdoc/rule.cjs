@@ -74,8 +74,19 @@ var rule = {
 				}
 				tags = J.parseTags( doc.value );
 				want = J.params( r.spec, r.form, r.params );
+				// An `Object` parameter (ARPACK's reverse-communication state)
+				// may name a `@typedef {Object} <Name>` declared in this file,
+				// which lists the properties the routine stores on it.
+				var typedefs = {};
+				source.getAllComments().forEach( function each( c ) {
+					var m = /@typedef \{Object\} (\w+)/.exec( c.value );
+					if ( m ) {
+						typedefs[ m[ 1 ] ] = true;
+					}
+				});
 				if ( want.length !== tags.params.length || want.some( function some( w, i ) {
-					return w.name !== tags.params[ i ].name || w.type !== tags.params[ i ].type;
+					var t = tags.params[ i ].type;
+					return w.name !== tags.params[ i ].name || ( w.type !== t && !( w.type === 'Object' && typedefs[ t ] ) );
 				}) ) {
 					context.report( { 'node': doc, 'messageId': 'params', 'data': { 'routine': r.routine, 'want': show( want ), 'got': show( tags.params ) } } );
 				}

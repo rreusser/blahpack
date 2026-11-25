@@ -32,6 +32,10 @@
 			"kind": "tool",
 			"why": "launches Claude Code in the Docker dev container"
 		},
+		"bin/codemod-implicit-any.mjs": {
+			"kind": "tool",
+			"why": "codemod: JSDoc types for what tsc's noImplicitAny reports (variables, helper parameters, helper result objects, ARPACK state typedefs); its result is checked by npm run typecheck"
+		},
 		"bin/codemod-index.js": {
 			"kind": "tool",
 			"why": "codemod: mechanical index.js fixes"

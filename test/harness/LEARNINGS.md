@@ -2792,3 +2792,13 @@ Keep entries short. Newest first.
 - **Gate**: `lint/typecheck-config.test.cjs` pins the tightened aliases and flags, so they cannot be loosened without a visible change to that test.
 - **Where else**: complex scalars (ticket 0085); option parameters documented as `{string}` (ticket 0056).
 
+## 2026-11-25 — noImplicitAny on; the replay can now check ARPACK, which exposed a stale test argument and a wrapper length bug (tickets 0023, 0075, 0004)
+
+- **Type check**: `noImplicitAny` had 2,675 errors in 64 modules, almost all one cause: `let a, b, c;` read inside nested helper functions, where control-flow typing cannot follow. `bin/codemod-implicit-any.mjs` annotates them from the checker's own inference; see ticket 0023.
+- **Replay, ARPACK**: the recorder encoded only arrays, numbers, strings and callbacks, so every call taking ARPACK's plain-object state was dropped. dgetv0, dsaitr, dsaup2 and dsaupd were never checked. Plain objects are now encoded property by property.
+  - dsaup2 then failed `null-work`: its spec gave WORKL intent `out`, but WORKL carries the Lanczos state between calls. Fixed by a spec override (ticket 0082).
+- **dlaqr4**: its tests passed a stale trailing `lwork` in 16 calls, which JS ignores. The replay skipped every call because the argument count differed from the spec. Without the stale argument, the replay found the wrapper sizing the negative-stride offsets of WR/WI from `N`, where the reference length is `IHI` (ticket 0068 class).
+- **dlamch**: `test.ndarray.js` imported `index.js`, so `ndarray.js` was untested.
+- **Bug class**: a check that silently skips what it cannot encode ("untested" is reported, but whole families sat there), and test files that nothing checks (ticket 0004).
+- **What allowed it**: the gate fails on "untested", but only for changed modules, and these modules had not changed since the replay existed.
+

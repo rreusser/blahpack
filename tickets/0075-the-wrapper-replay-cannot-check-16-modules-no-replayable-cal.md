@@ -31,3 +31,10 @@ Still untested, 11 modules: dgees dgetv0 dgges dlamch dlaqr4 dsaitr dsaup2 dsaup
 
 - Callbacks are now recorded by their source and rebuilt on replay (test/harness/replay-record.mjs, `decode` in replay.js). A callback that needs its closure throws on replay, and the call is skipped. dgees, zgees and zgges had recorded nothing, because their `select`/`selctg` callback could not be serialized; they now replay 15, 4 and 13 calls.
 - Still untested: dgetv0 and dsaitr record 0 calls (reverse communication through a state object); dlaqr4 and dtgex2 have an argument count that differs from the spec.
+
+## Update 2026-11-25 (2)
+
+- Plain objects are now recorded, so ARPACK's state argument no longer drops every call. dgetv0, dsaitr, dsaup2, dsaupd and dsband are replayed and pass.
+- dsaup2 needed its WORKL intent corrected to `inout` (spec override; ticket 0082).
+- dlaqr4's tests passed a stale trailing `lwork`, which is why its recorded argument count differed from the spec. With that removed, the replay found its wrapper sizing the WR/WI offsets from N instead of IHI (fixed with bin/codemod-vector-lengths.mjs).
+- dlamch's `test.ndarray.js` imported `index.js`, so it recorded nothing. It now imports `ndarray.js`.

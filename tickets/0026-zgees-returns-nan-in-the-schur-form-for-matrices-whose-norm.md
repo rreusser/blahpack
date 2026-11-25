@@ -57,3 +57,12 @@ for (let i=0;i<N;i++) for (let j=0;j<N;j++){let sr=0,si=0;for(let k=0;k<N;k++){c
 console.log('info',info,'unitarity err',err, Array.from(Z.slice(0,2*N)));
 ```
 
+
+## Evidence 2026-11-25 (2): zgeev has the same loss, in the eigenvectors
+
+Found while bringing zgeev to its coverage floor (ticket 0069). A = H·T·Hᴴ, with known eigenvalues {1+2i, −3, 2−i, 0.5i}, was scaled to various norms:
+- **Eigenvalues:** stay accurate to 1e-15 at every norm.
+- **Right-eigenvector residual ‖Av − λv‖ (relative):** about 4e-15 at norms 1, 1e-100, 1e-130 and 1e-136. It jumps to 1e-8 to 3e-7 at 1e-138 and below, which is below zgeev's own scaling threshold, so zgeev's scaling is not the cause.
+- **An already triangular input of the same norm** stays at about 1e-16 (ztrevc3, zgebak, zlascl are fine). The loss is in the Hessenberg/QR stage, as for zgees.
+
+`lib/lapack/base/zgeev/test/test.ndarray.js` has the general tiny case asserting eigenvalues only, with a comment citing this ticket, and the triangular tiny case asserting both residuals. When this is fixed, the general case should also assert the eigenvector residuals.

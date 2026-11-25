@@ -2814,3 +2814,12 @@ Keep entries short. Newest first.
   - The source still comes from the next hook for the bare URL, so both still compose with bin/break-mutants.mjs.
 - **Bug class**: a test-time source rewrite that changes character offsets silently corrupts every offset-based measurement of that module (coverage, and anything else that maps positions back to the file).
 - **Where else**: any loader that rewrites source. `test/harness/replay-offsets.mjs` and `bin/workspace-guard-loader.mjs` wrap expressions, but their runs are not used for coverage. `replay-record.mjs` rewrites `export default x` → `export default globalThis.__replayRecord( x )` on the last line only, so nothing after it shifts.
+
+## 2026-11-25 — dtrsyl set INFO from dlasy2's scale factor instead of its return code (2x2-by-2x2 blocks, all four trana/tranb branches)
+
+- **Found by**: a coverage agent bringing dtrsyl to its floor (ticket 0069). It wrote the reference INFO into a near-singular test, and that test failed.
+- **Reproduce**: M = N = 2, A = [[1,1],[-1,1]] (eigenvalues 1±i), B = [[-1,1],[-1,-1]] (eigenvalues -1±i), isgn = +1, C = [1,2,3,4]. Since λ(A) + μ(B) = 0, dlasy2 perturbs and returns IERR = 1 with scale 1. dtrsyl returned INFO = 0; the reference returns 1. Conversely, A = B = [[1e-3,1e-3],[-1e-3,1e-3]] with C = 1e300 everywhere: dlasy2 scales (6.25e-302) and returns IERR = 0, but dtrsyl returned INFO = 1.
+- **Root cause**: `dlasy2( ... ); if ( SCALOC_ARR[ 0 ] !== ONE ) { info = 1; }` discarded dlasy2's return value and tested the scale factor instead. `dtrsyl.f` does `CALL DLASY2( ..., IERR ); IF( IERR.NE.0 ) INFO = 1`. The dlaln2 calls in the same file were translated correctly.
+- **Bug class**: a callee's status replaced by a correlated, but different, output. The two usually agree on the happy path, which is the only path the fixture tests covered.
+- **Where else**: every other base.js call to dlasy2/dlaln2 discards the status (dlaexc, dtgevc, dtrevc, dtrevc3). The reference ignores IERR/IINFO there as well, so those translations are faithful.
+- **What allowed it**: no test reached the near-singular or scaling paths (dtrsyl base.js was at 80.7% lines). The coverage floor, applied because the PR touched dtrsyl's JSDoc, is what forced a test there.

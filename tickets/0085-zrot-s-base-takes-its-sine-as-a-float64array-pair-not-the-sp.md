@@ -34,3 +34,7 @@ sed -i "s/^type Complex128 = any;/type Complex128 = import( '@stdlib\/types\/com
 - Move the callers' `Float64Array` pairs to one-element `Complex128Array` scratch, which zlartg's complex output is written into.
 - Replace `.get()` reads with reinterpret views.
 - Then alias `Complex128`/`Complex64` to the ctor classes, and drop their exemption in `lint/typecheck-config.test.cjs`.
+
+## Evidence 2026-11-25 (ticket 0094)
+
+With `Complex128 = any`, `tsc -p tsconfig.callers.json` accepted a plain number passed as zspr's `alpha`. The ticket 0094 caller-fix agents found complex scalars passed as numbers or `Float64Array`s in several examples (zspr, zgerc, zgeru, zgemm, zgemv, zhemm, …). Only the runtime caught them, and only where an example threw.

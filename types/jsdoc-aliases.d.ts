@@ -24,6 +24,9 @@ type Layout = 'row-major' | 'column-major';
 type TransposeOperation = 'no-transpose' | 'transpose' | 'conjugate-transpose';
 type DiagonalType = 'unit' | 'non-unit';
 type OperationSide = 'left' | 'right';
+// dlamch's `cmach` (spec/options.json family `type`): exactly its values (pinned by
+// lint/typecheck-config.test.cjs). Any other string returns 0 (ticket 0089).
+type MachineParameter = 'epsilon' | 'safe-minimum' | 'precision' | 'base' | 'digits' | 'rounding' | 'min-exponent' | 'underflow' | 'max-exponent' | 'overflow';
 
 declare var require: any;
 declare var module: any;

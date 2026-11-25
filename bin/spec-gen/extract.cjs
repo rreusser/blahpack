@@ -11,6 +11,10 @@
 //                reference BLAS). `guard` is the enclosing IF condition(s).
 //   quick        top-level quick returns after the checks: { cond, body }
 //   locals       the scalar definitions those conditions reference
+//   dlamch       the machine constants the routine queries itself: the first
+//                letter of each `DLAMCH( '...' )` argument (E, S, P, B, ...),
+//                plus la_constants' `dulp` (P) / `deps` (E) / `dsafmin` (S)
+//                in .f90 sources. Omitted when there are none.
 //
 // Everything downstream (bin/gen_spec, CI) reads the cache, never the sources
 // (CONVENTIONS T6).
@@ -676,7 +680,30 @@ function extractOne( src, free, sig ) {
 	if ( Object.keys( used ).length ) {
 		rec.locals = used;
 	}
+	var mc = machineConstants( st );
+	if ( mc.length ) {
+		rec.dlamch = mc;
+	}
 	return rec;
+}
+
+// Letters of the DLAMCH queries in a statement list (see header).
+var LA_CONSTANTS = { 'DULP': 'P', 'DEPS': 'E', 'DSAFMIN': 'S' };
+
+function machineConstants( st ) {
+	var out = {};
+	st.forEach( function each( s ) {
+		var re = /\bDLAMCH ?\( ?'([A-Z])/g;
+		var m;
+		while ( ( m = re.exec( s ) ) !== null ) {
+			out[ m[ 1 ] ] = true;
+		}
+		re = /=> ?(DULP|DEPS|DSAFMIN)\b/g;
+		while ( ( m = re.exec( s ) ) !== null ) {
+			out[ LA_CONSTANTS[ m[ 1 ] ] ] = true;
+		}
+	});
+	return Object.keys( out ).sort();
 }
 
 function sortedJSON( obj ) {

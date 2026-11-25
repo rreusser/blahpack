@@ -5,6 +5,8 @@
 // generated validation prologue (ndarray.js, <routine>.js); and the `@returns`
 // type.
 
+var fs = require( 'fs' );
+var path = require( 'path' );
 var specLib = require( './spec.cjs' );
 var P = require( './prologue.cjs' );
 
@@ -29,16 +31,36 @@ var SCALAR_IN = {
 	'object': 'Object'
 };
 
+var OPTIONS = null;
+
+// The JSDoc type of an input option: the `type` of its spec/options.json
+// family (an alias in types/jsdoc-aliases.d.ts, a union of the family's
+// values, so `tsc` rejects any other string), else `string`.
+function optionType( routine, fortran ) {
+	var i;
+	var f;
+	if ( OPTIONS === null ) {
+		OPTIONS = JSON.parse( fs.readFileSync( path.join( __dirname, '..', '..', 'spec', 'options.json' ), 'utf8' ) ).families;
+	}
+	for ( i = 0; i < OPTIONS.length; i++ ) {
+		f = OPTIONS[ i ];
+		if ( f.params.indexOf( fortran ) >= 0 && ( !f.routines || new RegExp( f.routines ).test( routine ) ) ) {
+			return f.type || 'string';
+		}
+	}
+	return 'string';
+}
+
 function arrayType( p ) {
 	return ARRAY[ p.dtype ] || 'Array';
 }
 
 // Type of the leading (array or scalar) name of a param group.
-function leadType( p, form, g ) {
+function leadType( p, form, g, spec ) {
 	switch ( p.role ) {
 	case 'flag':
 		// An output option (EQUED of the svx drivers) is a single-element Array.
-		return ( p.intent === 'in' ) ? 'string' : 'Array<string>';
+		return ( p.intent === 'in' ) ? optionType( spec.routine, p.fortran ) : 'Array<string>';
 	case 'dim':
 		return 'NonNegativeInteger';
 	case 'info':
@@ -65,7 +87,7 @@ function params( spec, form, actual ) {
 	var out = [];
 	specLib.baseGroups( spec ).forEach( function each( g ) {
 		var p = g.param;
-		var lead = leadType( p, form, g );
+		var lead = leadType( p, form, g, spec );
 		if ( !g.names.length ) {
 			return;
 		}

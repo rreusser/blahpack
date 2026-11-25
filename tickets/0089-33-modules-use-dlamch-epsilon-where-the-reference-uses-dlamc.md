@@ -33,3 +33,20 @@ for d in lib/*/base/*; do r=$(basename $d); F=data/lapack-3.12.0/SRC/$r.f; [ -f 
 
 - **Make it a check, not a one-off fix:** a lint or conformance rule that compares the set of machine constants each base.js uses (`dlamch( … )` calls and the stdlib constants it imports) with the `DLAMCH` arguments of its reference source.
 - **Then fix the listed modules mechanically.** Add a test per routine family on an input at the scaling boundary, where the two choices differ (for the eigen drivers, a norm between RMIN computed with 'E' and with 'P').
+
+## Progress 2026-11-25
+
+**Enforcement:**
+- `dlamch`'s `cmach` is typed `MachineParameter`, a union of the canonical values. It comes from a new `type` field on the `spec/options.json` family, which the JSDoc generator (`lint/lib/jsdoc-spec.cjs`) uses for the option. `tsc` now rejects any other key; `lint/typecheck-config.test.cjs` pins the alias to the family's values.
+- `bin/spec-gen/extract.cjs` records each routine's `DLAMCH` letters in `data/fortran-checks.json` (`dlamch`, 381 routines).
+- The new conformance check `conf:machine-constants` (CONVENTIONS X4) fails a module whose epsilon (dlamch call, literal, stdlib `float64/eps`, `Number.EPSILON`) is a class its reference never queries, and any use of `Number.MIN_VALUE`. It does not check the reverse direction: dlaqr3, for example, legitimately takes its constants from dlaqr2's shared implementation.
+
+**Fixed:**
+- **Unknown keys that returned 0:** dtgsna, dtgsen, ztgsen, dlarrf (`'safe minimum'`), dggsvd3, zggsvd3 (`'Safe Minimum'`), zla_herfsx_extended (`'eps'`). The other 25 non-canonical spellings, which happened to be valid keys, are normalized too.
+- **'E' → 'P':** the 32 modules listed above, and dlarrr (a literal).
+- **'P' → 'E':** dtgevc, dla_gbrfsx_extended and dlasd2 (stdlib eps), dlartgp and dlartgs (literals).
+- **zlargv:** `SAFMN2` is now the reference formula (2^-484). It was 2^-511.
+- **dlanv2:** `Math.floor` → `Math.trunc` for Fortran `INT` (no value change).
+- **Tests whose oracle copied the bug:** dsbevx, zhbevx, zheevx and zhpevx.
+
+**Left:** a regression test per routine family at the boundary where the two constants differ.

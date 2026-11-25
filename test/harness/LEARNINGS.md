@@ -2802,3 +2802,15 @@ Keep entries short. Newest first.
 - **Bug class**: a check that silently skips what it cannot encode ("untested" is reported, but whole families sat there), and test files that nothing checks (ticket 0004).
 - **What allowed it**: the gate fails on "untested", but only for changed modules, and these modules had not changed since the replay existed.
 
+
+## 2026-11-25 — importWithDependencies (and longer importWithConstants values) attributed coverage to the wrong lines (harness)
+
+- **Found by**: a coverage agent for zlaqr0/zlaqr4 (ticket 0069). The lcov records of modules loaded through `importWithDependencies` showed hits on lines those copies never ran (an iteration-limit return), and no hits on lines they did run.
+- **Root cause**: node records V8 coverage by character offset into the source it ran, and maps it onto the file on disk. The hook replaced an import specifier (`'../../zlahqr/lib/base.js'`) with a much longer `data:` URL, so every later offset in the copy pointed into the wrong part of the file. `importWithConstants` had the same flaw whenever the new value's text was longer or shorter than the original expression. Earlier tests happened to set `0` in place of a one-digit or longer number, which shifted later lines by a few characters.
+- **Effect**: coverage of a module tested this way was partly fictional, both too high and too low. `bin/lib/lcov.mjs` merges copies by maximum, so the false hits counted. zlaqr0 read 100% lines; the honest figure before the fix was 90.1%.
+- **Fix**:
+  - `importWithDependencies` no longer edits the source: a `resolve` hook redirects the named specifier when the importing module's URL carries `?deps=`.
+  - `importWithConstants` pads a shorter value to the original length, and throws for a longer one, saying why.
+  - The source still comes from the next hook for the bare URL, so both still compose with bin/break-mutants.mjs.
+- **Bug class**: a test-time source rewrite that changes character offsets silently corrupts every offset-based measurement of that module (coverage, and anything else that maps positions back to the file).
+- **Where else**: any loader that rewrites source. `test/harness/replay-offsets.mjs` and `bin/workspace-guard-loader.mjs` wrap expressions, but their runs are not used for coverage. `replay-record.mjs` rewrites `export default x` → `export default globalThis.__replayRecord( x )` on the last line only, so nothing after it shifts.

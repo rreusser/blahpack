@@ -1,8 +1,9 @@
 {
-	"$comment": "Checks the code that calls the library (benchmarks, examples) against the library's declared types (ticket 0094): every call's argument count, array types and option strings. Not `strict`: a caller's own scratch variables need no annotations, only its calls into lib/ must type-check. lib/ itself is checked by tsconfig.json under `strict`. types/callers/ narrows three stdlib declarations that are too loose (uniform/discreteUniform return a union whatever the dtype) or that reject stdlib's own benchmark convention (bench); `paths` here replaces tsconfig.json's, so it repeats them.",
+	"$comment": "Checks the code that calls the library (benchmarks, examples) against the library's declared types (ticket 0094): every call's argument count, array types and option strings. `noImplicitAny`, because a value tsc cannot type is `any`, and a call passing it goes unchecked (a bare `let` captured by the benchmark closure; a JSDoc `{Object}`). The rest of `strict` (null checks and the like) is off: those flags check a caller's own logic, not its calls into lib/. lib/ itself is checked by tsconfig.json under `strict`. types/callers/ narrows three stdlib declarations that are too loose (uniform/discreteUniform return a union whatever the dtype) or that reject stdlib's own benchmark convention (bench); `paths` here replaces tsconfig.json's, so it repeats them.",
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"strict": false,
+		"noImplicitAny": true,
 		"module": "esnext",
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,

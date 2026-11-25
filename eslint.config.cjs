@@ -25,6 +25,16 @@ var SOURCE_RULES = {
 	'spec-jsdoc': 'error',
 	'module-exports': 'error',
 
+	// Layout wrappers throw only on LD bounds the spec states: its own checks,
+	// or `max( 1, <rows|cols> )` of the array (V5, V11).
+	'spec-ld-bounds': 'error',
+
+	// Documentation health: the JSDoc the API reference (bin/docs) publishes.
+	// Same predicates as the site's doc-health.json (lint/lib/doc-health.cjs).
+	'jsdoc-summary': 'error',
+	'jsdoc-param-description': 'error',
+	'jsdoc-example-esm': 'error',
+
 	// Scaffolding remnants and convention defects.
 	'jsdoc-backtick-params': 'error',
 	'no-dprefix-conjugate-transpose': 'error',

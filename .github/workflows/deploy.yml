@@ -7,6 +7,8 @@ on:
       - 'notebooks/**'
       - 'examples/**'
       - 'lib/**'
+      - 'spec/**'
+      - 'bin/docs/**'
       - 'progress.html'
       - 'vite.config.js'
       - 'package.json'
@@ -49,6 +51,11 @@ jobs:
         run: npx vite build
         env:
           BASE_URL: /blahpack/
+
+      # API reference, generated from JSDoc + spec/*.json. Written at the site
+      # root, alongside (never over) the notebook build above.
+      - name: Build API reference
+        run: node bin/docs/build.js --out dist
 
       - uses: actions/upload-pages-artifact@v3
         with:

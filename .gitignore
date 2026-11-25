@@ -19,3 +19,6 @@ notebooks/**/*-bundle.js
 test/.validation-ledger/
 .bench-smoke
 .cache/
+
+# Generated API reference (npm run docs:build)
+site/

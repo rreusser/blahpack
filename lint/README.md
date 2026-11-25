@@ -88,6 +88,7 @@ scaffolding/convention defects:
 | [`spec-signature`](rules/spec-signature/) | `base.js`, `ndarray.js`, `<routine>.js` | Parameter lists equal the spec projections (`bin/spec show`; CONVENTIONS S1–S5, S7, S10, D1–D3, D5c, W2). |
 | [`spec-prologue`](rules/spec-prologue/) | `ndarray.js`, `<routine>.js` | The validation prologue is the generated one: one check per reference `INFO = -k` check, in reference order (V1, V3–V7). Fix: `bin/codemod-spec/prologue.cjs`. |
 | [`spec-messages`](rules/spec-messages/) | `ndarray.js`, `<routine>.js` | Each prologue error carries its canonical message (V8). |
+| [`spec-ld-bounds`](rules/spec-ld-bounds/) | `<routine>.js` | Every LD bound thrown on is a spec check or `max( 1, <spec rows or cols> )` of the array (V5, V11). |
 | [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `ndarray.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
@@ -96,6 +97,9 @@ scaffolding/convention defects:
 | [`z-prefix-reinterpret`](rules/z-prefix-reinterpret/) | z-prefix `base.js` | Float64 views of complex arrays come from `reinterpret()`. |
 | [`no-dprefix-conjugate-transpose`](rules/no-dprefix-conjugate-transpose/) | d-prefix files | No `'conjugate-transpose'` in real routines. |
 | [`jsdoc-backtick-params`](rules/jsdoc-backtick-params/) | all | Single-char Fortran flags in `@param` are backtick-quoted. |
+| [`jsdoc-summary`](rules/jsdoc-summary/) | all | The exported function (and `index.js` module JSDoc) opens with a complete summary sentence (J6). |
+| [`jsdoc-param-description`](rules/jsdoc-param-description/) | all | No `@param` description that only repeats the parameter name (J7). |
+| [`jsdoc-example-esm`](rules/jsdoc-example-esm/) | all | `@example` code uses ESM `import`, not `require` (J8). |
 | [`no-stub-wrappers`](rules/no-stub-wrappers/) | all but `base.js` | No "not yet implemented" scaffolding stubs. |
 | [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
 | [`stride-provenance`](rules/stride-provenance/) | `base.js` | Element indices use the array's offset; callees get the array's own strides and offset (S13). Autofixes 1-D arrays. |

@@ -979,7 +979,10 @@
     "bundle:naca": "esbuild notebooks/naca/naca-entry.js --bundle --format=esm --outfile=notebooks/naca/naca-bundle.js --platform=neutral --main-fields=main,module",
     "bundle:pseudospectra": "esbuild notebooks/pseudospectra/pspectra-entry.js --bundle --format=esm --outfile=notebooks/pseudospectra/pspectra-bundle.js --platform=neutral --main-fields=main,module",
     "dev": "npm run bundle:notebook && npm run bundle:naca && npm run bundle:pseudospectra && vite --port 5174",
-    "gen-exports": "node bin/gen-exports.js"
+    "gen-exports": "node bin/gen-exports.js",
+    "docs:build": "node bin/docs/build.js",
+    "docs:serve": "node bin/docs/build.js && node bin/docs/serve.js",
+    "docs:examples": "node bin/docs/run-examples.js"
   },
   "dependencies": {
     "@stdlib/array": "^0.3.3",

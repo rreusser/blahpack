@@ -49,3 +49,4 @@ The ticket 0094 fixes made these benchmarks' calls valid, but they still time a 
 - The dlaqsp benchmarks' largest size was lowered from 10^6 to 10^3: at N = 10^6 the packed array would need about 5×10^11 elements. Before the fix they passed an AP of length N, so they never actually ran at that size.
 
 The type check cannot see this: the calls are valid, they just do almost nothing.
+- Fixed in the ticket 0094 PR: the dorghr, dormhr, zgehrd, zgehd2, zunghr and zunmhr benchmarks passed `ilo = ihi = 1`, to the timed call and to the dgehrd/zgehrd setup. That reduces nothing, so they timed the trivial path. Their siblings dgehrd and dgehd2 use 1..N, and all now do.

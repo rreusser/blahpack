@@ -233,6 +233,15 @@
 		"npm:bundle:pseudospectra": {
 			"kind": "gate"
 		},
+		"npm:check:modules": {
+			"kind": "alias",
+			"of": [
+				"bin/break-mutants.mjs",
+				"bin/workspace-guard.mjs",
+				"bin/coverage.mjs",
+				"bin/wrapper-replay.mjs"
+			]
+		},
 		"npm:check": {
 			"kind": "alias",
 			"of": [
@@ -318,6 +327,9 @@
 			"kind": "gate"
 		},
 		"npm:test:lint-rules": {
+			"kind": "gate"
+		},
+		"npm:test:tools": {
 			"kind": "gate"
 		},
 		"npm:test:unit": {

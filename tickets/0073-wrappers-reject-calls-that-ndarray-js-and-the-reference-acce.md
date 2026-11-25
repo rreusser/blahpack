@@ -23,3 +23,9 @@ On 28 modules the wrapper throws on a call that `ndarray.js` accepted and the re
 ```bash
 node bin/wrapper-replay.mjs dlangb dtprfb dsbgst dseigt
 ```
+
+## Corpus rerun 2026-11-24
+
+`node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
+
+Rejected calls, 26 modules: dla_gbrpvgrw dlangb dlansb dlantb dlarrr dorgtsqr_row dsapps dsbgst dseigt dseupd dstqrb dtpmqrt dtprfb zhbgst zla_gbrpvgrw zlangb zlanhb zlansb zlansy zlantb zlarfb_gett zlarzb zlaswp zlatrz ztpmqrt ztprfb. dseupd is a spec misclassification, not a wrapper bug (ticket 0082).

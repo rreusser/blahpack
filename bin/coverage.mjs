@@ -20,6 +20,9 @@
 *   node bin/coverage.mjs --all [--check] [--json]
 *   node bin/coverage.mjs --changed [--base <ref>] [--check] [--json]
 *
+* Results are cached per module and computed in a worker pool
+* (bin/lib/corpus.mjs; `--no-cache`, `--jobs <n>`).
+*
 * `--check` exits 1 if any file is below its threshold (THRESHOLDS below).
 * `--uncovered` lists the uncovered line numbers of each failing file.
 */
@@ -29,9 +32,9 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { ROOT, moduleDir, selectRoutines, testConcurrency, isWorker, workerMain, runCorpus } from './lib/corpus.mjs';
 
-const ROOT = path.resolve( path.dirname( fileURLToPath( import.meta.url ) ), '..' );
-const PKGS = [ 'blas', 'lapack', 'arpack' ];
+const ENTRY = fileURLToPath( import.meta.url );
 const REPLAY_COVERAGE = path.join( ROOT, 'test', 'harness', 'replay-coverage.mjs' );
 
 // Minimum line and branch coverage (percent) per file role.
@@ -41,45 +44,6 @@ const THRESHOLDS = {
 	'base': { 'lines': 90, 'branches': 85 },
 	'other': { 'lines': 90, 'branches': 85 }
 };
-
-function moduleDir( r ) {
-	for ( const pkg of PKGS ) {
-		const d = path.join( ROOT, 'lib', pkg, 'base', r );
-		if ( fs.existsSync( d ) ) {
-			return d;
-		}
-	}
-	return null;
-}
-
-function allRoutines() {
-	const out = [];
-	for ( const pkg of PKGS ) {
-		const d = path.join( ROOT, 'lib', pkg, 'base' );
-		if ( fs.existsSync( d ) ) {
-			fs.readdirSync( d ).forEach( ( r ) => out.push( r ) );
-		}
-	}
-	return out.sort();
-}
-
-function changedRoutines( base ) {
-	const run = ( args ) => spawnSync( 'git', args, { 'cwd': ROOT, 'encoding': 'utf8' } );
-	const mb = run( [ 'merge-base', 'HEAD', base ] );
-	if ( mb.status !== 0 ) {
-		return null;
-	}
-	const files = run( [ 'diff', '--name-only', mb.stdout.trim() ] ).stdout.split( '\n' )
-		.concat( run( [ 'ls-files', '--others', '--exclude-standard', 'lib/' ] ).stdout.split( '\n' ) );
-	const out = new Set();
-	files.forEach( ( f ) => {
-		const m = /^lib\/(?:blas|lapack|arpack)\/base\/([^/]+)\//.exec( f );
-		if ( m && moduleDir( m[ 1 ] ) ) {
-			out.add( m[ 1 ] );
-		}
-	});
-	return [ ...out ].sort();
-}
 
 function role( r, file ) {
 	const b = path.basename( file );
@@ -164,6 +128,7 @@ function measure( r ) {
 	const lcov = path.join( tmp, 'lcov.info' );
 	const res = spawnSync( process.execPath, [
 		'--test',
+		...testConcurrency(),
 		'--experimental-test-coverage',
 		'--test-coverage-include=' + rel + '/lib/**',
 		'--test-reporter=lcov', '--test-reporter-destination=' + lcov,
@@ -195,24 +160,14 @@ function measure( r ) {
 	return { 'routine': r, 'testsFailed': res.status !== 0, 'files': files };
 }
 
-function main() {
+async function main() {
 	const argv = process.argv.slice( 2 );
 	const flag = ( f ) => argv.includes( f );
-	let routines;
-	if ( flag( '--all' ) ) {
-		routines = allRoutines();
-	} else if ( flag( '--changed' ) ) {
-		const i = argv.indexOf( '--base' );
-		const base = ( i >= 0 ) ? argv[ i + 1 ] : 'origin/main';
-		routines = changedRoutines( base );
-		if ( routines === null ) {
-			console.error( 'coverage: cannot find merge-base with ' + base + ' (fetch full history)' );
-			process.exit( 2 );
-		}
-	} else {
-		routines = argv.filter( ( a, i ) => !a.startsWith( '--' ) && argv[ i - 1 ] !== '--base' );
+	const routines = selectRoutines( argv, 'coverage' );
+	if ( routines === null ) {
+		process.exit( 2 );
 	}
-	const results = routines.map( measure );
+	const results = await runCorpus( { 'tool': 'coverage', 'entry': ENTRY, 'extraFiles': [ REPLAY_COVERAGE ], 'env': [ 'REPLAY_MAX_CALLS' ], 'routines': routines, 'argv': argv } );
 	if ( flag( '--json' ) ) {
 		console.log( JSON.stringify( results, null, 1 ) );
 	} else {
@@ -234,4 +189,8 @@ function main() {
 	}
 }
 
-main();
+if ( isWorker() ) {
+	workerMain( measure );
+} else {
+	main();
+}

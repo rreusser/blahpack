@@ -20,6 +20,8 @@ jobs:
       - run: npm ci
       - name: Run unit tests
         run: npm run test:unit
+      - name: Corpus-check driver tests (bin/lib)
+        run: npm run test:tools
 
   # Lint: every project rule (lint/, one directory per rule) over every module,
   # including the spec ↔ code rules (signatures, validation prologue, messages,

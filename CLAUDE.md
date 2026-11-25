@@ -74,6 +74,12 @@ node bin/conformance.js --all          # Full conformance on all modules (includ
 npm run report                  # Generate progress.html with conformance checks
 bin/lint-fix.sh <module-path>   # Auto-fix (codemods + eslint + test verify)
 bin/lint.sh lib/<path>/base.js  # Lint a single file
+node bin/wrapper-replay.mjs --all     # Per-module corpus checks (also coverage.mjs,
+                                      #   workspace-guard.mjs, break-mutants.mjs): results
+                                      #   are cached in .cache/checks/ per module, keyed on
+                                      #   every input; reruns redo only what changed.
+                                      #   --no-cache, --jobs <n>, --slowest <n>
+npm run check:modules                 # The four per-module CI gates on modules changed vs origin/main
 ```
 
 ## Context Efficiency

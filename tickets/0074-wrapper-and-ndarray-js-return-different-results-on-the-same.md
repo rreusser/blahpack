@@ -22,3 +22,13 @@ With the recorded workspaces passed through (so only the `order`/LD mapping and 
 ```bash
 node bin/wrapper-replay.mjs dpocon dgecon dlacn2 dsyconvf
 ```
+
+## Corpus rerun 2026-11-24
+
+`node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
+
+Mismatches outside `null-work`, by variant:
+
+- exact, 5 modules: dgecon dlacon dpocon dsyconvf zlacon.
+- zero-size, 22 modules: dgecon dla_gbrpvgrw dlacon dlangb dlansb dlantb dlasyf dpocon dtprfb iladlr ilazlr zla_gbrpvgrw zlacon zlamtsqr zlangb zlanhb zlansb zlantb zlarfb_gett zlasyf ztprfb ztrtrs. dlasyf: the wrapper returns 0 where ndarray.js returns undefined for N = 0.
+- transposed, 3 modules: dsyconvf zlahef_rook zsyconvf.

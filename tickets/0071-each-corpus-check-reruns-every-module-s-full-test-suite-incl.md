@@ -32,3 +32,10 @@ grep -n "MAX_CALLS\|test.replay.js" test/harness/replay.js
 
 - Record from `test.ndarray.js` first, and fall back to the other test files only when too few calls are recorded.
 - Fold the workspace guard into the replay: allocate the replay's `null` workspaces through the guard's sentinel region, so overruns are caught directly. Then retire the guard's separate pass.
+
+## Measurements (2026-11-24, after ticket 0070)
+
+Recording only `test.ndarray.js` saves 0.1–0.5 s per module: dgetrf runs all tests in 581 ms against 148 ms for `test.ndarray.js` alone. That is about 10–20% of a replay worker's time (1532 s of worker time over 907 modules). With the cache from ticket 0070, the saving applies only to modules whose inputs changed. Restricting the recording would also change which calls are sampled, and with them the wrapper coverage that coverage.mjs credits to the replay. Re-measure both before switching.
+
+Folding the workspace guard into the replay is still open. The guard costs 148 s cold.
+

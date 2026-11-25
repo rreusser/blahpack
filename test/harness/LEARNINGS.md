@@ -2881,3 +2881,12 @@ Keep entries short. Newest first.
 - **Why the first test missed it**: the stale value 99 was scaled to about 1.6e-145, which an absolute tolerance of 1e-14 accepts as 0. A test of a value that should be exactly zero has to assert it exactly.
 - **Bug class**: a loop bound taken from the input contract (E(1:N−1) holds the off-diagonal) rather than from the output contract (E has dimension N and is overwritten). It hides on rarely reached failure branches.
 - **Where else**: other routines whose E argument is dimension N but carries N−1 values (dlasq2's callers, dbdsqr, the d/zstein family) on their failure or non-convergence paths.
+
+## 2026-11-25 — Option strings: dtgsja's validator and dispatch disagreed; dgges asked dlascl for a type it doesn't have (ticket 0022)
+
+- **Found by**: `tsc`, once every option parameter was typed as the literal union of its values. Neither came from a test or the harness.
+- **dtgsja/ztgsja**: spec/options.json mapped JOBU/JOBV/JOBQ = 'U'/'V'/'Q' to `'compute-vectors'`, so the generated `ndarray.js` accepted only that. `base.js` (and its callers dggsvd3/zggsvd3) dispatch on `'update'`. `dtgsja( 'compute-vectors', ... )` therefore passed validation and computed `wantu = false`: U, V and Q came back untouched. tsc reported `jobu === 'update'` as a comparison with no overlap.
+- **dgges**: it undid the scaling of A with `dlascl( 'hessenberg', ... )`. dlascl knows `'upper-hessenberg'` and returns -1 for anything else, and dgges ignored the return value. For an input with norm below SMLNUM or above BIGNUM, the Schur form S came back at the scaled magnitude. Two tests ran that branch, but asserted only `info`.
+- **Bug class**: an option string that is valid at one layer and unknown at another. A misspelled option fails silently, because the routine either falls through to a default branch or returns an error code nobody reads. Tests miss it unless they assert the output of the exact branch.
+- **Where else**: nowhere now in code that `tsc` checks. Every remaining mismatch would be a type error. Plain-JS callers still depend on the runtime validators, and options the reference doesn't validate have none (ticket 0092).
+- **What allowed it**: options were typed `{string}`. N8's "validator ≡ base-dispatch set" check was never built (it was listed as unbuilt), and a test that covers a branch without asserting its result counts toward coverage just the same.

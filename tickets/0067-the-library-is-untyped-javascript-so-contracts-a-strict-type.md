@@ -24,6 +24,14 @@ Bugs and gaps of this kind already found:
 - Swapped stride, offset and dimension arguments: ticket 0013. Plain `number` cannot catch these; branded index types (`Stride`, `Offset`, `Dim`) can.
 - Real/complex array confusion is invisible while `Complex128Array` is `any`: ticket 0023.
 
+- **Measured, 2026-11-25 (ticket 0022):** typing every option as the literal union of its values, under strict `checkJs` with no `.ts` sources, turned up:
+  - 684 type errors;
+  - two silent wrong-result bugs: dtgsja/ztgsja's validator and dispatch disagreed, and dgges called `dlascl( 'hessenberg', ... )`;
+  - five spellings of one dlacpy/dlaset option;
+  - a d/z vocabulary split in hsein.
+
+  Each of these had passed every test and lint rule. This is direction step 2's "literal unions for options", done library-wide, and it needed no project-specific check.
+
 A type system would not have caught ticket 0060 (an undersized allocation is a value, not a type).
 
 ## Constraints a migration must meet

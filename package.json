@@ -953,7 +953,7 @@
     "test:lint": "bash bin/lint.sh",
     "test:lint-rules": "node --test lint/rules/*/test.cjs lint/*.test.cjs",
     "test:tools": "node --test bin/lib/*.test.mjs",
-    "check:modules": "node bin/break-mutants.mjs --changed --check && node bin/workspace-guard.mjs --changed --check && node bin/coverage.mjs --changed --check --uncovered && node bin/wrapper-replay.mjs --changed --check",
+    "check:modules": "node bin/break-mutants.mjs --changed --check && node bin/workspace-guard.mjs --changed --check && node bin/coverage.mjs --changed --check --uncovered && node bin/wrapper-replay.mjs --changed --check && bin/bench-smoke.sh --changed",
     "lint": "bash bin/lint.sh",
     "lint:corpus": "node lint/verify-corpus.cjs",
     "lint:escape-hatches": "node lint/verify-no-escape-hatches.cjs",

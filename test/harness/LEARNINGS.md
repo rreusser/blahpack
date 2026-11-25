@@ -2778,3 +2778,17 @@ Keep entries short. Newest first.
   - `null-work` passed `null` for dseupd's WORKL, which carries dsaupd's state. A workspace with intent `in`/`inout` now keeps its contents (ticket 0082).
   - The replay exposed a real wrapper bug: dtgsna allocated `max(1, N)` WORK for every `job`, but `job` = `'eigenvectors'`/`'both'` needs `2*N*(N+2)+16`. `s` and `DIF` came back 0. ndarray.js already checked the right size; the wrapper now allocates it, and a test compares it with the reference fixture (ticket 0072).
 
+## 2026-11-25 — Array types tightened: zlag2c threw on its documented output type, and zlatrz's wrapper allocated the wrong array kind (ticket 0023)
+
+- **Found by**: `npm run typecheck` once `types/jsdoc-aliases.d.ts` aliased `Complex128Array`/`Complex64Array` to stdlib's real types (they were `any`). There were 113 errors in 25 modules:
+  - 81 were calls into zrot, whose base takes a `Float64Array` pair against its spec (ticket 0085), so the complex scalar alias stays `any` for now;
+  - 20 were `Complex128Array.get()` results typed `Complex128 | void`;
+  - 2 were real bugs.
+- **zlag2c**: `SA` is a `Complex64Array` per the spec, the JSDoc and the reference (COMPLEX). base.js reinterpreted it with `reinterpret-complex128`, so any call with the documented type threw `Invalid typed array length`. Every test passed a `Complex128Array` instead. Its triangular sibling zlat2c used `reinterpret-complex64` correctly. With the tests moved to `Complex64Array`, 18 of 31 fail before the fix.
+- **zlatrz wrapper**: `work = null` allocated a `Float64Array`, but base.js uses `work` as a `Complex128Array`. The replay had already listed zlatrz among the rejected calls (ticket 0073) without the cause. A new test compares `work = null` with an explicit complex workspace; it fails before the fix.
+- **zpbtrf, zunbdb2**: `X.get( i )` results (typed `Complex128 | void`) were passed on or dereferenced. They now copy through the Float64 views, with no allocation per element.
+- **Bug class**: an array of the wrong element kind, invisible while every array type is `any`. A test that uses the wrong kind consistently passes. The wrapper's own allocation is never type-checked against what base.js needs.
+- **What allowed it**: the alias file said "Loose for now", and nothing tracked tightening it. The JSDoc said `Complex64Array`; neither the code nor the tests were checked against it.
+- **Gate**: `lint/typecheck-config.test.cjs` pins the tightened aliases and flags, so they cannot be loosened without a visible change to that test.
+- **Where else**: complex scalars (ticket 0085); option parameters documented as `{string}` (ticket 0056).
+

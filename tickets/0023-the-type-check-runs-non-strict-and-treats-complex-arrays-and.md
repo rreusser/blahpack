@@ -26,3 +26,18 @@ The `tsc` sweep and the option-rules work show what stricter types would catch. 
 ```bash
 node -e 'const b=require("./tsconfig.json");Object.assign(b.compilerOptions,{strict:true});require("fs").writeFileSync("tsconfig.probe.json",JSON.stringify(b))' && npx tsc -p tsconfig.probe.json | grep -o 'error TS[0-9]*' | sort | uniq -c | sort -rn; rm -f tsconfig.probe.json
 ```
+
+## Progress 2026-11-25
+
+- **Done:**
+  - `strictFunctionTypes`, `strictBindCallApply`, `noImplicitThis`, `useUnknownInCatchVariables` and `alwaysStrict` are on; each had 0 errors.
+  - The array aliases are stdlib's real types (`Complex128Array`, `Complex64Array`), and `TypedArray`, `NumericArray` and `BooleanArray` are concrete unions. The option aliases (`MatrixTriangle`, `TransposeOperation`, `OperationSide`, `DiagonalType`, `Layout`) are literal unions. `ndarray` is removed.
+  - `lint/typecheck-config.test.cjs` pins all of it, so loosening one fails CI.
+- **Found by the tightened array types** (LEARNINGS 2026-11-25, second entry):
+  - zlag2c threw on its documented `Complex64Array` output;
+  - zlatrz's wrapper allocated a `Float64Array` where base.js needs a `Complex128Array`.
+- **Remaining:**
+  - **`noImplicitAny`:** 2,675 errors in 64 modules. Mostly `let x;` declarations TS cannot infer (TS7005/7034), `{Object}` parameters with properties (TS2339; ARPACK state objects need a typedef), and `{Array}` without a type argument (TS2314).
+  - **`strictNullChecks`:** 3,314 errors in 127 modules. Mostly TS18048, reads of a `let` that some control-flow path may leave unassigned. Each one is either a false alarm from Fortran-style control flow, or a real read of `undefined`, which is NaN silently. Do not blanket-initialise them: that would hide the real ones. Review each one, or find runtime evidence, for example with the harness's poisoned inputs.
+  - **Option parameters:** almost all are documented as plain `{string}`, so the literal-union aliases rarely apply. Ticket 0056 tracks using them.
+  - **Complex scalars:** `Complex128`/`Complex64` are still `any` (ticket 0085).

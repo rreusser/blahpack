@@ -1,6 +1,6 @@
 ---
 id: 0097
-title: dhgeqz takes ILO/IHI 0-based while zhgeqz and 23 other routines take them 1-based
+title: Scalar index bases are unchecked; dhgeqz and dlaqr5 differ from their twins, and dlaqr5 from its own spec
 status: open
 area: wrappers
 opened: 2026-11-25
@@ -18,6 +18,17 @@ How it was permitted: the override records the difference, but it doesn't justif
 - `lib/lapack/base/dhgeqz/lib/dhgeqz.js:30` documents 0-based ILO/IHI; `lib/lapack/base/zhgeqz/lib/zhgeqz.js:33` documents 1-based ones.
 - Found by the ticket 0094 caller-fix agent, whose examples now follow each routine's own JSDoc.
 - dhgeqz/zhgeqz is the only d/z twin pair whose shared params differ in `base`.
+
+## Evidence 2026-11-25 (2): dlaqr5
+
+The ticket 0094 part-07 agent found that dlaqr5's `ktop`, `kbot`, `iloz` and `ihiz` are 0-based in practice:
+- the wrapper passes them straight to `base.js`, which indexes 0-based;
+- the ndarray JSDoc and the wrapper's own tests use `0..N-1`;
+- but `lib/lapack/base/dlaqr5/lib/dlaqr5.js:32-33,41-42` documents them as 1-based.
+
+`spec/dlaqr5.json` records all four as 1-based, with no `base: 0` override. So the spec disagrees with the code. zlaqr5 is 1-based in its spec, its JSDoc and its code.
+
+This widens the problem. A scalar index's base is declared only by a spec override, and nothing compares that declaration with what `base.js` actually does. A test that called each such routine at the boundary index (e.g. `ihiz = N` for a 1-based routine) would expose any mismatch.
 
 ## Reproduce
 

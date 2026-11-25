@@ -2881,3 +2881,43 @@ Keep entries short. Newest first.
 - **Why the first test missed it**: the stale value 99 was scaled to about 1.6e-145, which an absolute tolerance of 1e-14 accepts as 0. A test of a value that should be exactly zero has to assert it exactly.
 - **Bug class**: a loop bound taken from the input contract (E(1:N−1) holds the off-diagonal) rather than from the output contract (E has dimension N and is overwritten). It hides on rarely reached failure branches.
 - **Where else**: other routines whose E argument is dimension N but carries N−1 values (dlasq2's callers, dbdsqr, the d/zstein family) on their failure or non-convergence paths.
+
+## 2026-11-25 — Option strings: dtgsja's validator and dispatch disagreed; dgges asked dlascl for a type it doesn't have (ticket 0022)
+
+- **Found by**: `tsc`, once every option parameter was typed as the literal union of its values. Neither came from a test or the harness.
+- **dtgsja/ztgsja**: spec/options.json mapped JOBU/JOBV/JOBQ = 'U'/'V'/'Q' to `'compute-vectors'`, so the generated `ndarray.js` accepted only that. `base.js` (and its callers dggsvd3/zggsvd3) dispatch on `'update'`. `dtgsja( 'compute-vectors', ... )` therefore passed validation and computed `wantu = false`: U, V and Q came back untouched. tsc reported `jobu === 'update'` as a comparison with no overlap.
+- **dgges**: it undid the scaling of A with `dlascl( 'hessenberg', ... )`. dlascl knows `'upper-hessenberg'` and returns -1 for anything else, and dgges ignored the return value. For an input with norm below SMLNUM or above BIGNUM, the Schur form S came back at the scaled magnitude. Two tests ran that branch, but asserted only `info`.
+- **Bug class**: an option string that is valid at one layer and unknown at another. A misspelled option fails silently, because the routine either falls through to a default branch or returns an error code nobody reads. Tests miss it unless they assert the output of the exact branch.
+- **Where else**: nowhere now in code that `tsc` checks. Every remaining mismatch would be a type error. Plain-JS callers still depend on the runtime validators, and options the reference doesn't validate have none (ticket 0092).
+- **What allowed it**: options were typed `{string}`. N8's "validator ≡ base-dispatch set" check was never built (it was listed as unbuilt), and a test that covers a branch without asserting its result counts toward coverage just the same.
+
+## 2026-11-25 — dpbstf/zpbstf clamped a signed diagonal stride, so the row-major layout gave wrong factors (ticket 0069)
+
+- **Found by**: a coverage agent for ticket 0069. It compared the dpbstf wrapper with `ndarray.js` and with the column-major factor in row-major.
+- **Reproduce**: a diagonally dominant positive definite band matrix: N = 6, kd = 2, upper; diagonal 10+j, off-diagonals `1/(d+1+0.5j) - 0.1d`. Run `dpbstf( 'row-major', 'upper', 6, 2, AB, 7 )`. Band entry (r=0, j=2) stays at its input 0.05, where the column-major call (fixture-checked against Fortran) gives 0.015811388300841892. zpbstf fails the same way at (r=0, j=4).
+- **Root cause**: dpbstf.f has `KLD = MAX( 1, LDAB-1 )`, the step along a band anti-diagonal (one column right, one row up). The JS wrote it as `max( 1, sa2 - sa1 )`. In column-major that is LDAB-1 ≥ 1, as in Fortran. In row-major (sa1 = LDAB, sa2 = 1) it is 1-LDAB < 0, so the clamp replaced it with 1, and the dscal/dsyr/zher/zlacgv calls on the anti-diagonal walked the wrong elements. dpbtf2 has the same KLD, but its translation used the signed `sa2 - sa1` and was correct.
+- **Bug class**: a Fortran guard on a leading-dimension expression, translated literally into a stride expression that can be negative. `MAX(1, ...)` exists only for LDAB = 1; on a signed stride it changes the stride itself.
+- **Where else**: only dpbstf and zpbstf use `max( 1, <stride2> - <stride1> )` (`grep -rnE "max\(\s*1,\s*\(?\s*(s[a-zA-Z0-9]*2|stride[A-Z]+2)\s*-" lib`). Other `MAX(1, LD...)` guards that became strides could still hide under other names.
+- **What allowed it**: no test ran the wrapper's row-major path, and both modules were below the wrapper coverage floor (ticket 0069). Neither has a layout-fuzzed harness level (L3). The fixtures are column-major, where the clamp is a no-op.
+
+## 2026-11-25 — Wrapper replay on the ticket 0022 PR: wrapper workspace and length bugs in 25 modules (tickets 0068, 0074)
+
+- **Found by**: `bin/wrapper-replay.mjs --changed`, once the ticket 0069 coverage tests recorded calls that reached the wrapper paths. Each fix has a regression test that fails on the old code.
+- **Undersized `WORK = null` allocation (NaN or LWORK errors)**:
+  - dormbr/zunmbr ignored the side and the blocked callee's `nw*NB + (NB+1)*NB`.
+  - zungrq allocated the unblocked M where the NB = 32 path needs `M*NB`.
+  - dorm22 allocated `M*N` without the required minimum NQ.
+  - dorbdb4 took the LWORK doc (M-Q) where the code checks a larger LWORKMIN.
+  - dsytri2x allocated `max(rows, cols)` for a 2-D `rows*cols` workspace.
+  - dlatrs3 kept the reference LWORK, but base.js also stores the reference's local arrays in WORK.
+  - dsapps/dseigt documented a nullable workspace and never allocated it.
+- **Wrong `stride2offset` length (negative strides)**:
+  - gbtf2/gbtrf IPIV used N where it should be min(M,N).
+  - orgbr TAU used N where it should be min(M,K) or min(N,K).
+  - ormbr/unmbr TAU used N where it should be min(NQ,K).
+  - zlaswp IPIV used N where it should be |k2-k1|+1; the spec's Fortran formula assumed absolute 1-based indexing.
+  - dlaed2 Q2 used the documented N1²+(N-N1)², but the reference writes up to N², which DLAED1's larger WORK absorbs.
+- **The layers disagree on a quick return or check**: dgecon, dpocon, iladlr, ilazlr, ztrtrs, dtrtrs, zlamtsqr, zlanhb, zlansy (see ticket 0074's resolution).
+- **Bug class**: a wrapper is a second implementation of argument handling: workspace sizes, vector extents and quick returns. Each one diverged where its author copied a documented size, or a matrix dimension, rather than what base.js actually touches.
+- **What allowed it**: wrapper paths were untested (ticket 0069). The replay audits only the calls the tests make, so a module's own coverage decides what it can see.
+- **The d/z twins**: the replay flagged only the variant whose tests reached the bad path. A review of the twins of every fixed module found the same bugs in zgbtf2/zgbtrf (IPIV), zungbr (TAU; harmless, since the argument checks make the two lengths equal), zunm22 and zunbdb4 (WORK). Each was fixed with a test that fails on the old code where a valid input can tell the old and new versions apart. When fixing a wrapper, check its d/z twin.

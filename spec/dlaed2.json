@@ -155,8 +155,8 @@
 				"N1**2+(N-N1)**2"
 			],
 			"length": {
-				"fortran": "N1**2+(N-N1)**2",
-				"js": "n1**2 + (N - n1)**2"
+				"fortran": "N*N",
+				"js": "N * N"
 			}
 		},
 		{
@@ -260,6 +260,17 @@
 		{
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
+		}
+	],
+	"overrides": [
+		{
+			"reason": "Q2 is documented as N1**2+(N-N1)**2, but dlaed2.f writes past that: the full-deflation path copies N*N entries into Q2 (lines 323-330) and each deflated column writes N entries (line 510). DLAED1's 4N+N**2 WORK, which follows Q2, absorbs the overrun. The JS wrapper must size Q2 by what the code touches, N*N (ticket 0068).",
+			"set": {
+				"params.Q2.length": {
+					"fortran": "N*N",
+					"js": "N * N"
+				}
+			}
 		}
 	]
 }

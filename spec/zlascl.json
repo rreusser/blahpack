@@ -108,9 +108,17 @@
 			"param": "TYPE",
 			"kind": "enum",
 			"fortranValues": "BGHLQUZ",
-			"values": null,
+			"values": [
+				"lower-band",
+				"general",
+				"upper-hessenberg",
+				"lower",
+				"upper-band",
+				"upper",
+				"band"
+			],
 			"fortran": "ITYPE.EQ.-1",
-			"js": null
+			"js": "(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : (type === 'band' ? 6 : -1))))))) === -1"
 		},
 		{
 			"info": -4,
@@ -145,7 +153,8 @@
 			"param": "LDA",
 			"kind": "expr",
 			"fortran": "ITYPE.LE.3 .AND. LDA.LT.MAX( 1, M )",
-			"js": null
+			"js": "(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) <= 3 && lda < max( 1, M )",
+			"rowMajor": "(type==='general'?0:(type==='lower'?1:(type==='upper'?2:(type==='upper-hessenberg'?3:(type==='lower-band'?4:(type==='upper-band'?5:6))))))<=3&&lda<max(1,N)"
 		},
 		{
 			"info": -2,
@@ -153,7 +162,7 @@
 			"kind": "expr",
 			"fortran": "KL.LT.0 .OR. KL.GT.MAX( M-1, 0 )",
 			"guard": "ITYPE.GE.4",
-			"js": null
+			"js": "(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) >= 4 && (kl < 0 || kl > max( M - 1, 0 ))"
 		},
 		{
 			"info": -3,
@@ -179,16 +188,10 @@
 		}
 	],
 	"untranslated": [
-		"check -1: no canonical value for TYPE='G'",
 		"check -4: unsupported call DISNAN",
 		"check -5: unsupported call DISNAN",
 		"check -7: local recursion too deep",
-		"check -9: no canonical value for TYPE='G'",
-		"check -2: no canonical value for TYPE='G'",
 		"check -3: local recursion too deep",
 		"check -9: local recursion too deep"
-	],
-	"notes": [
-		"option TYPE accepts 'BGHLQUZ' but spec/options.json has no canonical value for this family"
 	]
 }

@@ -73,22 +73,40 @@ test( 'array aliases are stdlib\'s array types, option aliases literal unions', 
 	});
 });
 
-test( 'an option family\'s `type` alias is exactly the union of its values (ticket 0089)', function t() {
+test( 'every input option is typed as the literal union of its values (tickets 0022, 0089)', function t() {
+	// lint/lib/jsdoc-spec.cjs derives the JSDoc type of each option parameter
+	// from its spec; spec-jsdoc makes lib/ agree. Loosening it to `string`
+	// would leave tsc unable to see a misspelled option.
+	var J = require( './lib/jsdoc-spec.cjs' );
+	var specLib = require( './lib/spec.cjs' );
 	var opts = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', 'options.json' ), 'utf8' ) );
 	var a = aliases();
-	var typed = opts.families.filter( function f( o ) {
-		return o.type;
+	var loose = [];
+	var n = 0;
+	fs.readdirSync( path.join( ROOT, 'spec' ) ).forEach( function each( f ) {
+		var spec;
+		var types = {};
+		if ( !/^[a-z].*\.json$/.test( f ) || f === 'options.json' || f === 'schema.json' ) {
+			return;
+		}
+		spec = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', f ), 'utf8' ) );
+		J.params( spec, 'ndarray', specLib.strided( spec ) ).forEach( function each( p ) {
+			types[ p.name ] = p.type;
+		});
+		( spec.params || [] ).forEach( function each( p ) {
+			var t;
+			if ( p.role !== 'flag' || p.intent !== 'in' || !( p.name in types ) ) {
+				return;
+			}
+			n += 1;
+			t = types[ p.name ];
+			t = ( a[ t ] ) ? a[ t ] : t;
+			if ( !/^\(?'[^']*'( ?\| ?'[^']*')*\)?$/.test( t ) ) {
+				loose.push( spec.routine + '.' + p.name + ': ' + types[ p.name ] );
+			}
+		});
 	});
-	assert.ok( typed.length > 0, 'no option family names a type' );
-	typed.forEach( function each( o ) {
-		var want = Object.keys( o.values ).map( function v( k ) {
-			return o.values[ k ];
-		}).sort();
-		var got;
-		assert.ok( a[ o.type ], o.type + ' (spec/options.json) is not in types/jsdoc-aliases.d.ts' );
-		got = a[ o.type ].split( '|' ).map( function v( x ) {
-			return x.trim().replace( /^'|'$/g, '' );
-		}).sort();
-		assert.deepStrictEqual( got, want, o.type );
-	});
+	assert.ok( n > 900, 'only ' + n + ' option parameters seen' );
+	assert.ok( opts.families.length > 0 );
+	assert.deepStrictEqual( loose, [], 'option parameters not typed as literal unions' );
 });

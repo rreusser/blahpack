@@ -57,9 +57,9 @@ import dsaup2 from './../../dsaup2/lib/base.js';
 * @private
 * @param {DsaupdState} state - persistent reverse-communication state (pass `{}` on first use)
 * @param {Int32Array} ido - reverse-communication flag (length-1; in/out)
-* @param {string} bmat - `'standard'` or `'generalized'` eigenproblem
+* @param {('standard'|'generalized')} bmat - `'standard'` or `'generalized'` eigenproblem
 * @param {NonNegativeInteger} N - order of the problem
-* @param {string} which - which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`)
+* @param {('LM'|'SM'|'LA'|'SA'|'BE')} which - which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`)
 * @param {integer} nev - number of eigenvalues to compute
 * @param {number} tol - relative accuracy for Ritz value convergence (`<= 0` uses machine epsilon)
 * @param {Float64Array} resid - residual vector (length N; in/out)

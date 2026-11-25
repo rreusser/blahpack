@@ -1,9 +1,10 @@
 ---
 id: 0022
 title: Some option arguments are never validated, so any string selects a default branch
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-18
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -62,3 +63,22 @@ node -e 'const fs=require("fs");for(const f of fs.readdirSync("spec")){if(!/^[a-
 ```
 
 Each needs an options entry spelling the values the code already compares against, then regeneration with `bin/codemod-spec/prologue.cjs`. Any test that relied on the missing check must change with it.
+
+## Resolution
+
+Fixed on branch `slop/gracious-dijkstra-q3yg0i` (ticket 0022 PR).
+
+- **Every input option is typed as the literal union of its values.** `lint/lib/jsdoc-spec.cjs` takes the values from the spec's enum check (what the reference accepts for that routine), else from the option's `spec/options.json` family. `lint:spec-jsdoc` makes `lib/` agree, and `ci:typecheck` (strict `tsc`) then rejects two things:
+  - a call that passes any other string;
+  - a `base.js` comparison against a string the option can never hold.
+
+  That closes the CONVENTIONS N8 gap ("validator ≡ base-dispatch set (unbuilt)") structurally, with no project-specific check. `lint/typecheck-config.test.cjs` fails if any input option is typed other than as a literal union.
+- **Every option the reference validates now has canonical values.** New families: BALANC, SENSE, JOBV (gsvj0/1), EIGSRC, INITV, TYPE (lascl), PIVOT, ID, JOB (tgsna/trsna, trsen), TRANS_TYPE, BMAT, WHICH, HOWMNY (dseupd, dsband), JOB (laic1), IDENT and JOBT. No spec enum check has `values: null`, so the generated prologue validates each of these options at runtime.
+- **What the types found** (each fixed, with a regression test that fails on the old code where behaviour changed):
+  - **dtgsja/ztgsja:** `ndarray.js` accepted `'compute-vectors'`, but `base.js` dispatches on `'update'`. A public call silently skipped updating U, V and Q. The canonical value is now `'update'`, matching COMPQ's.
+  - **dgges:** it called `dlascl( 'hessenberg', ... )`. `dlascl` returned -1, which `dgges` ignored, so a scaled input's Schur form came back unscaled. The tests ran that branch but asserted only `info`; they now assert S.
+  - **dlacpy/dlaset/zlacpy/zlaset callers:** they spelled "whole matrix" as `'all'`, `'full'`, `'Full'`, `'ALL'` and `'none'`. The family now has `other: 'all'`, and every caller passes `'all'`.
+  - **zhsein vs dhsein:** zhsein used `'no'`/`'no'` where dhsein uses `'no-source'`/`'no-init'`. zhsein now uses dhsein's spelling.
+  - **dggev, dggevx, zggev, zggevx:** they reused `chtemp` for both the dhgeqz job and the dtgevc side, as the Fortran does. The side is now its own variable.
+  - **dlanst, dlansy, zlange, zlanhe:** each had a duplicated `'one-norm'` test, left over from the reference's two letters, O and 1.
+- **Remaining:** options the reference never validates (it raises no `XERBLA`) are typed, but still accept any string at runtime. Ticket 0092 tracks this; it is where the `dlansf` evidence above now belongs.

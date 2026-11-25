@@ -59,8 +59,8 @@ function trimBlock( lines ) {
 }
 
 function paramInfo( block ) {
-	var m = /^\s*\*\s?@param\s+\{[^}]*\}\s+\[?([\w$]+)\]?\s*(?:-\s*)?(.*)$/.exec( block.lines[ 0 ] );
-	return m ? { 'name': m[ 1 ], 'desc': m[ 2 ], 'more': block.lines.slice( 1 ) } : null;
+	var m = /^\s*\*\s?@param\s+\{([^}]*)\}\s+\[?([\w$]+)\]?\s*(?:-\s*)?(.*)$/.exec( block.lines[ 0 ] );
+	return m ? { 'type': m[ 1 ], 'name': m[ 2 ], 'desc': m[ 3 ], 'more': block.lines.slice( 1 ) } : null;
 }
 
 // Descriptions of every @param in a module's three forms, by lower-cased name.
@@ -198,7 +198,12 @@ function rewrite( src, spec, form, mod, borrow ) {
 	want.forEach( function each( w ) {
 		var p = oldParams[ w.name.toLowerCase() ] || borrow[ w.name.toLowerCase() ];
 		var desc = ( p && p.desc ) ? p.desc : derived( w.name, params );
-		out.push( '* @param {' + w.type + '} ' + w.name + ' - ' + desc );
+		var type = w.type;
+		// Keep an `Object` parameter's `@typedef` name (spec-jsdoc accepts it).
+		if ( type === 'Object' && p && oldParams[ w.name.toLowerCase() ] && new RegExp( '@typedef \\{Object\\} ' + p.type + '\\b' ).test( src ) ) {
+			type = p.type;
+		}
+		out.push( '* @param {' + type + '} ' + w.name + ' - ' + desc );
 		if ( p && oldParams[ w.name.toLowerCase() ] ) {
 			out = out.concat( p.more );
 		}

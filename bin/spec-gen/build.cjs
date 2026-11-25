@@ -552,10 +552,15 @@ function build( routine, sig, facts, options ) {
 
 	// Translate a Fortran expression (locals inlined). Returns { fortran, js }
 	// with js null (and an `untranslated` note) when outside the grammar.
-	function translate( text, what ) {
+	function translate( text, what, covered ) {
 		var out = { 'fortran': text };
+		var ast;
 		try {
-			out.js = fexpr.emit( fexpr.inline( fexpr.parse( text ), locals, isArg ), ctx );
+			ast = fexpr.inline( fexpr.parse( text ), locals, isArg );
+			if ( covered ) {
+				ast = fexpr.assumeValid( ast, covered );
+			}
+			out.js = fexpr.emit( ast, ctx );
 		} catch ( err ) {
 			out.js = null;
 			untranslated.push( what + ': ' + err.message );
@@ -744,7 +749,17 @@ function build( routine, sig, facts, options ) {
 		if ( c.guard ) {
 			rec.guard = c.guard;
 		}
-		var tr = translate( c.guard ? '(' + c.guard + ') .AND. (' + c.cond + ')' : c.cond, 'check ' + c.info );
+		// An option an earlier check validated holds one of its values here.
+		var tr = translate( c.guard ? '(' + c.guard + ') .AND. (' + c.cond + ')' : c.cond, 'check ' + c.info, function covered( F, letters ) {
+			return checks.some( function v( e ) {
+				var vals = lookupOption( routine, F );
+				return e.kind === 'enum' && e.param === F && e.values && vals && e.fortranValues.split( '' ).every( function has( L ) {
+					return letters.some( function eq( x ) {
+						return vals[ x ] === vals[ L ];
+					});
+				});
+			});
+		});
 		rec.js = tr.js;
 		// An output argument's value on entry is meaningless (dhsein's
 		// `MM.LT.M` tests the M it computed from SELECT; in JS M is an array).

@@ -313,10 +313,10 @@
 			"values": [
 				"initialize",
 				"none",
-				"compute-vectors"
+				"update"
 			],
 			"fortran": ".NOT.( INITU .OR. WANTU .OR. LSAME( JOBU, 'N' ) )",
-			"js": "!((jobu === 'initialize' || (jobu === 'initialize' || jobu === 'compute-vectors')) || jobu === 'none')"
+			"js": "!((jobu === 'initialize' || (jobu === 'initialize' || jobu === 'update')) || jobu === 'none')"
 		},
 		{
 			"info": -2,
@@ -326,10 +326,10 @@
 			"values": [
 				"initialize",
 				"none",
-				"compute-vectors"
+				"update"
 			],
 			"fortran": ".NOT.( INITV .OR. WANTV .OR. LSAME( JOBV, 'N' ) )",
-			"js": "!((jobv === 'initialize' || (jobv === 'initialize' || jobv === 'compute-vectors')) || jobv === 'none')"
+			"js": "!((jobv === 'initialize' || (jobv === 'initialize' || jobv === 'update')) || jobv === 'none')"
 		},
 		{
 			"info": -3,
@@ -339,10 +339,10 @@
 			"values": [
 				"initialize",
 				"none",
-				"compute-vectors"
+				"update"
 			],
 			"fortran": ".NOT.( INITQ .OR. WANTQ .OR. LSAME( JOBQ, 'N' ) )",
-			"js": "!((jobq === 'initialize' || (jobq === 'initialize' || jobq === 'compute-vectors')) || jobq === 'none')"
+			"js": "!((jobq === 'initialize' || (jobq === 'initialize' || jobq === 'update')) || jobq === 'none')"
 		},
 		{
 			"info": -4,
@@ -396,21 +396,21 @@
 			"param": "LDU",
 			"kind": "expr",
 			"fortran": "LDU.LT.1 .OR. ( WANTU .AND. LDU.LT.M )",
-			"js": "ldu < 1 || ((jobu === 'initialize' || jobu === 'compute-vectors') && ldu < M)"
+			"js": "ldu < 1 || ((jobu === 'initialize' || jobu === 'update') && ldu < M)"
 		},
 		{
 			"info": -20,
 			"param": "LDV",
 			"kind": "expr",
 			"fortran": "LDV.LT.1 .OR. ( WANTV .AND. LDV.LT.P )",
-			"js": "ldv < 1 || ((jobv === 'initialize' || jobv === 'compute-vectors') && ldv < P)"
+			"js": "ldv < 1 || ((jobv === 'initialize' || jobv === 'update') && ldv < P)"
 		},
 		{
 			"info": -22,
 			"param": "LDQ",
 			"kind": "expr",
 			"fortran": "LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N )",
-			"js": "ldq < 1 || ((jobq === 'initialize' || jobq === 'compute-vectors') && ldq < N)"
+			"js": "ldq < 1 || ((jobq === 'initialize' || jobq === 'update') && ldq < N)"
 		}
 	],
 	"quickReturn": []

@@ -7,6 +7,15 @@
 				"params.INCX.role": "scalar",
 				"params.INCX.of": null
 			}
+		},
+		{
+			"reason": "The Fortran length K1+(K2-K1)*ABS(INCX) counts IPIV from absolute 1-based K1 with INCX as its stride. The JS takes IPIV's stride separately (strideIPIV) and reads it relative to offsetIPIV, entry 0 for row k1, so it reads |k2-k1|+1 entries (ticket 0068).",
+			"set": {
+				"params.IPIV.length": {
+					"fortran": "ABS(K2-K1)+1",
+					"js": "abs( k2 - k1 ) + 1"
+				}
+			}
 		}
 	]
 }

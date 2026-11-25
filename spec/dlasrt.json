@@ -53,9 +53,12 @@
 			"param": "ID",
 			"kind": "enum",
 			"fortranValues": "DI",
-			"values": null,
+			"values": [
+				"decreasing",
+				"increasing"
+			],
 			"fortran": "DIR.EQ.-1",
-			"js": null
+			"js": "(id === 'decreasing' ? 0 : (id === 'increasing' ? 1 : -1)) === -1"
 		},
 		{
 			"info": -2,
@@ -70,11 +73,5 @@
 			"fortran": "N.LE.1",
 			"js": "N <= 1"
 		}
-	],
-	"untranslated": [
-		"check -1: no canonical value for ID='D'"
-	],
-	"notes": [
-		"option ID accepts 'DI' but spec/options.json has no canonical value for this family"
 	]
 }

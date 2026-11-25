@@ -32,23 +32,81 @@ var SCALAR_IN = {
 };
 
 var OPTIONS = null;
+var ALIASES = null;
 
-// The JSDoc type of an input option: the `type` of its spec/options.json
-// family (an alias in types/jsdoc-aliases.d.ts, a union of the family's
-// values, so `tsc` rejects any other string), else `string`.
-function optionType( routine, fortran ) {
+// Alias name per literal-union alias in types/jsdoc-aliases.d.ts, keyed by
+// its sorted values.
+function aliases() {
+	var src;
+	if ( ALIASES === null ) {
+		ALIASES = {};
+		src = fs.readFileSync( path.join( __dirname, '..', '..', 'types', 'jsdoc-aliases.d.ts' ), 'utf8' );
+		src.replace( /^type (\w+) = ((?:\s*\|?\s*'[^']*')+);/gm, function each( m, name, rhs ) {
+			ALIASES[ rhs.match( /'[^']*'/g ).map( function u( v ) {
+				return v.slice( 1, -1 );
+			}).sort().join( '|' ) ] = name;
+			return m;
+		});
+	}
+	return ALIASES;
+}
+
+// The strings an input option accepts, in spec/options.json order: the
+// values of its spec enum check (what the reference accepts for this
+// routine), else every value of its options family (plus its `other`),
+// else null.
+function optionValues( spec, fortran ) {
+	var checked = null;
+	var fam = null;
+	var all;
 	var i;
-	var f;
+	( spec.checks || [] ).forEach( function each( c ) {
+		if ( c.kind === 'enum' && c.param === fortran && c.values ) {
+			checked = c.values;
+		}
+	});
 	if ( OPTIONS === null ) {
 		OPTIONS = JSON.parse( fs.readFileSync( path.join( __dirname, '..', '..', 'spec', 'options.json' ), 'utf8' ) ).families;
 	}
-	for ( i = 0; i < OPTIONS.length; i++ ) {
-		f = OPTIONS[ i ];
-		if ( f.params.indexOf( fortran ) >= 0 && ( !f.routines || new RegExp( f.routines ).test( routine ) ) ) {
-			return f.type || 'string';
+	for ( i = 0; i < OPTIONS.length && !fam; i++ ) {
+		if ( OPTIONS[ i ].params.indexOf( fortran ) >= 0 && ( !OPTIONS[ i ].routines || new RegExp( OPTIONS[ i ].routines ).test( spec.routine ) ) ) {
+			fam = OPTIONS[ i ];
 		}
 	}
-	return 'string';
+	all = ( fam ) ? Object.keys( fam.values ).map( function v( k ) {
+		return fam.values[ k ];
+	}).concat( ( fam.other ) ? [ fam.other ] : [] ) : [];
+	if ( checked ) {
+		return all.filter( function f( v ) {
+			return checked.indexOf( v ) >= 0;
+		}).concat( checked.filter( function f( v ) {
+			return all.indexOf( v ) < 0;
+		}) );
+	}
+	return ( fam ) ? all : null;
+}
+
+// The JSDoc type of an input option: the literal union of the strings it
+// accepts (CONVENTIONS S14), so `tsc` rejects any other string at a call
+// and any comparison against one in base.js. Spelled as the alias in
+// types/jsdoc-aliases.d.ts with exactly those values when there is one.
+// `string` only when the option has no known values (ticket 0022).
+function optionType( spec, fortran ) {
+	var vals = optionValues( spec, fortran );
+	var key;
+	if ( !vals ) {
+		return 'string';
+	}
+	vals = vals.filter( function u( v, i ) {
+		return vals.indexOf( v ) === i;
+	});
+	key = vals.slice().sort().join( '|' );
+	if ( aliases()[ key ] ) {
+		return aliases()[ key ];
+	}
+	return '(' + vals.map( function q( v ) {
+		return '\'' + v + '\'';
+	}).join( '|' ) + ')';
 }
 
 function arrayType( p ) {
@@ -60,7 +118,7 @@ function leadType( p, form, g, spec ) {
 	switch ( p.role ) {
 	case 'flag':
 		// An output option (EQUED of the svx drivers) is a single-element Array.
-		return ( p.intent === 'in' ) ? optionType( spec.routine, p.fortran ) : 'Array<string>';
+		return ( p.intent === 'in' ) ? optionType( spec, p.fortran ) : 'Array<string>';
 	case 'dim':
 		return 'NonNegativeInteger';
 	case 'info':
@@ -113,7 +171,7 @@ function params( spec, form, actual ) {
 		}
 	});
 	if ( form === 'strided' && specLib.takesOrder( spec ) ) {
-		out.unshift( { 'name': 'order', 'type': 'string' } );
+		out.unshift( { 'name': 'order', 'type': 'Layout' } );
 	}
 	if ( actual && actual.length === out.length ) {
 		out.forEach( function each( o, i ) {

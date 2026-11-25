@@ -14,7 +14,8 @@ CONVENTIONS J2, C1, C4, S10, S11):
   | stride | `integer` |
   | offset, dimension | `NonNegativeInteger` |
   | leading dimension | `PositiveInteger` |
-  | option, `order` | `string` |
+  | input option | the literal union of the values its routine accepts (the spec's enum check, else its `spec/options.json` family), spelled as the `types/jsdoc-aliases.d.ts` alias with exactly those values when there is one, e.g. `TransposeOperation`, `('no-vectors'\|'compute-vectors')`; `string` only for an option with no known values |
+  | `order` | `Layout` |
   | input scalar | `number`, `integer`, `boolean`, `Complex128`, `Function` |
   | reverse-communication state | `Object`, or the name of a `@typedef {Object}` declared in the same file (its properties) |
 

@@ -26,7 +26,7 @@ import dtrsm from '../../../../blas/base/dtrsm/lib/base.js';
 * IPIV must contain 0-based pivot indices (as produced by dgetrf/dgetrf2).
 *
 * @private
-* @param {string} trans - `'no-transpose'` or `'transpose'`
+* @param {TransposeOperation} trans - `'no-transpose'` or `'transpose'`
 * @param {NonNegativeInteger} N - order of matrix A
 * @param {NonNegativeInteger} nrhs - number of right-hand side columns
 * @param {Float64Array} A - LU-factored N-by-N matrix (from dgetrf)

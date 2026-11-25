@@ -268,18 +268,24 @@
 			"param": "EIGSRC",
 			"kind": "enum",
 			"fortranValues": "NQ",
-			"values": null,
+			"values": [
+				"no-source",
+				"qr"
+			],
 			"fortran": ".NOT.FROMQR .AND. .NOT.LSAME( EIGSRC, 'N' )",
-			"js": null
+			"js": "eigsrc !== 'qr' && eigsrc !== 'no-source'"
 		},
 		{
 			"info": -3,
 			"param": "INITV",
 			"kind": "enum",
 			"fortranValues": "NU",
-			"values": null,
+			"values": [
+				"no-init",
+				"user"
+			],
 			"fortran": ".NOT.NOINIT .AND. .NOT.LSAME( INITV, 'U' )",
-			"js": null
+			"js": "initv !== 'no-init' && initv !== 'user'"
 		},
 		{
 			"info": -5,
@@ -331,12 +337,6 @@
 		}
 	],
 	"untranslated": [
-		"check -2: no canonical value for EIGSRC='Q'",
-		"check -3: no canonical value for INITV='N'",
 		"check -14: tests the output argument M (its value is computed, not passed in)"
-	],
-	"notes": [
-		"option EIGSRC accepts 'NQ' but spec/options.json has no canonical value for this family",
-		"option INITV accepts 'NU' but spec/options.json has no canonical value for this family"
 	]
 }

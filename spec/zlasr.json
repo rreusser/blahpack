@@ -127,9 +127,13 @@
 			"param": "PIVOT",
 			"kind": "enum",
 			"fortranValues": "BTV",
-			"values": null,
+			"values": [
+				"bottom",
+				"top",
+				"variable"
+			],
 			"fortran": ".NOT.( LSAME( PIVOT, 'V' ) .OR. LSAME( PIVOT, 'T' ) .OR. LSAME( PIVOT, 'B' ) )",
-			"js": null
+			"js": "!((pivot === 'variable' || pivot === 'top') || pivot === 'bottom')"
 		},
 		{
 			"info": 3,
@@ -176,11 +180,5 @@
 			"fortran": "( M.EQ.0 ) .OR. ( N.EQ.0 )",
 			"js": "M === 0 || N === 0"
 		}
-	],
-	"untranslated": [
-		"check 2: no canonical value for PIVOT='V'"
-	],
-	"notes": [
-		"option PIVOT accepts 'BTV' but spec/options.json has no canonical value for this family"
 	]
 }

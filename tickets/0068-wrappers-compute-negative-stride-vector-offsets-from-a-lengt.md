@@ -18,6 +18,8 @@ A `<routine>.js` wrapper converts each vector stride into a starting offset with
 - Whole corpus (`node bin/wrapper-replay.mjs --all`, which instruments every wrapper's `stride2offset` calls):
   - 16 modules use a length below what a valid call actually touches (definite bugs): `dger`, `dlarf`, `zunmql`, `ddisna`, `dgemv`, `dgerfs`, `dlaed2`, `dlasq2`, `zlarf`, `zsyrfs`, `dlarfx`, `zgerc`, `zgesvx`, `zhesvx`, `dgtsvx`, `zlarfx`. Examples: `zunmql` TAU 2 vs 33, `dlasq2` z N vs 4N, `FERR`/`BERR` 1 vs NRHS.
   - 275 vector parameters in 170 modules use a length other than the spec's; the commonest are TAU 63, e 39, DL/DU 18 each, FERR/BERR 15 each. The usual pattern is the main dimension N used for every vector.
+- 2026-11-25 (found while closing coverage gaps for ticket 0069): `dgbtf2`, `dgbtrf`, `zgbtf2` and `zgbtrf` take IPIV's offset as `stride2offset( N, strideIPIV )`, but IPIV holds min(M,N) pivots. With a negative `strideIPIV` and M < N, the offset points past the pivots that are actually written. The new wrapper tests use stride 1, so they don't reach this.
+- 2026-11-25 (ticket 0022 PR): fixed the wrapper lengths in dgbtf2, dgbtrf, zgbtf2, zgbtrf (IPIV), dorgbr, dormbr, zunmbr (TAU), zlaswp (IPIV) and dlaed2 (Q2). zlaswp and dlaed2 also got spec overrides. Each has a regression test, or the replay's length audit. The rest of the corpus is unchanged.
 
 ## Reproduce
 

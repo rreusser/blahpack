@@ -1,6 +1,7 @@
 // Ambient aliases for the stdlib-js JSDoc type vocabulary, so `tsc --checkJs`
 // can read the `@param {Type}` annotations used throughout lib/.
-// Arrays are stdlib's real types, and option vocabularies are literal unions.
+// tsconfig.json runs `strict`. Arrays are stdlib's real types, and option
+// vocabularies are literal unions.
 // The complex SCALARS are still `any` (ticket 0085). lint/typecheck-config.test.cjs
 // pins every tightened alias and strict flag, so neither can be loosened
 // without a change to that test.

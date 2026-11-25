@@ -36,6 +36,10 @@
 			"kind": "tool",
 			"why": "codemod: JSDoc types for what tsc's noImplicitAny reports (variables, helper parameters, helper result objects, ARPACK state typedefs); its result is checked by npm run typecheck"
 		},
+		"bin/codemod-strict-null.mjs": {
+			"kind": "tool",
+			"why": "codemod: initializes to NaN the numbers-only lets that tsc's strictNullChecks reports as possibly undefined (behaviour-preserving); its result is checked by npm run typecheck"
+		},
 		"bin/codemod-index.js": {
 			"kind": "tool",
 			"why": "codemod: mechanical index.js fixes"

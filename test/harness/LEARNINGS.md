@@ -2842,3 +2842,14 @@ Keep entries short. Newest first.
   - dsbgst/zhbgst rejected `vect = 'none'`: `spec/options.json` had no values for the family, so no check was generated, and a wrong one was written by hand. 25 more options are in that state (ticket 0022).
   - zlahef_rook's "row swaps" test passed W at half its required size and asserted only `kb` (ticket 0077).
 - **Gate**: tsconfig.json runs `"strict": true`. `lint/typecheck-config.test.cjs` fails if any strict sub-flag is switched off.
+
+## 2026-11-25 — zsytf2 and zhetf2 (upper) searched the pivot row one element short, and chose a zero 1x1 pivot
+
+- **Found by**: a coverage agent writing a pivot-structure oracle for the symmetric factorisations (ticket 0069).
+- **Reproduce**: `zsytf2( 'upper', 2, [[0,1],[1,0]] )` (complex) returned INFO = 1, IPIV = [0,0] and NaN in A. The reference, and the `'lower'` path, give INFO = 0, IPIV = [-1,-1] (one 2x2 pivot) and A unchanged. zhetf2 behaves the same.
+- **Root cause**: `jmax = imax + 1 + izamax( k - imax - 1, … )` where `zsytf2.f`/`zhetf2.f` has `JMAX = IMAX + IZAMAX( K-IMAX, A( IMAX, IMAX+1 ), LDA )`. The count was one short, so A(IMAX,K) was never seen.
+  - For IMAX = K-1 the count was 0, `izamax` returned -1, and ROWMAX became the diagonal |A(IMAX,IMAX)|.
+  - For a zero diagonal, the 1x1-with-interchange test `0 >= ALPHA*0` then held, and the routine divided by a zero pivot.
+- **Bug class**: an off-by-one count in a 0-based translation of a 1-based `IAMAX( K-IMAX, A(IMAX,IMAX+1), LDA )`. The same line is correct in dsytf2 and in every `_rook`/`_rk` variant; only the two complex Bunch-Kaufman routines had it. Its lower-triangle twin was right.
+- **What allowed it**: the fixtures never put the row maximum in column K for the upper path. The existing tests reached neither branch's interchange code (lines 142–167 and 344–369 uncovered).
+- **Tests**: a regression test in each module fails before the fix.

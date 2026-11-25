@@ -1,8 +1,9 @@
 {
-	"$comment": "Machine-readable CONVENTIONS.md Appendix A: Fortran option letter -> canonical JS string, per option family. `params` are Fortran argument names; `routines` (optional) restricts a row to a routine family by regex over the routine name. The first matching row wins. Read by bin/gen_spec. `type` (optional) names an alias in types/jsdoc-aliases.d.ts, the union of the family's values, that the generated JSDoc uses for the option instead of `string` (pinned by lint/typecheck-config.test.cjs).",
+	"$comment": "Machine-readable CONVENTIONS.md Appendix A: Fortran option letter -> canonical JS string, per option family. `params` are Fortran argument names; `routines` (optional) restricts a row to a routine family by regex over the routine name. The first matching row wins. `other` (optional) is the JS value for every letter not in `values`, where the reference treats any other letter alike (DLACPY's UPLO: the whole matrix). Read by bin/gen_spec; lint/lib/jsdoc-spec.cjs types each input option as the literal union of its values (CONVENTIONS S14).",
 	"families": [
+		{ "params": [ "UPLO" ], "routines": "^([dz]lacpy|[dz]laset|zlacp2)$", "values": { "U": "upper", "L": "lower" }, "other": "all" },
 		{ "params": [ "UPLO" ], "values": { "U": "upper", "L": "lower" } },
-		{ "params": [ "TRANS", "TRANSA", "TRANSB", "TRANSR", "TRANA", "TRANB" ], "values": { "N": "no-transpose", "T": "transpose", "C": "conjugate-transpose" } },
+		{ "params": [ "TRANS", "TRANSA", "TRANSB", "TRANSR", "TRANA", "TRANB", "TRANS_TYPE" ], "values": { "N": "no-transpose", "T": "transpose", "C": "conjugate-transpose" } },
 		{ "params": [ "SIDE" ], "values": { "L": "left", "R": "right", "B": "both" } },
 		{ "params": [ "DIAG" ], "values": { "U": "unit", "N": "non-unit" } },
 		{ "params": [ "DIRECT" ], "values": { "F": "forward", "B": "backward" } },
@@ -15,9 +16,9 @@
 		{ "params": [ "JOBU" ], "routines": "^[dz]ggsv[dp]3$", "values": { "U": "compute-U", "N": "none" } },
 		{ "params": [ "JOBV" ], "routines": "^[dz]ggsv[dp]3$", "values": { "V": "compute-V", "N": "none" } },
 		{ "params": [ "JOBQ" ], "routines": "^[dz]ggsv[dp]3$", "values": { "Q": "compute-Q", "N": "none" } },
-		{ "params": [ "JOBU" ], "routines": "^[dz]tgsja$", "values": { "U": "compute-vectors", "I": "initialize", "N": "none" } },
-		{ "params": [ "JOBV" ], "routines": "^[dz]tgsja$", "values": { "V": "compute-vectors", "I": "initialize", "N": "none" } },
-		{ "params": [ "JOBQ" ], "routines": "^[dz]tgsja$", "values": { "Q": "compute-vectors", "I": "initialize", "N": "none" } },
+		{ "params": [ "JOBU" ], "routines": "^[dz]tgsja$", "values": { "U": "update", "I": "initialize", "N": "none" } },
+		{ "params": [ "JOBV" ], "routines": "^[dz]tgsja$", "values": { "V": "update", "I": "initialize", "N": "none" } },
+		{ "params": [ "JOBQ" ], "routines": "^[dz]tgsja$", "values": { "Q": "update", "I": "initialize", "N": "none" } },
 		{ "params": [ "VECT" ], "routines": "^[dz](orgbr|ormbr|ungbr|unmbr)$", "values": { "Q": "apply-Q", "P": "apply-P" } },
 		{ "params": [ "VECT" ], "routines": "^[dz](sbtrd|hbtrd)$", "values": { "N": "none", "V": "initialize", "U": "update" } },
 		{ "params": [ "VECT" ], "routines": "^[dz](sbgst|hbgst)$", "values": { "N": "none", "V": "update" } },
@@ -34,6 +35,16 @@
 		{ "params": [ "JOB" ], "routines": "^[dz](gebal|gebak|ggbal|ggbak)$", "values": { "N": "none", "P": "permute", "S": "scale", "B": "both" } },
 		{ "params": [ "JOB" ], "routines": "^[dz](hseqr|hgeqz)$", "values": { "E": "eigenvalues", "S": "schur" } },
 		{ "params": [ "JOB" ], "routines": "^ddisna$", "values": { "E": "eigenvalues", "L": "left-vectors", "R": "right-vectors" } },
-		{ "params": [ "CMACH" ], "routines": "^dlamch$", "type": "MachineParameter", "values": { "E": "epsilon", "S": "safe-minimum", "P": "precision", "B": "base", "N": "digits", "R": "rounding", "M": "min-exponent", "U": "underflow", "L": "max-exponent", "O": "overflow" } }
+		{ "params": [ "BALANC" ], "values": { "N": "none", "P": "permute", "S": "scale", "B": "both" } },
+		{ "params": [ "SENSE" ], "routines": "^[dz](geevx|ggevx)$", "values": { "N": "none", "E": "eigenvalues", "V": "right-vectors", "B": "both" } },
+		{ "params": [ "JOBV" ], "routines": "^[dz]gsvj[01]$", "values": { "V": "compute-v", "A": "apply-v", "N": "no-v" } },
+		{ "params": [ "EIGSRC" ], "values": { "Q": "qr", "N": "no-source" } },
+		{ "params": [ "INITV" ], "values": { "N": "no-init", "U": "user" } },
+		{ "params": [ "TYPE" ], "routines": "^[dz]lascl$", "values": { "G": "general", "L": "lower", "U": "upper", "H": "upper-hessenberg", "B": "lower-band", "Q": "upper-band", "Z": "band" } },
+		{ "params": [ "PIVOT" ], "values": { "V": "variable", "T": "top", "B": "bottom" } },
+		{ "params": [ "ID" ], "routines": "^dlasrt$", "values": { "I": "increasing", "D": "decreasing" } },
+		{ "params": [ "JOB" ], "routines": "^[dz](tgsna|trsna)$", "values": { "E": "eigenvalues", "V": "eigenvectors", "B": "both" } },
+		{ "params": [ "JOB" ], "routines": "^[dz]trsen$", "values": { "N": "none", "E": "eigenvalues", "V": "subspace", "B": "both" } },
+		{ "params": [ "CMACH" ], "routines": "^dlamch$", "values": { "E": "epsilon", "S": "safe-minimum", "P": "precision", "B": "base", "N": "digits", "R": "rounding", "M": "min-exponent", "U": "underflow", "L": "max-exponent", "O": "overflow" } }
 	]
 }

@@ -272,9 +272,13 @@
 			"param": "JOB",
 			"kind": "enum",
 			"fortranValues": "BEV",
-			"values": null,
+			"values": [
+				"both",
+				"eigenvalues",
+				"eigenvectors"
+			],
 			"fortran": ".NOT.WANTS .AND. .NOT.WANTDF",
-			"js": null
+			"js": "!(job === 'eigenvalues' || job === 'both') && !(job === 'eigenvectors' || job === 'both')"
 		},
 		{
 			"info": -2,
@@ -324,14 +328,16 @@
 			"param": "LDVL",
 			"kind": "expr",
 			"fortran": "WANTS .AND. LDVL.LT.N",
-			"js": null
+			"js": "(job === 'eigenvalues' || job === 'both') && ldvl < N",
+			"rowMajor": "(job==='eigenvalues'||job==='both')&&ldvl<max(1,mm)"
 		},
 		{
 			"info": -12,
 			"param": "LDVR",
 			"kind": "expr",
 			"fortran": "WANTS .AND. LDVR.LT.N",
-			"js": null
+			"js": "(job === 'eigenvalues' || job === 'both') && ldvr < N",
+			"rowMajor": "(job==='eigenvalues'||job==='both')&&ldvr<max(1,mm)"
 		},
 		{
 			"info": -15,
@@ -348,13 +354,7 @@
 		}
 	],
 	"untranslated": [
-		"check -1: no canonical value for JOB='E'",
-		"check -10: no canonical value for JOB='E'",
-		"check -12: no canonical value for JOB='E'",
 		"check -15: tests the output argument M (its value is computed, not passed in)",
 		"WORK.minLength: local LWMIN is assigned inside nested control flow"
-	],
-	"notes": [
-		"option JOB accepts 'BEV' but spec/options.json has no canonical value for this family"
 	]
 }

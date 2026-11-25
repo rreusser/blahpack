@@ -225,9 +225,14 @@
 			"param": "JOB",
 			"kind": "enum",
 			"fortranValues": "BENV",
-			"values": null,
+			"values": [
+				"both",
+				"eigenvalues",
+				"none",
+				"subspace"
+			],
 			"fortran": ".NOT.LSAME( JOB, 'N' ) .AND. .NOT.WANTS .AND. .NOT.WANTSP",
-			"js": null
+			"js": "job !== 'none' && !(job === 'eigenvalues' || job === 'both') && !(job === 'subspace' || job === 'both')"
 		},
 		{
 			"info": -2,
@@ -270,11 +275,7 @@
 	],
 	"quickReturn": [],
 	"untranslated": [
-		"check -1: no canonical value for JOB='N'",
 		"WORK.minLength: local LWMIN is assigned inside nested control flow",
 		"IWORK.minLength: local LIWMIN is assigned inside nested control flow"
-	],
-	"notes": [
-		"option JOB accepts 'BENV' but spec/options.json has no canonical value for this family"
 	]
 }

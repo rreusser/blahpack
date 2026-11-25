@@ -296,9 +296,14 @@
 			"param": "BALANC",
 			"kind": "enum",
 			"fortranValues": "BNPS",
-			"values": null,
+			"values": [
+				"both",
+				"none",
+				"permute",
+				"scale"
+			],
 			"fortran": ".NOT.( LSAME( BALANC, 'N' ) .OR. LSAME( BALANC, 'S' ) .OR. LSAME( BALANC, 'P' ) .OR. LSAME( BALANC, 'B' ) )",
-			"js": null
+			"js": "!(((balanc === 'none' || balanc === 'scale') || balanc === 'permute') || balanc === 'both')"
 		},
 		{
 			"info": -2,
@@ -329,7 +334,7 @@
 			"param": "SENSE",
 			"kind": "expr",
 			"fortran": ".NOT.( WNTSNN .OR. WNTSNE .OR. WNTSNB .OR. WNTSNV ) .OR. ( ( WNTSNE .OR. WNTSNB ) .AND. .NOT.( WANTVL .AND. WANTVR ) )",
-			"js": null
+			"js": "!(((sense === 'none' || sense === 'eigenvalues') || sense === 'both') || sense === 'right-vectors') || ((sense === 'eigenvalues' || sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))"
 		},
 		{
 			"info": -5,
@@ -372,11 +377,6 @@
 		}
 	],
 	"untranslated": [
-		"check -1: no canonical value for BALANC='N'",
-		"check -4: no canonical value for SENSE='N'",
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
-	],
-	"notes": [
-		"option BALANC accepts 'BNPS' but spec/options.json has no canonical value for this family"
 	]
 }

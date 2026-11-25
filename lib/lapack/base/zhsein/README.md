@@ -53,7 +53,7 @@ var IFAILR = new Int32Array( 2 );
 var M = new Int32Array([ 0 ]);
 
 // ndarray form: explicit strides/offsets, no `order` argument:
-var out = zhsein( 'right', 'no', 'no', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
+var out = zhsein( 'right', 'no-source', 'no-init', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
 // out => { 'info': 0, 'm': 2, ... }; VR holds the right eigenvectors
 ```
 
@@ -109,7 +109,7 @@ var IFAILR = new Int32Array( 2 );
 var M = new Int32Array([ 0 ]);
 
 // ndarray form: explicit strides/offsets, no `order` argument:
-var out = zhsein( 'right', 'no', 'no', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
+var out = zhsein( 'right', 'no-source', 'no-init', SELECT, 1, 0, 2, H, 1, 2, 0, w, 1, 0, VL, 1, 2, 0, VR, 1, 2, 0, 2, M, WORK, 1, 0, RWORK, 1, 0, IFAILL, 1, 0, IFAILR, 1, 0 );
 // out => { 'info': 0, 'm': 2, ... }
 ```
 
@@ -191,7 +191,7 @@ var IFAILL = new Int32Array( 2 );
 var IFAILR = new Int32Array( 2 );
 var M = new Int32Array([ 0 ]);
 
-var out = zhsein( 'column-major', 'right', 'no', 'no', SELECT, 1, 2, H, 2, w, 1, VL, 2, VR, 2, 2, M, WORK, 1, RWORK, 1, IFAILL, 1, 0, IFAILR, 1, 0 );
+var out = zhsein( 'column-major', 'right', 'no-source', 'no-init', SELECT, 1, 2, H, 2, w, 1, VL, 2, VR, 2, 2, M, WORK, 1, RWORK, 1, IFAILL, 1, 0, IFAILR, 1, 0 );
 // out => { 'info': 0, 'm': 2, ... }; VR holds the right eigenvectors
 
 console.log( out.info, out.m );

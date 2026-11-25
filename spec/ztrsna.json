@@ -246,9 +246,13 @@
 			"param": "JOB",
 			"kind": "enum",
 			"fortranValues": "BEV",
-			"values": null,
+			"values": [
+				"both",
+				"eigenvalues",
+				"eigenvectors"
+			],
 			"fortran": ".NOT.WANTS .AND. .NOT.WANTSP",
-			"js": null
+			"js": "!(job === 'eigenvalues' || job === 'both') && !(job === 'eigenvectors' || job === 'both')"
 		},
 		{
 			"info": -2,
@@ -286,14 +290,16 @@
 			"param": "LDVL",
 			"kind": "expr",
 			"fortran": "LDVL.LT.1 .OR. ( WANTS .AND. LDVL.LT.N )",
-			"js": null
+			"js": "ldvl < 1 || ((job === 'eigenvalues' || job === 'both') && ldvl < N)",
+			"rowMajor": "ldvl<1||((job==='eigenvalues'||job==='both')&&ldvl<max(1,mm))"
 		},
 		{
 			"info": -10,
 			"param": "LDVR",
 			"kind": "expr",
 			"fortran": "LDVR.LT.1 .OR. ( WANTS .AND. LDVR.LT.N )",
-			"js": null
+			"js": "ldvr < 1 || ((job === 'eigenvalues' || job === 'both') && ldvr < N)",
+			"rowMajor": "ldvr<1||((job==='eigenvalues'||job==='both')&&ldvr<max(1,mm))"
 		},
 		{
 			"info": -13,
@@ -310,13 +316,9 @@
 		}
 	],
 	"untranslated": [
-		"check -1: no canonical value for JOB='E'",
-		"check -8: no canonical value for JOB='E'",
-		"check -10: no canonical value for JOB='E'",
 		"check -13: tests the output argument M (its value is computed, not passed in)"
 	],
 	"notes": [
-		"option JOB accepts 'BEV' but spec/options.json has no canonical value for this family",
 		"workspace check for LDWORK not reducible to a minimum: LDWORK.LT.1 .OR. ( WANTSP .AND. LDWORK.LT.N )"
 	]
 }

@@ -26,6 +26,13 @@ CONVENTIONS T4 sets per-file coverage floors: `base.js` ≥ 90% lines and ≥ 85
 - `npm run conformance:full` (per-file coverage of every module) therefore fails, so it is not in CI.
 - Some wrappers are never called with valid inputs at all. For example, `dasum.js` never reaches its `return base( … )`.
 
+## Evidence 2026-11-25: 105 modules brought to the floor (ticket 0022 PR)
+
+The ticket 0022 PR changed JSDoc in 802 modules, and 105 of them were below the floor. Fifteen agents, in waves of five, wrote tests for them, mostly wrapper tests compared against `ndarray.js` in both layouts with `WORK = null`, plus throw tests with otherwise-valid arguments. That surfaced the following:
+- **dpbstf/zpbstf:** a wrong row-major factor, from a clamped signed stride (LEARNINGS).
+- **Dead duplicate argument checks:** dgeqrt2, zgeqrt2, dtpqrt2 and ztpqrt2 each kept a hand-written check the generated prologue made unreachable. dtgex2 had ten LINFO tests that can never fire.
+- **Throw tests that threw for the wrong reason:** many existing ones passed typed arrays for dimensions, or invalid placeholder options. Ticket 0093 tracks tests that cover a line without checking its result.
+
 ## Reproduce
 
 ```bash

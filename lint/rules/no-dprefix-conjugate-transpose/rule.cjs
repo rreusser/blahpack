@@ -4,7 +4,9 @@
 // Real routines don't have conjugate transposes — this is a copy-paste error
 // from z-prefix (complex) routines.
 //
-// Fixable: replaces "conjugate-transpose" with "transpose".
+// Fixable: replaces "conjugate-transpose" with "transpose". Comments (JSDoc
+// copied from the Fortran, where TRANS = 'C' means transpose for real data) are
+// reported too, without a fix: the sentence needs rewording, not a substitution.
 
 var path = require( 'path' );
 
@@ -32,6 +34,17 @@ var rule = {
 		}
 
 		return {
+			'Program': function onProgram() {
+				var source = context.sourceCode || context.getSourceCode();
+				source.getAllComments().forEach( function each( c ) {
+					if ( c.value.indexOf( 'conjugate-transpose' ) !== -1 ) {
+						context.report({
+							'loc': c.loc,
+							'message': 'd-prefix routine documents "conjugate-transpose", which it does not accept — describe "transpose" only'
+						});
+					}
+				});
+			},
 			'Literal': function onLiteral( node ) {
 				if (
 					typeof node.value === 'string' &&

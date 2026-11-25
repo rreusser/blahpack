@@ -299,6 +299,44 @@ function cascade( name, defs ) {
 	return val;
 }
 
+// Drops the unreachable fallback of a conditional chain on a validated option.
+// `covered( name, letters )` is true when an earlier check already rejects
+// every value of option `name` outside `letters`. A chain
+// `LSAME(F,'a') ? x : ( LSAME(F,'b') ? y : z )` whose letters cover F then
+// never reaches z, so it becomes `LSAME(F,'a') ? x : y` (dlascl's ITYPE).
+function assumeValid( node, covered ) {
+	var chain;
+	var name;
+	var cur;
+	var k;
+	if ( !node || typeof node !== 'object' ) {
+		return node;
+	}
+	if ( node.type === 'cond' ) {
+		chain = [];
+		cur = node;
+		while ( cur.type === 'cond' && cur.c.type === 'call' && cur.c.name === 'LSAME' && cur.c.args.length === 2 && cur.c.args[ 0 ].type === 'id' && cur.c.args[ 1 ].type === 'str' && ( name === void 0 || cur.c.args[ 0 ].name === name ) ) {
+			name = cur.c.args[ 0 ].name;
+			chain.push( cur );
+			cur = cur.f;
+		}
+		if ( chain.length && covered( name, chain.map( function l( c ) {
+			return c.c.args[ 1 ].v.charAt( 0 ).toUpperCase();
+		}) ) ) {
+			cur = assumeValid( chain[ chain.length - 1 ].t, covered );
+			for ( k = chain.length - 2; k >= 0; k-- ) {
+				cur = { 'type': 'cond', 'c': chain[ k ].c, 't': assumeValid( chain[ k ].t, covered ), 'f': cur };
+			}
+			return cur;
+		}
+	}
+	var out = Array.isArray( node ) ? [] : {};
+	Object.keys( node ).forEach( function each( key ) {
+		out[ key ] = assumeValid( node[ key ], covered );
+	});
+	return out;
+}
+
 // Three-valued evaluation (true/false/number/string/null=unknown), used to
 // decide which option letters a check rejects. env.value( name ) returns the
 // value of an identifier or null.
@@ -496,6 +534,7 @@ function fortran( node ) {
 }
 
 module.exports = {
+	'assumeValid': assumeValid,
 	'tokenize': tokenize,
 	'parse': parse,
 	'parsePrefix': parsePrefix,

@@ -22,7 +22,7 @@ A rule with no named enforcer is a defect in this file.
 | `lint:<rule>` | ESLint rule in `lint/rules/<rule>/`; always `error` | yes (`npm run test:lint`) |
 | `hatch` | `lint/verify-no-escape-hatches.cjs` | yes (`npm run lint:escape-hatches`) |
 | `conf:<id>` | `bin/conformance.js` result at **fail** level | yes (`npm run conformance:fast`), except `tests.coverage-*` (needs `--coverage`) |
-| `ci:<job>` | another CI step (`package`, `tickets`, `pr-body`, `test:unit`, `test:lint-rules`) | yes |
+| `ci:<job>` | another CI step (`package`, `tickets`, `pr-body`, `test:unit`, `test:lint-rules`, `typecheck`) | yes |
 | `harness:<check>` | property-based harness (`test/harness/`) | per-routine tests only; levels are not gated [ticket 0034] |
 | `skill:<file>#<section>` | judgment, applied in review by a skill | no (judgment) |
 
@@ -68,6 +68,7 @@ of the third:
 | S11 | Return value: `INFO` (integer) for LAPACK subroutines; the result for FUNCTIONs; otherwise the primary (last) output array (BLAS, stdlib style). An in/out `INFO` (ARPACK) also enters as the param `infoIn`. | stdlib return conventions. | `spec.returns`; `lint:spec-jsdoc` (`@returns`) |
 | S12 | Public pivot/index arrays (`IPIV`, `JPVT`, `IBLOCK`, …) are **0-based**. Fortran's 1-based values are converted inside `base.js`. `ndarray.js` passes them through. | JS indexing; same meaning across both entry points. | `harness:reconstruction` (pivot round-trip) |
 | S13 | `base.js` honors every array's full addressing. Each element index is computed from the array's own offset, and an array passed to a callee carries strides computed from *its own* strides (never a literal, never another array's) and an offset computed from its own offset. A Fortran `X(1,K), 1` becomes `strideX1`, not `1`. Workspace is D5's. | Any layout the caller describes is honored: row-major, padded, offset, negative stride. A literal stride is a hidden column-major assumption. | `lint:stride-provenance`; `harness:layout-invariance` (`test/harness/spec-layout.js`) |
+| S14 | Every value passed between routines, and to stdlib, has the type the callee declares: its JSDoc `@param` type in this repo, and stdlib's own `docs/types/index.d.ts` for stdlib. This covers argument count and kind (`Int32Array` vs `Float64Array` vs `Complex128Array`; an S10 output scalar is a typed array, never a plain `[ 0 ]` or a number). It also covers values compared or used in arithmetic: never an S10 array itself (`4 * n0` coerces a length-1 array to its element only by accident), a boolean stored in a numeric array, or a status code wrapped in an object. No `@ts-ignore`/`@ts-nocheck`/`@ts-expect-error`. | A mistyped value often still runs: a `Uint8Array` stores `false` as `0`, so `=== false` is never true (dseupd), and a wrapped `info` never equals `1` (zgges). Only a gated type check sees these. Strictness is tightened in tickets 0023 and 0067. | `ci:typecheck` (`tsc`, stdlib imports resolved to stdlib's declarations); `hatch` (suppressions) |
 
 ## W: Workspace
 

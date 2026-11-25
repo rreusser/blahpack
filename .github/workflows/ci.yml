@@ -43,6 +43,8 @@ jobs:
         run: npm run lint:escape-hatches
       - name: Run ESLint
         run: npm run test:lint
+      - name: Type check (tsc over lib/, with stdlib's own type definitions)
+        run: npm run typecheck
       - name: Per-rule corpus report is clean
         run: npm run lint:corpus
 

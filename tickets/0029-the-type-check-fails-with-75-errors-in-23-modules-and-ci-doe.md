@@ -1,9 +1,10 @@
 ---
 id: 0029
 title: The type check fails with 75 errors in 23 modules, and CI does not run it
-status: open
+status: resolved
 area: typecheck
 opened: 2026-11-20
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -26,3 +27,12 @@ Related: 0003 (stdlib imports resolve to `any`) and 0023 (non-strict) — both m
 ```bash
 npm run -s typecheck 2>&1 | grep -c 'error TS'
 ```
+
+## Resolution
+
+`npm run typecheck` exits 0 and runs in CI's lint job (CONVENTIONS S14). Since this ticket was opened the errors had fallen to 19. Loading stdlib's real types (ticket 0003) made it 22, in 13 modules. All are fixed:
+- two wrong results: dseupd's `Uint8Array` select compared `=== false`, and zgges never returned `INFO = N+3`;
+- three checks that could not work: ztgsen's workspace size, and the dtgsen/ztgevc `M < 0` checks;
+- several values right only by coercion (dlasq3, dgees, zgees, zggev, zggevx, dtrevc, dtrevc3, dtgsna).
+
+Details and tests are in test/harness/LEARNINGS.md, 2026-11-25. `lint/verify-no-escape-hatches.cjs` now rejects `@ts-ignore`, `@ts-nocheck` and `@ts-expect-error`, so the gate cannot be bypassed in source. Strictness stays in ticket 0023, and test files in ticket 0004.

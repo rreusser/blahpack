@@ -470,6 +470,7 @@ module.exports = {
 	'imports': imports,
 	'IMPORTS': IMPORTS,
 	'nameMap': nameMap,
+	'rename': rename,
 	'ordinal': ordinal,
 	'tidy': tidy
 };

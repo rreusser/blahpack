@@ -1,9 +1,10 @@
 ---
 id: 0003
 title: The type check resolves every stdlib import to `any`
-status: open
+status: resolved
 area: typecheck
 opened: 2026-11-18
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -20,3 +21,7 @@ opened: 2026-11-18
 ```bash
 node -e 'const b=require("./tsconfig.json");Object.assign(b.compilerOptions,JSON.parse(process.argv[1]));require("fs").writeFileSync("tsconfig.probe.json",JSON.stringify(b))' '{"esModuleInterop":true,"baseUrl":".","paths":{"@stdlib/*/lib/index.js":["node_modules/@stdlib/*/docs/types/index.d.ts"]}}' && npx tsc -p tsconfig.probe.json | grep -c 'error TS'; rm -f tsconfig.probe.json
 ```
+
+## Resolution
+
+tsconfig.json maps `@stdlib/*/lib/index.js` and `@stdlib/*` to `node_modules/@stdlib/*/docs/types/index.d.ts`, with `esModuleInterop`. 47 stdlib declaration files are now loaded, and stdlib calls are checked against stdlib's own signatures. Three errors were new with them, and they are fixed with ticket 0029. The JSDoc vocabulary in `types/jsdoc-aliases.d.ts` (Complex128Array, TypedArray, option strings) is still `any`/`string`; that is ticket 0023.

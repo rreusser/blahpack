@@ -21,7 +21,10 @@ function encode( x ) {
 		return { 'v': x };
 	}
 	if ( typeof x === 'function' ) {
-		return void 0;
+		// A callback (dgees's `select`, zgges's `selctg`) is recorded as its
+		// source and rebuilt on replay. One that needs its closure throws
+		// when called there, and the replay skips calls ndarray.js rejects.
+		return { 'f': x.toString() };
 	}
 	const name = x.constructor && x.constructor.name;
 	if ( name === 'Complex128Array' || name === 'Complex64Array' ) {

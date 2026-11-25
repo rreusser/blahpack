@@ -9,7 +9,16 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"types": [],
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"paths": {
+			"@stdlib/*/lib/index.js": [
+				"./node_modules/@stdlib/*/docs/types/index.d.ts"
+			],
+			"@stdlib/*": [
+				"./node_modules/@stdlib/*/docs/types/index.d.ts"
+			]
+		}
 	},
 	"include": [
 		"types/jsdoc-aliases.d.ts",

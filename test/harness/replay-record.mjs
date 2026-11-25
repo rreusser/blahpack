@@ -41,6 +41,19 @@ function encode( x ) {
 		const out = x.map( encode );
 		return ( out.some( ( e ) => e === void 0 ) ) ? void 0 : { 'a': out };
 	}
+	// A plain object (ARPACK's reverse-communication state): its own
+	// enumerable properties, each encoded like an argument.
+	if ( Object.getPrototypeOf( x ) === Object.prototype ) {
+		const o = {};
+		for ( const k of Object.keys( x ) ) {
+			const e = encode( x[ k ] );
+			if ( e === void 0 ) {
+				return void 0;
+			}
+			o[ k ] = e;
+		}
+		return { 'o': o };
+	}
 	return void 0;
 }
 

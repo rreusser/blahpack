@@ -4,7 +4,7 @@
 		"checkJs": true,
 		"noEmit": true,
 		"strict": false,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
 		"noImplicitThis": true,

@@ -24,3 +24,7 @@ opened: 2026-11-18
 ```bash
 grep -n 'tsc\|typecheck' .github/workflows/ci.yml; grep -A3 '"include"' tsconfig.json
 ```
+
+## Evidence 2026-11-25
+
+dlaqr4's `test.ndarray.js` passed a trailing `lwork` (`10000` or `LWORK`) in 16 calls, left over from before the signature dropped it. JS ignores extra arguments, so it passed silently. The replay found it because the recorded argument count differed from the spec. A type check over test files would have rejected each call.

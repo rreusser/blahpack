@@ -41,3 +41,13 @@ node -e 'const b=require("./tsconfig.json");Object.assign(b.compilerOptions,{str
   - **`strictNullChecks`:** 3,314 errors in 127 modules. Mostly TS18048, reads of a `let` that some control-flow path may leave unassigned. Each one is either a false alarm from Fortran-style control flow, or a real read of `undefined`, which is NaN silently. Do not blanket-initialise them: that would hide the real ones. Review each one, or find runtime evidence, for example with the harness's poisoned inputs.
   - **Option parameters:** almost all are documented as plain `{string}`, so the literal-union aliases rarely apply. Ticket 0056 tracks using them.
   - **Complex scalars:** `Complex128`/`Complex64` are still `any` (ticket 0085).
+
+## Progress 2026-11-25 (noImplicitAny)
+
+`noImplicitAny` is on and pinned in `lint/typecheck-config.test.cjs`. It had 2,675 errors in 64 modules. `bin/codemod-implicit-any.mjs` fixed nearly all of them from the type checker's own inference:
+- variables: the union of their assigned types, split into one annotated `let` each;
+- private-helper parameters: types from the call sites, descriptions from same-named parameters (the remaining 74 were written by hand);
+- helper `@returns {Object}`: the object shape;
+- ARPACK state: a `@typedef` per routine. The `spec-jsdoc` lint accepts a same-file `@typedef {Object}` for a state parameter.
+
+About ten were fixed by hand. `strictNullChecks` remains (3,314 errors in 127 modules; see above).

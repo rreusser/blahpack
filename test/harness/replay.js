@@ -137,6 +137,13 @@ function decode( e ) {
 	if ( e.f ) {
 		return callback( e.f );
 	}
+	if ( e.o ) {
+		const o = {};
+		Object.keys( e.o ).forEach( ( k ) => {
+			o[ k ] = decode( e.o[ k ] );
+		});
+		return o;
+	}
 	if ( e.c ) {
 		const C = ( e.c === 'Complex128Array' ) ? Complex128Array : Complex64Array;
 		return new C( e.d.slice() );

@@ -25,3 +25,16 @@ opened: 2026-11-25
 ```bash
 grep -n '"include"' -A4 tsconfig.json
 ```
+
+## Progress 2026-11-25
+
+On branch `slop/gracious-dijkstra-q3yg0i`:
+- **Infrastructure:**
+  - `tsconfig.callers.json` checks benchmarks and examples, with `npm run typecheck:callers` in CI.
+  - `main.js` default exports are typed with their `ndarray` (`bin/codemod-spec/main-type.cjs`, enforced by lint `module-exports`).
+  - `{ dtype }` options objects have literal types (`bin/codemod-spec/dtype-options.cjs`).
+  - `types/callers/` narrows stdlib's `uniform`, `discreteUniform` and `bench`.
+  - `bin/examples-smoke.sh` runs in CI (ticket 0041).
+- **What the check found:** 1,077 errors in 593 files across 491 modules. That covers 327 of the 332 examples that throw, plus 121 examples and 145 benchmark files that run but make invalid calls.
+- **Fixing:** the errors are being fixed in agent waves of 5. The module partitions are `/tmp/claude-0/s/fixpart-NN` (15 parts), and the brief is `/tmp/claude-0/s/cbrief.md`.
+- **Out of scope:** tests are ticket 0095.

@@ -291,14 +291,14 @@
 			"param": "LDVL",
 			"kind": "expr",
 			"fortran": "LDVL.LT.1 .OR. ( ILVL .AND. LDVL.LT.N )",
-			"js": "ldvl < 1 || ((jobvl === 'no-vectors' ? false : (jobvl === 'compute-vectors' ? true : false)) && ldvl < N)"
+			"js": "ldvl < 1 || ((jobvl === 'compute-vectors') && ldvl < N)"
 		},
 		{
 			"info": -14,
 			"param": "LDVR",
 			"kind": "expr",
 			"fortran": "LDVR.LT.1 .OR. ( ILVR .AND. LDVR.LT.N )",
-			"js": "ldvr < 1 || ((jobvr === 'no-vectors' ? false : (jobvr === 'compute-vectors' ? true : false)) && ldvr < N)"
+			"js": "ldvr < 1 || ((jobvr === 'compute-vectors') && ldvr < N)"
 		}
 	],
 	"quickReturn": [

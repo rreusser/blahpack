@@ -29,3 +29,31 @@ const info = zgees( 'no-vectors', 'none', () => false, N, A, 1, N, 0, new Int32A
 console.log( 'info', info, 'finite', new Float64Array( A.buffer ).every( Number.isFinite ) );
 "
 ```
+
+## Evidence 2026-11-25: inaccurate, not only NaN, and already at N = 3
+
+Found while bringing zgees to its coverage floor (ticket 0069):
+- A general, non-triangular matrix of norm about 1e-150 with `compute-vectors` returns no NaN at N = 3, but ||Z^H Z - I|| is 1.7e-12 (`'none'`) and 1.2e-12 (`'sort'`).
+- At norm 1e-140 it is 4.1e-11, against about 7e-16 at norms 1, 1e-130 or 1e150.
+- An already triangular tiny input stays accurate (about 2e-16) through the scaling and the ztrsen reordering. So the loss is in the QR iteration on the scaled matrix (about 6.7e-139), not in zlascl or ztrsen.
+- This is probably the same root cause as the NaN at N >= 5.
+
+zgees's tests use only triangular tiny inputs, so the tiny-norm accuracy has no test yet.
+
+Save as `repro.mjs` in the repository root, then run `node repro.mjs 3 1e-150 none`:
+
+```js
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import zgees from './lib/lapack/base/zgees/lib/ndarray.js';
+const N=+process.argv[2], sc=+process.argv[3], sort=process.argv[4];
+let s = 12345; const r = () => ( s = ( s * 1103515245 + 12345 ) % 2147483648 ) / 2147483648 - 0.5;
+const d = Float64Array.from( { length: 2*N*N }, () => r() * sc );
+const A = new Complex128Array( d );
+const VS=new Complex128Array( N*N ), W=new Complex128Array( N );
+const info = zgees( 'compute-vectors', sort, (w) => w.re<0, N, A, 1, N, 0, new Int32Array( 1 ), W, 1, 0, VS, 1, N, 0, new Complex128Array( 10*N ), 1, 0, new Float64Array( N ), 1, 0, new Uint8Array( N ), 1, 0 );
+const Z=new Float64Array(VS.buffer);
+let err=0;
+for (let i=0;i<N;i++) for (let j=0;j<N;j++){let sr=0,si=0;for(let k=0;k<N;k++){const ar=Z[2*(k+i*N)],ai=-Z[2*(k+i*N)+1],br=Z[2*(k+j*N)],bi=Z[2*(k+j*N)+1];sr+=ar*br-ai*bi;si+=ar*bi+ai*br;} err=Math.max(err,Math.abs(sr-(i==j))+Math.abs(si));}
+console.log('info',info,'unitarity err',err, Array.from(Z.slice(0,2*N)));
+```
+

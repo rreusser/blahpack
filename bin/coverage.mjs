@@ -60,48 +60,71 @@ function role( r, file ) {
 }
 
 // Parse an lcov file into { file: { lf, lh, brf, brh, uncovered, uncoveredBranches } },
-// counting a line or branch covered if any record for the file covers it.
+// counting a line covered if any record for the file covers it.
+//
+// One file can appear in several records: a test that re-imports it through
+// importWithConstants/importWithDependencies gets its own copy. V8 reports
+// detailed blocks only for functions a copy ran, so two copies can list a
+// different number of branches on one line, and positions then do not
+// correspond. Per line: records listing the most branches there are merged
+// position by position (same count, same blocks); records listing fewer
+// are not counted. That never invents untaken branches (a copy's partial
+// list used to add zero-hit "branches" on every line it did not run), and
+// at worst under-credits a branch reached only through a partial copy.
 function parseLcov( text ) {
-	const out = {};
+	const raw = {};
 	let cur = null;
 	text.split( '\n' ).forEach( ( line ) => {
 		const i = line.indexOf( ':' );
 		const k = ( i < 0 ) ? line : line.slice( 0, i );
 		const v = ( i < 0 ) ? '' : line.slice( i + 1 );
 		if ( k === 'SF' ) {
-			// One file can appear in several records (a test that re-imports
-			// it through importWithConstants gets its own copy): merge them.
 			const key = path.relative( ROOT, path.resolve( ROOT, v ) );
-			cur = out[ key ] || { 'lines': new Map(), 'branches': new Map() };
-			cur.seen = {};
-			out[ key ] = cur;
+			raw[ key ] = raw[ key ] || [];
+			cur = { 'lines': new Map(), 'branches': new Map() };
+			raw[ key ].push( cur );
 		} else if ( !cur ) {
 			// ignore
 		} else if ( k === 'DA' ) {
 			const [ ln, hits ] = v.split( ',' );
 			cur.lines.set( Number( ln ), Math.max( cur.lines.get( Number( ln ) ) || 0, Number( hits ) ) );
 		} else if ( k === 'BRDA' ) {
-			// Block numbers differ between copies of one file, so key a branch
-			// by its line and its position among that record's branches on it.
 			const parts = v.split( ',' );
-			cur.seen = cur.seen || {};
-			cur.seen[ parts[ 0 ] ] = ( cur.seen[ parts[ 0 ] ] || 0 ) + 1;
-			const id = parts[ 0 ] + ',' + cur.seen[ parts[ 0 ] ];
+			const ln = Number( parts[ 0 ] );
 			const hits = ( parts[ 3 ] === '-' ) ? 0 : Number( parts[ 3 ] );
-			cur.branches.set( id, Math.max( cur.branches.get( id ) || 0, hits ) );
+			if ( !cur.branches.has( ln ) ) {
+				cur.branches.set( ln, [] );
+			}
+			cur.branches.get( ln ).push( hits );
 		}
 	});
-	Object.keys( out ).forEach( ( f ) => {
-		const c = out[ f ];
-		const lines = [ ...c.lines.entries() ];
-		const branches = [ ...c.branches.entries() ];
+	const out = {};
+	Object.keys( raw ).forEach( ( f ) => {
+		const lines = new Map();
+		const branchLines = new Map();
+		raw[ f ].forEach( ( rec ) => {
+			rec.lines.forEach( ( h, ln ) => lines.set( ln, Math.max( lines.get( ln ) || 0, h ) ) );
+			rec.branches.forEach( ( list, ln ) => {
+				const prev = branchLines.get( ln );
+				if ( !prev || list.length > prev.length ) {
+					branchLines.set( ln, list.slice() );
+				} else if ( list.length === prev.length ) {
+					list.forEach( ( h, b ) => {
+						prev[ b ] = Math.max( prev[ b ], h );
+					});
+				}
+			});
+		});
+		const L = [ ...lines.entries() ];
+		const B = [];
+		branchLines.forEach( ( list, ln ) => list.forEach( ( h ) => B.push( [ ln, h ] ) ) );
 		out[ f ] = {
-			'lf': lines.length,
-			'lh': lines.filter( ( e ) => e[ 1 ] > 0 ).length,
-			'brf': branches.length,
-			'brh': branches.filter( ( e ) => e[ 1 ] > 0 ).length,
-			'uncovered': lines.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] ).sort( ( a, b ) => a - b ),
-			'uncoveredBranches': branches.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => Number( e[ 0 ].split( ',' )[ 0 ] ) )
+			'lf': L.length,
+			'lh': L.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'brf': B.length,
+			'brh': B.filter( ( e ) => e[ 1 ] > 0 ).length,
+			'uncovered': L.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] ).sort( ( a, b ) => a - b ),
+			'uncoveredBranches': B.filter( ( e ) => e[ 1 ] === 0 ).map( ( e ) => e[ 0 ] )
 		};
 	});
 	return out;

@@ -12,11 +12,13 @@ set -o pipefail
 OUTPUT=$(npm test 2>&1)
 EXIT=$?
 
-# Print summary
-echo "$OUTPUT" | grep '^ℹ' | tail -8
+# Print summary. node --test writes the spec reporter (ℹ/✖) to a terminal
+# and TAP (# pass, not ok) otherwise, as when an agent runs this; match both,
+# or the script prints nothing at all.
+echo "$OUTPUT" | grep -E '^ℹ |^# (tests|suites|pass|fail|cancelled|skipped|todo|duration_ms) ' | tail -8
 
 # Print failures with context
-FAILURES=$(echo "$OUTPUT" | grep '✖' | grep -v 'failing tests:' | head -30)
+FAILURES=$(echo "$OUTPUT" | grep -E '✖|^\s*not ok ' | grep -v 'failing tests:' | head -30)
 if [ -n "$FAILURES" ]; then
   echo ""
   echo "Failures:"

@@ -215,6 +215,9 @@
 		"lint/tickets-coverage.test.cjs": {
 			"kind": "gate"
 		},
+		"lint/typecheck-config.test.cjs": {
+			"kind": "gate"
+		},
 		"lint/verify-corpus.cjs": {
 			"kind": "gate"
 		},

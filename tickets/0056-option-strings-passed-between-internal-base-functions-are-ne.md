@@ -1,9 +1,10 @@
 ---
 id: 0056
 title: Option strings passed between internal base functions are never checked against what the callee accepts
-status: open
+status: resolved
 area: base
 opened: 2026-11-20
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -21,3 +22,14 @@ Public wrappers validate option strings, but `base.js` functions call each other
 ```bash
 git log --oneline -S"dlanhs('infinity'" -- lib/lapack/base/dhsein/lib/base.js
 ```
+
+## Resolution
+
+Resolved with ticket 0022. Every input option parameter's JSDoc type is now the literal union of the values its callee accepts: the spec's enum values, else its `spec/options.json` family. So strict `tsc` (`ci:typecheck`) checks every internal `base.js` call. A string the callee doesn't accept is a type error, and so is a callee comparing against a string it can never receive. That is the per-parameter vocabulary this ticket asked for, enforced by the compiler rather than by a scan.
+
+Found on enabling it:
+- `dgges` called `dlascl( 'hessenberg', ... )`, so the Schur form came back still scaled.
+- dtgsja/ztgsja dispatched on `'update'` while their validators accepted `'compute-vectors'`.
+- dlacpy/dlaset callers used five spellings of "whole matrix".
+
+All are fixed. `lint/typecheck-config.test.cjs` fails if any input option is typed `string`.

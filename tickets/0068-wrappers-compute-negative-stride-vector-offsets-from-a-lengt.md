@@ -36,3 +36,11 @@ Use a generic wrapper test that replays the same inputs through `<routine>.js` a
 `node bin/wrapper-replay.mjs --all` with per-call watchdogs (ticket 0070). Twenty modules that used to time out now report, and three harness crashes are fixed.
 
 Length findings, 6 modules: dlaed2 dlarrb dlarrj dormbr zlaswp zunmbr. dlarrb and dlarrj were hidden behind timeouts before.
+
+## Evidence 2026-11-25 (ticket 0094 caller fixes)
+
+dlaed2's `COLTYP`: the reference documents dimension N, but it always writes `COLTYP(1:4)` (`dlaed2.f:528`, `COLTYP( J ) = CTOT( J )` for J = 1..4). So the length actually touched is `max(N,4)`, as `lib/lapack/base/dlaed2/lib/dlaed2.js:53` documents. However:
+- the wrapper's offset uses N (`dlaed2.js:84`, `stride2offset( N, strideCOLTYP )`);
+- `lib/lapack/base/dlaed2/lib/ndarray.js:59` documents length N.
+
+This is the same pattern as dlaed2's Q2, which the reference writes past its documented size (ticket 0022 PR).

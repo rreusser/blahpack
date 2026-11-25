@@ -2823,3 +2823,22 @@ Keep entries short. Newest first.
 - **Bug class**: a callee's status replaced by a correlated, but different, output. The two usually agree on the happy path, which is the only path the fixture tests covered.
 - **Where else**: every other base.js call to dlasy2/dlaln2 discards the status (dlaexc, dtgevc, dtrevc, dtrevc3). The reference ignores IERR/IINFO there as well, so those translations are faithful.
 - **What allowed it**: no test reached the near-singular or scaling paths (dtrsyl base.js was at 80.7% lines). The coverage floor, applied because the PR touched dtrsyl's JSDoc, is what forced a test there.
+
+## 2026-11-25 — strict mode on: 3,434 "possibly undefined" reports, two real bugs among them (ticket 0023)
+
+- **Shape of the reports**: almost all were a `let` that Fortran-style control flow assigns on correlated branches: `k` only when M is even, read only under `if ( !misodd )`. TypeScript cannot correlate the conditions.
+- **Fix that changes nothing at runtime**: `bin/codemod-strict-null.mjs` initialises such a variable to `NaN` when every value assigned to it is a number. For numbers, `NaN` and `undefined` behave the same in arithmetic, comparisons, truthiness, bitwise operations, typed-array stores and indexing. So a real read before assignment still yields NaN, and the harness's poisoned inputs still catch it. A blanket `= 0` would have hidden such reads.
+  - The codemod skips any variable compared with `undefined` or tested with `typeof`.
+  - About 360 variables in 130 files. All unit tests pass unchanged.
+- **Real bugs the remaining reports showed**:
+  - dlasyf/zlasyf `ndarray.js` returned `undefined` for N = 0. The reference returns INFO = 0 with KB = 0, and the replay had listed it under ticket 0074.
+  - The dseupd and dsaup2 wrappers did not require `workl`/`workd`. Those arrays carry dsaupd's state, so a `null` reached base.js and failed there (ticket 0082).
+- **False alarms resolved structurally, not by casts**:
+  - the geev drivers compute the eigenvector side from the two flags;
+  - zlahqr/zlaqr5 use an empty Z view when `wantz` is false, since every read is under `if ( wantz )`;
+  - arguments the callee ignores in that mode get small module constants instead of `null`;
+  - ARPACK state typedefs list required properties, and the public forms cast `{}` once, at the boundary.
+- **Found while clearing the module gates on the touched modules**:
+  - dsbgst/zhbgst rejected `vect = 'none'`: `spec/options.json` had no values for the family, so no check was generated, and a wrong one was written by hand. 25 more options are in that state (ticket 0022).
+  - zlahef_rook's "row swaps" test passed W at half its required size and asserted only `kb` (ticket 0077).
+- **Gate**: tsconfig.json runs `"strict": true`. `lint/typecheck-config.test.cjs` fails if any strict sub-flag is switched off.

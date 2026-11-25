@@ -28,3 +28,7 @@ grep -n "WORK" lib/lapack/base/dormql/lib/dormql.js | head
 ## Direction
 
 The wrapper replay could add a variant passing a caller workspace one element shorter than the wrapper's own `null` allocation, and require a RangeError (or, if the routine adapts its blocking to the size it gets, a correct result).
+
+## Evidence 2026-11-25
+
+`zlahef_rook`'s own tests passed `W` at half its required size (`N*nb`), and nothing threw. The result was NaN, and the test asserted only `kb`. A size check in `ndarray.js` would have rejected the test call.

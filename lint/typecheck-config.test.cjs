@@ -15,9 +15,10 @@ var assert = require( 'node:assert' );
 
 var ROOT = path.join( __dirname, '..' );
 
-// Strict-family flags that must be on. strictNullChecks is not on yet
-// (ticket 0023).
-var FLAGS = [ 'checkJs', 'noImplicitAny', 'strictFunctionTypes', 'strictBindCallApply', 'noImplicitThis', 'useUnknownInCatchVariables', 'alwaysStrict', 'esModuleInterop' ];
+// `strict` must be on, and none of the flags it implies may be switched
+// back off one by one (ticket 0023).
+var FLAGS = [ 'checkJs', 'strict', 'esModuleInterop' ];
+var STRICT_FAMILY = [ 'noImplicitAny', 'strictNullChecks', 'strictFunctionTypes', 'strictBindCallApply', 'strictPropertyInitialization', 'noImplicitThis', 'useUnknownInCatchVariables', 'alwaysStrict' ];
 
 // Aliases still allowed to be `any`, each with the ticket that removes it.
 var LOOSE = {
@@ -35,10 +36,13 @@ function aliases() {
 	return out;
 }
 
-test( 'tsconfig.json keeps every tightened strict flag on', function t() {
+test( 'tsconfig.json keeps strict mode on', function t() {
 	var co = JSON.parse( fs.readFileSync( path.join( ROOT, 'tsconfig.json' ), 'utf8' ) ).compilerOptions;
 	FLAGS.forEach( function each( f ) {
 		assert.strictEqual( co[ f ], true, f + ' must be true' );
+	});
+	STRICT_FAMILY.forEach( function each( f ) {
+		assert.notStrictEqual( co[ f ], false, f + ' must not be switched off (strict implies it)' );
 	});
 	assert.notStrictEqual( co.skipDefaultLibCheck, true );
 });

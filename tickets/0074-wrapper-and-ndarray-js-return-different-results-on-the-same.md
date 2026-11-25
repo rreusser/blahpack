@@ -32,3 +32,7 @@ Mismatches outside `null-work`, by variant:
 - exact, 5 modules: dgecon dlacon dpocon dsyconvf zlacon.
 - zero-size, 22 modules: dgecon dla_gbrpvgrw dlacon dlangb dlansb dlantb dlasyf dpocon dtprfb iladlr ilazlr zla_gbrpvgrw zlacon zlamtsqr zlangb zlanhb zlansb zlantb zlarfb_gett zlasyf ztprfb ztrtrs. dlasyf: the wrapper returns 0 where ndarray.js returns undefined for N = 0.
 - transposed, 3 modules: dsyconvf zlahef_rook zsyconvf.
+
+## Update 2026-11-25
+
+`zlahef_rook`'s transposed mismatch was a test, not a library bug. "upper path with row swaps" passed a 16-element `W` for `nb = 8`, which needs `N*nb = 32`, so the routine read past the end and returned NaN. The test asserted only `kb = N`. It is fixed in the strict-mode PR. That `ndarray.js` accepts an undersized caller `W` is ticket 0077.

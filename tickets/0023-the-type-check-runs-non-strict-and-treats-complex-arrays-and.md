@@ -1,9 +1,10 @@
 ---
 id: 0023
 title: The type check runs non-strict and treats complex arrays and option strings as any or string
-status: open
+status: resolved
 area: typecheck
 opened: 2026-11-18
+resolved: 2026-11-25
 ---
 
 ## Problem
@@ -51,3 +52,13 @@ node -e 'const b=require("./tsconfig.json");Object.assign(b.compilerOptions,{str
 - ARPACK state: a `@typedef` per routine. The `spec-jsdoc` lint accepts a same-file `@typedef {Object}` for a state parameter.
 
 About ten were fixed by hand. `strictNullChecks` remains (3,314 errors in 127 modules; see above).
+
+## Resolution
+
+`tsconfig.json` runs `"strict": true` with 0 errors, and `lint/typecheck-config.test.cjs` forbids switching any strict sub-flag off. Steps:
+- the five zero-error flags and real array/option aliases (PR #40);
+- `noImplicitAny` (PR #41);
+- `strictNullChecks`, via the behaviour-preserving `NaN` initialisation in `bin/codemod-strict-null.mjs`, plus the hand fixes in LEARNINGS 2026-11-25.
+
+What remains of the original problem has its own tickets: the complex scalar aliases are still `any` (ticket 0085), and option parameters documented as `{string}` do not use the literal-union aliases (ticket 0056).
+

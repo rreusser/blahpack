@@ -40,7 +40,9 @@ async function loadWithDeps( url, context, nextLoad ) {
 	const res = await nextLoad( base, { ...context, 'format': 'module' } );
 	const src = String( res.source );
 	for ( const spec of Object.keys( ids ) ) {
-		const n = src.split( "'" + spec + "'" ).length - 1;
+		// Import declarations only: a JSDoc `import( '…' )` type names the
+		// same path without importing it.
+		const n = src.split( "from '" + spec + "'" ).length - 1;
 		if ( n !== 1 ) {
 			throw new Error( 'importWithDependencies: expected exactly one import of `' + spec + '` in ' + base + ', found ' + n );
 		}

@@ -38,3 +38,27 @@ console.log(n,"unvalidated");' | tail -5
 ## Evidence 2026-11-25
 
 `dlansf` and `zlansf`: `ndarray.js` does not validate `norm`, so an unrecognised value reaches `base.js`, which returns 0. Tests added under ticket 0069 assert that current behaviour ("an unrecognized norm returns zero"). When validation is added here, those tests must change to expect the TypeError.
+
+## Evidence 2026-11-25 (2): options with no canonical values get no generated check
+
+When `spec/options.json` has no entry for an option family, the spec's enum check carries `values: null`, and the generated prologue validates nothing. A hand-written check may then fill the gap wrongly:
+- dsbgst/zhbgst accepted only `'update'`, so the reference's `VECT = 'N'` (`'none'`) threw. That is now fixed with an options entry, and the replay found it (strict-mode PR).
+
+Still without canonical values (each option accepts the letters shown):
+- `BALANC` 'BNPS': dgeevx, dggevx, zgeevx, zggevx
+- `SENSE` 'BENV': dggevx, zggevx
+- `JOBV` 'ANV': dgsvj0, dgsvj1, zgsvj0, zgsvj1
+- `EIGSRC` 'NQ' and `INITV` 'NU': dhsein, zhsein
+- `TYPE` 'BGHLQUZ': dlascl, zlascl
+- `PIVOT` 'BTV': dlasr, zlasr
+- `ID` 'DI': dlasrt
+- `JOB` 'BEV': dtgsna, dtrsna, ztgsna, ztrsna
+- `JOB` 'BENV': dtrsen, ztrsen
+
+List them with:
+
+```bash
+node -e 'const fs=require("fs");for(const f of fs.readdirSync("spec")){if(!/^[a-z].*\.json$/.test(f)||f==="options.json"||f==="schema.json")continue;const s=JSON.parse(fs.readFileSync("spec/"+f));for(const c of s.checks||[])if(c.kind==="enum"&&!c.values)console.log(f,c.param)}'
+```
+
+Each needs an options entry spelling the values the code already compares against, then regeneration with `bin/codemod-spec/prologue.cjs`. Any test that relied on the missing check must change with it.

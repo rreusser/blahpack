@@ -2823,3 +2823,42 @@ Keep entries short. Newest first.
 - **Bug class**: a callee's status replaced by a correlated, but different, output. The two usually agree on the happy path, which is the only path the fixture tests covered.
 - **Where else**: every other base.js call to dlasy2/dlaln2 discards the status (dlaexc, dtgevc, dtrevc, dtrevc3). The reference ignores IERR/IINFO there as well, so those translations are faithful.
 - **What allowed it**: no test reached the near-singular or scaling paths (dtrsyl base.js was at 80.7% lines). The coverage floor, applied because the PR touched dtrsyl's JSDoc, is what forced a test there.
+
+## 2026-11-25 — strict mode on: 3,434 "possibly undefined" reports, two real bugs among them (ticket 0023)
+
+- **Shape of the reports**: almost all were a `let` that Fortran-style control flow assigns on correlated branches: `k` only when M is even, read only under `if ( !misodd )`. TypeScript cannot correlate the conditions.
+- **Fix that changes nothing at runtime**: `bin/codemod-strict-null.mjs` initialises such a variable to `NaN` when every value assigned to it is a number. For numbers, `NaN` and `undefined` behave the same in arithmetic, comparisons, truthiness, bitwise operations, typed-array stores and indexing. So a real read before assignment still yields NaN, and the harness's poisoned inputs still catch it. A blanket `= 0` would have hidden such reads.
+  - The codemod skips any variable compared with `undefined` or tested with `typeof`.
+  - About 360 variables in 130 files. All unit tests pass unchanged.
+- **Real bugs the remaining reports showed**:
+  - dlasyf/zlasyf `ndarray.js` returned `undefined` for N = 0. The reference returns INFO = 0 with KB = 0, and the replay had listed it under ticket 0074.
+  - The dseupd and dsaup2 wrappers did not require `workl`/`workd`. Those arrays carry dsaupd's state, so a `null` reached base.js and failed there (ticket 0082).
+- **False alarms resolved structurally, not by casts**:
+  - the geev drivers compute the eigenvector side from the two flags;
+  - zlahqr/zlaqr5 use an empty Z view when `wantz` is false, since every read is under `if ( wantz )`;
+  - arguments the callee ignores in that mode get small module constants instead of `null`;
+  - ARPACK state typedefs list required properties, and the public forms cast `{}` once, at the boundary.
+- **Found while clearing the module gates on the touched modules**:
+  - dsbgst/zhbgst rejected `vect = 'none'`: `spec/options.json` had no values for the family, so no check was generated, and a wrong one was written by hand. 25 more options are in that state (ticket 0022).
+  - zlahef_rook's "row swaps" test passed W at half its required size and asserted only `kb` (ticket 0077).
+- **Gate**: tsconfig.json runs `"strict": true`. `lint/typecheck-config.test.cjs` fails if any strict sub-flag is switched off.
+
+## 2026-11-25 — zsytf2 and zhetf2 (upper) searched the pivot row one element short, and chose a zero 1x1 pivot
+
+- **Found by**: a coverage agent writing a pivot-structure oracle for the symmetric factorisations (ticket 0069).
+- **Reproduce**: `zsytf2( 'upper', 2, [[0,1],[1,0]] )` (complex) returned INFO = 1, IPIV = [0,0] and NaN in A. The reference, and the `'lower'` path, give INFO = 0, IPIV = [-1,-1] (one 2x2 pivot) and A unchanged. zhetf2 behaves the same.
+- **Root cause**: `jmax = imax + 1 + izamax( k - imax - 1, … )` where `zsytf2.f`/`zhetf2.f` has `JMAX = IMAX + IZAMAX( K-IMAX, A( IMAX, IMAX+1 ), LDA )`. The count was one short, so A(IMAX,K) was never seen.
+  - For IMAX = K-1 the count was 0, `izamax` returned -1, and ROWMAX became the diagonal |A(IMAX,IMAX)|.
+  - For a zero diagonal, the 1x1-with-interchange test `0 >= ALPHA*0` then held, and the routine divided by a zero pivot.
+- **Bug class**: an off-by-one count in a 0-based translation of a 1-based `IAMAX( K-IMAX, A(IMAX,IMAX+1), LDA )`. The same line is correct in dsytf2 and in every `_rook`/`_rk` variant; only the two complex Bunch-Kaufman routines had it. Its lower-triangle twin was right.
+- **What allowed it**: the fixtures never put the row maximum in column K for the upper path. The existing tests reached neither branch's interchange code (lines 142–167 and 344–369 uncovered).
+- **Tests**: a regression test in each module fails before the fix.
+
+## 2026-11-25 — The wrong machine epsilon: dlatrs/dlatbs/dlatps hard-coded DLAMCH('E') where the reference uses 'P'; 33 more modules choose the wrong dlamch argument (ticket 0089)
+
+- **Found by**: a coverage agent comparing dlatrs's scale with the reference formula.
+- **Reproduce**: dlatrs with N = 1, A = [1], b = [1e300], upper / no-transpose / non-unit, normin 'no'. JS gave scale 4.99e-9; the reference gives BIGNUM/xmax = 9.98e-9. Both satisfy A·x = scale·b, so residual tests cannot tell them apart.
+- **Root cause**: `const SMLNUM = 2.2250738585072014e-308 / 1.1102230246251565e-16`. That divides by `DLAMCH('E')` (2^-53), where `dlatrs.f:316` has `DLAMCH( 'Safe minimum' ) / DLAMCH( 'Precision' )` (2^-52).
+- **Bug class**: LAPACK's two epsilons, 'E' (the rounding unit) and 'P' (eps·base), confused in translation. Thresholds built from them (SMLNUM, BIGNUM, RMIN/RMAX, tolerances) are then off by 2x or √2. A borderline input takes a different path; the answer stays acceptable but no longer matches the reference.
+- **Where else**: 32 modules call `dlamch( 'epsilon' )` where their reference uses only 'Precision' (the eigen drivers, the equilibration routines laq*, zlatrs, zlatbs, dlaqr5), and dtgevc does the reverse. Listed in ticket 0089, with a proposed check comparing each module's machine constants with its Fortran source.
+- **What allowed it**: nothing compares constants with the reference. Fixtures exercise the normal range, where the choice does not change the path taken.

@@ -2899,3 +2899,24 @@ Keep entries short. Newest first.
 - **Bug class**: a Fortran guard on a leading-dimension expression, translated literally into a stride expression that can be negative. `MAX(1, ...)` exists only for LDAB = 1; on a signed stride it changes the stride itself.
 - **Where else**: only dpbstf and zpbstf use `max( 1, <stride2> - <stride1> )` (`grep -rnE "max\(\s*1,\s*\(?\s*(s[a-zA-Z0-9]*2|stride[A-Z]+2)\s*-" lib`). Other `MAX(1, LD...)` guards that became strides could still hide under other names.
 - **What allowed it**: no test ran the wrapper's row-major path, and both modules were below the wrapper coverage floor (ticket 0069). Neither has a layout-fuzzed harness level (L3). The fixtures are column-major, where the clamp is a no-op.
+
+## 2026-11-25 — Wrapper replay on the ticket 0022 PR: wrapper workspace and length bugs in 25 modules (tickets 0068, 0074)
+
+- **Found by**: `bin/wrapper-replay.mjs --changed`, once the ticket 0069 coverage tests recorded calls that reached the wrapper paths. Each fix has a regression test that fails on the old code.
+- **Undersized `WORK = null` allocation (NaN or LWORK errors)**:
+  - dormbr/zunmbr ignored the side and the blocked callee's `nw*NB + (NB+1)*NB`.
+  - zungrq allocated the unblocked M where the NB = 32 path needs `M*NB`.
+  - dorm22 allocated `M*N` without the required minimum NQ.
+  - dorbdb4 took the LWORK doc (M-Q) where the code checks a larger LWORKMIN.
+  - dsytri2x allocated `max(rows, cols)` for a 2-D `rows*cols` workspace.
+  - dlatrs3 kept the reference LWORK, but base.js also stores the reference's local arrays in WORK.
+  - dsapps/dseigt documented a nullable workspace and never allocated it.
+- **Wrong `stride2offset` length (negative strides)**:
+  - gbtf2/gbtrf IPIV used N where it should be min(M,N).
+  - orgbr TAU used N where it should be min(M,K) or min(N,K).
+  - ormbr/unmbr TAU used N where it should be min(NQ,K).
+  - zlaswp IPIV used N where it should be |k2-k1|+1; the spec's Fortran formula assumed absolute 1-based indexing.
+  - dlaed2 Q2 used the documented N1²+(N-N1)², but the reference writes up to N², which DLAED1's larger WORK absorbs.
+- **The layers disagree on a quick return or check**: dgecon, dpocon, iladlr, ilazlr, ztrtrs, dtrtrs, zlamtsqr, zlanhb, zlansy (see ticket 0074's resolution).
+- **Bug class**: a wrapper is a second implementation of argument handling: workspace sizes, vector extents and quick returns. Each one diverged where its author copied a documented size, or a matrix dimension, rather than what base.js actually touches.
+- **What allowed it**: wrapper paths were untested (ticket 0069). The replay audits only the calls the tests make, so a module's own coverage decides what it can see.

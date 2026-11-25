@@ -43,7 +43,7 @@ function transform( src ) {
 		// Inside `if ( WORK === null … ) { … }`, an allocation is WORK's even
 		// when it goes into a local (dgelss: `W = new Float64Array( … )`).
 		if ( n.type === 'IfStatement' ) {
-			const m = /\b([A-Z]*WORK)\s*===\s*null\b/.exec( src.slice( n.test.range[ 0 ], n.test.range[ 1 ] ) );
+			const m = /\b([A-Za-z]*WORK)\s*===\s*null\b/i.exec( src.slice( n.test.range[ 0 ], n.test.range[ 1 ] ) );
 			if ( m ) {
 				walk( n.test, nullOf );
 				walk( n.consequent, m[ 1 ] );
@@ -51,8 +51,8 @@ function transform( src ) {
 				return;
 			}
 		}
-		if ( n.type === 'AssignmentExpression' && n.left.type === 'Identifier' && n.right.type === 'NewExpression' && ( /^[A-Z]*WORK$/.test( n.left.name ) || nullOf ) ) {
-			const name = /^[A-Z]*WORK$/.test( n.left.name ) ? n.left.name : nullOf;
+		if ( n.type === 'AssignmentExpression' && n.left.type === 'Identifier' && n.right.type === 'NewExpression' && ( /^[a-z]*work$/i.test( n.left.name ) || nullOf ) ) {
+			const name = /^[a-z]*work$/i.test( n.left.name ) ? n.left.name : nullOf;
 			edits.push( [ n.right.range[ 0 ], n.right.range[ 1 ], 'globalThis.__replayAlloc( ' + JSON.stringify( name ) + ', ' + src.slice( n.right.range[ 0 ], n.right.range[ 1 ] ) + ' )' ] );
 			return;
 		}

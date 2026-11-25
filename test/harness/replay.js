@@ -968,7 +968,7 @@ async function replayModule( dir, options ) {
 				return null;
 			}
 			const er = sameStorageReturn( expArgs, expRet, actArgs, actRet ) ? SAME : expRet;
-			return { 'act': snapshot( actArgs, workspaceIdx ), 'ret': actRet, 'er': er, 'lens': lens ? lens.slice() : [] };
+			return { 'act': snapshot( actArgs, workspaceIdx ), 'args': actArgs, 'ret': actRet, 'er': er, 'lens': lens ? lens.slice() : [] };
 		};
 
 		// exact: recorded workspaces, bit-identical.
@@ -1020,7 +1020,7 @@ async function replayModule( dir, options ) {
 				}
 			}
 			if ( nw ) {
-				const nwEr = ( nwExpArgs !== expArgs && sameStorageReturn( nwExpArgs, nwExpRet, rec.map( decode ), nw.ret ) ) ? SAME : ( ( nwExpArgs === expArgs ) ? nw.er : nwExpRet );
+				const nwEr = ( nwExpArgs !== expArgs && sameStorageReturn( nwExpArgs, nwExpRet, nw.args, nw.ret ) ) ? SAME : ( ( nwExpArgs === expArgs ) ? nw.er : nwExpRet );
 				const d = diff( nwExp, nw.act, nwEr, nw.ret, baseNames );
 				if ( d ) {
 					const retOk = ( nwEr === SAME ) || ( nw.er === SAME ) || retEqual( nwExpRet, nw.ret ) || ( typeof nwExpRet === 'object' && typeof nw.ret === 'object' );

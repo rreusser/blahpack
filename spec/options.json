@@ -3,8 +3,11 @@
 	"families": [
 		{ "params": [ "UPLO" ], "routines": "^([dz]lacpy|[dz]laset|zlacp2)$", "values": { "U": "upper", "L": "lower" }, "other": "all" },
 		{ "params": [ "UPLO" ], "values": { "U": "upper", "L": "lower" } },
+		{ "params": [ "TRANSR" ], "routines": "^d", "values": { "N": "no-transpose", "T": "transpose" } },
+		{ "params": [ "TRANSR" ], "routines": "^z", "values": { "N": "no-transpose", "C": "conjugate-transpose" } },
 		{ "params": [ "TRANS", "TRANSA", "TRANSB", "TRANSR", "TRANA", "TRANB", "TRANS_TYPE" ], "values": { "N": "no-transpose", "T": "transpose", "C": "conjugate-transpose" } },
-		{ "params": [ "SIDE" ], "values": { "L": "left", "R": "right", "B": "both" } },
+		{ "params": [ "SIDE" ], "routines": "^[dz](trevc3?|tgevc|hsein)$", "values": { "L": "left", "R": "right", "B": "both" } },
+		{ "params": [ "SIDE" ], "values": { "L": "left", "R": "right" } },
 		{ "params": [ "DIAG" ], "values": { "U": "unit", "N": "non-unit" } },
 		{ "params": [ "DIRECT" ], "values": { "F": "forward", "B": "backward" } },
 		{ "params": [ "STOREV" ], "values": { "C": "columnwise", "R": "rowwise" } },

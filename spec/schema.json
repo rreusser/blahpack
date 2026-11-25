@@ -101,7 +101,7 @@
 				"vector": { "type": "string" },
 				"min": { "$ref": "#/definitions/expr" },
 				"fortranValues": { "type": "string", "description": "Letters the reference accepts." },
-				"values": { "type": [ "array", "null" ], "items": { "type": [ "string", "null" ] }, "description": "Canonical JS strings (spec/options.json); null when Appendix A has no mapping." },
+				"values": { "type": [ "array", "null" ], "items": { "type": [ "string", "null" ] }, "uniqueItems": true, "description": "Canonical JS strings (spec/options.json), each once; null when Appendix A has no mapping." },
 				"guard": { "type": "string", "description": "Enclosing Fortran IF condition(s)." },
 				"fortran": { "type": "string" },
 				"js": { "type": [ "string", "null" ], "description": "Rejection condition (guard included) in JS; null = untranslated." },

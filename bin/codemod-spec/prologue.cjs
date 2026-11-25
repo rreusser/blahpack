@@ -66,6 +66,28 @@ function thrownNew( stmt ) {
 	return t.argument;
 }
 
+// The option a test rejects, when the test is a chain `x !== 'a' && x !==
+// 'b' …` over one identifier: a hand-written option check, whatever its
+// message says (ticket 0092: dseupd's "`bmat` must be one of …", dlarrc's
+// concatenated message).
+function optionTest( t ) {
+	var name = null;
+	function walk( n ) {
+		if ( n.type === 'LogicalExpression' && n.operator === '&&' ) {
+			return walk( n.left ) && walk( n.right );
+		}
+		if ( n.type !== 'BinaryExpression' || n.operator !== '!==' || n.left.type !== 'Identifier' || n.right.type !== 'Literal' || typeof n.right.value !== 'string' ) {
+			return false;
+		}
+		if ( name !== null && name !== n.left.name ) {
+			return false;
+		}
+		name = n.left.name;
+		return true;
+	}
+	return ( walk( t ) ) ? name : null;
+}
+
 // { param, cat } of an existing argument check, or null.
 function classify( stmt ) {
 	var nx = ( stmt.type === 'IfStatement' ) ? thrownNew( stmt ) : null;
@@ -73,8 +95,13 @@ function classify( stmt ) {
 	var msg;
 	var last;
 	var cat;
+	var opt;
 	if ( !nx || nx.arguments.length !== 1 ) {
 		return null;
+	}
+	opt = optionTest( stmt.test );
+	if ( opt && nx.callee.name === 'TypeError' ) {
+		return { 'param': opt, 'cat': 'enum', 'layout': null };
 	}
 	call = nx.arguments[ 0 ];
 	if ( call.type !== 'CallExpression' || call.callee.name !== 'format' || !call.arguments.length || call.arguments[ 0 ].type !== 'Literal' ) {

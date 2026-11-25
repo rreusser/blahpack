@@ -27,10 +27,15 @@ How the generator maps a check:
 | `nonzero` on an INC | `strideX === 0` (V7) | `RangeError` |
 | `ld` / `expr` on an LD (wrapper only) | the reference bound; with `rowMajor`, one statement per layout (V5) | `RangeError` |
 | other `expr` | the translated condition | by dtype |
+| none, on an input option (ticket 0092) | `x !== 'a' && x !== 'b'` over the values of the option's type, at the option's position | `TypeError` |
 
 An output scalar is read as `x[ 0 ]` (S10), an `element` scalar as
 `x[ offsetX ]`, and a scalar index the JS takes 0-based (`base: 0`) is restated
-1-based. A check naming something the form lacks (an LD in `ndarray.js`) or that
+1-based. An input option the reference never checks (or checks in a way the
+generator could not translate) gets an enum check over the values of its type
+(`spec/options.json`, CONVENTIONS V1), so a plain-JS caller's typo throws
+rather than silently taking the reference's "any other letter" case
+(`fixtures/fail/missing-option-check.js`). A check naming something the form lacks (an LD in `ndarray.js`) or that
 the generator could not translate (`js: null`) is not generated.
 
 Statements after the prologue — quick returns, workspace checks (W3, D5b),

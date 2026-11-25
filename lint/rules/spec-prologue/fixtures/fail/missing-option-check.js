@@ -1,0 +1,63 @@
+// target: lib/lapack/base/dlansf/lib/ndarray.js
+// expect: check
+/**
+* @license MIT
+*
+* Copyright (c) 2026 Ricky Reusser.
+*
+* Derived from the LAPACK 3.12.0 reference implementation (BSD-3-Clause).
+* See LICENSE.txt in the repository root for the full license text and
+* upstream attribution.
+*/
+
+// MODULES //
+
+import isMatrixTriangle from '@stdlib/blas/base/assert/is-matrix-triangle/lib/index.js';
+import format from '@stdlib/string/format/lib/index.js';
+import base from './base.js';
+
+
+// MAIN //
+
+/**
+* Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a real symmetric matrix stored in Rectangular Full Packed (RFP) format.
+*
+* @param {('one-norm'|'max'|'inf-norm'|'frobenius')} norm - `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'`
+* @param {('no-transpose'|'transpose')} transr - specifies the storage format (`'no-transpose'` or `'transpose'`)
+* @param {MatrixTriangle} uplo - specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`)
+* @param {NonNegativeInteger} N - order of the matrix
+* @param {Float64Array} A - RFP array of length N*(N+1)/2
+* @param {integer} strideA - stride for `A`
+* @param {NonNegativeInteger} offsetA - starting index for `A`
+* @param {Float64Array} WORK - workspace of length N (only for `'one-norm'`/`'inf-norm'` norms)
+* @param {integer} strideWork - stride of WORK
+* @param {NonNegativeInteger} offsetWork - starting index of WORK
+* @throws {TypeError} first argument must be one of the following: "one-norm", "max", "inf-norm", "frobenius"
+* @throws {TypeError} second argument must be one of the following: "no-transpose", "transpose"
+* @throws {TypeError} third argument must be a valid matrix triangle
+* @returns {number} the norm value
+*/
+function dlansf( norm, transr, uplo, N, A, strideA, offsetA, WORK, strideWork, offsetWork ) { // eslint-disable-line max-len, max-params
+	if ( transr !== 'no-transpose' && transr !== 'transpose' ) {
+		throw new TypeError( format( 'invalid argument. Second argument must be one of the following: "no-transpose", "transpose". Value: `%s`.', transr ) );
+	}
+	if ( !isMatrixTriangle( uplo ) ) {
+		throw new TypeError( format( 'invalid argument. Third argument must be a valid matrix triangle. Value: `%s`.', uplo ) );
+	}
+	if ( N < 0 ) {
+		throw new RangeError( format( 'invalid argument. Fourth argument must be a nonnegative integer. Value: `%d`.', N ) );
+	}
+	const minWork = ( norm === 'one-norm' || norm === 'inf-norm' ) ? Math.max( 1, N ) : 1;
+	if ( !WORK || ( WORK.length - offsetWork ) < minWork ) {
+		throw new RangeError( format( 'invalid argument. WORK array must have at least %d elements from offset %d. Provided length: %d.', minWork, offsetWork, ( WORK ) ? WORK.length : 0 ) );
+	}
+	if ( strideWork !== 1 ) {
+		throw new RangeError( format( 'invalid argument. `strideWork` must be 1 (only contiguous workspace is supported). Value: `%d`.', strideWork ) );
+	}
+	return base( norm, transr, uplo, N, A, strideA, offsetA, WORK, strideWork, offsetWork ); // eslint-disable-line max-len
+}
+
+
+// EXPORTS //
+
+export default dlansf;

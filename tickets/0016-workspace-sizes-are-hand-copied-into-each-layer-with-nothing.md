@@ -1,9 +1,10 @@
 ---
 id: 0016
 title: Workspace sizes are hand-copied into each layer with nothing tying them to what the kernel consumes
-status: open
+status: resolved
 area: workspace
 opened: 2026-11-18
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -32,3 +33,39 @@ grep -rl assertWorkspaceSufficient lib/*/base/*/test/ | sed -E 's#lib/[a-z]+/bas
 ## Evidence 2026-11-26
 
 - zgges's `ndarray.js` demanded WORK of `N + max(8N, 1)` and RWORK of `2N + max(8N, 1)`, while `spec/zgges.json` already held the reference's `max(1, 2N)` and `8N`: the spec knew the right minimum and nothing compared the hand-written check with it. Fixed in the ticket-0049 PR; found by an agent reading the code. Similar: ztgsna (ticket 0104, resolved).
+
+## Evidence 2026-11-26 (workspace-minimum check)
+
+- `bin/gen-lwmin.mjs` recorded the reference's workspace minimum into `data/fortran-lwmin.json`: 161 modules, 28,539 rows over the lwkopt grid. For each workspace with a length argument it records the smallest length that neither the routine nor any of its callees rejects. It also records the declared extents (e.g. `RWORK( 8*N )`). `bin/workspace-minimum.mjs --all --check` replays the rows through each `ndarray.js` with `base.js` stopped.
+- First run: 41 modules fail, 4,403 row-workspaces in all.
+  - 20 modules demand too much (ndarray.js rejects a call at the reference's minimum). Examples: dtgsyl 39200 vs 1, d/z orgtsqr_row and ungtsqr_row 19600 vs 1, dlamtsqr 5600 vs 40, zungtsqr 15400 vs 9800, d/z orbdb1 and unbdb1 140 vs 70, dsyevx 8 vs 1, ztgsen WORK/IWORK, and dggsvd3/zggsvd3 280 vs the effective 141. Some of these are at zero dimensions: dtgex2 32 vs 0, d/z orbdb5/6 and unbdb5/6 1 vs 0. Declared extents: zggevx IWORK N+6 vs the declared N+2, and dgeevx IWORK.
+  - 22 modules demand too little (ndarray.js reaches base.js at minimum − 1). Most have no check at all on that workspace: d/z gsvj0/1 (0 vs M), dlatrs3, zhetrd_he2hb (0 vs 78400), the IWORK of dstevr and dsyevr (0 vs 10N), ztgsen IWORK and ztgsyl. Others are off by a small amount: d/z orbdb2, zunbdb4, d/z sytrf_aa, dtgexc, zheev, zheevx, d/z ormhr/unmhr, d/z orghr/unghr at N = 1, and ztgsen WORK.
+- Reported but not failed:
+  - 5,645 row-workspaces at a zero dimension accept less than the reference's minimum (W3: an empty problem needs no workspace).
+  - 4,120 row-workspaces accept less than a declared extent the reference cannot check.
+  - Some rows were not run: dlamswlq/dlamtsqr K > N (kept deliberately, ticket 0103), and rows of d/z tgsen and d/z lamtsqr whose reference callees reject the call at every length.
+- Before this check, nothing compared the IWORK/RWORK guards with the reference.
+
+## Evidence 2026-11-26 (writes past the reference's own check)
+
+- An "accepted" length is not always a safe minimum. `bin/gen-lwmin.mjs` now fills each workspace past the length it passes with a sentinel, and the minimum it records is the smallest length that the routine and its callees accept and past which nothing is written. Each row is probed on zero data and on seeded random data, and the larger minimum is kept. Only writes are detected; reads past the length are not seen. Inputs that need structure to reach a path (SPD, Schur form) are a known limit.
+- The reference writes past what its own check accepts in these cases. There the JS deliberately demands more than the reference's check, and the cache's `overruns` records why:
+  - d/z orgtsqr_row/ungtsqr_row: the check is LWORK >= 1, but DLARFB_GETT writes NB*max( NB, N-NB ). With M = N = 140 and NB = 150 it writes element 19600.
+  - dlamtsqr SIDE = 'R': the check is LW = MB*NB, but DGEMQRT writes M*NB. With MB = 1, NB = 40 and M = 140, the check accepts 40 and element 5600 is written. zlamtsqr checks M*NB and does not overrun.
+  - d/z laqr0/laqr4: there is no check, but WORK(1) is written at LWORK = 0.
+  - d/z orbdb1/unbdb1 (M = P = Q = 0): WORK(1) is written at LWORK = 0.
+- Random data raises the minimum of d/z ggsvp3 and d/z ggsvd3 (90 rows each; on zero data the ranks are 0), and of d/z trsen and dtgsen (the subdiagonal of the random T forms 2x2 blocks). d/z tgsen: the reference's own DTGSYL call rejects the documented 2MN, so the minimum is 2MN+1.
+
+## Resolution
+
+Each workspace size is now tied to the reference by a check:
+- `ndarray.js`'s minimum: `ci:workspace-minimum`, against the reference's measured minimum (`bin/gen-lwmin.mjs`, `data/fortran-lwmin.json`, kept current by `lwmin:check`). It covers IWORK and RWORK as well as WORK.
+- The wrapper's `null` allocation: `ci:workspace-optimum` (ticket 0103), and `ci:workspace-guard`.
+- `base.js`: it adapts to the workspace it is given (W6, lint `workspace-adaptive`, ticket 0100). `ci:wrapper-replay`'s min-work variant replays every recorded call at the minimum `ndarray.js` demands.
+
+The first run failed 41 modules, and later rounds found more as the measurement improved. All are fixed. Where the reference writes past its own check, or its documented minimum differs from what it accepts, the module's `DIFFERENCES.md` says why (dlamtsqr, d/z orgtsqr_row/ungtsqr_row, d/z tgsen, d/z laqr0/laqr4).
+
+Left open:
+- The minimum is sampled, so it is a lower bound: ticket 0106.
+- The JSDoc text of the sizes is unchecked: evidence on ticket 0086.
+- Wrappers pass a caller's WORK unchecked: ticket 0077.

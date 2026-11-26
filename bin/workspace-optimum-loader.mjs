@@ -1,22 +1,26 @@
 /**
-* Load hook for bin/workspace-optimum.mjs (registered in its worker with
-* `module.register`). It rewrites ONE wrapper (`data.target`):
+* Load hook for bin/workspace-optimum.mjs and bin/workspace-minimum.mjs
+* (registered in their workers with `module.register`). It rewrites ONE
+* file of a module (`data.target`: the wrapper, or ndarray.js):
 *
-* -   every null-workspace allocation goes through `globalThis.__wsGuard`
-*     (the rewrite of bin/workspace-guard-loader.mjs), which the checker
-*     defines to record the requested size;
+* -   unless `data.guard` is false, every null-workspace allocation goes
+*     through `globalThis.__wsGuard` (the rewrite of
+*     bin/workspace-guard-loader.mjs), which the optimum checker defines to
+*     record the requested size;
 * -   the module's own `base.js` / `ndarray.js` default import is replaced by
 *     `globalThis.__wsOptStop`, which throws a sentinel: the call stops after
-*     validation and allocation, before the algorithm runs.
+*     validation (and allocation), before the algorithm runs.
 */
 
 import * as espree from 'espree';
 import { transform } from './workspace-guard-loader.mjs';
 
 let target = null;
+let guard = true;
 
 export async function initialize( data ) {
 	target = data && data.target;
+	guard = !( data && data.guard === false );
 }
 
 function stopOwnEntry( src ) {
@@ -45,7 +49,8 @@ export async function load( url, context, nextLoad ) {
 	if ( target && url === target ) {
 		const res = await nextLoad( url, context );
 		const tag = url.replace( /^.*\/lib\/[a-z]+\/base\//, '' ).replace( /\/lib\/.*$/, '' );
-		return { 'format': 'module', 'source': stopOwnEntry( transform( String( res.source ), tag ) ), 'shortCircuit': true };
+		const src = String( res.source );
+		return { 'format': 'module', 'source': stopOwnEntry( guard ? transform( src, tag ) : src ), 'shortCircuit': true };
 	}
 	return nextLoad( url, context );
 }

@@ -113,6 +113,28 @@ jobs:
       - name: Every WORK = null allocation reaches the reference's optimum
         run: npm run check:workspace-optimum
 
+  # CONVENTIONS W3/W5 (ticket 0016): ndarray.js demands exactly the
+  # reference's workspace minimum. Every row of the committed
+  # data/fortran-lwmin.json (the smallest LWORK/LRWORK/LIWORK the reference
+  # does not reject with INFO = -k, and each declared workspace extent) is
+  # replayed through ndarray.js with base.js stopped: a RangeError at the
+  # minimum, or reaching base.js at the minimum - 1, fails. The cache is
+  # checked against the specs it was generated from.
+  minimum:
+    name: Workspace minimum
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: The workspace-minimum cache matches the specs
+        run: npm run lwmin:check
+      - name: Every ndarray.js workspace check demands the reference's minimum
+        run: npm run check:workspace-minimum
+
   # CONVENTIONS T3/T4 (tickets 0033, 0064): every changed module's lib/ files
   # meet their per-file coverage floor under the module's own tests. The
   # wrapper and ndarray.js must be fully covered (both orders, the

@@ -36,3 +36,5 @@ The wrapper replay could add a variant passing a caller workspace one element sh
 ## Evidence 2026-11-26
 
 - Of the 434 wrappers that allocate WORK for `null`, 422 have no length check on a WORK the caller passes; they hand it to base.js directly (e.g. `lib/lapack/base/dgeqrf/lib/dgeqrf.js:83`, `lib/lapack/base/dgesvd/lib/dgesvd.js:108`). Since ticket 0100 a WORK at or above the reference's minimum is safe there, because base.js adapts to it; one below the minimum still overruns silently.
+
+- (2026-11-26, ticket 0016's PR) The zheev and zhetrd_he2hb wrappers call `base.js` directly, so a caller-supplied WORK shorter than the minimum their `ndarray.js` now demands reaches base.js unchecked.

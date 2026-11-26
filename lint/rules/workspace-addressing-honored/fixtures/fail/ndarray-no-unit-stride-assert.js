@@ -1,6 +1,8 @@
-// target: lib/lapack/base/dgeqrf/lib/ndarray.js
+// target: lib/lapack/base/dgetri/lib/ndarray.js
 // expect: never asserts it is 1
-function dgeqrf( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWork, offsetWork ) {
-	return base( M, N, A, strideA1, strideA2, offsetA, TAU, strideTAU, offsetTAU, WORK, strideWork, offsetWork );
+// dgetri's base.js forwards WORK to its callees with a literal unit stride,
+// so it does not honor strideWork; ndarray.js must reject a non-unit one.
+function dgetri( N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWork, offsetWork ) {
+	return base( N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWork, offsetWork );
 }
-export default dgeqrf;
+export default dgetri;

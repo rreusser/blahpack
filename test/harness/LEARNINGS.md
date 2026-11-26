@@ -3007,3 +3007,16 @@ Keep entries short. Newest first.
   - Complex Schur forms compare with the reference only up to a diagonal phase in Z; some AED windows amplify a one-ulp change to about 1e-3 in H and Z, so compare eigenvalue order and similarity there, not H and Z elementwise.
   - Fixtures regenerated here differ from committed ones in the last bits; append new cases rather than regenerating old ones.
 - **Where else**: the remaining *evr drivers' eigenvector path still replaces DSTEMR (ticket 0105); nothing yet checks a null allocation against the optimum (ticket 0103).
+
+## 2026-11-26 — Null-workspace allocations below the reference's optimum, unchecked (ticket 0103)
+
+- **Found by**: the new check `bin/workspace-optimum.mjs`, against the reference's own workspace queries recorded by `bin/gen-lwkopt.mjs` (158 routines, 26,807 rows: every routine whose reference answers LWORK = -1, swept over dimensions and options). It calls each wrapper with null workspaces, captures the allocation's size without running the algorithm, and fails below the optimum.
+- **Reproduce** (dtgsen): N = 14 with 7 eigenvalues selected, IJOB = 3, WORK = IWORK = null: the old wrapper allocated WORK 4N+16 and IWORK 1, and dtgsen returned info = -22.
+- **Bug classes**:
+  - **An allocation below the reference's minimum**, not just its optimum: dtgsen (the IJOB >= 1 terms 2M(N-M), 4M(N-M) missing, IWORK not checked at all), ztgsna (2N^2 skipped at N = 1), dlamswlq (nb*mb where the reference needs N*MB, so a null WORK overran on the blocked path and gave NaN).
+  - **Off by one against the reference's LWORKOPT**: dorbdb3, zunbdb3 (the reference addresses WORK from 2; the JS from 1, so it never overran).
+  - **The reference's own size too small for its callees**: DLAMTSQR's SIDE = 'R' LW = MB*NB, but DGEMQRT/DTPMQRT address M*NB (ZLAMTSQR has M*NB). The JS allocates the larger; the check, which compares with the reference's figure, cannot see this class.
+  - **Validation the reference doesn't make**: dlamswlq/dlamtsqr rejected mb < 1 / nb < 1 and K > M for SIDE = 'L', and threw for SIDE = 'R', K > N even at N = 0 where the reference quick-returns; ztgsna demanded IWORK N+6 for N+2. SIDE = 'R', K > N still throws otherwise: the reference's callee rejects it or addresses outside C.
+  - **The query's own coverage**: the generator first detected a query by an `LQUERY` variable, which missed dlaqr0/2/3/4, zlaqr0/2/3/4 and dlaqz4 (they test LWORK = -1 directly); it now detects the test itself. And it first skipped a routine it couldn't sweep, which `lint:escape-hatches` rejected: a routine with a query that can't be swept is now an error.
+- **What allowed it**: workspace-guard checked a null allocation against the `ndarray.js` minimum only, and the minimum was hand-written too; no per-routine optimum was recorded anywhere. The last two PRs found about twenty such wrappers only by reading code.
+- **Where else**: an optimum that depends on array contents beyond SELECT and 2x2 blocks would need its data swept; the generator's scan found only dtrsen, dtgsen, dtgsna, dtrevc3 and twins reading data before their query returns. Rows the reference's query accepts but the call itself rejects (DLAMSWLQ/DLAMTSQR SIDE = 'R', K > N) are reported as not run, not failed.

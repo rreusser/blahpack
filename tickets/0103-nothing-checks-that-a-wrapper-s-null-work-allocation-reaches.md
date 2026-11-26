@@ -1,9 +1,10 @@
 ---
 id: 0103
 title: Nothing checks that a wrapper's null-WORK allocation reaches the optimum, so callers silently get a slower path
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-26
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -41,3 +42,7 @@ grep -rln "1056\|2080" lib/lapack/base/*/lib/*.js | head
 - dorbdb3, zunbdb3 WORK: `max(P, M-P-1, Q-1)`, one short of the reference's.
 - ztgsna WORK: nothing for JOB = V/B at N = 1, where the reference gives 2N^2 = 2.
 - dlamswlq, dlamtsqr reject SIDE = 'R' with K > N, which the reference accepts.
+
+## Resolution
+
+bin/gen-lwkopt.mjs records the reference's workspace-query optimum for every routine with a query (158, 26,807 rows; data/fortran-lwkopt.json, checked current by lwkopt:check), and bin/workspace-optimum.mjs (CI, check:modules) fails any wrapper whose null allocation is below it (W6). It found dlamswlq, dtgsen, dorbdb3, zunbdb3 and ztgsna short, now fixed, and dlamtsqr's reference sizing too small for its own callees.

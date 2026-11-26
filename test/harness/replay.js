@@ -98,6 +98,16 @@ const MAX_CALLS = Number( process.env.REPLAY_MAX_CALLS ) || 40;
 const VM_CONTEXT = vm.createContext( {} );
 const VM_CALL = new vm.Script( '__fn( ...__args )' );
 const MIN_BUDGET_MS = Number( process.env.REPLAY_CALL_MS ) || 2000;
+
+// The recorded call's own cap. A variant that keeps the recorded (valid)
+// inputs and changes only a workspace (null-work, min-work) gets this cap too,
+// not a multiple of the recorded call's time. A routine may choose how much
+// work to do by the workspace it is given (W6): dlaqr0 at N = 300 with
+// WORK = 1 returns INFO = N in 16 ms, like the reference, but with the
+// wrapper's optimal WORK it solves the problem in over a second, so a 2 s
+// budget timed out on a slower CI runner. These are not the domain probes the
+// tight budget exists for (ticket 0070).
+const RECORDED_MS = 60000;
 let budgetMs = MIN_BUDGET_MS;
 
 // The length audit's poisoned-storage trials get a tight budget: a timeout
@@ -880,7 +890,8 @@ function validate( fn, names, args, checks, fns, done, optionValues ) {
 * @returns {Promise<Object>} report
 */
 async function replayModule( dir, options ) {
-	const opts = Object.assign( { 'probe': true, 'recs': null }, options );
+	// `budgetFloorMs` replaces MIN_BUDGET_MS (harness self-tests only).
+	const opts = Object.assign( { 'probe': true, 'recs': null, 'budgetFloorMs': MIN_BUDGET_MS }, options );
 	const routine = path.basename( dir );
 	const report = { 'routine': routine, 'recorded': 0, 'replayed': 0, 'variants': 0, 'mismatches': [], 'rejected': [], 'lengths': [], 'rounding': 0, 'skipped': {} };
 	const skip = function skipReason( why ) {
@@ -944,7 +955,7 @@ async function replayModule( dir, options ) {
 		SAVED_AT = SAVED ? Object.assign( {}, SAVED ) : null;
 		// The recorded call's own time sets the budget of every call made
 		// from it (min MIN_BUDGET_MS).
-		budgetMs = 60000;
+		budgetMs = RECORDED_MS;
 		const t0 = Date.now();
 		try {
 			expRet = bounded( nd, expArgs );
@@ -952,7 +963,7 @@ async function replayModule( dir, options ) {
 			skip( ( e instanceof CallTimeout ) ? 'ndarray did not return on replay' : 'ndarray threw on replay' );
 			continue;
 		}
-		budgetMs = Math.max( MIN_BUDGET_MS, 50 * ( Date.now() - t0 ) );
+		budgetMs = Math.max( opts.budgetFloorMs, 50 * ( Date.now() - t0 ) );
 		probeMs = Math.max( 100, 10 * ( Date.now() - t0 ) );
 		const exp = snapshot( expArgs, workspaceIdx );
 		const intIdx = new Set( expArgs.map( ( x, i ) => ( ( x instanceof Int32Array || x instanceof Int8Array || x instanceof Int16Array || x instanceof Uint8Array || x instanceof Uint32Array || Array.isArray( x ) ) ? i : -1 ) ).filter( ( i ) => i >= 0 ) );
@@ -972,7 +983,7 @@ async function replayModule( dir, options ) {
 			const need = ( order === 'column-major' ) ? rows : cols;
 			return need === null || ld >= Math.max( 1, need );
 		});
-		const run = function run( variant, keepWork ) {
+		const run = function run( variant, keepWork, ms ) {
 			const actArgs = rec.map( decode );
 			const wargs = toWrapper( spec, groups, actArgs, order, null, keepWork );
 			if ( wargs === null ) {
@@ -985,7 +996,7 @@ async function replayModule( dir, options ) {
 			}
 			let actRet;
 			try {
-				actRet = bounded( wrapper, wargs );
+				actRet = bounded( wrapper, wargs, ms );
 			} catch ( e ) {
 				if ( ldCoversRows ) {
 					report.rejected.push( { 'variant': variant + ' ' + order, 'detail': String( e.message ).slice( 0, 200 ) } );
@@ -1016,7 +1027,7 @@ async function replayModule( dir, options ) {
 			if ( allocs ) {
 				allocs.length = 0;
 			}
-			const nw = run( 'null-work', false );
+			const nw = run( 'null-work', false, RECORDED_MS );
 			let nwExp = exp;
 			let nwExpRet = expRet;
 			let nwExpArgs = expArgs;
@@ -1037,7 +1048,7 @@ async function replayModule( dir, options ) {
 					}
 				});
 				try {
-					nwExpRet = bounded( nd, sized );
+					nwExpRet = bounded( nd, sized, RECORDED_MS );
 				} catch ( e ) {
 					ok = false;
 				}
@@ -1131,7 +1142,7 @@ async function replayModule( dir, options ) {
 			report.variants += 1;
 			let mRet;
 			try {
-				mRet = bounded( nd, mArgs );
+				mRet = bounded( nd, mArgs, RECORDED_MS );
 			} catch ( e ) {
 				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'ndarray.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
 				return;

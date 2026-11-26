@@ -278,3 +278,27 @@ test( 'replay short-work: a wrapper that skips ndarray.js\'s workspace check is 
 	assert.equal( cur.replayed, 1 );
 	assert.deepEqual( cur.mismatches, [] );
 });
+
+test( 'replay null-work/min-work: a routine that does more work with more workspace is not timed out against the recorded call (dlaqr0 at N = 300)', async function t() {
+	// A cyclic shift of order 300. With WORK = 1, dlaqr0 (like the reference)
+	// makes no progress and returns INFO = N in milliseconds; with the
+	// wrapper's optimal WORK it solves the problem, taking about 100 times
+	// longer. A budget of 50 times the recorded call timed that out on CI.
+	const N = 300;
+	const H = new Float64Array( N * N );
+	const Z = new Float64Array( N * N );
+	let i;
+	for ( i = 1; i < N; i++ ) {
+		H[ i + ( ( i - 1 ) * N ) ] = 1.0;
+	}
+	H[ ( N - 1 ) * N ] = 1.0;
+	for ( i = 0; i < N; i++ ) {
+		Z[ i + ( i * N ) ] = 1.0;
+	}
+	const v = ( x ) => ( { 'v': x } );
+	const rec = [ v( true ), v( true ), v( N ), v( 1 ), v( N ), { 't': H }, v( 1 ), v( N ), v( 0 ), { 't': new Float64Array( N ) }, v( 1 ), v( 0 ), { 't': new Float64Array( N ) }, v( 1 ), v( 0 ), v( 1 ), v( N ), { 't': Z }, v( 1 ), v( N ), v( 0 ), { 't': new Float64Array( 1 ) }, v( 1 ), v( 0 ) ];
+	const here = path.dirname( fileURLToPath( import.meta.url ) );
+	const r = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'base', 'dlaqr0' ), { 'probe': false, 'recs': [ rec ], 'budgetFloorMs': 50 } );
+	assert.equal( r.replayed, 1 );
+	assert.deepEqual( r.rejected, [], JSON.stringify( r.rejected ) );
+});

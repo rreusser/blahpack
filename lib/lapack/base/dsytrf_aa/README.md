@@ -105,7 +105,7 @@ The function has the following additional parameters:
 -   On exit, the symmetric tridiagonal `T` is stored on the diagonals of `A`
     (with sub/superdiagonal stored adjacent), and `L` (or `U`) is stored below
     (or above) the subdiagonals.
--   The block size is hardcoded to `NB = 32`.
+-   The block size `NB` comes from `ilaenv` (64), as in the reference.
 
 </section>
 

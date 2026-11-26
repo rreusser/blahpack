@@ -37,7 +37,7 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @param IPIV - output pivot index array
 	* @param strideIPIV - stride length for `IPIV`
-	* @param WORK - caller-owned workspace (length `>= N*NB` with `NB = 32` when `N > NB`); `null` requests internal allocation
+	* @param WORK - caller-owned workspace (length `>= N*NB` with `NB = 64` from `ilaenv` when `N > NB`); `null` requests internal allocation
 	* @param strideWork - stride length for `WORK`
 	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)
 	*/
@@ -55,7 +55,7 @@ interface Routine {
 	* @param IPIV - output pivot index array
 	* @param strideIPIV - stride length for `IPIV`
 	* @param offsetIPIV - starting index for `IPIV`
-	* @param WORK - caller-owned workspace (length `>= N*NB` with `NB = 32` when `N > NB`; unused otherwise)
+	* @param WORK - caller-owned workspace (length `>= N*NB` with `NB = 64` from `ilaenv` when `N > NB`; unused otherwise)
 	* @param strideWork - stride length for `WORK`
 	* @param offsetWork - starting index for `WORK`
 	* @returns `info` integer (0 on success; k>0 if D(k,k) is exactly zero)

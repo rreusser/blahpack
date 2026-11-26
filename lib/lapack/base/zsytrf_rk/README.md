@@ -104,7 +104,7 @@ The additional parameters relative to the BLAS-style API are:
 
 ## Notes
 
--   The implementation is a blocked driver: it calls `zlasyf_rk` for full panels of width `NB = 32` and falls back to the unblocked kernel `zsytf2_rk` for the trailing submatrix.
+-   The implementation is a blocked driver: it calls `zlasyf_rk` for full panels of width `NB` (64, from `ilaenv`) and falls back to the unblocked kernel `zsytf2_rk` for the trailing submatrix.
 -   `IPIV` follows the stdlib bitwise-NOT convention: positive entries indicate a 1x1 pivot whose target row is the value itself; negative entries `~p` indicate a 2x2 pivot block whose swap target is `~IPIV[i]`.
 
 </section>

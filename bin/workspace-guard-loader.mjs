@@ -174,8 +174,9 @@ function wrapTests( src ) {
 const WORKSPACE = /^[A-Za-z]*work$/i;
 
 // Rewrites the wrapper: force each null-allocated workspace parameter to
-// null at entry, and allocate it through __wsGuard.
-function transform( src, tagBase ) {
+// null at entry, and allocate it through __wsGuard. Also used by
+// bin/workspace-optimum-loader.mjs.
+export function transform( src, tagBase ) {
 	const ast = espree.parse( src, { 'ecmaVersion': 2022, 'sourceType': 'module', 'range': true } );
 	const edits = [];
 	( function walk( node, fn ) {

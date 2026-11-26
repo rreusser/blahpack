@@ -78,7 +78,7 @@ The function has the following parameters:
 -   **strideTAUP2**: stride length for `TAUP2` (in complex elements).
 -   **TAUQ1**: output array of length at least `Q` ([`Complex128Array`][@stdlib/array/complex128]); Householder scalars for `Q1` (only the first `M-P` entries are written).
 -   **strideTAUQ1**: stride length for `TAUQ1` (in complex elements).
--   **WORK**: workspace of length at least `max(P, M-P-1, Q-1)` complex elements ([`Complex128Array`][@stdlib/array/complex128]).
+-   **WORK**: workspace of length at least `max(P, M-P-1, Q-1) + 1` (the reference LWORKMIN) complex elements ([`Complex128Array`][@stdlib/array/complex128]).
 -   **strideWORK**: stride length for `WORK` (in complex elements).
 
 The function returns `info` (0 on success).

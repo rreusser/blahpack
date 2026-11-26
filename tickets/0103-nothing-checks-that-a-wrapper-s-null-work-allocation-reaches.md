@@ -1,9 +1,10 @@
 ---
 id: 0103
 title: Nothing checks that a wrapper's null-WORK allocation reaches the optimum, so callers silently get a slower path
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-26
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -32,3 +33,16 @@ grep -rln "1056\|2080" lib/lapack/base/*/lib/*.js | head
 
 - The rule `tuning-from-ilaenv` (ticket 0049) cannot see an optimum the reference gets from a callee's workspace query: DSYSV's LWKOPT is `DSYTRF( ..., WORK, -1, ... )`, not an ILAENV call. dsysv/zsysv's wrappers kept `N*32` after dsytrf's NB became 64, and allocated below its optimum; fixed in the ticket-0049 PR, found only by the agent reading the code.
 - In the same PR, several wrappers turned out to allocate only the minimum for a null WORK, never the blocked path: dgebrd/zgebrd, dgetri/zgetri, dsyev/zheev, and the dsyevr/dsyevx/dsygv/dsygvx families.
+
+## Evidence 2026-11-26 (the check)
+
+`bin/workspace-optimum.mjs` (data from `bin/gen-lwkopt.mjs`'s reference workspace queries, 149 routines, 25,911 rows) finds on main:
+- dlamswlq WORK: `max(1,nb)*mb` for SIDE = 'L', where the reference's query gives N*MB (40 for 5600 at 140x140, MB = 40).
+- dtgsen WORK `4N+16` and IWORK 1, ignoring the 2M(N-M) / 4M(N-M) terms of IJOB >= 1: below the reference's minimum, not just its optimum.
+- dorbdb3, zunbdb3 WORK: `max(P, M-P-1, Q-1)`, one short of the reference's.
+- ztgsna WORK: nothing for JOB = V/B at N = 1, where the reference gives 2N^2 = 2.
+- dlamswlq, dlamtsqr reject SIDE = 'R' with K > N, which the reference accepts.
+
+## Resolution
+
+bin/gen-lwkopt.mjs records the reference's workspace-query optimum for every routine with a query (158, 26,807 rows; data/fortran-lwkopt.json, checked current by lwkopt:check), and bin/workspace-optimum.mjs (CI, check:modules) fails any wrapper whose null allocation is below it (W6). It found dlamswlq, dtgsen, dorbdb3, zunbdb3 and ztgsna short, now fixed, and dlamtsqr's reference sizing too small for its own callees.

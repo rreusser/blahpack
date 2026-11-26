@@ -77,7 +77,7 @@ The function has the following parameters:
 -   **strideTAUP2**: stride length for `TAUP2`.
 -   **TAUQ1**: output array of length at least `Q` ([`Float64Array`][mdn-float64array]); Householder scalars for `Q1` (only the first `M-P` entries are written).
 -   **strideTAUQ1**: stride length for `TAUQ1`.
--   **WORK**: workspace of length at least `max(P, M-P-1, Q-1)` ([`Float64Array`][mdn-float64array]).
+-   **WORK**: workspace of length at least `max(P, M-P-1, Q-1) + 1` (the reference LWORKMIN) ([`Float64Array`][mdn-float64array]).
 -   **strideWORK**: stride length for `WORK`.
 
 #### dorbdb3.ndarray( M, P, Q, X11, strideX111, strideX112, offsetX11, X21, strideX211, strideX212, offsetX21, THETA, strideTHETA, offsetTHETA, PHI, stridePHI, offsetPHI, TAUP1, strideTAUP1, offsetTAUP1, TAUP2, strideTAUP2, offsetTAUP2, TAUQ1, strideTAUQ1, offsetTAUQ1, WORK, strideWORK, offsetWORK )

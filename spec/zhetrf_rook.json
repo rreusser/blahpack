@@ -82,7 +82,8 @@
 				"fortran": "1",
 				"js": "1",
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

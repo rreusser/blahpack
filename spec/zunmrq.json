@@ -136,7 +136,8 @@
 				"fortran": "NW",
 				"js": "side === 'left' ? max( 1, N ) : max( 1, M )",
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

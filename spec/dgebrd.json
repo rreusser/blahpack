@@ -127,7 +127,8 @@
 				"fortran": "MAX(1,M,N)",
 				"js": "max( max( 1, M ), N )",
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

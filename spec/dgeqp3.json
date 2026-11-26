@@ -97,7 +97,8 @@
 				"fortran": "IWS",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

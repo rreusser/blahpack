@@ -54,6 +54,11 @@ var SOURCE_RULES = {
 	// uses (drivers sub-allocate one buffer among callees by offset).
 	'workspace-addressing-honored': 'error',
 
+	// base.js reads the length of each workspace the reference picks its
+	// path from (block size, unblocked fallback), as the reference reads
+	// LWORK (W6; ticket 0100).
+	'workspace-adaptive': 'error',
+
 	// base.js honors every array's strides and offset: element indices use the
 	// array's offset, and callees get the array's own strides (S13).
 	'stride-provenance': 'error'

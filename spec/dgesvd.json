@@ -158,7 +158,8 @@
 				"fortran": "MINWRK",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

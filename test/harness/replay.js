@@ -512,6 +512,11 @@ function describe( rec, names ) {
 		let v;
 		if ( 'v' in e ) {
 			v = JSON.stringify( e.v );
+		} else if ( e.f ) {
+			// A recorded callback (zgees's `select`): its source, shortened.
+			v = 'Function(' + String( e.f ).replace( /\s+/g, ' ' ).slice( 0, 40 ) + ')';
+		} else if ( e.o ) {
+			v = 'Object{' + Object.keys( e.o ).join( ',' ) + '}';
 		} else if ( e.c ) {
 			v = e.c + '(' + ( e.d.length / 2 ) + ')';
 		} else if ( e.z ) {
@@ -1340,4 +1345,4 @@ function runReplay( dir, timeout ) {
 	return JSON.parse( res.stdout );
 }
 
-export { replayModule, runReplay };
+export { describe, replayModule, runReplay };

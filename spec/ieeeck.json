@@ -1,0 +1,157 @@
+{
+	"routine": "ieeeck",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "INTEGER          FUNCTION IEEECK( ISPEC, ZERO, ONE )",
+	"returns": {
+		"kind": "value",
+		"dtype": "int32"
+	},
+	"params": [
+		{
+			"name": "ispec",
+			"fortran": "ISPEC",
+			"position": 1,
+			"role": "dim",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "zero",
+			"fortran": "ZERO",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "float32",
+			"intent": "in"
+		},
+		{
+			"name": "one",
+			"fortran": "ONE",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "float32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": [
+		{
+			"fortran": "POSINF.LE.ONE",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NEGINF.GE.ZERO",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NEGZRO.NE.ZERO",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NEGINF.GE.ZERO",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NEWZRO.NE.ZERO",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "POSINF.LE.ONE",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NEGINF.GE.ZERO",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "POSINF.LE.ONE",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "ISPEC.EQ.0",
+			"js": "ispec === 0"
+		},
+		{
+			"fortran": "NAN1.EQ.NAN1",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NAN2.EQ.NAN2",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NAN3.EQ.NAN3",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NAN4.EQ.NAN4",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NAN5.EQ.NAN5",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		},
+		{
+			"fortran": "NAN6.EQ.NAN6",
+			"js": null,
+			"sets": [
+				"IEEECK = 0"
+			]
+		}
+	],
+	"untranslated": [
+		"quickReturn 0: local recursion too deep",
+		"quickReturn 1: local recursion too deep",
+		"quickReturn 2: local recursion too deep",
+		"quickReturn 3: local recursion too deep",
+		"quickReturn 4: local recursion too deep",
+		"quickReturn 5: local recursion too deep",
+		"quickReturn 6: local recursion too deep",
+		"quickReturn 7: local recursion too deep",
+		"quickReturn 9: local recursion too deep",
+		"quickReturn 10: local recursion too deep",
+		"quickReturn 11: local recursion too deep",
+		"quickReturn 12: local recursion too deep",
+		"quickReturn 13: local recursion too deep",
+		"quickReturn 14: local recursion too deep"
+	]
+}

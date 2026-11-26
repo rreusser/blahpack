@@ -21,6 +21,10 @@
 //                an algorithm chosen by the space it has (ticket 0100). A
 //                test that rejects (sets a negative INFO) or answers a query
 //                (LQUERY) is not one. Omitted when there are none.
+//   ilaenv       the reference's ILAENV/IPARMQ queries: { fn, ispec, name,
+//                into }, where `into` is the variable the statement assigns
+//                (NB, NX, NBMIN, NMIN, ...) and `name` the routine named in
+//                the query (ticket 0049). Omitted when there are none.
 //
 // Everything downstream (bin/gen_spec, CI) reads the cache, never the sources
 // (CONVENTIONS T6).
@@ -690,11 +694,39 @@ function extractOne( src, free, sig ) {
 	if ( mc.length ) {
 		rec.dlamch = mc;
 	}
+	var il = tuningQueries( st, start );
+	if ( il.length ) {
+		rec.ilaenv = il;
+	}
 	var ad = adaptiveLengths( st, ( xer >= 0 ) ? xer + 1 : start, argset );
 	if ( ad.length ) {
 		rec.adaptive = ad;
 	}
 	return rec;
+}
+
+// ILAENV/IPARMQ queries in the executable statements (see header), in source
+// order, without repeats.
+function tuningQueries( st, from ) {
+	var out = [];
+	var seen = {};
+	var i;
+	for ( i = from; i < st.length; i++ ) {
+		( function each( s ) {
+			var re = /\b(ILAENV|IPARMQ) ?\( ?([A-Z0-9_]+) ?, ?'([^']*)'/g;
+			var lhs = /^(?:IF ?\(.*?\) ?)?([A-Z][A-Z0-9_]*) ?= ?/.exec( s );
+			var x;
+			var key;
+			while ( ( x = re.exec( s ) ) ) {
+				key = [ x[ 1 ], x[ 2 ], x[ 3 ], ( lhs ) ? lhs[ 1 ] : '' ].join( ' ' );
+				if ( !seen[ key ] ) {
+					seen[ key ] = true;
+					out.push( { 'fn': x[ 1 ].toLowerCase(), 'ispec': x[ 2 ], 'name': x[ 3 ].trim(), 'into': ( lhs ) ? lhs[ 1 ] : null } );
+				}
+			}
+		})( unlabel( st[ i ] ) );
+	}
+	return out;
 }
 
 // Workspace-length arguments an IF after the argument checks compares (see

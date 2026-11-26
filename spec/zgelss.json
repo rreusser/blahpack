@@ -237,6 +237,26 @@
 			]
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "6",
+			"name": "ZGELSS",
+			"into": "MNTHR"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZGEQRF",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZUNMQR",
+			"into": "MAXWRK"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
 	],

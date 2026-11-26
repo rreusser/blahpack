@@ -223,5 +223,13 @@
 			"js": "ldz < 1 || ((compz === 'initialize' || compz === 'update') && ldz < max( 1, N ))"
 		}
 	],
-	"quickReturn": []
+	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "12",
+			"name": "ZHSEQR",
+			"into": "NMIN"
+		}
+	]
 }

@@ -278,6 +278,14 @@
 	],
 	"checks": [],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "12",
+			"name": "ZLAQR3",
+			"into": "NMIN"
+		}
+	],
 	"notes": [
 		"no derivable minimum length for workspace WORK"
 	],

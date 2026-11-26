@@ -133,6 +133,26 @@
 		}
 	],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGERQF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "3",
+			"name": "DGERQF",
+			"into": "NX"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "DGERQF",
+			"into": "NBMIN"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local LWKMIN is assigned inside nested control flow"
 	]

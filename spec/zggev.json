@@ -311,5 +311,25 @@
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZGEQRF",
+			"into": "LWKOPT"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZUNMQR",
+			"into": "LWKOPT"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZUNGQR",
+			"into": "LWKOPT"
+		}
 	]
 }

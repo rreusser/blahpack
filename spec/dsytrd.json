@@ -174,5 +174,25 @@
 				"WORK( 1 ) = 1"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRD",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "3",
+			"name": "DSYTRD",
+			"into": "NX"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "DSYTRD",
+			"into": "NBMIN"
+		}
 	]
 }

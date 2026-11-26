@@ -204,5 +204,25 @@
 			"rowMajor": "ldb < max( 1, P )"
 		}
 	],
-	"quickReturn": []
+	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGEQRF",
+			"into": "NB1"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGERQF",
+			"into": "NB2"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMQR",
+			"into": "NB3"
+		}
+	]
 }

@@ -169,5 +169,13 @@
 				"IF( WANTZ ) A( 1, 1 ) = ONE"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRD",
+			"into": "NB"
+		}
 	]
 }

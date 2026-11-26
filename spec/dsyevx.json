@@ -327,6 +327,20 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRD",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMTR",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local LWKMIN is assigned inside nested control flow"
 	]

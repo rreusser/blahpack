@@ -49,6 +49,14 @@
 		}
 	],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "10",
+			"name": "DLASQ2",
+			"into": "IEEE"
+		}
+	],
 	"untranslated": [
 		"check INFO=-201: no argument at that position",
 		"check INFO=-201: no argument at that position",

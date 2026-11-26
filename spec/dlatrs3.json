@@ -270,6 +270,14 @@
 		}
 	],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DLATRS",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: unknown identifier MAX"
 	],

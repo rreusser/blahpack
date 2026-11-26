@@ -318,7 +318,7 @@ mirror reads, zeroed diagonal imaginary parts, and `'transpose'` →
 | `DLAMCH('P')` | `Number.EPSILON` | Precision = epsilon × base. Distinct from `'E'`. |
 | `safmin` / `safmax` | `import FLOAT64_SMALLEST_NORMAL from '@stdlib/constants/float64/smallest-normal/lib/index.js'` (or module-scope `dlamch( 'safe-minimum' )`) / `1.0 / safmin` | Hoist to module scope (X4). |
 | `IF (c) GO TO 60` in a loop, with statements between the loop end and `60` | guard the post-loop code: `if ( j === jlast ) { … }`, a flag, or `return` | A bare `break` runs the statements the `GO TO` skips (X2). `python bin/goto-exits.py <routine>` lists every such site. |
-| `ILAENV(1, ...)` | `NB = 32` (hardcoded) | X3. Defaults vary by query: `ILAENV(1)` → NB=32, `ILAENV(3)` → NX=128 (crossover), `ILAENV(12)` (ISPEC = INMIN) → NMIN=75 (IPARMQ; the `12` is the query number, not the value; tickets/0049). Check which query the source uses. |
+| `NB = ILAENV( 1, 'DGEQRF', ' ', M, N, -1, -1 )` | `nb = ilaenv( 1, 'DGEQRF', ' ', M, N, -1, -1 );` (`import ilaenv from '../../ilaenv/lib/base.js';`) | X3: every ILAENV/IPARMQ query goes through the `ilaenv` module with the reference's exact arguments (ISPEC, NAME, OPTS, N1–N4), never a copied constant; `lint:tuning-from-ilaenv` checks it against the spec's `tuning` list. |
 | Integer division | `(expr)\|0` | Fortran truncates toward zero, like `\|0`, NOT `Math.floor`: `Math.floor(-3/2) = -2`, Fortran gives `-1`. |
 | `ABS(z)` (complex) | `cmplx.abs` | C3: never inline (overflows). |
 

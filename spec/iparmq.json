@@ -1,0 +1,70 @@
+{
+	"routine": "iparmq",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "INTEGER FUNCTION IPARMQ( ISPEC, NAME, OPTS, N, ILO, IHI, LWORK )",
+	"returns": {
+		"kind": "value",
+		"dtype": "int32"
+	},
+	"params": [
+		{
+			"name": "ispec",
+			"fortran": "ISPEC",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "name",
+			"fortran": "NAME",
+			"position": 2,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "opts",
+			"fortran": "OPTS",
+			"position": 3,
+			"role": "flag",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "n",
+			"fortran": "N",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ilo",
+			"fortran": "ILO",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "ihi",
+			"fortran": "IHI",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "lwork",
+			"fortran": "LWORK",
+			"position": 7,
+			"role": "lwork",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

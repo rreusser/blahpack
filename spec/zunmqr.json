@@ -238,5 +238,19 @@
 				"WORK( 1 ) = 1"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZUNMQR",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "ZUNMQR",
+			"into": "NBMIN"
+		}
 	]
 }

@@ -140,5 +140,25 @@
 				"WORK( 1 ) = 1"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGEQRF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "3",
+			"name": "DGEQRF",
+			"into": "NX"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "DGEQRF",
+			"into": "NBMIN"
+		}
 	]
 }

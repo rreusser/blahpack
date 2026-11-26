@@ -145,5 +145,13 @@
 			"fortran": "N.EQ.1",
 			"js": "N === 1"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZSYTRF_AA",
+			"into": "NB"
+		}
 	]
 }

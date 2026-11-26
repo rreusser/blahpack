@@ -259,6 +259,20 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZGEHRD",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZUNGHR",
+			"into": "MAXWRK"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
 	],

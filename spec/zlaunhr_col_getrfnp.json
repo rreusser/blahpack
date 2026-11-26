@@ -107,5 +107,13 @@
 			"fortran": "MIN( M, N ).EQ.0",
 			"js": "min( M, N ) === 0"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZLAUNHR_COL_GETRFNP",
+			"into": "NB"
+		}
 	]
 }

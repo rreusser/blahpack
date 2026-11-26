@@ -273,6 +273,14 @@
 			"js": "M === 0 || N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "6",
+			"name": "ZGESVD",
+			"into": "MNTHR"
+		}
+	],
 	"untranslated": [
 		"U.cols: unknown identifier UCOL",
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"

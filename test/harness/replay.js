@@ -31,7 +31,8 @@
 *         touches passes validation and then silently drops writes past the
 *         end of the typed array (ticket 0096). An output the spec marks
 *         `workDependent` (the reference's own result depends on LWORK, with
-*         the reason in an override) is not compared.
+*         the reason in an override) is not compared, nor a return value the
+*         spec marks `returns.workDependent`.
 *     -   `zero-size`: for the first few calls, each dimension set to 0 in
 *         turn; the wrapper and ndarray.js must agree (quick returns).
 *     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of
@@ -1103,7 +1104,10 @@ async function replayModule( dir, options ) {
 			// singular vectors A returns.
 			const mAct = snapshot( mArgs, workDependentIdx );
 			const mExp = snapshot( expArgs, workDependentIdx );
-			const mEr = sameStorageReturn( expArgs, expRet, mArgs, mRet ) ? SAME : expRet;
+			// Likewise a return value the reference makes depend on LWORK
+			// (spec `returns.workDependent`): dlaqr0 at LWORK = 1 makes no
+			// progress and returns INFO = IHI, as the reference does.
+			const mEr = ( spec.returns && spec.returns.workDependent ) || sameStorageReturn( expArgs, expRet, mArgs, mRet ) ? SAME : expRet;
 			const d = diff( mExp, mAct, mEr, mRet, baseNames );
 			if ( d ) {
 				const retOk = ( mEr === SAME ) || retEqual( expRet, mRet ) || ( typeof expRet === 'object' && typeof mRet === 'object' );

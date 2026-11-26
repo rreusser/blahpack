@@ -4,7 +4,8 @@
 	"kind": "subroutine",
 	"signature": "SUBROUTINE ZLAQR4( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,",
 	"returns": {
-		"kind": "info"
+		"kind": "info",
+		"workDependent": "the QR iteration's path depends on LWORK, as the reference's does; with 1 or 2 elements it makes no progress and returns INFO = IHI, as the compiled reference does"
 	},
 	"params": [
 		{
@@ -66,7 +67,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)"
 		},
 		{
 			"name": "ldh",
@@ -90,7 +92,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)"
 		},
 		{
 			"name": "iloz",
@@ -127,7 +130,8 @@
 			"cols": {
 				"fortran": "IHI",
 				"js": "ihi"
-			}
+			},
+			"workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)"
 		},
 		{
 			"name": "ldz",
@@ -212,6 +216,17 @@
 			"ispec": "16",
 			"name": "ZLAQR4",
 			"into": "KACC22"
+		}
+	],
+	"overrides": [
+		{
+			"reason": "ZLAQR4 caps its aggressive-early-deflation window at NW <= LWORK/2 and its simultaneous shifts at NS <= 2*LWORK/3, and ZLAQR2 and ZLAQR5 then pick their block sizes from the WORK they are given, so the reference's own QR iteration depends on LWORK: below its documented max(1,N) (which it neither checks nor needs) it is accepted but takes another path, and at LWORK = 1 or 2 (no window, no shifts) it makes no progress and returns INFO = IHI with H and Z partly reduced. Compiled LAPACK 3.12.0 does this too: N = 120 and 140 (the cyclic shift and a random Hessenberg matrix) at LWORK = 1, 2 return INFO = N, at LWORK = 3 INFO = 0 (N = 120 cyclic shift and N = 140 random), at LWORK >= 4 INFO = 0, never writing past WORK(LWORK). The Schur form and vectors are unique only up to the order and signs the path picks. The module's tests check LWORK = 1 (INFO = N, as the reference) and a few elements past the blocking threshold (all eigenvalues found) (ticket 0016).",
+			"set": {
+				"params.H.workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)",
+				"params.w.workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)",
+				"params.Z.workDependent": "the QR iteration's path depends on LWORK (AED window <= LWORK/2, shifts <= 2*LWORK/3), as the reference's does; with 1 or 2 elements it makes no progress (INFO > 0)",
+				"returns.workDependent": "the QR iteration's path depends on LWORK, as the reference's does; with 1 or 2 elements it makes no progress and returns INFO = IHI, as the compiled reference does"
+			}
 		}
 	]
 }

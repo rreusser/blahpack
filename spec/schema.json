@@ -19,7 +19,8 @@
 			"properties": {
 				"kind": { "enum": [ "info", "value", "array", "none" ], "description": "S11: INFO; a FUNCTION's value; else the last output array (BLAS/stdlib style)." },
 				"dtype": { "$ref": "#/definitions/dtype" },
-				"param": { "type": "string" }
+				"param": { "type": "string" },
+				"workDependent": { "type": "string", "minLength": 20, "description": "The return value (e.g. INFO) the reference itself makes depend on the workspace it is given, with why; the wrapper replay's min-work variant does not compare it (ticket 0016). Set only by an override." }
 			}
 		},
 		"params": { "type": "array", "items": { "$ref": "#/definitions/param" } },

@@ -5,6 +5,13 @@ program test_dpbtrf
   double precision :: ab(100)
   integer :: info, ldab
 
+  ! The reference's blocked path needs ILAENV( 1, 'DPBTRF' ) = 32, which it
+  ! gives only when KD > 64, and NB <= KD
+  integer, parameter :: N_BLK = 100, KD_BLK = 65
+  integer, parameter :: LDAB_BLK = KD_BLK + 1
+  double precision :: ab_blk(LDAB_BLK, N_BLK)
+  integer :: i, j
+
   ! ===== Test 1: UPLO='U', N=5, KD=1 (tridiagonal, unblocked path) =====
   ! A = tridiag(-1, 2, -1)
   ldab = 2
@@ -151,6 +158,36 @@ program test_dpbtrf
   call begin_test('lower_banded_8')
   call print_int('info', info)
   call print_array('ab', ab, 24)
+  call end_test()
+
+  ! ===== Test 10: UPLO='U', N=100, KD=65 (blocked path) =====
+  ! A diagonally dominant SPD banded matrix: for i /= j,
+  ! A(i,j) = ( MOD( 7*(i+j) + i*j, 13 ) - 6 ) / 8
+  ab_blk = 0.0d0
+  do j = 1, N_BLK
+    ab_blk(KD_BLK + 1, j) = 100.0d0
+    do i = max(1, j - KD_BLK), j - 1
+      ab_blk(KD_BLK + 1 + i - j, j) = dble(mod(7*(i+j) + i*j, 13) - 6) / 8.0d0
+    end do
+  end do
+  call dpbtrf('U', N_BLK, KD_BLK, ab_blk, LDAB_BLK, info)
+  call begin_test('upper_blocked')
+  call print_int('info', info)
+  call print_matrix('ab', ab_blk, LDAB_BLK, LDAB_BLK, N_BLK)
+  call end_test()
+
+  ! ===== Test 11: UPLO='L', N=100, KD=65 (blocked path), the same matrix =====
+  ab_blk = 0.0d0
+  do j = 1, N_BLK
+    ab_blk(1, j) = 100.0d0
+    do i = j + 1, min(N_BLK, j + KD_BLK)
+      ab_blk(1 + i - j, j) = dble(mod(7*(i+j) + i*j, 13) - 6) / 8.0d0
+    end do
+  end do
+  call dpbtrf('L', N_BLK, KD_BLK, ab_blk, LDAB_BLK, info)
+  call begin_test('lower_blocked')
+  call print_int('info', info)
+  call print_matrix('ab', ab_blk, LDAB_BLK, LDAB_BLK, N_BLK)
   call end_test()
 
 end program

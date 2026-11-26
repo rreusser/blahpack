@@ -27,3 +27,8 @@ A check could record the reference's LWKOPT from the Fortran workspace query for
 ```bash
 grep -rln "1056\|2080" lib/lapack/base/*/lib/*.js | head
 ```
+
+## Evidence 2026-11-26
+
+- The rule `tuning-from-ilaenv` (ticket 0049) cannot see an optimum the reference gets from a callee's workspace query: DSYSV's LWKOPT is `DSYTRF( ..., WORK, -1, ... )`, not an ILAENV call. dsysv/zsysv's wrappers kept `N*32` after dsytrf's NB became 64, and allocated below its optimum; fixed in the ticket-0049 PR, found only by the agent reading the code.
+- In the same PR, several wrappers turned out to allocate only the minimum for a null WORK, never the blocked path: dgebrd/zgebrd, dgetri/zgetri, dsyev/zheev, and the dsyevr/dsyevx/dsygv/dsygvx families.

@@ -26,7 +26,7 @@
         Stride length for `IPIV`.
 
     WORK: Complex128Array|null
-        Workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally.
+        Workspace (length >= 1; `N*NB`, with `NB = 64` from `ilaenv`, enables the blocked algorithm); if `null`, a workspace is allocated internally.
 
     Returns
     -------

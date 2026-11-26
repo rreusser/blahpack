@@ -13,6 +13,17 @@ program test_zlaqr0
   equivalence (Zpk, Zpk_r)
   integer :: info, n, ilo, ihi, ldh, ldz, iloz, ihiz, lwork
   integer :: i, j
+  ! Larger cases (ticket 0049): NWR, NSR and KACC22 from IPARMQ depend on NH
+  integer, parameter :: NBIG = 100
+  complex*16 :: HB(NBIG, NBIG), ZB(NBIG, NBIG), WB(NBIG), WORKB(20000)
+  double precision :: WB_r(2*NBIG), HBpk_r(2*NBIG*NBIG), ZBpk_r(2*NBIG*NBIG)
+  complex*16 :: HBpk(NBIG*NBIG), ZBpk(NBIG*NBIG)
+  equivalence (WB, WB_r)
+  equivalence (HBpk, HBpk_r)
+  equivalence (ZBpk, ZBpk_r)
+  integer(8) :: seed
+  double precision :: xr, xi
+  integer :: nb
 
   ldh = NMAX
   ldz = NMAX
@@ -215,6 +226,62 @@ program test_zlaqr0
     end do
   end do
   call print_array('H', Hpk_r, 2*n*n)
+  call end_test()
+
+  ! ---- 40x40 random Hessenberg, Schur form and vectors (ticket 0049) ----
+  nb = 40
+  seed = 1
+  HB = (0.0d0, 0.0d0)
+  do j = 1, nb
+    do i = 1, min(j + 1, nb)
+      seed = mod(seed * 1103515245_8 + 12345_8, 2147483648_8)
+      xr = dble(seed) / 2147483648.0d0 - 0.5d0
+      seed = mod(seed * 1103515245_8 + 12345_8, 2147483648_8)
+      xi = dble(seed) / 2147483648.0d0 - 0.5d0
+      HB(i, j) = dcmplx(xr, xi)
+    end do
+  end do
+  ZB = (0.0d0, 0.0d0)
+  do i = 1, nb
+    ZB(i, i) = (1.0d0, 0.0d0)
+  end do
+  WB = (0.0d0, 0.0d0)
+  call ZLAQR0(.TRUE., .TRUE., nb, 1, nb, HB, NBIG, WB, 1, nb, ZB, NBIG, WORKB, 20000, info)
+  do j = 1, nb
+    do i = 1, nb
+      HBpk((j-1)*nb + i) = HB(i,j)
+      ZBpk((j-1)*nb + i) = ZB(i,j)
+    end do
+  end do
+  call begin_test('40x40_random_schur')
+  call print_int('info', info)
+  call print_array('w', WB_r, 2*nb)
+  call print_array('H', HBpk_r, 2*nb*nb)
+  call print_array('Z', ZBpk_r, 2*nb*nb)
+  call end_test()
+
+  ! ---- 100x100 random Hessenberg, eigenvalues only (ticket 0049) ----
+  nb = 100
+  seed = 1
+  HB = (0.0d0, 0.0d0)
+  do j = 1, nb
+    do i = 1, min(j + 1, nb)
+      seed = mod(seed * 1103515245_8 + 12345_8, 2147483648_8)
+      xr = dble(seed) / 2147483648.0d0 - 0.5d0
+      seed = mod(seed * 1103515245_8 + 12345_8, 2147483648_8)
+      xi = dble(seed) / 2147483648.0d0 - 0.5d0
+      HB(i, j) = dcmplx(xr, xi)
+    end do
+  end do
+  ZB = (0.0d0, 0.0d0)
+  do i = 1, nb
+    ZB(i, i) = (1.0d0, 0.0d0)
+  end do
+  WB = (0.0d0, 0.0d0)
+  call ZLAQR0(.FALSE., .FALSE., nb, 1, nb, HB, NBIG, WB, 1, nb, ZB, NBIG, WORKB, 20000, info)
+  call begin_test('100x100_random_eig')
+  call print_int('info', info)
+  call print_array('w', WB_r, 2*nb)
   call end_test()
 
 end program

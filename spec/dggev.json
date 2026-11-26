@@ -311,6 +311,26 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGEQRF",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMQR",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORGQR",
+			"into": "MAXWRK"
+		}
+	],
 	"overrides": [
 		{
 			"reason": "DGGEV hands its LWORK to DGEQRF, DORMQR and DORGQR, which pick their block size from LWORK and fall back to unblocked code when it is short of the optimum. The blocked and unblocked QR steps round differently, and the QZ iteration that follows can then reach a generalized Schur form (S,T) whose rows and columns differ by signs, with eigenvectors scaled by -1 (real) or by a different complex unit (complex pairs). ALPHAR, ALPHAI and BETA do not depend on LWORK beyond rounding; the module's tests check the eigenvalues at the minimum WORK past the blocking threshold (ticket 0100).",

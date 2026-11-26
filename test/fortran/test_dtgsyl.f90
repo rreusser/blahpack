@@ -9,6 +9,8 @@ program test_dtgsyl
   double precision :: SCALE, DIF, WORK(LWORK)
   integer :: IWORK(MAXN*3), INFO
   integer :: M, N
+  character(len=1) :: TR
+  integer :: IJ
 
   ! Test 1: 2x2 diagonal, IJOB=0, TRANS='N'
   A = 0.0d0; B = 0.0d0; C = 0.0d0; D = 0.0d0; E = 0.0d0; F = 0.0d0
@@ -254,5 +256,131 @@ program test_dtgsyl
   call print_matrix('C', C, MAXN, M, N)
   call print_matrix('F', F, MAXN, M, N)
   call end_test()
+
+
+  ! Blocked-path cases: ILAENV(2/5,'DTGSYL') = 2 = MB = NB, so these M, N exceed the
+  ! block sizes and take the blocked solver (block starts, 2x2 bumps, a merged last row).
+  TR = 'N'; IJ = 1; M = 5; N = 4
+  call gen(M, N, 3, 0)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('notrans_5x4_ijob1_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+  TR = 'T'; IJ = 0; M = 5; N = 4
+  call gen(M, N, 3, 0)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('trans_5x4_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+  TR = 'N'; IJ = 2; M = 5; N = 5
+  call gen(M, N, 0, 0)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('notrans_5x5_ijob2_merge')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+  TR = 'N'; IJ = 0; M = 7; N = 6
+  call gen(M, N, 0, 3)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('notrans_7x6_bumpB')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+  TR = 'T'; IJ = 0; M = 7; N = 6
+  call gen(M, N, 0, 3)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('trans_7x6_bumpB')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+  TR = 'N'; IJ = 3; M = 5; N = 4
+  call gen(M, N, 3, 0)
+  call DTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  call begin_test('notrans_5x4_ijob3_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_matrix('C', C, MAXN, M, N)
+  call print_matrix('F', F, MAXN, M, N)
+  call end_test()
+
+contains
+
+  ! Upper (quasi-)triangular (A,D) and (B,E); a 2x2 bump at row/column ba/bb (0 = none).
+  subroutine gen(mm, nn, ba, bb)
+    integer, intent(in) :: mm, nn, ba, bb
+    integer :: i, j
+    A = 0.0d0; B = 0.0d0; C = 0.0d0; D = 0.0d0; E = 0.0d0; F = 0.0d0
+    do j = 1, mm
+      do i = 1, j
+        if (i == j) then
+          A(i,j) = 1.0d0 + dble(i)
+          D(i,j) = 1.0d0 + 0.1d0*dble(i)
+        else
+          A(i,j) = 0.1d0*sin(dble(i + 2*j))
+          D(i,j) = 0.05d0*cos(dble(i + j))
+        end if
+      end do
+    end do
+    if (ba > 0) then
+      A(ba-1,ba-1) = A(ba,ba); A(ba-1,ba) = 0.5d0; A(ba,ba-1) = -0.5d0
+      D(ba-1,ba) = 0.0d0
+    end if
+    do j = 1, nn
+      do i = 1, j
+        if (i == j) then
+          B(i,j) = -(1.0d0 + 0.5d0*dble(i))
+          E(i,j) = 1.0d0 + 0.2d0*dble(i)
+        else
+          B(i,j) = 0.1d0*cos(dble(2*i + j))
+          E(i,j) = 0.05d0*sin(dble(i + j))
+        end if
+      end do
+    end do
+    if (bb > 0) then
+      B(bb-1,bb-1) = B(bb,bb); B(bb-1,bb) = 0.4d0; B(bb,bb-1) = -0.4d0
+      E(bb-1,bb) = 0.0d0
+    end if
+    do j = 1, nn
+      do i = 1, mm
+        C(i,j) = dble(i) + 0.5d0*dble(j)
+        F(i,j) = 1.0d0 + sin(dble(i*j))
+      end do
+    end do
+  end subroutine gen
 
 end program

@@ -13,6 +13,14 @@ program test_dgbtrf
   integer :: ipiv_big(N_BIG)
   integer :: i, j, kv_big
 
+  ! Parameters for the reference's blocked path: ILAENV( 1, 'DGBTRF' ) is
+  ! 32 only when KU > 64, and DGBTRF blocks only when NB <= KL
+  integer, parameter :: KL_BLK = 33, KU_BLK = 65
+  integer, parameter :: N_BLK = 100
+  integer, parameter :: LDAB_BLK = 2*KL_BLK + KU_BLK + 1
+  double precision :: AB_blk(LDAB_BLK, N_BLK)
+  integer :: ipiv_blk(N_BLK)
+
   ! ============================================================
   ! Test 1: 4x4 tridiagonal (KL=1, KU=1), LDAB=4
   ! Same as dgbtf2 test - should get same result (NB > KL so falls through)
@@ -128,6 +136,25 @@ program test_dgbtrf
   call begin_test('blocked_100x100_kl33')
   call print_array('AB', AB_packed, LDAB_BIG * N_BIG)
   call print_int_array('ipiv', ipiv_big, N_BIG)
+  call print_int('info', info)
+  call end_test()
+
+  ! ============================================================
+  ! Test 9: Blocked path - N=100, KL=33, KU=65 (NB = 32 <= KL), with
+  ! entries that force row interchanges within the band:
+  ! A(i,j) = ( MOD( 7*i*i + 13*j + 3*i*j, 23 ) - 11 ) / 4
+  AB_blk = 0.0d0
+  do j = 1, N_BLK
+    do i = max(1, j - KU_BLK), min(N_BLK, j + KL_BLK)
+      AB_blk(KL_BLK + KU_BLK + 1 + i - j, j) = &
+        dble(mod(7*i*i + 13*j + 3*i*j, 23) - 11) / 4.0d0
+    end do
+  end do
+  ipiv_blk = 0
+  call DGBTRF(N_BLK, N_BLK, KL_BLK, KU_BLK, AB_blk, LDAB_BLK, ipiv_blk, info)
+  call begin_test('blocked_100x100_kl33_ku65')
+  call print_matrix('AB', AB_blk, LDAB_BLK, LDAB_BLK, N_BLK)
+  call print_int_array('ipiv', ipiv_blk, N_BLK)
   call print_int('info', info)
   call end_test()
 

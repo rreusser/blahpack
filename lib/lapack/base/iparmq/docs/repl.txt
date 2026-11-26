@@ -1,0 +1,85 @@
+{{alias}}( ispec, name, opts, N, ilo, ihi )
+    Returns the tuning parameters of the multishift QR algorithm.
+
+    Parameters
+    ----------
+    ispec: integer
+        Parameter to return: `12` (`INMIN`, the order below which `xLAHQR` is
+        used), `13` (`INWIN`, the deflation window size), `14` (`INIBL`, the
+        nibble crossover point), `15` (`ISHFTS`, the number of simultaneous
+        shifts), `16` (`IACC22`, how to accumulate reflections), `17` (`ICOST`,
+        the relative cost of flops); any other value returns `-1`.
+
+    name: string
+        Name of the calling routine (e.g. `'DLAQR0'`), read only for `ispec =
+        16`; upper-cased, as in the reference, only when its first character is
+        a lower-case letter.
+
+    opts: string
+        Character options of the calling routine (not read).
+
+    N: integer
+        Order of the Hessenberg matrix.
+
+    ilo: integer
+        First row/column of the active block (1-based, as the reference's
+        `ILO`).
+
+    ihi: integer
+        Last row/column of the active block (1-based, as the reference's `IHI`).
+
+    Returns
+    -------
+    out: integer
+        Parameter value.
+
+    Examples
+    --------
+    > var v = {{alias}}( 15, 'DLAQR0', 'SV', 200, 1, 200 )
+    24
+
+
+{{alias}}.ndarray( ispec, name, opts, N, ilo, ihi )
+    Returns the tuning parameters of the multishift QR algorithm, using alternative indexing
+    semantics (the routine takes no arrays).
+
+    Parameters
+    ----------
+    ispec: integer
+        Parameter to return: `12` (`INMIN`, the order below which `xLAHQR` is
+        used), `13` (`INWIN`, the deflation window size), `14` (`INIBL`, the
+        nibble crossover point), `15` (`ISHFTS`, the number of simultaneous
+        shifts), `16` (`IACC22`, how to accumulate reflections), `17` (`ICOST`,
+        the relative cost of flops); any other value returns `-1`.
+
+    name: string
+        Name of the calling routine (e.g. `'DLAQR0'`), read only for `ispec =
+        16`; upper-cased, as in the reference, only when its first character is
+        a lower-case letter.
+
+    opts: string
+        Character options of the calling routine (not read).
+
+    N: integer
+        Order of the Hessenberg matrix.
+
+    ilo: integer
+        First row/column of the active block (1-based, as the reference's
+        `ILO`).
+
+    ihi: integer
+        Last row/column of the active block (1-based, as the reference's `IHI`).
+
+    Returns
+    -------
+    out: integer
+        Parameter value.
+
+    Examples
+    --------
+    > var v = {{alias}}.ndarray( 15, 'DLAQR0', 'SV', 200, 1, 200 )
+    24
+
+    See Also
+    --------
+

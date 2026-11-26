@@ -189,5 +189,13 @@
 				"IF( WANTZ ) A( 1, 1 ) = CONE"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZHETRD",
+			"into": "NB"
+		}
 	]
 }

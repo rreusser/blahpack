@@ -38,6 +38,21 @@
 				}
 			}
 		},
+		"tuning": {
+			"type": "array",
+			"description": "The reference's ILAENV/IPARMQ queries (generated from data/fortran-checks.json `ilaenv`): base.js makes each through the ilaenv module rather than a hard-coded constant (CONVENTIONS X3; ticket 0049).",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [ "fn", "ispec", "name", "into" ],
+				"properties": {
+					"fn": { "enum": [ "ilaenv", "iparmq" ] },
+					"ispec": { "type": "string", "description": "ISPEC as the reference writes it: a number or a PARAMETER name." },
+					"name": { "type": "string", "description": "The routine name the query passes (often another routine's)." },
+					"into": { "type": [ "string", "null" ], "description": "The variable the statement assigns (NB, NX, NBMIN, NMIN, ...)." }
+				}
+			}
+		},
 		"untranslated": { "type": "array", "items": { "type": "string" }, "description": "Expressions outside the translator's grammar (js is null there)." },
 		"notes": { "type": "array", "items": { "type": "string" }, "description": "Facts the generator could not derive (Appendix A gaps, undocumented arguments, ...)." },
 		"overrides": {

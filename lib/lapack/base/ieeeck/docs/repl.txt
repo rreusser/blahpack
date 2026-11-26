@@ -1,0 +1,57 @@
+{{alias}}( ispec, zero, one )
+    Checks whether infinity and NaN arithmetic is safe.
+
+    Parameters
+    ----------
+    ispec: integer
+        `0` checks infinity arithmetic only; any other value also checks NaN
+        arithmetic.
+
+    zero: number
+        The value `0.0` (rounded to single precision, as the reference's `REAL`
+        argument).
+
+    one: number
+        The value `1.0` (rounded to single precision).
+
+    Returns
+    -------
+    out: integer
+        `1` if the arithmetic is safe, `0` otherwise.
+
+    Examples
+    --------
+    > var v = {{alias}}( 1, 0.0, 1.0 )
+    1
+
+
+{{alias}}.ndarray( ispec, zero, one )
+    Checks whether infinity and NaN arithmetic is safe, using alternative indexing
+    semantics (the routine takes no arrays).
+
+    Parameters
+    ----------
+    ispec: integer
+        `0` checks infinity arithmetic only; any other value also checks NaN
+        arithmetic.
+
+    zero: number
+        The value `0.0` (rounded to single precision, as the reference's `REAL`
+        argument).
+
+    one: number
+        The value `1.0` (rounded to single precision).
+
+    Returns
+    -------
+    out: integer
+        `1` if the arithmetic is safe, `0` otherwise.
+
+    Examples
+    --------
+    > var v = {{alias}}.ndarray( 1, 0.0, 1.0 )
+    1
+
+    See Also
+    --------
+

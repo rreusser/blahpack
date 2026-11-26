@@ -9,6 +9,11 @@ program test_dlaqr3
   integer :: N, KTOP, KBOT, NW, NS, ND, ILOZ, IHIZ, NH, NV, LWORK
   logical :: WANTT, WANTZ
   integer :: i, j
+  ! Test 6: a 50x50 matrix with a 40-wide window (between the old JS crossover 12 and ILAENV(12) = 75)
+  integer, parameter :: NB6 = 50
+  double precision :: H6(NB6, NB6), Z6(NB6, NB6), SR6(NB6), SI6(NB6)
+  double precision :: V6(NB6, NB6), T6(NB6, NB6), WV6(NB6, NB6), WORK6(10000)
+  integer(8) :: seed
 
   ! ---- Test 1: 6x6 upper Hessenberg, NW=3, expect deflation ----
   N = 6
@@ -145,6 +150,33 @@ program test_dlaqr3
   call begin_test('empty deflation window')
   call print_int('ns', NS)
   call print_int('nd', ND)
+  call end_test()
+
+  ! ---- Test 6: JW = 40, so DLAQR3 solves the window with DLAHQR (JW <= NMIN = 75) ----
+  seed = 1
+  H6 = 0.0d0
+  do j = 1, NB6
+    do i = 1, min(j + 1, NB6)
+      seed = mod(seed * 1103515245_8 + 12345_8, 2147483648_8)
+      H6(i, j) = dble(seed) / 2147483648.0d0 - 0.5d0
+    end do
+  end do
+  Z6 = 0.0d0
+  do i = 1, NB6
+    Z6(i, i) = 1.0d0
+  end do
+  SR6 = 0.0d0; SI6 = 0.0d0
+
+  call DLAQR3(.true., .true., NB6, 1, NB6, 40, H6, NB6, 1, NB6, &
+              Z6, NB6, NS, ND, SR6, SI6, V6, NB6, NB6, T6, NB6, NB6, WV6, NB6, WORK6, 10000)
+
+  call begin_test('50x50 window 40')
+  call print_int('ns', NS)
+  call print_int('nd', ND)
+  call print_array('H', H6, NB6*NB6)
+  call print_array('Z', Z6, NB6*NB6)
+  call print_array('SR', SR6, NB6)
+  call print_array('SI', SI6, NB6)
   call end_test()
 
 end program

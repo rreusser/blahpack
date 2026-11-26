@@ -1,9 +1,9 @@
 program test_zpbtrf
   use test_utils
   implicit none
-  ! For the blocked path (NB=32), need kd>32 and matrices of size N>kd+NB
-  ! For testing, use small cases that fall through to zpbtf2,
-  ! plus a larger case with kd=33 to exercise the blocked path.
+  ! The reference's blocked path needs ILAENV( 1, 'ZPBTRF' ) = 32, which it
+  ! gives only when KD > 64, and NB <= KD: small cases fall through to
+  ! zpbtf2, and a larger case with KD=65 exercises the blocked path.
 
   ! Small cases (unblocked path)
   complex*16 :: AB(100)
@@ -12,7 +12,7 @@ program test_zpbtrf
   integer :: info
 
   ! Large case for blocked path
-  integer, parameter :: N_LARGE = 100, KD_LARGE = 33
+  integer, parameter :: N_LARGE = 100, KD_LARGE = 65
   integer, parameter :: LDAB_LARGE = KD_LARGE + 1
   complex*16 :: ABL(LDAB_LARGE * N_LARGE)
   double precision :: ABL_r(2 * LDAB_LARGE * N_LARGE)
@@ -69,44 +69,38 @@ program test_zpbtrf
   call print_int('info', info)
   call end_test()
 
-  ! Test 6: upper, blocked path (KD=33, N=100)
-  ! Build a diagonally dominant HPD banded matrix
+  ! Test 6: upper, blocked path (KD=65, N=100)
+  ! A diagonally dominant HPD banded matrix: for i < j,
+  ! A(i,j) = ( MOD( 7*(i+j) + i*j, 13 ) - 6 )/8 + i*( MOD( 3*i + 5*j, 11 ) - 5 )/8
   ABL = (0.0d0, 0.0d0)
   do j = 1, N_LARGE
-    ! Diagonal: ABL(KD_LARGE+1, j)
-    ABL((j-1)*LDAB_LARGE + KD_LARGE + 1) = dcmplx(100.0d0, 0.0d0)
-    ! Superdiagonals
-    do kk = 1, KD_LARGE
-      if (j + kk <= N_LARGE) then
-        ABL((j+kk-1)*LDAB_LARGE + KD_LARGE + 1 - kk) = &
-          dcmplx(0.5d0 / dble(kk), 0.1d0 / dble(kk))
-      end if
+    ABL((j-1)*LDAB_LARGE + KD_LARGE + 1) = dcmplx(200.0d0, 0.0d0)
+    do i = max(1, j - KD_LARGE), j - 1
+      ABL((j-1)*LDAB_LARGE + KD_LARGE + 1 + i - j) = dcmplx( &
+        dble(mod(7*(i+j) + i*j, 13) - 6) / 8.0d0, &
+        dble(mod(3*i + 5*j, 11) - 5) / 8.0d0)
     end do
   end do
   call zpbtrf('U', N_LARGE, KD_LARGE, ABL, LDAB_LARGE, info)
   call begin_test('upper_blocked')
   call print_int('info', info)
-  ! Print only the first 8 complex elements to keep fixture small
-  call print_array('AB', ABL_r, 16)
+  call print_array('AB', ABL_r, 2 * LDAB_LARGE * N_LARGE)
   call end_test()
 
-  ! Test 7: lower, blocked path (KD=33, N=100)
+  ! Test 7: lower, blocked path (KD=65, N=100), the same matrix
   ABL = (0.0d0, 0.0d0)
   do j = 1, N_LARGE
-    ! Diagonal: ABL(1, j)
-    ABL((j-1)*LDAB_LARGE + 1) = dcmplx(100.0d0, 0.0d0)
-    ! Subdiagonals
-    do kk = 1, KD_LARGE
-      if (j + kk <= N_LARGE) then
-        ABL((j-1)*LDAB_LARGE + 1 + kk) = &
-          dcmplx(0.5d0 / dble(kk), -0.1d0 / dble(kk))
-      end if
+    ABL((j-1)*LDAB_LARGE + 1) = dcmplx(200.0d0, 0.0d0)
+    do i = j + 1, min(N_LARGE, j + KD_LARGE)
+      ABL((j-1)*LDAB_LARGE + 1 + i - j) = dcmplx( &
+        dble(mod(7*(i+j) + i*j, 13) - 6) / 8.0d0, &
+        -dble(mod(3*j + 5*i, 11) - 5) / 8.0d0)
     end do
   end do
   call zpbtrf('L', N_LARGE, KD_LARGE, ABL, LDAB_LARGE, info)
   call begin_test('lower_blocked')
   call print_int('info', info)
-  call print_array('AB', ABL_r, 16)
+  call print_array('AB', ABL_r, 2 * LDAB_LARGE * N_LARGE)
   call end_test()
 
 end program

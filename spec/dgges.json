@@ -366,6 +366,26 @@
 			]
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGEQRF",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMQR",
+			"into": "MAXWRK"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORGQR",
+			"into": "MAXWRK"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
 	]

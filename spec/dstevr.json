@@ -299,5 +299,13 @@
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "10",
+			"name": "DSTEVR",
+			"into": "IEEEOK"
+		}
 	]
 }

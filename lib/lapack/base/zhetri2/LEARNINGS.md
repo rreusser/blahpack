@@ -13,11 +13,10 @@
     `MINSIZE` to `WORK(1)`). Per project convention this is dropped — the
     caller sizes `WORK` themselves. The `LWORK` parameter is therefore
     consumed (not exposed in JS), exactly like `LDA` and `INFO`.
--   `ILAENV(1, 'ZHETRF', ...)` is replaced with a hardcoded `NBMAX = 32`
-    (the convention documented in the skill). This means the dispatch
-    threshold differs slightly from a tuned Fortran build, but downstream
-    semantics are identical because `zhetri` and `zhetri2x` produce the
-    same inverse to within floating-point rounding.
+-   `ILAENV(1, 'ZHETRF', ...)` is called through the translated `ilaenv` module (64), in
+    `lib/base.js`, `lib/ndarray.js` (MINSIZE) and the wrapper's `null` allocation
+    (CONVENTIONS X3; ticket 0049). It used to be a hardcoded `NBMAX = 32`, which took the
+    blocked `zhetri2x` path for 33 <= N <= 64 where the reference takes `zhetri`.
 
 ## Dependency interface surprises
 
@@ -36,9 +35,9 @@
     transitive deps of `ZHETRF` (`zhetrf`, `zhetf2`, `zlahef`, `zlacgv`,
     `dlamch`, `dlapy2`, `disnan`, `dlaisnan`). Cross-checked against
     `deps_zhetri2x.txt` and merged its dependency set in.
--   To exercise the blocked path, the Fortran test allocates a 40x40
-    diagonally-dominant Hermitian matrix (so `N=40 > NBMAX=32`). All
-    smaller cases (n=4, n=5) exercise the unblocked `zhetri` path.
+-   The 40x40 case is below `NBMAX = 64`, so it runs the unblocked `zhetri`
+    path, as in the reference. The blocked path is exercised by the 70x70
+    cases (a separate `NBIG = 70` array in the Fortran test).
     `NMAX = 40` keeps the column padding visible to the JS test as
     `FIXTURE_LDA = 40`.
 -   Complex literal gotcha: `(3.0d0 + dble(i), 0.0d0)` is not a valid

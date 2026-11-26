@@ -2443,6 +2443,14 @@
 			"AB": "(LDAB,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"KV": [
@@ -2957,6 +2965,26 @@
 			"TAUQ": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGEBRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -3829,6 +3857,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -3985,6 +4027,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -4167,6 +4223,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -4348,6 +4418,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -4586,6 +4670,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGEHRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -5024,12 +5128,12 @@
 			"CWORK": "COMPLEX",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -5108,6 +5212,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "CGELQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGELQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -5343,6 +5461,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -5624,6 +5762,32 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -5759,6 +5923,56 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "CGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "CGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMBR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -6000,6 +6214,26 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "CGELSS"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -6138,6 +6372,20 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGELST"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGELST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -6267,6 +6515,32 @@
 			"RWORK": "(2*N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -7424,6 +7698,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGEQLF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -7531,6 +7825,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "CGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -7676,6 +7990,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "CGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "CGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "CGEQP3RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -7799,6 +8133,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "CGEQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -8091,6 +8439,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -8190,6 +8558,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -9021,6 +9409,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -9647,6 +10055,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "CGESVD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -10459,6 +10875,38 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "CGESVD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLS": [
@@ -10735,9 +11183,9 @@
 			"A": "COMPLEX",
 			"CWORK": "COMPLEX",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LRWORK": "INTEGER",
@@ -11470,6 +11918,14 @@
 			"A": "(LDA,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGETRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -11607,6 +12063,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGETRI"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGETRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -12395,6 +12865,26 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -12910,6 +13400,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -13179,6 +13689,26 @@
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -13660,6 +14190,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -13905,6 +14455,32 @@
 			"X": "(M)",
 			"Y": "(P)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -14060,6 +14636,32 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "CGGHD3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITQ": [
@@ -14394,6 +14996,32 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -14524,6 +15152,26 @@
 			"TAUB": "(MIN(N,P))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "CUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -14638,6 +15286,26 @@
 			"TAUB": "(MIN(P,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "CGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -15213,7 +15881,7 @@
 			"D": "COMPLEX",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -15358,7 +16026,7 @@
 			"D": "COMPLEX",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -15988,6 +16656,14 @@
 			"DU2": "(N-2)",
 			"IPIV": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOTRAN": [
@@ -18682,6 +19358,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LOWER": [
@@ -18965,6 +19649,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LOPT",
+				"ispec": "1",
+				"name": "CHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LIWMIN": [
@@ -19406,6 +20098,26 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "CHEEVR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -19638,6 +20350,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "CHEEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -19882,6 +20602,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -20331,6 +21065,14 @@
 			"A": "(LDA,N)",
 			"B": "(LDB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHEGST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -20445,6 +21187,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -20992,6 +21742,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -22083,6 +22841,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -22544,6 +23310,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -22698,6 +23472,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -23362,6 +24144,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -23709,6 +24511,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -23798,6 +24614,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -23916,6 +24740,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -24019,6 +24851,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CHETRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -24109,6 +24955,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CHETRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -24266,6 +25126,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "CHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -24455,6 +25323,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CHETRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -27862,6 +28738,14 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "CHSEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITZ": [
@@ -29552,7 +30436,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -29989,7 +30873,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -30527,7 +31411,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -31076,6 +31960,14 @@
 			"QSTORE": "(LDQS,N)",
 			"RWORK": "(1+3*N+2*N*LGN+3*N**2)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "CLAED0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -34537,6 +35429,38 @@
 			"W": "(N)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "CLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "CLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "CLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "CLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "CLAQR0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -34801,6 +35725,14 @@
 			"WV": "(LDWV,NW)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "CLAQR3"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -34899,6 +35831,38 @@
 			"W": "(N)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "CLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "CLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "CLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "CLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "CLAQR4"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -35358,6 +36322,38 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "CLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "CLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "CLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "CLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "RCOST",
+				"ispec": "17",
+				"name": "CLAQZ0"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ILQ": [
@@ -38532,6 +39528,14 @@
 			"WORK": "(LWORK)",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CLATRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -38801,6 +39805,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CLAUNHR_COL_GETRFNP"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -38983,6 +39995,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CLAUUM"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -39828,6 +40848,14 @@
 		"docDims": {
 			"AB": "(LDAB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CPBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -41290,6 +42318,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -42343,6 +43379,14 @@
 			"PIV": "(N)",
 			"WORK": "(2*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -42959,6 +44003,14 @@
 			"D": "(N)",
 			"E": "(N-1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CPTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -44130,6 +45182,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "CSTEDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPZ": [
@@ -47004,6 +48064,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -47577,6 +48645,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -47666,6 +48748,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -47782,6 +48872,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -47885,6 +48983,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CSYTRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -47975,6 +49087,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CSYTRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -48132,6 +49258,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "CSYTRI2"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -48321,6 +49455,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CSYTRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -51466,6 +52608,20 @@
 			"IWORK": "(M+N+2)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "2",
+				"name": "CTGSYL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "5",
+				"name": "CTGSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -53535,6 +54691,14 @@
 			"VR": "(LDVR,MM)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CTREVC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLV": [
@@ -54890,6 +56054,14 @@
 			"C": "(LDC,N)",
 			"SWORK": "(MAX(2,ROWS),MAX(1,COLS))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CTRSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LDSWORK": [
@@ -55080,6 +56252,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CTRTRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOUNIT": [
@@ -55415,6 +56595,26 @@
 			"TAU": "(M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -57712,6 +58912,14 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -57899,6 +59107,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CUNGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNGLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -58001,6 +59229,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNGQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -58101,6 +59349,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CUNGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -58282,6 +59550,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "CUNGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNGRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -58368,6 +59656,20 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -59317,6 +60619,20 @@
 				"flag": "VECT"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"APPLYQ": [
@@ -59506,6 +60822,14 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -59827,6 +61151,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -59989,6 +61327,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNMQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -60151,6 +61503,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -60629,6 +61995,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -60808,6 +62188,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "CUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -60982,6 +62376,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "CUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -61733,6 +63141,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "DBDSDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPQ": [
@@ -64221,6 +65637,14 @@
 			"AB": "(LDAB,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"KV": [
@@ -64739,6 +66163,26 @@
 			"TAUQ": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGEBRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -65580,6 +67024,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -65755,6 +67213,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -65944,6 +67416,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -66152,6 +67638,20 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -66391,6 +67891,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGEHRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -66633,12 +68153,12 @@
 			"A": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -66716,6 +68236,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "DGELQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGELQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -66951,6 +68485,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -67236,6 +68790,32 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -67370,6 +68950,56 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "DGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "DGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMBR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -67646,6 +69276,14 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "DGELSS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"BDSPAC": [
@@ -67807,6 +69445,20 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGELST"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGELST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -67935,6 +69587,32 @@
 			"JPVT": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -69089,6 +70767,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGEQLF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -69191,6 +70889,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "DGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -69335,6 +71053,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "DGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "DGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "DGEQP3RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -69457,6 +71195,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "DGEQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -69749,6 +71501,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -69848,6 +71620,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -70687,6 +72479,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -71242,6 +73054,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "DGESVD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"BDSPAC": [
@@ -72077,6 +73897,44 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "DGESVD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLS": [
@@ -72337,9 +74195,9 @@
 		"types": {
 			"A": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -73086,6 +74944,14 @@
 			"A": "(LDA,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGETRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -73226,6 +75092,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGETRI"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGETRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -74077,6 +75957,26 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -74604,6 +76504,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -74877,6 +76797,26 @@
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -75367,6 +77307,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -75610,6 +77570,32 @@
 			"X": "(M)",
 			"Y": "(P)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -75765,6 +77751,32 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "DGGHD3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITQ": [
@@ -76099,6 +78111,32 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -76229,6 +78267,26 @@
 			"TAUB": "(MIN(N,P))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "DORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -76343,6 +78401,26 @@
 			"TAUB": "(MIN(P,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "DGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -76910,7 +78988,7 @@
 			"D": "DOUBLE PRECISION",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -77055,7 +79133,7 @@
 			"D": "DOUBLE PRECISION",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -77698,6 +79776,14 @@
 			"DU2": "(N-2)",
 			"IPIV": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOTRAN": [
@@ -78374,6 +80460,14 @@
 			"WR": "(N)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "DHSEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITZ": [
@@ -79692,7 +81786,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -80137,7 +82231,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -80652,6 +82746,14 @@
 			"Q": "(LDQ,N)",
 			"QSTORE": "(LDQS,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "DLAED0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -84102,6 +86204,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DLAORHR_COL_GETRFNP"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -84990,6 +87100,38 @@
 			"WR": "(IHI)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "DLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "DLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "DLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "DLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "DLAQR0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -85278,6 +87420,14 @@
 			"WV": "(LDWV,NW)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "DLAQR3"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -85382,6 +87532,38 @@
 			"WR": "(IHI)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "DLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "DLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "DLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "DLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "DLAQR4"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -85938,6 +88120,38 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "DLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "DLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "DLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "DLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "RCOST",
+				"ispec": "17",
+				"name": "DLAQZ0"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ILQ": [
@@ -87646,6 +89860,14 @@
 			"WERR": "(N)",
 			"WORK": "(4*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSTEBZ"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -90497,6 +92719,14 @@
 		"docDims": {
 			"Z": "(4*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEE",
+				"ispec": "10",
+				"name": "DLASQ2"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ZERO": "0.0D0"
@@ -92047,6 +94277,14 @@
 			"WORK": "(LWORK)",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DLATRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -92372,6 +94610,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DLAUUM"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -94864,6 +97110,14 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -95051,6 +97305,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DORGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORGLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -95153,6 +97427,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORGQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -95253,6 +97547,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DORGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -95434,6 +97748,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DORGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORGRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -95520,6 +97854,20 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -96468,6 +98816,20 @@
 				"flag": "VECT"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"APPLYQ": [
@@ -96657,6 +99019,14 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -96978,6 +99348,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -97142,6 +99526,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORMQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -97304,6 +99702,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -97782,6 +100194,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -97961,6 +100387,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -98137,6 +100577,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -99035,6 +101489,14 @@
 		"docDims": {
 			"AB": "(LDAB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DPBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -100518,6 +102980,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -101588,6 +104058,14 @@
 			"PIV": "(N)",
 			"WORK": "(2*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -102180,6 +104658,14 @@
 			"D": "(N)",
 			"E": "(N-1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DPTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -102637,7 +105123,7 @@
 			"RITZ": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION"
 		}
@@ -102703,7 +105189,7 @@
 			"RESID": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION"
 		}
@@ -105062,7 +107548,7 @@
 			"SIGMA": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION",
 			"Z": "DOUBLE PRECISION"
@@ -107420,6 +109906,14 @@
 			"W": "(N)",
 			"WORK": "(4*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSTEBZ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IORDER": [
@@ -107570,6 +110064,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "DSTEDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPZ": [
@@ -108689,6 +111191,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "DSTEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -109682,6 +112192,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LOWER": [
@@ -109950,6 +112468,14 @@
 			"W": "(N)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LOPT",
+				"ispec": "1",
+				"name": "DSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LIWMIN": [
@@ -110339,6 +112865,26 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "DSYEVR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -110554,6 +113100,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "DSYEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -110789,6 +113343,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DORMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -111235,6 +113803,14 @@
 			"A": "(LDA,N)",
 			"B": "(LDB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYGST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -111344,6 +113920,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -111854,6 +114438,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -113574,6 +116166,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -114248,6 +116848,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -114595,6 +117215,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -114684,6 +117318,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -114800,6 +117442,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -114903,6 +117553,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DSYTRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -114993,6 +117657,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DSYTRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -115150,6 +117828,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "DSYTRI2"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -115339,6 +118025,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DSYTRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -118618,6 +121312,20 @@
 			"IWORK": "(M+N+6)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "2",
+				"name": "DTGSYL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "5",
+				"name": "DTGSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -120694,6 +123402,14 @@
 			"VR": "(LDVR,MM)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DTREVC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLV": [
@@ -122141,6 +124857,14 @@
 			"IWORK": "(MAX(1,LIWORK))",
 			"SWORK": "(MAX(2,ROWS),MAX(1,COLS))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DTRSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LDSWORK": [
@@ -122333,6 +125057,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DTRTRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOUNIT": [
@@ -122668,6 +125400,26 @@
 			"TAU": "(M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "DGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "DGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -123229,7 +125981,8 @@
 			"N2": "INTEGER",
 			"N3": "INTEGER",
 			"N4": "INTEGER",
-			"OPTS": "CHARACTER*("
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"ilaenv2stage": {
@@ -123252,7 +126005,8 @@
 			"N2": "INTEGER",
 			"N3": "INTEGER",
 			"N4": "INTEGER",
-			"OPTS": "CHARACTER*("
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"ilaslc": {
@@ -123408,8 +126162,8 @@
 			"ISPEC": "INTEGER",
 			"LWORK": "INTEGER",
 			"N": "INTEGER",
-			"NAME": "CHARACTER",
-			"OPTS": "CHARACTER"
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"isamax": {
@@ -123554,7 +126308,8 @@
 		"package": "lapack",
 		"quick": [],
 		"types": {
-			"CB": "CHARACTER*(",
+			"CA": "CHARACTER*(*)",
+			"CB": "CHARACTER*(*)",
 			"N": "INTEGER"
 		}
 	},
@@ -124018,6 +126773,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "SBDSDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPQ": [
@@ -126596,6 +129359,14 @@
 			"AB": "(LDAB,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"KV": [
@@ -127110,6 +129881,26 @@
 			"TAUQ": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGEBRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -127932,6 +130723,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -128103,6 +130908,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -128288,6 +131107,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"WR": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -128492,6 +131325,20 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -128731,6 +131578,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGEHRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -128968,12 +131835,12 @@
 			"A": "REAL",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -129051,6 +131918,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "SGELQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGELQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -129286,6 +132167,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -129567,6 +132468,32 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -129697,6 +132624,56 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "SGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "SGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMBR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -129965,6 +132942,20 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "SGELSS"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"BDSPAC": [
@@ -130122,6 +133113,20 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGELST"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGELST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -130246,6 +133251,32 @@
 			"JPVT": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -131400,6 +134431,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGEQLF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -131502,6 +134553,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "SGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -131641,6 +134712,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "SGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "SGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "SGEQP3RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -131763,6 +134854,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "SGEQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -132055,6 +135160,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -132154,6 +135279,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -132985,6 +136130,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -133528,6 +136693,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "SGESVD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"BDSPAC": [
@@ -134354,6 +137527,44 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "SGESVD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLS": [
@@ -134609,9 +137820,9 @@
 		"types": {
 			"A": "REAL",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -135343,6 +138554,14 @@
 			"A": "(LDA,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGETRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -135480,6 +138699,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGETRI"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGETRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -136269,6 +139502,26 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -136788,6 +140041,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -137057,6 +140330,26 @@
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -137539,6 +140832,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -137788,6 +141101,32 @@
 			"X": "(M)",
 			"Y": "(P)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -137943,6 +141282,32 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "SGGHD3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITQ": [
@@ -138277,6 +141642,32 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -138407,6 +141798,26 @@
 			"TAUB": "(MIN(N,P))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "SORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -138521,6 +141932,26 @@
 			"TAUB": "(MIN(P,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "SGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -139084,7 +142515,7 @@
 			"D": "REAL",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -139229,7 +142660,7 @@
 			"D": "REAL",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -139865,6 +143296,14 @@
 			"DU2": "(N-2)",
 			"IPIV": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOTRAN": [
@@ -140532,6 +143971,14 @@
 			"WR": "(N)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "SHSEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITZ": [
@@ -141832,7 +145279,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -142267,7 +145714,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -142777,6 +146224,14 @@
 			"Q": "(LDQ,N)",
 			"QSTORE": "(LDQS,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "SLAED0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -146180,6 +149635,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SLAORHR_COL_GETRFNP"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -147037,6 +150500,38 @@
 			"WR": "(IHI)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "SLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "SLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "SLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "SLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "SLAQR0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -147317,6 +150812,14 @@
 			"WV": "(LDWV,NW)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "SLAQR3"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -147421,6 +150924,38 @@
 			"WR": "(IHI)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "SLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "SLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "SLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "SLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "SLAQR4"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -147953,6 +151488,38 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "SLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "SLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "SLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "SLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "RCOST",
+				"ispec": "17",
+				"name": "SLAQZ0"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ILQ": [
@@ -149634,6 +153201,14 @@
 			"WERR": "(N)",
 			"WORK": "(4*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSTEBZ"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -153899,6 +157474,14 @@
 			"WORK": "(LWORK)",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SLATRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -154224,6 +157807,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SLAUUM"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -156710,6 +160301,14 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -156897,6 +160496,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SORGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORGLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -156999,6 +160618,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORGQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -157099,6 +160738,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SORGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -157280,6 +160939,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SORGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORGRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -157366,6 +161045,20 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -158314,6 +162007,20 @@
 				"flag": "VECT"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"APPLYQ": [
@@ -158503,6 +162210,14 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -158824,6 +162539,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -158988,6 +162717,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORMQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -159150,6 +162893,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -159628,6 +163385,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -159807,6 +163578,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SORMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -159981,6 +163766,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -160868,6 +164667,14 @@
 		"docDims": {
 			"AB": "(LDAB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SPBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -162330,6 +166137,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -163383,6 +167198,14 @@
 			"PIV": "(N)",
 			"WORK": "(2*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -163968,6 +167791,14 @@
 			"D": "(N)",
 			"E": "(N-1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SPTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -168356,6 +172187,14 @@
 			"W": "(N)",
 			"WORK": "(4*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSTEBZ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IORDER": [
@@ -168503,6 +172342,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "SSTEDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPZ": [
@@ -169594,6 +173441,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "SSTEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -170524,6 +174379,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LOWER": [
@@ -170784,6 +174647,14 @@
 			"W": "(N)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LOPT",
+				"ispec": "1",
+				"name": "SSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LIWMIN": [
@@ -171165,6 +175036,26 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "SSYEVR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -171376,6 +175267,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "SSYEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -171607,6 +175506,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SORMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -172049,6 +175962,14 @@
 			"A": "(LDA,N)",
 			"B": "(LDB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYGST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -172158,6 +176079,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -172668,6 +176597,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -174377,6 +178314,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175041,6 +178986,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SSYTRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SSYTRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175388,6 +179353,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175477,6 +179456,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175593,6 +179580,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -175696,6 +179691,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SSYTRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175786,6 +179795,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SSYTRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -175943,6 +179966,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "SSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -176132,6 +180163,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SSYTRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -179389,6 +183428,20 @@
 			"IWORK": "(M+N+6)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "2",
+				"name": "STGSYL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "5",
+				"name": "STGSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -181447,6 +185500,14 @@
 			"VR": "(LDVR,MM)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "STREVC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLV": [
@@ -182887,6 +186948,14 @@
 			"IWORK": "(MAX(1,LIWORK))",
 			"SWORK": "(MAX(2,ROWS),MAX(1,COLS))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "STRSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LDSWORK": [
@@ -183079,6 +187148,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "STRTRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOUNIT": [
@@ -183414,6 +187491,26 @@
 			"TAU": "(M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "SGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "SGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -186311,6 +190408,14 @@
 			"AB": "(LDAB,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"KV": [
@@ -186829,6 +190934,26 @@
 			"TAUQ": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGEBRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -187720,6 +191845,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -187880,6 +192019,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -188066,6 +192219,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -188251,6 +192418,20 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGHR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -188489,6 +192670,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(LWORK)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGEHRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGEHRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -188932,12 +193133,12 @@
 			"CWORK": "COMPLEX*16",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -189016,6 +193217,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "ZGELQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGELQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -189251,6 +193466,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -189536,6 +193771,32 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -189675,6 +193936,56 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "ZGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "ZGELSD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMBR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGELQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -189920,6 +194231,26 @@
 			"S": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "ZGELSS"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -190062,6 +194393,20 @@
 			"B": "(LDB,NRHS)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGELST"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGELST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -190195,6 +194540,32 @@
 			"RWORK": "(2*N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -191352,6 +195723,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGEQLF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGEQLF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -191459,6 +195850,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "ZGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -191609,6 +196020,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "INB",
+				"name": "ZGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "IXOVER",
+				"name": "ZGEQP3RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "INBMIN",
+				"name": "ZGEQP3RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IWS": [
@@ -191732,6 +196163,20 @@
 			"T": "(MAX(5,TSIZE))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "1",
+				"name": "ZGEQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LMINWS": [
@@ -192024,6 +196469,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -192123,6 +196588,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGEQRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -192961,6 +197446,26 @@
 			"TAU": "(MIN(M,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"K": [
@@ -193599,6 +198104,14 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "ZGESVD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -194420,6 +198933,38 @@
 			"VT": "(LDVT,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MNTHR",
+				"ispec": "6",
+				"name": "ZGESVD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEBRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGELQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLS": [
@@ -194701,9 +199246,9 @@
 			"A": "COMPLEX*16",
 			"CWORK": "COMPLEX*16",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LRWORK": "INTEGER",
@@ -195450,6 +199995,14 @@
 			"A": "(LDA,N)",
 			"IPIV": "(MIN(M,N))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGETRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -195590,6 +200143,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGETRI"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGETRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -196389,6 +200956,26 @@
 			"VSR": "(LDVSR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -196912,6 +201499,26 @@
 				"flag": "SENSE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -197186,6 +201793,26 @@
 			"VR": "(LDVR,N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "LWKOPT",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -197676,6 +202303,26 @@
 				"flag": "JOB"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "MAXWRK",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"IJOBVL": [
@@ -197921,6 +202568,32 @@
 			"X": "(M)",
 			"Y": "(P)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -198076,6 +202749,32 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGGHD3"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "ZGGHD3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITQ": [
@@ -198410,6 +203109,32 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB4",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -198540,6 +203265,26 @@
 			"TAUB": "(MIN(N,P))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -198654,6 +203399,26 @@
 			"TAUB": "(MIN(P,N))",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB1",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB2",
+				"ispec": "1",
+				"name": "ZGEQRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB3",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -199233,7 +203998,7 @@
 			"D": "COMPLEX*16",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -199378,7 +204143,7 @@
 			"D": "COMPLEX*16",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -200015,6 +204780,14 @@
 			"DU2": "(N-2)",
 			"IPIV": "(N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOTRAN": [
@@ -202741,6 +207514,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LOWER": [
@@ -203032,6 +207813,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "LOPT",
+				"ispec": "1",
+				"name": "ZHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LIWMIN": [
@@ -203481,6 +208270,26 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "ZHEEVR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -203717,6 +208526,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "IEEEOK",
+				"ispec": "10",
+				"name": "ZHEEVR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -203965,6 +208782,20 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMTR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -204418,6 +209249,14 @@
 			"A": "(LDA,N)",
 			"B": "(LDB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHEGST"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -204532,6 +209371,14 @@
 			"W": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -205079,6 +209926,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,MAX(1,M))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLEIG": [
@@ -206177,6 +211032,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -206638,6 +211501,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -206795,6 +211666,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -207468,6 +212347,26 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZHETRD"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZHETRD"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -207815,6 +212714,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -207904,6 +212817,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -208022,6 +212943,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -208125,6 +213054,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZHETRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -208215,6 +213158,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZHETRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -208372,6 +213329,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "ZHETRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -208561,6 +213526,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZHETRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -211996,6 +216969,14 @@
 			"WORK": "(LWORK)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "ZHSEQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"INITZ": [
@@ -213707,7 +218688,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -214151,7 +219132,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -214696,7 +219677,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -215251,6 +220232,14 @@
 			"QSTORE": "(LDQS,N)",
 			"RWORK": "(1+3*N+2*N*LGN+3*N**2)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "ZLAED0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -218768,6 +223757,38 @@
 			"W": "(N)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "ZLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "ZLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "ZLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "ZLAQR0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "ZLAQR0"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -219040,6 +224061,14 @@
 			"WV": "(LDWV,NW)",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "ZLAQR3"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [],
@@ -219138,6 +224167,38 @@
 			"W": "(N)",
 			"Z": "(LDZ,IHI)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "ZLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "ZLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "ZLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "ZLAQR4"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "KACC22",
+				"ispec": "16",
+				"name": "ZLAQR4"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -219617,6 +224678,38 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NMIN",
+				"ispec": "12",
+				"name": "ZLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NWR",
+				"ispec": "13",
+				"name": "ZLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NIBBLE",
+				"ispec": "14",
+				"name": "ZLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NSR",
+				"ispec": "15",
+				"name": "ZLAQZ0"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "RCOST",
+				"ispec": "17",
+				"name": "ZLAQZ0"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ILQ": [
@@ -222896,6 +227989,14 @@
 			"WORK": "(LWORK)",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZLATRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -223165,6 +228266,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZLAUNHR_COL_GETRFNP"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -223350,6 +228459,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZLAUUM"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -224206,6 +229323,14 @@
 		"docDims": {
 			"AB": "(LDAB,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZPBTRF"
+			}
+		],
 		"kind": "subroutine",
 		"package": "lapack",
 		"quick": [
@@ -225688,6 +230813,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -226758,6 +231891,14 @@
 			"PIV": "(N)",
 			"WORK": "(2*N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZPOTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -227381,6 +232522,14 @@
 			"D": "(N)",
 			"E": "(N-1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZPTTRS"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"UPPER": [
@@ -228449,6 +233598,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"Z": "(LDZ,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "SMLSIZ",
+				"ispec": "9",
+				"name": "ZSTEDC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ICOMPZ": [
@@ -231348,6 +236505,14 @@
 			"WORK": "(MAX(1,LWORK))",
 			"X": "(LDX,NRHS)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -231930,6 +237095,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZSYTRF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -232019,6 +237198,14 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF_AA"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -232135,6 +237322,14 @@
 			"IPIV2": "(N)",
 			"TB": "(LTB)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF_AA_2STAGE"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"TQUERY": [
@@ -232238,6 +237433,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF_RK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZSYTRF_RK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -232328,6 +237537,20 @@
 			"IPIV": "(N)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRF_ROOK"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZSYTRF_ROOK"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -232485,6 +237708,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NBMAX",
+				"ispec": "1",
+				"name": "ZSYTRI2"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -232674,6 +237905,14 @@
 			"IPIV": "(N)",
 			"WORK": "(N+NB+1)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZSYTRI_3"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -235840,6 +241079,20 @@
 			"IWORK": "(M+N+2)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "MB",
+				"ispec": "2",
+				"name": "ZTGSYL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "5",
+				"name": "ZTGSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -237927,6 +243180,14 @@
 			"VR": "(LDVR,MM)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZTREVC"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"ALLV": [
@@ -239297,6 +244558,14 @@
 			"C": "(LDC,N)",
 			"SWORK": "(MAX(2,ROWS),MAX(1,COLS))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZTRSYL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LDSWORK": [
@@ -239487,6 +244756,14 @@
 		"docDims": {
 			"A": "(LDA,N)"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZTRTRI"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"NOUNIT": [
@@ -239822,6 +245099,26 @@
 			"TAU": "(M)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZGERQF"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZGERQF"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242125,6 +247422,14 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242312,6 +247617,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZUNGLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNGLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242414,6 +247739,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNGQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242514,6 +247859,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZUNGQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242695,6 +248060,26 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NX",
+				"ispec": "3",
+				"name": "ZUNGRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNGRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -242781,6 +248166,20 @@
 			"TAU": "(N-1)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNGQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LQUERY": [
@@ -243730,6 +249129,20 @@
 				"flag": "VECT"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"APPLYQ": [
@@ -243919,6 +249332,14 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -244240,6 +249661,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMLQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNMLQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -244404,6 +249839,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNMQL"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -244566,6 +250015,20 @@
 			"TAU": "(K)",
 			"WORK": "(MAX(1,LWORK))"
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -245044,6 +250507,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -245223,6 +250700,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMRQ"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NBMIN",
+				"ispec": "2",
+				"name": "ZUNMRQ"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [
@@ -245397,6 +250888,20 @@
 				"flag": "SIDE"
 			}
 		},
+		"ilaenv": [
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQL"
+			},
+			{
+				"fn": "ilaenv",
+				"into": "NB",
+				"ispec": "1",
+				"name": "ZUNMQR"
+			}
+		],
 		"kind": "subroutine",
 		"locals": {
 			"LEFT": [

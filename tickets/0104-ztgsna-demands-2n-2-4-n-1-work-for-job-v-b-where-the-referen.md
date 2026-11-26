@@ -1,9 +1,10 @@
 ---
 id: 0104
 title: ztgsna demands 2N^2 + 4(N-1) WORK for JOB = V/B where the reference demands 2N^2
-status: open
+status: resolved
 area: base
 opened: 2026-11-26
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -22,3 +23,7 @@ How it is permitted: the `min-work` replay only lowers a workspace to what `ndar
 ```bash
 grep -n "4 \* ( N - 1 )" lib/lapack/base/ztgsna/lib/ndarray.js
 ```
+
+## Resolution
+
+ztgsna's ndarray.js and wrapper now demand and allocate the reference's 2*N*N for JOB = V/B; ztgsyl, called with IJOB = 3, never touches the WORK it is handed (the reference passes a length-1 DUMMY). Regression test: WORK of exactly 2*N*N at offset 2 matches an ample WORK, and one less throws.

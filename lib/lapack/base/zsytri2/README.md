@@ -55,7 +55,7 @@ The function has the following parameters:
 -   **LDA**: leading dimension of `A`.
 -   **IPIV**: pivot indices from `zsytrf`.
 -   **strideIPIV**: stride length for `IPIV`.
--   **WORK**: workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally.
+-   **WORK**: workspace of length at least `max(1,N)` when `N <= NBMAX`, else `(N+NBMAX+1)*(NBMAX+3)`, where `NBMAX = ILAENV( 1, 'ZSYTRI2', ... ) = 1`; if `null`, a workspace is allocated internally.
 
 #### zsytri2.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWORK, offsetWORK )
 
@@ -93,7 +93,7 @@ The function has the following additional parameters:
 
 ## Notes
 
--   The routine dispatches at the JS-level block-size threshold `NBMAX = 32`. When `N <= NBMAX`, the unblocked worker `zsytri` is invoked and `WORK` must hold at least `N` complex elements. When `N > NBMAX`, the blocked worker `zsytri2x` is invoked and `WORK` must hold at least `(N+NBMAX+1)*(NBMAX+3)` complex elements arranged column-major with leading dimension `N+NBMAX+1`.
+-   The routine dispatches at the reference's block size `NBMAX = ILAENV( 1, 'ZSYTRI2', ... )`, which is `1` (ILAENV has no `SY`/`TRI` entry), so every `N > 1` takes the blocked path with `NB = 1`. When `N <= NBMAX`, the unblocked worker `zsytri` is invoked and `WORK` must hold at least `N` complex elements. When `N > NBMAX`, the blocked worker `zsytri2x` is invoked and `WORK` must hold at least `(N+NBMAX+1)*(NBMAX+3)` complex elements arranged column-major with leading dimension `N+NBMAX+1`.
 -   The BLAS-style wrapper `zsytri2( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK )` allocates `WORK` internally when `WORK` is `null`, with the correct size for the dispatch path it will take.
 -   `IPIV` follows the JS convention used throughout the Bunch-Kaufman family: non-negative entries denote `1x1` pivot blocks (target row index `0`-based); negative entries `raw` denote `2x2` pivot blocks with target `~raw` (bitwise NOT).
 -   Returns `0` on success; a positive integer `k` indicates that `D[k,k] = 0` and the inverse could not be computed.

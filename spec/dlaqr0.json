@@ -196,5 +196,37 @@
 				"WORK( 1 ) = ONE"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "13",
+			"name": "DLAQR0",
+			"into": "NWR"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "15",
+			"name": "DLAQR0",
+			"into": "NSR"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "12",
+			"name": "DLAQR0",
+			"into": "NMIN"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "14",
+			"name": "DLAQR0",
+			"into": "NIBBLE"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "16",
+			"name": "DLAQR0",
+			"into": "KACC22"
+		}
 	]
 }

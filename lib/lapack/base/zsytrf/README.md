@@ -53,7 +53,7 @@ The function has the following parameters:
 -   **LDA**: leading dimension of `A`.
 -   **IPIV**: output pivot indices.
 -   **strideIPIV**: stride length for `IPIV`.
--   **WORK**: workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally.
+-   **WORK**: workspace (length >= 1; `N*NB`, with `NB = 64` from `ilaenv`, enables the blocked algorithm); if `null`, a workspace is allocated internally.
 
 #### zsytrf.ndarray( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV )
 

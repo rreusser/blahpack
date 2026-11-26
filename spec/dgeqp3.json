@@ -148,6 +148,26 @@
 		}
 	],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "INB",
+			"name": "DGEQRF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "IXOVER",
+			"name": "DGEQRF",
+			"into": "NX"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "INBMIN",
+			"name": "DGEQRF",
+			"into": "NBMIN"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local IWS is assigned inside nested control flow"
 	]

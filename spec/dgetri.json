@@ -121,5 +121,19 @@
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGETRI",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "DGETRI",
+			"into": "NBMIN"
+		}
 	]
 }

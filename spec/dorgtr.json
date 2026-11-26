@@ -143,5 +143,19 @@
 				"WORK( 1 ) = 1"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORGQL",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORGQR",
+			"into": "NB"
+		}
 	]
 }

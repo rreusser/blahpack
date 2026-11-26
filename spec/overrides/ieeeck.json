@@ -1,0 +1,11 @@
+{
+	"routine": "ieeeck",
+	"overrides": [
+		{
+			"reason": "ISPEC selects which test to run (0: infinity arithmetic only; otherwise infinity and NaN), it is not a dimension: the generator reads its quick return `IF( ISPEC.EQ.0 ) RETURN` as a dimension's quick return.",
+			"set": {
+				"params.ISPEC.role": "scalar"
+			}
+		}
+	]
+}

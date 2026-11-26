@@ -170,7 +170,13 @@ transform in `bin/transform.py` or script in `bin/`) before continuing.
 ## Known problems
 
 Every known problem is a ticket (`tickets/`, `node bin/tickets.js new "<problem>"`),
-never only prose (CONVENTIONS P1–P4). CI enforces most of this:
+never only prose (CONVENTIONS P1–P5). CI enforces most of this:
+
+- **One ticket per problem:** `tickets.js new` lists the open tickets most like
+  the new one; read them, add evidence to the matching one, and pass
+  `--reviewed` only when none matches. A verified defect confined to a module or
+  two, found while doing other work, is fixed in that PR with its regression
+  test rather than ticketed (P5).
 
 - **PR descriptions:** a "not in this PR" / "known gaps" / "follow-up" line, and
   each list item under such a heading, cites `ticket NNNN`
@@ -221,8 +227,9 @@ most valuable output. This overrides any inclination to "just fix it."
   `deps_dgels.txt`); the script builds the `.mod` files in a per-routine dir.
 - **`deps.py` misses transitive Fortran-only dependencies.** Routines
   that call `ILAENV` transitively need `ilaenv`, `ieeeck`, `iparmq` in
-  their Fortran deps file for test compilation. These are not JS
-  dependencies (ILAENV is replaced with hardcoded constants), but
-  `deps_<routine>.txt` must include them for `test/run_fortran.sh` to link.
+  their Fortran deps file for test compilation. In JS they are ordinary
+  modules too (`lib/lapack/base/ilaenv`, CONVENTIONS X3), but `deps.py` does
+  not list them for the Fortran side, so `deps_<routine>.txt` must include
+  them for `test/run_fortran.sh` to link.
   Check the deps files of similar routines when compilation fails with
   undefined references.

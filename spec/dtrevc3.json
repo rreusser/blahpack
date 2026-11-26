@@ -263,6 +263,14 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DTREVC",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"check -11: tests the output argument M (its value is computed, not passed in)"
 	]

@@ -141,5 +141,13 @@
 			"fortran": "M.EQ.0 .OR. N.EQ.0",
 			"js": "M === 0 || N === 0"
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGBTRF",
+			"into": "NB"
+		}
 	]
 }

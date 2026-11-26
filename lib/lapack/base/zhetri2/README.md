@@ -94,7 +94,7 @@ The function has the following additional parameters:
 ## Notes
 
 -   `zhetri2` is a thin dispatcher: when `N` is at most the internal block size, it calls [`zhetri`][@stdlib/lapack/base/zhetri] (the unblocked variant, which only requires `WORK` of length `N`). When `N` exceeds the block size, it calls [`zhetri2x`][@stdlib/lapack/base/zhetri2x] (the blocked variant, which uses a larger workspace to leverage BLAS-3 GEMM/TRMM updates).
--   The Fortran reference picks the block size via `ILAENV(1, 'ZHETRF', ...)`. Following project convention, this routine uses a hardcoded value (`NBMAX = 32`); the workspace-query path (`LWORK = -1`) is not exposed.
+-   The block size is the reference's `NBMAX = ILAENV( 1, 'ZHETRF', ... )` (64): `N <= 64` dispatches to `zhetri` (`WORK` of `N` complex elements), larger `N` to `zhetri2x` (`WORK` of `(N+NBMAX+1)*(NBMAX+3)` complex elements). The workspace-query path (`LWORK = -1`) is not exposed.
 -   On entry, `A` must contain the Bunch-Kaufman factorization of a Hermitian matrix as produced by [`zhetrf`][@stdlib/lapack/base/zhetrf].
 
 </section>

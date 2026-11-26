@@ -37,7 +37,7 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @param IPIV - output pivot indices
 	* @param strideIPIV - stride length for `IPIV`
-	* @param WORK - workspace (length >= 1; `N*32` enables the blocked algorithm); if `null`, a workspace is allocated internally
+	* @param WORK - workspace (length >= 1; `N*NB`, with `NB = 64` from `ilaenv`, enables the blocked algorithm); if `null`, a workspace is allocated internally
 	* @returns info status code
 	*/
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Complex128Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Complex128Array | null ): number;

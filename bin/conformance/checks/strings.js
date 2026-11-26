@@ -8,7 +8,6 @@ var ID = 'strings';
 // Pattern: single-char string in code (not in comments, requires, eslint directives,
 // or object-property keys like `'K': 0`).
 var SINGLE_CHAR_CODE = /'[A-Z0-9]'/;
-var COMMENT_OR_REQUIRE = /\/\/|^\s*\*|eslint|require/;
 // Skip lines that contain a single-char literal in object-key position only,
 // e.g. `'K': 0,`. We accept the literal when there's also a non-key
 // occurrence on the line (e.g. `dlamch( 'E' )` — that's a real flag).
@@ -35,8 +34,9 @@ function check( mod ) {
 		// single-char literals are object-property keys.
 		locs = [];
 		for ( i = 0; i < hits.length; i++ ) {
-			if ( COMMENT_OR_REQUIRE.test( hits[ i ].text ) ) continue;
-			if ( OBJECT_KEY_ONLY.test( hits[ i ].text ) ) continue;
+			var code = util.flagCheckCode( hits[ i ].text );
+			if ( code === null || !SINGLE_CHAR_CODE.test( code ) ) continue;
+			if ( OBJECT_KEY_ONLY.test( code ) ) continue;
 			locs.push( 'base.js:' + hits[ i ].line );
 		}
 		if ( locs.length === 0 ) {

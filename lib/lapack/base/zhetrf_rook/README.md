@@ -99,7 +99,7 @@ The additional parameters relative to the BLAS-style API are:
 
 ## Notes
 
--   The implementation is a blocked driver: it calls `zlahef_rook` for full panels of width `NB = 32` and falls back to the unblocked kernel `zhetf2_rook` for the trailing submatrix.
+-   The implementation is a blocked driver: it calls `zlahef_rook` for full panels of width `NB` (64, from `ilaenv`) and falls back to the unblocked kernel `zhetf2_rook` for the trailing submatrix.
 -   `IPIV` follows the stdlib bitwise-NOT convention: positive entries indicate a 1x1 pivot whose target row is the value itself; negative entries `~p` indicate a 2x2 pivot block whose swap target is `~IPIV[i]`. Because rook pivoting performs an extra row/column search, the two entries of a 2x2 block can encode different swap targets (unlike the original Bunch-Kaufman variant).
 -   For Hermitian matrices, the diagonal entries of `A` are real-valued; the imaginary parts on the diagonal are forced to zero on exit.
 

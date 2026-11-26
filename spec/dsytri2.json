@@ -145,6 +145,14 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRI2",
+			"into": "NBMAX"
+		}
+	],
 	"untranslated": [
 		"WORK.length: unknown identifier NB",
 		"WORK.minLength: unsupported call ILAENV"

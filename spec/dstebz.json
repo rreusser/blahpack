@@ -269,6 +269,14 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSTEBZ",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"check -1: local recursion too deep",
 		"check -5: local recursion too deep",

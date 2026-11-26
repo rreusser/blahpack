@@ -356,5 +356,13 @@
 			"rowMajor": "ldx < max( 1, nrhs )"
 		}
 	],
-	"quickReturn": []
+	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRF",
+			"into": "NB"
+		}
+	]
 }

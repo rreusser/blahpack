@@ -202,5 +202,31 @@
 				"CALL DLASET( 'FULL', MAX( M, N ), NRHS, ZERO, ZERO, B, LDB )"
 			]
 		}
+	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGEQRF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMQR",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DGELQF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DORMLQ",
+			"into": "NB"
+		}
 	]
 }

@@ -217,6 +217,14 @@
 			]
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "6",
+			"name": "DGELSS",
+			"into": "MNTHR"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
 	],

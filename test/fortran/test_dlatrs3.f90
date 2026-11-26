@@ -3,6 +3,10 @@ program test_dlatrs3
   implicit none
   double precision :: a(400), x(400), cnorm(20), scale(20), work(1000)
   integer :: info, n, nrhs, lwork, i, j
+  ! N > NB = MIN( 64, MAX( 8, ILAENV( 1, 'DLATRS' ) ) ) = 32 for several block rows.
+  integer, parameter :: NBG = 70, RBG = 40, LWBG = 4000
+  double precision :: ab(NBG*NBG), xb(NBG*RBG), cnb(NBG), scb(RBG), workb(LWBG)
+  character(len=1) :: ul, tr
 
   ! Test 1: NRHS=1 falls back to unblocked dlatrs path
   ! Upper triangular, no transpose, non-unit, 3x3
@@ -154,7 +158,7 @@ program test_dlatrs3
   call print_int('info', info)
   call end_test()
 
-  ! Test 10: Larger blocked path. NB=8 in Fortran. Use N=10 to get 2 blocks (NBA=2).
+  ! Test 10: N=10 < NB = 32, so one block row (NBA=1).
   ! Upper triangular, no transpose, NRHS=4
   n = 10
   nrhs = 4
@@ -269,5 +273,111 @@ program test_dlatrs3
   call print_array('scale', scale, nrhs)
   call print_int('info', info)
   call end_test()
+
+
+  ! Multi-block cases (NBA = 3 at N = 70), printing the reference's local scale factors and
+  ! block-norm bounds WORK(1:LSCALE+LANRM) as well.
+  ul = 'U'; tr = 'N'; n = 70; nrhs = 4
+  call gen(n, nrhs, ul, 0)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_upper_N_n70_nrhs4')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+  ul = 'L'; tr = 'T'; n = 70; nrhs = 4
+  call gen(n, nrhs, ul, 0)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_lower_T_n70_nrhs4')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+  ul = 'U'; tr = 'T'; n = 70; nrhs = 35
+  call gen(n, nrhs, ul, 0)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_upper_T_n70_nrhs35')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+  ul = 'L'; tr = 'N'; n = 70; nrhs = 3
+  call gen(n, nrhs, ul, 0)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_lower_N_n70_nrhs3')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+  ul = 'U'; tr = 'N'; n = 70; nrhs = 3
+  call gen(n, nrhs, ul, 1)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_upper_N_n70_scaled')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+  ul = 'U'; tr = 'N'; n = 10; nrhs = 4
+  call gen(n, nrhs, ul, 0)
+  call dlatrs3(ul, tr, 'N', 'N', n, nrhs, ab, n, xb, n, scb, cnb, workb, LWBG, info)
+  call begin_test('blocked_upper_N_n10_work')
+  call print_array('x', xb, n*nrhs)
+  call print_array('scale', scb, nrhs)
+  call print_int('info', info)
+  call print_int('lwork_used', nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call print_array('work', workb, nbaw(n) * max(nbaw(n), min(nrhs, 32)) + nbaw(n)**2)
+  call end_test()
+
+contains
+
+  integer function nbaw(nn)
+    integer, intent(in) :: nn
+    nbaw = max(1, (nn + 32 - 1) / 32)
+  end function nbaw
+
+  ! Triangular A (diag 2+j, small off-diagonal) and X; sc = 1 makes one diagonal entry tiny
+  ! and one right-hand side huge, so the solve must scale.
+  subroutine gen(nn, rr, uu, sc)
+    integer, intent(in) :: nn, rr, sc
+    character(len=1), intent(in) :: uu
+    integer :: ii, jj
+    ab = 0.0d0
+    do jj = 1, nn
+      do ii = 1, nn
+        if (ii == jj) then
+          ab((jj-1)*nn + ii) = 2.0d0 + dble(jj)
+        else if ((uu == 'U' .and. ii < jj) .or. (uu == 'L' .and. ii > jj)) then
+          ab((jj-1)*nn + ii) = 0.1d0*sin(dble(ii + 2*jj))
+        end if
+      end do
+    end do
+    do jj = 1, rr
+      do ii = 1, nn
+        xb((jj-1)*nn + ii) = dble(ii) + 0.5d0*dble(jj)
+      end do
+    end do
+    if (sc == 1) then
+      ab((40-1)*nn + 40) = 1.0d-300
+      xb(50) = 1.0d300
+    end if
+    scb = 0.0d0
+    cnb = 0.0d0
+    workb = 0.0d0
+  end subroutine gen
 
 end program

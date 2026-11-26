@@ -238,6 +238,20 @@ function jsParams( content, routine ) {
 	return [];
 }
 
+/**
+* The code on a line that a single-char-flag check should look at, or `null`
+* when the line is a comment, a require or an eslint directive. A trailing
+* comment is stripped rather than exempting the line, so it can't hide a flag,
+* and ilaenv/iparmq arguments are removed: their OPTS are the reference's own
+* letters (CONVENTIONS X3).
+*/
+function flagCheckCode( text ) {
+	if ( /^\s*(?:\/\/|\/?\*)|eslint|require/.test( text ) ) {
+		return null;
+	}
+	return text.replace( /\s\/\/.*$/, '' ).replace( /\b(?:ilaenv|iparmq)\s*\([^)]*\)/g, '' );
+}
+
 module.exports = {
 	ROOT: ROOT,
 	FORTRAN_WORK_ARGS: FORTRAN_WORK_ARGS,
@@ -245,6 +259,7 @@ module.exports = {
 	readFile: readFile,
 	fileExists: fileExists,
 	grepFile: grepFile,
+	flagCheckCode: flagCheckCode,
 	grepCount: grepCount,
 	getRoutineName: getRoutineName,
 	getPrefix: getPrefix,

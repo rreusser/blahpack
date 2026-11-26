@@ -400,6 +400,20 @@
 		}
 	],
 	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "DTGSYL",
+			"into": "MB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "5",
+			"name": "DTGSYL",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"WORK.minLength: local LWMIN is assigned inside nested control flow"
 	]

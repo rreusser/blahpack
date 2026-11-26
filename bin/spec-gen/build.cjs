@@ -490,6 +490,13 @@ function build( routine, sig, facts, options ) {
 				return;
 			}
 		}
+		// An assumed-length CHARACTER*(*) argument is free text (ILAENV's
+		// NAME and OPTS, XERBLA's SRNAME), not a one-letter option: it is a
+		// string scalar with no set of values to check (ticket 0049).
+		if ( p.dtype === 'string' && facts && facts.types && facts.types[ F ] === 'CHARACTER*(*)' ) {
+			p.role = 'scalar';
+			return;
+		}
 		if ( p.dtype === 'string' ) {
 			p.role = 'flag';
 			return;
@@ -1104,6 +1111,13 @@ function build( routine, sig, facts, options ) {
 	};
 	if ( !facts ) {
 		notes.push( 'no Fortran source facts (signature-only routine): checks and quick returns unknown' );
+	}
+	// The reference's tuning queries, which base.js makes through the ilaenv
+	// module (CONVENTIONS X3; ticket 0049).
+	if ( facts && facts.ilaenv && facts.ilaenv.length ) {
+		spec.tuning = facts.ilaenv.map( function m( q ) {
+			return { 'fn': q.fn, 'ispec': q.ispec, 'name': q.name, 'into': q.into };
+		});
 	}
 	if ( untranslated.length ) {
 		spec.untranslated = untranslated;

@@ -136,5 +136,19 @@
 			"js": "lda < max( 1, N )"
 		}
 	],
-	"quickReturn": []
+	"quickReturn": [],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "ZHETRF",
+			"into": "NB"
+		},
+		{
+			"fn": "ilaenv",
+			"ispec": "2",
+			"name": "ZHETRF",
+			"into": "NBMIN"
+		}
+	]
 }

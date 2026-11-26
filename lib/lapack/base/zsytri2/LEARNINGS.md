@@ -2,8 +2,8 @@
 
 ## Translation pitfalls
 
-- `zsytri2` is a pure dispatcher in the Fortran reference: it calls `ILAENV` once to pick `NBMAX`, then forwards to `zsytri` (if `NBMAX >= N`) or `zsytri2x` (otherwise). The JS port drops ILAENV entirely per project convention and hardcodes `NBMAX = 32`. The same threshold must be repeated in the BLAS-style wrapper (`zsytri2.js`) because it sizes `WORK` based on which branch will be taken — keep the constant in sync between `lib/base.js` and `lib/zsytri2.js`.
-- Fortran ILAENV actually returns `NB = 1` for `ZSYTRI2` (no specific tuning entry in `ilaenv.f`), so the reference implementation almost always reaches `ZSYTRI2X` with a degenerate `NB=1` block size. We deliberately diverge by picking the conventional `NBMAX = 32`, which yields a sharper unblocked/blocked split and matches the JS-side `zsytri`/`zsytri2x` test coverage.
+- `zsytri2` is a pure dispatcher in the Fortran reference: it calls `ILAENV` once to pick `NBMAX`, then forwards to `zsytri` (if `NBMAX >= N`) or `zsytri2x` (otherwise). The JS calls the translated `ilaenv` with the reference's arguments in `lib/base.js`, `lib/ndarray.js` (the reference's MINSIZE) and the wrapper (its `null` allocation) (CONVENTIONS X3; ticket 0049).
+- `ILAENV( 1, 'ZSYTRI2', ... )` returns `NB = 1` (no specific tuning entry in `ilaenv.f`), so the reference reaches `ZSYTRI2X` with a degenerate `NB = 1` block size for every `N > 1`. The JS used to hard-code `NBMAX = 32` instead, which took the unblocked `zsytri` for `N <= 32` and agreed with the reference fixtures only to ~2e-15 (the `NB = 1` path agrees to ~5e-16).
 - Removed all `LWORK` plumbing including the workspace-query short-circuit (`LWORK == -1`). The JS `ndarray.js` takes `WORK` as a pre-sized array; the layout wrapper allocates internally.
 - `XERBLA` argument-error handling is replaced by validator throws in `ndarray.js` / `zsytri2.js`. Base.js does no validation.
 

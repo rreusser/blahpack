@@ -160,6 +160,14 @@
 			"js": "N === 0"
 		}
 	],
+	"tuning": [
+		{
+			"fn": "ilaenv",
+			"ispec": "1",
+			"name": "DSYTRI_3",
+			"into": "NB"
+		}
+	],
 	"untranslated": [
 		"WORK.length: unsupported call ILAENV",
 		"WORK.minLength: unsupported call ILAENV"

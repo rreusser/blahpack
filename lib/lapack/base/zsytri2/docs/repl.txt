@@ -26,7 +26,7 @@
         Stride length for `IPIV`.
 
     WORK: Complex128Array|null
-        Workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally.
+        Workspace of length at least `max(1,N)` when `N <= NBMAX`, else `(N+NBMAX+1)*(NBMAX+3)`, where `NBMAX = ILAENV( 1, 'ZSYTRI2', ... ) = 1`; if `null`, a workspace is allocated internally.
 
     Returns
     -------

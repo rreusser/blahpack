@@ -32,7 +32,7 @@ import { createHash } from 'node:crypto';
 
 // Bump when what a row means changes; the cache records it and `--check`
 // compares.
-const LWMIN_VERSION = 5;
+const LWMIN_VERSION = 6;
 
 const CACHE_FILE = path.join( ROOT, 'data', 'fortran-lwmin.json' );
 

@@ -35,12 +35,18 @@
 * NB*max( NB, N-NB ), the cache's `overruns` says so and this report lists
 * it: the JS deliberately demands more than the reference's check there.
 * Reads past the length are not seen. Each minimum is the larger of the
-* reference's on zero data and on seeded random data, so data-dependent
-* extents (d/z ggsvp3's ranks) count; inputs that need structure to reach a
+* reference's on zero data, on seeded random data and on that data made
+* rank-deficient, each replayed here on the same data, so data-dependent
+* extents (d/z ggsvp3's ranks) count; a sampled minimum is still only a
+* lower bound of the minimum over all data; inputs that need structure to reach a
 * path are a known limit, bin/gen-lwmin.mjs.)
 *
 * - at the minimum: a RangeError fails the row (`too high`: it rejects a
-*   valid call), at a zero dimension too;
+*   valid call), at a zero dimension too. Here the minimum is the largest
+*   that any data source gave for the row (a JS minimum that cannot see the
+*   data must cover them all); `too low` below is judged per source, on
+*   that source's data (a JS minimum that depends on the data, like
+*   dtrsen's count of selected eigenvalues, sees the same data);
 * - at minimum - 1 (when the minimum is > 0): accepting it (reaching base.js)
 *   fails the row (`too low`: base.js may overrun). Each failure reports the
 *   JS boundary (bisected over the same call) next to the reference's.
@@ -84,9 +90,10 @@ const STOP = { 'wsMinStop': true };
 * Fills the real and complex input arrays as the generator's driver does
 * (bin/lib/fortran-ref.mjs): in argument order, `zext` values each (two per
 * complex element) from one Park-Miller sequence started at `seed`, IPIV
-* left alone.
+* left alone; with `rankDeficient` (the row's values) every second column
+* of each 2-D array is then a copy of the one before it.
 */
-function fillRandom( arrays, seed, zext ) {
+function fillRandom( arrays, seed, zext, rankDeficient ) {
 	let st = seed;
 	const next = () => {
 		st = ( st * 16807 ) % 2147483647;
@@ -102,6 +109,20 @@ function fillRandom( arrays, seed, zext ) {
 			const x = next();
 			if ( i < v.length ) {
 				v[ i ] = x;
+			}
+		}
+		// Rank-deficient: column j a copy of column j - 1 for every odd j
+		// (0-based), over the first `zext` elements at the row's leading
+		// dimension, as the driver's dup_d/dup_z.
+		const ld = ( rankDeficient && p.ld ) ? rankDeficient[ p.ld ] : 0;
+		if ( ld >= 1 ) {
+			for ( let j = 1; j < Math.floor( zext / ld ); j += 2 ) {
+				for ( let i = 0; i < ld * per; i++ ) {
+					const to = ( j * ld * per ) + i;
+					if ( to < v.length ) {
+						v[ to ] = v[ ( ( j - 1 ) * ld * per ) + i ];
+					}
+				}
 			}
 		}
 	});
@@ -175,7 +196,7 @@ async function analyze( r ) {
 			vals[ a ] = row[ i ];
 		});
 		const big = maxDim( pl, vals ) + 2;
-		const most = Math.max( 0, ...row.slice( nargs + 4 * nw, nargs + 5 * nw ) );
+		const most = Math.max( 0, ...row.slice( nargs + 6 * nw, nargs + 7 * nw ) );
 		ample = Math.max( ample, 2 * most + 32 * big * big + 4096 );
 	});
 	const ampleOf = new Map( wsParams.map( ( p ) => [ p.fortran, jsArray( p, ample ) ] ) );
@@ -189,7 +210,7 @@ async function analyze( r ) {
 		const seen = new Set();
 		const push = ( list, x ) => {
 			// A row-workspace counts once, whichever data found it.
-			const k = String( x.ws || x.why ) + '\0' + ( x.dir || x.how || '' ) + '\0' + x.args.replace( ' [random data]', '' );
+			const k = String( x.ws || x.why ) + '\0' + ( x.dir || x.how || '' ) + '\0' + x.args.replace( / \[[a-z-]+ data\]$/, '' );
 			if ( !seen.has( k ) ) {
 				seen.add( k );
 				list.push( x );
@@ -197,13 +218,13 @@ async function analyze( r ) {
 		};
 		// The reference's minimums on zero data, then on its seeded random
 		// data, which the same arrays here are filled with.
-		for ( const data of [ 'zero', 'random' ] ) {
-			const off = ( data === 'zero' ) ? 0 : 2 * nw;
-			if ( data === 'random' && entry.workspaces.every( ( w, j ) => row[ nargs + off + nw + j ] === null && row[ nargs + off + j ] === null ) ) {
+		for ( const data of [ 'zero', 'random', 'rank-deficient' ] ) {
+			const off = { 'zero': 0, 'random': 2 * nw, 'rank-deficient': 4 * nw }[ data ];
+			if ( data !== 'zero' && entry.workspaces.every( ( w, j ) => row[ nargs + off + nw + j ] === null && row[ nargs + off + j ] === null ) ) {
 				continue;
 			}
 			const arrays = [];
-			const tag = ( data === 'zero' ) ? '' : ' [random data]';
+			const tag = ( data === 'zero' ) ? '' : ' [' + data + ' data]';
 			// The argument list with every workspace ample; `slot` remembers where
 			// each workspace goes.
 			const slot = {};
@@ -229,8 +250,8 @@ async function analyze( r ) {
 				a[ slot[ W ] ] = jsArray( p, len );
 				return outcome( fn, a );
 			};
-			if ( data === 'random' ) {
-				fillRandom( arrays, row[ nargs + 5 * nw ], Math.min( BIG, 4 * ( maxDim( pl, vals ) + 2 ) * ( maxDim( pl, vals ) + 2 ) ) );
+			if ( data !== 'zero' ) {
+				fillRandom( arrays, row[ nargs + 7 * nw ], Math.min( BIG, 4 * ( maxDim( pl, vals ) + 2 ) * ( maxDim( pl, vals ) + 2 ) ), ( data === 'rank-deficient' ) ? vals : null );
 			}
 			const base = outcome( fn, args );
 			if ( base.kind === 'range' || base.kind === 'other' ) {
@@ -268,14 +289,19 @@ async function analyze( r ) {
 					push( res.unrun, { 'why': W + ': callees of the reference reject the call at every length', 'args': where + tag } );
 					return;
 				}
-				const x = at( W, ref );
+				// Too high is judged against the largest minimum any data
+				// source gave: a sampled minimum is a lower bound, and a JS
+				// minimum that does not depend on the data (the JS cannot see
+				// the ranks) must cover every source. Too low is per source.
+				const top = Math.max( ref, ...[ 0, 2, 4 ].map( ( o ) => row[ nargs + ( o + 1 ) * nw + j ] ).filter( ( e ) => e !== null ) );
+				const x = at( W, top );
 				if ( x.kind === 'other' ) {
 					res.unrun.push( { 'why': W + ' at the reference minimum: ' + x.msg.slice( 0, 200 ), 'args': where + tag } );
 					return;
 				}
 				if ( x.kind === 'range' ) {
 					// Rejects a valid call, at a zero dimension too.
-					push( res.fail, { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': zeroDim, 'args': where + tag } );
+					push( res.fail, { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': jsMin( W ), 'ref': top, 'own': own, 'zeroDim': zeroDim, 'args': where + tag } );
 					return;
 				}
 				if ( ref === 0 ) {

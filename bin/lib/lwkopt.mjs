@@ -69,8 +69,11 @@ const SCALARS = {
 	'VU': () => [ 1 ],
 	'ABSTOL': () => [ 0 ],
 	'RCOND': () => [ -1 ],
-	'TOLA': () => [ 0 ],
-	'TOLB': () => [ 0 ],
+	// d/z ggsvp3's rank thresholds: positive, so rank-deficient data
+	// (gen-lwmin) is seen as such despite rounding (0 counts every
+	// rounding residual as rank).
+	'TOLA': () => [ 1e-8 ],
+	'TOLB': () => [ 1e-8 ],
 	// dgsvj0/1 (z twins): V has MV rows; the machine constants their caller
 	// (dgesvj) passes; TOL > EPS.
 	'MV': ( v ) => [ v.N ],

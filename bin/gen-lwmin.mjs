@@ -51,15 +51,20 @@
 *    records it (rows, the example with the largest overrun): there the JS
 *    must demand more than the reference's check. Writes only: a read past
 *    L leaves no trace.
-* 4. Every row is measured twice: on zero data, and on seeded random data
+* 4. Every row is measured three times: on zero data, on seeded random data
 *    (real and complex input arrays uniform in [-1, 1], seed 1 + the row's
 *    index; IPIV the identity, other integer inputs and SELECT as above),
-*    and each minimum is the larger. Zero data hides data-dependent extents:
+*    and on that random data made rank-deficient (in every 2-D input, each
+*    second column a copy of the one before it: rank about half, > 0, so
+*    the rank-deficient paths of ggsvp3, gelsy, geqp3 run), and each
+*    minimum is the largest. A sampled minimum is only a lower bound of
+*    the minimum over all data. Zero data hides data-dependent extents:
 *    on it d/z ggsvp3's ranks K and L are 0, and the callees that write the
 *    declared extents of U, V and A never run. INFO > 0 on random data
 *    (singular, not positive definite) still counts as accepted. A crash of
-*    the random-data run keeps the zero-data row (`randomCrashed`);
-*    `randomRaised` counts the rows whose minimum random data raised.
+*    a random-data run keeps the other sources' minimums (`randomCrashed`);
+*    `randomRaised` counts, per random source, the rows whose minimum it
+*    raised above the zero data's.
 *    Known limit: a routine whose full path needs structured input
 *    (symmetric positive definite, a factored or reduced matrix: d/z potrs-
 *    like callers, the tridiagonal/Hessenberg/Schur-form inputs of hseqr,
@@ -330,37 +335,55 @@ async function prepare( r ) {
 	return { 'r': r, 'spec': spec, 'g': g, 'pl': g.plan, 'm': m, 'lworks': lworks, 'query': query, 'bin': bin, 'nout': nout, 'calls': 0, 'faults': 0, 'hash': entryHash( g.hash, m ) };
 }
 
-// One row from its zero-data and random-data measurements: the arguments,
-// then per workspace the zero-data minimum and effective minimum, the same
-// on random data (null when that run crashed or was rejected), the bounds
-// (the larger), and last the seed of the random data. The overruns are the
-// larger; `randomRaised` names the workspaces whose effective minimum the
-// random data raised; `randomCrashed` that the random-data run crashed.
-function combine( ctx, x0, x1, seed ) {
+// The data sources, in row order: zero data, seeded random data, and the
+// same random data made rank-deficient (every second column of each 2-D
+// input a copy of the one before it; the driver reads seed < 0 as that).
+const SOURCES = [ 'zero', 'random', 'rank-deficient' ];
+
+// One row from its measurements on each source: the arguments, then per
+// source and workspace the minimum and the effective minimum (null when
+// that run crashed or was rejected), the bounds (the largest), and last the
+// seed of the random data. The overruns are the largest; `raised` names,
+// per random source, the workspaces whose effective minimum it raised above
+// the zero data's; `randomCrashed` that a random run crashed.
+function combine( ctx, xs, seed ) {
+	const x0 = xs[ 0 ];
 	if ( !x0.row ) {
 		return x0;
 	}
 	const n = ctx.g.args.length;
 	const nw = ctx.m.workspaces.length;
-	const r1 = x1.row || null;
+	const rs = xs.map( ( x ) => x.row || null );
 	const pick = ( row, k ) => ctx.m.workspaces.map( ( w, j ) => ( row ? row[ n + k * nw + j ] : null ) );
-	const raised = [];
-	ctx.m.workspaces.forEach( ( w, j ) => {
-		const e0 = x0.row[ n + nw + j ];
-		const e1 = r1 ? r1[ n + nw + j ] : null;
-		if ( e0 !== null && e1 !== null && e1 > e0 ) {
-			raised.push( w.name );
+	const raised = {};
+	xs.forEach( ( x, k ) => {
+		if ( k === 0 || !rs[ k ] ) {
+			return;
 		}
+		ctx.m.workspaces.forEach( ( w, j ) => {
+			const e0 = rs[ 0 ][ n + nw + j ];
+			const e = rs[ k ][ n + nw + j ];
+			if ( e0 !== null && e !== null && e > e0 ) {
+				( raised[ SOURCES[ k ] ] || ( raised[ SOURCES[ k ] ] = [] ) ).push( w.name );
+			}
+		});
 	});
-	const uppers = ctx.m.workspaces.map( ( w, j ) => Math.max( x0.row[ n + 2 * nw + j ], r1 ? r1[ n + 2 * nw + j ] : 0 ) );
-	const row = x0.row.slice( 0, n ).concat( pick( x0.row, 0 ), pick( x0.row, 1 ), pick( r1, 0 ), pick( r1, 1 ), uppers, [ seed ] );
-	const overruns = Object.assign( {}, x0.overruns );
-	Object.keys( ( r1 && x1.overruns ) || {} ).forEach( ( W ) => {
-		overruns[ W ] = Math.max( overruns[ W ] || 0, x1.overruns[ W ] );
+	const uppers = ctx.m.workspaces.map( ( w, j ) => Math.max( ...rs.map( ( r ) => ( r ? r[ n + 2 * nw + j ] : 0 ) ) ) );
+	let row = x0.row.slice( 0, n );
+	rs.forEach( ( r ) => {
+		row = row.concat( pick( r, 0 ), pick( r, 1 ) );
 	});
-	const out = { 'row': row, 'overruns': overruns, 'randomRaised': raised };
-	if ( x1.crashed ) {
-		out.randomCrashed = x1.crashed;
+	row = row.concat( uppers, [ seed ] );
+	const overruns = {};
+	xs.forEach( ( x, k ) => {
+		Object.keys( ( rs[ k ] && x.overruns ) || {} ).forEach( ( W ) => {
+			overruns[ W ] = Math.max( overruns[ W ] || 0, x.overruns[ W ] );
+		});
+	});
+	const out = { 'row': row, 'overruns': overruns, 'raised': raised };
+	const crashed = xs.filter( ( x ) => x.crashed ).map( ( x ) => x.crashed );
+	if ( crashed.length ) {
+		out.randomCrashed = crashed.join( '; ' );
 	}
 	return out;
 }
@@ -374,24 +397,25 @@ async function runChunk( ctx, from, to ) {
 			try {
 				// Each row works on its own copy of the measured list.
 				const copy = () => Object.assign( {}, ctx, { 'calls': 0, 'faults': 0, 'm': { 'workspaces': ctx.m.workspaces.map( ( w ) => Object.assign( {}, w ) ) } } );
-				// On zero data, then on seeded random data (row i: seed 1 + i);
-				// the larger minimum counts.
-				const c0 = copy();
-				const x0 = await measureRow( c0, s, call, 0 );
-				const c1 = copy();
+				// On zero data, then on seeded random data (row i: seed 1 + i),
+				// then on that data made rank-deficient (seed -(1 + i)); the
+				// largest minimum counts.
 				const seed = 1 + i;
-				let x1;
-				try {
-					x1 = await measureRow( c1, s, call, seed );
-				} catch ( err ) {
-					if ( !( err instanceof RowCrash ) ) {
-						throw err;
+				const xs = [];
+				for ( let k = 0; k < SOURCES.length; k++ ) {
+					const c = copy();
+					try {
+						xs.push( await measureRow( c, s, call, [ 0, seed, -seed ][ k ] ) );
+					} catch ( err ) {
+						if ( k === 0 || !( err instanceof RowCrash ) ) {
+							throw err;
+						}
+						xs.push( { 'crashed': SOURCES[ k ] + ': ' + err.message } );
 					}
-					x1 = { 'crashed': err.message };
+					ctx.calls += c.calls;
+					ctx.faults += c.faults;
 				}
-				ctx.calls += c0.calls + c1.calls;
-				ctx.faults += c0.faults + c1.faults;
-				out.push( combine( ctx, x0, x1, seed ) );
+				out.push( combine( ctx, xs, seed ) );
 			} catch ( err ) {
 				if ( !( err instanceof RowCrash ) ) {
 					throw err;
@@ -415,7 +439,7 @@ function assemble( ctx, results ) {
 	const unmeasured = Object.assign( {}, m.unmeasured );
 	const keep = [];
 	m.workspaces.forEach( ( w, j ) => {
-		if ( w.kind === 'check' && rows.every( ( row ) => [ 0, 1, 2, 3 ].every( ( k ) => !row[ nargs + k * nw + j ] ) ) ) {
+		if ( w.kind === 'check' && rows.every( ( row ) => [ 0, 1, 2, 3, 4, 5 ].every( ( k ) => !row[ nargs + k * nw + j ] ) ) ) {
 			unmeasured[ w.name ] = 'the reference never rejects it and never writes it: ' + w.length + ' = 0 is accepted and runs clean in every row (INFO != ' + w.info + ')';
 		} else {
 			keep.push( j );
@@ -465,9 +489,9 @@ function assemble( ctx, results ) {
 		}),
 		'unmeasured': unmeasured,
 		'overruns': overruns,
-		'randomRaised': Object.fromEntries( keep.map( ( j ) => m.workspaces[ j ].name ).map( ( W ) => [ W, results.filter( ( x ) => x.randomRaised && x.randomRaised.includes( W ) ).length ] ).filter( ( e ) => e[ 1 ] > 0 ) ),
+		'randomRaised': Object.fromEntries( SOURCES.slice( 1 ).map( ( src ) => [ src, Object.fromEntries( keep.map( ( j ) => m.workspaces[ j ].name ).map( ( W ) => [ W, results.filter( ( x ) => x.raised && x.raised[ src ] && x.raised[ src ].includes( W ) ).length ] ).filter( ( e ) => e[ 1 ] > 0 ) ) ] ).filter( ( e ) => Object.keys( e[ 1 ] ).length ) ),
 		'randomCrashed': results.filter( ( x ) => x.randomCrashed ).length,
-		'rows': rows.map( ( row ) => row.slice( 0, nargs ).concat( ...[ 0, 1, 2, 3, 4 ].map( ( k ) => keep.map( ( j ) => row[ nargs + k * nw + j ] ) ), [ row[ nargs + 5 * nw ] ] ) )
+		'rows': rows.map( ( row ) => row.slice( 0, nargs ).concat( ...[ 0, 1, 2, 3, 4, 5, 6 ].map( ( k ) => keep.map( ( j ) => row[ nargs + k * nw + j ] ) ), [ row[ nargs + 7 * nw ] ] ) )
 	};
 }
 
@@ -503,7 +527,7 @@ function serialize( cache ) {
 	return out.join( '\n' ) + '\n';
 }
 
-const COMMENT = 'Generated by bin/gen-lwmin.mjs from the reference (CONVENTIONS W3, ticket 0016); read by bin/workspace-minimum.mjs. Per routine: `args` are Fortran argument names (options as Fortran letters; SELECT is the number of leading .TRUE. entries), over the grid of bin/gen-lwkopt.mjs; each row ends with, per workspace of `workspaces`: its minimum and its effective minimum on zero data, the same on seeded random data (null: that run crashed or was rejected), the length each was given while another was measured, and last the seed of the random data (bin/lib/fortran-ref.mjs fills the real and complex inputs, in argument order, with a Park-Miller sequence from it). A `check` minimum is the smallest length whose call does not return INFO = `info` (min - 1 is rejected); its effective minimum the smallest length at which no callee rejects what the routine passes it either and nothing past the length is written (null: callees reject even at the bound). `overruns`: per workspace, the rows where the reference writes past what its own check accepts (`own`: the minimum of that check, `wrote`: the last element written, in `example`); writes only, reads past the length are not seen. A `declared` minimum (and effective minimum) is the extent the reference declares. Only rows whose arguments the reference accepts are recorded. `unmeasured`: workspaces with no minimum, and why. `noInfo`: modules whose reference has no INFO argument, so rejects nothing. `noCheck`: modules whose reference never rejects any workspace length (value: the entry hash). `unhandled`: modules the generator cannot measure, and why (bin/lib/lwmin.mjs UNHANDLED).';
+const COMMENT = 'Generated by bin/gen-lwmin.mjs from the reference (CONVENTIONS W3, ticket 0016); read by bin/workspace-minimum.mjs. Per routine: `args` are Fortran argument names (options as Fortran letters; SELECT is the number of leading .TRUE. entries), over the grid of bin/gen-lwkopt.mjs; each row ends with, per workspace of `workspaces`: its minimum and its effective minimum on zero data, the same on seeded random data, the same on that data made rank-deficient (every second column of each 2-D input a copy of the one before; null: that run crashed or was rejected), the length each was given while another was measured, and last the seed of the random data (bin/lib/fortran-ref.mjs fills the real and complex inputs, in argument order, with a Park-Miller sequence from it). A `check` minimum is the smallest length whose call does not return INFO = `info` (min - 1 is rejected); its effective minimum the smallest length at which no callee rejects what the routine passes it either and nothing past the length is written (null: callees reject even at the bound). `overruns`: per workspace, the rows where the reference writes past what its own check accepts (`own`: the minimum of that check, `wrote`: the last element written, in `example`); writes only, reads past the length are not seen. A `declared` minimum (and effective minimum) is the extent the reference declares. Only rows whose arguments the reference accepts are recorded. `unmeasured`: workspaces with no minimum, and why. `noInfo`: modules whose reference has no INFO argument, so rejects nothing. `noCheck`: modules whose reference never rejects any workspace length (value: the entry hash). `unhandled`: modules the generator cannot measure, and why (bin/lib/lwmin.mjs UNHANDLED).';
 
 function readCache() {
 	return fs.existsSync( CACHE_FILE ) ? JSON.parse( fs.readFileSync( CACHE_FILE, 'utf8' ) ) : null;

@@ -171,10 +171,12 @@ function literal( x ) {
 *
 * With `probe`, every non-workspace array is zeroed over its first `zext`
 * elements before each call (the call overwrites its outputs, and the next
-* call must see the same data), and with `seed` > 0 its real and complex
+* call must see the same data), and with `seed` != 0 its real and complex
 * ones are then filled with seeded random values in [-1, 1] (Park-Miller,
-* from `seed`; IPIV is the identity, other integer inputs and SELECT are as
-* read); before the call a line `D` gives the
+* from |`seed`|; IPIV is the identity, other integer inputs and SELECT are
+* as read); with `seed` < 0 every second column of each 2-D array (one with
+* a leading dimension) is then a copy of the column before it (rank about
+* half: rank-deficient paths); before the call a line `D` gives the
 * value of every `probe.declared` expression (a workspace's declared
 * extent, e.g. RWORK( 8*N )), and a callee's XERBLA prints `C` and ends
 * the process (see `xerbla` below).
@@ -248,7 +250,13 @@ function driver( spec, g, probe ) {
 				// Seeded random data in [-1, 1] for the real and complex
 				// inputs (zero data hides data-dependent extents: ranks 0).
 				if ( p.dtype === 'float64' || p.dtype === 'complex128' ) {
-					reset.push( 'if ( seed > 0 ) call fill_' + ( p.dtype === 'float64' ? 'd' : 'z' ) + '( ' + name + ', zext, state )' );
+					const t = ( p.dtype === 'float64' ) ? 'd' : 'z';
+					reset.push( 'if ( seed /= 0 ) call fill_' + t + '( ' + name + ', zext, state )' );
+					// seed < 0: rank-deficient random data, every second
+					// column of a 2-D array a copy of the one before it.
+					if ( p.ld ) {
+						reset.push( 'if ( seed < 0 ) call dup_' + t + '( ' + name + ', ' + fv( p.ld ) + ', zext )' );
+					}
 				}
 			}
 			callArgs.push( name );
@@ -271,7 +279,7 @@ function driver( spec, g, probe ) {
 		readList.push( 'zext' );
 		readList.push( 'seed' );
 		lworks.forEach( ( L ) => readList.push( fv( L.fortran ) ) );
-		reset.unshift( 'zext = max( 1, min( BIG, zext ) )', 'state = int( seed, 8 )' );
+		reset.unshift( 'zext = max( 1, min( BIG, zext ) )', 'state = int( abs( seed ), 8 )' );
 	}
 	const outs = probe ?
 		lworks.map( ( L ) => ( L.of ? 'dble( ' + fv( L.of ) + '( 1 ) )' : '0.0d0' ) ) :
@@ -398,7 +406,29 @@ function driver( spec, g, probe ) {
 			'      y = 2.0d0 * dble( st ) / 2147483647.0d0 - 1.0d0',
 			'      a( i ) = cmplx( x, y, kind=8 )',
 			'    end do',
-			'  end subroutine fill_z'
+			'  end subroutine fill_z',
+			// Column j = column j - 1 for every even j, over the buffer's
+			// first n elements with leading dimension ld.
+			'  subroutine dup_d( a, ld, n )',
+			'    integer :: ld, n, j, i',
+			'    double precision :: a( * )',
+			'    if ( ld < 1 ) return',
+			'    do j = 2, n / ld, 2',
+			'      do i = 1, ld',
+			'        a( ( j - 1 ) * ld + i ) = a( ( j - 2 ) * ld + i )',
+			'      end do',
+			'    end do',
+			'  end subroutine dup_d',
+			'  subroutine dup_z( a, ld, n )',
+			'    integer :: ld, n, j, i',
+			'    complex*16 :: a( * )',
+			'    if ( ld < 1 ) return',
+			'    do j = 2, n / ld, 2',
+			'      do i = 1, ld',
+			'        a( ( j - 1 ) * ld + i ) = a( ( j - 2 ) * ld + i )',
+			'      end do',
+			'    end do',
+			'  end subroutine dup_z'
 		] : [] ),
 		'end program drv',
 		''

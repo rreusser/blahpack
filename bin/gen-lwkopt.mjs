@@ -11,7 +11,8 @@
 * `LWORK.NE.-1`), this writes a Fortran driver from
 * the spec, compiles it against the reference (all of LAPACK SRC and BLAS,
 * built once into test/build/lwkopt/, with an XERBLA that returns instead of
-* stopping), and calls the routine with every workspace length = -1 over the
+* stopping; bin/lib/fortran-ref.mjs, shared with bin/gen-lwmin.mjs), and
+* calls the routine with every workspace length = -1 over the
 * grid of bin/lib/lwkopt.mjs (each dimension over a ladder crossing the
 * blocking thresholds, each option over its letters). Arrays are zero-filled
 * buffers; the only data a query reads is SELECT (dtrsen, dtgsen, dtgsna,
@@ -34,255 +35,9 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawn, spawnSync } from 'node:child_process';
 import { ROOT } from './lib/corpus.mjs';
 import { GRID_VERSION, CACHE_FILE, specLib, grid, routineSet } from './lib/lwkopt.mjs';
-
-const SRC = path.join( ROOT, 'data', 'lapack-3.12.0', 'SRC' );
-const INSTALL = path.join( ROOT, 'data', 'lapack-3.12.0', 'INSTALL' );
-const BLAS = path.join( ROOT, 'data', 'BLAS-3.12.0' );
-const BUILD = path.join( ROOT, 'test', 'build', 'lwkopt' );
-const LIB = path.join( BUILD, 'libref.a' );
-
-// Every Fortran array is one buffer of this many elements. A query touches
-// only the first element of its workspaces (and reads SELECT and the
-// diagonal blocks of A/T in the routines named above).
-const BIG = 200000;
-
-const FTYPE = {
-	'float64': 'double precision',
-	'complex128': 'complex*16',
-	'int32': 'integer',
-	'bool': 'logical',
-	'string': 'character(len=1)'
-};
-
-
-// LIBRARY //
-
-function run( cmd, args, opts ) {
-	return new Promise( ( resolve ) => {
-		const child = spawn( cmd, args, Object.assign( { 'stdio': [ 'pipe', 'pipe', 'pipe' ] }, opts ) );
-		const out = [];
-		const err = [];
-		child.stdout.on( 'data', ( b ) => out.push( b ) );
-		child.stderr.on( 'data', ( b ) => err.push( b ) );
-		child.on( 'close', ( code ) => resolve( { 'code': code, 'stdout': Buffer.concat( out ).toString( 'utf8' ), 'stderr': Buffer.concat( err ).toString( 'utf8' ) } ) );
-		if ( opts && opts.input !== void 0 ) {
-			child.stdin.end( opts.input );
-		} else {
-			child.stdin.end();
-		}
-	});
-}
-
-async function pool( items, jobs, fn ) {
-	const out = new Array( items.length );
-	let next = 0;
-	const slot = async () => {
-		while ( next < items.length ) {
-			const i = next;
-			next += 1;
-			out[ i ] = await fn( items[ i ], i );
-		}
-	};
-	await Promise.all( Array.from( { 'length': Math.min( jobs, items.length ) || 1 }, slot ) );
-	return out;
-}
-
-// All of LAPACK SRC (not DEPRECATED/VARIANTS), INSTALL's dlamch,
-// droundup_lwork and ilaver, and BLAS, in one archive.
-async function buildLibrary( jobs, rebuild ) {
-	if ( fs.existsSync( LIB ) && !rebuild ) {
-		return;
-	}
-	const obj = path.join( BUILD, 'obj' );
-	fs.rmSync( obj, { 'recursive': true, 'force': true } );
-	fs.mkdirSync( obj, { 'recursive': true } );
-	const flags = [ '-O0', '-cpp', '-w', '-ffixed-line-length-none', '-fallow-argument-mismatch', '-I', obj, '-J', obj ];
-	for ( const m of [ 'la_constants.f90', 'la_xisnan.F90' ] ) {
-		const r = spawnSync( 'gfortran', flags.concat( [ '-c', path.join( SRC, m ), '-o', path.join( obj, 'm_' + m.replace( /\..*$/, '' ) + '.o' ) ] ), { 'encoding': 'utf8' } );
-		if ( r.status !== 0 ) {
-			throw new Error( 'gfortran ' + m + ': ' + r.stderr );
-		}
-	}
-	const src = [];
-	fs.readdirSync( SRC ).filter( ( f ) => /\.(f|f90|F|F90)$/.test( f ) && !/^la_(constants|xisnan)\./.test( f ) ).forEach( ( f ) => src.push( [ path.join( SRC, f ), 'l_' ] ) );
-	[ 'dlamch.f', 'droundup_lwork.f', 'ilaver.f' ].forEach( ( f ) => src.push( [ path.join( INSTALL, f ), 'i_' ] ) );
-	fs.readdirSync( BLAS ).filter( ( f ) => /\.(f|f90)$/.test( f ) ).forEach( ( f ) => src.push( [ path.join( BLAS, f ), 'b_' ] ) );
-	process.stderr.write( 'gen-lwkopt: compiling ' + src.length + ' reference sources into ' + path.relative( ROOT, LIB ) + '\n' );
-	const res = await pool( src, jobs, ( s ) => run( 'gfortran', flags.concat( [ '-c', s[ 0 ], '-o', path.join( obj, s[ 1 ] + path.basename( s[ 0 ] ).replace( /\.[^.]+$/, '' ) + '.o' ) ] ), { 'cwd': obj } ) );
-	const bad = res.map( ( r, i ) => ( r.code === 0 ) ? null : src[ i ][ 0 ] + ': ' + r.stderr.slice( 0, 200 ) ).filter( Boolean );
-	if ( bad.length ) {
-		throw new Error( 'reference sources that did not compile:\n' + bad.join( '\n' ) );
-	}
-	const objs = fs.readdirSync( obj ).filter( ( f ) => f.endsWith( '.o' ) ).sort().map( ( f ) => path.join( obj, f ) );
-	fs.rmSync( LIB, { 'force': true } );
-	const ar = spawnSync( 'ar', [ 'rcs', LIB ].concat( objs ), { 'encoding': 'utf8' } );
-	if ( ar.status !== 0 ) {
-		throw new Error( 'ar: ' + ar.stderr );
-	}
-}
-
-
-// DRIVER //
-
-function v( F ) {
-	return 'v_' + F.toLowerCase();
-}
-
-function literal( x ) {
-	if ( typeof x === 'string' ) {
-		return "'" + x + "'";
-	}
-	if ( typeof x === 'boolean' ) {
-		return x ? 'T' : 'F';
-	}
-	if ( Number.isInteger( x ) ) {
-		return String( x );
-	}
-	return x.toExponential( 17 ).replace( 'e', 'D' );
-}
-
-/**
-* The driver for one routine: reads one call per line (the grid's `args`, in
-* order), sets every workspace length to -1, calls the routine and prints
-* INFO and the first element of each queried workspace.
-*/
-function driver( spec, g ) {
-	const params = g.plan.params.slice().sort( ( a, b ) => a.p.position - b.p.position );
-	const decl = [];
-	const init = [];
-	const reset = [];
-	const callArgs = [];
-	params.forEach( ( e ) => {
-		const p = e.p;
-		const name = v( p.fortran );
-		const t = FTYPE[ p.dtype ];
-		switch ( e.kind ) {
-		case 'flag':
-		case 'dim':
-		case 'derived':
-		case 'scalar':
-		case 'ld':
-		case 'info':
-		case 'out':
-			if ( !t ) {
-				throw new Error( 'no Fortran type for ' + p.fortran + ' (' + p.dtype + ')' );
-			}
-			decl.push( t + ' :: ' + name );
-			callArgs.push( name );
-			break;
-		case 'lwork':
-			decl.push( 'integer :: ' + name );
-			reset.push( name + ' = -1' );
-			callArgs.push( name );
-			break;
-		case 'function':
-			callArgs.push( 'selfn' );
-			break;
-		case 'select':
-			decl.push( 'logical, allocatable :: ' + name + '(:)' );
-			decl.push( 'integer :: n_' + p.fortran.toLowerCase() );
-			init.push( 'allocate( ' + name + '( BIG ) )' );
-			reset.push( name + ' = .false.' );
-			reset.push( 'if ( n_' + p.fortran.toLowerCase() + ' > 0 ) ' + name + '( 1:n_' + p.fortran.toLowerCase() + ' ) = .true.' );
-			callArgs.push( name );
-			break;
-		case 'array': {
-			if ( !t ) {
-				throw new Error( 'no Fortran type for array ' + p.fortran + ' (' + p.dtype + ')' );
-			}
-			decl.push( t + ', allocatable :: ' + name + '(:)' );
-			const zero = ( p.dtype === 'bool' ) ? '.false.' : ( ( p.dtype === 'int32' ) ? '0' : '0.0d0' );
-			init.push( 'allocate( ' + name + '( BIG ) )' );
-			init.push( name + ' = ' + zero );
-			if ( p.role === 'workspace' ) {
-				reset.push( name + '( 1 ) = ' + zero );
-			}
-			callArgs.push( name );
-			break;
-		}
-		default:
-			throw new Error( 'unhandled kind ' + e.kind );
-		}
-	});
-	const readList = g.args.map( ( F ) => {
-		const e = params.find( ( x ) => x.p.fortran === F );
-		return ( e.kind === 'select' ) ? 'n_' + F.toLowerCase() : v( F );
-	});
-	const outs = g.queries.map( ( W ) => 'dble( ' + v( W ) + '( 1 ) )' );
-	const info = params.find( ( e ) => e.kind === 'info' );
-	const wrap = ( s, ind ) => {
-		// Free-form continuation keeps every line short.
-		const parts = s.split( ', ' );
-		const lines = [];
-		let cur = ind;
-		parts.forEach( ( x, i ) => {
-			const piece = x + ( ( i < parts.length - 1 ) ? ', ' : '' );
-			if ( cur.length + piece.length > 100 ) {
-				lines.push( cur + '&' );
-				cur = ind + '   & ';
-			}
-			cur += piece;
-		});
-		lines.push( cur );
-		return lines.join( '\n' );
-	};
-	return [
-		'! Generated by bin/gen-lwkopt.mjs: workspace queries of ' + spec.routine.toUpperCase() + '.',
-		'subroutine xerbla( srname, info )',
-		'  character(len=*) :: srname',
-		'  integer :: info',
-		'end subroutine xerbla',
-		'logical function selfn()',
-		'  selfn = .false.',
-		'end function selfn',
-		'program drv',
-		'  implicit none',
-		'  integer, parameter :: BIG = ' + BIG,
-		'  integer :: ios',
-		'  logical, external :: selfn',
-		...decl.map( ( d ) => '  ' + d ),
-		...init.map( ( d ) => '  ' + d ),
-		'  do',
-		wrap( 'read( *, *, iostat=ios ) ' + readList.join( ', ' ), '    ' ),
-		'    if ( ios /= 0 ) exit',
-		...reset.map( ( d ) => '    ' + d ),
-		wrap( 'call ' + spec.routine.toUpperCase() + '( ' + callArgs.join( ', ' ) + ' )', '    ' ),
-		// dlaqr2/3 have no INFO: every call is recorded (the grid gives only
-		// values their callers pass).
-		wrap( "write( *, '(I0,99(1X,ES26.17E3))' ) " + ( info ? v( info.p.fortran ) : '0' ) + ', ' + outs.join( ', ' ), '    ' ),
-		'    flush( 6 )',
-		'  end do',
-		'end program drv',
-		''
-	].join( '\n' );
-}
-
-// Does the reference answer a workspace query? It tests one of its
-// workspace-length arguments against -1 (`LWORK.EQ.-1`, `LWORK.NE.-1`,
-// dlaqr0's spelling), or for being negative (`LWORK.LT.0`, dlamtsqr), in
-// executable code, whatever it names the result (`LQUERY` or none).
-function hasQuery( r, spec ) {
-	const names = spec.params.filter( ( p ) => p.role === 'lwork' ).map( ( p ) => p.fortran );
-	for ( const ext of [ '.f', '.f90', '.F', '.F90' ] ) {
-		const f = path.join( SRC, r + ext );
-		if ( fs.existsSync( f ) ) {
-			const code = fs.readFileSync( f, 'utf8' ).split( '\n' ).filter( ( l ) => !/^[*cC!]/.test( l ) && !/^\s*!/.test( l ) ).join( '\n' );
-			return names.some( ( L ) => new RegExp( '\\b' + L + '\\s*(\\.EQ\\.|\\.NE\\.|==|/=)\\s*\\(?\\s*-\\s*1\\b|\\b' + L + '\\s*(\\.LT\\.|<)\\s*0\\b', 'i' ).test( code ) );
-		}
-	}
-	return null;
-}
-
-function parseLine( line, nq ) {
-	const t = line.trim().split( /\s+/ );
-	if ( t.length !== nq + 1 ) {
-		return null;
-	}
-	return { 'info': Number( t[ 0 ] ), 'opt': t.slice( 1 ).map( ( x ) => Number( x.replace( /[dD]/, 'e' ) ) ) };
-}
+import { SRC, run, pool, buildLibrary, hasQuery, literal, driver, compile, parseLine } from './lib/fortran-ref.mjs';
 
 async function generate( r ) {
 	const spec = specLib.load( r );
@@ -290,19 +45,14 @@ async function generate( r ) {
 	if ( g.error ) {
 		throw new Error( r + ': cannot build its query grid: ' + g.error );
 	}
-	const dir = path.join( BUILD, r );
-	fs.mkdirSync( dir, { 'recursive': true } );
-	const f90 = path.join( dir, 'drv_' + r + '.f90' );
-	const bin = path.join( dir, 'drv_' + r );
+	let source;
 	try {
-		fs.writeFileSync( f90, driver( spec, g ) );
+		source = driver( spec, g );
 	} catch ( err ) {
 		throw new Error( r + ': cannot write its driver: ' + err.message );
 	}
-	const c = await run( 'gfortran', [ '-O0', '-w', '-ffree-line-length-none', '-fallow-argument-mismatch', '-o', bin, f90, LIB ], { 'cwd': dir } );
-	if ( c.code !== 0 ) {
-		throw new Error( r + ': its driver does not compile: ' + c.stderr.split( '\n' ).filter( Boolean ).slice( 0, 3 ).join( ' / ' ) );
-	}
+	const bin = await compile( 'lwkopt', r, source );
+	const dir = path.dirname( bin );
 	const results = new Array( g.calls.length ).fill( null );
 	const crashed = [];
 	let at = 0;
@@ -313,7 +63,8 @@ async function generate( r ) {
 		const res = await run( bin, [], { 'cwd': dir, 'input': input } );
 		const lines = res.stdout.split( '\n' ).filter( ( l ) => l.trim() );
 		lines.forEach( ( l, i ) => {
-			results[ at + i ] = parseLine( l, g.queries.length );
+			const x = parseLine( l, g.queries.length );
+			results[ at + i ] = x && { 'info': x.info, 'opt': x.out };
 		});
 		at += lines.length;
 		if ( at < g.calls.length ) {
@@ -435,7 +186,7 @@ async function main( argv ) {
 	const ji = argv.indexOf( '--jobs' );
 	const jobs = ( ji >= 0 ) ? Math.max( 1, Number( argv[ ji + 1 ] ) ) : Math.max( 1, os.availableParallelism() );
 	const only = argv.filter( ( a, i ) => !a.startsWith( '--' ) && argv[ i - 1 ] !== '--jobs' );
-	await buildLibrary( jobs, argv.includes( '--rebuild' ) );
+	await buildLibrary( jobs, argv.includes( '--rebuild' ), 'gen-lwkopt' );
 	const prev = readCache();
 	const cache = ( prev && only.length ) ? prev : { 'routines': {}, 'noQuery': [], 'skipped': {} };
 	cache.$comment = COMMENT;

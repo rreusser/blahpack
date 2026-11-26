@@ -37,20 +37,12 @@ import path from 'node:path';
 import { register } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ROOT, moduleDir, selectRoutines, isWorker, workerMain, runCorpus } from './lib/corpus.mjs';
-import { CACHE_FILE, specLib, plan, jsScope, evalJs, maxDim } from './lib/lwkopt.mjs';
-import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import { CACHE_FILE, specLib, plan, callArgs } from './lib/lwkopt.mjs';
 
 const ENTRY = fileURLToPath( import.meta.url );
 const LOADER = path.join( ROOT, 'bin', 'workspace-optimum-loader.mjs' );
 const GUARD_LOADER = path.join( ROOT, 'bin', 'workspace-guard-loader.mjs' );
 const STOP = { 'wsOptStop': true };
-
-const CTOR = {
-	'float64': Float64Array,
-	'complex128': Complex128Array,
-	'int32': Int32Array,
-	'bool': Uint8Array
-};
 
 function readCache() {
 	return JSON.parse( fs.readFileSync( CACHE_FILE, 'utf8' ) );
@@ -58,82 +50,6 @@ function readCache() {
 
 function describe( entry, row ) {
 	return entry.args.map( ( a, i ) => a + '=' + row[ i ] ).join( ' ' );
-}
-
-/**
-* The wrapper's argument list for one cache row (the spec's `strided`
-* projection, lint/lib/spec.cjs), every workspace `null`.
-*/
-function wrapperArgs( spec, pl, vals ) {
-	const scope = jsScope( spec, pl, vals );
-	const big = maxDim( pl, vals );
-	const kinds = new Map( pl.params.map( ( e ) => [ e.p.fortran, e ] ) );
-	const size = ( expr, fallback ) => {
-		const n = evalJs( expr, scope );
-		return Math.max( 1, Number.isNaN( n ) ? fallback : n );
-	};
-	const array = ( p, n ) => {
-		const C = CTOR[ p.dtype ];
-		if ( !C ) {
-			throw new Error( 'no JS array type for ' + p.fortran + ' (' + p.dtype + ')' );
-		}
-		return new C( n );
-	};
-	const out = specLib.takesOrder( spec ) ? [ 'column-major' ] : [];
-	specLib.baseGroups( spec ).forEach( ( g ) => {
-		const p = g.param;
-		const e = kinds.get( p.fortran );
-		if ( g.names.length === 4 ) {
-			const ld = ( p.ld && vals[ p.ld ] !== void 0 ) ? vals[ p.ld ] : Math.max( 1, big );
-			if ( p.role === 'workspace' ) {
-				out.push( null, ld );
-			} else {
-				out.push( array( p, ld * size( p.cols && p.cols.js, big ) ), ld );
-			}
-		} else if ( g.names.length === 3 ) {
-			if ( p.role === 'workspace' ) {
-				out.push( null );
-				return;
-			}
-			const a = array( p, size( p.length && p.length.js, 2 * big + 10 ) );
-			if ( e.kind === 'select' ) {
-				a.fill( 1, 0, Math.min( a.length, vals[ p.fortran ] ) );
-			}
-			if ( p.role === 'packed' && p.format === 'packed' ) {
-				out.push( a );
-			} else {
-				out.push( a, 1 );
-			}
-		} else if ( g.names.length === 2 ) {
-			out.push( array( p, 1 ) );
-		} else if ( g.names.length === 1 ) {
-			switch ( e.kind ) {
-			case 'flag':
-				out.push( scope[ p.name ] );
-				break;
-			case 'dim':
-			case 'derived':
-			case 'scalar': {
-				// A scalar index the JS takes 0-based is marked `base: 0` (S10).
-				const x = vals[ p.fortran ] - ( ( p.base === 0 ) ? 1 : 0 );
-				out.push( ( p.intent === 'in' ) ? x : array( p, 1 ).fill( x ) );
-				break;
-			}
-			case 'out':
-				out.push( array( p, 1 ) );
-				break;
-			case 'function':
-				out.push( () => false );
-				break;
-			case 'info':
-				out.push( 0 );
-				break;
-			default:
-				throw new Error( 'no wrapper argument for ' + p.fortran + ' (' + e.kind + ')' );
-			}
-		}
-	});
-	return out;
 }
 
 async function analyze( r ) {
@@ -179,7 +95,8 @@ async function analyze( r ) {
 		const where = describe( entry, row );
 		let args;
 		try {
-			args = wrapperArgs( spec, pl, vals );
+			// The wrapper's arguments, every workspace `null`.
+			args = callArgs( spec, pl, vals, 'strided', () => null );
 		} catch ( err ) {
 			res.unrun.push( { 'why': 'translate: ' + err.message, 'args': where } );
 			continue;

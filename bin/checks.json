@@ -142,6 +142,9 @@
 		"bin/gen-lwkopt.mjs": {
 			"kind": "gate"
 		},
+		"bin/gen-lwmin.mjs": {
+			"kind": "gate"
+		},
 		"bin/gen_test.py": {
 			"kind": "tool",
 			"why": "generator: test scaffold from fixtures"
@@ -224,6 +227,9 @@
 		"bin/workspace-optimum.mjs": {
 			"kind": "gate"
 		},
+		"bin/workspace-minimum.mjs": {
+			"kind": "gate"
+		},
 		"bin/wrapper-replay.mjs": {
 			"kind": "gate"
 		},
@@ -270,6 +276,7 @@
 				"bin/break-mutants.mjs",
 				"bin/workspace-guard.mjs",
 				"bin/workspace-optimum.mjs",
+				"bin/workspace-minimum.mjs",
 				"bin/coverage.mjs",
 				"bin/wrapper-replay.mjs"
 			]
@@ -335,6 +342,16 @@
 			"kind": "gate"
 		},
 		"npm:check:workspace-optimum": {
+			"kind": "gate"
+		},
+		"npm:gen:lwmin": {
+			"kind": "tool",
+			"why": "generator: data/fortran-lwmin.json (the reference workspace minima; needs gfortran and the Fortran sources)"
+		},
+		"npm:lwmin:check": {
+			"kind": "gate"
+		},
+		"npm:check:workspace-minimum": {
 			"kind": "gate"
 		},
 		"npm:gen:spec": {

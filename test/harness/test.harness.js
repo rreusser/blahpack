@@ -12,6 +12,7 @@ import assert from 'node:assert/strict';
 
 import { RNG, scalar as S, logical, schemes, ref, check, layoutInvariant, SIZES_SMALL } from './index.js';
 import { checked } from './ledger.js';
+import { describe as describeCall } from './replay.js';
 
 import dpotrf from '../../lib/lapack/base/dpotrf/lib/ndarray.js';
 import zpotrf from '../../lib/lapack/base/zpotrf/lib/ndarray.js';
@@ -239,4 +240,13 @@ test( 'dspmv: output is bit-exact across storage layouts (packed AP + strided/ne
 			}, { 'label': 'dspmv '+uplo+' layout invariance' } );
 		});
 	});
+});
+
+test( 'replay describe(): a recorded callback or options object is described, not a crash', function t() {
+	// zgees's `select` callback made a mismatch report throw (ticket 0100).
+	const rec = [ { 'v': 3 }, { 'f': 'function select( re, im ) { return re > 0; }' }, { 'o': { 'dtype': 'float64' } }, { 't': new Float64Array( 2 ) } ];
+	const out = describeCall( rec, [ 'N', 'select', 'opts', 'WORK' ] );
+	assert.match( out, /^N=3 select=Function\(function select\( re, im \)/ );
+	assert.match( out, /opts=Object\{dtype\}/ );
+	assert.match( out, /WORK=Float64Array\(2\)\[0,0\]$/ );
 });

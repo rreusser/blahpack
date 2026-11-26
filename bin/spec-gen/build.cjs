@@ -1038,6 +1038,10 @@ function build( routine, sig, facts, options ) {
 		} else if ( p.dims.length === 2 ) {
 			src = 'dimension';
 		}
+		// The reference picks its path from this workspace's length (ticket 0100).
+		if ( lw && lw.role === 'lwork' && facts && facts.adaptive && facts.adaptive.indexOf( lw.fortran ) >= 0 ) {
+			p.adaptive = true;
+		}
 		if ( t ) {
 			p.minLength = translate( t, p.fortran + '.minLength' );
 			p.minLength.source = src;

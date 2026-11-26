@@ -18,11 +18,12 @@
 
 ## Workspace
 
-- `LWORK` is a declared parameter but the base routine allocates
-  internal workspace of size `N*NB` when the provided `WORK` is
-  missing or too small. The user-supplied `lwork` argument is unused
-  (suppressed via `eslint-disable no-unused-vars`) to preserve
-  signature symmetry with the Fortran API.
+- There is no `LWORK` argument: `base.js` takes the reference's `LWORK` from
+  the length of `WORK` from `offsetWork`, and, as the reference does, shrinks
+  `NB` to `floor( LWORK/N )` or falls back to the unblocked code when it has
+  less than `N*NB` (ticket 0100). `T` lives in `WORK(0:IB-1,0:IB-1)` with
+  leading dimension `N`, and `dlarfb` gets `WORK(IB:)`. The minimum is
+  `max(1,N)`.
 
 ## Testing
 

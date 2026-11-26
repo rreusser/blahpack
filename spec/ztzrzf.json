@@ -82,7 +82,8 @@
 				"fortran": "LWKMIN",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

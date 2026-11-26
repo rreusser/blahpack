@@ -15,6 +15,12 @@
 //                letter of each `DLAMCH( '...' )` argument (E, S, P, B, ...),
 //                plus la_constants' `dulp` (P) / `deps` (E) / `dsafmin` (S)
 //                in .f90 sources. Omitted when there are none.
+//   adaptive     the workspace-length arguments (LWORK, LIWORK, ...) whose
+//                value the reference tests after its argument checks to pick
+//                its path: a block size shrunk to fit, an unblocked fallback,
+//                an algorithm chosen by the space it has (ticket 0100). A
+//                test that rejects (sets a negative INFO) or answers a query
+//                (LQUERY) is not one. Omitted when there are none.
 //
 // Everything downstream (bin/gen_spec, CI) reads the cache, never the sources
 // (CONVENTIONS T6).
@@ -684,7 +690,31 @@ function extractOne( src, free, sig ) {
 	if ( mc.length ) {
 		rec.dlamch = mc;
 	}
+	var ad = adaptiveLengths( st, ( xer >= 0 ) ? xer + 1 : start, argset );
+	if ( ad.length ) {
+		rec.adaptive = ad;
+	}
 	return rec;
+}
+
+// Workspace-length arguments an IF after the argument checks compares (see
+// header). `LD`-prefixed names are leading dimensions, not lengths.
+function adaptiveLengths( st, from, argset ) {
+	var out = [];
+	var i;
+	var c;
+	for ( i = from; i < st.length; i++ ) {
+		c = parseIf( unlabel( st[ i ] ) );
+		if ( !c || /\bLQUERY\b/.test( c.cond ) || ( i + 1 < st.length && /^(?:INFO|IERR) ?= ?-/.test( unlabel( st[ i + 1 ] ) ) ) || /\b(?:INFO|IERR) ?= ?-/.test( c.rest ) ) {
+			continue;
+		}
+		( c.cond.match( /\bL[A-Z]*WORK[A-Z]*\b/g ) || [] ).forEach( function each( w ) {
+			if ( !/^LD/.test( w ) && argset[ w ] && out.indexOf( w ) < 0 && new RegExp( '\\b' + w + ' ?\\.(LT|LE|GT|GE)\\.|\\.(LT|LE|GT|GE)\\. ?' + w + '\\b' ).test( c.cond ) ) {
+				out.push( w );
+			}
+		});
+	}
+	return out.sort();
 }
 
 // Letters of the DLAMCH queries in a statement list (see header).

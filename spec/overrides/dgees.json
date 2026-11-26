@@ -1,0 +1,12 @@
+{
+	"routine": "dgees",
+	"overrides": [
+		{
+			"reason": "DGEES hands its LWORK to DGEHRD, DORGHR and DHSEQR, which pick their block size or AED window from LWORK. The blocked and unblocked Hessenberg reductions round differently, and the QR iteration that follows can then reach a different real Schur form T (2-by-2 blocks rotated, rows and columns of other signs) with Schur vectors of other signs; past the reference's crossover the eigenvalue order changes too. The reference does this as well: compiled LAPACK 3.12.0 DGEES at N = 150 (random matrix, JOBVS = 'V') returns a different A, VS and order of WR at LWORK = 3N than at its queried optimum. The JS dgehrd crosses over at NX = 32 where ILAENV(3) gives 128, so the JS path changes from N > 33 (the reference's from N > 128). The module's tests check the eigenvalues, SDIM and A = Z*T*Z^T at the minimum WORK past the blocking threshold (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the real Schur form T is unique only up to rotations of its 2-by-2 blocks and signs, which the LWORK-dependent Hessenberg blocking can change",
+				"params.VS.workDependent": "the Schur vectors are unique only up to the same transformations as T, which the LWORK-dependent Hessenberg blocking can change"
+			}
+		}
+	]
+}

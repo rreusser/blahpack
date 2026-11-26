@@ -1,9 +1,10 @@
 ---
 id: 0100
 title: Blocked base routines ignore the workspace they get, so callers sized by the reference overrun
-status: open
+status: resolved
 area: wrappers
 opened: 2026-11-25
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -38,3 +39,7 @@ grep -ln "const NB = \|DEFAULT_NB = \|const nb = [0-9]" lib/lapack/base/*/lib/ba
   - zlaqr0 and zlaqr4 hard-code NWR = 5 rather than taking IPARMQ's value.
 
   Neither breaks workspace safety, but each changes which path a given size takes.
+
+## Resolution
+
+Every module whose reference picks its path from LWORK now does so from the workspace it is given (CONVENTIONS W6, lint:workspace-adaptive over the generated spec fact adaptive): 46 callees adapted with the reference's WORK layouts, and ticket 0096's raised caller minimums returned to the reference's, with wrappers allocating the callees' optima. Remaining gaps: null allocations unchecked against the optimum (ticket 0103), ILAENV stand-ins (ticket 0101).

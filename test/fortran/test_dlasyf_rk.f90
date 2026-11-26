@@ -1,6 +1,9 @@
 program test_dlasyf_rk
   use test_utils
   implicit none
+  ! Heavy rook-pivoting case (ticket 0102)
+  double precision :: AB(40, 40), WB(40, 32), eB(40)
+  integer :: IPIVB(40), ib, jb
   double precision :: a(100), w(100), e(10)
   integer :: ipiv(10), info, kb
 
@@ -128,6 +131,46 @@ program test_dlasyf_rk
   call print_array('a', a, 16)
   call print_array('e', e, 4)
   call print_int_array('ipiv', ipiv, 4)
+  call print_int('kb', kb)
+  call print_int('info', info)
+  call end_test()
+
+  ! 40x40 matrix needing heavy rook pivoting (2x2 pivots with P != K),
+  ! a_ij = sin(i*j + i + j - 2), NB=32, UPLO='L' (ticket 0102)
+  do jb = 1, 40
+    do ib = 1, 40
+      AB(ib, jb) = sin(dble(ib*jb + ib + jb - 2))
+    end do
+  end do
+  WB = 0.0d0
+  eB = 0.0d0
+  IPIVB = 0
+  kb = 0
+  call dlasyf_rk('L', 40, 32, kb, AB, 40, eB, IPIVB, WB, 40, info)
+  call begin_test('lower_40x40_pivot40_nb32')
+  call print_array('a', AB, 1600)
+  call print_array('e', eB, 40)
+  call print_int_array('ipiv', IPIVB, 40)
+  call print_int('kb', kb)
+  call print_int('info', info)
+  call end_test()
+
+  ! 40x40 matrix needing heavy rook pivoting (2x2 pivots with P != K),
+  ! a_ij = sin(i*j + i + j - 2), NB=32, UPLO='U' (ticket 0102)
+  do jb = 1, 40
+    do ib = 1, 40
+      AB(ib, jb) = sin(dble(ib*jb + ib + jb - 2))
+    end do
+  end do
+  WB = 0.0d0
+  eB = 0.0d0
+  IPIVB = 0
+  kb = 0
+  call dlasyf_rk('U', 40, 32, kb, AB, 40, eB, IPIVB, WB, 40, info)
+  call begin_test('upper_40x40_pivot40_nb32')
+  call print_array('a', AB, 1600)
+  call print_array('e', eB, 40)
+  call print_int_array('ipiv', IPIVB, 40)
   call print_int('kb', kb)
   call print_int('info', info)
   call end_test()

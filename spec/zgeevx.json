@@ -66,7 +66,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the Schur form T is unique only up to unit phases, which the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
 			"name": "lda",
@@ -219,7 +220,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "ZTRSNA's estimate is computed from the Schur form, whose phases the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
 			"name": "WORK",
@@ -363,5 +365,14 @@
 	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
+	],
+	"overrides": [
+		{
+			"reason": "ZGEEVX hands its LWORK to ZGEHRD, ZUNGHR, ZHSEQR and ZTREVC3, which pick their block size, AED window or back-transformation from LWORK. The blocked and unblocked Hessenberg reductions round differently, and the QR iteration that follows reaches a Schur form T (in A) that is unique only up to unit phases of its off-diagonal entries; ZTRSNA's RCONDV is ZLACN2's estimate on that T, so it moves with it. The reference does this as well past its ZGEHRD crossover (ILAENV(3) = 128; compiled LAPACK 3.12.0 ZGEEV, which shares this path, returns a different A at LWORK = 2N than at its optimum for N = 150, 200 and 300). The JS zgehrd crosses over at NX = 32, so the JS path changes from N > 33. At N = 40, W, VL, VR (normalized), RCONDE, SCALE and ABNRM agree to rounding; the module's tests check W and RCONDE, and RCONDV within a factor 2, at the minimum WORK past the blocking threshold (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the Schur form T is unique only up to unit phases, which the LWORK-dependent Hessenberg blocking can change",
+				"params.RCONDV.workDependent": "ZTRSNA's estimate is computed from the Schur form, whose phases the LWORK-dependent Hessenberg blocking can change"
+			}
+		}
 	]
 }

@@ -50,7 +50,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the Schur form T follows the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change, and is unique only up to unit phases"
 		},
 		{
 			"name": "lda",
@@ -74,7 +75,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the order in which the eigenvalues deflate depends on the LWORK-dependent Hessenberg blocking"
 		},
 		{
 			"name": "VL",
@@ -95,7 +97,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the eigenvector columns follow the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
 			"name": "ldvl",
@@ -125,7 +128,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the eigenvector columns follow the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
 			"name": "ldvr",
@@ -257,5 +261,16 @@
 	],
 	"untranslated": [
 		"WORK.minLength: local MINWRK is assigned inside nested control flow"
+	],
+	"overrides": [
+		{
+			"reason": "ZGEEV hands its LWORK to ZGEHRD, ZUNGHR, ZHSEQR and ZTREVC3, which pick their block size, AED window or back-transformation from LWORK. The blocked and unblocked Hessenberg reductions round differently, and the QR iteration that follows can then deflate the eigenvalues in another order, so W, the Schur form T in A (also unique only up to unit phases), and the eigenvector columns that follow W's order all change. The reference does this as well: compiled LAPACK 3.12.0 ZGEEV (random matrix, JOBVR = 'V') returns a different A and a different order of W at LWORK = 2N than at its optimum for N = 150, 200 and 300. The JS zgehrd crosses over at NX = 32 where ILAENV(3) gives 128, so the JS path changes from N > 33 (the reference's from N > 128): at N = 80 and 120 the JS result at WORK = 2N is bit-identical to the one with only zgehrd held unblocked, and matches the optimum's spectrum to 5e-14 with 4 and 18 eigenvalues reordered and the matched eigenvectors equal to 2e-14. The module's tests check the spectrum and the eigenvector residuals at the minimum WORK past the blocking threshold (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the Schur form T follows the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change, and is unique only up to unit phases",
+				"params.w.workDependent": "the order in which the eigenvalues deflate depends on the LWORK-dependent Hessenberg blocking",
+				"params.VL.workDependent": "the eigenvector columns follow the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change",
+				"params.VR.workDependent": "the eigenvector columns follow the eigenvalue order, which the LWORK-dependent Hessenberg blocking can change"
+			}
+		}
 	]
 }

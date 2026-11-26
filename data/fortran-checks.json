@@ -2879,6 +2879,9 @@
 		}
 	},
 	"cgebrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -4516,6 +4519,9 @@
 		}
 	},
 	"cgehrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"ILO",
@@ -5274,6 +5280,9 @@
 		}
 	},
 	"cgelqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -5654,6 +5663,9 @@
 		}
 	},
 	"cgelsd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -5896,6 +5908,9 @@
 		}
 	},
 	"cgelss": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -7346,6 +7361,9 @@
 		}
 	},
 	"cgeqlf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -7440,6 +7458,9 @@
 		}
 	},
 	"cgeqp3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -7545,6 +7566,9 @@
 		}
 	},
 	"cgeqp3rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -8002,6 +8026,9 @@
 		}
 	},
 	"cgeqrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -8100,6 +8127,9 @@
 		}
 	},
 	"cgeqrfp": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -8926,6 +8956,9 @@
 		}
 	},
 	"cgerqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -9162,6 +9195,9 @@
 		}
 	},
 	"cgesdd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBZ",
 			"M",
@@ -9503,6 +9539,9 @@
 		}
 	},
 	"cgesvd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBU",
 			"JOBVT",
@@ -11513,6 +11552,9 @@
 		}
 	},
 	"cgetri": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"A",
@@ -11686,6 +11728,9 @@
 		}
 	},
 	"cgetsls": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"TRANS",
 			"M",
@@ -13898,6 +13943,9 @@
 		}
 	},
 	"cgghd3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"COMPQ",
 			"COMPZ",
@@ -21951,6 +21999,9 @@
 		}
 	},
 	"chesv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23241,6 +23292,9 @@
 		}
 	},
 	"chetrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23595,6 +23649,9 @@
 		}
 	},
 	"chetrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23681,6 +23738,9 @@
 		}
 	},
 	"chetrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23778,6 +23838,9 @@
 		}
 	},
 	"chetrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23891,6 +23954,9 @@
 		}
 	},
 	"chetrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -23983,6 +24049,9 @@
 		}
 	},
 	"chetrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -46238,6 +46307,9 @@
 		}
 	},
 	"csysv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -47445,6 +47517,9 @@
 		}
 	},
 	"csytrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -47531,6 +47606,9 @@
 		}
 	},
 	"csytrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -47626,6 +47704,9 @@
 		}
 	},
 	"csytrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -47739,6 +47820,9 @@
 		}
 	},
 	"csytrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -47831,6 +47915,9 @@
 		}
 	},
 	"csytrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -53331,6 +53418,9 @@
 		}
 	},
 	"ctrevc3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"HOWMNY",
@@ -55262,6 +55352,9 @@
 		}
 	},
 	"ctzrzf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -57735,6 +57828,9 @@
 		}
 	},
 	"cunglq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -57834,6 +57930,9 @@
 		}
 	},
 	"cungql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -57931,6 +58030,9 @@
 		}
 	},
 	"cungqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -58109,6 +58211,9 @@
 		}
 	},
 	"cungrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -59617,6 +59722,9 @@
 		}
 	},
 	"cunmlq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -59784,6 +59892,9 @@
 		}
 	},
 	"cunmql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -59943,6 +60054,9 @@
 		}
 	},
 	"cunmqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -60410,6 +60524,9 @@
 		}
 	},
 	"cunmrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -60577,6 +60694,9 @@
 		}
 	},
 	"cunmrz": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -64541,6 +64661,9 @@
 		}
 	},
 	"dgebrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -66201,6 +66324,9 @@
 		}
 	},
 	"dgehrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"ILO",
@@ -66762,6 +66888,9 @@
 		}
 	},
 	"dgelqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -67146,6 +67275,9 @@
 		}
 	},
 	"dgelsd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -67423,6 +67555,9 @@
 		}
 	},
 	"dgelss": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -68891,6 +69026,9 @@
 		}
 	},
 	"dgeqlf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -68985,6 +69123,9 @@
 		}
 	},
 	"dgeqp3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -69084,6 +69225,9 @@
 		}
 	},
 	"dgeqp3rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -69540,6 +69684,9 @@
 		}
 	},
 	"dgeqrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -69638,6 +69785,9 @@
 		}
 	},
 	"dgeqrfp": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -70472,6 +70622,9 @@
 		}
 	},
 	"dgerqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -70622,6 +70775,9 @@
 		}
 	},
 	"dgesdd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBZ",
 			"M",
@@ -70979,6 +71135,9 @@
 		}
 	},
 	"dgesvd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBU",
 			"JOBVT",
@@ -73012,6 +73171,9 @@
 		}
 	},
 	"dgetri": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"A",
@@ -73185,6 +73347,9 @@
 		}
 	},
 	"dgetsls": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"TRANS",
 			"M",
@@ -75483,6 +75648,9 @@
 		}
 	},
 	"dgghd3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"COMPQ",
 			"COMPZ",
@@ -94812,6 +94980,9 @@
 		}
 	},
 	"dorglq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -94911,6 +95082,9 @@
 		}
 	},
 	"dorgql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -95008,6 +95182,9 @@
 		}
 	},
 	"dorgqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -95186,6 +95363,9 @@
 		}
 	},
 	"dorgrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -96693,6 +96873,9 @@
 		}
 	},
 	"dormlq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -96862,6 +97045,9 @@
 		}
 	},
 	"dormql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -97021,6 +97207,9 @@
 		}
 	},
 	"dormqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -97488,6 +97677,9 @@
 		}
 	},
 	"dormrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -97655,6 +97847,9 @@
 		}
 	},
 	"dormrz": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -112679,6 +112874,9 @@
 		}
 	},
 	"dsysv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -113980,6 +114178,9 @@
 		}
 	},
 	"dsytrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -114334,6 +114535,9 @@
 		}
 	},
 	"dsytrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -114420,6 +114624,9 @@
 		}
 	},
 	"dsytrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -114515,6 +114722,9 @@
 		}
 	},
 	"dsytrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -114628,6 +114838,9 @@
 		}
 	},
 	"dsytrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -114720,6 +114933,9 @@
 		}
 	},
 	"dsytrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -120370,6 +120586,9 @@
 		}
 	},
 	"dtrevc3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"HOWMNY",
@@ -121812,6 +122031,9 @@
 		}
 	},
 	"dtrsyl3": {
+		"adaptive": [
+			"LIWORK"
+		],
 		"args": [
 			"TRANA",
 			"TRANB",
@@ -122383,6 +122605,9 @@
 		}
 	},
 	"dtzrzf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -126807,6 +127032,9 @@
 		}
 	},
 	"sgebrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -128436,6 +128664,9 @@
 		}
 	},
 	"sgehrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"ILO",
@@ -128992,6 +129223,9 @@
 		}
 	},
 	"sgelqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -129372,6 +129606,9 @@
 		}
 	},
 	"sgelsd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -129641,6 +129878,9 @@
 		}
 	},
 	"sgelss": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -131097,6 +131337,9 @@
 		}
 	},
 	"sgeqlf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -131191,6 +131434,9 @@
 		}
 	},
 	"sgeqp3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -131290,6 +131536,9 @@
 		}
 	},
 	"sgeqp3rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -131741,6 +131990,9 @@
 		}
 	},
 	"sgeqrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -131839,6 +132091,9 @@
 		}
 	},
 	"sgeqrfp": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -132665,6 +132920,9 @@
 		}
 	},
 	"sgerqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -132811,6 +133069,9 @@
 		}
 	},
 	"sgesdd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBZ",
 			"M",
@@ -133164,6 +133425,9 @@
 		}
 	},
 	"sgesvd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBU",
 			"JOBVT",
@@ -135161,6 +135425,9 @@
 		}
 	},
 	"sgetri": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"A",
@@ -135334,6 +135601,9 @@
 		}
 	},
 	"sgetsls": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"TRANS",
 			"M",
@@ -137556,6 +137826,9 @@
 		}
 	},
 	"sgghd3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"COMPQ",
 			"COMPZ",
@@ -156553,6 +156826,9 @@
 		}
 	},
 	"sorglq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -156652,6 +156928,9 @@
 		}
 	},
 	"sorgql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -156749,6 +157028,9 @@
 		}
 	},
 	"sorgqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -156927,6 +157209,9 @@
 		}
 	},
 	"sorgrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -158434,6 +158719,9 @@
 		}
 	},
 	"sormlq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -158603,6 +158891,9 @@
 		}
 	},
 	"sormql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -158762,6 +159053,9 @@
 		}
 	},
 	"sormqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -159229,6 +159523,9 @@
 		}
 	},
 	"sormrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -159396,6 +159693,9 @@
 		}
 	},
 	"sormrz": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -173380,6 +173680,9 @@
 		}
 	},
 	"ssysv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -174668,6 +174971,9 @@
 		}
 	},
 	"ssytrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -175022,6 +175328,9 @@
 		}
 	},
 	"ssytrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -175108,6 +175417,9 @@
 		}
 	},
 	"ssytrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -175203,6 +175515,9 @@
 		}
 	},
 	"ssytrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -175316,6 +175631,9 @@
 		}
 	},
 	"ssytrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -175408,6 +175726,9 @@
 		}
 	},
 	"ssytrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -181022,6 +181343,9 @@
 		}
 	},
 	"strevc3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"HOWMNY",
@@ -182448,6 +182772,9 @@
 		}
 	},
 	"strsyl3": {
+		"adaptive": [
+			"LIWORK"
+		],
 		"args": [
 			"TRANA",
 			"TRANB",
@@ -183024,6 +183351,9 @@
 		}
 	},
 	"stzrzf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -186421,6 +186751,9 @@
 		}
 	},
 	"zgebrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -188089,6 +188422,9 @@
 		}
 	},
 	"zgehrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"ILO",
@@ -188852,6 +189188,9 @@
 		}
 	},
 	"zgelqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -189236,6 +189575,9 @@
 		}
 	},
 	"zgelsd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -189482,6 +189824,9 @@
 		}
 	},
 	"zgelss": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -190944,6 +191289,9 @@
 		}
 	},
 	"zgeqlf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -191038,6 +191386,9 @@
 		}
 	},
 	"zgeqp3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -191143,6 +191494,9 @@
 		}
 	},
 	"zgeqp3rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -191605,6 +191959,9 @@
 		}
 	},
 	"zgeqrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -191703,6 +192060,9 @@
 		}
 	},
 	"zgeqrfp": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -192536,6 +192896,9 @@
 		}
 	},
 	"zgerqf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -192776,6 +193139,9 @@
 		}
 	},
 	"zgesdd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBZ",
 			"M",
@@ -193121,6 +193487,9 @@
 		}
 	},
 	"zgesvd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"JOBU",
 			"JOBVT",
@@ -195166,6 +195535,9 @@
 		}
 	},
 	"zgetri": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"N",
 			"A",
@@ -195339,6 +195711,9 @@
 		}
 	},
 	"zgetsls": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"TRANS",
 			"M",
@@ -197584,6 +197959,9 @@
 		}
 	},
 	"zgghd3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"COMPQ",
 			"COMPZ",
@@ -205715,6 +206093,9 @@
 		}
 	},
 	"zhesv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207017,6 +207398,9 @@
 		}
 	},
 	"zhetrd": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207371,6 +207755,9 @@
 		}
 	},
 	"zhetrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207457,6 +207844,9 @@
 		}
 	},
 	"zhetrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207554,6 +207944,9 @@
 		}
 	},
 	"zhetrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207667,6 +208060,9 @@
 		}
 	},
 	"zhetrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -207759,6 +208155,9 @@
 		}
 	},
 	"zhetrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -230249,6 +230648,9 @@
 		}
 	},
 	"zsysv": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -231468,6 +231870,9 @@
 		}
 	},
 	"zsytrf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -231554,6 +231959,9 @@
 		}
 	},
 	"zsytrf_aa": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -231649,6 +232057,9 @@
 		}
 	},
 	"zsytrf_aa_2stage": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -231762,6 +232173,9 @@
 		}
 	},
 	"zsytrf_rk": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -231854,6 +232268,9 @@
 		}
 	},
 	"zsytrf_rook": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"UPLO",
 			"N",
@@ -237389,6 +237806,9 @@
 		}
 	},
 	"ztrevc3": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"HOWMNY",
@@ -239339,6 +239759,9 @@
 		}
 	},
 	"ztzrzf": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -241818,6 +242241,9 @@
 		}
 	},
 	"zunglq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -241917,6 +242343,9 @@
 		}
 	},
 	"zungql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -242014,6 +242443,9 @@
 		}
 	},
 	"zungqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -242192,6 +242624,9 @@
 		}
 	},
 	"zungrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"M",
 			"N",
@@ -243700,6 +244135,9 @@
 		}
 	},
 	"zunmlq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -243869,6 +244307,9 @@
 		}
 	},
 	"zunmql": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -244028,6 +244469,9 @@
 		}
 	},
 	"zunmqr": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -244495,6 +244939,9 @@
 		}
 	},
 	"zunmrq": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",
@@ -244662,6 +245109,9 @@
 		}
 	},
 	"zunmrz": {
+		"adaptive": [
+			"LWORK"
+		],
 		"args": [
 			"SIDE",
 			"TRANS",

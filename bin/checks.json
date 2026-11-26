@@ -224,6 +224,9 @@
 			"kind": "tool",
 			"why": "ESLint plugin module loaded by eslint.config.cjs; its rules run under npm:test:lint"
 		},
+		"lint/spec-adaptive.test.cjs": {
+			"kind": "gate"
+		},
 		"lint/spec-schema.test.cjs": {
 			"kind": "gate"
 		},

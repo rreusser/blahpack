@@ -32,3 +32,7 @@ The wrapper replay could add a variant passing a caller workspace one element sh
 ## Evidence 2026-11-25
 
 `zlahef_rook`'s own tests passed `W` at half its required size (`N*nb`), and nothing threw. The result was NaN, and the test asserted only `kb`. A size check in `ndarray.js` would have rejected the test call.
+
+## Evidence 2026-11-26
+
+- Of the 434 wrappers that allocate WORK for `null`, 422 have no length check on a WORK the caller passes; they hand it to base.js directly (e.g. `lib/lapack/base/dgeqrf/lib/dgeqrf.js:83`, `lib/lapack/base/dgesvd/lib/dgesvd.js:108`). Since ticket 0100 a WORK at or above the reference's minimum is safe there, because base.js adapts to it; one below the minimum still overruns silently.

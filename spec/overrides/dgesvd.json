@@ -1,0 +1,13 @@
+{
+	"routine": "dgesvd",
+	"overrides": [
+		{
+			"reason": "DGESVD picks its path from LWORK: for M much larger than N (or N much larger than M) it uses a work matrix for the fast QR (LQ) variant only when LWORK holds it, and otherwise applies the QR (LQ) factor through DORMBR; the callees' block sizes follow LWORK too. Singular vectors are determined only up to sign (a unit phase for complex), so a different path can return different ones; A is scratch unless JOBU or JOBVT is 'O', and then holds vectors of that sign. S does not depend on LWORK; the module's tests check every path, at the minimum WORK and between it and the optimum, against the optimum by property (orthonormal U and V^T, A = U*S*V^T, vectors equal up to sign) (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "on exit A is scratch, or (JOBU or JOBVT = 'O') singular vectors whose signs depend on the path LWORK selects",
+				"params.U.workDependent": "the left singular vectors' signs depend on the path LWORK selects",
+				"params.VT.workDependent": "the right singular vectors' signs depend on the path LWORK selects"
+			}
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"routine": "dgeev",
+	"overrides": [
+		{
+			"reason": "DGEEV hands its LWORK to DGEHRD, DORGHR, DHSEQR and DTREVC3, which pick their block size, AED window or back-transformation from LWORK. The blocked and unblocked Hessenberg reductions round differently, and the QR iteration that follows can then reach a different real Schur form T (2-by-2 blocks rotated, rows and columns of other signs) with eigenvectors of the opposite sign; past the reference's crossover the eigenvalue order changes too. The reference does this as well: compiled LAPACK 3.12.0 DGEEV at N = 150 and 200 (random matrix, JOBVR = 'V') returns a different A, a different order of WR, and VR entries of different magnitude at LWORK = 4N than at its queried optimum. The JS dgehrd crosses over at NX = 32 where ILAENV(3) gives 128, so the JS path changes from N > 33 (the reference's from N > 128). The eigenvalues do not depend on LWORK beyond rounding at the sizes the tests reach; the module's tests check them, and the eigenvector residual, at the minimum WORK past the blocking threshold (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the real Schur form T is unique only up to rotations of its 2-by-2 blocks and signs, which the LWORK-dependent Hessenberg blocking can change",
+				"params.VL.workDependent": "each left eigenvector is unique only up to sign, which the LWORK-dependent Hessenberg blocking can change",
+				"params.VR.workDependent": "each right eigenvector is unique only up to sign, which the LWORK-dependent Hessenberg blocking can change"
+			}
+		}
+	]
+}

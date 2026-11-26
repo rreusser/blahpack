@@ -1,0 +1,17 @@
+{
+	"routine": "zggsvp3",
+	"overrides": [
+		{
+			"reason": "ZGGSVP3 hands its LWORK to ZGEQP3, which picks its block size from LWORK and falls back to the unblocked ZLAQP2 when the workspace is short of (N+1)*NB. The blocked and unblocked column-pivoted QR update the column norms differently, so where two candidate columns are nearly tied they can pivot differently, and A, B, U, V, Q (and the pivots in IWORK) then hold a different, equally valid reduction U^H*A*Q, V^H*B*Q. K and L do not depend on LWORK; the module's tests check the reduction at the minimum WORK past the blocking threshold by residual (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the triangular reduction of A depends on ZGEQP3's pivot order, which LWORK's block size can change in near ties",
+				"params.B.workDependent": "the triangular reduction of B depends on ZGEQP3's pivot order, which LWORK's block size can change in near ties",
+				"params.U.workDependent": "U follows the pivot order that LWORK's block size can change",
+				"params.V.workDependent": "V follows the pivot order that LWORK's block size can change",
+				"params.Q.workDependent": "Q follows the pivot order that LWORK's block size can change",
+				"params.IWORK.workDependent": "the pivots LWORK's block size can change in near ties",
+				"params.TAU.workDependent": "scratch reflector scalars of the pivoted factorizations"
+			}
+		}
+	]
+}

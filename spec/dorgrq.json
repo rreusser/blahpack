@@ -90,7 +90,8 @@
 				"fortran": "MAX(1,M)",
 				"js": "max( 1, M )",
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

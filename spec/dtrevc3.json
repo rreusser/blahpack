@@ -166,7 +166,8 @@
 				"fortran": "MAX(1,3*N)",
 				"js": "max( 1, 3 * N )",
 				"source": "check"
-			}
+			},
+			"adaptive": true
 		},
 		{
 			"name": "lwork",

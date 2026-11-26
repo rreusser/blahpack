@@ -59,6 +59,9 @@ var SOURCE_RULES = {
 	// LWORK (W6; ticket 0100).
 	'workspace-adaptive': 'error',
 
+	// base.js takes the reference's ILAENV/IPARMQ values from the ilaenv
+	// module, not from copied constants (X3; ticket 0049).
+	'tuning-from-ilaenv': 'error',
 
 	// base.js honors every array's strides and offset: element indices use the
 	// array's offset, and callees get the array's own strides (S13).

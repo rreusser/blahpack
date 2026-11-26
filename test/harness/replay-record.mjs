@@ -57,8 +57,26 @@ function encode( x ) {
 	return void 0;
 }
 
+// The module's own wrapper calls ndarray.js (CONVENTIONS D5d), but the record
+// is of the calls the TESTS make: a call from the wrapper would be replayed
+// through the wrapper again, and would crowd the tests' own calls out of the
+// sample. A call whose caller frame is in `lib/<routine>.js` is not recorded.
+const WRAPPER = process.env.REPLAY_TARGET ? process.env.REPLAY_TARGET.replace( /\/lib\/ndarray\.js$/, ( m, i, str ) => '/lib/' + path.basename( path.dirname( path.dirname( str ) ) ) + '.js:' ) : null;
+
+function fromWrapper( recorded ) {
+	const o = {};
+	const limit = Error.stackTraceLimit;
+	Error.stackTraceLimit = 1;
+	Error.captureStackTrace( o, recorded );
+	Error.stackTraceLimit = limit;
+	return !!WRAPPER && String( o.stack ).indexOf( WRAPPER ) >= 0;
+}
+
 globalThis.__replayRecord = function replayRecord( fn ) {
 	return function recorded( ...args ) {
+		if ( fromWrapper( recorded ) ) {
+			return fn.apply( this, args );
+		}
 		const enc = ( records.length < MAX ) ? args.map( encode ) : null;
 		const out = fn.apply( this, args );
 		if ( enc && !enc.some( ( e ) => e === void 0 ) ) {

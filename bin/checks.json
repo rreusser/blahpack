@@ -56,6 +56,10 @@
 			"kind": "tool",
 			"why": "codemod: mechanical test-file fixes"
 		},
+		"bin/codemod-wrapper-ndarray.mjs": {
+			"kind": "tool",
+			"why": "codemod (ticket 0077): a wrapper whose routine takes a workspace calls ndarray.js instead of base.js (CONVENTIONS D5d); its result is checked by lint:wrapper-calls-ndarray and bin/wrapper-replay.mjs (short-work)"
+		},
 		"bin/codemod-vector-lengths.mjs": {
 			"kind": "tool",
 			"why": "one-shot codemod: rewrites wrapper vector-length expressions to the spec’s; its result is checked by bin/wrapper-replay.mjs"

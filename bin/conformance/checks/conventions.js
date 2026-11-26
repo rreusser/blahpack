@@ -5,6 +5,16 @@ var util = require( '../util.js' );
 
 var ID = 'conventions';
 
+var specLib = require( '../../../lint/lib/spec.cjs' );
+
+// Whether the routine's spec has a param of role `workspace` (CONVENTIONS D5d).
+function takesWorkspace( routine ) {
+	var spec = specLib.load( routine );
+	return !!spec && spec.params.some( function some( p ) {
+		return p.role === 'workspace';
+	});
+}
+
 // String parameter names → expected validator require string
 var STRING_VALIDATORS = {
 	'order': 'is-layout',
@@ -140,8 +150,21 @@ function check( mod ) {
 	// ──────────────────────────────────────────
 
 	if ( routineContent && routineParams ) {
-		// Should call base.js (not ndarray.js)
-		if ( /base\(/.test( routineContent ) || /require.*base\.js/.test( routineContent ) ) {
+		// Calls base.js (not ndarray.js), unless the routine takes a
+		// workspace: then ndarray.js, so a caller's workspace is checked
+		// against the minimum (S8, D5d; lint:wrapper-calls-ndarray).
+		if ( takesWorkspace( mod.routine ) ) {
+			if ( /\bndarray\(/.test( routineContent ) && /import ndarray from '\.\/ndarray\.js'/.test( routineContent ) ) {
+				results.push( util.pass( ID + '.routine-calls-base', mod.routine + '.js calls ndarray.js (the routine takes a workspace)' ) );
+			} else {
+				results.push( util.fail(
+					ID + '.routine-calls-base',
+					mod.routine + '.js calls ndarray.js',
+					1, [ mod.routine + '.js' ],
+					mod.routine + '.js should call ndarray.js: the routine takes a workspace (CONVENTIONS D5d)'
+				));
+			}
+		} else if ( /base\(/.test( routineContent ) || /require.*base\.js/.test( routineContent ) ) {
 			results.push( util.pass( ID + '.routine-calls-base', mod.routine + '.js calls base.js' ) );
 		} else {
 			results.push( util.fail(

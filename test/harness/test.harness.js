@@ -12,7 +12,9 @@ import assert from 'node:assert/strict';
 
 import { RNG, scalar as S, logical, schemes, ref, check, layoutInvariant, SIZES_SMALL } from './index.js';
 import { checked } from './ledger.js';
-import { describe as describeCall } from './replay.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { describe as describeCall, replayModule } from './replay.js';
 
 import dpotrf from '../../lib/lapack/base/dpotrf/lib/ndarray.js';
 import zpotrf from '../../lib/lapack/base/zpotrf/lib/ndarray.js';
@@ -249,4 +251,30 @@ test( 'replay describe(): a recorded callback or options object is described, no
 	assert.match( out, /^N=3 select=Function\(function select\( re, im \)/ );
 	assert.match( out, /opts=Object\{dtype\}/ );
 	assert.match( out, /WORK=Float64Array\(2\)\[0,0\]$/ );
+});
+
+test( 'replay short-work: a wrapper that skips ndarray.js\'s workspace check is reported (ticket 0077)', async function t() {
+	// One recorded dormql call: Q (4-by-2 reflectors) applied from the left to a 4-by-3 C; ndarray.js demands WORK >= max( 1, N ) = 3.
+	const M = 4;
+	const N = 3;
+	const K = 2;
+	const A = new Float64Array( [ 0.5, -0.25, 1, 0, 0.75, 0.125, -0.5, 1 ] );
+	const TAU = new Float64Array( [ 1.2, 0.8 ] );
+	const C = new Float64Array( 12 ).map( ( _, i ) => ( ( i * 7 ) % 5 ) - 2 );
+	const WORK = new Float64Array( 8 );
+	const v = ( x ) => ( { 'v': x } );
+	const rec = [ v( 'left' ), v( 'no-transpose' ), v( M ), v( N ), v( K ), { 't': A }, v( 1 ), v( M ), v( 0 ), { 't': TAU }, v( 1 ), v( 0 ), { 't': C }, v( 1 ), v( M ), v( 0 ), { 't': WORK }, v( 1 ), v( 0 ) ];
+	const here = path.dirname( fileURLToPath( import.meta.url ) );
+	const short = ( r ) => r.mismatches.filter( ( m ) => /^short-work WORK=2 \(minimum 3\)/.test( m.variant ) );
+
+	// The old wrapper (calls base.js): the short WORK is accepted.
+	const old = await replayModule( path.join( here, 'fixtures', 'short-work', 'dormql' ), { 'probe': false, 'recs': [ rec ] } );
+	assert.equal( old.replayed, 1 );
+	assert.equal( short( old ).length, 1, JSON.stringify( old.mismatches ) );
+	assert.match( short( old )[ 0 ].detail, /accepted a workspace shorter than the minimum/ );
+
+	// The real wrapper (calls ndarray.js, D5d): RangeError, no finding.
+	const cur = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'base', 'dormql' ), { 'probe': false, 'recs': [ rec ] } );
+	assert.equal( cur.replayed, 1 );
+	assert.deepEqual( cur.mismatches, [] );
 });

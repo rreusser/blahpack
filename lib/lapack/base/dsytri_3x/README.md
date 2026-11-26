@@ -42,7 +42,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var A = new Float64Array( [ 5.0 ] );
 var e = new Float64Array( [ 0.0 ] );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Float64Array( 6 );
+var work = new Float64Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = dsytri_3x( 'column-major', 'lower', 1, A, 1, e, 1, ipiv, 1, 0, work, 1, 1 );
 // info => 0
@@ -76,7 +76,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var A = new Float64Array( [ 5.0 ] );
 var e = new Float64Array( [ 0.0 ] );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Float64Array( 6 );
+var work = new Float64Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = dsytri_3x.ndarray( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0, 1 );
 // info => 0
@@ -130,7 +130,7 @@ var dsytri_3x = require( '@stdlib/lapack/base/dsytri_3x' );
 var A = new Float64Array( [ 5.0 ] );
 var e = new Float64Array( [ 0.0 ] );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Float64Array( 6 );
+var work = new Float64Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = dsytri_3x( 'column-major', 'lower', 1, A, 1, e, 1, ipiv, 1, 0, work, 1, 1 );
 console.log( info );

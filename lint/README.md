@@ -89,6 +89,7 @@ scaffolding/convention defects:
 | [`spec-prologue`](rules/spec-prologue/) | `ndarray.js`, `<routine>.js` | The validation prologue is the generated one: one check per reference `INFO = -k` check, in reference order (V1, V3–V7). Fix: `bin/codemod-spec/prologue.cjs`. |
 | [`spec-messages`](rules/spec-messages/) | `ndarray.js`, `<routine>.js` | Each prologue error carries its canonical message (V8). |
 | [`spec-ld-bounds`](rules/spec-ld-bounds/) | `<routine>.js` | Every LD bound thrown on is a spec check or `max( 1, <spec rows or cols> )` of the array (V5, V11). |
+| [`wrapper-calls-ndarray`](rules/wrapper-calls-ndarray/) | `<routine>.js` | A wrapper whose routine takes a workspace calls `ndarray.js`, not `base.js`, so a caller's workspace is validated (D5d). Fix: `bin/codemod-wrapper-ndarray.mjs`. |
 | [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `ndarray.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
 | [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |

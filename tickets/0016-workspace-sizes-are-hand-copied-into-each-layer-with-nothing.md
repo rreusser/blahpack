@@ -32,3 +32,15 @@ grep -rl assertWorkspaceSufficient lib/*/base/*/test/ | sed -E 's#lib/[a-z]+/bas
 ## Evidence 2026-11-26
 
 - zgges's `ndarray.js` demanded WORK of `N + max(8N, 1)` and RWORK of `2N + max(8N, 1)`, while `spec/zgges.json` already held the reference's `max(1, 2N)` and `8N`: the spec knew the right minimum and nothing compared the hand-written check with it. Fixed in the ticket-0049 PR; found by an agent reading the code. Similar: ztgsna (ticket 0104, resolved).
+
+## Evidence 2026-11-26 (workspace-minimum check)
+
+- `bin/gen-lwmin.mjs` recorded the reference's workspace minimum into `data/fortran-lwmin.json`: 161 modules, 28,539 rows over the lwkopt grid. For each workspace with a length argument it records the smallest length that neither the routine nor any of its callees rejects. It also records the declared extents (e.g. `RWORK( 8*N )`). `bin/workspace-minimum.mjs --all --check` replays the rows through each `ndarray.js` with `base.js` stopped.
+- First run: 41 modules fail, 4,403 row-workspaces in all.
+  - 20 modules demand too much (ndarray.js rejects a call at the reference's minimum). Examples: dtgsyl 39200 vs 1, d/z orgtsqr_row and ungtsqr_row 19600 vs 1, dlamtsqr 5600 vs 40, zungtsqr 15400 vs 9800, d/z orbdb1 and unbdb1 140 vs 70, dsyevx 8 vs 1, ztgsen WORK/IWORK, and dggsvd3/zggsvd3 280 vs the effective 141. Some of these are at zero dimensions: dtgex2 32 vs 0, d/z orbdb5/6 and unbdb5/6 1 vs 0. Declared extents: zggevx IWORK N+6 vs the declared N+2, and dgeevx IWORK.
+  - 22 modules demand too little (ndarray.js reaches base.js at minimum − 1). Most have no check at all on that workspace: d/z gsvj0/1 (0 vs M), dlatrs3, zhetrd_he2hb (0 vs 78400), the IWORK of dstevr and dsyevr (0 vs 10N), ztgsen IWORK and ztgsyl. Others are off by a small amount: d/z orbdb2, zunbdb4, d/z sytrf_aa, dtgexc, zheev, zheevx, d/z ormhr/unmhr, d/z orghr/unghr at N = 1, and ztgsen WORK.
+- Reported but not failed:
+  - 5,645 row-workspaces at a zero dimension accept less than the reference's minimum (W3: an empty problem needs no workspace).
+  - 4,120 row-workspaces accept less than a declared extent the reference cannot check.
+  - Some rows were not run: dlamswlq/dlamtsqr K > N (kept deliberately, ticket 0103), and rows of d/z tgsen and d/z lamtsqr whose reference callees reject the call at every length.
+- Before this check, nothing compared the IWORK/RWORK guards with the reference.

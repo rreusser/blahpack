@@ -20,25 +20,29 @@
 * no algorithm runs: the sentinel means "accepted", a RangeError
 * "rejected". By W1 a length-L array is LWORK = L.
 *
-* For each workspace in turn, the others ample:
+* For each workspace in turn, the others ample, against the reference's
+* minimum: for a workspace with a length argument the effective one, the
+* smallest length at which neither the routine nor any callee rejects the
+* call (dggsvd3 checks only LWORK >= 1, but its DGGSVP3 needs more; below
+* the effective minimum the reference fails in a callee, and base.js, which
+* calls its callees' base.js unchecked, may overrun); for a `declared`
+* workspace the extent the reference declares.
 *
-* - at the reference's minimum: a RangeError fails the row (`too high`),
-*   unless the reference's own check is weaker than its callees' and
-*   ndarray.js accepts the effective minimum (the smallest length no callee
-*   of the reference rejects; dggsvd3 checks LWORK >= 1, its DGGSVP3 needs
-*   more): then it is reported (`callee gap`), not failed;
-* - at minimum - 1 (when the minimum is > 0): reaching base.js fails the row
-*   (`too low`: base.js may overrun). Each failure reports the JS boundary
-*   (bisected over the same call) next to the reference's. For a `declared`
-*   minimum (the extent the reference declares, which it cannot check),
-*   accepting less is reported (`below declared`), not failed: a path that
-*   never references the workspace needs none of it.
-* - Returning before base.js at minimum - 1 (a quick return in ndarray.js
-*   that accepts a short workspace where the reference rejects it) is a
-*   W3/V10 question: reported, counted, not failed (`zero-dim` when a
-*   dimension of the row is 0, else `quick`).
+* - at the minimum: a RangeError fails the row (`too high`: it rejects a
+*   valid call), at a zero dimension too;
+* - at minimum - 1 (when the minimum is > 0): accepting it (reaching base.js)
+*   fails the row (`too low`: base.js may overrun). Each failure reports the
+*   JS boundary (bisected over the same call) next to the reference's.
+* - Except: at a row where some dimension is 0, accepting less is reported
+*   and counted (`zero-dim`), not failed, whether ndarray.js returns early
+*   or base.js is reached: an empty problem needs no workspace (W3, V10).
+*   For a `declared` minimum (which the reference cannot check), accepting
+*   less is reported (`below declared`), not failed: a path that never
+*   references the workspace needs none of it. A quick return in ndarray.js
+*   at non-zero dimensions that accepts less is reported (`quick`).
 * - A row whose call throws for another reason on arguments the reference
-*   accepted is reported (`not run`), not failed.
+*   accepted, or whose reference callees reject at every length, is
+*   reported (`not run`), not failed.
 *
 * Usage:
 *   node bin/workspace-minimum.mjs <routine> [...]
@@ -97,7 +101,7 @@ async function analyze( r ) {
 	}
 	const spec = specLib.load( r );
 	const pl = plan( spec );
-	const res = { 'routine': r, 'rows': entry.rows.length, 'checked': 0, 'fail': [], 'calleeGap': [], 'belowDeclared': [], 'quick': [], 'unrun': [] };
+	const res = { 'routine': r, 'rows': entry.rows.length, 'checked': 0, 'fail': [], 'belowDeclared': [], 'quick': [], 'unrun': [] };
 	if ( pl.error ) {
 		res.error = 'spec: ' + pl.error;
 		return res;
@@ -194,39 +198,50 @@ async function analyze( r ) {
 				res.unrun.push( { 'why': W + ': not a workspace argument of ndarray.js', 'args': where } );
 				return;
 			}
-			const eff = row[ nargs + nw + j ];
-			const x = at( W, min );
+			// The reference's minimum is the effective one: the smallest
+			// length no callee rejects either. Below it the reference fails
+			// in a callee, and base.js, which calls its callees' base.js
+			// unchecked, may overrun. Null: callees reject even at the bound.
+			const own = row[ nargs + j ];
+			const ref = row[ nargs + nw + j ];
+			if ( ref === null ) {
+				res.unrun.push( { 'why': W + ': callees of the reference reject the call at every length', 'args': where } );
+				return;
+			}
+			const x = at( W, ref );
 			if ( x.kind === 'other' ) {
 				res.unrun.push( { 'why': W + ' at the reference minimum: ' + x.msg.slice( 0, 200 ), 'args': where } );
 				return;
 			}
 			if ( x.kind === 'range' ) {
-				// Above the routine's own check: too high unless a callee of
-				// the reference rejects the call there anyway.
-				const y = ( eff === null || eff === min ) ? null : at( W, eff );
-				const js = jsMin( W );
-				if ( eff === null || ( y && y.kind !== 'range' ) ) {
-					res.calleeGap.push( { 'ws': W, 'kind': w.kind, 'dir': 'callee gap', 'js': js, 'ref': min, 'eff': eff, 'args': where } );
-				} else {
-					res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': js, 'ref': min, 'eff': eff, 'zeroDim': zeroDim, 'args': where } );
-				}
+				// Rejects a valid call, at a zero dimension too.
+				res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': zeroDim, 'args': where } );
 				return;
 			}
-			if ( min === 0 ) {
+			if ( ref === 0 ) {
 				return;
 			}
-			const y = at( W, min - 1 );
-			if ( y.kind === 'accept' && w.kind === 'declared' ) {
+			const y = at( W, ref - 1 );
+			if ( y.kind === 'other' ) {
+				res.unrun.push( { 'why': W + ' at the reference minimum - 1 throws a non-RangeError: ' + y.msg.slice( 0, 200 ), 'args': where } );
+				return;
+			}
+			if ( y.kind === 'range' ) {
+				return;
+			}
+			if ( zeroDim ) {
+				// An empty problem needs no workspace (W3): reported, not
+				// failed, whether ndarray.js returns early or base.js runs.
+				res.quick.push( { 'ws': W, 'kind': w.kind, 'zeroDim': true, 'how': ( y.kind === 'early' ) ? 'returns early' : 'reaches base.js', 'ref': ref, 'args': where } );
+			} else if ( w.kind === 'declared' ) {
 				// The reference rejects nothing here; a path that never
 				// references the workspace (dtrsna's IWORK when JOB = 'E')
 				// needs none of it.
-				res.belowDeclared.push( { 'ws': W, 'kind': w.kind, 'dir': 'below declared', 'js': jsMin( W ), 'ref': min, 'args': where } );
+				res.belowDeclared.push( { 'ws': W, 'kind': w.kind, 'dir': 'below declared', 'js': jsMin( W ), 'ref': ref, 'args': where } );
 			} else if ( y.kind === 'accept' ) {
-				res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too low', 'js': jsMin( W ), 'ref': min, 'zeroDim': zeroDim, 'args': where } );
-			} else if ( y.kind === 'early' ) {
-				res.quick.push( { 'ws': W, 'kind': w.kind, 'zeroDim': zeroDim, 'ref': min, 'args': where } );
-			} else if ( y.kind === 'other' ) {
-				res.unrun.push( { 'why': W + ' at the reference minimum - 1 throws a non-RangeError: ' + y.msg.slice( 0, 200 ), 'args': where } );
+				res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too low', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': false, 'args': where } );
+			} else {
+				res.quick.push( { 'ws': W, 'kind': w.kind, 'zeroDim': false, 'how': 'returns early', 'ref': ref, 'args': where } );
 			}
 		});
 	}
@@ -263,11 +278,11 @@ async function main( argv ) {
 		console.log( JSON.stringify( all, null, 1 ) );
 	} else {
 		errors.forEach( ( x ) => console.log( 'ERROR      ' + x.routine + ': ' + x.error ) );
-		const TAGS = { 'too high': 'TOO-HIGH   ', 'too low': 'TOO-LOW    ', 'callee gap': 'callee-gap ', 'below declared': 'below-decl ' };
+		const TAGS = { 'too high': 'TOO-HIGH   ', 'too low': 'TOO-LOW    ', 'below declared': 'below-decl ' };
 		const show = ( x, xs ) => groupBy( xs, ( s ) => s.ws + ' ' + s.dir ).forEach( ( list ) => {
 			// The example: the row with the largest gap.
 			const worst = list.reduce( ( a, b ) => ( Math.abs( b.js - b.ref ) > Math.abs( a.js - a.ref ) ? b : a ) );
-			const ref = ( worst.eff !== void 0 && worst.eff !== worst.ref ) ? worst.ref + ' (its callees ' + ( worst.eff === null ? 'reject even the bound' : worst.eff ) + ')' : String( worst.ref );
+			const ref = ( worst.own !== void 0 && worst.own !== worst.ref ) ? worst.ref + ' (its own check: ' + worst.own + ')' : String( worst.ref );
 			const z = list.filter( ( s ) => s.zeroDim ).length;
 			console.log( TAGS[ worst.dir ] + x.routine + ' ' + worst.ws + ' (' + worst.kind + '): ' + list.length + '/' + x.checked + ' rows' + ( z ? ' (' + z + ' with a zero dimension)' : '' ) + '; e.g. ' + worst.args + ': ndarray.js demands ' + worst.js + ', reference ' + ref );
 			if ( allRows ) {
@@ -275,11 +290,11 @@ async function main( argv ) {
 			}
 		});
 		res.forEach( ( x ) => show( x, x.fail ) );
-		res.forEach( ( x ) => show( x, x.calleeGap ) );
 		res.forEach( ( x ) => show( x, x.belowDeclared ) );
 		res.forEach( ( x ) => {
 			groupBy( x.quick, ( q ) => q.ws + ( q.zeroDim ? ' zero-dim' : ' quick' ) ).forEach( ( list ) => {
-				console.log( ( list[ 0 ].zeroDim ? 'zero-dim   ' : 'quick      ' ) + x.routine + ' ' + list[ 0 ].ws + ': ' + list.length + ' row(s) return before base.js with minimum - 1 where the reference rejects (e.g. ' + list[ 0 ].args + ': reference minimum ' + list[ 0 ].ref + ')' );
+				const early = list.filter( ( q ) => q.how === 'returns early' ).length;
+				console.log( ( list[ 0 ].zeroDim ? 'zero-dim   ' : 'quick      ' ) + x.routine + ' ' + list[ 0 ].ws + ': ' + list.length + ' row(s) accept the minimum - 1 where the reference rejects (' + early + ' return before base.js, ' + ( list.length - early ) + ' reach it; e.g. ' + list[ 0 ].args + ': reference minimum ' + list[ 0 ].ref + ')' );
 			});
 		});
 		res.forEach( ( x ) => {
@@ -291,7 +306,7 @@ async function main( argv ) {
 		const nf = ( d ) => res.filter( ( x ) => x.fail.some( ( f ) => f.dir === d ) ).length;
 		const zq = res.reduce( ( a, x ) => a + x.quick.filter( ( q ) => q.zeroDim ).length, 0 );
 		const qq = res.reduce( ( a, x ) => a + x.quick.filter( ( q ) => !q.zeroDim ).length, 0 );
-		console.log( '\n' + res.length + ' modules, ' + rows + ' rows checked; ' + res.filter( ( x ) => x.fail.length ).length + ' failing (' + nf( 'too high' ) + ' too high, ' + nf( 'too low' ) + ' too low; ' + res.reduce( ( a, x ) => a + x.fail.length, 0 ) + ' row-workspaces); ' + res.reduce( ( a, x ) => a + x.calleeGap.length, 0 ) + ' in a callee gap, ' + res.reduce( ( a, x ) => a + x.belowDeclared.length, 0 ) + ' below a declared extent, ' + zq + ' zero-dim and ' + qq + ' other quick-return row-workspaces (reported, not failed); ' + res.filter( ( x ) => x.unrun.length ).length + ' with rows not run; ' + errors.length + ' errors' );
+		console.log( '\n' + res.length + ' modules, ' + rows + ' rows checked; ' + res.filter( ( x ) => x.fail.length ).length + ' failing (' + nf( 'too high' ) + ' too high, ' + nf( 'too low' ) + ' too low; ' + res.reduce( ( a, x ) => a + x.fail.length, 0 ) + ' row-workspaces); ' + res.reduce( ( a, x ) => a + x.belowDeclared.length, 0 ) + ' below a declared extent, ' + zq + ' zero-dim and ' + qq + ' other quick-return row-workspaces (reported, not failed); ' + res.filter( ( x ) => x.unrun.length ).length + ' with rows not run; ' + errors.length + ' errors' );
 	}
 	if ( check && ( errors.length || res.some( ( x ) => x.fail.length ) ) ) {
 		process.exitCode = 1;

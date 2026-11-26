@@ -50,7 +50,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the generalized Schur form S is unique only up to signs, which the LWORK-dependent QR blocking can change"
 		},
 		{
 			"name": "lda",
@@ -80,7 +81,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "the triangular T is unique only up to signs, which the LWORK-dependent QR blocking can change"
 		},
 		{
 			"name": "ldb",
@@ -155,7 +157,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "each left eigenvector is unique only up to a scalar factor of unit size, which the LWORK-dependent QR blocking can change"
 		},
 		{
 			"name": "ldvl",
@@ -185,7 +188,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"workDependent": "each right eigenvector is unique only up to a scalar factor of unit size, which the LWORK-dependent QR blocking can change"
 		},
 		{
 			"name": "ldvr",
@@ -305,6 +309,17 @@
 		{
 			"fortran": "N.EQ.0",
 			"js": "N === 0"
+		}
+	],
+	"overrides": [
+		{
+			"reason": "DGGEV hands its LWORK to DGEQRF, DORMQR and DORGQR, which pick their block size from LWORK and fall back to unblocked code when it is short of the optimum. The blocked and unblocked QR steps round differently, and the QZ iteration that follows can then reach a generalized Schur form (S,T) whose rows and columns differ by signs, with eigenvectors scaled by -1 (real) or by a different complex unit (complex pairs). ALPHAR, ALPHAI and BETA do not depend on LWORK beyond rounding; the module's tests check the eigenvalues at the minimum WORK past the blocking threshold (ticket 0100).",
+			"set": {
+				"params.A.workDependent": "the generalized Schur form S is unique only up to signs, which the LWORK-dependent QR blocking can change",
+				"params.B.workDependent": "the triangular T is unique only up to signs, which the LWORK-dependent QR blocking can change",
+				"params.VL.workDependent": "each left eigenvector is unique only up to a scalar factor of unit size, which the LWORK-dependent QR blocking can change",
+				"params.VR.workDependent": "each right eigenvector is unique only up to a scalar factor of unit size, which the LWORK-dependent QR blocking can change"
+			}
 		}
 	]
 }

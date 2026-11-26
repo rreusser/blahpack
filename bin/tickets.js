@@ -175,8 +175,75 @@ function maxId( ids ) {
 	return String( n.length ? Math.max.apply( null, n ) : 0 ).padStart( 4, '0' );
 }
 
-function create( title, area ) {
+// Open tickets most like `text`, by TF-IDF cosine over each ticket's title
+// (counted twice) and Problem section. A duplicate rarely shares the new
+// title's words exactly (ticket 0101 duplicated 0049 and ranked it third), so
+// `new` shows the closest few and asks for a reading, not a verdict.
+var STOPWORDS = {};
+'the a an and or of to in is are be by for on with that this from as at it its not no so but when where which than then their there they them has have had was were can only each every into does do one two'.split( ' ' ).forEach( function each( w ) {
+	STOPWORDS[ w ] = true;
+});
+
+function words( text ) {
+	return ( String( text ).toLowerCase().match( /[a-z][a-z0-9_]{2,}/g ) || [] ).filter( function f( w ) {
+		return !STOPWORDS[ w ];
+	});
+}
+
+function similar( text, n ) {
+	var open = all().filter( function f( t ) {
+		return t.meta && t.meta.status === 'open';
+	});
+	var docs = open.map( function m( t ) {
+		var problem = ( t.body.split( '## Evidence' )[ 0 ].split( '## Problem' )[ 1 ] ) || '';
+		return words( t.meta.title + ' ' + t.meta.title + ' ' + problem );
+	});
+	var df = {};
+	docs.forEach( function each( d ) {
+		Object.keys( d.reduce( function r( o, w ) {
+			o[ w ] = true;
+			return o;
+		}, {} ) ).forEach( function c( w ) {
+			df[ w ] = ( df[ w ] || 0 ) + 1;
+		});
+	});
+	function vec( ws ) {
+		var v = {};
+		ws.forEach( function each( w ) {
+			v[ w ] = ( v[ w ] || 0 ) + Math.log( ( docs.length + 1 ) / ( ( df[ w ] || 0 ) + 1 ) );
+		});
+		return v;
+	}
+	function cos( a, b ) {
+		var d = 0;
+		var na = 0;
+		var nb = 0;
+		Object.keys( a ).forEach( function each( k ) {
+			na += a[ k ] * a[ k ];
+			d += a[ k ] * ( b[ k ] || 0 );
+		});
+		Object.keys( b ).forEach( function each( k ) {
+			nb += b[ k ] * b[ k ];
+		});
+		return ( na && nb ) ? d / Math.sqrt( na * nb ) : 0;
+	}
+	var q = vec( words( text ) );
+	return open.map( function m( t, i ) {
+		return { 'id': t.meta.id, 'title': t.meta.title, 'score': cos( q, vec( docs[ i ] ) ) };
+	}).sort( function s( a, b ) {
+		return b.score - a.score;
+	}).slice( 0, n );
+}
+
+function create( title, area, reviewed ) {
 	var problems = titleProblems( title );
+	var near;
+	if ( !reviewed ) {
+		near = similar( title, 5 );
+		die( 'Before opening a ticket, read the open tickets most like it; a known problem gets evidence on its ticket, not a second one (CONVENTIONS P5):\n' + near.map( function m( t ) {
+			return '  ' + t.id + '  ' + t.score.toFixed( 2 ) + '  ' + t.title;
+		}).join( '\n' ) + '\nIf none of them (nor any other open ticket: `node bin/tickets.js list`) is this problem, rerun with --reviewed.' );
+	}
 	var ids = all().map( function m( t ) {
 		return t.meta ? Number( t.meta.id ) : 0;
 	});
@@ -320,6 +387,8 @@ var argv = process.argv.slice( 2 );
 var cmd = argv[ 0 ] || 'list';
 var areaIdx = argv.indexOf( '--area' );
 var area = ( areaIdx >= 0 ) ? argv.splice( areaIdx, 2 )[ 1 ] : null;
+var reviewedIdx = argv.indexOf( '--reviewed' );
+var reviewed = ( reviewedIdx >= 0 ) ? Boolean( argv.splice( reviewedIdx, 1 ) ) : false;
 
 switch ( cmd ) {
 case 'list':
@@ -334,7 +403,7 @@ case 'show':
 	process.stdout.write( find( argv[ 1 ] ).src );
 	break;
 case 'new':
-	create( argv[ 1 ] || die( 'usage: new "<problem statement>"' ), area );
+	create( argv[ 1 ] || die( 'usage: new "<problem statement>" [--area <area>] [--reviewed]' ), area, reviewed );
 	break;
 case 'resolve':
 	resolve( argv[ 1 ], argv.slice( 2 ).join( ' ' ) );

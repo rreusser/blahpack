@@ -1,9 +1,10 @@
 ---
 id: 0101
 title: Crossover NX stand-ins differ from ILAENV(3), so blocked routines switch paths at other sizes than the reference
-status: open
+status: resolved
 area: faithfulness
 opened: 2026-11-26
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -29,3 +30,7 @@ grep -ln "const nx = 0\|const NX = 0\|nx = 0;" lib/lapack/base/*/lib/base.js
 - zlaqr0/zlaqr4 hard-code NWR = 5 and NSR = 14; IPARMQ gives NS by NH (10 below 150, up to 64+) and NWR = NS (3·NS/2 past 500). dlaqr0/4 do use IPARMQ.
 - JS dgehrd's crossover is NX = max(NB, 32) where ILAENV(3) gives 128, so it blocks on windows of 33–127 that the reference reduces unblocked.
 - zlaqr0 applies `max(2, NSR)` before dropping NSR's odd bit; the reference applies it after. Only tiny N differ.
+
+## Resolution
+
+Duplicate of ticket 0049, which already covered the ILAENV/IPARMQ stand-ins; its evidence is now there. The two weren't connected because 0101 was opened without reading the open tickets first; `tickets.js new` now lists the closest open tickets and requires --reviewed (CONVENTIONS P5).

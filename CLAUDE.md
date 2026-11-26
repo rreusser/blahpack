@@ -170,7 +170,13 @@ transform in `bin/transform.py` or script in `bin/`) before continuing.
 ## Known problems
 
 Every known problem is a ticket (`tickets/`, `node bin/tickets.js new "<problem>"`),
-never only prose (CONVENTIONS P1–P4). CI enforces most of this:
+never only prose (CONVENTIONS P1–P5). CI enforces most of this:
+
+- **One ticket per problem:** `tickets.js new` lists the open tickets most like
+  the new one; read them, add evidence to the matching one, and pass
+  `--reviewed` only when none matches. A verified defect confined to a module or
+  two, found while doing other work, is fixed in that PR with its regression
+  test rather than ticketed (P5).
 
 - **PR descriptions:** a "not in this PR" / "known gaps" / "follow-up" line, and
   each list item under such a heading, cites `ticket NNNN`

@@ -38,7 +38,8 @@ resolved: YYYY-MM-DD        # resolved tickets only
 node bin/tickets.js                       # open tickets
 node bin/tickets.js all                   # every ticket (also: resolved)
 node bin/tickets.js show 7
-node bin/tickets.js new "X is inconsistent across Y" --area base
+node bin/tickets.js new "X is inconsistent across Y" --area base   # lists similar open tickets
+node bin/tickets.js new "X is inconsistent across Y" --area base --reviewed   # creates it
 node bin/tickets.js resolve 7 "Fixed in <sha>; the ld-rules check now rejects array-typed bounds."
 node bin/tickets.js reopen 7 "Recurred in zfoo: ..."
 node bin/tickets.js check

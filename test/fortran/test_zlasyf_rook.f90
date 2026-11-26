@@ -1,6 +1,12 @@
 program test_zlasyf_rook
   use test_utils
   implicit none
+  ! Heavy rook-pivoting case (ticket 0102)
+  complex*16 :: AB(40, 40), WB(40, 32), eB(40)
+  double precision :: AB_r(3200), eB_r(80)
+  equivalence (AB, AB_r)
+  equivalence (eB, eB_r)
+  integer :: IPIVB(40), ib, jb
 
   complex*16 :: A6(6, 6), W6(6, 3)
   double precision :: A6_r(72)
@@ -284,6 +290,48 @@ program test_zlasyf_rook
   call print_int('info', INFO)
   call print_array('A', A4_r, 32)
   call print_int_array('ipiv', IPIV, 4)
+  call end_test()
+
+  ! 40x40 matrix needing heavy rook pivoting (2x2 pivots with P != K),
+  ! a_ij = sin(i*j + i + j - 2) + i*cos(i*j - i - j + 2), NB=32, UPLO='L' (ticket 0102)
+  do jb = 1, 40
+    do ib = 1, 40
+      AB(ib, jb) = dcmplx(sin(dble(ib*jb + ib + jb - 2)), cos(dble(ib*jb - ib - jb + 2)))
+    end do
+  end do
+  WB = (0.0d0, 0.0d0)
+  eB = (0.0d0, 0.0d0)
+  IPIVB = 0
+  kb = 0
+  call ZLASYF_ROOK('L', 40, 32, kb, AB, 40, IPIVB, WB, 40, info)
+  call begin_test('lower_40x40_pivot40_nb32')
+  call print_int('n', 40)
+  call print_int('nb', 32)
+  call print_int('kb', kb)
+  call print_int('info', info)
+  call print_array('A', AB_r, 3200)
+  call print_int_array('ipiv', IPIVB, 40)
+  call end_test()
+
+  ! 40x40 matrix needing heavy rook pivoting (2x2 pivots with P != K),
+  ! a_ij = sin(i*j + i + j - 2) + i*cos(i*j - i - j + 2), NB=32, UPLO='U' (ticket 0102)
+  do jb = 1, 40
+    do ib = 1, 40
+      AB(ib, jb) = dcmplx(sin(dble(ib*jb + ib + jb - 2)), cos(dble(ib*jb - ib - jb + 2)))
+    end do
+  end do
+  WB = (0.0d0, 0.0d0)
+  eB = (0.0d0, 0.0d0)
+  IPIVB = 0
+  kb = 0
+  call ZLASYF_ROOK('U', 40, 32, kb, AB, 40, IPIVB, WB, 40, info)
+  call begin_test('upper_40x40_pivot40_nb32')
+  call print_int('n', 40)
+  call print_int('nb', 32)
+  call print_int('kb', kb)
+  call print_int('info', info)
+  call print_array('A', AB_r, 3200)
+  call print_int_array('ipiv', IPIVB, 40)
   call end_test()
 
 end program

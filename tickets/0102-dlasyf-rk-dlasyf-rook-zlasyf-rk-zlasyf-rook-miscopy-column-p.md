@@ -1,9 +1,10 @@
 ---
 id: 0102
 title: dlasyf_rk, dlasyf_rook, zlasyf_rk, zlasyf_rook miscopy column P on a 2x2 rook pivot with P != K
-status: open
+status: resolved
 area: base
 opened: 2026-11-26
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -27,3 +28,7 @@ How it was permitted: the blocked fixtures (33x33, 50x50) are diagonally dominan
 ```bash
 grep -nE "[dz]copy\( p, A, (sa1|strideA1), offsetA \+ \( k \*" lib/lapack/base/[dz]lasyf_r*/lib/base.js
 ```
+
+## Resolution
+
+Fixed the column-K-to-column-P copy extents in the upper branch of dlasyf_rk, dlasyf_rook, zlasyf_rk and zlasyf_rook (p + 1 elements, as the reference's DCOPY( P, ... )), and rewrote dlasyf_rk's lower branch to match the reference (DCOPY( P-K, ... ), DCOPY( N-P+1, ... ), DSWAP( K, ... )). Each kernel has a 40x40, NB = 32 heavy-pivoting fixture for both uplo, which fails on the old code. The ticket 0100 driver tests no longer shift the diagonal, and they pass. See test/harness/LEARNINGS.md (2026-11-26).

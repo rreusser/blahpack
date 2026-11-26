@@ -2964,3 +2964,23 @@ Keep entries short. Newest first.
   - The ticket 0100 tests shifted the diagonal by ±6 to stay out of the branch. Those tests now use the unshifted matrix.
   - The property harness does not sweep these drivers past the blocking threshold.
 - **Where else**: any blocked panel kernel that ports a "copy non-updated column" step, where the reference relies on copy order to move a diagonal entry (dlasyf, zlasyf, zlahef and the _aa/_rk/_rook variants). Check every 1-based DCOPY count that starts at row 1. A test needs N > NB and a matrix that forces 2x2 pivots with P != K. A diagonally dominant matrix doesn't.
+
+## 2026-11-26 — Blocked routines ignored the workspace they were given, in 46 modules (ticket 0100)
+
+- **Found by**: ticket 0096's fixes, which had to raise callers' minimums above the reference's because the JS callee always blocked at NB = 32. The new lint rule `workspace-adaptive` then listed every module whose reference picks its path from LWORK while its base.js never read the workspace's length: 46, including dgesvd, dsysv and dtrevc3, whose fixed paths were safe but not the reference's.
+- **Reproduce** (dgesvd): 70x40, jobu = jobvt = 's', old base.js called directly with the reference's MINWRK = 230: info = 39, NaN singular values. zgeev at N = 80 with WORK = 2N spun to info = 80 with NaN eigenvalues (ticket 0100's evidence).
+- **Bug classes**:
+  - **A block size fixed where the reference shrinks it**: the dgeqrf, dorgqr, dormqr, dgehrd, dgeqp3 and dsytrf_rk/rook/aa families, and dtzrzf, all partitioned WORK on NB = 32 whatever its length.
+  - **A WORK layout of the JS's own**: dgeqrf, dgeqlf, dgerqf and their z twins kept T after `LDWORK*NB` (needing `+ NB*NB`); dgelqf and dtzrzf allocated T inside base.js on every call; zgeqp3 placed F at a fixed offset (needing `(N+2)*NB`). The reference keeps T in `WORK(1:IB,1:IB)` at LDWORK; the dormqr family and dgehrd keep it in a TSIZE part.
+  - **Only the large-workspace branch translated**: dgesvd had only its fast branches (and NaN at the reference's minimum, hidden by an inflated `ndarray.js` minimum); zgesvd lacked 16 of its 20 paths.
+  - **A reference sizing bug**: DGEQP3 sizes its blocked path with `2*SN + (SN+1)*NB` and shrinks NB with `(LWORK-2*SN)/(SN+1)`, but DLAQPS uses `2N + (SN+1)*JB`, so with NFXD fixed columns a WORK near that bound is overrun by 2·NFXD (200x200, 10 fixed columns, LWORK = 6492: NaN). The JS uses 2N.
+  - **Found alongside**: zgeqp3 used NX = 0 where ILAENV(3) is 128 (ticket 0101 for the rest); dtrevc3 hoisted SMLNUM to module scope as if N = 1 (the reference scales by N); dsysv returned before factoring when NRHS = 0; the rook-pivot panels' miscopy (ticket 0102, entry above); workspace-guard matched only an upper-case `WORK`, so 16 wrappers whose parameter is `work` (dgeev, dgels, dgesvd, dhseqr, ...) were never guarded.
+- **What allowed it**:
+  - nothing compared a base.js with the reference's path selection; the spec had no record that the reference adapts (now spec `adaptive`, generated, and `lint:workspace-adaptive`, CONVENTIONS W6);
+  - the `min-work` replay only reaches the sizes tests use, and blocked paths start past 32 (dgeqp3: past 128);
+  - `ndarray.js` minimums inflated to the always-blocked need made a short WORK throw instead of exposing the overrun.
+- **Testing notes**:
+  - Blocked and unblocked runs differ by rounding, so the regression tests compare minimum and optimum WORK by tolerance or by property. dgeqrfp's Householder entries differ by about 6e-12 relative (dlarfgp's formula amplifies rounding) while both reconstruct A to 2e-14.
+  - Pivoting routines (dsytrf_aa, xGEQP3 callers such as zggsvp3) can pick different pivots on near ties between paths. The reference does the same, so those outputs are spec `workDependent`, and tests compare residuals or invariants (generalized singular values).
+  - An "ample WORK" in a bit-exact `WORK = null` test must reach the callee's optimum, or the two runs take different paths: the dormqr family's optimum is now `nw*32 + 4160` (TSIZE) and dgehrd's `N*32 + 4160`. The reference's own LWKOPT for xORMBR/xORMHR/xORMTR (`NW*NB`) is below that of the xORMQR it wraps, so the wrappers allocate the callee's optimum.
+- **Where else**: nothing yet checks that a wrapper's `null` allocation reaches the optimum, rather than just the minimum (ticket 0103). Wrappers still pass a caller's WORK to base.js unchecked (ticket 0077).

@@ -33,8 +33,21 @@
 *         `workDependent` (the reference's own result depends on LWORK, with
 *         the reason in an override) is not compared, nor a return value the
 *         spec marks `returns.workDependent`.
+*     -   `short-work` (CONVENTIONS D5d; ticket 0077): for each workspace
+*         whose `min-work` minimum is known and above 0, the call replayed
+*         through the WRAPPER with that workspace one element shorter than
+*         the minimum (the recorded leading elements, other workspaces as
+*         recorded) must throw a RangeError naming the workspace: a wrapper
+*         that skips ndarray.js's check hands the short buffer to base.js,
+*         which drops writes past its end and returns NaN. Skipped where the
+*         minimum is 0 (nothing shorter exists) or unknown (ndarray.js
+*         accepts an empty workspace for the call), and for calls whose
+*         recorded LDs the wrapper cannot express.
 *     -   `zero-size`: for the first few calls, each dimension set to 0 in
-*         turn; the wrapper and ndarray.js must agree (quick returns).
+*         turn; the wrapper and ndarray.js must agree (quick returns), and
+*         ndarray.js must agree with base.js where base.js returns (an
+*         ndarray.js quick return that skips an output the reference writes,
+*         as dptrfs's FERR/BERR at N = 0, ticket 0077).
 *     -   validation: for every top-level `if ( … ) { throw new E( … ) }` of
 *         both forms (generated prologue checks and hand-written ones), a
 *         recorded call with only one argument that statement names made
@@ -85,6 +98,16 @@ const MAX_CALLS = Number( process.env.REPLAY_MAX_CALLS ) || 40;
 const VM_CONTEXT = vm.createContext( {} );
 const VM_CALL = new vm.Script( '__fn( ...__args )' );
 const MIN_BUDGET_MS = Number( process.env.REPLAY_CALL_MS ) || 2000;
+
+// The recorded call's own cap. A variant that keeps the recorded (valid)
+// inputs and changes only a workspace (null-work, min-work) gets this cap too,
+// not a multiple of the recorded call's time. A routine may choose how much
+// work to do by the workspace it is given (W6): dlaqr0 at N = 300 with
+// WORK = 1 returns INFO = N in 16 ms, like the reference, but with the
+// wrapper's optimal WORK it solves the problem in over a second, so a 2 s
+// budget timed out on a slower CI runner. These are not the domain probes the
+// tight budget exists for (ticket 0070).
+const RECORDED_MS = 60000;
 let budgetMs = MIN_BUDGET_MS;
 
 // The length audit's poisoned-storage trials get a tight budget: a timeout
@@ -867,7 +890,8 @@ function validate( fn, names, args, checks, fns, done, optionValues ) {
 * @returns {Promise<Object>} report
 */
 async function replayModule( dir, options ) {
-	const opts = Object.assign( { 'probe': true, 'recs': null }, options );
+	// `budgetFloorMs` replaces MIN_BUDGET_MS (harness self-tests only).
+	const opts = Object.assign( { 'probe': true, 'recs': null, 'budgetFloorMs': MIN_BUDGET_MS }, options );
 	const routine = path.basename( dir );
 	const report = { 'routine': routine, 'recorded': 0, 'replayed': 0, 'variants': 0, 'mismatches': [], 'rejected': [], 'lengths': [], 'rounding': 0, 'skipped': {} };
 	const skip = function skipReason( why ) {
@@ -931,7 +955,7 @@ async function replayModule( dir, options ) {
 		SAVED_AT = SAVED ? Object.assign( {}, SAVED ) : null;
 		// The recorded call's own time sets the budget of every call made
 		// from it (min MIN_BUDGET_MS).
-		budgetMs = 60000;
+		budgetMs = RECORDED_MS;
 		const t0 = Date.now();
 		try {
 			expRet = bounded( nd, expArgs );
@@ -939,7 +963,7 @@ async function replayModule( dir, options ) {
 			skip( ( e instanceof CallTimeout ) ? 'ndarray did not return on replay' : 'ndarray threw on replay' );
 			continue;
 		}
-		budgetMs = Math.max( MIN_BUDGET_MS, 50 * ( Date.now() - t0 ) );
+		budgetMs = Math.max( opts.budgetFloorMs, 50 * ( Date.now() - t0 ) );
 		probeMs = Math.max( 100, 10 * ( Date.now() - t0 ) );
 		const exp = snapshot( expArgs, workspaceIdx );
 		const intIdx = new Set( expArgs.map( ( x, i ) => ( ( x instanceof Int32Array || x instanceof Int8Array || x instanceof Int16Array || x instanceof Uint8Array || x instanceof Uint32Array || Array.isArray( x ) ) ? i : -1 ) ).filter( ( i ) => i >= 0 ) );
@@ -959,7 +983,7 @@ async function replayModule( dir, options ) {
 			const need = ( order === 'column-major' ) ? rows : cols;
 			return need === null || ld >= Math.max( 1, need );
 		});
-		const run = function run( variant, keepWork ) {
+		const run = function run( variant, keepWork, ms ) {
 			const actArgs = rec.map( decode );
 			const wargs = toWrapper( spec, groups, actArgs, order, null, keepWork );
 			if ( wargs === null ) {
@@ -972,7 +996,7 @@ async function replayModule( dir, options ) {
 			}
 			let actRet;
 			try {
-				actRet = bounded( wrapper, wargs );
+				actRet = bounded( wrapper, wargs, ms );
 			} catch ( e ) {
 				if ( ldCoversRows ) {
 					report.rejected.push( { 'variant': variant + ' ' + order, 'detail': String( e.message ).slice( 0, 200 ) } );
@@ -1003,7 +1027,7 @@ async function replayModule( dir, options ) {
 			if ( allocs ) {
 				allocs.length = 0;
 			}
-			const nw = run( 'null-work', false );
+			const nw = run( 'null-work', false, RECORDED_MS );
 			let nwExp = exp;
 			let nwExpRet = expRet;
 			let nwExpArgs = expArgs;
@@ -1024,7 +1048,7 @@ async function replayModule( dir, options ) {
 					}
 				});
 				try {
-					nwExpRet = bounded( nd, sized );
+					nwExpRet = bounded( nd, sized, RECORDED_MS );
 				} catch ( e ) {
 					ok = false;
 				}
@@ -1082,6 +1106,31 @@ async function replayModule( dir, options ) {
 					min = Number( m[ 2 ] );
 				}
 			}
+			// short-work (D5d; ticket 0077): one element short of the
+			// minimum, through the wrapper, must throw RangeError.
+			if ( min !== null && min > 0 && ldCoversRows ) {
+				const sArgs = rec.map( decode );
+				const ss = sArgs[ g.at ];
+				const so = sArgs[ g.at + 2 ];
+				sArgs[ g.at ] = isComplexArray( ss ) ? new ss.constructor( flat( ss ).slice( 2 * so, 2 * ( so + min - 1 ) ) ) : ss.slice( so, so + min - 1 );
+				sArgs[ g.at + 2 ] = 0;
+				const swArgs = toWrapper( spec, groups, sArgs, order, null, true );
+				if ( swArgs === null ) {
+					skip( 'call not expressible through the wrapper (short-work)' );
+				} else {
+					report.variants += 1;
+					let sThrew = null;
+					try {
+						bounded( wrapper, swArgs );
+					} catch ( e ) {
+						sThrew = e;
+					}
+					const sm = sThrew && /\b(\w+) array must have at least (\d+) elements/.exec( String( sThrew.message ) );
+					if ( !( sThrew instanceof RangeError ) || !sm || sm[ 1 ].toLowerCase() !== g.param.name.toLowerCase() ) {
+						report.mismatches.push( { 'variant': 'short-work ' + g.param.name + '=' + ( min - 1 ) + ' (minimum ' + min + ')', 'detail': ( sThrew ? 'the wrapper threw ' + ( sThrew.constructor && sThrew.constructor.name ) + ' (' + String( sThrew.message ).slice( 0, 120 ) + '), not the workspace RangeError' : 'the wrapper accepted a workspace shorter than the minimum ndarray.js demands' ), 'call': describe( rec, baseNames ) } );
+					}
+				}
+			}
 			if ( min === null || min >= have ) {
 				return;
 			}
@@ -1093,7 +1142,7 @@ async function replayModule( dir, options ) {
 			report.variants += 1;
 			let mRet;
 			try {
-				mRet = bounded( nd, mArgs );
+				mRet = bounded( nd, mArgs, RECORDED_MS );
 			} catch ( e ) {
 				report.mismatches.push( { 'variant': 'min-work ' + g.param.name + '=' + min, 'detail': 'ndarray.js rejected its own minimum: ' + String( e.message ).slice( 0, 160 ), 'call': describe( rec, baseNames ) } );
 				return;
@@ -1247,6 +1296,43 @@ async function replayModule( dir, options ) {
 					// The reference does not return: outside the routine's domain.
 					skip( 'zero-size probe outside the domain (ndarray did not return)' );
 					return;
+				}
+				// ndarray.js's quick returns against base.js's (the reference's):
+				// since the wrapper calls ndarray.js (D5d), the wrapper-vs-ndarray
+				// comparison below no longer reaches base.js at a zero dimension.
+				// Every floating-point array that is not a workspace is filled
+				// with the same sentinel for both calls, so an output the one
+				// writes and the other skips cannot hide behind a recorded value
+				// that happens to equal it (FERR = 0 before dptrfs's N = 0).
+				if ( !zThrew && typeof baseNs.default === 'function' ) {
+					const poison = function poison( args ) {
+						args[ g.at ] = 0;
+						args.forEach( ( x, i ) => {
+							if ( !workspaceIdx.has( i ) && x && ( x instanceof Float64Array || x instanceof Float32Array || isComplexArray( x ) ) ) {
+								flat( x ).fill( 7.25 );
+							}
+						});
+						return args;
+					};
+					const pArgs = poison( rec.map( decode ) );
+					const bArgs = poison( rec.map( decode ) );
+					let pRet;
+					let bRet;
+					let bThrew = null;
+					try {
+						pRet = bounded( nd, pArgs );
+						bRet = bounded( baseNs.default, bArgs );
+					} catch ( e ) {
+						bThrew = e;
+					}
+					if ( !bThrew ) {
+						report.variants += 1;
+						const ber = sameStorageReturn( bArgs, bRet, pArgs, pRet ) ? SAME : bRet;
+						const bd = diff( snapshot( bArgs, workspaceIdx ), snapshot( pArgs, workspaceIdx ), ber, pRet, baseNames );
+						if ( bd ) {
+							report.mismatches.push( { 'variant': 'zero-size ' + g.param.name + ' = 0 (ndarray.js vs base.js)', 'detail': bd, 'call': describe( rec, baseNames ) } );
+						}
+					}
 				}
 				const aArgs = rec.map( decode );
 				aArgs[ g.at ] = 0;

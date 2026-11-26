@@ -50,6 +50,11 @@ var SOURCE_RULES = {
 	'no-internal-workspace-alloc': 'error',
 	'no-lwork-param': 'error',
 
+	// A layout wrapper whose routine takes a workspace calls ndarray.js, not
+	// base.js, so a caller's workspace is checked against the minimum (D5d;
+	// ticket 0077).
+	'wrapper-calls-ndarray': 'error',
+
 	// base.js honors the declared offset of each caller-owned workspace it
 	// uses (drivers sub-allocate one buffer among callees by offset).
 	'workspace-addressing-honored': 'error',

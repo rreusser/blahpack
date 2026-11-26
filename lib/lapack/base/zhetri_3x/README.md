@@ -42,7 +42,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var A = new Complex128Array( [ 5.0, 0.0 ] );
 var e = new Complex128Array( 1 );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Complex128Array( 6 );
+var work = new Complex128Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = zhetri_3x( 'column-major', 'lower', 1, A, 1, e, 1, ipiv, 1, 0, work, 1, 1 );
 // info => 0
@@ -76,7 +76,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var A = new Complex128Array( [ 5.0, 0.0 ] );
 var e = new Complex128Array( 1 );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Complex128Array( 6 );
+var work = new Complex128Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = zhetri_3x.ndarray( 'lower', 1, A, 1, 1, 0, e, 1, 0, ipiv, 1, 0, work, 1, 0, 1 );
 // info => 0
@@ -131,7 +131,7 @@ var zhetri_3x = require( '@stdlib/lapack/base/zhetri_3x' );
 var A = new Complex128Array( [ 5.0, 0.0 ] );
 var e = new Complex128Array( 1 );
 var ipiv = new Int32Array( [ 0 ] );
-var work = new Complex128Array( 6 );
+var work = new Complex128Array( 12 ); // (N+nb+1)-by-(nb+3)
 
 var info = zhetri_3x( 'column-major', 'lower', 1, A, 1, e, 1, ipiv, 1, 0, work, 1, 1 );
 console.log( info );

@@ -1,3 +1,5 @@
+la_constants
+la_xisnan
 # dlaqr3 dependencies (same as dlaqr2 plus dlaqr4/dlaqr5/dlaqr1 chain)
 dgehd2
 dgehrd
@@ -37,5 +39,3 @@ iladlc
 iladlr
 ilaenv
 iparmq
-la_constants
-la_xisnan

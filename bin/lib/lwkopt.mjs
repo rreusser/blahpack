@@ -9,7 +9,8 @@
 *
 * - `routineSet()`: the d/z modules whose spec has a workspace-length argument
 *   (role `lwork`). The generator splits it into those whose reference has a
-*   workspace query (`LQUERY`) and those without.
+*   workspace query (a test of a workspace length for -1, `LQUERY` or not)
+*   and those without.
 * - `plan( spec )`: how each Fortran argument enters a query call, or why the
 *   routine cannot be swept.
 * - `grid( spec )`: the deterministic list of query calls (Fortran name ->
@@ -80,7 +81,22 @@ const SCALARS = {
 	// dorbdb4's P is declared like a dimension.
 	'P': null,
 	// dorm22: N1 + N2 = NQ.
-	'N1': ( v ) => [ Math.floor( nq( v ) / 2 ) ]
+	'N1': ( v ) => [ Math.floor( nq( v ) / 2 ) ],
+	// The dlaqr0/2/3/4 family (and z twins): the active block is the whole
+	// matrix (KTOP = ILO = 1, KBOT = IHI = N), Z is updated over all rows,
+	// and T/WV get as many columns/rows as the deflation window (NH, NV >= NW).
+	// These routines have no INFO checks, so only valid values are given.
+	'WANTT': () => [ true, false ],
+	'KTOP': () => [ 1 ],
+	'ILOZ': () => [ 1 ],
+	'IHIZ': ( v ) => [ v.N ],
+	'NH': ( v ) => [ Math.max( 1, v.NW ) ],
+	'NV': ( v ) => [ Math.max( 1, v.NW ) ],
+	// dlaqz4: Schur form / Q / Z wanted; two shifts (one sweep's pair).
+	'ILSCHUR': () => [ true, false ],
+	'ILQ': () => [ true, false ],
+	'ILZ': () => [ true, false ],
+	'NSHIFTS': () => [ 2 ]
 };
 
 // Dimensions fixed by others rather than swept.
@@ -88,7 +104,15 @@ const DERIVED = {
 	// dtgsna, dtrevc3: the number of columns of VL/VR, >= M <= N.
 	'MM': ( v ) => [ v.N ],
 	// dorm22: N2 = NQ - N1.
-	'N2': ( v ) => [ nq( v ) - v.N1 ]
+	'N2': ( v ) => [ nq( v ) - v.N1 ],
+	// dlaqr0/4 declare IHI, dlaqr2/3 KBOT, like a dimension: the last row of
+	// the active block, here the whole matrix.
+	'IHI': ( v ) => [ v.N ],
+	'KBOT': ( v ) => [ v.N ],
+	// dlaqr2/3: the deflation window (>= 1; JW = MIN( NW, KBOT-KTOP+1 )).
+	'NW': () => [ 1, 5, 33, 70, 140 ],
+	// dlaqz4: the block size its caller asks for (>= 1).
+	'NBLOCK_DESIRED': () => [ 1, 5, 33, 70, 140 ]
 };
 
 let OPTIONS = null;

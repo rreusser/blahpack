@@ -31,3 +31,7 @@ const s=require("./spec/"+f);const qr=(s.quickReturn||[]).filter(q=>q.sets&&q.se
 const p=["blas","lapack","arpack"].map(k=>"lib/"+k+"/base/"+s.routine+"/lib/ndarray.js").find(x=>fs.existsSync(x));if(!p)continue;
 if(/\n\tif \([^\n]*\) \{\n\t\treturn [^\n]*;\n\t\}/.test(fs.readFileSync(p,"utf8")))console.log(s.routine,JSON.stringify(qr.map(q=>q.sets)))}'
 ```
+
+## Evidence 2026-11-26
+
+- dgeqp3 and zgeqp3 `base.js` return before initializing JPVT when min(M,N) = 0. The reference still runs its column-pivot setup there (`JPVT(J) = J` for free columns when M = 0 and N > 0). Found while fixing their workspace adaptation (ticket 0100); left unchanged.

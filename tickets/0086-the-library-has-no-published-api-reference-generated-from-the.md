@@ -86,3 +86,7 @@ Note: a first pass of this work was lost to a `git reset --hard` on
   error, which the import failure masks.
 - 659 routines have no `@example` (J3, warn only). Until both counts are 0,
   `docs:examples` cannot become a gate.
+
+## Evidence 2026-11-26
+
+- The workspace size each `@param` JSDoc states (CONVENTIONS W5) is not checked against the minimum `ndarray.js` enforces, which `ci:workspace-minimum` now ties to the reference (ticket 0016). The fix waves for ticket 0016 rewrote many of these by hand. Moved here from ticket 0016 when it was resolved.

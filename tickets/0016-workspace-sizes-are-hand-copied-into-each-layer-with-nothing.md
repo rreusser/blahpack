@@ -1,9 +1,10 @@
 ---
 id: 0016
 title: Workspace sizes are hand-copied into each layer with nothing tying them to what the kernel consumes
-status: open
+status: resolved
 area: workspace
 opened: 2026-11-18
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -54,3 +55,17 @@ grep -rl assertWorkspaceSufficient lib/*/base/*/test/ | sed -E 's#lib/[a-z]+/bas
   - d/z laqr0/laqr4: there is no check, but WORK(1) is written at LWORK = 0.
   - d/z orbdb1/unbdb1 (M = P = Q = 0): WORK(1) is written at LWORK = 0.
 - Random data raises the minimum of d/z ggsvp3 and d/z ggsvd3 (90 rows each; on zero data the ranks are 0), and of d/z trsen and dtgsen (the subdiagonal of the random T forms 2x2 blocks). d/z tgsen: the reference's own DTGSYL call rejects the documented 2MN, so the minimum is 2MN+1.
+
+## Resolution
+
+Each workspace size is now tied to the reference by a check:
+- `ndarray.js`'s minimum: `ci:workspace-minimum`, against the reference's measured minimum (`bin/gen-lwmin.mjs`, `data/fortran-lwmin.json`, kept current by `lwmin:check`). It covers IWORK and RWORK as well as WORK.
+- The wrapper's `null` allocation: `ci:workspace-optimum` (ticket 0103), and `ci:workspace-guard`.
+- `base.js`: it adapts to the workspace it is given (W6, lint `workspace-adaptive`, ticket 0100). `ci:wrapper-replay`'s min-work variant replays every recorded call at the minimum `ndarray.js` demands.
+
+The first run failed 41 modules, and later rounds found more as the measurement improved. All are fixed. Where the reference writes past its own check, or its documented minimum differs from what it accepts, the module's `DIFFERENCES.md` says why (dlamtsqr, d/z orgtsqr_row/ungtsqr_row, d/z tgsen, d/z laqr0/laqr4).
+
+Left open:
+- The minimum is sampled, so it is a lower bound: ticket 0106.
+- The JSDoc text of the sizes is unchecked: evidence on ticket 0086.
+- Wrappers pass a caller's WORK unchecked: ticket 0077.

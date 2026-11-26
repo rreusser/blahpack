@@ -29,10 +29,9 @@ var NDARRAY_TEST_REQ_BASE = /require\(\s*['"]\.\.?\/(?:\.\.\/)?lib\/base\.js['"]
 // Single-char Fortran flags in user-facing example/benchmark string args
 // (not in comments, not in @param backticks, not in object-property keys
 // like `'M': 0`). We look only at `'X'` literals where X is a likely
-// Fortran flag letter. Comments and require lines are excluded by the same
-// rule the strings check uses.
+// Fortran flag letter. Comments, requires and ilaenv arguments are excluded
+// by the rule the strings check uses (util.flagCheckCode).
 var SINGLE_CHAR_FLAG = /'[A-Z]'/;
-var COMMENT_OR_REQUIRE = /\/\/|^\s*\*|eslint|require/;
 // Skip lines whose only single-char literals are in object-key position.
 var OBJECT_KEY_ONLY = /^[^']*'[A-Z]'\s*:[^']*(?:'[A-Z]'\s*:[^']*)*$/;
 
@@ -54,8 +53,9 @@ var BENCHMARK_EMPTY_BODY = /function createBenchmark\( len \) \{\s*(?:const N = 
 function checkSingleCharFlagsInFile( filePath, locs, label ) {
 	var hits = util.grepFile( filePath, SINGLE_CHAR_FLAG );
 	for ( var i = 0; i < hits.length; i++ ) {
-		if ( COMMENT_OR_REQUIRE.test( hits[ i ].text ) ) continue;
-		if ( OBJECT_KEY_ONLY.test( hits[ i ].text ) ) continue;
+		var code = util.flagCheckCode( hits[ i ].text );
+		if ( code === null || !SINGLE_CHAR_FLAG.test( code ) ) continue;
+		if ( OBJECT_KEY_ONLY.test( code ) ) continue;
 		locs.push( label + ':' + hits[ i ].line );
 	}
 }

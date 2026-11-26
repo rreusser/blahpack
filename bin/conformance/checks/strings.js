@@ -8,12 +8,6 @@ var ID = 'strings';
 // Pattern: single-char string in code (not in comments, requires, eslint directives,
 // or object-property keys like `'K': 0`).
 var SINGLE_CHAR_CODE = /'[A-Z0-9]'/;
-var COMMENT_LINE = /^\s*(?:\/\/|\/?\*)|eslint|require/;
-// A trailing comment is stripped before testing, so it can't hide a flag on
-// its line. ILAENV/IPARMQ's arguments are exempt: their OPTS are the
-// reference's own letters (`ilaenv( 10, 'DSTEVR', 'N', 1, 2, 3, 4 )`; X3).
-var TRAILING_COMMENT = /\s\/\/.*$/;
-var TUNING_CALL = /\b(?:ilaenv|iparmq)\s*\([^)]*\)/g;
 // Skip lines that contain a single-char literal in object-key position only,
 // e.g. `'K': 0,`. We accept the literal when there's also a non-key
 // occurrence on the line (e.g. `dlamch( 'E' )` — that's a real flag).
@@ -40,8 +34,8 @@ function check( mod ) {
 		// single-char literals are object-property keys.
 		locs = [];
 		for ( i = 0; i < hits.length; i++ ) {
-			var code = hits[ i ].text.replace( TRAILING_COMMENT, '' ).replace( TUNING_CALL, '' );
-			if ( COMMENT_LINE.test( hits[ i ].text ) || !SINGLE_CHAR_CODE.test( code ) ) continue;
+			var code = util.flagCheckCode( hits[ i ].text );
+			if ( code === null || !SINGLE_CHAR_CODE.test( code ) ) continue;
 			if ( OBJECT_KEY_ONLY.test( code ) ) continue;
 			locs.push( 'base.js:' + hits[ i ].line );
 		}

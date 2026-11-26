@@ -26,12 +26,33 @@ var ID = 'work-assert';
 
 // Matches the canonical WORK-size assertion pattern in ndarray.js.
 // We look for a RangeError throw alongside a WORK/RWORK/IWORK length check.
-var ASSERT_RE = /\bWORK\b.*\.length|\.length.*\bWORK\b/;
+// Names compare case-insensitively (CONVENTIONS S7): `work` is WORK.
+var ASSERT_RE = /\bWORK\b.*\.length|\.length.*\bWORK\b/i;
 var THROW_RE = /throw\s+new\s+RangeError/;
 
 // Early return: `return 0;`, `return N;`, `return rcond[...]...`, etc.
 // Matches simple literal/short-expression returns (zero-dim quick exits).
 var EARLY_RETURN_RE = /^\s*return\s+(?:\d+|rcond\s*\[)/;
+
+/**
+ * True if a function declared in the file takes a parameter named WORK, in
+ * any case (CONVENTIONS S7). A mention in a comment does not count.
+ *
+ * @param {string} content - file source
+ * @returns {boolean}
+ */
+function takesWork( content ) {
+	var re = /function\s+\w*\s*\(([^)]*)\)/g;
+	var m;
+	while ( ( m = re.exec( content ) ) !== null ) {
+		if ( m[ 1 ].split( ',' ).some( function isWork( p ) {
+			return /^\s*work\s*$/i.test( p );
+		}) ) {
+			return true;
+		}
+	}
+	return false;
+}
 
 /**
  * True if the file contains a WORK size assertion (length check + throw).
@@ -124,7 +145,7 @@ function check( mod ) {
 	}
 
 	// Only applies to routines whose ndarray.js accepts a WORK parameter.
-	if ( !/\bWORK\b/.test( ndarrayContent ) ) {
+	if ( !takesWork( ndarrayContent ) ) {
 		results.push( util.skip( ID, 'ndarray.js takes no WORK parameter' ) );
 		return results;
 	}

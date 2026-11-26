@@ -185,24 +185,38 @@ function transform( src, tagBase ) {
 		if ( node.type === 'FunctionDeclaration' && !fn ) {
 			const names = node.params.filter( ( p ) => p.type === 'Identifier' && WORKSPACE.test( p.name ) ).map( ( p ) => p.name );
 			const allocated = new Set();
-			( function inner( n ) {
+			// The workspace parameter an `if ( WORK === null ... )` branch
+			// allocates for, when it stores the allocation in a local
+			// (`W = new Float64Array( n )`, then `W = WORK` otherwise).
+			const nullTested = ( test ) => {
+				const t = src.slice( test.range[ 0 ], test.range[ 1 ] );
+				return ( /\bnull\b|\bvoid 0\b|undefined/.test( t ) ) ? names.find( ( w ) => new RegExp( '\\b' + w + '\\b' ).test( t ) ) : void 0;
+			};
+			( function inner( n, forParam ) {
 				if ( !n || typeof n.type !== 'string' ) {
 					return;
 				}
-				if ( n.type === 'AssignmentExpression' && n.left.type === 'Identifier' && names.includes( n.left.name ) && n.right.type === 'NewExpression' && n.right.arguments.length === 1 ) {
+				if ( n.type === 'IfStatement' ) {
+					inner( n.test, forParam );
+					inner( n.consequent, nullTested( n.test ) || forParam );
+					inner( n.alternate, forParam );
+					return;
+				}
+				if ( n.type === 'AssignmentExpression' && n.left.type === 'Identifier' && n.right.type === 'NewExpression' && n.right.arguments.length === 1 && ( names.includes( n.left.name ) || forParam ) ) {
 					const r = n.right;
-					edits.push( [ r.range[ 0 ], r.range[ 1 ], 'globalThis.__wsGuard( ' + src.slice( r.callee.range[ 0 ], r.callee.range[ 1 ] ) + ', ' + src.slice( r.arguments[ 0 ].range[ 0 ], r.arguments[ 0 ].range[ 1 ] ) + ', ' + JSON.stringify( tagBase + ':' + n.left.name ) + ' )' ] );
-					allocated.add( n.left.name );
+					const param = names.includes( n.left.name ) ? n.left.name : forParam;
+					edits.push( [ r.range[ 0 ], r.range[ 1 ], 'globalThis.__wsGuard( ' + src.slice( r.callee.range[ 0 ], r.callee.range[ 1 ] ) + ', ' + src.slice( r.arguments[ 0 ].range[ 0 ], r.arguments[ 0 ].range[ 1 ] ) + ', ' + JSON.stringify( tagBase + ':' + param ) + ' )' ] );
+					allocated.add( param );
 				}
 				for ( const k of Object.keys( n ) ) {
 					const v = n[ k ];
 					if ( Array.isArray( v ) ) {
-						v.forEach( inner );
+						v.forEach( ( c ) => inner( c, forParam ) );
 					} else if ( v && typeof v.type === 'string' ) {
-						inner( v );
+						inner( v, forParam );
 					}
 				}
-			})( node.body );
+			})( node.body, void 0 );
 			if ( allocated.size ) {
 				const at = node.body.range[ 0 ] + 1;
 				edits.push( [ at, at, ' ' + [ ...allocated ].map( ( x ) => x + ' = null;' ).join( ' ' ) ] );

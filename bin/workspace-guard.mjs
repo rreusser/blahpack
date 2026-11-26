@@ -37,7 +37,9 @@ import { ROOT, moduleDir, selectRoutines, testConcurrency, isWorker, workerMain,
 
 const ENTRY = fileURLToPath( import.meta.url );
 const LOADER = path.join( ROOT, 'bin', 'workspace-guard-loader.mjs' );
-const ALLOC = /\b[A-Za-z]*work\s*=\s*new\s+\w+\s*\(/i;
+// A wrapper allocates for a null workspace, directly (`WORK = new ...`) or into
+// a local inside the null branch (`W = new ...`; dgelss).
+const ALLOC = /\b[A-Za-z]*work\s*===?\s*(?:null|void 0)[\s\S]{0,400}?=\s*new\s+\w+\s*\(|\b[A-Za-z]*work\s*=\s*new\s+\w+\s*\(/i;
 
 function analyze( r ) {
 	const dir = moduleDir( r );

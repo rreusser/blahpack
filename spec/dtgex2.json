@@ -149,7 +149,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"base": 0
 		},
 		{
 			"name": "n1",
@@ -222,5 +223,13 @@
 	],
 	"untranslated": [
 		"WORK.minLength: unknown identifier MAX"
+	],
+	"overrides": [
+		{
+			"reason": "The JS API takes J1 0-based (base.js indexes the diagonal with it directly, and dtgexc passes its 0-based block index).",
+			"set": {
+				"params.J1.base": 0
+			}
+		}
 	]
 }

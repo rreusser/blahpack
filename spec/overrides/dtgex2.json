@@ -1,0 +1,11 @@
+{
+	"routine": "dtgex2",
+	"overrides": [
+		{
+			"reason": "The JS API takes J1 0-based (base.js indexes the diagonal with it directly, and dtgexc passes its 0-based block index).",
+			"set": {
+				"params.J1.base": 0
+			}
+		}
+	]
+}

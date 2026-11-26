@@ -1,9 +1,10 @@
 ---
 id: 0049
 title: Some QR-family routines hardcode tuning values that differ from the reference ILAENV/IPARMQ values
-status: open
+status: resolved
 area: base
 opened: 2026-11-18
+resolved: 2026-11-26
 ---
 
 ## Problem
@@ -47,3 +48,7 @@ Also reproduce with:
 ```bash
 grep -ln "const nx = 0\|const NX = 0\|nx = 0;" lib/lapack/base/*/lib/base.js
 ```
+
+## Resolution
+
+ILAENV, IPARMQ and IEEECK are translated modules, and every base.js whose reference queries them takes its tuning values from ilaenv with the reference's arguments (CONVENTIONS X3, lint:tuning-from-ilaenv over the generated spec fact tuning): 140 modules migrated, the wrong crossovers, block sizes and QR-sweep values among them now the reference's, each changed path with a regression test that fails on the old code.

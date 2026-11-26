@@ -227,8 +227,9 @@ most valuable output. This overrides any inclination to "just fix it."
   `deps_dgels.txt`); the script builds the `.mod` files in a per-routine dir.
 - **`deps.py` misses transitive Fortran-only dependencies.** Routines
   that call `ILAENV` transitively need `ilaenv`, `ieeeck`, `iparmq` in
-  their Fortran deps file for test compilation. These are not JS
-  dependencies (ILAENV is replaced with hardcoded constants), but
-  `deps_<routine>.txt` must include them for `test/run_fortran.sh` to link.
+  their Fortran deps file for test compilation. In JS they are ordinary
+  modules too (`lib/lapack/base/ilaenv`, CONVENTIONS X3), but `deps.py` does
+  not list them for the Fortran side, so `deps_<routine>.txt` must include
+  them for `test/run_fortran.sh` to link.
   Check the deps files of similar routines when compilation fails with
   undefined references.

@@ -28,3 +28,7 @@ The `work-assert` conformance check confirms only that *a* guard exists. The har
 ```bash
 grep -rl assertWorkspaceSufficient lib/*/base/*/test/ | sed -E 's#lib/[a-z]+/base/([^/]+)/.*#\1#' | sort -u | wc -l
 ```
+
+## Evidence 2026-11-26
+
+- zgges's `ndarray.js` demanded WORK of `N + max(8N, 1)` and RWORK of `2N + max(8N, 1)`, while `spec/zgges.json` already held the reference's `max(1, 2N)` and `8N`: the spec knew the right minimum and nothing compared the hand-written check with it. Fixed in the ticket-0049 PR; found by an agent reading the code. Similar: ztgsna (ticket 0104, resolved).

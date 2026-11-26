@@ -22,3 +22,10 @@ How it is permitted: ILAENV is replaced by constants chosen per module, with no 
 ```bash
 grep -ln "const nx = 0\|const NX = 0\|nx = 0;" lib/lapack/base/*/lib/base.js
 ```
+
+## Evidence 2026-11-26
+
+- dlaqr3 switches to dlaqr4 at `nmin = 12` (`lib/lapack/base/dlaqr2/lib/base.js:~291` family); the reference uses ILAENV(12) = 75, which zlaqr3 uses.
+- zlaqr0/zlaqr4 hard-code NWR = 5 and NSR = 14; IPARMQ gives NS by NH (10 below 150, up to 64+) and NWR = NS (3·NS/2 past 500). dlaqr0/4 do use IPARMQ.
+- JS dgehrd's crossover is NX = max(NB, 32) where ILAENV(3) gives 128, so it blocks on windows of 33–127 that the reference reduces unblocked.
+- zlaqr0 applies `max(2, NSR)` before dropping NSR's odd bit; the reference applies it after. Only tiny N differ.

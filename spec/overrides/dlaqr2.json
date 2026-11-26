@@ -1,0 +1,15 @@
+{
+	"routine": "dlaqr2",
+	"overrides": [
+		{
+			"reason": "DLAQR2 hands WORK(JW+1:LWORK) to DGEHRD and DORMHR, which pick their block size from it (DGEHRD shrinks NB or goes unblocked; DORMHR's DORMQR shrinks NB and goes unblocked below NBMIN), as the reference's do (the reference's xGEHRD crossover NX = 128 keeps it unblocked for JW < 128, where the JS NX = 32 does not: ticket 0101). Their blocked and unblocked runs round differently, and returning the reflected window to Hessenberg form amplifies that in the forward sense (the reduction is fixed only by its first column), so the updated H and Z, and the window matrices V, T and WV, differ beyond rounding between the minimum 2*JW and the optimum, while each is an exact orthogonal (unitary) similarity to rounding. NS, ND and the shifts do not depend on LWORK. The module's tests check the minimum WORK past the blocking threshold (JW > 32) against the optimum: the same NS, ND and shifts, and Z^T*H0*Z = H (ticket 0100).",
+			"set": {
+				"params.H.workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense",
+				"params.Z.workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense",
+				"params.V.workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense",
+				"params.T.workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense",
+				"params.WV.workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense"
+			}
+		}
+	]
+}

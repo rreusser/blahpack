@@ -5128,12 +5128,12 @@
 			"CWORK": "COMPLEX",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -11183,9 +11183,9 @@
 			"A": "COMPLEX",
 			"CWORK": "COMPLEX",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LRWORK": "INTEGER",
@@ -15881,7 +15881,7 @@
 			"D": "COMPLEX",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -16026,7 +16026,7 @@
 			"D": "COMPLEX",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -30436,7 +30436,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -30873,7 +30873,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -31411,7 +31411,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -68153,12 +68153,12 @@
 			"A": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -74195,9 +74195,9 @@
 		"types": {
 			"A": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -78988,7 +78988,7 @@
 			"D": "DOUBLE PRECISION",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -79133,7 +79133,7 @@
 			"D": "DOUBLE PRECISION",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -81786,7 +81786,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -82231,7 +82231,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -105123,7 +105123,7 @@
 			"RITZ": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION"
 		}
@@ -105189,7 +105189,7 @@
 			"RESID": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION"
 		}
@@ -107548,7 +107548,7 @@
 			"SIGMA": "DOUBLE PRECISION",
 			"TOL": "DOUBLE PRECISION",
 			"V": "DOUBLE PRECISION",
-			"WHICH": "CHARACTER",
+			"WHICH": "CHARACTER*2",
 			"WORKD": "DOUBLE PRECISION",
 			"WORKL": "DOUBLE PRECISION",
 			"Z": "DOUBLE PRECISION"
@@ -125981,7 +125981,8 @@
 			"N2": "INTEGER",
 			"N3": "INTEGER",
 			"N4": "INTEGER",
-			"OPTS": "CHARACTER*("
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"ilaenv2stage": {
@@ -126004,7 +126005,8 @@
 			"N2": "INTEGER",
 			"N3": "INTEGER",
 			"N4": "INTEGER",
-			"OPTS": "CHARACTER*("
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"ilaslc": {
@@ -126160,8 +126162,8 @@
 			"ISPEC": "INTEGER",
 			"LWORK": "INTEGER",
 			"N": "INTEGER",
-			"NAME": "CHARACTER",
-			"OPTS": "CHARACTER"
+			"NAME": "CHARACTER*(*)",
+			"OPTS": "CHARACTER*(*)"
 		}
 	},
 	"isamax": {
@@ -126306,7 +126308,8 @@
 		"package": "lapack",
 		"quick": [],
 		"types": {
-			"CB": "CHARACTER*(",
+			"CA": "CHARACTER*(*)",
+			"CB": "CHARACTER*(*)",
 			"N": "INTEGER"
 		}
 	},
@@ -131832,12 +131835,12 @@
 			"A": "REAL",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -137817,9 +137820,9 @@
 		"types": {
 			"A": "REAL",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -142512,7 +142515,7 @@
 			"D": "REAL",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -142657,7 +142660,7 @@
 			"D": "REAL",
 			"EPS": "REAL",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -145276,7 +145279,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -145711,7 +145714,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "REAL"
 		}
 	},
@@ -193130,12 +193133,12 @@
 			"CWORK": "COMPLEX*16",
 			"INFO": "INTEGER",
 			"IWORK": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBP": "CHARACTER*1",
-			"JOBR": "CHARACTER*1",
-			"JOBT": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBP": "CHARACTER",
+			"JOBR": "CHARACTER",
+			"JOBT": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDU": "INTEGER",
 			"LDV": "INTEGER",
@@ -199243,9 +199246,9 @@
 			"A": "COMPLEX*16",
 			"CWORK": "COMPLEX*16",
 			"INFO": "INTEGER",
-			"JOBA": "CHARACTER*1",
-			"JOBU": "CHARACTER*1",
-			"JOBV": "CHARACTER*1",
+			"JOBA": "CHARACTER",
+			"JOBU": "CHARACTER",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LRWORK": "INTEGER",
@@ -203995,7 +203998,7 @@
 			"D": "COMPLEX*16",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -204140,7 +204143,7 @@
 			"D": "COMPLEX*16",
 			"EPS": "DOUBLE PRECISION",
 			"INFO": "INTEGER",
-			"JOBV": "CHARACTER*1",
+			"JOBV": "CHARACTER",
 			"LDA": "INTEGER",
 			"LDV": "INTEGER",
 			"LWORK": "INTEGER",
@@ -218685,7 +218688,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -219129,7 +219132,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"NCOLS": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},
@@ -219674,7 +219677,7 @@
 			"LDA": "INTEGER",
 			"LDAF": "INTEGER",
 			"N": "INTEGER",
-			"UPLO": "CHARACTER*1",
+			"UPLO": "CHARACTER",
 			"WORK": "DOUBLE PRECISION"
 		}
 	},

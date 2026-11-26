@@ -1,0 +1,112 @@
+<!--
+
+@license Apache-2.0
+
+Copyright (c) 2025 The Stdlib Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+
+# iparmq
+
+> Returns the tuning parameters of the multishift QR algorithm.
+
+<section class="usage">
+
+## Usage
+
+```javascript
+import iparmq from '@rreusser/blahpack/lapack/base/iparmq';
+```
+
+#### iparmq( ispec, name, opts, N, ilo, ihi )
+
+Returns the tuning parameters of the multishift QR algorithm.
+
+```javascript
+var v = iparmq( 15, 'DLAQR0', 'SV', 200, 1, 200 );
+// returns 24
+```
+
+The function has the following parameters:
+
+-   **ispec**: parameter to return: `12` (`INMIN`, the order below which `xLAHQR` is used), `13` (`INWIN`, the deflation window size), `14` (`INIBL`, the nibble crossover point), `15` (`ISHFTS`, the number of simultaneous shifts), `16` (`IACC22`, how to accumulate reflections), `17` (`ICOST`, the relative cost of flops); any other value returns `-1`.
+-   **name**: name of the calling routine (e.g. `'DLAQR0'`), read only for `ispec = 16`; upper-cased, as in the reference, only when its first character is a lower-case letter.
+-   **opts**: character options of the calling routine (not read).
+-   **N**: order of the Hessenberg matrix.
+-   **ilo**: first row/column of the active block (1-based, as the reference's `ILO`).
+-   **ihi**: last row/column of the active block (1-based, as the reference's `IHI`).
+
+The function returns the parameter value.
+
+#### iparmq.ndarray( ispec, name, opts, N, ilo, ihi )
+
+Returns the tuning parameters of the multishift QR algorithm, using alternative indexing semantics. The routine takes no arrays, so the parameters are the same as above.
+
+```javascript
+var v = iparmq.ndarray( 15, 'DLAQR0', 'SV', 200, 1, 200 );
+// returns 24
+```
+
+</section>
+
+<!-- /.usage -->
+
+<section class="notes">
+
+## Notes
+
+-   `iparmq()` corresponds to the [LAPACK][lapack] routine `IPARMQ`, without its unused trailing `LWORK` argument. [`ilaenv`][@rreusser/blahpack/lapack/base/ilaenv] calls it for `ispec` `12`-`17`.
+-   The number of shifts depends on `NH = ihi - ilo + 1`; between `NH = 150` and `590` it is `NH / NINT( LOG2( NH ) )`, computed in single precision as in the reference.
+
+</section>
+
+<!-- /.notes -->
+
+<section class="examples">
+
+## Examples
+
+<!-- eslint no-undef: "error" -->
+
+```javascript
+import iparmq from '@rreusser/blahpack/lapack/base/iparmq';
+
+console.log( iparmq( 15, 'DLAQR0', 'SV', 200, 1, 200 ) );
+// => 24
+```
+
+</section>
+
+<!-- /.examples -->
+
+<!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
+
+<section class="related">
+
+</section>
+
+<!-- /.related -->
+
+<!-- Section for all links. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="links">
+
+[lapack]: https://www.netlib.org/lapack/explore-html/
+
+[@rreusser/blahpack/lapack/base/ilaenv]: ../ilaenv
+
+</section>
+
+<!-- /.links -->

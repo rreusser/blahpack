@@ -490,6 +490,13 @@ function build( routine, sig, facts, options ) {
 				return;
 			}
 		}
+		// An assumed-length CHARACTER*(*) argument is free text (ILAENV's
+		// NAME and OPTS, XERBLA's SRNAME), not a one-letter option: it is a
+		// string scalar with no set of values to check (ticket 0049).
+		if ( p.dtype === 'string' && facts && facts.types && facts.types[ F ] === 'CHARACTER*(*)' ) {
+			p.role = 'scalar';
+			return;
+		}
 		if ( p.dtype === 'string' ) {
 			p.role = 'flag';
 			return;

@@ -1,0 +1,91 @@
+{{alias}}( ispec, name, opts, n1, n2, n3, n4 )
+    Returns problem-dependent parameters for the local environment.
+
+    Parameters
+    ----------
+    ispec: integer
+        Parameter to return: `1` (optimal block size), `2` (minimum block size),
+        `3` (crossover point), `4` (number of shifts), `5` (minimum column
+        dimension), `6` (SVD crossover point), `7` (number of processors), `8`
+        (multishift QR crossover point), `9` (divide-and-conquer leaf size),
+        `10`/`11` (NaN/infinity arithmetic is safe), `12`-`17` (multishift QR
+        parameters, from `iparmq`); any other value returns `-1`.
+
+    name: string
+        Name of the calling routine (e.g. `'DGEQRF'`), in any case: as in the
+        reference, its first six characters are upper-cased when the first is a
+        lower-case letter.
+
+    opts: string
+        Character options of the calling routine, concatenated (not read).
+
+    n1: integer
+        First problem dimension.
+
+    n2: integer
+        Second problem dimension.
+
+    n3: integer
+        Third problem dimension.
+
+    n4: integer
+        Fourth problem dimension.
+
+    Returns
+    -------
+    out: integer
+        Parameter value.
+
+    Examples
+    --------
+    > var v = {{alias}}( 1, 'DGEQRF', ' ', 100, 100, -1, -1 )
+    32
+
+
+{{alias}}.ndarray( ispec, name, opts, n1, n2, n3, n4 )
+    Returns problem-dependent parameters for the local environment, using alternative indexing
+    semantics (the routine takes no arrays).
+
+    Parameters
+    ----------
+    ispec: integer
+        Parameter to return: `1` (optimal block size), `2` (minimum block size),
+        `3` (crossover point), `4` (number of shifts), `5` (minimum column
+        dimension), `6` (SVD crossover point), `7` (number of processors), `8`
+        (multishift QR crossover point), `9` (divide-and-conquer leaf size),
+        `10`/`11` (NaN/infinity arithmetic is safe), `12`-`17` (multishift QR
+        parameters, from `iparmq`); any other value returns `-1`.
+
+    name: string
+        Name of the calling routine (e.g. `'DGEQRF'`), in any case: as in the
+        reference, its first six characters are upper-cased when the first is a
+        lower-case letter.
+
+    opts: string
+        Character options of the calling routine, concatenated (not read).
+
+    n1: integer
+        First problem dimension.
+
+    n2: integer
+        Second problem dimension.
+
+    n3: integer
+        Third problem dimension.
+
+    n4: integer
+        Fourth problem dimension.
+
+    Returns
+    -------
+    out: integer
+        Parameter value.
+
+    Examples
+    --------
+    > var v = {{alias}}.ndarray( 1, 'DGEQRF', ' ', 100, 100, -1, -1 )
+    32
+
+    See Also
+    --------
+

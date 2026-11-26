@@ -641,14 +641,24 @@ function extractOne( src, free, sig ) {
 	}
 	var types = {};
 	st.slice( 0, start ).forEach( function each( d ) {
-		var m = /^(DOUBLE PRECISION|REAL(?:\*\d+|\(\w+\))?|INTEGER|COMPLEX(?:\*\d+|\(\w+\))?|DOUBLE COMPLEX|LOGICAL|CHARACTER(?:\*\S+)?)\s*(?:,\s*[A-Z() ]+)?(?:::)?\s*(.*)$/.exec( d );
+		// A CHARACTER length is written on the type (`CHARACTER*( * ) NAME`)
+		// or on the entity (`CHARACTER NAME*( * )`); either is recorded, as
+		// `CHARACTER*(*)` or `CHARACTER*n` (a one-letter option is `CHARACTER`).
+		var m = /^(DOUBLE PRECISION|REAL(?:\*\d+|\(\w+\))?|INTEGER|COMPLEX(?:\*\d+|\(\w+\))?|DOUBLE COMPLEX|LOGICAL|CHARACTER(?:\* ?(?:\( ?[^)]*\)|\d+))?)\s*(?:,\s*[A-Z() ]+)?(?:::)?\s*(.*)$/.exec( d );
 		if ( !m ) {
 			return;
 		}
 		m[ 2 ].split( /,(?![^()]*\))/ ).forEach( function eachEnt( e ) {
-			var k = /^\s*([A-Z][A-Z0-9_]*)/.exec( e );
+			var k = /^\s*([A-Z][A-Z0-9_]*)(?:\s*\* ?(\( ?[^)]*\)|\d+))?/.exec( e );
+			var t = ( /^CHARACTER/.test( m[ 1 ] ) ) ? m[ 1 ].replace( /\s+/g, '' ) : m[ 1 ];
+			if ( /^CHARACTER/.test( t ) && k && k[ 2 ] ) {
+				t = 'CHARACTER*' + k[ 2 ].replace( /\s+/g, '' );
+			}
+			if ( t === 'CHARACTER*1' ) {
+				t = 'CHARACTER';
+			}
 			if ( k && argset[ k[ 1 ] ] && !types[ k[ 1 ] ] ) {
-				types[ k[ 1 ] ] = m[ 1 ];
+				types[ k[ 1 ] ] = t;
 			}
 		});
 	});

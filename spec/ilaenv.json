@@ -1,0 +1,70 @@
+{
+	"routine": "ilaenv",
+	"package": "lapack",
+	"kind": "function",
+	"signature": "INTEGER FUNCTION ILAENV( ISPEC, NAME, OPTS, N1, N2, N3, N4 )",
+	"returns": {
+		"kind": "value",
+		"dtype": "int32"
+	},
+	"params": [
+		{
+			"name": "ispec",
+			"fortran": "ISPEC",
+			"position": 1,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "name",
+			"fortran": "NAME",
+			"position": 2,
+			"role": "scalar",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "opts",
+			"fortran": "OPTS",
+			"position": 3,
+			"role": "scalar",
+			"dtype": "string",
+			"intent": "in"
+		},
+		{
+			"name": "n1",
+			"fortran": "N1",
+			"position": 4,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n2",
+			"fortran": "N2",
+			"position": 5,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n3",
+			"fortran": "N3",
+			"position": 6,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		},
+		{
+			"name": "n4",
+			"fortran": "N4",
+			"position": 7,
+			"role": "scalar",
+			"dtype": "int32",
+			"intent": "in"
+		}
+	],
+	"checks": [],
+	"quickReturn": []
+}

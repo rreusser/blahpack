@@ -482,10 +482,13 @@ export { default as dtrttf, ndarray as dtrttfNdarray } from './lib/lapack/base/d
 export { default as dtrttp, ndarray as dtrttpNdarray } from './lib/lapack/base/dtrttp/lib/index.js';
 export { default as dtzrzf, ndarray as dtzrzfNdarray } from './lib/lapack/base/dtzrzf/lib/index.js';
 export { default as dzsum1, ndarray as dzsum1Ndarray } from './lib/lapack/base/dzsum1/lib/index.js';
+export { default as ieeeck, ndarray as ieeeckNdarray } from './lib/lapack/base/ieeeck/lib/index.js';
 export { default as iladlc, ndarray as iladlcNdarray } from './lib/lapack/base/iladlc/lib/index.js';
 export { default as iladlr, ndarray as iladlrNdarray } from './lib/lapack/base/iladlr/lib/index.js';
+export { default as ilaenv, ndarray as ilaenvNdarray } from './lib/lapack/base/ilaenv/lib/index.js';
 export { default as ilazlc, ndarray as ilazlcNdarray } from './lib/lapack/base/ilazlc/lib/index.js';
 export { default as ilazlr, ndarray as ilazlrNdarray } from './lib/lapack/base/ilazlr/lib/index.js';
+export { default as iparmq, ndarray as iparmqNdarray } from './lib/lapack/base/iparmq/lib/index.js';
 export { default as izmax1, ndarray as izmax1Ndarray } from './lib/lapack/base/izmax1/lib/index.js';
 export { default as zbdsqr, ndarray as zbdsqrNdarray } from './lib/lapack/base/zbdsqr/lib/index.js';
 export { default as zdrscl, ndarray as zdrsclNdarray } from './lib/lapack/base/zdrscl/lib/index.js';

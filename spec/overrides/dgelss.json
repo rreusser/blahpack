@@ -1,0 +1,12 @@
+{
+	"routine": "dgelss",
+	"overrides": [
+		{
+			"reason": "DGELSS picks its path (QR first, LQ first, or direct bidiagonalization) from LWORK. On exit A holds the right singular vectors in its first min(M,N) rows, but singular vectors are determined only up to sign (and within the subspace of a repeated singular value), so a different path can return different ones; the remaining rows are scratch. Rows N..M-1 of B, when M > N, carry the residual, which the reference defines only through its sum of squares (\"the residual sum-of-squares ... is given by the sum of squares of elements n+1:m\"), in a basis that depends on the path. S, RANK and rows 1..N of B (the solution) do not depend on LWORK; the module's tests check the solution at the minimum WORK (ticket 0096).",
+			"set": {
+				"params.A.workDependent": "on exit A's right singular vectors are determined only up to sign, and which ones LWORK's path returns differs; its other rows are scratch",
+				"params.B.workDependent": "when M > N its rows N..M-1 hold the residual in a basis that depends on the path LWORK selects; only their sum of squares is defined"
+			}
+		}
+	]
+}

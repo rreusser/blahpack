@@ -10,6 +10,8 @@ program test_ztgsyl
   double precision :: SCALE, DIF
   integer :: IWORK(MAXN*3), INFO
   integer :: M, N, i, j, idx
+  character(len=1) :: TR
+  integer :: IJ
 
   ! Pack buffers for printing complex matrices via EQUIVALENCE
   complex*16 :: Cpk(MAXN*MAXN), Fpk(MAXN*MAXN)
@@ -382,5 +384,165 @@ program test_ztgsyl
   call print_array('C', Cpk_r, 2*M*N)
   call print_array('F', Fpk_r, 2*M*N)
   call end_test()
+
+
+  ! Blocked-path cases: ILAENV(2/5,'ZTGSYL') = 2 = MB = NB, so these M, N exceed the
+  ! block sizes and take the blocked solver (including a merged last row/column).
+  TR = 'N'; IJ = 1; M = 5; N = 4
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('notrans_5x4_ijob1_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+  TR = 'C'; IJ = 0; M = 5; N = 4
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('conjtrans_5x4_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+  TR = 'N'; IJ = 2; M = 5; N = 5
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('notrans_5x5_ijob2_merge')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+  TR = 'N'; IJ = 0; M = 7; N = 6
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('notrans_7x6_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+  TR = 'C'; IJ = 0; M = 7; N = 6
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('conjtrans_7x6_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+  TR = 'N'; IJ = 3; M = 5; N = 4
+  call gen(M, N)
+  call ZTGSYL(TR, IJ, M, N, A, MAXN, B, MAXN, C, MAXN, &
+              D, MAXN, E, MAXN, F, MAXN, SCALE, DIF, WORK, LWORK, &
+              IWORK, INFO)
+  do j = 1, N
+    do i = 1, M
+      idx = i + (j-1)*M
+      Cpk(idx) = C(i, j)
+      Fpk(idx) = F(i, j)
+    end do
+  end do
+  call begin_test('notrans_5x4_ijob3_blocked')
+  call print_int('info', INFO)
+  call print_scalar('scale', SCALE)
+  call print_scalar('dif', DIF)
+  call print_array('C', Cpk_r, 2*M*N)
+  call print_array('F', Fpk_r, 2*M*N)
+  call end_test()
+
+contains
+
+  ! Upper triangular (A,D) and (B,E) in complex Schur form.
+  subroutine gen(mm, nn)
+    integer, intent(in) :: mm, nn
+    integer :: ii, jj
+    A = (0.0d0, 0.0d0); B = A; C = A; D = A; E = A; F = A
+    do jj = 1, mm
+      do ii = 1, jj
+        if (ii == jj) then
+          A(ii,jj) = dcmplx(1.0d0 + dble(ii), 0.1d0*dble(ii))
+          D(ii,jj) = dcmplx(1.0d0 + 0.1d0*dble(ii), 0.0d0)
+        else
+          A(ii,jj) = dcmplx(0.1d0*sin(dble(ii + 2*jj)), 0.1d0*cos(dble(ii + jj)))
+          D(ii,jj) = dcmplx(0.05d0*cos(dble(ii + jj)), 0.02d0*sin(dble(ii)))
+        end if
+      end do
+    end do
+    do jj = 1, nn
+      do ii = 1, jj
+        if (ii == jj) then
+          B(ii,jj) = dcmplx(-(1.0d0 + 0.5d0*dble(ii)), 0.2d0*dble(ii))
+          E(ii,jj) = dcmplx(1.0d0 + 0.2d0*dble(ii), 0.0d0)
+        else
+          B(ii,jj) = dcmplx(0.1d0*cos(dble(2*ii + jj)), 0.05d0*sin(dble(jj)))
+          E(ii,jj) = dcmplx(0.05d0*sin(dble(ii + jj)), 0.03d0*cos(dble(jj)))
+        end if
+      end do
+    end do
+    do jj = 1, nn
+      do ii = 1, mm
+        C(ii,jj) = dcmplx(dble(ii) + 0.5d0*dble(jj), 0.25d0*dble(ii - jj))
+        F(ii,jj) = dcmplx(1.0d0 + sin(dble(ii*jj)), cos(dble(ii + jj)))
+      end do
+    end do
+  end subroutine gen
 
 end program

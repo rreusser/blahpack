@@ -91,7 +91,7 @@ The function has the following parameters:
 -   **strideSCALE**: stride length for `SCALE`.
 -   **CNORM**: in/out column-norm workspace (length `N`).
 -   **strideCNORM**: stride length for `CNORM`.
--   **work**: workspace `Float64Array` of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba + 40` where `nba = ceil(N/8)`.
+-   **work**: workspace `Float64Array` of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba + 40` where `nba = ceil(N/NB)` and `NB = min( 64, max( 8, ILAENV( 1, 'DLATRS', ... ) ) )` (32).
 -   **strideWork**: stride length for `work` (must be `1`).
 
 #### dlatrs3.ndarray( uplo, trans, diag, normin, N, nrhs, A, strideA1, strideA2, offsetA, X, strideX1, strideX2, offsetX, SCALE, strideSCALE, offsetSCALE, CNORM, strideCNORM, offsetCNORM, work, strideWork, offsetWork )

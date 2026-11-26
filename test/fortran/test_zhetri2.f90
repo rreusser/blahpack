@@ -8,7 +8,7 @@ program test_zhetri2
   ! on ILAENV's NBMAX vs N. We exercise both code paths plus the singular and
   ! quick-return guards:
   !
-  !   * small N (< typical NBMAX of 32)  -> dispatches to ZHETRI
+  !   * N <= NBMAX = ILAENV(1,'ZHETRF') = 64 -> dispatches to ZHETRI
   !   * larger N (>= NBMAX) with LWORK   -> dispatches to ZHETRI2X
   !
   ! Workspace size: WORK must be at least (N+NBMAX+1)*(NBMAX+3) complex elements
@@ -21,6 +21,13 @@ program test_zhetri2
   double precision :: A_r(2*NMAX*NMAX)
   equivalence (A, A_r)
   integer :: IPIV(NMAX), INFO, n, LWORK_TF, LWORK, i, j
+  ! Larger problems (N > ILAENV(1,'ZHETRF') = 64) for the blocked ZHETRI2X path.
+  integer, parameter :: NBIG = 70
+  integer, parameter :: LWBIG = (NBIG + 64 + 1) * (64 + 3)
+  complex*16 :: B(NBIG, NBIG), WORK_TFB(NBIG*64), WORKB(LWBIG)
+  double precision :: B_r(2*NBIG*NBIG)
+  equivalence (B, B_r)
+  integer :: IPIVB(NBIG)
 
   LWORK_TF = NMAX * 32
   LWORK = LWMAX
@@ -128,7 +135,7 @@ program test_zhetri2
   call print_int('info', INFO)
   call end_test()
 
-  ! Test 8: Larger N that forces the blocked path (NBMAX=32 typical).
+  ! Test 8: N=40, below ILAENV(1,'ZHETRF') = 64, so the unblocked ZHETRI path.
   ! Use a diagonally-dominant Hermitian matrix that yields 1x1 pivots.
   n = 40
   A = (0.0d0, 0.0d0)
@@ -150,6 +157,50 @@ program test_zhetri2
   call ZHETRI2('U', n, A, NMAX, IPIV, WORK, LWORK, INFO)
   call print_int('info', INFO)
   call print_array('a_inv', A_r, 2*NMAX*n)
+  call end_test()
+
+  ! Test 9: N=70 > NBMAX = 64 forces the blocked ZHETRI2X path (upper).
+  n = NBIG
+  B = (0.0d0, 0.0d0)
+  do j = 1, n
+    do i = 1, j
+      if (i == j) then
+        B(i,j) = dcmplx(3.0d0 + dble(i), 0.0d0)
+      else
+        B(i,j) = dcmplx( 0.1d0 * dsin(dble(i + 2*j)), 0.1d0 * dcos(dble(2*i + j)) )
+      end if
+    end do
+  end do
+  call ZHETRF('U', n, B, NBIG, IPIVB, WORK_TFB, NBIG*64, INFO)
+  call begin_test('70x70_upper_blocked')
+  call print_int('info_trf', INFO)
+  call print_array('a_factored', B_r, 2*NBIG*n)
+  call print_int_array('ipiv', IPIVB, n)
+  call ZHETRI2('U', n, B, NBIG, IPIVB, WORKB, LWBIG, INFO)
+  call print_int('info', INFO)
+  call print_array('a_inv', B_r, 2*NBIG*n)
+  call end_test()
+
+  ! Test 10: N=70 lower, indefinite (zero diagonal: 2x2 pivots), blocked path.
+  n = NBIG
+  B = (0.0d0, 0.0d0)
+  do j = 1, n
+    do i = j, n
+      if (i == j) then
+        B(i,j) = dcmplx(dble(mod(i, 3)) - 1.0d0, 0.0d0)
+      else
+        B(i,j) = dcmplx( dsin(dble(i + 2*j)), dcos(dble(2*i + j)) )
+      end if
+    end do
+  end do
+  call ZHETRF('L', n, B, NBIG, IPIVB, WORK_TFB, NBIG*64, INFO)
+  call begin_test('70x70_lower_indef_blocked')
+  call print_int('info_trf', INFO)
+  call print_array('a_factored', B_r, 2*NBIG*n)
+  call print_int_array('ipiv', IPIVB, n)
+  call ZHETRI2('L', n, B, NBIG, IPIVB, WORKB, LWBIG, INFO)
+  call print_int('info', INFO)
+  call print_array('a_inv', B_r, 2*NBIG*n)
   call end_test()
 
 end program

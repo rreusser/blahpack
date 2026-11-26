@@ -21,7 +21,7 @@
 
 - IJOB >= 1 paths (DIF estimation, two-solve rounds) require dlatdf in dtgsy2. Not tested.
 - IJOB >= 3 paths (zero-out C,F then solve for DIF) also untested.
-- The blocked path (MB < M or NB < N) is not exercised with small test matrices. Would need M,N > 32.
+- The reference's block sizes are MB = ILAENV( 2, 'DTGSYL' ) = 2 and NB = ILAENV( 5 ) = 2, so the blocked path runs for any M > 2 or N > 2 (the JS used to hard-code 32). Its partition loop leaves when the 1-based I reaches M (`IF( I.GE.M )`), so a last single row/column joins the previous block; the JS loop used to make it its own block.
 - The TRANS blocked path is structurally similar to NOTRAN but iterates in different order.
 
 ## Complex number handling

@@ -36,7 +36,7 @@ interface Routine {
 	* @param LDA - leading dimension of `A`
 	* @param IPIV - pivot indices from the factorization
 	* @param strideIPIV - stride length for `IPIV`
-	* @param WORK - workspace of length at least `max(1,N)` when `N <= 32`, else `(N+33)*35`; if `null`, a workspace is allocated internally
+	* @param WORK - workspace of length at least `max(1,N)` when `N <= NBMAX`, else `(N+NBMAX+1)*(NBMAX+3)`, where `NBMAX = ILAENV( 1, 'DSYTRI2', ... ) = 1`; if `null`, a workspace is allocated internally
 	* @returns status code
 	*/
 	( order: Layout, uplo: MatrixTriangle, N: number, A: Float64Array, LDA: number, IPIV: Int32Array, strideIPIV: number, WORK: Float64Array | null ): number;

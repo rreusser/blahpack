@@ -37,7 +37,7 @@ import { ROOT, moduleDir, selectRoutines, testConcurrency, isWorker, workerMain,
 
 const ENTRY = fileURLToPath( import.meta.url );
 const LOADER = path.join( ROOT, 'bin', 'workspace-guard-loader.mjs' );
-const ALLOC = /\b[A-Z]*WORK\s*=\s*new\s+\w+\s*\(/;
+const ALLOC = /\b[A-Za-z]*work\s*=\s*new\s+\w+\s*\(/i;
 
 function analyze( r ) {
 	const dir = moduleDir( r );

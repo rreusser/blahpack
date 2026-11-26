@@ -171,7 +171,7 @@ function wrapTests( src ) {
 	return out;
 }
 
-const WORKSPACE = /^[A-Z]*WORK$/;
+const WORKSPACE = /^[A-Za-z]*work$/i;
 
 // Rewrites the wrapper: force each null-allocated workspace parameter to
 // null at entry, and allocate it through __wsGuard.

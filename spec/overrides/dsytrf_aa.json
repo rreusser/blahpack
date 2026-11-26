@@ -1,0 +1,11 @@
+{
+	"routine": "dsytrf_aa",
+	"overrides": [
+		{
+			"reason": "DSYTRF_AA shrinks its block size from LWORK (NB = (LWORK-N)/N when LWORK < (1+NB)*N). The blocked and the block-size-1 runs round differently, and where two pivot candidates tie exactly in magnitude (the module's integer-valued 40x40 test matrices), the rounding decides which IDAMAX picks: the reference itself returns IPIV(13) = 18 with LWORK = 5000 and 39 with LWORK = 2*N on that matrix (checked by compiling the reference), as the JS does. The factor A agrees to rounding; the module's tests check the factor at the minimum WORK against the optimum (ticket 0100).",
+			"set": {
+				"params.IPIV.workDependent": "where pivot candidates tie exactly, which one is chosen depends on the rounding of the block size LWORK selects, in the reference as in the JS"
+			}
+		}
+	]
+}

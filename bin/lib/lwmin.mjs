@@ -32,7 +32,7 @@ import { createHash } from 'node:crypto';
 
 // Bump when what a row means changes; the cache records it and `--check`
 // compares.
-const LWMIN_VERSION = 2;
+const LWMIN_VERSION = 5;
 
 const CACHE_FILE = path.join( ROOT, 'data', 'fortran-lwmin.json' );
 
@@ -93,6 +93,8 @@ function measured( spec ) {
 				'kind': 'check',
 				'length': L.fortran,
 				'info': c ? c.info : -L.position,
+				// Declared WORK( MAX( 1, LWORK ) ): WORK( 1 ) exists at LWORK = 0.
+				'floor1': /^MAX\(1,/i.test( String( p.dims && p.dims[ 0 ] ).replace( /\s+/g, '' ) ),
 				'estimate': ( p.minLength && p.minLength.js ) || null
 			} );
 			return;

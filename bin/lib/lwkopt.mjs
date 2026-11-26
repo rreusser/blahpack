@@ -409,9 +409,9 @@ function jsArray( p, n ) {
 * zero-filled arrays of the sizes the spec gives, options translated from
 * the Fortran letters to the JS strings. Each workspace is
 * `workspace( param, ld )` (null for the wrapper's auto-allocation, or an
-* array).
+* array); `onArray( param, array )`, when given, sees every other array.
 */
-function callArgs( spec, pl, vals, form, workspace ) {
+function callArgs( spec, pl, vals, form, workspace, onArray ) {
 	const nd = ( form === 'ndarray' );
 	const scope = jsScope( spec, pl, vals );
 	const big = maxDim( pl, vals );
@@ -427,6 +427,9 @@ function callArgs( spec, pl, vals, form, workspace ) {
 		if ( g.names.length === 4 ) {
 			const ld = ( p.ld && vals[ p.ld ] !== void 0 ) ? vals[ p.ld ] : Math.max( 1, big );
 			const a = ( p.role === 'workspace' ) ? workspace( p, ld ) : jsArray( p, ld * size( p.cols && p.cols.js, big ) );
+			if ( onArray && p.role !== 'workspace' ) {
+				onArray( p, a );
+			}
 			if ( nd ) {
 				out.push( a, 1, ld, 0 );
 			} else {
@@ -441,6 +444,9 @@ function callArgs( spec, pl, vals, form, workspace ) {
 				return;
 			}
 			const a = jsArray( p, size( p.length && p.length.js, 2 * big + 10 ) );
+			if ( onArray ) {
+				onArray( p, a );
+			}
 			if ( e.kind === 'select' ) {
 				a.fill( 1, 0, Math.min( a.length, vals[ p.fortran ] ) );
 			}

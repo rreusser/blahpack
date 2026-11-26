@@ -34,6 +34,13 @@ const LIB = path.join( LIB_DIR, 'libref.a' );
 // dimensions, with workspace lengths up to the optimum (at most ~80k).
 const BIG = 200000;
 
+// What a probe fills a workspace with past the length it passes.
+const SENTINEL = {
+	'float64': '-7.7777777777777777d+300',
+	'complex128': 'cmplx( -7.7777777777777777d+300, 7.7777777777777777d+300, kind=8 )',
+	'int32': '-987654321'
+};
+
 const FTYPE = {
 	'float64': 'double precision',
 	'complex128': 'complex*16',
@@ -157,19 +164,25 @@ function literal( x ) {
 
 /**
 * The driver for one routine. It reads one call per line: the grid's
-* `args`, in order, and with `probe` then an extent `zext` and the value of
+* `args`, in order, and with `probe` then an extent `zext`, a data `seed`
+* (0: zero data) and the value of
 * every workspace-length argument (in the plan's order). Without `probe`
 * every workspace length is -1 (a query).
 *
 * With `probe`, every non-workspace array is zeroed over its first `zext`
 * elements before each call (the call overwrites its outputs, and the next
-* call must see the same zero data); before the call a line `D` gives the
+* call must see the same data), and with `seed` > 0 its real and complex
+* ones are then filled with seeded random values in [-1, 1] (Park-Miller,
+* from `seed`; IPIV is the identity, other integer inputs and SELECT are as
+* read); before the call a line `D` gives the
 * value of every `probe.declared` expression (a workspace's declared
 * extent, e.g. RWORK( 8*N )), and a callee's XERBLA prints `C` and ends
 * the process (see `xerbla` below).
 *
 * The line after a call: INFO, then the first element of each workspace
-* named by a workspace-length argument (a query's answer).
+* named by a workspace-length argument (a query's answer), then (probe) for
+* each of those workspaces the last element written past its length (0:
+* none; see `after` below).
 */
 function driver( spec, g, probe ) {
 	const params = g.plan.params.slice().sort( ( a, b ) => a.p.position - b.p.position );
@@ -232,6 +245,11 @@ function driver( spec, g, probe ) {
 				reset.push( 'end do' );
 			} else if ( probe ) {
 				reset.push( name + '( 1:zext ) = ' + zero );
+				// Seeded random data in [-1, 1] for the real and complex
+				// inputs (zero data hides data-dependent extents: ranks 0).
+				if ( p.dtype === 'float64' || p.dtype === 'complex128' ) {
+					reset.push( 'if ( seed > 0 ) call fill_' + ( p.dtype === 'float64' ? 'd' : 'z' ) + '( ' + name + ', zext, state )' );
+				}
 			}
 			callArgs.push( name );
 			break;
@@ -248,18 +266,45 @@ function driver( spec, g, probe ) {
 	// their workspaces; dtrsna's LDWORK names none).
 	const lworks = g.plan.params.filter( ( e ) => e.kind === 'lwork' ).map( ( e ) => e.p );
 	if ( probe ) {
-		decl.push( 'integer :: zext, ii' );
+		decl.push( 'integer :: zext, ii, seed' );
+		decl.push( 'integer(8) :: state' );
 		readList.push( 'zext' );
+		readList.push( 'seed' );
 		lworks.forEach( ( L ) => readList.push( fv( L.fortran ) ) );
-		reset.unshift( 'zext = max( 1, min( BIG, zext ) )' );
+		reset.unshift( 'zext = max( 1, min( BIG, zext ) )', 'state = int( seed, 8 )' );
 	}
 	const outs = probe ?
 		lworks.map( ( L ) => ( L.of ? 'dble( ' + fv( L.of ) + '( 1 ) )' : '0.0d0' ) ) :
 		g.queries.map( ( W ) => 'dble( ' + fv( W ) + '( 1 ) )' );
 	// A probe first prints `D` and each declared extent, for the arguments
 	// as read (before the call can change an in/out one).
+	// A probe fills each workspace named by a length argument past that
+	// length L with a sentinel, and after the call reports the last element
+	// that no longer holds it (0: nothing past L was written). Writes only:
+	// a read past L leaves no trace.
+	const after = [];
 	if ( probe ) {
 		reset.push( "write( *, '(A,99(1X,I0))' ) 'D'" + ( probe.declared || [] ).map( ( d ) => ', max( 0, ' + d.expr + ' )' ).join( '' ) );
+		lworks.filter( ( L ) => L.of ).forEach( ( L, k ) => {
+			const W = spec.params.find( ( q ) => q.fortran === L.of );
+			const sent = SENTINEL[ W.dtype ];
+			if ( !sent ) {
+				throw new Error( 'no sentinel for workspace ' + W.fortran + ' (' + W.dtype + ')' );
+			}
+			decl.push( 'integer :: l_' + k + ', wx_' + k );
+			reset.push( 'l_' + k + ' = ' + fv( L.fortran ) );
+			reset.push( 'if ( l_' + k + ' >= 0 .and. l_' + k + ' < BIG ) ' + fv( W.fortran ) + '( l_' + k + '+1:BIG ) = ' + sent );
+			after.push( 'wx_' + k + ' = 0' );
+			after.push( 'if ( l_' + k + ' >= 0 ) then' );
+			after.push( '  do ii = BIG, l_' + k + ' + 1, -1' );
+			after.push( '    if ( ' + fv( W.fortran ) + '( ii ) /= ' + sent + ' ) then' );
+			after.push( '      wx_' + k + ' = ii' );
+			after.push( '      exit' );
+			after.push( '    end if' );
+			after.push( '  end do' );
+			after.push( 'end if' );
+			outs.push( 'dble( wx_' + k + ' )' );
+		});
 	}
 	const info = params.find( ( e ) => e.kind === 'info' );
 	const wrap = ( s, ind ) => {
@@ -323,11 +368,38 @@ function driver( spec, g, probe ) {
 		'    if ( ios /= 0 ) exit',
 		...reset.map( ( d ) => '    ' + d ),
 		wrap( 'call ' + spec.routine.toUpperCase() + '( ' + callArgs.join( ', ' ) + ' )', '    ' ),
+		...after.map( ( d ) => '    ' + d ),
 		// dlaqr2/3 have no INFO: every call is recorded (the grid gives only
 		// values their callers pass).
 		wrap( "write( *, '(I0,99(1X,ES26.17E3))' ) " + ( info ? fv( info.p.fortran ) : '0' ) + ', ' + outs.join( ', ' ), '    ' ),
 		'    flush( 6 )',
 		'  end do',
+		...( probe ? [
+			'contains',
+			// A Park-Miller generator: the same data on every platform.
+			'  subroutine fill_d( a, n, st )',
+			'    integer :: n, i',
+			'    double precision :: a( * )',
+			'    integer(8) :: st',
+			'    do i = 1, n',
+			'      st = mod( st * 16807_8, 2147483647_8 )',
+			'      a( i ) = 2.0d0 * dble( st ) / 2147483647.0d0 - 1.0d0',
+			'    end do',
+			'  end subroutine fill_d',
+			'  subroutine fill_z( a, n, st )',
+			'    integer :: n, i',
+			'    complex*16 :: a( * )',
+			'    integer(8) :: st',
+			'    double precision :: x, y',
+			'    do i = 1, n',
+			'      st = mod( st * 16807_8, 2147483647_8 )',
+			'      x = 2.0d0 * dble( st ) / 2147483647.0d0 - 1.0d0',
+			'      st = mod( st * 16807_8, 2147483647_8 )',
+			'      y = 2.0d0 * dble( st ) / 2147483647.0d0 - 1.0d0',
+			'      a( i ) = cmplx( x, y, kind=8 )',
+			'    end do',
+			'  end subroutine fill_z'
+		] : [] ),
 		'end program drv',
 		''
 	].join( '\n' );

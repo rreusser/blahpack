@@ -44,3 +44,13 @@ grep -rl assertWorkspaceSufficient lib/*/base/*/test/ | sed -E 's#lib/[a-z]+/bas
   - 4,120 row-workspaces accept less than a declared extent the reference cannot check.
   - Some rows were not run: dlamswlq/dlamtsqr K > N (kept deliberately, ticket 0103), and rows of d/z tgsen and d/z lamtsqr whose reference callees reject the call at every length.
 - Before this check, nothing compared the IWORK/RWORK guards with the reference.
+
+## Evidence 2026-11-26 (writes past the reference's own check)
+
+- An "accepted" length is not always a safe minimum. `bin/gen-lwmin.mjs` now fills each workspace past the length it passes with a sentinel, and the minimum it records is the smallest length that the routine and its callees accept and past which nothing is written. Each row is probed on zero data and on seeded random data, and the larger minimum is kept. Only writes are detected; reads past the length are not seen. Inputs that need structure to reach a path (SPD, Schur form) are a known limit.
+- The reference writes past what its own check accepts in these cases. There the JS deliberately demands more than the reference's check, and the cache's `overruns` records why:
+  - d/z orgtsqr_row/ungtsqr_row: the check is LWORK >= 1, but DLARFB_GETT writes NB*max( NB, N-NB ). With M = N = 140 and NB = 150 it writes element 19600.
+  - dlamtsqr SIDE = 'R': the check is LW = MB*NB, but DGEMQRT writes M*NB. With MB = 1, NB = 40 and M = 140, the check accepts 40 and element 5600 is written. zlamtsqr checks M*NB and does not overrun.
+  - d/z laqr0/laqr4: there is no check, but WORK(1) is written at LWORK = 0.
+  - d/z orbdb1/unbdb1 (M = P = Q = 0): WORK(1) is written at LWORK = 0.
+- Random data raises the minimum of d/z ggsvp3 and d/z ggsvd3 (90 rows each; on zero data the ranks are 0), and of d/z trsen and dtgsen (the subdiagonal of the random T forms 2x2 blocks). d/z tgsen: the reference's own DTGSYL call rejects the documented 2MN, so the minimum is 2MN+1.

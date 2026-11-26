@@ -39,7 +39,34 @@
 *    effective minimum, the smallest length (>= min) whose call no callee
 *    rejects either (null when callees reject even at the bound), verified
 *    the same way.
-* 4. A workspace without a length argument whose declaration gives its
+*    "Accepted" is not enough either: a routine's check can be weaker than
+*    what it writes (dorgtsqr_row checks LWORK >= 1, then DLARFB_GETT writes
+*    NB*max( NB, N-NB ); dlamtsqr's SIDE = 'R' check is MB*NB, its
+*    DGEMQRT writes M*NB). So each probe fills the workspace past the length
+*    L it passes (past max( 1, L ) for a WORK( MAX( 1, LWORK ) )
+*    declaration) with a sentinel, and the driver reports the last element
+*    changed. The effective minimum is the smallest length that is accepted,
+*    that no callee rejects, and past which nothing is written. Where the
+*    reference writes past its own check's minimum, the entry's `overruns`
+*    records it (rows, the example with the largest overrun): there the JS
+*    must demand more than the reference's check. Writes only: a read past
+*    L leaves no trace.
+* 4. Every row is measured twice: on zero data, and on seeded random data
+*    (real and complex input arrays uniform in [-1, 1], seed 1 + the row's
+*    index; IPIV the identity, other integer inputs and SELECT as above),
+*    and each minimum is the larger. Zero data hides data-dependent extents:
+*    on it d/z ggsvp3's ranks K and L are 0, and the callees that write the
+*    declared extents of U, V and A never run. INFO > 0 on random data
+*    (singular, not positive definite) still counts as accepted. A crash of
+*    the random-data run keeps the zero-data row (`randomCrashed`);
+*    `randomRaised` counts the rows whose minimum random data raised.
+*    Known limit: a routine whose full path needs structured input
+*    (symmetric positive definite, a factored or reduced matrix: d/z potrs-
+*    like callers, the tridiagonal/Hessenberg/Schur-form inputs of hseqr,
+*    hgeqz, trsen, tgsen, tgsna, trevc3, the reflectors of the orm and unm
+*    families) may not reach it on either kind of data; its minimum is what
+*    these two runs reach.
+* 5. A workspace without a length argument whose declaration gives its
 *    extent from the integer arguments (RWORK( 8*N )) records that extent,
 *    evaluated by the driver in Fortran (`declared`).
 *
@@ -85,7 +112,7 @@ class RowCrash extends Error {}
 * query or the call at the bounds rejects the row's arguments), or throws
 * RowCrash.
 */
-async function measureRow( ctx, s, call ) {
+async function measureRow( ctx, s, call, seed ) {
 	const { pl, m, lworks, query } = ctx;
 	const vals = {};
 	ctx.g.args.forEach( ( a, i ) => {
@@ -100,7 +127,7 @@ async function measureRow( ctx, s, call ) {
 	// A call: { declared, info, out }, { declared, callee } or
 	// { declared, crashed }.
 	const invoke = async ( lens ) => {
-		const args = call.concat( [ zext ], lworks.map( ( L ) => ( L.of ? lens[ L.of ] : ldValue ) ) );
+		const args = call.concat( [ zext, seed ], lworks.map( ( L ) => ( L.of ? lens[ L.of ] : ldValue ) ) );
 		ctx.calls += 1;
 		return s.call( args );
 	};
@@ -154,9 +181,25 @@ async function measureRow( ctx, s, call ) {
 	if ( !base.callee && base.info < 0 ) {
 		return { 'rejected': true };
 	}
+	// The others must be ample while one is measured: when a callee rejects
+	// the call at the bounds, or it writes past one (dtgsen passes DTGSYL
+	// less than its optimum asks for), every bound becomes the buffer size.
+	const writtenPast = ( res ) => lworks.filter( ( L ) => L.of ).some( ( L, k ) => {
+		const w = checked.find( ( x ) => x.name === L.of );
+		return w && res.out && res.out[ lworks.length + k ] > Math.max( w.floor1 ? 1 : 0, upper[ w.name ] );
+	});
+	if ( base.callee || writtenPast( base ) ) {
+		checked.forEach( ( w ) => {
+			upper[ w.name ] = BIG;
+		});
+		base = must( await invoke( upper ), 'call at the buffer size' );
+		if ( !base.callee && base.info < 0 ) {
+			return { 'rejected': true };
+		}
+	}
 	const mins = {};
 	const effs = {};
-	const baseClean = !base.callee;
+	const overruns = {};
 	for ( const w of checked ) {
 		const memo = new Map();
 		const probe = async ( L ) => {
@@ -177,12 +220,17 @@ async function measureRow( ctx, s, call ) {
 			const res = await probe( L );
 			return Boolean( res.crashed ) || !rejects( res, w );
 		};
-		// ... and ran clean when no callee rejected what it was passed either.
+		// ... and ran clean when no callee rejected what it was passed
+		// either and nothing past L was written.
+		const wx = lworks.length + lworks.filter( ( L ) => L.of ).findIndex( ( L ) => L.of === w.name );
+		const wrote = ( res ) => ( res.out ? res.out[ wx ] : 0 );
+		// What the declaration gives a length L: WORK( MAX( 1, LWORK ) ).
+		const extent = ( L ) => ( w.floor1 ? Math.max( 1, L ) : L );
 		const clean = async ( L ) => {
 			const res = await probe( L );
-			return !res.crashed && !res.callee && res.info !== w.info;
+			return !res.crashed && !res.callee && res.info !== w.info && wrote( res ) <= extent( L );
 		};
-		memo.set( upper[ w.name ], baseClean ? { 'info': base.info } : { 'callee': base.callee } );
+		memo.set( upper[ w.name ], base );
 		const first = async ( test, lo, hi ) => {
 			// The smallest L in ( lo, hi ] passing `test`, given test( hi ).
 			while ( hi - lo > 1 ) {
@@ -212,13 +260,24 @@ async function measureRow( ctx, s, call ) {
 		// The effective minimum: the smallest length no callee rejects
 		// either (dggsvd3 checks only LWORK >= 1; its DGGSVP3 needs more).
 		// Null when callees reject even at the bound.
+		// The reference writing past what its own check accepts: the JS
+		// must demand more than that check (dorgtsqr_row checks LWORK >= 1;
+		// its DLARFB_GETT writes NB*max( NB, N-NB )).
+		const atMin = await probe( min );
+		if ( !atMin.crashed && !atMin.callee && wrote( atMin ) > extent( min ) ) {
+			overruns[ w.name ] = wrote( atMin );
+		}
 		let eff = null;
+		let top = upper[ w.name ];
+		if ( !( await clean( top ) ) && top < BIG && await clean( BIG ) ) {
+			top = BIG;
+		}
 		if ( await clean( min ) ) {
 			eff = min;
-		} else if ( await clean( upper[ w.name ] ) ) {
-			eff = await first( clean, min, upper[ w.name ] );
+		} else if ( await clean( top ) ) {
+			eff = await first( clean, min, top );
 			if ( !( await clean( eff ) ) || await clean( eff - 1 ) ) {
-				throw new Error( ctx.spec.routine + ' ' + w.name + ': callee rejections not monotone at ' + eff + ' (' + describe( ctx.g, call ) + ')' );
+				throw new Error( ctx.spec.routine + ' ' + w.name + ': callee rejections or writes past the length not monotone at ' + eff + ' (' + describe( ctx.g, call ) + ')' );
 			}
 		}
 		effs[ w.name ] = eff;
@@ -232,7 +291,7 @@ async function measureRow( ctx, s, call ) {
 			d += 1;
 		}
 	});
-	return { 'row': call.concat( m.workspaces.map( ( w ) => mins[ w.name ] ), m.workspaces.map( ( w ) => effs[ w.name ] ), m.workspaces.map( ( w ) => upper[ w.name ] ) ) };
+	return { 'overruns': overruns, 'row': call.concat( m.workspaces.map( ( w ) => mins[ w.name ] ), m.workspaces.map( ( w ) => effs[ w.name ] ), m.workspaces.map( ( w ) => upper[ w.name ] ) ) };
 }
 
 function describe( g, call ) {
@@ -267,8 +326,43 @@ async function prepare( r ) {
 	}
 	const bin = await compile( 'lwmin', r, source );
 	const lworks = g.plan.params.filter( ( e ) => e.kind === 'lwork' ).map( ( e ) => e.p );
-	const nout = lworks.length;
+	const nout = lworks.length + lworks.filter( ( L ) => L.of ).length;
 	return { 'r': r, 'spec': spec, 'g': g, 'pl': g.plan, 'm': m, 'lworks': lworks, 'query': query, 'bin': bin, 'nout': nout, 'calls': 0, 'faults': 0, 'hash': entryHash( g.hash, m ) };
+}
+
+// One row from its zero-data and random-data measurements: the arguments,
+// then per workspace the zero-data minimum and effective minimum, the same
+// on random data (null when that run crashed or was rejected), the bounds
+// (the larger), and last the seed of the random data. The overruns are the
+// larger; `randomRaised` names the workspaces whose effective minimum the
+// random data raised; `randomCrashed` that the random-data run crashed.
+function combine( ctx, x0, x1, seed ) {
+	if ( !x0.row ) {
+		return x0;
+	}
+	const n = ctx.g.args.length;
+	const nw = ctx.m.workspaces.length;
+	const r1 = x1.row || null;
+	const pick = ( row, k ) => ctx.m.workspaces.map( ( w, j ) => ( row ? row[ n + k * nw + j ] : null ) );
+	const raised = [];
+	ctx.m.workspaces.forEach( ( w, j ) => {
+		const e0 = x0.row[ n + nw + j ];
+		const e1 = r1 ? r1[ n + nw + j ] : null;
+		if ( e0 !== null && e1 !== null && e1 > e0 ) {
+			raised.push( w.name );
+		}
+	});
+	const uppers = ctx.m.workspaces.map( ( w, j ) => Math.max( x0.row[ n + 2 * nw + j ], r1 ? r1[ n + 2 * nw + j ] : 0 ) );
+	const row = x0.row.slice( 0, n ).concat( pick( x0.row, 0 ), pick( x0.row, 1 ), pick( r1, 0 ), pick( r1, 1 ), uppers, [ seed ] );
+	const overruns = Object.assign( {}, x0.overruns );
+	Object.keys( ( r1 && x1.overruns ) || {} ).forEach( ( W ) => {
+		overruns[ W ] = Math.max( overruns[ W ] || 0, x1.overruns[ W ] );
+	});
+	const out = { 'row': row, 'overruns': overruns, 'randomRaised': raised };
+	if ( x1.crashed ) {
+		out.randomCrashed = x1.crashed;
+	}
+	return out;
 }
 
 async function runChunk( ctx, from, to ) {
@@ -279,11 +373,25 @@ async function runChunk( ctx, from, to ) {
 			const call = ctx.g.calls[ i ];
 			try {
 				// Each row works on its own copy of the measured list.
-				const c = Object.assign( {}, ctx, { 'calls': 0, 'faults': 0, 'm': { 'workspaces': ctx.m.workspaces.map( ( w ) => Object.assign( {}, w ) ) } } );
-				const x = await measureRow( c, s, call );
-				ctx.calls += c.calls;
-				ctx.faults += c.faults;
-				out.push( x );
+				const copy = () => Object.assign( {}, ctx, { 'calls': 0, 'faults': 0, 'm': { 'workspaces': ctx.m.workspaces.map( ( w ) => Object.assign( {}, w ) ) } } );
+				// On zero data, then on seeded random data (row i: seed 1 + i);
+				// the larger minimum counts.
+				const c0 = copy();
+				const x0 = await measureRow( c0, s, call, 0 );
+				const c1 = copy();
+				const seed = 1 + i;
+				let x1;
+				try {
+					x1 = await measureRow( c1, s, call, seed );
+				} catch ( err ) {
+					if ( !( err instanceof RowCrash ) ) {
+						throw err;
+					}
+					x1 = { 'crashed': err.message };
+				}
+				ctx.calls += c0.calls + c1.calls;
+				ctx.faults += c0.faults + c1.faults;
+				out.push( combine( ctx, x0, x1, seed ) );
 			} catch ( err ) {
 				if ( !( err instanceof RowCrash ) ) {
 					throw err;
@@ -307,8 +415,8 @@ function assemble( ctx, results ) {
 	const unmeasured = Object.assign( {}, m.unmeasured );
 	const keep = [];
 	m.workspaces.forEach( ( w, j ) => {
-		if ( w.kind === 'check' && rows.every( ( row ) => row[ nargs + j ] === 0 ) ) {
-			unmeasured[ w.name ] = 'the reference never rejects it: ' + w.length + ' = 0 is accepted in every row (INFO != ' + w.info + ')';
+		if ( w.kind === 'check' && rows.every( ( row ) => [ 0, 1, 2, 3 ].every( ( k ) => !row[ nargs + k * nw + j ] ) ) ) {
+			unmeasured[ w.name ] = 'the reference never rejects it and never writes it: ' + w.length + ' = 0 is accepted and runs clean in every row (INFO != ' + w.info + ')';
 		} else {
 			keep.push( j );
 		}
@@ -316,6 +424,22 @@ function assemble( ctx, results ) {
 	if ( !keep.length ) {
 		return null;
 	}
+	// Per workspace: the rows where the reference writes past the length its
+	// own check accepts, and the example with the largest overrun.
+	const overruns = {};
+	results.filter( ( x ) => x.row ).forEach( ( x ) => {
+		Object.keys( x.overruns ).forEach( ( W ) => {
+			const j = m.workspaces.findIndex( ( w ) => w.name === W );
+			const own = x.row[ nargs + j ];
+			const o = overruns[ W ] || ( overruns[ W ] = { 'rows': 0, 'example': null, 'own': 0, 'wrote': 0 } );
+			o.rows += 1;
+			if ( o.example === null || x.overruns[ W ] - own > o.wrote - o.own ) {
+				o.example = describe( ctx.g, x.row );
+				o.own = own;
+				o.wrote = x.overruns[ W ];
+			}
+		});
+	});
 	if ( !rows.length ) {
 		throw new Error( ctx.r + ': no grid row was measured (' + ctx.g.calls.length + ' calls); widen its grid' );
 	}
@@ -340,7 +464,10 @@ function assemble( ctx, results ) {
 			return o;
 		}),
 		'unmeasured': unmeasured,
-		'rows': rows.map( ( row ) => row.slice( 0, nargs ).concat( keep.map( ( j ) => row[ nargs + j ] ), keep.map( ( j ) => row[ nargs + nw + j ] ), keep.map( ( j ) => row[ nargs + 2 * nw + j ] ) ) )
+		'overruns': overruns,
+		'randomRaised': Object.fromEntries( keep.map( ( j ) => m.workspaces[ j ].name ).map( ( W ) => [ W, results.filter( ( x ) => x.randomRaised && x.randomRaised.includes( W ) ).length ] ).filter( ( e ) => e[ 1 ] > 0 ) ),
+		'randomCrashed': results.filter( ( x ) => x.randomCrashed ).length,
+		'rows': rows.map( ( row ) => row.slice( 0, nargs ).concat( ...[ 0, 1, 2, 3, 4 ].map( ( k ) => keep.map( ( j ) => row[ nargs + k * nw + j ] ) ), [ row[ nargs + 5 * nw ] ] ) )
 	};
 }
 
@@ -361,10 +488,11 @@ function serialize( cache ) {
 	names.forEach( ( r, k ) => {
 		const e = cache.routines[ r ];
 		out.push( '\t\t' + JSON.stringify( r ) + ': {' );
-		[ 'hash', 'grid', 'calls', 'rejected', 'crashed', 'probes', 'faults', 'args', 'workspaces' ].forEach( ( f ) => {
-			out.push( '\t\t\t' + JSON.stringify( f ) + ': ' + JSON.stringify( e[ f ] ) + ',' );
+		[ 'hash', 'grid', 'calls', 'rejected', 'crashed', 'randomCrashed', 'probes', 'faults', 'args', 'workspaces', 'randomRaised' ].forEach( ( f ) => {
+			out.push( '\t\t\t' + JSON.stringify( f ) + ': ' + JSON.stringify( ( e[ f ] === void 0 ) ? null : e[ f ] ) + ',' );
 		});
 		out.push( '\t\t\t"unmeasured": ' + obj( e.unmeasured ) + ',' );
+		out.push( '\t\t\t"overruns": ' + JSON.stringify( Object.fromEntries( Object.keys( e.overruns || {} ).sort().map( ( W ) => [ W, e.overruns[ W ] ] ) ) ) + ',' );
 		out.push( '\t\t\t"rows": [' );
 		e.rows.forEach( ( row, i ) => out.push( '\t\t\t\t' + JSON.stringify( row ) + ( ( i < e.rows.length - 1 ) ? ',' : '' ) ) );
 		out.push( '\t\t\t]' );
@@ -375,7 +503,7 @@ function serialize( cache ) {
 	return out.join( '\n' ) + '\n';
 }
 
-const COMMENT = 'Generated by bin/gen-lwmin.mjs from the reference (CONVENTIONS W3, ticket 0016); read by bin/workspace-minimum.mjs. Per routine: `args` are Fortran argument names (options as Fortran letters; SELECT is the number of leading .TRUE. entries), over the grid of bin/gen-lwkopt.mjs; each row ends with the minimum of each of `workspaces`, then the effective minimum of each, then the length each was given while another was measured. A `check` minimum is the smallest length whose call does not return INFO = `info` (min - 1 is rejected); its effective minimum the smallest length at which no callee rejects what the routine passes it either (null: callees reject even at the bound). A `declared` minimum (and effective minimum) is the extent the reference declares. Only rows whose arguments the reference accepts are recorded. `unmeasured`: workspaces with no minimum, and why. `noInfo`: modules whose reference has no INFO argument, so rejects nothing. `noCheck`: modules whose reference never rejects any workspace length (value: the entry hash). `unhandled`: modules the generator cannot measure, and why (bin/lib/lwmin.mjs UNHANDLED).';
+const COMMENT = 'Generated by bin/gen-lwmin.mjs from the reference (CONVENTIONS W3, ticket 0016); read by bin/workspace-minimum.mjs. Per routine: `args` are Fortran argument names (options as Fortran letters; SELECT is the number of leading .TRUE. entries), over the grid of bin/gen-lwkopt.mjs; each row ends with, per workspace of `workspaces`: its minimum and its effective minimum on zero data, the same on seeded random data (null: that run crashed or was rejected), the length each was given while another was measured, and last the seed of the random data (bin/lib/fortran-ref.mjs fills the real and complex inputs, in argument order, with a Park-Miller sequence from it). A `check` minimum is the smallest length whose call does not return INFO = `info` (min - 1 is rejected); its effective minimum the smallest length at which no callee rejects what the routine passes it either and nothing past the length is written (null: callees reject even at the bound). `overruns`: per workspace, the rows where the reference writes past what its own check accepts (`own`: the minimum of that check, `wrote`: the last element written, in `example`); writes only, reads past the length are not seen. A `declared` minimum (and effective minimum) is the extent the reference declares. Only rows whose arguments the reference accepts are recorded. `unmeasured`: workspaces with no minimum, and why. `noInfo`: modules whose reference has no INFO argument, so rejects nothing. `noCheck`: modules whose reference never rejects any workspace length (value: the entry hash). `unhandled`: modules the generator cannot measure, and why (bin/lib/lwmin.mjs UNHANDLED).';
 
 function readCache() {
 	return fs.existsSync( CACHE_FILE ) ? JSON.parse( fs.readFileSync( CACHE_FILE, 'utf8' ) ) : null;

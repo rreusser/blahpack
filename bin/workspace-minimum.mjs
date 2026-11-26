@@ -28,6 +28,17 @@
 * calls its callees' base.js unchecked, may overrun); for a `declared`
 * workspace the extent the reference declares.
 *
+* (The effective minimum also covers writes: the generator's probes fill the
+* workspace past the length with a sentinel, and the smallest length past
+* which the reference writes nothing is the minimum. Where that exceeds the
+* reference's own check, e.g. dorgtsqr_row checks LWORK >= 1 but writes
+* NB*max( NB, N-NB ), the cache's `overruns` says so and this report lists
+* it: the JS deliberately demands more than the reference's check there.
+* Reads past the length are not seen. Each minimum is the larger of the
+* reference's on zero data and on seeded random data, so data-dependent
+* extents (d/z ggsvp3's ranks) count; inputs that need structure to reach a
+* path are a known limit, bin/gen-lwmin.mjs.)
+*
 * - at the minimum: a RangeError fails the row (`too high`: it rejects a
 *   valid call), at a zero dimension too;
 * - at minimum - 1 (when the minimum is > 0): accepting it (reaching base.js)
@@ -61,11 +72,40 @@ import { register } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ROOT, moduleDir, selectRoutines, isWorker, workerMain, runCorpus } from './lib/corpus.mjs';
 import { specLib, plan, callArgs, jsArray, maxDim } from './lib/lwkopt.mjs';
+import { BIG } from './lib/fortran-ref.mjs';
 import { CACHE_FILE } from './lib/lwmin.mjs';
+import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 
 const ENTRY = fileURLToPath( import.meta.url );
 const LOADER = path.join( ROOT, 'bin', 'workspace-optimum-loader.mjs' );
 const STOP = { 'wsMinStop': true };
+
+/**
+* Fills the real and complex input arrays as the generator's driver does
+* (bin/lib/fortran-ref.mjs): in argument order, `zext` values each (two per
+* complex element) from one Park-Miller sequence started at `seed`, IPIV
+* left alone.
+*/
+function fillRandom( arrays, seed, zext ) {
+	let st = seed;
+	const next = () => {
+		st = ( st * 16807 ) % 2147483647;
+		return ( 2 * st / 2147483647 ) - 1;
+	};
+	arrays.slice().sort( ( a, b ) => a[ 0 ].position - b[ 0 ].position ).forEach( ( [ p, arr ] ) => {
+		if ( p.fortran === 'IPIV' || ( p.dtype !== 'float64' && p.dtype !== 'complex128' ) ) {
+			return;
+		}
+		const v = ( p.dtype === 'complex128' ) ? reinterpret( arr, 0 ) : arr;
+		const per = ( p.dtype === 'complex128' ) ? 2 : 1;
+		for ( let i = 0; i < zext * per; i++ ) {
+			const x = next();
+			if ( i < v.length ) {
+				v[ i ] = x;
+			}
+		}
+	});
+}
 
 function readCache() {
 	return JSON.parse( fs.readFileSync( CACHE_FILE, 'utf8' ) );
@@ -101,7 +141,7 @@ async function analyze( r ) {
 	}
 	const spec = specLib.load( r );
 	const pl = plan( spec );
-	const res = { 'routine': r, 'rows': entry.rows.length, 'checked': 0, 'fail': [], 'belowDeclared': [], 'quick': [], 'unrun': [] };
+	const res = { 'routine': r, 'rows': entry.rows.length, 'checked': 0, 'checkedRandom': 0, 'fail': [], 'belowDeclared': [], 'quick': [], 'unrun': [] };
 	if ( pl.error ) {
 		res.error = 'spec: ' + pl.error;
 		return res;
@@ -135,7 +175,7 @@ async function analyze( r ) {
 			vals[ a ] = row[ i ];
 		});
 		const big = maxDim( pl, vals ) + 2;
-		const most = Math.max( 0, ...row.slice( nargs + 2 * nw ) );
+		const most = Math.max( 0, ...row.slice( nargs + 4 * nw, nargs + 5 * nw ) );
 		ample = Math.max( ample, 2 * most + 32 * big * big + 4096 );
 	});
 	const ampleOf = new Map( wsParams.map( ( p ) => [ p.fortran, jsArray( p, ample ) ] ) );
@@ -146,104 +186,125 @@ async function analyze( r ) {
 		});
 		const where = describe( entry, row );
 		const zeroDim = pl.params.some( ( e ) => ( e.kind === 'dim' || e.kind === 'derived' ) && vals[ e.p.fortran ] === 0 );
-		// The argument list with every workspace ample; `slot` remembers where
-		// each workspace goes.
-		const slot = {};
-		let args;
-		try {
-			args = callArgs( spec, pl, vals, 'ndarray', ( p ) => {
-				slot[ p.fortran ] = -1;
-				return { 'wsSlot': p.fortran };
-			});
-		} catch ( err ) {
-			res.unrun.push( { 'why': 'translate: ' + err.message, 'args': where } );
-			continue;
-		}
-		args.forEach( ( a, i ) => {
-			if ( a && a.wsSlot ) {
-				slot[ a.wsSlot ] = i;
-				args[ i ] = ampleOf.get( a.wsSlot );
+		const seen = new Set();
+		const push = ( list, x ) => {
+			// A row-workspace counts once, whichever data found it.
+			const k = String( x.ws || x.why ) + '\0' + ( x.dir || x.how || '' ) + '\0' + x.args.replace( ' [random data]', '' );
+			if ( !seen.has( k ) ) {
+				seen.add( k );
+				list.push( x );
 			}
-		});
-		const at = ( W, len ) => {
-			const a = args.slice();
-			const p = wsParams.find( ( q ) => q.fortran === W );
-			a[ slot[ W ] ] = jsArray( p, len );
-			return outcome( fn, a );
 		};
-		const base = outcome( fn, args );
-		if ( base.kind === 'range' || base.kind === 'other' ) {
-			res.unrun.push( { 'why': 'throws with every workspace ample: ' + base.msg.slice( 0, 200 ), 'args': where } );
-			continue;
-		}
-		res.checked += 1;
-		// The smallest length ndarray.js does not reject (others ample).
-		const jsMin = ( W ) => {
-			let lo = -1;
-			let hi = ample;
-			while ( hi - lo > 1 ) {
-				const mid = Math.floor( ( lo + hi ) / 2 );
-				if ( at( W, mid ).kind === 'range' ) {
-					lo = mid;
-				} else {
-					hi = mid;
+		// The reference's minimums on zero data, then on its seeded random
+		// data, which the same arrays here are filled with.
+		for ( const data of [ 'zero', 'random' ] ) {
+			const off = ( data === 'zero' ) ? 0 : 2 * nw;
+			if ( data === 'random' && entry.workspaces.every( ( w, j ) => row[ nargs + off + nw + j ] === null && row[ nargs + off + j ] === null ) ) {
+				continue;
+			}
+			const arrays = [];
+			const tag = ( data === 'zero' ) ? '' : ' [random data]';
+			// The argument list with every workspace ample; `slot` remembers where
+			// each workspace goes.
+			const slot = {};
+			let args;
+			try {
+				args = callArgs( spec, pl, vals, 'ndarray', ( p ) => {
+					slot[ p.fortran ] = -1;
+					return { 'wsSlot': p.fortran };
+				}, ( p, arr ) => arrays.push( [ p, arr ] ) );
+			} catch ( err ) {
+				res.unrun.push( { 'why': 'translate: ' + err.message, 'args': where + tag } );
+				continue;
+			}
+			args.forEach( ( a, i ) => {
+				if ( a && a.wsSlot ) {
+					slot[ a.wsSlot ] = i;
+					args[ i ] = ampleOf.get( a.wsSlot );
 				}
+			});
+			const at = ( W, len ) => {
+				const a = args.slice();
+				const p = wsParams.find( ( q ) => q.fortran === W );
+				a[ slot[ W ] ] = jsArray( p, len );
+				return outcome( fn, a );
+			};
+			if ( data === 'random' ) {
+				fillRandom( arrays, row[ nargs + 5 * nw ], Math.min( BIG, 4 * ( maxDim( pl, vals ) + 2 ) * ( maxDim( pl, vals ) + 2 ) ) );
 			}
-			return hi;
-		};
-		entry.workspaces.forEach( ( w, j ) => {
-			const min = row[ nargs + j ];
-			const W = w.name;
-			if ( !( W in slot ) ) {
-				res.unrun.push( { 'why': W + ': not a workspace argument of ndarray.js', 'args': where } );
-				return;
+			const base = outcome( fn, args );
+			if ( base.kind === 'range' || base.kind === 'other' ) {
+				push( res.unrun, { 'why': 'throws with every workspace ample: ' + base.msg.slice( 0, 200 ), 'args': where + tag } );
+				continue;
 			}
-			// The reference's minimum is the effective one: the smallest
-			// length no callee rejects either. Below it the reference fails
-			// in a callee, and base.js, which calls its callees' base.js
-			// unchecked, may overrun. Null: callees reject even at the bound.
-			const own = row[ nargs + j ];
-			const ref = row[ nargs + nw + j ];
-			if ( ref === null ) {
-				res.unrun.push( { 'why': W + ': callees of the reference reject the call at every length', 'args': where } );
-				return;
-			}
-			const x = at( W, ref );
-			if ( x.kind === 'other' ) {
-				res.unrun.push( { 'why': W + ' at the reference minimum: ' + x.msg.slice( 0, 200 ), 'args': where } );
-				return;
-			}
-			if ( x.kind === 'range' ) {
-				// Rejects a valid call, at a zero dimension too.
-				res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': zeroDim, 'args': where } );
-				return;
-			}
-			if ( ref === 0 ) {
-				return;
-			}
-			const y = at( W, ref - 1 );
-			if ( y.kind === 'other' ) {
-				res.unrun.push( { 'why': W + ' at the reference minimum - 1 throws a non-RangeError: ' + y.msg.slice( 0, 200 ), 'args': where } );
-				return;
-			}
-			if ( y.kind === 'range' ) {
-				return;
-			}
-			if ( zeroDim ) {
-				// An empty problem needs no workspace (W3): reported, not
-				// failed, whether ndarray.js returns early or base.js runs.
-				res.quick.push( { 'ws': W, 'kind': w.kind, 'zeroDim': true, 'how': ( y.kind === 'early' ) ? 'returns early' : 'reaches base.js', 'ref': ref, 'args': where } );
-			} else if ( w.kind === 'declared' ) {
-				// The reference rejects nothing here; a path that never
-				// references the workspace (dtrsna's IWORK when JOB = 'E')
-				// needs none of it.
-				res.belowDeclared.push( { 'ws': W, 'kind': w.kind, 'dir': 'below declared', 'js': jsMin( W ), 'ref': ref, 'args': where } );
-			} else if ( y.kind === 'accept' ) {
-				res.fail.push( { 'ws': W, 'kind': w.kind, 'dir': 'too low', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': false, 'args': where } );
-			} else {
-				res.quick.push( { 'ws': W, 'kind': w.kind, 'zeroDim': false, 'how': 'returns early', 'ref': ref, 'args': where } );
-			}
-		});
+			res[ ( data === 'zero' ) ? 'checked' : 'checkedRandom' ] += 1;
+			// The smallest length ndarray.js does not reject (others ample).
+			const jsMin = ( W ) => {
+				let lo = -1;
+				let hi = ample;
+				while ( hi - lo > 1 ) {
+					const mid = Math.floor( ( lo + hi ) / 2 );
+					if ( at( W, mid ).kind === 'range' ) {
+						lo = mid;
+					} else {
+						hi = mid;
+					}
+				}
+				return hi;
+			};
+			entry.workspaces.forEach( ( w, j ) => {
+				const W = w.name;
+				if ( !( W in slot ) ) {
+					res.unrun.push( { 'why': W + ': not a workspace argument of ndarray.js', 'args': where + tag } );
+					return;
+				}
+				// The reference's minimum is the effective one: the smallest
+				// length no callee rejects either. Below it the reference fails
+				// in a callee, and base.js, which calls its callees' base.js
+				// unchecked, may overrun. Null: callees reject even at the bound.
+				const own = row[ nargs + off + j ];
+				const ref = row[ nargs + off + nw + j ];
+				if ( ref === null ) {
+					push( res.unrun, { 'why': W + ': callees of the reference reject the call at every length', 'args': where + tag } );
+					return;
+				}
+				const x = at( W, ref );
+				if ( x.kind === 'other' ) {
+					res.unrun.push( { 'why': W + ' at the reference minimum: ' + x.msg.slice( 0, 200 ), 'args': where + tag } );
+					return;
+				}
+				if ( x.kind === 'range' ) {
+					// Rejects a valid call, at a zero dimension too.
+					push( res.fail, { 'ws': W, 'kind': w.kind, 'dir': 'too high', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': zeroDim, 'args': where + tag } );
+					return;
+				}
+				if ( ref === 0 ) {
+					return;
+				}
+				const y = at( W, ref - 1 );
+				if ( y.kind === 'other' ) {
+					res.unrun.push( { 'why': W + ' at the reference minimum - 1 throws a non-RangeError: ' + y.msg.slice( 0, 200 ), 'args': where + tag } );
+					return;
+				}
+				if ( y.kind === 'range' ) {
+					return;
+				}
+				if ( zeroDim ) {
+					// An empty problem needs no workspace (W3): reported, not
+					// failed, whether ndarray.js returns early or base.js runs.
+					push( res.quick, { 'ws': W, 'kind': w.kind, 'zeroDim': true, 'how': ( y.kind === 'early' ) ? 'returns early' : 'reaches base.js', 'ref': ref, 'args': where + tag } );
+				} else if ( w.kind === 'declared' ) {
+					// The reference rejects nothing here; a path that never
+					// references the workspace (dtrsna's IWORK when JOB = 'E')
+					// needs none of it.
+					push( res.belowDeclared, { 'ws': W, 'kind': w.kind, 'dir': 'below declared', 'js': jsMin( W ), 'ref': ref, 'args': where + tag } );
+				} else if ( y.kind === 'accept' ) {
+					push( res.fail, { 'ws': W, 'kind': w.kind, 'dir': 'too low', 'js': jsMin( W ), 'ref': ref, 'own': own, 'zeroDim': false, 'args': where + tag } );
+				} else {
+					push( res.quick, { 'ws': W, 'kind': w.kind, 'zeroDim': false, 'how': 'returns early', 'ref': ref, 'args': where + tag } );
+				}
+			});
+		}
 	}
 	return res;
 }
@@ -295,6 +356,12 @@ async function main( argv ) {
 			groupBy( x.quick, ( q ) => q.ws + ( q.zeroDim ? ' zero-dim' : ' quick' ) ).forEach( ( list ) => {
 				const early = list.filter( ( q ) => q.how === 'returns early' ).length;
 				console.log( ( list[ 0 ].zeroDim ? 'zero-dim   ' : 'quick      ' ) + x.routine + ' ' + list[ 0 ].ws + ': ' + list.length + ' row(s) accept the minimum - 1 where the reference rejects (' + early + ' return before base.js, ' + ( list.length - early ) + ' reach it; e.g. ' + list[ 0 ].args + ': reference minimum ' + list[ 0 ].ref + ')' );
+			});
+		});
+		routines.forEach( ( r ) => {
+			Object.keys( cache.routines[ r ].overruns || {} ).sort().forEach( ( W ) => {
+				const o = cache.routines[ r ].overruns[ W ];
+				console.log( 'overrun    ' + r + ' ' + W + ': the reference writes past its own check in ' + o.rows + '/' + cache.routines[ r ].rows.length + ' rows (e.g. ' + o.example + ': check accepts ' + o.own + ', writes element ' + o.wrote + '); the minimum here is what it writes' );
 			});
 		});
 		res.forEach( ( x ) => {

@@ -93,6 +93,26 @@ jobs:
       - name: Every WORK = null allocation in a changed wrapper is sufficient
         run: node bin/workspace-guard.mjs --changed --check
 
+  # CONVENTIONS W6 (ticket 0103): a wrapper given WORK = null allocates the
+  # reference's optimum (its LWORK = -1 query), not just the minimum. Every
+  # row of the committed data/fortran-lwkopt.json is replayed through its
+  # wrapper with every workspace null; an allocation below the optimum fails.
+  # The cache is checked against the specs it was generated from.
+  optimum:
+    name: Workspace optimum
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: The workspace-query cache matches the specs
+        run: npm run lwkopt:check
+      - name: Every WORK = null allocation reaches the reference's optimum
+        run: npm run check:workspace-optimum
+
   # CONVENTIONS T3/T4 (tickets 0033, 0064): every changed module's lib/ files
   # meet their per-file coverage floor under the module's own tests. The
   # wrapper and ndarray.js must be fully covered (both orders, the

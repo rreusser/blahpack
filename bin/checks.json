@@ -139,6 +139,9 @@
 		"bin/gen_spec": {
 			"kind": "gate"
 		},
+		"bin/gen-lwkopt.mjs": {
+			"kind": "gate"
+		},
 		"bin/gen_test.py": {
 			"kind": "tool",
 			"why": "generator: test scaffold from fixtures"
@@ -214,6 +217,13 @@
 		"bin/workspace-guard.mjs": {
 			"kind": "gate"
 		},
+		"bin/workspace-optimum-loader.mjs": {
+			"kind": "part",
+			"of": "bin/workspace-optimum.mjs"
+		},
+		"bin/workspace-optimum.mjs": {
+			"kind": "gate"
+		},
 		"bin/wrapper-replay.mjs": {
 			"kind": "gate"
 		},
@@ -259,6 +269,7 @@
 			"of": [
 				"bin/break-mutants.mjs",
 				"bin/workspace-guard.mjs",
+				"bin/workspace-optimum.mjs",
 				"bin/coverage.mjs",
 				"bin/wrapper-replay.mjs"
 			]
@@ -315,6 +326,16 @@
 		"npm:gen:fortran-signatures": {
 			"kind": "tool",
 			"why": "generator: data/fortran-signatures.json"
+		},
+		"npm:gen:lwkopt": {
+			"kind": "tool",
+			"why": "generator: data/fortran-lwkopt.json (the reference workspace-query optima; needs gfortran and the Fortran sources)"
+		},
+		"npm:lwkopt:check": {
+			"kind": "gate"
+		},
+		"npm:check:workspace-optimum": {
+			"kind": "gate"
 		},
 		"npm:gen:spec": {
 			"kind": "tool",

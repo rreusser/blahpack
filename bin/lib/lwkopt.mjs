@@ -1,0 +1,342 @@
+/**
+* Shared by bin/gen-lwkopt.mjs (records the reference's workspace-query
+* optimum) and bin/workspace-optimum.mjs (checks each wrapper's `null`
+* allocation against it): CONVENTIONS W6, ticket 0103.
+*
+* Everything here reads only the specs (spec/<routine>.json, spec/options.json),
+* never the Fortran sources (CONVENTIONS T6), so the generator's `--check` and
+* the checker both run in CI.
+*
+* - `routineSet()`: the d/z modules whose spec has a workspace-length argument
+*   (role `lwork`). The generator splits it into those whose reference has a
+*   workspace query (`LQUERY`) and those without.
+* - `plan( spec )`: how each Fortran argument enters a query call, or why the
+*   routine cannot be swept.
+* - `grid( spec )`: the deterministic list of query calls (Fortran name ->
+*   value), a sweep of every dimension over a ladder that crosses the blocking
+*   thresholds, crossed with every option value.
+* - `letters( spec, F )`: an option's Fortran letters and their JS strings.
+* - `jsScope`, `evalJs`: evaluate a spec's JS size expressions for a row.
+*/
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+import { ROOT, moduleDir } from './corpus.mjs';
+
+const require = createRequire( import.meta.url );
+const specLib = require( '../../lint/lib/spec.cjs' );
+
+// Bump when the grid or the driver changes what a row means; the cache
+// records it and `--check` compares.
+const GRID_VERSION = 1;
+
+// Dimension ladders, largest first: the first whose grid fits BUDGET calls is
+// used (else the last). 33 and 70 cross NB = 32 / 64 and the 1.6x MNTHR
+// ratios of the SVD/least-squares drivers; 140 crosses NX = 128.
+const LADDERS = [
+	[ 0, 1, 2, 5, 33, 70, 140 ],
+	[ 0, 1, 5, 33, 70, 140 ],
+	[ 0, 1, 33, 70, 140 ],
+	[ 0, 5, 33, 140 ],
+	[ 1, 33, 140 ]
+];
+const BUDGET = 800;
+
+// Block sizes the caller chooses (the TSQR/LQ family's MB, NB).
+const BLOCKS = [ 1, 8, 40, 150 ];
+
+function nq( v ) {
+	return ( v.SIDE === 'L' ) ? v.M : v.N;
+}
+
+// Integer/real/logical scalar inputs (and dimensions the reference ties to
+// others): candidate values given the row so far (Fortran name -> value;
+// options as Fortran letters). A query reads only dimensions and options for
+// all of these; the values are ones the argument checks accept.
+const SCALARS = {
+	'ILO': () => [ 1 ],
+	'IHI': ( v, r ) => [ ( /^[dz](ormhr|unmhr)$/.test( r ) ) ? nq( v ) : v.N ],
+	'IL': () => [ 1 ],
+	'IU': ( v ) => [ v.N ],
+	'VL': () => [ 0 ],
+	'VU': () => [ 1 ],
+	'ABSTOL': () => [ 0 ],
+	'RCOND': () => [ -1 ],
+	'TOLA': () => [ 0 ],
+	'TOLB': () => [ 0 ],
+	'ITYPE': () => [ 1, 2, 3 ],
+	'IJOB': ( v, r ) => ( /tgsen$/.test( r ) ? [ 0, 1, 2, 3, 4, 5 ] : [ 0, 1, 2, 3, 4 ] ),
+	'WANTQ': () => [ true, false ],
+	'WANTZ': () => [ true, false ],
+	'IFST': () => [ 1 ],
+	'ILST': ( v ) => [ Math.max( 1, v.N ) ],
+	'MB': () => BLOCKS,
+	'NB': () => BLOCKS,
+	'MB1': () => BLOCKS,
+	'NB1': () => BLOCKS,
+	'NB2': () => BLOCKS,
+	// dorbdb4's P is declared like a dimension.
+	'P': null,
+	// dorm22: N1 + N2 = NQ.
+	'N1': ( v ) => [ Math.floor( nq( v ) / 2 ) ]
+};
+
+// Dimensions fixed by others rather than swept.
+const DERIVED = {
+	// dtgsna, dtrevc3: the number of columns of VL/VR, >= M <= N.
+	'MM': ( v ) => [ v.N ],
+	// dorm22: N2 = NQ - N1.
+	'N2': ( v ) => [ nq( v ) - v.N1 ]
+};
+
+let OPTIONS = null;
+
+function family( routine, F ) {
+	if ( OPTIONS === null ) {
+		OPTIONS = JSON.parse( fs.readFileSync( path.join( ROOT, 'spec', 'options.json' ), 'utf8' ) ).families;
+	}
+	return OPTIONS.find( ( f ) => f.params.includes( F ) && ( !f.routines || new RegExp( f.routines ).test( routine ) ) ) || null;
+}
+
+/**
+* An option's Fortran letters with their JS strings: the spec's enum check
+* (what the reference accepts, letter by letter), else the option family
+* (spec/options.json; one letter per JS string). Null when neither exists.
+*/
+function letters( spec, F ) {
+	const c = ( spec.checks || [] ).find( ( x ) => x.kind === 'enum' && x.param === F && x.fortranValues && x.values );
+	if ( c && c.fortranValues.length === c.values.length ) {
+		return c.fortranValues.split( '' ).map( ( L, i ) => ( { 'letter': L, 'js': c.values[ i ] } ) );
+	}
+	const fam = family( spec.routine, F );
+	if ( !fam ) {
+		return null;
+	}
+	const seen = new Set();
+	const out = [];
+	Object.keys( fam.values ).forEach( ( L ) => {
+		if ( !seen.has( fam.values[ L ] ) ) {
+			seen.add( fam.values[ L ] );
+			out.push( { 'letter': L, 'js': fam.values[ L ] } );
+		}
+	});
+	return out;
+}
+
+/**
+* How each Fortran argument enters a query call:
+*
+* - `flag`: swept over its letters; `dim`: swept over the ladder;
+* - `derived`/`scalar`: from DERIVED / SCALARS;
+* - `ld`: max( 1, rows of its matrix ), evaluated from the spec's JS rows
+*   expression (else the largest dimension of the row);
+* - `select`: a logical SELECT vector, swept over the number of leading
+*   `.TRUE.` entries (0, 1, N/2, N): dtrsen/dtgsen count the selected
+*   eigenvalues in their query, so it reads this data; the matrices are zero,
+*   so no 2x2 block pairs a selected eigenvalue with its neighbour;
+* - `lwork`: -1 (the query), and the workspace it names is reported;
+* - `array`, `out`, `function`, `info`: buffers, outputs, a dummy SELECT
+*   function, INFO.
+*
+* Returns { params: [ { p, kind, ... } ], queries: [ workspace names ] }, or
+* { error } naming what the sweep cannot handle.
+*/
+function plan( spec ) {
+	const out = [];
+	const queries = [];
+	for ( const p of spec.params ) {
+		const F = p.fortran;
+		const e = { 'p': p, 'kind': null };
+		if ( p.role === 'flag' ) {
+			if ( p.intent !== 'in' ) {
+				return { 'error': 'option ' + F + ' is not an input' };
+			}
+			e.kind = 'flag';
+			e.letters = letters( spec, F );
+			if ( !e.letters || !e.letters.length ) {
+				return { 'error': 'no Fortran letters known for option ' + F };
+			}
+		} else if ( p.role === 'dim' ) {
+			e.kind = ( F in DERIVED ) ? 'derived' : 'dim';
+		} else if ( p.role === 'scalar' && p.dtype === 'function' ) {
+			e.kind = 'function';
+		} else if ( p.role === 'scalar' && p.intent === 'out' ) {
+			e.kind = 'out';
+		} else if ( p.role === 'scalar' ) {
+			if ( !( F in SCALARS ) ) {
+				return { 'error': 'no sweep values for scalar input ' + F };
+			}
+			e.kind = ( SCALARS[ F ] === null ) ? 'dim' : 'scalar';
+		} else if ( p.role === 'ld' ) {
+			e.kind = 'ld';
+		} else if ( p.role === 'lwork' ) {
+			e.kind = 'lwork';
+			queries.push( p.of );
+		} else if ( p.role === 'info' ) {
+			e.kind = 'info';
+		} else if ( p.role === 'vector' && p.dtype === 'bool' && p.intent !== 'out' ) {
+			if ( F !== 'SELECT' ) {
+				return { 'error': 'logical input vector ' + F + ' is not SELECT' };
+			}
+			e.kind = 'select';
+		} else if ( [ 'matrix', 'banded', 'vector', 'index', 'workspace', 'packed' ].includes( p.role ) ) {
+			e.kind = 'array';
+		} else {
+			return { 'error': 'unhandled parameter ' + F + ' (role ' + p.role + ', dtype ' + p.dtype + ')' };
+		}
+		out.push( e );
+	}
+	if ( !queries.length ) {
+		return { 'error': 'no workspace-length argument' };
+	}
+	return { 'params': out, 'queries': queries };
+}
+
+/**
+* The JS scope of a row: each spec param's JS name -> its value (options as
+* JS strings), for evaluating the spec's JS size expressions.
+*/
+function jsScope( spec, pl, row ) {
+	const s = {};
+	pl.params.forEach( ( e ) => {
+		const F = e.p.fortran;
+		if ( !( F in row ) ) {
+			return;
+		}
+		if ( e.kind === 'flag' ) {
+			const m = e.letters.find( ( x ) => x.letter === row[ F ] );
+			s[ e.p.name ] = m ? m.js : row[ F ];
+		} else {
+			s[ e.p.name ] = row[ F ];
+		}
+	});
+	return s;
+}
+
+const fnMemo = new Map();
+
+/**
+* Evaluates a spec JS expression (`max( 1, M )`, `side === 'left' ? M : N`)
+* in `scope`; NaN when it is absent or names something the row lacks.
+*/
+function evalJs( expr, scope ) {
+	if ( typeof expr !== 'string' || !expr ) {
+		return NaN;
+	}
+	const names = Object.keys( scope ).sort();
+	const key = expr + '\0' + names.join( ',' );
+	let fn = fnMemo.get( key );
+	if ( fn === void 0 ) {
+		try {
+			fn = new Function( 'max', 'min', 'ceil', 'floor', ...names, '"use strict"; return ( ' + expr + ' );' ); // eslint-disable-line no-new-func
+		} catch ( e ) {
+			fn = null;
+		}
+		fnMemo.set( key, fn );
+	}
+	if ( !fn ) {
+		return NaN;
+	}
+	try {
+		const v = fn( Math.max, Math.min, Math.ceil, Math.floor, ...names.map( ( n ) => scope[ n ] ) );
+		return ( typeof v === 'number' && Number.isFinite( v ) ) ? v : NaN;
+	} catch ( e ) {
+		return NaN;
+	}
+}
+
+function maxDim( pl, row ) {
+	let m = 1;
+	pl.params.forEach( ( e ) => {
+		if ( ( e.kind === 'dim' || e.kind === 'derived' ) && typeof row[ e.p.fortran ] === 'number' ) {
+			m = Math.max( m, row[ e.p.fortran ] );
+		}
+	});
+	return m;
+}
+
+/**
+* The leading dimension of each matrix for a row: max( 1, rows ), rows from
+* the spec's JS expression, else the row's largest dimension.
+*/
+function leadingDims( spec, pl, row ) {
+	const scope = jsScope( spec, pl, row );
+	const out = {};
+	pl.params.forEach( ( e ) => {
+		if ( e.kind !== 'ld' ) {
+			return;
+		}
+		const m = spec.params.find( ( q ) => q.fortran === e.p.of || q.name === e.p.of );
+		let rows = m && m.rows ? evalJs( m.rows.js, scope ) : NaN;
+		if ( Number.isNaN( rows ) ) {
+			rows = maxDim( pl, row );
+		}
+		out[ e.p.fortran ] = Math.max( 1, rows );
+	});
+	return out;
+}
+
+function expand( spec, pl, ladder ) {
+	const r = spec.routine;
+	let rows = [ {} ];
+	const step = ( fn ) => {
+		const next = [];
+		rows.forEach( ( v ) => fn( v ).forEach( ( x ) => next.push( x ) ) );
+		rows = next;
+	};
+	const set = ( v, k, x ) => Object.assign( {}, v, { [ k ]: x } );
+	pl.params.filter( ( e ) => e.kind === 'flag' ).forEach( ( e ) => step( ( v ) => e.letters.map( ( L ) => set( v, e.p.fortran, L.letter ) ) ) );
+	pl.params.filter( ( e ) => e.kind === 'dim' ).forEach( ( e ) => step( ( v ) => ladder.map( ( n ) => set( v, e.p.fortran, n ) ) ) );
+	pl.params.filter( ( e ) => e.kind === 'scalar' || e.kind === 'derived' ).forEach( ( e ) => {
+		const fn = ( e.kind === 'scalar' ) ? SCALARS[ e.p.fortran ] : DERIVED[ e.p.fortran ];
+		step( ( v ) => fn( v, r ).map( ( x ) => set( v, e.p.fortran, x ) ) );
+	});
+	pl.params.filter( ( e ) => e.kind === 'select' ).forEach( ( e ) => step( ( v ) => {
+		const n = v.N;
+		return [ ...new Set( [ 0, Math.min( 1, n ), Math.floor( n / 2 ), n ] ) ].map( ( k ) => set( v, e.p.fortran, k ) );
+	}) );
+	return rows.map( ( v ) => Object.assign( v, leadingDims( spec, pl, v ) ) );
+}
+
+/**
+* The query calls for a routine, deterministic from its spec:
+* { args: [ Fortran names, in argument order ], calls: [ [ values ] ], ladder, hash }.
+*/
+function grid( spec ) {
+	const pl = plan( spec );
+	if ( pl.error ) {
+		return { 'error': pl.error };
+	}
+	let rows = null;
+	let ladder = null;
+	for ( const L of LADDERS ) {
+		ladder = L;
+		rows = expand( spec, pl, L );
+		if ( rows.length <= BUDGET ) {
+			break;
+		}
+	}
+	const args = pl.params.filter( ( e ) => [ 'flag', 'dim', 'derived', 'scalar', 'ld', 'select' ].includes( e.kind ) ).map( ( e ) => e.p.fortran );
+	const calls = rows.map( ( v ) => args.map( ( a ) => v[ a ] ) );
+	const hash = createHash( 'sha256' ).update( JSON.stringify( { 'v': GRID_VERSION, 'args': args, 'queries': pl.queries, 'calls': calls } ) ).digest( 'hex' ).slice( 0, 16 );
+	return { 'plan': pl, 'args': args, 'queries': pl.queries, 'calls': calls, 'ladder': ladder, 'hash': hash };
+}
+
+/**
+* The d/z routines with a module and a spec that has a workspace-length
+* argument (role `lwork`), sorted.
+*/
+function routineSet() {
+	return fs.readdirSync( path.join( ROOT, 'spec' ) )
+		.filter( ( f ) => /^[dz].*\.json$/.test( f ) )
+		.map( ( f ) => f.slice( 0, -5 ) )
+		.filter( ( r ) => moduleDir( r ) && fs.existsSync( path.join( moduleDir( r ), 'lib', r + '.js' ) ) )
+		.filter( ( r ) => ( specLib.load( r ).params || [] ).some( ( p ) => p.role === 'lwork' ) )
+		.sort();
+}
+
+const CACHE_FILE = path.join( ROOT, 'data', 'fortran-lwkopt.json' );
+
+export { GRID_VERSION, CACHE_FILE, specLib, plan, grid, letters, jsScope, evalJs, maxDim, routineSet };

@@ -55,6 +55,10 @@ var SOURCE_RULES = {
 	// ticket 0077).
 	'wrapper-calls-ndarray': 'error',
 
+	// ndarray.js checks the length of every workspace whose minimum the spec
+	// knows, after the zero-dimension quick returns (W3; ticket 0107).
+	'workspace-length-guard': 'error',
+
 	// base.js honors the declared offset of each caller-owned workspace it
 	// uses (drivers sub-allocate one buffer among callees by offset).
 	'workspace-addressing-honored': 'error',

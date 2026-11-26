@@ -49,7 +49,7 @@ var SELECT = new Uint8Array( N );
 var s = new Float64Array( N );
 var DIF = new Float64Array( N );
 var WORK = new Complex128Array( 2 * N * N );
-var IWORK = new Int32Array( 1 );
+var IWORK = new Int32Array( N + 2 );
 var res = ztgsna( 'column-major', 'both', 'all', SELECT, 1, N, A, N, B, N, VL, N, VR, N, s, 1, DIF, 1, N, N, WORK, 1, 0, IWORK, 1, 0 );
 // res.m => 1
 ```
@@ -161,7 +161,7 @@ var Int32Array = require( '@stdlib/array/int32' );
 var ztgsna = require( '@stdlib/lapack/base/ztgsna' );
 
 var N = 1;
-var res = ztgsna( 'column-major', 'both', 'all', new Uint8Array( N ), 1, N, new Complex128Array( [ 3.0, 2.0 ] ), N, new Complex128Array( [ 1.0, 0.5 ] ), N, new Complex128Array( [ 1.0, 0.0 ] ), N, new Complex128Array( [ 1.0, 0.0 ] ), N, new Float64Array( N ), 1, new Float64Array( N ), 1, N, N, new Complex128Array( 1 ), 1, 0, new Int32Array( 1 ), 1, 0 );
+var res = ztgsna( 'column-major', 'both', 'all', new Uint8Array( N ), 1, N, new Complex128Array( [ 3.0, 2.0 ] ), N, new Complex128Array( [ 1.0, 0.5 ] ), N, new Complex128Array( [ 1.0, 0.0 ] ), N, new Complex128Array( [ 1.0, 0.0 ] ), N, new Float64Array( N ), 1, new Float64Array( N ), 1, N, N, new Complex128Array( 1 ), 1, 0, new Int32Array( N + 2 ), 1, 0 );
 console.log( res.m );
 ```
 

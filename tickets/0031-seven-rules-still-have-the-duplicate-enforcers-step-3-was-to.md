@@ -30,3 +30,7 @@ grep -n '(dup' CONVENTIONS.md
 ## Evidence 2026-11-25
 
 N2 (d-prefix routines never use `'conjugate-transpose'`): `lint:no-dprefix-conjugate-transpose` checks code only. PR #42 put the value into the JSDoc of 14 d-prefix modules, and only `bin/audit.sh` caught it, after the merge, which turned main's CI red. PR #41 removed the 14 mentions. The lint rule should cover JSDoc, which would make the audit check a true duplicate to delete.
+
+## Evidence 2026-11-26 (ticket 0107 PR)
+
+- A new pair: `lint:workspace-length-guard` (ticket 0107) checks the guard and its early-return order for every spec workspace with a known minimum, `WORK` included, while `conf:work-assert` and `conf:work-assert.early-return-order` still check the same for `WORK` alone. One of the two `WORK` checks can be deleted.

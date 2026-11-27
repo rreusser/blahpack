@@ -38,7 +38,7 @@ What is left:
   server with no request outside `dist/`, and ddot, dgesv, dsyev and dgesvd
   match Node bit for bit. It was shown to fail on a leftover bare import, a
   missing file and a one-ulp change to ddot's result.
-- `npm pack`: 6.8 MB, 36.8 MB unpacked, 8,287 files with `dist/`; 2.5 MB,
+- `npm pack`: 6.7 MB, 36.6 MB unpacked, 8,233 files with `dist/`; 2.5 MB,
   23 MB unpacked, 7,383 files before.
 - Gzipped sizes: `dist/_stdlib.js` 21.5 KB; ddot 0.6 KB, zggbal 3.2 KB, dgesv
   4.8 KB, zgeev 29 KB, largest (zhegvx) 33.8 KB.

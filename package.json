@@ -950,7 +950,10 @@
     "!lib/**/docs/repl.txt",
     "!lib/**/docs/types/test.ts",
     "!lib/**/LEARNINGS.md",
-    "!lib/**/LEARNINGS.integrated.md"
+    "!lib/**/LEARNINGS.integrated.md",
+    "!lib/**/DIFFERENCES.md",
+    "!lib/**/*.test.js",
+    "!lib/**/.eslintrc.cjs"
   ],
   "scripts": {
     "test": "npm run test:unit && npm run test:lint",

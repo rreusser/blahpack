@@ -9,7 +9,6 @@ var ID = 'file-structure';
 var REQUIRED = [
 	'package.json',
 	'lib/index.js',
-	'lib/main.js',
 	'lib/base.js',
 	'lib/ndarray.js',
 	'test/test.js',
@@ -20,6 +19,12 @@ var REQUIRED = [
 	'docs/repl.txt',
 	'examples/index.js',
 	'benchmark/benchmark.ndarray.js'
+];
+
+// Files a module must not have. lib/main.js was folded into lib/index.js
+// (ticket 0124; bin/codemod-fold-main.mjs).
+var FORBIDDEN = [
+	'lib/main.js'
 ];
 
 // The routine-specific wrapper file: lib/<routine>.js
@@ -67,6 +72,21 @@ function check( mod ) {
 			missing.length,
 			missing,
 			'Missing: ' + missing.join( ', ' )
+		));
+	}
+
+	var present = FORBIDDEN.filter( function f( name ) {
+		return util.fileExists( path.join( mod.dir, name ) );
+	});
+	if ( present.length === 0 ) {
+		results.push( util.pass( ID + '.no-forbidden-files', 'No retired files (lib/main.js)' ) );
+	} else {
+		results.push( util.fail(
+			ID + '.no-forbidden-files',
+			'No retired files (lib/main.js)',
+			present.length,
+			present,
+			'Remove: ' + present.join( ', ' ) + ' (fix: node bin/codemod-fold-main.mjs <routine>)'
 		));
 	}
 

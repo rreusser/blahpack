@@ -9,7 +9,7 @@
 * orders and with `WORK = null`), restricted to the module's own `lib/`
 * files, and reports line
 * and branch coverage for EVERY file there: `base.js`, `ndarray.js`, the
-* `<routine>.js` wrapper, `main.js`, `index.js`. The wrapper is where the
+* `<routine>.js` wrapper, `index.js`. The wrapper is where the
 * convenience logic lives (`order`/LD mapping, `WORK = null` allocation),
 * and a module's correctness tests usually bypass it, so it must be measured
 * on its own (ticket 0060's 15 undersized allocations sat in wrapper lines

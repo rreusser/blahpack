@@ -74,7 +74,6 @@ for ( const P of plans ) {
 	idx.set( path.join( lib, 'base.js' ), { P, kind: 'base' } );
 	idx.set( path.join( lib, 'ndarray.js' ), { P, kind: 'ndarray' } );
 	idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'strided' } );
-	idx.set( path.join( lib, 'main.js' ), { P, kind: 'strided', hasNdarray: true } );
 	idx.set( path.join( lib, 'index.js' ), { P, kind: 'strided', hasNdarray: true } );
 }
 for ( const f of allSources() ) {

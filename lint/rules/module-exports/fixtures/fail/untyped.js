@@ -1,6 +1,10 @@
-// PASS — main.js attaches the ndarray variant and exports the routine default.
+// expect: untyped
+// FAIL — index.js attaches ndarray but exports the routine untyped, so tsc cannot see `ddot.ndarray`.
 import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
 import ddot from './ddot.js';
 import ndarray from './ndarray.js';
+
 setReadOnly( ddot, 'ndarray', ndarray );
-export default /** @type {typeof ddot & { ndarray: typeof ndarray }} */ ( ddot );
+
+export default ddot;
+export { ndarray };

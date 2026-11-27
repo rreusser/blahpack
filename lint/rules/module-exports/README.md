@@ -1,37 +1,38 @@
 # `module-exports`
 
-**Every module must expose both entry points: the strided default and its
-`ndarray` variant.**
+**Every module must expose both entry points: the layout-form default and its
+`ndarray` (offset-form) variant.**
 
-`main.js` and `index.js` declare no parameter list of their own — they are the
-plumbing that defines how the module is consumed. Their "signature" is the export
-surface, and a module that is missing either entry point is a broken public API.
-This rule enforces:
+`index.js` declares no parameter list of its own: it is the plumbing that
+defines how the module is consumed. Its "signature" is the export surface, and a
+module missing either entry point is a broken public API. There is no
+`main.js`; its attachment was folded into `index.js` (ticket 0124,
+`bin/codemod-fold-main.mjs`). This rule enforces, on `lib/index.js`:
 
-| File | Contract |
+| Requirement | Form |
 | --- | --- |
-| `main.js` | Attaches the ndarray variant to the routine (`setReadOnly( <routine>, 'ndarray', ndarray )`, or `<routine>.ndarray = ndarray`) **and** exports it as the default, typed with that variant: `export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );`. `tsc` cannot see a property a call adds, so without the type no caller's `<routine>.ndarray( … )` is checked (ticket 0094; fix: `node bin/codemod-spec/main-type.cjs`). |
-| `index.js` | Exports a `default` (the strided entry point) **and** exposes `ndarray` — either as a named `ndarray` export (the common form) or by re-exporting `main.js`'s default, which already carries `.ndarray`. |
-
-Both index.js forms are accepted because both leave `ndarray` reachable:
+| Attach the offset form | `setReadOnly( <routine>, 'ndarray', ndarray );` |
+| Typed default export | `export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );` `tsc` cannot see a property a call adds, so without the type no caller's `<routine>.ndarray( … )` is checked (ticket 0094). |
+| Named export | `export { ndarray };` |
 
 ```js
-// canonical
-export { default } from './main.js';
-export { default as ndarray } from './ndarray.js';
+import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
+import ddot from './ddot.js';
+import ndarray from './ndarray.js';
 
-// variant — default carries `.ndarray` (attached in main.js)
-import main from './main.js';
-export default main;
+setReadOnly( ddot, 'ndarray', ndarray );
+
+export default /** @type {typeof ddot & { ndarray: typeof ndarray }} */ ( ddot );
+export { ndarray };
 ```
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `rule.cjs` | AST checks over `main.js` and `index.js` export surfaces. |
-| `fixtures/pass/*.js` | Canonical + variant index.js, and a well-formed main.js. |
-| `fixtures/fail/*.js` | index.js missing ndarray; main.js missing the ndarray attach; main.js exporting the routine untyped. |
+| `rule.cjs` | AST checks over the `index.js` export surface. |
+| `fixtures/pass/*.js` | The canonical `index.js`. |
+| `fixtures/fail/*.js` | No attachment, an untyped default, no named `ndarray`, and the retired re-export of `main.js`. |
 | `test.cjs` | Runs the rule over every fixture (`node --test`). |
 
 ## Changing the rule

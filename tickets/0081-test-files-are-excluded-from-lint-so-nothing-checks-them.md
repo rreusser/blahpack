@@ -1,9 +1,10 @@
 ---
 id: 0081
 title: Test files are excluded from lint, so nothing checks them
-status: open
+status: resolved
 area: lint
 opened: 2026-11-23
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -53,3 +54,11 @@ Counts over 3,099 module test files plus 25 harness files, with the test rule se
 The second unused-vars pass found 35 more (fixture imports and harness names used only by the removed dead code), also fixed. All 22,285 unit tests pass. No fixed comparison exposed a NaN result. The harness's `assertZeroBlock` was blind to a NaN `scale`; it is fixed with a regression test and a LEARNINGS entry.
 
 I think this ticket can be resolved: every test file is linted in CI and the corpus is clean.
+
+## Resolution
+
+Test files are linted: `bin/lint.sh` (so `npm run lint` and CI's lint job) covers `lib/**/test/**` and `test/harness/**`. It uses its own correctness-only rule set: parse errors, `no-undef`, `no-unused-vars`, `no-self-compare`, `no-unreachable`, `no-dupe-keys` and the like, plus the new `no-nan-blind-comparison` (CONVENTIONS T2a, T2b). The parser is espree 10, so JSON import attributes parse. The corpus is clean: 222 unused bindings, 61 `x !== x` NaN tests, 22 NaN-blind comparisons (one of them in the harness's `assertZeroBlock`) and 2,866 stale disable directives were fixed.
+
+Remaining, ticketed separately:
+- the tests whose dropped bindings show they never compared what they computed: ticket 0115;
+- benchmarks and examples, still unlinted: ticket 0116.

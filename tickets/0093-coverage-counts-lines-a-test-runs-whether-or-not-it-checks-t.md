@@ -26,3 +26,7 @@ The coverage floor (CONVENTIONS T4) counts a line as covered once any test execu
 grep -rlE "typeof info" lib/*/base/*/test/*.js
 grep -n "only check\|path executes" -r lib/*/base/*/test/*.js | head
 ```
+
+## Evidence 2026-11-27 (ticket 0108 PR)
+
+- zlahef's upper branch searched its row max one element short (`izamax( k - imax - 1, … )` for the reference's `K-IMAX`), so zhetrf's upper blocked path chose pivots the reference does not: 49 of 70 on a random N = 70 Hermitian matrix. The branch was fully covered. zlahef's upper tests compare only with themselves, zhetrf's N = 70 upper tests assert `info === 0`, and the validate test checks a residual that any valid pivot choice passes. The replay's `min-work` variant found it once zhetrf's guard message was readable. It is fixed, with Fortran fixtures for the upper blocked path; see the LEARNINGS entry of 2026-11-27.

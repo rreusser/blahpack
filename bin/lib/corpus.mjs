@@ -1,7 +1,7 @@
 /**
 * Shared driver for the per-module corpus checks (ticket 0070):
-* `bin/coverage.mjs`, `bin/workspace-guard.mjs`, `bin/wrapper-replay.mjs`
-* and `bin/break-mutants.mjs`.
+* `bin/coverage.mjs`, `bin/workspace-guard.mjs`, `bin/wrapper-replay.mjs`,
+* `bin/break-mutants.mjs` and `bin/value-mutants.mjs`.
 *
 * - Module selection (`<routine>...`, `--all`, `--changed [--base <ref>]`),
 *   so the four tools cannot drift apart in what they check.
@@ -221,9 +221,9 @@ function testConcurrency() {
 	return ( n > 0 ) ? [ '--test-concurrency=' + n ] : [];
 }
 
-function runWorker( entry, r, concurrency ) {
+function runWorker( entry, r, concurrency, scope ) {
 	return new Promise( ( resolve ) => {
-		const env = Object.assign( {}, process.env, { 'CORPUS_TEST_CONCURRENCY': String( concurrency ) } );
+		const env = Object.assign( {}, process.env, { 'CORPUS_TEST_CONCURRENCY': String( concurrency ), 'CORPUS_SCOPE': scope } );
 		delete env.NODE_TEST_CONTEXT;
 		const child = spawn( process.execPath, [ entry, WORKER_FLAG, r ], { 'cwd': ROOT, 'env': env, 'stdio': [ 'ignore', 'pipe', 'pipe' ] } );
 		const out = [];
@@ -252,7 +252,7 @@ function isWorker() {
 
 async function workerMain( compute ) {
 	const r = process.argv[ process.argv.indexOf( WORKER_FLAG ) + 1 ];
-	const res = await compute( r );
+	const res = await compute( r, process.env.CORPUS_SCOPE || '' );
 	process.stdout.write( JSON.stringify( res === void 0 ? null : res ) );
 }
 
@@ -268,6 +268,7 @@ async function workerMain( compute ) {
 * @param {Array<string>} o.routines
 * @param {Array<string>} o.argv - for `--no-cache`, `--jobs <n>` and `--slowest <n>`
 * @param {Function} [o.isError] - results for which this returns true are not cached
+* @param {Function} [o.scope] - `( routine ) => string`: what part of the module to check (e.g. changed lines). It is part of that module's cache key and reaches the worker's `compute( routine, scope )`
 * @returns {Promise<Array>} results, in the order of `routines` (a result may be null)
 */
 async function runCorpus( o ) {
@@ -292,7 +293,8 @@ async function runCorpus( o ) {
 			results[ i ] = { 'routine': r, 'error': 'no module' };
 			return;
 		}
-		const key = digest( moduleInputs( r ), toolKey );
+		const scope = o.scope ? String( o.scope( r ) ) : '';
+		const key = digest( moduleInputs( r ), ( scope ) ? toolKey + '\n' + scope : toolKey );
 		const file = path.join( dir, r + '.json' );
 		if ( useCache && isFile( file ) ) {
 			try {
@@ -305,7 +307,7 @@ async function runCorpus( o ) {
 				// Corrupt entry: recompute.
 			}
 		}
-		todo.push( { 'i': i, 'r': r, 'key': key, 'file': file } );
+		todo.push( { 'i': i, 'r': r, 'key': key, 'file': file, 'scope': scope } );
 	});
 	const jobs = Math.min( cpus, todo.length ) || 1;
 	const concurrency = Math.max( 1, Math.floor( cpus / jobs ) );
@@ -321,7 +323,7 @@ async function runCorpus( o ) {
 			const t = todo[ next ];
 			next += 1;
 			const t0 = Date.now();
-			const w = await runWorker( o.entry, t.r, concurrency );
+			const w = await runWorker( o.entry, t.r, concurrency, t.scope );
 			const ms = Date.now() - t0;
 			results[ t.i ] = w.result;
 			times.push( { 'routine': t.r, 'ms': ms } );

@@ -29,3 +29,7 @@ grep -n "test/\*\*" eslint.config.cjs
 ## Direction
 
 Add a test-file lint configuration (with a parser that accepts import attributes), and gate it on changed modules first.
+
+## Evidence 2026-11-27 (ticket 0093 PR)
+
+- The value-mutant survey found 11 test files whose comparisons pass on NaN: `if ( Math.abs( a - b ) > tol ) { fail }` is false for NaN. In zsyr this made the fixture tests pass on an all-NaN A. The helpers were in dlamswlq, dlamtsqr, dorgtsqr, zhetrd_he2hb, zhetrs, zsyr, zsytf2 and zsytrf, and the inline checks in dlarft, dlarfy and dlarzt. All now use `!( … <= tol )`. With test files unlinted, nothing stops a new one; a lint rule for the pattern belongs with this ticket.

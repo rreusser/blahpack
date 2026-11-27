@@ -106,14 +106,19 @@ export function vaOrthog(Z, n) {
 // For derivatives, differentiate the recurrence:
 //   dq_0 = 0
 //   dq_{k+1} = (q_k + z * dq_k - Σ_{j=0}^{k} H(j,k) * dq_j) / H(k+1,k)
-export function vaEval(va, z) {
+//
+// `out` is an optional { q, dq } pair of Float64Arrays of length 2*(n+1) to
+// write into. Pass one when evaluating at many points: allocating two typed
+// arrays per point costs several times more than the recurrence itself.
+export function vaEval(va, z, out) {
   const { H, n } = va;
   const zr = z[0], zi = z[1];
   const stride = n + 1;
 
   // q and dq as flat interleaved arrays
-  const q = new Float64Array(2 * (n + 1));
-  const dq = new Float64Array(2 * (n + 1));
+  const q = out ? out.q : new Float64Array(2 * (n + 1));
+  const dq = out ? out.dq : new Float64Array(2 * (n + 1));
+  if (out) { q.fill(0); dq.fill(0); }
 
   q[0] = 1; q[1] = 0;   // q_0 = 1
   dq[0] = 0; dq[1] = 0; // dq_0 = 0
@@ -147,7 +152,7 @@ export function vaEval(va, z) {
     }
   }
 
-  return { q, dq };
+  return out || { q, dq };
 }
 
 // Evaluate the VA basis at sample points Z and return the Q matrix.

@@ -2,11 +2,19 @@
 // Replaces the createRequire pattern from aaa-pure.js with direct ESM imports.
 // esbuild bundles this + all CJS dependencies into a single ESM module.
 
-import Complex128Array from '@stdlib/array/complex128';
-import reinterpret from '@stdlib/strided/base/reinterpret-complex128';
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 
 import { prz, cleanup, feval, barycentricRoots } from '../../examples/prz.js';
+import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
 import zgesvd from '../../lib/lapack/base/zgesvd/lib/ndarray.js';
+import zlartg from '../../lib/lapack/base/zlartg/lib/ndarray.js';
+import zrot from '../../lib/lapack/base/zrot/lib/ndarray.js';
+import zgemv from '../../lib/blas/base/zgemv/lib/ndarray.js';
+import zaxpy from '../../lib/blas/base/zaxpy/lib/ndarray.js';
+import zcopy from '../../lib/blas/base/zcopy/lib/ndarray.js';
+import zdscal from '../../lib/blas/base/zdscal/lib/ndarray.js';
+import dznrm2 from '../../lib/blas/base/dznrm2/lib/ndarray.js';
 
 export { prz, cleanup, feval, barycentricRoots };
 
@@ -14,6 +22,88 @@ export const timings = {
   svd: 0, cauchy: 0, aMatrix: 0, ratEval: 0, prz: 0, total: 0, iters: 0,
   reset() { this.svd = 0; this.cauchy = 0; this.aMatrix = 0; this.ratEval = 0; this.prz = 0; this.total = 0; this.iters = 0; }
 };
+
+// ---- Incrementally updated thin QR of the Loewner matrix ----
+//
+// The Loewner matrix changes by exactly two operations per AAA iteration: the
+// row of the new support point is removed and one column is appended. Refactoring
+// it from scratch costs O(M m^2) per iteration and dominates the run time, so
+// instead a thin QR factorization A = Q R is carried along and updated in O(M m).
+// The weight vector is the right singular vector of the smallest singular value,
+// which A shares with its m x m factor R, so only R goes through zgesvd.
+//
+// LAPACK has no QR updating routines, so the two updates are written here, on
+// top of the library's kernels (zgemv, dznrm2, zlartg, zrot, ...).
+//
+// Q is M x n (leading dimension M) and R is n x n upper triangular (leading
+// dimension ldr), both column-major. Rows of removed points are zero in Q.
+
+const ONE = new Complex128(1, 0);
+const NEG_ONE = new Complex128(-1, 0);
+const ZERO = new Complex128(0, 0);
+
+// a := a - Q (Q^H a), with the coefficients Q^H a written to x at offsetX.
+function projectOut(Q, M, n, a, x, offsetX) {
+  zgemv('conjugate-transpose', M, n, ONE, Q, 1, M, 0, a, 1, 0, ZERO, x, 1, offsetX);
+  zgemv('no-transpose', M, n, NEG_ONE, Q, 1, M, 0, x, 1, offsetX, ONE, a, 1, 0);
+}
+
+// Appends column `a` (length M, overwritten) to the factorization, by classical
+// Gram-Schmidt with one reorthogonalization pass. `s` is scratch of length n.
+// Returns false on breakdown (a zero or non-finite remainder).
+function qrAppendColumn(Q, R, M, ldr, n, a, s) {
+  const rn = n * ldr;
+  if (n > 0) {
+    projectOut(Q, M, n, a, R, rn);
+    projectOut(Q, M, n, a, s, 0);
+    zaxpy(n, ONE, s, 1, 0, R, 1, rn);
+  }
+  const rho = dznrm2(M, a, 1, 0);
+  if (!(rho > 0) || !Number.isFinite(rho)) return false;
+  zdscal(M, 1 / rho, a, 1, 0);
+  zcopy(M, a, 1, 0, Q, 1, n * M);
+  const Rv = reinterpret(R, 0);
+  Rv[2 * (rn + n)] = rho; Rv[2 * (rn + n) + 1] = 0;
+  return true;
+}
+
+// Scratch for the rotations in qrDeleteRow: [f, s, r] and c, as zlartg takes them.
+const ROT = new Complex128Array(3);
+const ROTv = reinterpret(ROT, 0);
+const ROTC = new Float64Array(1);
+
+// Removes (zeros) row j of the factored matrix. `u` (length M), `p` and `w`
+// (length n) are scratch. Returns false on breakdown, when e_j lies in the
+// column space of Q to working precision.
+function qrDeleteRow(Q, R, M, ldr, n, j, u, p, w) {
+  // e_j = Q p + rho u, with u a unit vector orthogonal to the columns of Q.
+  const uv = reinterpret(u, 0);
+  uv.fill(0);
+  uv[2 * j] = 1;
+  projectOut(Q, M, n, u, p, 0);
+  projectOut(Q, M, n, u, w, 0);
+  zaxpy(n, ONE, w, 1, 0, p, 1, 0);
+  const rho = dznrm2(M, u, 1, 0);
+  if (!(rho > 1e-8)) return false;
+  zdscal(M, 1 / rho, u, 1, 0);
+
+  // Rotate [p; rho] onto the last axis with Givens rotations in the planes
+  // (k, n), k = n-1..0. Applied to the columns of [Q u] this turns u into e_j
+  // and leaves row j of Q zero; applied to the rows of [R; 0] it keeps R upper
+  // triangular. `w` holds the extra row of R, which is discarded.
+  reinterpret(w, 0).fill(0, 0, 2 * n);
+  const Qv = reinterpret(Q, 0);
+  ROTv[0] = rho; ROTv[1] = 0;
+  for (let k = n - 1; k >= 0; k--) {
+    zlartg(ROT, 0, p, k, ROTC, 0, ROT, 1, ROT, 2);
+    const c = ROTC[0], sr = ROTv[2], si = ROTv[3];
+    zrot(n - k, w, 1, k, R, ldr, k + k * ldr, c, new Complex128(sr, si));
+    zrot(M, u, 1, 0, Q, 1, k * M, c, new Complex128(sr, -si));
+    Qv[2 * (j + k * M)] = 0; Qv[2 * (j + k * M) + 1] = 0;
+    ROTv[0] = ROTv[4]; ROTv[1] = ROTv[5];
+  }
+  return true;
+}
 
 export function aaa(Z, F, tol = 1e-13, mmax = 100) {
   const t_total = performance.now();
@@ -65,6 +155,18 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
   const WORK = new Complex128Array(lworkMax);
   const RWORK = new Float64Array(5 * maxN);
 
+  // Updated QR factorization of the Loewner matrix (see qrAppendColumn). If an
+  // update breaks down, or the matrix stops being tall, `useQR` goes false and
+  // every later iteration factors the full matrix directly instead.
+  const Qq = new Complex128Array(M * mmax);
+  const Rq = new Complex128Array(mmax * mmax);
+  const Rqv = reinterpret(Rq, 0);
+  const colScratch = new Complex128Array(M);
+  const colv = reinterpret(colScratch, 0);
+  const rowScratch = new Complex128Array(mmax);
+  const rowScratch2 = new Complex128Array(mmax);
+  let useQR = true;
+
   let converged = false;
   let m = 0;
 
@@ -102,16 +204,44 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
     timings.cauchy += performance.now() - t0;
 
     t0 = performance.now();
-    for (let k = 0; k < m; k++) {
-      const fkr = fr[2 * k], fki = fr[2 * k + 1];
-      for (let ii = 0; ii < nJ; ii++) {
-        const ci = J[ii];
-        const cBase = 2 * (ci + k * M);
-        const cr = Cr[cBase], cim = Cr[cBase + 1];
-        const dr = Fr[2 * ci] - fkr, di = Fr[2 * ci + 1] - fki;
-        const idx = 2 * (ii + k * nJ);
-        Av[idx] = cr * dr - cim * di;
-        Av[idx + 1] = cr * di + cim * dr;
+    if (useQR) {
+      const n = m - 1;
+      useQR = nJ >= m && (n === 0 || qrDeleteRow(Qq, Rq, M, mmax, n, j, colScratch, rowScratch, rowScratch2));
+      if (useQR) {
+        const fkr = fr[2 * n], fki = fr[2 * n + 1];
+        colv.fill(0);
+        for (let ii = 0; ii < nJ; ii++) {
+          const ci = J[ii];
+          const cBase = 2 * (ci + n * M);
+          const cr = Cr[cBase], cim = Cr[cBase + 1];
+          const dr = Fr[2 * ci] - fkr, di = Fr[2 * ci + 1] - fki;
+          colv[2 * ci] = cr * dr - cim * di;
+          colv[2 * ci + 1] = cr * di + cim * dr;
+        }
+        useQR = qrAppendColumn(Qq, Rq, M, mmax, n, colScratch, rowScratch);
+      }
+    }
+    let svdRows = m;
+    if (useQR) {
+      // The matrix handed to zgesvd is the m x m triangular factor.
+      for (let k = 0; k < m; k++) {
+        const src = 2 * k * mmax, dst = 2 * k * m;
+        for (let i = 0; i < 2 * (k + 1); i++) Av[dst + i] = Rqv[src + i];
+        for (let i = 2 * (k + 1); i < 2 * m; i++) Av[dst + i] = 0;
+      }
+    } else {
+      svdRows = nJ;
+      for (let k = 0; k < m; k++) {
+        const fkr = fr[2 * k], fki = fr[2 * k + 1];
+        for (let ii = 0; ii < nJ; ii++) {
+          const ci = J[ii];
+          const cBase = 2 * (ci + k * M);
+          const cr = Cr[cBase], cim = Cr[cBase + 1];
+          const dr = Fr[2 * ci] - fkr, di = Fr[2 * ci + 1] - fki;
+          const idx = 2 * (ii + k * nJ);
+          Av[idx] = cr * dr - cim * di;
+          Av[idx + 1] = cr * di + cim * dr;
+        }
       }
     }
     timings.aMatrix += performance.now() - t0;
@@ -120,8 +250,8 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
 
     t0 = performance.now();
     const info = zgesvd(
-      'none', 'all-rows', nJ, m,
-      Adata, 1, nJ, 0,
+      'none', 'all-rows', svdRows, m,
+      Adata, 1, svdRows, 0,
       sData, 1, 0,
       UData, 1, 1, 0,
       VTData, 1, m, 0,

@@ -1,35 +1,74 @@
 // Poles, residues, zeros for AAA rational approximation.
-// Uses QZ algorithm for numerically stable pole/zero computation.
-// All complex arithmetic uses in-place gl-matrix-style operations.
+// Poles and zeros are generalized eigenvalues of an arrowhead pencil, computed
+// with the library's zggev (QZ algorithm).
 
-import { zggev, cabs, cmul, cadd, csub, cscale, cset } from "./qz.js";
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
+import zggev from '../lib/lapack/base/zggev/lib/ndarray.js';
+import zladiv from '../lib/lapack/base/zladiv/lib/base.js';
 
-// Scratch arrays for prz computations
-const _p1 = [0, 0], _p2 = [0, 0], _p3 = [0, 0];
+// Smallest safe denominator; eigenvalues with |beta| below it are infinite.
+const SAFMIN = Number.MIN_VALUE * (1 / Number.EPSILON);
+
+function cabs(a) { return Math.sqrt(a[0] * a[0] + a[1] * a[1]); }
 
 // ---- Generalized eigenvalue approach for poles/zeros ----
+//
+// The finite eigenvalues of the (m+1) x (m+1) pencil
+//
+//   E = [ 0  w^T    ]      B = [ 0     ]
+//       [ 1  diag(z)]          [    I  ]
+//
+// are the roots of sum_j w_j / (x - z_j).
 function barycentricRoots(z, weights) {
   const m = z.length;
   if (m <= 1) return [];
 
   const n = m + 1;
-  const E = [];
-  for (let i = 0; i < n; i++) {
-    E[i] = [];
-    for (let j = 0; j < n; j++) E[i][j] = [0, 0];
+  const E = new Complex128Array(n * n);
+  const B = new Complex128Array(n * n);
+  const Ev = reinterpret(E, 0);
+  const Bv = reinterpret(B, 0);
+  for (let j = 0; j < m; j++) {
+    const row0 = 2 * (j + 1) * n;       // E[0][j+1]
+    const diag = 2 * (j + 1) * (n + 1); // [j+1][j+1]
+    Ev[row0] = weights[j][0]; Ev[row0 + 1] = weights[j][1];
+    Ev[2 * (j + 1)] = 1;                // E[j+1][0]
+    Ev[diag] = z[j][0]; Ev[diag + 1] = z[j][1];
+    Bv[diag] = 1;
   }
-  for (let j = 0; j < m; j++) { E[0][j + 1][0] = weights[j][0]; E[0][j + 1][1] = weights[j][1]; }
-  for (let i = 0; i < m; i++) cset(E[i + 1][0], 1, 0);
-  for (let i = 0; i < m; i++) { E[i + 1][i + 1][0] = z[i][0]; E[i + 1][i + 1][1] = z[i][1]; }
 
-  const B = [];
-  for (let i = 0; i < n; i++) {
-    B[i] = [];
-    for (let j = 0; j < n; j++) B[i][j] = [0, 0];
+  const ALPHA = new Complex128Array(n);
+  const BETA = new Complex128Array(n);
+  const V = new Complex128Array(1);
+  // n + n*NB + TSIZE (NB = 32, TSIZE = 4160) enables zggev's blocked QR steps.
+  const WORK = new Complex128Array(n + 32 * n + 4160);
+  const RWORK = new Float64Array(8 * n);
+  const info = zggev(
+    'no-vectors', 'no-vectors', n,
+    E, 1, n, 0,
+    B, 1, n, 0,
+    ALPHA, 1, 0,
+    BETA, 1, 0,
+    V, 1, 1, 0,
+    V, 1, 1, 0,
+    WORK, 1, 0,
+    RWORK, 1, 0
+  );
+  if (info !== 0) console.warn('zggev info =', info);
+
+  const bv = reinterpret(BETA, 0);
+  const q = new Complex128Array(1);
+  const qv = reinterpret(q, 0);
+  const roots = [];
+  // On a QZ failure only eigenvalues info..n-1 are valid.
+  for (let i = (info > 0 && info <= n) ? info : 0; i < n; i++) {
+    if (Math.hypot(bv[2 * i], bv[2 * i + 1]) > SAFMIN) {
+      zladiv(ALPHA, i, BETA, i, q, 0);
+      roots.push([qv[0], qv[1]]);
+    }
   }
-  for (let i = 1; i < n; i++) cset(B[i][i], 1, 0);
-
-  return zggev(E, B, n);
+  return roots;
 }
 
 // Evaluate barycentric rational function r(zz) = N(zz)/D(zz)
@@ -77,8 +116,10 @@ export function prz(z, f, w) {
   // Zeros: weights = w .* f
   const wf = new Array(w.length);
   for (let i = 0; i < w.length; i++) {
-    wf[i] = [0, 0];
-    cmul(wf[i], w[i], f[i]);
+    wf[i] = [
+      w[i][0] * f[i][0] - w[i][1] * f[i][1],
+      w[i][0] * f[i][1] + w[i][1] * f[i][0],
+    ];
   }
   const zer = barycentricRoots(z, wf);
 

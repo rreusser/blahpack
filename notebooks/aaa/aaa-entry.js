@@ -116,7 +116,6 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
     }
     timings.aMatrix += performance.now() - t0;
 
-    const lwork = Math.max(1, 8 * (nJ + m));
     for (let i = 0; i < 2 * m * m; i++) VTv[i] = 0;
 
     t0 = performance.now();
@@ -126,7 +125,7 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
       sData, 1, 0,
       UData, 1, 1, 0,
       VTData, 1, m, 0,
-      WORK, 1, 0, lwork,
+      WORK, 1, 0,
       RWORK, 1, 0
     );
     timings.svd += performance.now() - t0;

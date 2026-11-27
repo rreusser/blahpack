@@ -28,3 +28,7 @@ grep -n 'tsc\|typecheck' .github/workflows/ci.yml; grep -A3 '"include"' tsconfig
 ## Evidence 2026-11-25
 
 dlaqr4's `test.ndarray.js` passed a trailing `lwork` (`10000` or `LWORK`) in 16 calls, left over from before the signature dropped it. JS ignores extra arguments, so it passed silently. The replay found it because the recorded argument count differed from the spec. A type check over test files would have rejected each call.
+
+## Evidence 2026-11-27
+
+The deployed AAA notebook (`notebooks/aaa/aaa-entry.js`) still passed the `lwork` that `zgesvd`'s `ndarray.js` dropped. Every later argument shifted by one, `strideRWork` received `0`, and the call threw "`strideRWork` must be 1", so the AAA and Laplace demos failed in the browser while `npm test` and CI stayed green. Notebook and example sources are outside every arity check, `tsc` included. `examples/aaa-pure.js:167` has the same stale call (ticket 0109).

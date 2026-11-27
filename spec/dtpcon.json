@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;\n\n-   `= 'I'`: Infinity-norm."
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: A is upper triangular;\n-   `= 'L'`: A is lower triangular."
 		},
 		{
 			"name": "diag",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: A is non-unit triangular;\n-   `= 'U'`: A is unit triangular."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -53,7 +57,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The upper or lower triangular matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \\le i \\le n$. If `DIAG = 'U'`, the diagonal elements of A are not referenced and are assumed to be 1."
 		},
 		{
 			"name": "rcond",
@@ -61,7 +66,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\operatorname{norm}(A) \\, \\operatorname{norm}(\\operatorname{inv}(A)))$."
 		},
 		{
 			"name": "WORK",
@@ -109,7 +115,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

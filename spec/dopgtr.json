@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangular packed storage used in previous call to DSPTRD;\n-   `= 'L'`: Lower triangular packed storage used in previous call to DSPTRD."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix Q. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The vectors which define the elementary reflectors, as returned by DSPTRD."
 		},
 		{
 			"name": "TAU",
@@ -52,7 +55,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DSPTRD."
 		},
 		{
 			"name": "Q",
@@ -73,7 +77,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N-by-N orthogonal matrix Q."
 		},
 		{
 			"name": "ldq",
@@ -82,7 +87,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -110,7 +116,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

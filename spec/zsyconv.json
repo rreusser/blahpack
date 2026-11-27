@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.\n\n-   `= 'U'`: Upper triangular, form is $A = U \\, D \\, U^T$;\n-   `= 'L'`: Lower triangular, form is $A = L \\, D \\, L^T$."
 		},
 		{
 			"name": "way",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'C'`: Convert\n-   `= 'R'`: Revert"
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "IPIV",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D as determined by ZSYTRF."
 		},
 		{
 			"name": "e",
@@ -89,7 +95,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "E stores the supdiagonal/subdiagonal of the symmetric 1-by-1 or 2-by-2 block diagonal matrix D in LDLT."
 		},
 		{
 			"name": "info",
@@ -97,7 +104,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

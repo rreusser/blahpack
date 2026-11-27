@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "First index."
 		},
 		{
 			"name": "n0",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Last index."
 		},
 		{
 			"name": "z",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "4*N0",
 				"js": "4 * n0"
-			}
+			},
+			"reference": "Z holds the qd array."
 		},
 		{
 			"name": "pp",
@@ -45,7 +48,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "`PP=0` for ping, `PP=1` for pong. `PP=2` indicates that flipping was applied to the Z array and that the initial tests for deflation should not be performed."
 		},
 		{
 			"name": "dmin",
@@ -53,7 +57,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Minimum value of d."
 		},
 		{
 			"name": "sigma",
@@ -61,7 +66,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Sum of shifts used in current segment."
 		},
 		{
 			"name": "desig",
@@ -69,7 +75,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Lower order part of `SIGMA`"
 		},
 		{
 			"name": "qmax",
@@ -77,7 +84,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Maximum value of q."
 		},
 		{
 			"name": "nfail",
@@ -85,7 +93,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Increment `NFAIL` by 1 each time the shift was too big."
 		},
 		{
 			"name": "iter",
@@ -93,7 +102,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Increment `ITER` by 1 for each iteration."
 		},
 		{
 			"name": "ndiv",
@@ -101,7 +111,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Increment `NDIV` by 1 for each division."
 		},
 		{
 			"name": "ieee",
@@ -109,7 +120,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Flag for `IEEE` or non `IEEE` arithmetic (passed to DLASQ5)."
 		},
 		{
 			"name": "ttype",
@@ -117,7 +129,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Shift type."
 		},
 		{
 			"name": "dmin1",
@@ -173,7 +186,8 @@
 			"position": 20,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "These are passed as arguments in order to save their values between calls to DLASQ3."
 		}
 	],
 	"checks": [],

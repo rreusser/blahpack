@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE. : accumulate the transformation in the matrix Q; = .FALSE.: do not accumulate the transformation."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, the updated matrix T, again in Schur canonical form."
 		},
 		{
 			"name": "ldt",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `WANTQ` is .TRUE., the orthogonal matrix Q. On exit, if `WANTQ` is .TRUE., the updated matrix Q. If `WANTQ` is .FALSE., Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$; and if `WANTQ` is .TRUE., $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "j1",
@@ -89,7 +95,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the first row of the first block T11."
 		},
 		{
 			"name": "n1",
@@ -97,7 +104,8 @@
 			"position": 8,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the first block T11. `N1 = 0`, 1 or 2."
 		},
 		{
 			"name": "n2",
@@ -105,7 +113,8 @@
 			"position": 9,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the second block T22. `N2 = 0`, 1 or 2."
 		},
 		{
 			"name": "WORK",
@@ -133,7 +142,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `= 1`: the transformed matrix T would be too far from Schur form; the blocks are not swapped and T and Q are unchanged."
 		}
 	],
 	"checks": [],

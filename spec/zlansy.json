@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in ZLANSY as described above."
 		},
 		{
 			"name": "uplo",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the symmetric matrix A is to be referenced.\n\n-   `= 'U'`: Upper triangular part of A is referenced\n-   `= 'L'`: Lower triangular part of A is referenced"
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, ZLANSY is set to zero."
 		},
 		{
 			"name": "A",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The symmetric matrix A. If `UPLO = 'U'`, the leading n by n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n by n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced."
 		},
 		{
 			"name": "lda",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (N,1)$."
 		},
 		{
 			"name": "WORK",
@@ -72,7 +77,8 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'` or '1' or 'O'; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

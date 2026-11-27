@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: update the matrix Q of Schur vectors;\n-   `= 'N'`: do not update Q."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$. If N == 0 arguments `ILST` and `IFST` may be any value."
 		},
 		{
 			"name": "T",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper quasi-triangular matrix T, in Schur Schur canonical form. On exit, the reordered upper quasi-triangular matrix, again in Schur canonical form."
 		},
 		{
 			"name": "ldt",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPQ = 'V'`, the matrix Q of Schur vectors. On exit, if `COMPQ = 'V'`, Q has been postmultiplied by the orthogonal transformation matrix Z which reorders T. If `COMPQ = 'N'`, Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$, and if `COMPQ = 'V'`, $\\mathrm{LDQ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ifst",
@@ -97,7 +103,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "Specify the reordering of the diagonal blocks of T. The block with row index `IFST` is moved to row `ILST`, by a sequence of transpositions between adjacent blocks. On exit, if `IFST` pointed on entry to the second row of a 2-by-2 block, it is changed to point to the first row; `ILST` always points to the first row of the block in its final position (which may differ from its input value by +1 or -1). $1 \\le \\mathrm{IFST} \\le N$; $1 \\le \\mathrm{ILST} \\le N$."
 		},
 		{
 			"name": "WORK",
@@ -125,7 +132,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `= 1`: two adjacent blocks were too close to swap (the problem is very ill-conditioned); T may have been partially reordered, and `ILST` points to the first row of the current position of the block being moved."
 		}
 	],
 	"checks": [

@@ -22,7 +22,8 @@
 */
 
 import { mkdirSync, writeFileSync, copyFileSync, readdirSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, resolve, dirname } from 'node:path';
+import { createRequire } from 'node:module';
 import { extractAll, ROOT, PACKAGE_JSON } from './extract.js';
 import { routineHTML, routineMarkdown } from './render/routine.js';
 import { groupRoutines, sidebarFor, packageHTML, homeHTML } from './render/indexes.js';
@@ -130,6 +131,13 @@ function main() {
 	mkdirSync( join( OUT, 'assets' ), { 'recursive': true } );
 	for ( const f of readdirSync( assets ) ) {
 		copyFileSync( join( assets, f ), join( OUT, 'assets', f ) );
+	}
+	// KaTeX stylesheet and fonts for the build-time-typeset math of the reference-documentation sections:
+	const katexDist = join( dirname( createRequire( import.meta.url ).resolve( 'katex/package.json' ) ), 'dist' );
+	mkdirSync( join( OUT, 'assets', 'katex', 'fonts' ), { 'recursive': true } );
+	copyFileSync( join( katexDist, 'katex.min.css' ), join( OUT, 'assets', 'katex', 'katex.min.css' ) );
+	for ( const f of readdirSync( join( katexDist, 'fonts' ) ).filter( ( x ) => x.endsWith( '.woff2' ) ) ) {
+		copyFileSync( join( katexDist, 'fonts', f ), join( OUT, 'assets', 'katex', 'fonts', f ) );
 	}
 	write( '.nojekyll', '' );
 

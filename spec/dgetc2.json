@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -34,7 +35,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the n-by-n matrix A to be factored. On exit, the factors L and U from the factorization $A = P \\, L \\, U \\, Q$; the unit diagonal elements of L are not stored. If U(k, k) appears to be less than SMIN, U(k, k) is given the value of SMIN, i.e., giving a nonsingular perturbed system."
 		},
 		{
 			"name": "lda",
@@ -43,7 +45,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "IPIV",
@@ -58,7 +61,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le i \\le N$, row i of the matrix has been interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "JPIV",
@@ -73,7 +77,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le j \\le N$, column j of the matrix has been interchanged with column `JPIV(j)`."
 		},
 		{
 			"name": "info",
@@ -81,7 +86,8 @@
 			"position": 6,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `> 0`: if `INFO = k`, U(k, k) is likely to produce overflow if we try to solve for x in $\\mathrm{Ax} = b$. So U is perturbed to avoid the overflow."
 		}
 	],
 	"checks": [],

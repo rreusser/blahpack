@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the eigenvalue to be computed. $I = 1$ or $I = 2$."
 		},
 		{
 			"name": "d",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "The original eigenvalues. We assume $D(1) < D(2)$."
 		},
 		{
 			"name": "z",
@@ -44,7 +46,8 @@
 			"length": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "The components of the updating vector."
 		},
 		{
 			"name": "DELTA",
@@ -59,7 +62,8 @@
 			"length": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "The vector `DELTA` contains the information necessary to construct the eigenvectors."
 		},
 		{
 			"name": "rho",
@@ -67,7 +71,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The scalar in the symmetric updating formula."
 		},
 		{
 			"name": "dlam",
@@ -75,7 +80,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The computed lambda\\_I, the I-th updated eigenvalue."
 		}
 	],
 	"checks": [],

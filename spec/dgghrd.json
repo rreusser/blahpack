@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute Q;\n-   `= 'I'`: Q is initialized to the unit matrix, and the orthogonal matrix Q is returned;\n-   `= 'V'`: Q must contain an orthogonal matrix Q1 on entry, and the product $Q_{1} \\, Q$ is returned."
 		},
 		{
 			"name": "compz",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute Z;\n-   `= 'I'`: Z is initialized to the unit matrix, and the orthogonal matrix Z is returned;\n-   `= 'V'`: Z must contain an orthogonal matrix Z1 on entry, and the product $Z_{1} \\, Z$ is returned."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "ilo",
@@ -45,7 +48,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`ILO` and `IHI` mark the rows and columns of A which are to be reduced. It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. `ILO` and `IHI` are normally set by a previous call to DGGBAL; otherwise they should be set to 1 and N respectively. $1 \\le \\mathrm{ILO} \\le \\mathrm{IHI} \\le N$, if $N > 0$; `ILO=1` and `IHI=0`, if $N=0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +70,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N general matrix to be reduced. On exit, the upper triangle and the first subdiagonal of A are overwritten with the upper Hessenberg matrix H, and the rest is set to zero."
 		},
 		{
 			"name": "lda",
@@ -75,7 +80,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -96,7 +102,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N upper triangular matrix B. On exit, the upper triangular matrix $T = Q^T$ B Z. The elements below the diagonal are set to zero."
 		},
 		{
 			"name": "ldb",
@@ -105,7 +112,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -126,7 +134,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPQ = 'V'`, the orthogonal matrix Q1, typically from the QR factorization of B. On exit, if `COMPQ='I'`, the orthogonal matrix Q, and if `COMPQ = 'V'`, the product $Q_{1} \\, Q$. Not referenced if `COMPQ='N'`."
 		},
 		{
 			"name": "ldq",
@@ -135,7 +144,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge N$ if `COMPQ='V'` or 'I'; $\\mathrm{LDQ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "Z",
@@ -156,7 +166,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPZ = 'V'`, the orthogonal matrix Z1. On exit, if `COMPZ='I'`, the orthogonal matrix Z, and if `COMPZ = 'V'`, the product $Z_{1} \\, Z$. Not referenced if `COMPZ='N'`."
 		},
 		{
 			"name": "ldz",
@@ -165,7 +176,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge N$ if `COMPZ='V'` or 'I'; $\\mathrm{LDZ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "info",
@@ -173,7 +185,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

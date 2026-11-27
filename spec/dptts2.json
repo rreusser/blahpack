@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the tridiagonal matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the diagonal matrix D from the $L \\, D \\, L^T$ factorization of A."
 		},
 		{
 			"name": "e",
@@ -52,7 +55,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) subdiagonal elements of the unit bidiagonal factor L from the $L \\, D \\, L^T$ factorization of A. E can also be regarded as the superdiagonal of the unit bidiagonal factor U from the factorization $A = U^T \\, D \\, U$."
 		},
 		{
 			"name": "B",
@@ -73,7 +77,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X."
 		},
 		{
 			"name": "ldb",
@@ -82,7 +87,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		}
 	],
 	"checks": [],

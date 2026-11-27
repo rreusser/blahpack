@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: A is upper triangular;\n-   `= 'L'`: A is lower triangular."
 		},
 		{
 			"name": "diag",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: A is non-unit triangular;\n-   `= 'U'`: A is unit triangular."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the upper or lower triangular matrix A, stored columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, AP($i + (j-1) \\, ((2 \\, n-j)/2) = A(i,j)$ for $j \\le i \\le n$. See below for further details. On exit, the (triangular) inverse of the original matrix, in the same packed storage format."
 		},
 		{
 			"name": "info",
@@ -53,7 +57,8 @@
 			"position": 5,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, A(i,i) is exactly zero.  The triangular matrix is singular and its inverse can not be computed."
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;\n\n-   `= 'I'`: Infinity-norm."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The factors L and U from the factorization $A = P \\, L \\, U$ as computed by ZGETRF."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "anorm",
@@ -59,7 +63,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `NORM = '1'` or 'O', the 1-norm of the original matrix A. If `NORM = 'I'`, the infinity-norm of the original matrix A."
 		},
 		{
 			"name": "rcond",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\operatorname{norm}(A) \\, \\operatorname{norm}(\\operatorname{inv}(A)))$."
 		},
 		{
 			"name": "WORK",
@@ -115,7 +121,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value. NaNs are illegal values for `ANORM`, and they propagate to the output parameter `RCOND`. Infinity is illegal for `ANORM`, and it propagates to the output parameter `RCOND` as 0.\n-   `= 1`: if `RCOND` = NaN, or `RCOND` = Inf, or the computed norm of the inverse of A is 0. In the latter, `RCOND = 0` is returned."
 		}
 	],
 	"checks": [

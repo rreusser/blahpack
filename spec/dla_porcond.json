@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of linear equations, i.e., the order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -43,7 +45,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N matrix A."
 		},
 		{
 			"name": "lda",
@@ -52,7 +55,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "AF",
@@ -73,7 +77,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The triangular factor U or L from the Cholesky factorization $A = U^T \\, U$ or $A = L \\, L^T$, as computed by DPOTRF."
 		},
 		{
 			"name": "ldaf",
@@ -82,7 +87,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AF"
+			"of": "AF",
+			"reference": "The leading dimension of the array `AF`. $\\mathrm{LDAF} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "cmode",
@@ -90,7 +96,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines op2(C) in the formula op(A) \\* op2(C) as follows:\n\n| `CMODE =  1` | op2(C) = C |\n| --- | --- |\n| `CMODE =  0` | op2(C) = I |\n| `CMODE = -1` | op2(C) = inv(C) |"
 		},
 		{
 			"name": "c",
@@ -105,7 +112,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector C in the formula op(A) \\* op2(C)."
 		},
 		{
 			"name": "info",
@@ -113,7 +121,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: Successful exit. $i > 0$:  The ith argument is invalid."
 		},
 		{
 			"name": "WORK",
@@ -133,7 +142,8 @@
 				"fortran": "3*N",
 				"js": "3 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "IWORK",
@@ -153,7 +163,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		}
 	],
 	"checks": [

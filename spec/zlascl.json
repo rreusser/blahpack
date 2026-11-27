@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`TYPE` indices the storage type of the input matrix.\n\n-   `= 'G'`: A is a full matrix.\n-   `= 'L'`: A is a lower triangular matrix.\n-   `= 'U'`: A is an upper triangular matrix.\n-   `= 'H'`: A is an upper Hessenberg matrix.\n-   `= 'B'`: A is a symmetric band matrix with lower bandwidth `KL` and upper bandwidth `KU` and with the only the lower half stored.\n-   `= 'Q'`: A is a symmetric band matrix with lower bandwidth `KL` and upper bandwidth `KU` and with the only the upper half stored.\n-   `= 'Z'`: A is a band matrix with lower bandwidth `KL` and upper bandwidth `KU`. See ZGBTRF for storage details."
 		},
 		{
 			"name": "kl",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The lower bandwidth of A. Referenced only if `TYPE = 'B'`, 'Q' or 'Z'."
 		},
 		{
 			"name": "ku",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The upper bandwidth of A. Referenced only if `TYPE = 'B'`, 'Q' or 'Z'."
 		},
 		{
 			"name": "cfrom",
@@ -45,7 +48,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The matrix A is multiplied by `CTO`/`CFROM`. `A(I,J)` is computed without over/underflow if the final result $\\mathrm{CTO} \\, A(I,J)/\\mathrm{CFROM}$ can be represented without over/underflow. `CFROM` must be nonzero."
 		},
 		{
 			"name": "M",
@@ -53,7 +57,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -61,7 +66,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -82,7 +88,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The matrix to be multiplied by `CTO`/`CFROM`. See `TYPE` for the storage type."
 		},
 		{
 			"name": "lda",
@@ -91,7 +98,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. If `TYPE = 'G'`, 'L', 'U', 'H', $\\mathrm{LDA} \\ge \\max (1,M)$;\n\n$$\n\\mathrm{TYPE} = \\text{'B'}, \\mathrm{LDA} \\ge \\mathrm{KL}+1\n$$\n\n$$\n\\mathrm{TYPE} = \\text{'Q'}, \\mathrm{LDA} \\ge \\mathrm{KU}+1\n$$\n\n$$\n\\mathrm{TYPE} = \\text{'Z'}, \\mathrm{LDA} \\ge 2 \\, \\mathrm{KL}+\\mathrm{KU}+1\n$$"
 		},
 		{
 			"name": "info",
@@ -99,7 +107,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "0 - successful exit \\<0 - if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

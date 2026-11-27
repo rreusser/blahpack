@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge N$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the complex M-by-N matrix A. On exit, the elements on and above the diagonal contain the N-by-N upper triangular matrix R; the elements below the diagonal are the columns of V. See below for further details."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "T",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N-by-N upper triangular factor of the block reflector. The elements on and above the diagonal contain the block reflector T; the elements below the diagonal are not used. See below for further details."
 		},
 		{
 			"name": "ldt",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -89,7 +95,8 @@
 			"position": 7,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

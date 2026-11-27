@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.\n\n-   `= 'U'`: Upper triangular, form is $A = U \\, D \\, U^H$;\n-   `= 'L'`: Lower triangular, form is $A = L \\, D \\, L^H$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZHPTRF, stored as a packed triangular matrix."
 		},
 		{
 			"name": "IPIV",
@@ -52,7 +55,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D as determined by ZHPTRF."
 		},
 		{
 			"name": "anorm",
@@ -60,7 +64,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The 1-norm of the original matrix A."
 		},
 		{
 			"name": "rcond",
@@ -68,7 +73,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\mathrm{ANORM} \\, \\mathrm{AINVNM})$, where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine."
 		},
 		{
 			"name": "WORK",
@@ -96,7 +102,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

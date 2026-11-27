@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the left Schur vectors;\n-   `= 'V'`: compute the left Schur vectors."
 		},
 		{
 			"name": "jobvsr",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the right Schur vectors;\n-   `= 'V'`: compute the right Schur vectors."
 		},
 		{
 			"name": "sort",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not to order the eigenvalues on the diagonal of the generalized Schur form.\n\n-   `= 'N'`: Eigenvalues are not ordered;\n-   `= 'S'`: Eigenvalues are ordered (see `SELCTG`)."
 		},
 		{
 			"name": "selctg",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "function",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`SELCTG` must be declared EXTERNAL in the calling subroutine. If `SORT = 'N'`, `SELCTG` is not referenced. If `SORT = 'S'`, `SELCTG` is used to select eigenvalues to sort to the top left of the Schur form. An eigenvalue `ALPHA(j)`/`BETA(j)` is selected if `SELCTG(ALPHA(j),BETA(j))` is true.\n\nNote that a selected complex eigenvalue may no longer satisfy `SELCTG(ALPHA(j),BETA(j))` = .TRUE. after ordering, since ordering may change the value of complex eigenvalues (especially if the eigenvalue is ill-conditioned), in this case `INFO` is set to N+2 (See `INFO` below)."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A, B, `VSL`, and `VSR`. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the first of the pair of matrices. On exit, A has been overwritten by its generalized Schur form S."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the second of the pair of matrices. On exit, B has been overwritten by its generalized Schur form T."
 		},
 		{
 			"name": "ldb",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "sdim",
@@ -113,7 +122,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `SORT = 'N'`, `SDIM = 0`. If `SORT = 'S'`, `SDIM` = number of eigenvalues (after sorting) for which `SELCTG` is true."
 		},
 		{
 			"name": "ALPHA",
@@ -143,7 +153,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `ALPHA(j)`/`BETA(j)`, $j=1$,...,N, will be the generalized eigenvalues. `ALPHA(j)`, $j=1$,...,N and `BETA(j)`, $j=1$,...,N are the diagonals of the complex Schur form (A,B) output by ZGGES. The `BETA(j)` will be non-negative real.\n\nNote: the quotients `ALPHA(j)`/`BETA(j)` may easily over- or underflow, and `BETA(j)` may even be zero. Thus, the user should avoid naively computing the ratio $\\alpha$/$\\beta$. However, `ALPHA` will be always less than and usually comparable with norm(A) in magnitude, and `BETA` always less than and usually comparable with norm(B)."
 		},
 		{
 			"name": "VSL",
@@ -164,7 +175,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVSL = 'V'`, `VSL` will contain the left Schur vectors. Not referenced if `JOBVSL = 'N'`."
 		},
 		{
 			"name": "ldvsl",
@@ -173,7 +185,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VSL"
+			"of": "VSL",
+			"reference": "The leading dimension of the matrix `VSL`. $\\mathrm{LDVSL} \\ge 1$, and if `JOBVSL = 'V'`, $\\mathrm{LDVSL} \\ge N$."
 		},
 		{
 			"name": "VSR",
@@ -194,7 +207,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVSR = 'V'`, `VSR` will contain the right Schur vectors. Not referenced if `JOBVSR = 'N'`."
 		},
 		{
 			"name": "ldvsr",
@@ -203,7 +217,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VSR"
+			"of": "VSR",
+			"reference": "The leading dimension of the matrix `VSR`. $\\mathrm{LDVSR} \\ge 1$, and if `JOBVSR = 'V'`, $\\mathrm{LDVSR} \\ge N$."
 		},
 		{
 			"name": "WORK",
@@ -219,7 +234,8 @@
 				"fortran": "LWKMIN",
 				"js": "max( 1, 2 * N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -228,7 +244,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. For good performance, `LWORK` must generally be larger.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -268,7 +285,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Not referenced if `SORT = 'N'`."
 		},
 		{
 			"name": "info",
@@ -276,7 +294,8 @@
 			"position": 21,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `=1,...,N`:  The QZ iteration failed.  (A,B) are not in Schur form, but `ALPHA(j)` and `BETA(j)` should be correct for $j=\\mathrm{INFO}+1$,...,N.\n-   `> N`: =N+1: other than QZ iteration failed in $\\mathrm{ZHGEQZ} =N+2$: after reordering, roundoff changed values of some complex eigenvalues so that leading eigenvalues in the Generalized Schur form no longer satisfy `SELCTG`=.TRUE.  This could also be caused due to scaling. =N+3: reordering failed in ZTGSEN."
 		}
 	],
 	"checks": [

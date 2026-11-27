@@ -11,6 +11,25 @@
 // The output is a deterministic function of those files. See spec/README.md.
 
 var fexpr = require( './fexpr.cjs' );
+var fs = require( 'fs' );
+var path = require( 'path' );
+
+var PARAM_DOCS = null;
+
+// data/fortran-param-docs.json (bin/fortran-docs.mjs --extract-params), loaded once.
+function paramDocs() {
+	var file;
+	if ( PARAM_DOCS === null ) {
+		file = path.join( __dirname, '..', '..', 'data', 'fortran-param-docs.json' );
+		PARAM_DOCS = fs.existsSync( file ) ? JSON.parse( fs.readFileSync( file, 'utf8' ) ) : {};
+	}
+	return PARAM_DOCS;
+}
+
+// bin/fortran-docs.mjs's argument converter (an ES module, loaded with require()).
+function referenceMarkdown( name, lines, names ) {
+	return require( '../fortran-docs.mjs' ).paramMarkdown( name, lines, names );
+}
 
 var WORKSPACE_RE = /^[A-Z]?WORK[A-Z0-9]*$/;
 var WORKSIZE_RE = /^L[A-Z]*WORK[A-Z0-9]*$/;
@@ -1097,6 +1116,22 @@ function build( routine, sig, facts, options ) {
 			}
 		});
 		returns = last ? { 'kind': 'array', 'param': last } : { 'kind': 'none' };
+	}
+
+	// The reference's per-argument documentation, as Markdown (data/fortran-param-docs.json,
+	// converted by bin/fortran-docs.mjs): what the argument holds on entry and exit, what is not
+	// referenced, sizes and conventions the JSDoc summary may leave out.
+	var pdocs = paramDocs()[ routine ];
+	if ( pdocs ) {
+		out.forEach( function each( p ) {
+			var md;
+			if ( p.fortran && pdocs[ p.fortran ] ) {
+				md = referenceMarkdown( p.fortran, pdocs[ p.fortran ].split( '\n' ), Object.keys( pdocs ) );
+				if ( md ) {
+					p.reference = md;
+				}
+			}
+		});
 	}
 
 	var spec = {

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: `ARF` in Normal mode is wanted;\n-   `= 'C'`: `ARF` in Conjugate Transpose mode is wanted;"
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: A is upper triangular;\n-   `= 'L'`: A is lower triangular."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the triangular matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of the array A contains the upper triangular matrix, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of the array A contains the lower triangular matrix, and the strictly upper triangular part of A is not referenced."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the matrix A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ARF",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On exit, the upper or lower triangular matrix A stored in RFP format. For a further discussion see Notes below."
 		},
 		{
 			"name": "info",
@@ -83,7 +89,8 @@
 			"position": 7,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

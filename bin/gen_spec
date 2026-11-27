@@ -13,6 +13,7 @@
 // spec file, so a spec can be generated before its module is written.
 //
 // Inputs are committed (data/fortran-signatures.json, data/fortran-checks.json,
+// data/fortran-param-docs.json,
 // spec/options.json, spec/overrides/), so --check runs without the Fortran
 // sources (CONVENTIONS T6).
 
@@ -147,6 +148,8 @@ function main() {
 	});
 	if ( argv.indexOf( '--extract' ) !== -1 ) {
 		require( './spec-gen/extract.cjs' ).main();
+		// Each argument's doc text, for the spec's `reference` field (data/fortran-param-docs.json).
+		require( 'child_process' ).execFileSync( process.execPath, [ path.join( __dirname, 'fortran-docs.mjs' ), '--extract-params' ], { 'stdio': 'inherit' } );
 		return;
 	}
 	var inputs = {

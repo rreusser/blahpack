@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The ( 1, 1 ) element of input matrix."
 		},
 		{
 			"name": "b",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The ( 1, 2 ) element of input matrix. The ( 2, 1 ) element is also given by B, since the 2-by-2 matrix is symmetric."
 		},
 		{
 			"name": "c",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The ( 2, 2 ) element of input matrix."
 		},
 		{
 			"name": "rt1",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The eigenvalue of larger modulus."
 		},
 		{
 			"name": "rt2",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The eigenvalue of smaller modulus."
 		},
 		{
 			"name": "evscal",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The complex value by which the eigenvector matrix was scaled to make it orthonormal. If `EVSCAL` is zero, the eigenvectors were not computed. This means one of two things: the 2-by-2 matrix could not be diagonalized, or the norm of the matrix of eigenvectors before scaling was larger than the threshold value THRESH (set below)."
 		},
 		{
 			"name": "cs1",
@@ -69,7 +75,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If $\\mathrm{EVSCAL} \\ne 0$, ( `CS1`, `SN1` ) is the unit right eigenvector for `RT1`."
 		}
 	],
 	"checks": [],

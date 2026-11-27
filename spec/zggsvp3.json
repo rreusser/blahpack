@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Unitary matrix U is computed;\n-   `= 'N'`: U is not computed."
 		},
 		{
 			"name": "jobv",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: Unitary matrix V is computed;\n-   `= 'N'`: V is not computed."
 		},
 		{
 			"name": "jobq",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'Q'`: Unitary matrix Q is computed;\n-   `= 'N'`: Q is not computed."
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "P",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B. $P \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -75,6 +81,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "On entry, the M-by-N matrix A. On exit, A contains the triangular (or trapezoidal) matrix described in the Purpose section.",
 			"workDependent": "the triangular reduction of A depends on ZGEQP3's pivot order, which LWORK's block size can change in near ties"
 		},
 		{
@@ -84,7 +91,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -106,6 +114,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "On entry, the P-by-N matrix B. On exit, B contains the triangular matrix described in the Purpose section.",
 			"workDependent": "the triangular reduction of B depends on ZGEQP3's pivot order, which LWORK's block size can change in near ties"
 		},
 		{
@@ -115,7 +124,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,P)$."
 		},
 		{
 			"name": "tola",
@@ -131,7 +141,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`TOLA` and `TOLB` are the thresholds to determine the effective numerical rank of matrix B and a subblock of A. Generally, they are set to\n\n$$\n\\mathrm{TOLA} = \\max (M,N) \\, \\operatorname{norm}(A) \\, \\mathrm{MAZHEPS}\n$$\n\n$$\n\\mathrm{TOLB} = \\max (P,N) \\, \\operatorname{norm}(B) \\, \\mathrm{MAZHEPS}\n$$\n\nThe size of `TOLA` and `TOLB` may affect the size of backward errors of the decomposition."
 		},
 		{
 			"name": "k",
@@ -147,7 +158,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, K and L specify the dimension of the subblocks described in Purpose section. K + L = effective numerical rank of $(A^H,B^H)^H$."
 		},
 		{
 			"name": "U",
@@ -169,6 +181,7 @@
 				"fortran": "M",
 				"js": "M"
 			},
+			"reference": "If `JOBU = 'U'`, U contains the unitary matrix U. If `JOBU = 'N'`, U is not referenced.",
 			"workDependent": "U follows the pivot order that LWORK's block size can change"
 		},
 		{
@@ -178,7 +191,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "The leading dimension of the array U. $\\mathrm{LDU} \\ge \\max (1,M)$ if `JOBU = 'U'`; $\\mathrm{LDU} \\ge 1$ otherwise."
 		},
 		{
 			"name": "V",
@@ -200,6 +214,7 @@
 				"fortran": "P",
 				"js": "P"
 			},
+			"reference": "If `JOBV = 'V'`, V contains the unitary matrix V. If `JOBV = 'N'`, V is not referenced.",
 			"workDependent": "V follows the pivot order that LWORK's block size can change"
 		},
 		{
@@ -209,7 +224,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. $\\mathrm{LDV} \\ge \\max (1,P)$ if `JOBV = 'V'`; $\\mathrm{LDV} \\ge 1$ otherwise."
 		},
 		{
 			"name": "Q",
@@ -231,6 +247,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "If `JOBQ = 'Q'`, Q contains the unitary matrix Q. If `JOBQ = 'N'`, Q is not referenced.",
 			"workDependent": "Q follows the pivot order that LWORK's block size can change"
 		},
 		{
@@ -240,7 +257,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,N)$ if `JOBQ = 'Q'`; $\\mathrm{LDQ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "IWORK",
@@ -313,7 +331,8 @@
 				"fortran": "1",
 				"js": "1",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -322,7 +341,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -330,7 +350,8 @@
 			"position": 26,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The first component of vector to be rotated."
 		},
 		{
 			"name": "g",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The second component of vector to be rotated."
 		},
 		{
 			"name": "cs",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The cosine of the rotation."
 		},
 		{
 			"name": "sn",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The sine of the rotation."
 		},
 		{
 			"name": "r",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The nonzero component of the rotated vector.\n\nThis version has a few statements commented out for thread safety (machine parameters are computed on each entry). 10 feb 03, SJH."
 		}
 	],
 	"checks": [],

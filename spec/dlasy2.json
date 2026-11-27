@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `LTRANL` specifies the op(`TL`):\n\n$$\n= .\\mathrm{FALSE}., \\operatorname{op}(\\mathrm{TL}) = \\mathrm{TL}\n$$\n\n$$\n= .\\mathrm{TRUE}., \\operatorname{op}(\\mathrm{TL}) = \\mathrm{TL}^T\n$$"
 		},
 		{
 			"name": "ltranr",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `LTRANR` specifies the op(`TR`):\n\n$$\n= .\\mathrm{FALSE}., \\operatorname{op}(\\mathrm{TR}) = \\mathrm{TR}\n$$\n\n$$\n= .\\mathrm{TRUE}., \\operatorname{op}(\\mathrm{TR}) = \\mathrm{TR}^T\n$$"
 		},
 		{
 			"name": "isgn",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ISGN` specifies the sign of the equation as described before. `ISGN` may only be 1 or -1."
 		},
 		{
 			"name": "n1",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `N1` specifies the order of matrix `TL`. `N1` may only be 0, 1 or 2."
 		},
 		{
 			"name": "n2",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `N2` specifies the order of matrix `TR`. `N2` may only be 0, 1 or 2."
 		},
 		{
 			"name": "TL",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On entry, `TL` contains an `N1` by `N1` matrix."
 		},
 		{
 			"name": "ldtl",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "TL"
+			"of": "TL",
+			"reference": "The leading dimension of the matrix `TL`. $\\mathrm{LDTL} \\ge \\max (1,N_{1})$."
 		},
 		{
 			"name": "TR",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On entry, `TR` contains an `N2` by `N2` matrix."
 		},
 		{
 			"name": "ldtr",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "TR"
+			"of": "TR",
+			"reference": "The leading dimension of the matrix `TR`. $\\mathrm{LDTR} \\ge \\max (1,N_{2})$."
 		},
 		{
 			"name": "B",
@@ -126,7 +135,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On entry, the `N1` by `N2` matrix B contains the right-hand side of the equation."
 		},
 		{
 			"name": "ldb",
@@ -135,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the matrix B. $\\mathrm{LDB} \\ge \\max (1,N_{1})$."
 		},
 		{
 			"name": "scale",
@@ -143,7 +154,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `SCALE` contains the scale factor. `SCALE` is chosen less than or equal to 1 to prevent the solution overflowing."
 		},
 		{
 			"name": "X",
@@ -164,7 +176,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On exit, X contains the `N1` by `N2` solution."
 		},
 		{
 			"name": "ldx",
@@ -173,7 +186,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the matrix X. $\\mathrm{LDX} \\ge \\max (1,N_{1})$."
 		},
 		{
 			"name": "xnorm",
@@ -181,7 +195,8 @@
 			"position": 15,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `XNORM` is the infinity-norm of the solution."
 		},
 		{
 			"name": "info",
@@ -189,7 +204,8 @@
 			"position": 16,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `INFO` is set to\n\n-   0: successful exit.\n-   1: `TL` and `TR` have too close eigenvalues, so `TL` or `TR` is perturbed to get a nonsingular equation.\n\nNOTE: In the interests of speed, this routine does not\n\ncheck the inputs for errors."
 		}
 	],
 	"checks": [],

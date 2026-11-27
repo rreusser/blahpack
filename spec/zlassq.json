@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elements to be used from the vector x."
 		},
 		{
 			"name": "x",
@@ -24,7 +25,8 @@
 			"intent": "in",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "The vector for which a scaled sum of squares is computed.\n\n$$\nx( i ) = X( 1 + ( i - 1 ) \\, \\mathrm{INCX} ), 1 \\le i \\le n\n$$"
 		},
 		{
 			"name": "incx",
@@ -33,7 +35,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between successive values of the vector x. If $\\mathrm{INCX} > 0$, $X(1+(i-1) \\, \\mathrm{INCX}) = x(i)$ for $1 \\le i \\le n$ If $\\mathrm{INCX} < 0$, $X(1-(n-i) \\, \\mathrm{INCX}) = x(i)$ for $1 \\le i \\le n$ If `INCX = 0`, x isn't a vector so there is no need to call this subroutine. If you call it anyway, it will count x(1) in the vector norm N times."
 		},
 		{
 			"name": "scale",
@@ -41,7 +44,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the value scale in the equation above. On exit, `SCALE` is overwritten by scale\\_out, the scaling factor for the sum of squares."
 		},
 		{
 			"name": "sumsq",
@@ -49,7 +53,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the value sumsq in the equation above. On exit, `SUMSQ` is overwritten by sumsq\\_out, the basic sum of squares from which scale\\_out has been factored out."
 		}
 	],
 	"checks": [],

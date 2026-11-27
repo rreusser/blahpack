@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only;\n-   `= 'V'`: Compute eigenvalues and eigenvectors."
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the Hermitian matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2*n-j)/2) = A(i,j)` for $j \\le i \\le n$.\n\nOn exit, `AP` is overwritten by values generated during the reduction to tridiagonal form. If `UPLO = 'U'`, the diagonal and first superdiagonal of the tridiagonal matrix T overwrite the corresponding elements of A, and if `UPLO = 'L'`, the diagonal and first subdiagonal of T overwrite the corresponding elements of A."
 		},
 		{
 			"name": "w",
@@ -60,7 +64,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `INFO = 0`, the eigenvalues in ascending order."
 		},
 		{
 			"name": "Z",
@@ -81,7 +86,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, Z contains the orthonormal eigenvectors of the matrix A, with the i-th column of Z holding the eigenvector associated with `W(i)`. If `JOBZ = 'N'`, then Z is not referenced."
 		},
 		{
 			"name": "ldz",
@@ -90,7 +96,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if `JOBZ = 'V'`, $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -138,7 +145,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `> 0`: if `INFO = i`, the algorithm failed to converge; i off-diagonal elements of an intermediate tridiagonal form did not converge to zero."
 		}
 	],
 	"checks": [

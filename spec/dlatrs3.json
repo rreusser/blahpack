@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the matrix A is upper or lower triangular.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the operation applied to A.\n\n-   `= 'N'`: Solve $A \\, x = s \\, b$  (No transpose)\n-   `= 'T'`: Solve $A^T \\, x = s \\, b$  (Transpose)\n-   `= 'C'`: Solve $A^T \\, x = s \\, b$  (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "diag",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not the matrix A is unit triangular.\n\n-   `= 'N'`: Non-unit triangular\n-   `= 'U'`: Unit triangular"
 		},
 		{
 			"name": "normin",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether `CNORM` has been set or not.\n\n-   `= 'Y'`: `CNORM` contains the column norms on entry\n-   `= 'N'`: `CNORM` is not set on entry.  On exit, the norms will be computed and stored in `CNORM`."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of X. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -74,7 +80,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The triangular matrix A. If `UPLO = 'U'`, the leading n by n upper triangular part of the array A contains the upper triangular matrix, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n by n lower triangular part of the array A contains the lower triangular matrix, and the strictly upper triangular part of A is not referenced. If `DIAG = 'U'`, the diagonal elements of A are also not referenced and are assumed to be 1."
 		},
 		{
 			"name": "lda",
@@ -83,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max$ (1,N)."
 		},
 		{
 			"name": "X",
@@ -104,7 +112,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the right hand side B of the triangular system. On exit, X is overwritten by the solution matrix X."
 		},
 		{
 			"name": "ldx",
@@ -113,7 +122,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max$ (1,N)."
 		},
 		{
 			"name": "SCALE",
@@ -128,7 +138,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The scaling factor s(k) is for the triangular system $A \\, x(:,k) = s(k) \\, b(:,k)$ or $A^T \\, x(:,k) = s(k) \\, b(:,k)$. If `SCALE = 0`, the matrix A is singular or badly scaled. If $A(j,j) = 0$ is encountered, a non-trivial vector x(:,k) that is an exact or approximate solution to $A \\, x(:,k) = 0$ is returned. If the system so badly scaled that solution cannot be presented as $x(:,k) \\cdot 1/s(k)$, then $x(:,k) = 0$ is returned."
 		},
 		{
 			"name": "CNORM",
@@ -143,7 +154,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `NORMIN = 'Y'`, `CNORM` is an input argument and `CNORM(j)` contains the norm of the off-diagonal part of the j-th column of A. If `TRANS = 'N'`, `CNORM(j)` must be greater than or equal to the infinity-norm, and if `TRANS = 'T'` or 'C', `CNORM(j)` must be greater than or equal to the 1-norm.\n\nIf `NORMIN = 'N'`, `CNORM` is an output argument and `CNORM(j)` returns the 1-norm of the offdiagonal part of the j-th column of A."
 		},
 		{
 			"name": "WORK",
@@ -159,7 +171,8 @@
 				"fortran": "MAX",
 				"js": null,
 				"source": "doc"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal size of `WORK`."
 		},
 		{
 			"name": "lwork",
@@ -168,7 +181,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "`LWORK` \\>= MAX(1, $2 \\, \\mathrm{NBA} \\, \\max (\\mathrm{NBA}, \\min (\\mathrm{NRHS}, 32))$, where $\\mathrm{NBA} = (N + \\mathrm{NB} - 1)/\\mathrm{NB}$ and NB is the optimal block size.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal dimensions of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -176,7 +190,8 @@
 			"position": 15,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -k`, the k-th argument had an illegal value"
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 1`: an estimate for the largest singular value is computed.\n-   `= 2`: an estimate for the smallest singular value is computed."
 		},
 		{
 			"name": "J",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Length of X and W"
 		},
 		{
 			"name": "x",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "J",
 				"js": "J"
-			}
+			},
+			"reference": "The j-vector x."
 		},
 		{
 			"name": "sest",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Estimated singular value of j by j matrix L"
 		},
 		{
 			"name": "w",
@@ -59,7 +63,8 @@
 			"length": {
 				"fortran": "J",
 				"js": "J"
-			}
+			},
+			"reference": "The j-vector w."
 		},
 		{
 			"name": "gamma",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The diagonal element $\\gamma$."
 		},
 		{
 			"name": "sestpr",
@@ -75,7 +81,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Estimated singular value of (j+1) by (j+1) matrix Lhat."
 		},
 		{
 			"name": "s",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Sine needed in forming xhat."
 		},
 		{
 			"name": "c",
@@ -91,7 +99,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Cosine needed in forming xhat."
 		}
 	],
 	"checks": [],

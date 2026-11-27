@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A."
 		},
 		{
 			"name": "A",
@@ -35,7 +36,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the LU part of the factorization of the n-by-n matrix A computed by ZGETC2: $A = P \\, L \\, U \\, Q$"
 		},
 		{
 			"name": "lda",
@@ -44,7 +46,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1, N)$."
 		},
 		{
 			"name": "RHS",
@@ -55,7 +58,8 @@
 			"intent": "inout",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "On entry, the right hand side vector b. On exit, the solution vector X."
 		},
 		{
 			"name": "IPIV",
@@ -70,7 +74,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le i \\le N$, row i of the matrix has been interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "JPIV",
@@ -85,7 +90,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le j \\le N$, column j of the matrix has been interchanged with column `JPIV(j)`."
 		},
 		{
 			"name": "scale",
@@ -93,7 +99,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `SCALE` contains the scale factor. `SCALE` is chosen $0 \\le \\mathrm{SCALE} \\le 1$ to prevent overflow in the solution."
 		}
 	],
 	"checks": [],

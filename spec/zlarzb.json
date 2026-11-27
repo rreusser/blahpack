@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply H or $H^H$ from the Left\n-   `= 'R'`: apply H or $H^H$ from the Right"
 		},
 		{
 			"name": "trans",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: apply H (No transpose)\n-   `= 'C'`: apply $H^H$ (Conjugate transpose)"
 		},
 		{
 			"name": "direct",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how H is formed from a product of elementary reflectors\n\n-   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward, not supported yet)\n-   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)"
 		},
 		{
 			"name": "storev",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how the vectors which define the elementary reflectors are stored:\n\n-   `= 'C'`: Columnwise                        (not supported yet)\n-   `= 'R'`: Rowwise"
 		},
 		{
 			"name": "m",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C."
 		},
 		{
 			"name": "N",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C."
 		},
 		{
 			"name": "K",
@@ -62,7 +68,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T (= the number of elementary reflectors whose product defines the block reflector)."
 		},
 		{
 			"name": "L",
@@ -70,7 +77,8 @@
 			"position": 8,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix V containing the meaningful part of the Householder reflectors. If `SIDE = 'L'`, $M \\ge L \\ge 0$, if `SIDE = 'R'`, $N \\ge L \\ge 0$."
 		},
 		{
 			"name": "V",
@@ -91,7 +99,8 @@
 			"cols": {
 				"fortran": "NV",
 				"js": null
-			}
+			},
+			"reference": "If `STOREV = 'C'`, $\\mathrm{NV} = K$; if `STOREV = 'R'`, $\\mathrm{NV} = L$."
 		},
 		{
 			"name": "ldv",
@@ -100,7 +109,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. If `STOREV = 'C'`, $\\mathrm{LDV} \\ge L$; if `STOREV = 'R'`, $\\mathrm{LDV} \\ge K$."
 		},
 		{
 			"name": "T",
@@ -121,7 +131,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The triangular K-by-K matrix T in the representation of the block reflector."
 		},
 		{
 			"name": "ldt",
@@ -130,7 +141,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge K$."
 		},
 		{
 			"name": "C",
@@ -151,7 +163,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $H \\, C$ or $H^H \\, C$ or $C \\, H$ or $C \\, H^H$."
 		},
 		{
 			"name": "ldc",
@@ -160,7 +173,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -189,7 +203,8 @@
 			"position": 16,
 			"role": "lwork",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The leading dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LDWORK} \\ge \\max (1,N)$; if `SIDE = 'R'`, $\\mathrm{LDWORK} \\ge \\max (1,M)$."
 		}
 	],
 	"checks": [

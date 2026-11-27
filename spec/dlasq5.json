@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "First index."
 		},
 		{
 			"name": "n0",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Last index."
 		},
 		{
 			"name": "z",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "4*N",
 				"js": null
-			}
+			},
+			"reference": "Z holds the qd array. EMIN is stored in `Z(4*N0)` to avoid an extra argument."
 		},
 		{
 			"name": "pp",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`PP=0` for ping, `PP=1` for pong."
 		},
 		{
 			"name": "tau",
@@ -52,7 +56,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "This is the shift."
 		},
 		{
 			"name": "sigma",
@@ -60,7 +65,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "This is the accumulated shift up to this step."
 		},
 		{
 			"name": "dmin",
@@ -68,7 +74,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Minimum value of d."
 		},
 		{
 			"name": "dmin1",
@@ -76,7 +83,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Minimum value of d, excluding D( `N0` )."
 		},
 		{
 			"name": "dmin2",
@@ -84,7 +92,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Minimum value of d, excluding D( `N0` ) and D( `N0`-1 )."
 		},
 		{
 			"name": "dn",
@@ -92,7 +101,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "d(`N0`), the last value of d."
 		},
 		{
 			"name": "dnm1",
@@ -100,7 +110,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "d(`N0`-1)."
 		},
 		{
 			"name": "dnm2",
@@ -108,7 +119,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "d(`N0`-2)."
 		},
 		{
 			"name": "ieee",
@@ -116,7 +128,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Flag for `IEEE` or non `IEEE` arithmetic."
 		},
 		{
 			"name": "eps",
@@ -124,7 +137,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "This is the value of $\\epsilon$ used."
 		}
 	],
 	"checks": [],

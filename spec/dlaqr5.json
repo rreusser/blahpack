@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`WANTT` = .true. if the quasi-triangular Schur factor is being computed. `WANTT` is set to .false. otherwise."
 		},
 		{
 			"name": "wantz",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`WANTZ` = .true. if the orthogonal Schur factor is being computed. `WANTZ` is set to .false. otherwise."
 		},
 		{
 			"name": "kacc22",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the computation mode of far-from-diagonal orthogonal updates.\n\n-   `= 0`: DLAQR5 does not accumulate reflections and does not use matrix-matrix multiply to update far-from-diagonal matrix entries.\n-   `= 1`: DLAQR5 accumulates reflections and uses matrix-matrix multiply to update the far-from-diagonal matrix entries.\n-   `= 2`: Same as `KACC22 = 1`. This option used to enable exploiting the 2-by-2 structure during matrix multiplications, but this is no longer supported."
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "N is the order of the Hessenberg matrix H upon which this subroutine operates."
 		},
 		{
 			"name": "ktop",
@@ -54,7 +58,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "These are the first and last rows and columns of an isolated diagonal block upon which the QR sweep is to be applied. It is assumed without a check that\n\neither `KTOP = 1` or $H(\\mathrm{KTOP},\\mathrm{KTOP}-1) = 0$\n\nand\n\neither `KBOT = N` or $H(\\mathrm{KBOT}+1,\\mathrm{KBOT}) = 0$."
 		},
 		{
 			"name": "nshfts",
@@ -62,7 +67,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`NSHFTS` gives the number of simultaneous shifts. `NSHFTS` must be positive and even."
 		},
 		{
 			"name": "SR",
@@ -92,7 +98,8 @@
 			"length": {
 				"fortran": "NSHFTS",
 				"js": "nshfts"
-			}
+			},
+			"reference": "`SR` contains the real parts and `SI` contains the imaginary parts of the `NSHFTS` shifts of origin that define the multi-shift QR sweep. On output `SR` and `SI` may be reordered."
 		},
 		{
 			"name": "H",
@@ -113,7 +120,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input H contains a Hessenberg matrix. On output a multi-shift QR sweep with shifts $\\mathrm{SR}(J)+i \\, \\mathrm{SI}(J)$ is applied to the isolated diagonal block in rows and columns `KTOP` through `KBOT`."
 		},
 		{
 			"name": "ldh",
@@ -122,7 +130,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "`LDH` is the leading dimension of H just as declared in the calling procedure. $\\mathrm{LDH} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "iloz",
@@ -138,7 +147,8 @@
 			"position": 13,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specify the rows of Z to which transformations must be applied if `WANTZ` is .TRUE.. $1 \\le \\mathrm{ILOZ} \\le \\mathrm{IHIZ} \\le N$"
 		},
 		{
 			"name": "Z",
@@ -159,7 +169,8 @@
 			"cols": {
 				"fortran": "IHIZ",
 				"js": "ihiz"
-			}
+			},
+			"reference": "If `WANTZ` = .TRUE., then the QR Sweep orthogonal similarity transformation is accumulated into `Z(ILOZ:IHIZ,ILOZ:IHIZ)` from the right. If `WANTZ` = .FALSE., then Z is unreferenced."
 		},
 		{
 			"name": "ldz",
@@ -168,7 +179,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "LDA is the leading dimension of Z just as declared in the calling procedure. $\\mathrm{LDZ} \\ge N$."
 		},
 		{
 			"name": "V",
@@ -198,7 +210,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "`LDV` is the leading dimension of V as declared in the calling procedure. $\\mathrm{LDV} \\ge 3$."
 		},
 		{
 			"name": "U",
@@ -228,7 +241,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "`LDU` is the leading dimension of U just as declared in the in the calling subroutine. $\\mathrm{LDU} \\ge 2 \\, \\mathrm{NSHFTS}$."
 		},
 		{
 			"name": "nv",
@@ -236,7 +250,8 @@
 			"position": 20,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`NV` is the number of rows in `WV` agailable for workspace. $\\mathrm{NV} \\ge 1$."
 		},
 		{
 			"name": "WV",
@@ -266,7 +281,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WV"
+			"of": "WV",
+			"reference": "`LDWV` is the leading dimension of `WV` as declared in the in the calling subroutine. $\\mathrm{LDWV} \\ge \\mathrm{NV}$."
 		},
 		{
 			"name": "nh",
@@ -274,7 +290,8 @@
 			"position": 23,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`NH` is the number of columns in array `WH` available for workspace. $\\mathrm{NH} \\ge 1$."
 		},
 		{
 			"name": "WH",
@@ -304,7 +321,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WH"
+			"of": "WH",
+			"reference": "Leading dimension of `WH` just as declared in the calling procedure. $\\mathrm{LDWH} \\ge 2 \\, \\mathrm{NSHFTS}$."
 		}
 	],
 	"checks": [],

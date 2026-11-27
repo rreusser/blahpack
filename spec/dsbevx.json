@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only;\n-   `= 'V'`: Compute eigenvalues and eigenvectors."
 		},
 		{
 			"name": "range",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: all eigenvalues will be found;\n-   `= 'V'`: all eigenvalues in the half-open interval (`VL`,`VU`\\] will be found;\n-   `= 'I'`: the `IL`-th through `IU`-th eigenvalues will be found."
 		},
 		{
 			"name": "uplo",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kd",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\\mathrm{KD} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{kd}) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{kd})$.\n\nOn exit, `AB` is overwritten by values generated during the reduction to tridiagonal form. If `UPLO = 'U'`, the first superdiagonal and the diagonal of the tridiagonal matrix T are returned in rows `KD` and `KD`+1 of `AB`, and if `UPLO = 'L'`, the diagonal and first subdiagonal of T are returned in the first two rows of `AB`."
 		},
 		{
 			"name": "ldab",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KD} + 1$."
 		},
 		{
 			"name": "Q",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, the N-by-N orthogonal matrix used in the\n\nreduction to tridiagonal form.\n\nIf `JOBZ = 'N'`, the array Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. If `JOBZ = 'V'`, then $\\mathrm{LDQ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "vl",
@@ -113,7 +122,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the lower bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "vu",
@@ -121,7 +131,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the upper bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "il",
@@ -129,7 +140,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the smallest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "iu",
@@ -137,7 +149,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the largest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "abstol",
@@ -145,7 +158,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval \\[a,b\\] of width less than or equal to\n\n$$\n\\mathrm{ABSTOL} + \\mathrm{EPS} \\, \\max ( |a|,|b| )\n$$\n\nwhere EPS is the machine precision. If `ABSTOL` is less than or equal to zero, then EPS\\*\\|T\\| will be used in its place, where \\|T\\| is the 1-norm of the tridiagonal matrix obtained by reducing `AB` to tridiagonal form.\n\nEigenvalues will be computed most accurately when `ABSTOL` is set to twice the underflow threshold $2 \\, \\mathrm{DLAMCH}(\\text{'S'})$, not zero. If this routine returns with $\\mathrm{INFO}>0$, indicating that some eigenvectors did not converge, try setting `ABSTOL` to $2 \\, \\mathrm{DLAMCH}(\\text{'S'})$.\n\nSee \"Computing Small Singular Values of Bidiagonal Matrices with Guaranteed High Relative Accuracy,\" by Demmel and Kahan, LAPACK Working Note #3."
 		},
 		{
 			"name": "m",
@@ -153,7 +167,8 @@
 			"position": 15,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The total number of eigenvalues found. $0 \\le M \\le N$. If `RANGE = 'A'`, $M = N$, and if `RANGE = 'I'`, $M = \\mathrm{IU}-\\mathrm{IL}+1$."
 		},
 		{
 			"name": "w",
@@ -168,7 +183,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The first M elements contain the selected eigenvalues in ascending order."
 		},
 		{
 			"name": "Z",
@@ -189,7 +205,8 @@
 			"cols": {
 				"fortran": "MAX(1,M)",
 				"js": "range === 'index' ? iu - il + 1 : N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with `W(i)`. If an eigenvector fails to converge, then that column of Z contains the latest approximation to the eigenvector, and the index of the eigenvector is returned in `IFAIL`. If `JOBZ = 'N'`, then Z is not referenced. Note: the user must ensure that at least max(1,M) columns are supplied in the array Z; if `RANGE = 'V'`, the exact value of M is not known in advance and an upper bound must be used."
 		},
 		{
 			"name": "ldz",
@@ -198,7 +215,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if `JOBZ = 'V'`, $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -253,7 +271,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, the first M elements of `IFAIL` are zero. If $\\mathrm{INFO} > 0$, then `IFAIL` contains the indices of the eigenvectors that failed to converge. If `JOBZ = 'N'`, then `IFAIL` is not referenced."
 		},
 		{
 			"name": "info",
@@ -261,7 +280,8 @@
 			"position": 22,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `> 0`: if `INFO = i`, then i eigenvectors failed to converge. Their indices are stored in array `IFAIL`."
 		}
 	],
 	"checks": [

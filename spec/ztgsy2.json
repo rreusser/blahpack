@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: solve the generalized Sylvester equation (1).\n-   `= 'T'`: solve the 'transposed' system (3)."
 		},
 		{
 			"name": "ijob",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies what kind of functionality to be performed.\n\n-   `=0`: solve (1) only.\n-   `=1`: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. (look ahead strategy is used).\n-   `=2`: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. (DGECON on sub-systems is used.) Not referenced if `TRANS = 'T'`."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the order of A and D, and the row dimension of C, F, R and L."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of B and E, and the column dimension of C, F, R and L."
 		},
 		{
 			"name": "A",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, A contains an upper triangular matrix."
 		},
 		{
 			"name": "lda",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the matrix A. $\\mathrm{LDA} \\ge \\max (1, M)$."
 		},
 		{
 			"name": "B",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, B contains an upper triangular matrix."
 		},
 		{
 			"name": "ldb",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the matrix B. $\\mathrm{LDB} \\ge \\max (1, N)$."
 		},
 		{
 			"name": "C",
@@ -118,7 +126,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, C contains the right-hand-side of the first matrix equation in (1). On exit, if `IJOB = 0`, C has been overwritten by the solution R."
 		},
 		{
 			"name": "ldc",
@@ -127,7 +136,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the matrix C. $\\mathrm{LDC} \\ge \\max (1, M)$."
 		},
 		{
 			"name": "D",
@@ -148,7 +158,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, D contains an upper triangular matrix."
 		},
 		{
 			"name": "ldd",
@@ -157,7 +168,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "D"
+			"of": "D",
+			"reference": "The leading dimension of the matrix D. $\\mathrm{LDD} \\ge \\max (1, M)$."
 		},
 		{
 			"name": "E",
@@ -178,7 +190,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, E contains an upper triangular matrix."
 		},
 		{
 			"name": "lde",
@@ -187,7 +200,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "E"
+			"of": "E",
+			"reference": "The leading dimension of the matrix E. $\\mathrm{LDE} \\ge \\max (1, N)$."
 		},
 		{
 			"name": "F",
@@ -208,7 +222,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, F contains the right-hand-side of the second matrix equation in (1). On exit, if `IJOB = 0`, F has been overwritten by the solution L."
 		},
 		{
 			"name": "ldf",
@@ -217,7 +232,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "F"
+			"of": "F",
+			"reference": "The leading dimension of the matrix F. $\\mathrm{LDF} \\ge \\max (1, M)$."
 		},
 		{
 			"name": "scale",
@@ -225,7 +241,8 @@
 			"position": 17,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, $0 \\le \\mathrm{SCALE} \\le 1$. If $0 < \\mathrm{SCALE} < 1$, the solutions R and L (C and F on entry) will hold the solutions to a slightly perturbed system but the input matrices A, B, D and E have not been changed. If `SCALE = 0`, R and L will hold the solutions to the homogeneous system with $C = F = 0$. Normally, `SCALE = 1`."
 		},
 		{
 			"name": "rdsum",
@@ -233,7 +250,8 @@
 			"position": 18,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the sum of squares of computed contributions to the Dif-estimate under computation by ZTGSYL, where the scaling factor `RDSCAL` (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. If `TRANS = 'T'` `RDSUM` is not touched. NOTE: `RDSUM` only makes sense when ZTGSY2 is called by ZTGSYL."
 		},
 		{
 			"name": "rdscal",
@@ -241,7 +259,8 @@
 			"position": 19,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, scaling factor used to prevent overflow in `RDSUM`. On exit, `RDSCAL` is updated w.r.t. the current contributions in `RDSUM`. If `TRANS = 'T'`, `RDSCAL` is not touched. NOTE: `RDSCAL` only makes sense when ZTGSY2 is called by ZTGSYL."
 		},
 		{
 			"name": "info",
@@ -249,7 +268,8 @@
 			"position": 20,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, if `INFO` is set to\n\n-   `=0`: Successful exit\n-   `<0`: If `INFO = -i`, input argument number i is illegal.\n-   `>0`: The matrix pairs (A, D) and (B, E) have common or very close eigenvalues."
 		}
 	],
 	"checks": [

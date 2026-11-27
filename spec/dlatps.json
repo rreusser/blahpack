@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the matrix A is upper or lower triangular.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the operation applied to A.\n\n-   `= 'N'`: Solve $A \\, x = s \\, b$  (No transpose)\n-   `= 'T'`: Solve $A^T \\, x = s \\, b$  (Transpose)\n-   `= 'C'`: Solve $A^T \\, x = s \\, b$  (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "diag",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not the matrix A is unit triangular.\n\n-   `= 'N'`: Non-unit triangular\n-   `= 'U'`: Unit triangular"
 		},
 		{
 			"name": "normin",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether `CNORM` has been set or not.\n\n-   `= 'Y'`: `CNORM` contains the column norms on entry\n-   `= 'N'`: `CNORM` is not set on entry.  On exit, the norms will be computed and stored in `CNORM`."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -61,7 +66,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The upper or lower triangular matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \\le i \\le n$."
 		},
 		{
 			"name": "x",
@@ -76,7 +82,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the right hand side b of the triangular system. On exit, X is overwritten by the solution vector x."
 		},
 		{
 			"name": "scale",
@@ -84,7 +91,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The scaling factor s for the triangular system\n\n$$\nA \\, x = s \\, b \\quad\\text{or}\\quad A^T \\, x = s \\, b\n$$\n\nIf `SCALE = 0`, the matrix A is singular or badly scaled, and the vector x is an exact or approximate solution to $A \\, x = 0$."
 		},
 		{
 			"name": "CNORM",
@@ -99,7 +107,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `NORMIN = 'Y'`, `CNORM` is an input argument and `CNORM(j)` contains the norm of the off-diagonal part of the j-th column of A. If `TRANS = 'N'`, `CNORM(j)` must be greater than or equal to the infinity-norm, and if `TRANS = 'T'` or 'C', `CNORM(j)` must be greater than or equal to the 1-norm.\n\nIf `NORMIN = 'N'`, `CNORM` is an output argument and `CNORM(j)` returns the 1-norm of the offdiagonal part of the j-th column of A."
 		},
 		{
 			"name": "info",
@@ -107,7 +116,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -k`, the k-th argument had an illegal value"
 		}
 	],
 	"checks": [

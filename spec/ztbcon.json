@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;\n\n-   `= 'I'`: Infinity-norm."
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: A is upper triangular;\n-   `= 'L'`: A is lower triangular."
 		},
 		{
 			"name": "diag",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: A is non-unit triangular;\n-   `= 'U'`: A is unit triangular."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kd",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals or subdiagonals of the triangular band matrix A. $\\mathrm{KD} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper or lower triangular band matrix A, stored in the first kd+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{kd}) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{kd})$. If `DIAG = 'U'`, the diagonal elements of A are not referenced and are assumed to be 1."
 		},
 		{
 			"name": "ldab",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KD}+1$."
 		},
 		{
 			"name": "rcond",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\operatorname{norm}(A) \\, \\operatorname{norm}(\\operatorname{inv}(A)))$."
 		},
 		{
 			"name": "WORK",
@@ -131,7 +139,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

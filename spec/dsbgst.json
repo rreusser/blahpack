@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not form the transformation matrix X;\n-   `= 'V'`: form X."
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "ka",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\\mathrm{KA} \\ge 0$."
 		},
 		{
 			"name": "kb",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix B if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\\mathrm{KA} \\ge \\mathrm{KB} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first ka+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(ka+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{ka}) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{ka})$.\n\nOn exit, the transformed matrix $X^T \\, A \\, X$, stored in the same format as A."
 		},
 		{
 			"name": "ldab",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KA}+1$."
 		},
 		{
 			"name": "BB",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The banded factor S from the split Cholesky factorization of B, as returned by DPBSTF, stored in the first `KB`+1 rows of the array."
 		},
 		{
 			"name": "ldbb",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "BB"
+			"of": "BB",
+			"reference": "The leading dimension of the array `BB`. $\\mathrm{LDBB} \\ge \\mathrm{KB}+1$."
 		},
 		{
 			"name": "X",
@@ -126,7 +135,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `VECT = 'V'`, the n-by-n matrix X. If `VECT = 'N'`, the array X is not referenced."
 		},
 		{
 			"name": "ldx",
@@ -135,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,N)$ if `VECT = 'V'`; $\\mathrm{LDX} \\ge 1$ otherwise."
 		},
 		{
 			"name": "WORK",
@@ -163,7 +174,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

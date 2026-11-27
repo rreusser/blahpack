@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "j1",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The location of the first row, or column, of the panel within the submatrix of A, passed to this routine, e.g., when called by DSYTRF\\_AA, for the first panel, `J1` is 1, while for the remaining panels, `J1` is 2."
 		},
 		{
 			"name": "M",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension of the submatrix. $M \\ge 0$."
 		},
 		{
 			"name": "nb",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension of the panel to be facotorized."
 		},
 		{
 			"name": "A",
@@ -59,7 +63,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "the first panel, while dimension (`LDA`,M+1) for the remaining panels.\n\nOn entry, A contains the last row, or column, of the previous panel, and the trailing submatrix of A to be factorized, except for the first panel, only the panel is passed.\n\nOn exit, the leading panel is factorized."
 		},
 		{
 			"name": "lda",
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "IPIV",
@@ -83,7 +89,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "Details of the row and column interchanges, the row and column k were interchanged with the row and column `IPIV(k)`."
 		},
 		{
 			"name": "H",
@@ -113,7 +120,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of the workspace H. $\\mathrm{LDH} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",

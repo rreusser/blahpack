@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the distribution of the random numbers:\n\n-   `= 1`: uniform (0,1)\n-   `= 2`: uniform (-1,1)\n-   `= 3`: normal (0,1)"
 		},
 		{
 			"name": "ISEED",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "4",
 				"js": "4"
-			}
+			},
+			"reference": "On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and `ISEED(4)` must be odd. On exit, the seed is updated."
 		},
 		{
 			"name": "N",
@@ -37,7 +39,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of random numbers to be generated."
 		},
 		{
 			"name": "x",
@@ -52,7 +55,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The generated random numbers."
 		}
 	],
 	"checks": [],

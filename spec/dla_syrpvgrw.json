@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of linear equations, i.e., the order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "info",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The value of `INFO` returned from DSYTRF, .i.e., the pivot in column `INFO` is exactly 0."
 		},
 		{
 			"name": "A",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N matrix A."
 		},
 		{
 			"name": "lda",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "AF",
@@ -81,7 +86,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by DSYTRF."
 		},
 		{
 			"name": "ldaf",
@@ -90,7 +96,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AF"
+			"of": "AF",
+			"reference": "The leading dimension of the array `AF`. $\\mathrm{LDAF} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "IPIV",
@@ -105,7 +112,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D as determined by DSYTRF."
 		},
 		{
 			"name": "WORK",

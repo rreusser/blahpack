@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the operations to be performed on A and B:\n\n-   `= 'N'`: none:  simply set `ILO = 1`, `IHI = N`, `LSCALE(I) = 1.0` and `RSCALE(I) = 1.0` for $i=1$,...,N;\n-   `= 'P'`: permute only;\n-   `= 'S'`: scale only;\n-   `= 'B'`: both permute and scale."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the input matrix A. On exit, A is overwritten by the balanced matrix. If `JOB = 'N'`, A is not referenced."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the input matrix B. On exit, B is overwritten by the balanced matrix. If `JOB = 'N'`, B is not referenced."
 		},
 		{
 			"name": "ldb",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ilo",
@@ -97,7 +103,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "`ILO` and `IHI` are set to integers such that on exit $A(i,j) = 0$ and $B(i,j) = 0$ if $i > j$ and $j = 1$,...,`ILO`-1 or $i = \\mathrm{IHI}+1$,...,N. If `JOB = 'N'` or 'S', `ILO = 1` and `IHI = N`."
 		},
 		{
 			"name": "LSCALE",
@@ -112,7 +119,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the permutations and scaling factors applied to the left side of A and B. If P(j) is the index of the row interchanged with row j, and D(j) is the scaling factor applied to row j, then\n\n```text\nLSCALE(j) = P(j)    for J = 1,...,ILO-1\n          = D(j)    for J = ILO,...,IHI\n          = P(j)    for J = IHI+1,...,N.\n```\n\nThe order in which the interchanges are made is N to `IHI`+1, then 1 to `ILO`-1."
 		},
 		{
 			"name": "RSCALE",
@@ -127,7 +135,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the permutations and scaling factors applied to the right side of A and B. If P(j) is the index of the column interchanged with column j, and D(j) is the scaling factor applied to column j, then\n\n```text\nRSCALE(j) = P(j)    for J = 1,...,ILO-1\n          = D(j)    for J = ILO,...,IHI\n          = P(j)    for J = IHI+1,...,N.\n```\n\nThe order in which the interchanges are made is N to `IHI`+1, then 1 to `ILO`-1."
 		},
 		{
 			"name": "WORK",
@@ -139,7 +148,8 @@
 			"dims": [
 				"LWORK"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "lwork must be at least max(1,6\\*N) when `JOB = 'S'` or 'B', and at least 1 when `JOB = 'N'` or 'P'."
 		},
 		{
 			"name": "info",
@@ -147,7 +157,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

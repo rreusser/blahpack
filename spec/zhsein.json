@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'R'`: compute right eigenvectors only;\n-   `= 'L'`: compute left eigenvectors only;\n-   `= 'B'`: compute both right and left eigenvectors."
 		},
 		{
 			"name": "eigsrc",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the source of eigenvalues supplied in W:\n\n-   `= 'Q'`: the eigenvalues were found using ZHSEQR; thus, if H has zero subdiagonal elements, and so is block-triangular, then the j-th eigenvalue can be assumed to be an eigenvalue of the block containing the j-th row/column.  This property allows ZHSEIN to perform inverse iteration on just one diagonal block.\n-   `= 'N'`: no assumptions are made on the correspondence between eigenvalues and diagonal blocks.  In this case, ZHSEIN must always perform inverse iteration using the whole matrix H."
 		},
 		{
 			"name": "initv",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: no initial vectors are supplied;\n-   `= 'U'`: user-supplied initial vectors are stored in the arrays `VL` and/or `VR`."
 		},
 		{
 			"name": "SELECT",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Specifies the eigenvectors to be computed. To select the eigenvector corresponding to the eigenvalue `W(j)`, `SELECT(j)` must be set to .TRUE.."
 		},
 		{
 			"name": "N",
@@ -52,7 +56,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix H. $N \\ge 0$."
 		},
 		{
 			"name": "H",
@@ -73,7 +78,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper Hessenberg matrix H. If a NaN is detected in H, the routine will return with `INFO=-6`."
 		},
 		{
 			"name": "ldh",
@@ -82,7 +88,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of the array H. $\\mathrm{LDH} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "w",
@@ -97,7 +104,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the eigenvalues of H. On exit, the real parts of W may have been altered since close eigenvalues are perturbed slightly in searching for independent eigenvectors."
 		},
 		{
 			"name": "VL",
@@ -118,7 +126,8 @@
 			"cols": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "On entry, if `INITV = 'U'` and `SIDE = 'L'` or 'B', `VL` must contain starting vectors for the inverse iteration for the left eigenvectors; the starting vector for each eigenvector must be in the same column in which the eigenvector will be stored. On exit, if `SIDE = 'L'` or 'B', the left eigenvectors specified by `SELECT` will be stored consecutively in the columns of `VL`, in the same order as their eigenvalues. If `SIDE = 'R'`, `VL` is not referenced."
 		},
 		{
 			"name": "ldvl",
@@ -127,7 +136,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the array `VL`. $\\mathrm{LDVL} \\ge \\max (1,N)$ if `SIDE = 'L'` or 'B'; $\\mathrm{LDVL} \\ge 1$ otherwise."
 		},
 		{
 			"name": "VR",
@@ -148,7 +158,8 @@
 			"cols": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "On entry, if `INITV = 'U'` and `SIDE = 'R'` or 'B', `VR` must contain starting vectors for the inverse iteration for the right eigenvectors; the starting vector for each eigenvector must be in the same column in which the eigenvector will be stored. On exit, if `SIDE = 'R'` or 'B', the right eigenvectors specified by `SELECT` will be stored consecutively in the columns of `VR`, in the same order as their eigenvalues. If `SIDE = 'L'`, `VR` is not referenced."
 		},
 		{
 			"name": "ldvr",
@@ -157,7 +168,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the array `VR`. $\\mathrm{LDVR} \\ge \\max (1,N)$ if `SIDE = 'R'` or 'B'; $\\mathrm{LDVR} \\ge 1$ otherwise."
 		},
 		{
 			"name": "mm",
@@ -165,7 +177,8 @@
 			"position": 13,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns in the arrays `VL` and/or `VR`. $\\mathrm{MM} \\ge M$."
 		},
 		{
 			"name": "m",
@@ -173,7 +186,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of columns in the arrays `VL` and/or `VR` required to store the eigenvectors (= the number of .TRUE. elements in `SELECT`)."
 		},
 		{
 			"name": "WORK",
@@ -228,7 +242,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `SIDE = 'L'` or 'B', $\\mathrm{IFAILL}(i) = j > 0$ if the left eigenvector in the i-th column of `VL` (corresponding to the eigenvalue w(j)) failed to converge; `IFAILL(i) = 0` if the eigenvector converged satisfactorily. If `SIDE = 'R'`, `IFAILL` is not referenced."
 		},
 		{
 			"name": "IFAILR",
@@ -243,7 +258,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `SIDE = 'R'` or 'B', $\\mathrm{IFAILR}(i) = j > 0$ if the right eigenvector in the i-th column of `VR` (corresponding to the eigenvalue w(j)) failed to converge; `IFAILR(i) = 0` if the eigenvector converged satisfactorily. If `SIDE = 'L'`, `IFAILR` is not referenced."
 		},
 		{
 			"name": "info",
@@ -251,7 +267,8 @@
 			"position": 19,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, i is the number of eigenvectors which failed to converge; see `IFAILL` and `IFAILR` for further details."
 		}
 	],
 	"checks": [

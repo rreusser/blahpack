@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elements in the vector `ZX`."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector `ZX`. The IZMAX1 function returns the index of its first element of maximum absolute value."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "ZX"
+			"of": "ZX",
+			"reference": "The spacing between successive values of `ZX`. $\\mathrm{INCX} \\ge 1$."
 		}
 	],
 	"checks": [],

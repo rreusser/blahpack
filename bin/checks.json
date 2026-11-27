@@ -111,6 +111,10 @@
 			"kind": "tool",
 			"why": "translation pipeline: Fortran to ESTree"
 		},
+		"bin/fortran-docs.mjs": {
+			"kind": "tool",
+			"why": "generator: converts a reference routine's Doxygen prologue to Markdown with KaTeX math (reference docs for translators); every math span is parsed by KaTeX and falls back to code/text when it does not render"
+		},
 		"bin/gen-benchmark-recipes.mjs": {
 			"kind": "tool",
 			"why": "generator: structured-input recipes for bin/gen-benchmark.mjs"
@@ -185,6 +189,10 @@
 		"bin/package.json": {
 			"kind": "tool",
 			"why": "marks bin/ as CommonJS"
+		},
+		"bin/reference-facts.mjs": {
+			"kind": "ticket",
+			"ticket": "0130"
 		},
 		"bin/remove_goto.py": {
 			"kind": "tool",

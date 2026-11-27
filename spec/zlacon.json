@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N \\ge 1$."
 		},
 		{
 			"name": "v",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On the final return, $V = A \\, W$, where $\\mathrm{EST} = \\operatorname{norm}(V)/\\operatorname{norm}(W)$ (W is not returned)."
 		},
 		{
 			"name": "x",
@@ -44,7 +46,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On an intermediate return, X should be overwritten by\n\n$$\nA \\, X, \\quad\\text{if}\\quad \\mathrm{KASE}=1\n$$\n\n$$\nA^H \\, X, \\quad\\text{if}\\quad \\mathrm{KASE}=2\n$$\n\nwhere $A^H$ is the conjugate transpose of A, and ZLACON must be re-called with all the other parameters unchanged."
 		},
 		{
 			"name": "est",
@@ -52,7 +55,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry with `KASE = 1` or 2 and $\\mathrm{JUMP} = 3$, `EST` should be unchanged from the previous call to ZLACON. On exit, `EST` is an estimate (a lower bound) for norm(A)."
 		},
 		{
 			"name": "kase",
@@ -60,7 +64,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On the initial call to ZLACON, `KASE` should be 0. On an intermediate return, `KASE` will be 1 or 2, indicating whether X should be overwritten by $A \\, X$ or $A^H \\, X$. On the final return from ZLACON, `KASE` will again be 0."
 		}
 	],
 	"checks": [],

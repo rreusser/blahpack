@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elements in the vectors `CX` and `CY`."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, the vector X. On output, `CX` is overwritten with $C \\, X + S \\, Y$."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "CX"
+			"of": "CX",
+			"reference": "The increment between successive values of `CX`. `INCX` \\<\\> 0."
 		},
 		{
 			"name": "y",
@@ -53,7 +56,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, the vector Y. On output, `CY` is overwritten with $-\\overline{S} \\, X + C \\, Y$."
 		},
 		{
 			"name": "incy",
@@ -62,7 +66,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "CY"
+			"of": "CY",
+			"reference": "The increment between successive values of `CY`. `INCX` \\<\\> 0."
 		},
 		{
 			"name": "c",
@@ -78,7 +83,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "C and S define a rotation\n\n$$\n\\begin{bmatrix} C & S \\\\ -\\overline{S} & C \\end{bmatrix}\n$$\n\nwhere $C \\, C + S \\, \\overline{S} = 1.0$."
 		}
 	],
 	"checks": [],

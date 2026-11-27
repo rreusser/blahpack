@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of components of the vector x."
 		},
 		{
 			"name": "a",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The scalar a which is used to divide each component of x. A must not be 0, or the subroutine will divide by zero."
 		},
 		{
 			"name": "x",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n-element vector x."
 		},
 		{
 			"name": "incx",
@@ -46,7 +49,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between successive values of the vector SX.\n\n-   `> 0`: $\\mathrm{SX}(1) = X(1)$ and $\\mathrm{SX}(1+(i-1) \\, \\mathrm{INCX}) = x(i)$,     $1< i \\le n$"
 		}
 	],
 	"checks": [],

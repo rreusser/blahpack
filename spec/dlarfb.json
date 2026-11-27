@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply H or $H^T$ from the Left\n-   `= 'R'`: apply H or $H^T$ from the Right"
 		},
 		{
 			"name": "trans",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: apply H (No transpose)\n-   `= 'T'`: apply $H^T$ (Transpose)"
 		},
 		{
 			"name": "direct",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how H is formed from a product of elementary reflectors\n\n-   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward)\n-   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)"
 		},
 		{
 			"name": "storev",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how the vectors which define the elementary reflectors are stored:\n\n-   `= 'C'`: Columnwise\n-   `= 'R'`: Rowwise"
 		},
 		{
 			"name": "M",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C."
 		},
 		{
 			"name": "N",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C."
 		},
 		{
 			"name": "K",
@@ -62,7 +68,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T (= the number of elementary reflectors whose product defines the block reflector). If `SIDE = 'L'`, $M \\ge K \\ge 0$; if `SIDE = 'R'`, $N \\ge K \\ge 0$."
 		},
 		{
 			"name": "V",
@@ -83,7 +90,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "(`LDV`,M) if `STOREV = 'R'` and `SIDE = 'L'` (`LDV`,N) if `STOREV = 'R'` and `SIDE = 'R'` The matrix V. See Further Details."
 		},
 		{
 			"name": "ldv",
@@ -92,7 +100,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. If `STOREV = 'C'` and `SIDE = 'L'`, $\\mathrm{LDV} \\ge \\max (1,M)$; if `STOREV = 'C'` and `SIDE = 'R'`, $\\mathrm{LDV} \\ge \\max (1,N)$; if `STOREV = 'R'`, $\\mathrm{LDV} \\ge K$."
 		},
 		{
 			"name": "T",
@@ -113,7 +122,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The triangular k by k matrix T in the representation of the block reflector."
 		},
 		{
 			"name": "ldt",
@@ -122,7 +132,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge K$."
 		},
 		{
 			"name": "C",
@@ -143,7 +154,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m by n matrix C. On exit, C is overwritten by $H \\, C$ or $H^T \\, C$ or $C \\, H$ or $C \\, H^T$."
 		},
 		{
 			"name": "ldc",
@@ -152,7 +164,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -181,7 +194,8 @@
 			"position": 15,
 			"role": "lwork",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The leading dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LDWORK} \\ge \\max (1,N)$; if `SIDE = 'R'`, $\\mathrm{LDWORK} \\ge \\max (1,M)$."
 		}
 	],
 	"checks": [],

@@ -23,7 +23,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": null
-			}
+			},
+			"reference": "The 3-by-3 matrix A in (\\*)."
 		},
 		{
 			"name": "lda",
@@ -32,7 +33,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A as declared in the calling procedure."
 		},
 		{
 			"name": "B",
@@ -49,7 +51,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": null
-			}
+			},
+			"reference": "The 3-by-3 matrix B in (\\*)."
 		},
 		{
 			"name": "ldb",
@@ -58,7 +61,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B as declared in the calling procedure."
 		},
 		{
 			"name": "sr1",
@@ -113,7 +117,8 @@
 			"length": {
 				"fortran": "N",
 				"js": null
-			}
+			},
+			"reference": "A scalar multiple of the first column of the matrix K in (\\*)."
 		}
 	],
 	"checks": [],

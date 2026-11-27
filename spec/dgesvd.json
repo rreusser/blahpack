@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies options for computing all or part of the matrix U:\n\n-   `= 'A'`: all M columns of U are returned in array U:\n-   `= 'S'`: the first min(m,n) columns of U (the left singular vectors) are returned in the array U;\n-   `= 'O'`: the first min(m,n) columns of U (the left singular vectors) are overwritten on the array A;\n-   `= 'N'`: no columns of U (no left singular vectors) are computed."
 		},
 		{
 			"name": "jobvt",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies options for computing all or part of the matrix $V^T$:\n\n-   `= 'A'`: all N rows of $V^T$ are returned in the array `VT`;\n-   `= 'S'`: the first min(m,n) rows of $V^T$ (the right singular vectors) are returned in the array `VT`;\n-   `= 'O'`: the first min(m,n) rows of $V^T$ (the right singular vectors) are overwritten on the array A;\n-   `= 'N'`: no rows of $V^T$ (no right singular vectors) are computed.\n\n`JOBVT` and `JOBU` cannot both be 'O'."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the input matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the input matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -59,6 +63,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "On entry, the M-by-N matrix A. On exit, if `JOBU = 'O'`, A is overwritten with the first min(m,n)\n\n-   columns of U (the left singular vectors,\n-   stored columnwise);\n\nif `JOBVT = 'O'`, A is overwritten with the first min(m,n)\n\n-   rows of $V^T$ (the right singular vectors,\n-   stored rowwise);\n\nif $\\mathrm{JOBU} \\ne \\text{'O'}$ and $\\mathrm{JOBVT} \\ne \\text{'O'}$, the contents of A\n\nare destroyed.",
 			"workDependent": "on exit A is scratch, or (JOBU or JOBVT = 'O') singular vectors whose signs depend on the path LWORK selects"
 		},
 		{
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "s",
@@ -83,7 +89,8 @@
 			"length": {
 				"fortran": "MIN(M,N)",
 				"js": "min( M, N )"
-			}
+			},
+			"reference": "The singular values of A, sorted so that $S(i) \\ge S(i+1)$."
 		},
 		{
 			"name": "U",
@@ -105,6 +112,7 @@
 				"fortran": "UCOL",
 				"js": "jobu === 'all-columns' ? M : min( M, N )"
 			},
+			"reference": "(`LDU`,M) if `JOBU = 'A'` or (`LDU`,min(M,N)) if `JOBU = 'S'`. If `JOBU = 'A'`, U contains the M-by-M orthogonal matrix U; if `JOBU = 'S'`, U contains the first min(m,n) columns of U (the left singular vectors, stored columnwise); if `JOBU = 'N'` or 'O', U is not referenced.",
 			"workDependent": "the left singular vectors' signs depend on the path LWORK selects"
 		},
 		{
@@ -114,7 +122,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "The leading dimension of the array U. $\\mathrm{LDU} \\ge 1$; if `JOBU = 'S'` or 'A', $\\mathrm{LDU} \\ge M$."
 		},
 		{
 			"name": "VT",
@@ -136,6 +145,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "If `JOBVT = 'A'`, `VT` contains the N-by-N orthogonal matrix $V^T$; if `JOBVT = 'S'`, `VT` contains the first min(m,n) rows of $V^T$ (the right singular vectors, stored rowwise); if `JOBVT = 'N'` or 'O', `VT` is not referenced.",
 			"workDependent": "the right singular vectors' signs depend on the path LWORK selects"
 		},
 		{
@@ -145,7 +155,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VT"
+			"of": "VT",
+			"reference": "The leading dimension of the array `VT`. $\\mathrm{LDVT} \\ge 1$; if `JOBVT = 'A'`, $\\mathrm{LDVT} \\ge N$; if `JOBVT = 'S'`, $\\mathrm{LDVT} \\ge \\min (M,N)$."
 		},
 		{
 			"name": "WORK",
@@ -162,7 +173,8 @@
 				"js": null,
 				"source": "check"
 			},
-			"adaptive": true
+			"adaptive": true,
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`; if $\\mathrm{INFO} > 0$, `WORK(2:MIN(M,N))` contains the unconverged superdiagonal elements of an upper bidiagonal matrix B whose diagonal is in S (not necessarily sorted). B satisfies $A = U \\, B \\, \\mathrm{VT}$, so it has the same singular values as A, and singular vectors related by U and `VT`."
 		},
 		{
 			"name": "lwork",
@@ -171,7 +183,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,5 \\, \\min (M,N))$ for the paths (see comments inside code):\n\n-   - PATH 1 (M much larger than N, `JOBU='N'`)\n-   - PATH 1t (N much larger than M, `JOBVT='N'`)\n\n$\\mathrm{LWORK} \\ge \\max (1,3 \\, \\min (M,N) + \\max (M,N),5 \\, \\min (M,N))$ for the other paths For good performance, `LWORK` should generally be larger.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -179,7 +192,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `> 0`: if DBDSQR did not converge, `INFO` specifies how many superdiagonals of an intermediate bidiagonal form B did not converge to zero. See the description of `WORK` above for details."
 		}
 	],
 	"checks": [

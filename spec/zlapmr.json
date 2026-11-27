@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE., forward permutation = .FALSE., backward permutation"
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix X. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix X. $N \\ge 0$."
 		},
 		{
 			"name": "X",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M by N matrix X. On exit, X contains the permuted matrix X."
 		},
 		{
 			"name": "ldx",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X, $\\mathrm{LDX} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "k",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, K contains the permutation vector. K is used as internal workspace, but reset to its original value on output."
 		}
 	],
 	"checks": [],

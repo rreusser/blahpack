@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in ZLANHF as described above."
 		},
 		{
 			"name": "transr",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the RFP format of A is normal or conjugate-transposed format.\n\n-   `= 'N'`: RFP format is Normal\n-   `= 'C'`: RFP format is Conjugate-transposed"
 		},
 		{
 			"name": "uplo",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the RFP matrix A came from an upper or lower triangular matrix as follows:\n\n`UPLO = 'U'` or 'u' RFP A came from an upper triangular matrix\n\n`UPLO = 'L'` or 'l' RFP A came from a lower triangular matrix"
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, ZLANHF is set to zero."
 		},
 		{
 			"name": "a",
@@ -53,7 +57,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the matrix A in RFP Format. RFP Format is described by `TRANSR`, `UPLO` and N as follows: If `TRANSR='N'` then RFP A is (0:N,0:K-1) when N is even; $K=N/2$. RFP A is (0:N-1,0:K) when N is odd; $K=N/2$. If `TRANSR = 'C'` then RFP is the Conjugate-transpose of RFP A as defined when `TRANSR = 'N'`. The contents of RFP A are defined by `UPLO` as follows: If `UPLO = 'U'` the RFP A contains the ( N\\*(N+1)/2 ) elements of upper packed A either in normal or conjugate-transpose Format. If `UPLO = 'L'` the RFP A contains the ( N\\*(N+1) /2 ) elements of lower packed A either in normal or conjugate-transpose Format. The LDA of RFP A is (N+1)/2 when `TRANSR = 'C'`. When `TRANSR` is 'N' the LDA is N+1 when N is even and is N when is odd. See the Note below for more details. Unchanged on exit."
 		},
 		{
 			"name": "WORK",
@@ -65,7 +70,8 @@
 			"dims": [
 				"LWORK"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'` or '1' or 'O'; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in ZLANHP as described above."
 		},
 		{
 			"name": "uplo",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the hermitian matrix A is supplied.\n\n-   `= 'U'`: Upper triangular part of A is supplied\n-   `= 'L'`: Lower triangular part of A is supplied"
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, ZLANHP is set to zero."
 		},
 		{
 			"name": "AP",
@@ -46,7 +49,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The upper or lower triangle of the hermitian matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \\le i \\le n$. Note that the imaginary parts of the diagonal elements need not be set and are assumed to be zero."
 		},
 		{
 			"name": "WORK",
@@ -58,7 +62,8 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'` or '1' or 'O'; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

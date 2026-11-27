@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether condition numbers are required for the cluster of eigenvalues (S) or the invariant subspace (`SEP`):\n\n-   `= 'N'`: none;\n-   `= 'E'`: for eigenvalues only (S);\n-   `= 'V'`: for invariant subspace only (`SEP`);\n-   `= 'B'`: for both eigenvalues and invariant subspace (S and `SEP`)."
 		},
 		{
 			"name": "compq",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: update the matrix Q of Schur vectors;\n-   `= 'N'`: do not update Q."
 		},
 		{
 			"name": "SELECT",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`SELECT` specifies the eigenvalues in the selected cluster. To select a real eigenvalue w(j), `SELECT(j)` must be set to .TRUE.. To select a complex conjugate pair of eigenvalues w(j) and w(j+1), corresponding to a 2-by-2 diagonal block, either `SELECT(j)` or `SELECT(j+1)` or both must be set to .TRUE.; a complex conjugate pair of eigenvalues must be either both included in the cluster or both excluded."
 		},
 		{
 			"name": "N",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -65,7 +69,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, T is overwritten by the reordered matrix T, again in Schur canonical form, with the selected eigenvalues in the leading diagonal blocks."
 		},
 		{
 			"name": "ldt",
@@ -74,7 +79,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPQ = 'V'`, the matrix Q of Schur vectors. On exit, if `COMPQ = 'V'`, Q has been postmultiplied by the orthogonal transformation matrix which reorders T; the leading M columns of Q form an orthonormal basis for the specified invariant subspace. If `COMPQ = 'N'`, Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$; and if `COMPQ = 'V'`, $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "WR",
@@ -134,7 +142,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The real and imaginary parts, respectively, of the reordered eigenvalues of T. The eigenvalues are stored in the same order as on the diagonal of T, with `WR(i) = T(i,i)` and, if `T(i:i+1,i:i+1)` is a 2-by-2 diagonal block, $\\mathrm{WI}(i) > 0$ and `WI(i+1) = -WI(i)`. Note that if a complex eigenvalue is sufficiently ill-conditioned, then its value may differ significantly from its value before reordering."
 		},
 		{
 			"name": "m",
@@ -142,7 +151,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The dimension of the specified invariant subspace. 0 \\< = $M \\le N$."
 		},
 		{
 			"name": "s",
@@ -150,7 +160,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `JOB = 'E'` or 'B', S is a lower bound on the reciprocal condition number for the selected cluster of eigenvalues. S cannot underestimate the true reciprocal condition number by more than a factor of sqrt(N). If $M = 0$ or N, $S = 1$. If `JOB = 'N'` or 'V', S is not referenced."
 		},
 		{
 			"name": "sep",
@@ -158,7 +169,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `JOB = 'V'` or 'B', `SEP` is the estimated reciprocal condition number of the specified invariant subspace. If $M = 0$ or N, `SEP = norm(T)`. If `JOB = 'N'` or 'E', `SEP` is not referenced."
 		},
 		{
 			"name": "WORK",
@@ -174,7 +186,8 @@
 				"fortran": "LWMIN",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -183,7 +196,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. If `JOB = 'N'`, $\\mathrm{LWORK} \\ge \\max (1,N)$; if `JOB = 'E'`, $\\mathrm{LWORK} \\ge \\max (1,M \\, (N-M))$; if `JOB = 'V'` or 'B', $\\mathrm{LWORK} \\ge \\max (1,2 \\, M \\, (N-M))$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "IWORK",
@@ -199,7 +213,8 @@
 				"fortran": "LIWMIN",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `IWORK(1)` returns the optimal `LIWORK`."
 		},
 		{
 			"name": "liwork",
@@ -208,7 +223,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "IWORK"
+			"of": "IWORK",
+			"reference": "The dimension of the array `IWORK`. If `JOB = 'N'` or 'E', $\\mathrm{LIWORK} \\ge 1$; if `JOB = 'V'` or 'B', $\\mathrm{LIWORK} \\ge \\max (1,M \\, (N-M))$.\n\nIf `LIWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `IWORK` array, returns this value as the first entry of the `IWORK` array, and no error message related to `LIWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -216,7 +232,8 @@
 			"position": 18,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `= 1`: reordering of T failed because some eigenvalues are too close to separate (the problem is very ill-conditioned); T may have been partially reordered, and `WR` and `WI` contain the eigenvalues in the same order as in T; S and `SEP` (if requested) are set to zero."
 		}
 	],
 	"checks": [

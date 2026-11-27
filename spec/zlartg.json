@@ -14,6 +14,7 @@
 			"role": "scalar",
 			"dtype": "complex128",
 			"intent": "in",
+			"reference": "The first component of vector to be rotated.",
 			"element": true
 		},
 		{
@@ -23,6 +24,7 @@
 			"role": "scalar",
 			"dtype": "complex128",
 			"intent": "in",
+			"reference": "The second component of vector to be rotated.",
 			"element": true
 		},
 		{
@@ -32,6 +34,7 @@
 			"role": "scalar",
 			"dtype": "float64",
 			"intent": "out",
+			"reference": "The cosine of the rotation.",
 			"element": true
 		},
 		{
@@ -40,7 +43,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The sine of the rotation."
 		},
 		{
 			"name": "r",
@@ -48,7 +52,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The nonzero component of the rotated vector."
 		}
 	],
 	"checks": [],

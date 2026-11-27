@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": ".TRUE. : update the left transformation matrix Q; .FALSE.: do not update Q."
 		},
 		{
 			"name": "wantz",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": ".TRUE. : update the right transformation matrix Z; .FALSE.: do not update Z."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -46,7 +49,8 @@
 			"rows": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in the pair (A, B). On exit, the updated matrix A."
 		},
 		{
 			"name": "lda",
@@ -55,7 +59,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -72,7 +77,8 @@
 			"rows": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix B in the pair (A, B). On exit, the updated matrix B."
 		},
 		{
 			"name": "ldb",
@@ -81,7 +87,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -102,7 +109,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `WANTQ` = .TRUE, on entry, the unitary matrix Q. On exit, the updated matrix Q. Not referenced if `WANTQ` = .FALSE.."
 		},
 		{
 			"name": "ldq",
@@ -111,7 +119,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$; If `WANTQ` = .TRUE., $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "Z",
@@ -132,7 +141,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `WANTZ` = .TRUE, on entry, the unitary matrix Z. On exit, the updated matrix Z. Not referenced if `WANTZ` = .FALSE.."
 		},
 		{
 			"name": "ldz",
@@ -141,7 +151,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$; If `WANTZ` = .TRUE., $\\mathrm{LDZ} \\ge N$."
 		},
 		{
 			"name": "j1",
@@ -149,7 +160,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index to the first block (A11, B11)."
 		},
 		{
 			"name": "info",
@@ -157,7 +169,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `=0`: Successful exit.\n-   `=1`: The transformed matrix pair (A, B) would be too far from generalized Schur form; the problem is ill- conditioned."
 		}
 	],
 	"checks": [],

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^T$ from the Left;\n-   `= 'R'`: apply Q or $Q^T$ from the Right."
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: apply Q (No transpose);\n-   `= 'C'`: apply $Q^T$ (Conjugate transpose)."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "n1",
@@ -53,7 +57,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "N1 is INTEGER `N2` is INTEGER The dimension of Q12 and Q21, respectively. N1, $N_{2} \\ge 0$. The following requirement must be satisfied: $N_{1} + N_{2} = M$ if `SIDE = 'L'` and $N_{1} + N_{2} = N$ if `SIDE = 'R'`."
 		},
 		{
 			"name": "Q",
@@ -74,7 +79,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "side === 'left' ? M : N"
-			}
+			},
+			"reference": "(`LDQ`,N) if `SIDE = 'R'`"
 		},
 		{
 			"name": "ldq",
@@ -83,7 +89,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,M)$ if `SIDE = 'L'`; $\\mathrm{LDQ} \\ge \\max (1,N)$ if `SIDE = 'R'`."
 		},
 		{
 			"name": "C",
@@ -104,7 +111,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^T \\, C$ or $C \\, Q^T$ or $C \\, Q$."
 		},
 		{
 			"name": "ldc",
@@ -113,7 +121,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -129,7 +138,8 @@
 				"fortran": "NW",
 				"js": "n1 === 0 || n2 === 0 ? 1 : (side === 'left' ? M : N)",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -138,7 +148,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LWORK} \\ge \\max (1,N)$; if `SIDE = 'R'`, $\\mathrm{LWORK} \\ge \\max (1,M)$. For optimum performance $\\mathrm{LWORK} \\ge M \\, N$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -146,7 +157,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

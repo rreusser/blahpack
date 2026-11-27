@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the problem type to be solved:\n\n-   `= 1`: $A \\, x = (\\lambda ) \\, B \\, x$\n-   `= 2`: $A \\, B \\, x = (\\lambda ) \\, x$\n-   `= 3`: $B \\, A \\, x = (\\lambda ) \\, x$"
 		},
 		{
 			"name": "jobz",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only;\n-   `= 'V'`: Compute eigenvalues and eigenvectors."
 		},
 		{
 			"name": "range",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: all eigenvalues will be found.\n-   `= 'V'`: all eigenvalues in the half-open interval (`VL`,`VU`\\] will be found.\n-   `= 'I'`: the `IL`-th through `IU`-th eigenvalues will be found."
 		},
 		{
 			"name": "uplo",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangles of A and B are stored;\n-   `= 'L'`: Lower triangles of A and B are stored."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the Hermitian matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A.\n\nOn exit, the lower triangle (if `UPLO='L'`) or the upper triangle (if `UPLO='U'`) of A, including the diagonal, is destroyed."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the Hermitian matrix B. If `UPLO = 'U'`, the leading N-by-N upper triangular part of B contains the upper triangular part of the matrix B. If `UPLO = 'L'`, the leading N-by-N lower triangular part of B contains the lower triangular part of the matrix B.\n\nOn exit, if $\\mathrm{INFO} \\le N$, the part of B containing the matrix is overwritten by the triangular factor U or L from the Cholesky factorization $B = U^H \\, U$ or $B = L \\, L^H$."
 		},
 		{
 			"name": "ldb",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "vl",
@@ -113,7 +122,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the lower bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "vu",
@@ -121,7 +131,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the upper bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "il",
@@ -129,7 +140,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the smallest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "iu",
@@ -137,7 +149,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the largest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "abstol",
@@ -145,7 +158,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval \\[a,b\\] of width less than or equal to\n\n$$\n\\mathrm{ABSTOL} + \\mathrm{EPS} \\, \\max ( |a|,|b| )\n$$\n\nwhere EPS is the machine precision. If `ABSTOL` is less than or equal to zero, then EPS\\*\\|T\\| will be used in its place, where \\|T\\| is the 1-norm of the tridiagonal matrix obtained by reducing C to tridiagonal form, where C is the symmetric matrix of the standard symmetric problem to which the generalized problem is transformed.\n\nEigenvalues will be computed most accurately when `ABSTOL` is set to twice the underflow threshold $2 \\, \\mathrm{DLAMCH}(\\text{'S'})$, not zero. If this routine returns with $\\mathrm{INFO}>0$, indicating that some eigenvectors did not converge, try setting `ABSTOL` to $2 \\, \\mathrm{DLAMCH}(\\text{'S'})$."
 		},
 		{
 			"name": "m",
@@ -153,7 +167,8 @@
 			"position": 15,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The total number of eigenvalues found. $0 \\le M \\le N$. If `RANGE = 'A'`, $M = N$, and if `RANGE = 'I'`, $M = \\mathrm{IU}-\\mathrm{IL}+1$."
 		},
 		{
 			"name": "w",
@@ -168,7 +183,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The first M elements contain the selected eigenvalues in ascending order."
 		},
 		{
 			"name": "Z",
@@ -189,7 +205,8 @@
 			"cols": {
 				"fortran": "MAX(1,M)",
 				"js": "range === 'index' ? iu - il + 1 : N"
-			}
+			},
+			"reference": "If `JOBZ = 'N'`, then Z is not referenced. If `JOBZ = 'V'`, then if `INFO = 0`, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with `W(i)`. The eigenvectors are normalized as follows: if `ITYPE = 1` or 2, $Z^T \\, B \\, Z = I$; if `ITYPE = 3`, $Z^T \\, \\operatorname{inv}(B) \\, Z = I$.\n\nIf an eigenvector fails to converge, then that column of Z contains the latest approximation to the eigenvector, and the index of the eigenvector is returned in `IFAIL`. Note: the user must ensure that at least max(1,M) columns are supplied in the array Z; if `RANGE = 'V'`, the exact value of M is not known in advance and an upper bound must be used."
 		},
 		{
 			"name": "ldz",
@@ -198,7 +215,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if `JOBZ = 'V'`, $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -214,7 +232,8 @@
 				"fortran": "MAX(1,2*N)",
 				"js": "max( 1, 2 * N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -223,7 +242,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The length of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. For optimal efficiency, $\\mathrm{LWORK} \\ge (\\mathrm{NB}+1) \\, N$, where NB is the blocksize for ZHETRD returned by ILAENV.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -278,7 +298,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, the first M elements of `IFAIL` are zero. If $\\mathrm{INFO} > 0$, then `IFAIL` contains the indices of the eigenvectors that failed to converge. If `JOBZ = 'N'`, then `IFAIL` is not referenced."
 		},
 		{
 			"name": "info",
@@ -286,7 +307,8 @@
 			"position": 24,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: ZPOTRF or ZHEEVX returned an error code: \\<= N:  if `INFO = i`, ZHEEVX failed to converge; i eigenvectors failed to converge.  Their indices are stored in array `IFAIL`.\n-   `> N`: if $\\mathrm{INFO} = N + i$, for $1 \\le i \\le N$, then the leading principal minor of order i of B is not positive. The factorization of B could not be completed and no eigenvalues or eigenvectors were computed."
 		}
 	],
 	"checks": [

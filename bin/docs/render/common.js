@@ -6,6 +6,7 @@
 */
 
 import MarkdownIt from 'markdown-it';
+import katex from 'katex';
 import { PACKAGES } from '../taxonomy.js';
 
 const md = new MarkdownIt({ 'html': false, 'linkify': false, 'typographer': false });
@@ -24,6 +25,38 @@ export function esc( s ) {
 */
 export function markdown( s ) {
 	return md.render( s || '' );
+}
+
+/**
+* Renders Markdown with TeX math (`$...$` inline, `$$`-fenced display) to HTML,
+* typesetting the math at build time with KaTeX. Code spans and fences are left
+* alone, and `\\$` stays a literal dollar sign. Math KaTeX cannot parse is
+* shown as code rather than failing the build.
+*
+* @param {string} s - Markdown
+* @returns {string} HTML
+*/
+export function markdownMath( s ) {
+	const math = [];
+	const code = [];
+	const tex = ( t, displayMode ) => {
+		try {
+			math.push( katex.renderToString( t, { displayMode, 'throwOnError': true, 'strict': 'ignore' } ) );
+		} catch ( err ) {
+			math.push( '<code>' + esc( t ) + '</code>' );
+		}
+		return 'KATEXMATH' + ( math.length - 1 ) + 'X';
+	};
+	let src = ( s || '' ).replace( /```[\s\S]*?```|`[^`\n]*`/g, ( m ) => {
+		code.push( m );
+		return '\u0001' + ( code.length - 1 ) + '\u0001';
+	});
+	src = src.replace( /^\$\$\n([\s\S]*?)\n\$\$$/gm, ( _, t ) => '\n\n' + tex( t, true ) + '\n\n' );
+	src = src.replace( /(^|[^\\])\$([^$\n]+?)\$/g, ( _, pre, t ) => pre + tex( t, false ) );
+	src = src.replace( /\u0001(\d+)\u0001/g, ( _, n ) => code[ Number( n ) ] );
+	return md.render( src )
+		.replace( /<p>KATEXMATH(\d+)X<\/p>/g, ( _, n ) => '<div class="math-display">' + math[ Number( n ) ] + '</div>' )
+		.replace( /KATEXMATH(\d+)X/g, ( _, n ) => math[ Number( n ) ] );
 }
 
 /**
@@ -173,6 +206,7 @@ export function page( o ) {
 <meta name="generator" content="bin/docs (generated from JSDoc and spec/*.json; do not edit)">
 ${ alts }
 <link rel="stylesheet" href="${ r }assets/site.css">
+${ o.math ? '<link rel="stylesheet" href="' + r + 'assets/katex/katex.min.css">' : '' }
 <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body data-root="${ r }">

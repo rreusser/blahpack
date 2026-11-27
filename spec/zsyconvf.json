@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the details of the factorization are stored as an upper or lower triangular matrix A.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "way",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'C'`: Convert\n-   `= 'R'`: Revert"
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "1) If `WAY ='C'`:\n\nOn entry, contains factorization details in format used in ZSYTRF:\n\n-   a) all elements of the symmetric block diagonal matrix D on the diagonal of A and on superdiagonal (or subdiagonal) of A, and\n-   b) If `UPLO = 'U'`: multipliers used to obtain factor U in the superdiagonal part of A. If `UPLO = 'L'`: multipliers used to obtain factor L in the superdiagonal part of A.\n\nOn exit, contains factorization details in format used in ZSYTRF\\_RK or ZSYTRF\\_BK:\n\n-   a) ONLY diagonal elements of the symmetric block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D are stored on exit in array E), and\n-   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.\n\n2) If `WAY = 'R'`:\n\nOn entry, contains factorization details in format used in ZSYTRF\\_RK or ZSYTRF\\_BK:\n\n-   a) ONLY diagonal elements of the symmetric block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D are stored on exit in array E), and\n-   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.\n\nOn exit, contains factorization details in format used in ZSYTRF:\n\n-   a) all elements of the symmetric block diagonal matrix D on the diagonal of A and on superdiagonal (or subdiagonal) of A, and\n-   b) If `UPLO = 'U'`: multipliers used to obtain factor U in the superdiagonal part of A. If `UPLO = 'L'`: multipliers used to obtain factor L in the superdiagonal part of A."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "e",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "1) If `WAY ='C'`:\n\nOn entry, just a workspace.\n\nOn exit, contains the superdiagonal (or subdiagonal) elements of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$, $i=2$:N, `E(1)` is set to 0; If `UPLO = 'L'`: $E(i) = D(i+1,i)$, $i=1$:N-1, `E(N)` is set to 0.\n\n2) If `WAY = 'R'`:\n\nOn entry, contains the superdiagonal (or subdiagonal) elements of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$,$i=2$:N, `E(1)` not referenced; If `UPLO = 'L'`: $E(i) = D(i+1,i)$,$i=1$:N-1, `E(N)` not referenced.\n\nOn exit, is not changed"
 		},
 		{
 			"name": "IPIV",
@@ -89,7 +95,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "1) If `WAY ='C'`: On entry, details of the interchanges and the block structure of D in the format used in ZSYTRF. On exit, details of the interchanges and the block structure of D in the format used in ZSYTRF\\_RK ( or ZSYTRF\\_BK).\n\n1) If `WAY ='R'`: On entry, details of the interchanges and the block structure of D in the format used in ZSYTRF\\_RK ( or ZSYTRF\\_BK). On exit, details of the interchanges and the block structure of D in the format used in ZSYTRF."
 		},
 		{
 			"name": "info",
@@ -97,7 +104,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

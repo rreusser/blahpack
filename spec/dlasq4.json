@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "First index."
 		},
 		{
 			"name": "n0",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Last index."
 		},
 		{
 			"name": "z",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "4*N0",
 				"js": "4 * n0"
-			}
+			},
+			"reference": "Z holds the qd array."
 		},
 		{
 			"name": "pp",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`PP=0` for ping, `PP=1` for pong."
 		},
 		{
 			"name": "n0in",
@@ -52,7 +56,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The value of `N0` at start of EIGTEST."
 		},
 		{
 			"name": "dmin",
@@ -60,7 +65,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Minimum value of d."
 		},
 		{
 			"name": "dmin1",
@@ -68,7 +74,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Minimum value of d, excluding D( `N0` )."
 		},
 		{
 			"name": "dmin2",
@@ -76,7 +83,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Minimum value of d, excluding D( `N0` ) and D( `N0`-1 )."
 		},
 		{
 			"name": "dn",
@@ -84,7 +92,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "d(N)"
 		},
 		{
 			"name": "dn1",
@@ -92,7 +101,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "d(N-1)"
 		},
 		{
 			"name": "dn2",
@@ -100,7 +110,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "d(N-2)"
 		},
 		{
 			"name": "tau",
@@ -108,7 +119,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "This is the shift."
 		},
 		{
 			"name": "ttype",
@@ -116,7 +128,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Shift type."
 		},
 		{
 			"name": "g",
@@ -124,7 +137,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "G is passed as an argument in order to save its value between calls to DLASQ4."
 		}
 	],
 	"checks": [],

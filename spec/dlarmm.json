@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The infinity norm of A. $\\mathrm{ANORM} \\ge 0$. The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "bnorm",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The infinity norm of B. $\\mathrm{BNORM} \\ge 0$."
 		},
 		{
 			"name": "cnorm",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The infinity norm of C. $\\mathrm{CNORM} \\ge 0$."
 		}
 	],
 	"checks": [],

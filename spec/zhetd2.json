@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored:\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the Hermitian matrix A. If `UPLO = 'U'`, the leading n-by-n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n-by-n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit, if `UPLO = 'U'`, the diagonal and first superdiagonal of A are overwritten by the corresponding elements of the tridiagonal matrix T, and the elements above the first superdiagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors; if `UPLO = 'L'`, the diagonal and first subdiagonal of A are over- written by the corresponding elements of the tridiagonal matrix T, and the elements below the first subdiagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors. See Further Details."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "d",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The diagonal elements of the tridiagonal matrix T: $D(i) = A(i,i)$."
 		},
 		{
 			"name": "e",
@@ -81,7 +86,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The off-diagonal elements of the tridiagonal matrix T: $E(i) = A(i,i+1)$ if `UPLO = 'U'`, $E(i) = A(i+1,i)$ if `UPLO = 'L'`."
 		},
 		{
 			"name": "TAU",
@@ -96,7 +102,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors (see Further Details)."
 		},
 		{
 			"name": "info",
@@ -104,7 +111,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

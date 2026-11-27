@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The length of the vectors X and Y."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCX",
 				"js": "1 + (N - 1) * incx"
-			}
+			},
+			"reference": "dimension (1+(N-1)\\*`INCX`) On entry, X contains the N-vector X. On exit, X is overwritten."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between successive elements of X. $\\mathrm{INCX} > 0$."
 		},
 		{
 			"name": "y",
@@ -53,7 +56,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCY",
 				"js": "1 + (N - 1) * incy"
-			}
+			},
+			"reference": "dimension (1+(N-1)\\*`INCY`) On entry, Y contains the N-vector Y. On exit, Y is overwritten."
 		},
 		{
 			"name": "incy",
@@ -62,7 +66,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "The increment between successive elements of Y. $\\mathrm{INCY} > 0$."
 		},
 		{
 			"name": "ssmin",
@@ -70,7 +75,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The smallest singular value of the N-by-2 matrix $A = ( X Y )$."
 		}
 	],
 	"checks": [],

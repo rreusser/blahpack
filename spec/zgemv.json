@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the operation to be performed as follows:\n\n$$\n\\mathrm{TRANS} = \\text{'N'} \\quad\\text{or}\\quad \\text{'n'} y := \\alpha \\, A \\, x + \\beta \\, y\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'T'} \\quad\\text{or}\\quad \\text{'t'} y := \\alpha \\, A^T \\, x + \\beta \\, y\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'C'} \\quad\\text{or}\\quad \\text{'c'} y := \\alpha \\, A^H \\, x + \\beta \\, y\n$$"
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the number of rows of the matrix A. M must be at least zero."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of the matrix A. N must be at least zero."
 		},
 		{
 			"name": "alpha",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$."
 		},
 		{
 			"name": "A",
@@ -59,7 +63,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the leading m by n part of the array A must contain the matrix of coefficients."
 		},
 		{
 			"name": "lda",
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, m )."
 		},
 		{
 			"name": "x",
@@ -83,7 +89,8 @@
 			"length": {
 				"fortran": "(N) if TRANS = 'N' or (M) otherwise",
 				"js": "( trans === 'no-transpose' ) ? N : M"
-			}
+			},
+			"reference": "( 1 + ( n - 1 )\\*abs( `INCX` ) ) when `TRANS = 'N'` or 'n' and at least ( 1 + ( m - 1 )\\*abs( `INCX` ) ) otherwise. Before entry, the incremented array X must contain the vector x."
 		},
 		{
 			"name": "incx",
@@ -92,7 +99,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero."
 		},
 		{
 			"name": "beta",
@@ -100,7 +108,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `BETA` specifies the scalar $\\beta$. When `BETA` is supplied as zero then Y need not be set on input."
 		},
 		{
 			"name": "y",
@@ -115,7 +124,8 @@
 			"length": {
 				"fortran": "(M) if TRANS = 'N' or (N) otherwise",
 				"js": "( trans === 'no-transpose' ) ? M : N"
-			}
+			},
+			"reference": "( 1 + ( m - 1 )\\*abs( `INCY` ) ) when `TRANS = 'N'` or 'n' and at least ( 1 + ( n - 1 )\\*abs( `INCY` ) ) otherwise. Before entry with `BETA` non-zero, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. If either m or n is zero, then Y not referenced and the function performs a quick return."
 		},
 		{
 			"name": "incy",
@@ -124,7 +134,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero."
 		}
 	],
 	"checks": [

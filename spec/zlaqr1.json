@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Order of the matrix H. N must be either 2 or 3."
 		},
 		{
 			"name": "H",
@@ -31,7 +32,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The 2-by-2 or 3-by-3 matrix H in (\\*)."
 		},
 		{
 			"name": "ldh",
@@ -40,7 +42,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of H as declared in the calling procedure. $\\mathrm{LDH} \\ge N$"
 		},
 		{
 			"name": "s1",
@@ -56,7 +59,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`S1` and `S2` are the shifts defining K in (\\*) above."
 		},
 		{
 			"name": "v",
@@ -71,7 +75,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "A scalar multiple of the first column of the matrix K in (\\*)."
 		}
 	],
 	"checks": [],

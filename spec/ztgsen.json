@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether condition numbers are required for the cluster of eigenvalues (`PL` and `PR`) or the deflating subspaces (Difu and Difl):\n\n-   `=0`: Only reorder w.r.t. `SELECT`. No extras.\n-   `=1`: Reciprocal of norms of \"projections\" onto left and right eigenspaces w.r.t. the selected cluster (`PL` and `PR`).\n-   `=2`: Upper bounds on Difu and Difl. F-norm-based estimate (`DIF(1:2)`).\n-   `=3`: Estimate of Difu and Difl. 1-norm-based estimate (`DIF(1:2)`). About 5 times as expensive as `IJOB = 2`.\n-   `=4`: Compute `PL`, `PR` and `DIF` (i.e. 0, 1 and 2 above): Economic version to get it all.\n-   `=5`: Compute `PL`, `PR` and `DIF` (i.e. 0, 1 and 3 above)"
 		},
 		{
 			"name": "wantq",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": ".TRUE. : update the left transformation matrix Q; .FALSE.: do not update Q."
 		},
 		{
 			"name": "wantz",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": ".TRUE. : update the right transformation matrix Z; .FALSE.: do not update Z."
 		},
 		{
 			"name": "SELECT",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`SELECT` specifies the eigenvalues in the selected cluster. To select an eigenvalue w(j), `SELECT(j)` must be set to .TRUE.."
 		},
 		{
 			"name": "N",
@@ -52,7 +56,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -73,7 +78,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper triangular matrix A, in generalized Schur canonical form. On exit, A is overwritten by the reordered matrix A."
 		},
 		{
 			"name": "lda",
@@ -82,7 +88,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -103,7 +110,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper triangular matrix B, in generalized Schur canonical form. On exit, B is overwritten by the reordered matrix B."
 		},
 		{
 			"name": "ldb",
@@ -112,7 +120,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ALPHA",
@@ -142,7 +151,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The diagonal elements of A and B, respectively, when the pair (A,B) has been reduced to generalized Schur form. `ALPHA(i)`/`BETA(i)` $i=1$,...,N are the generalized eigenvalues."
 		},
 		{
 			"name": "Q",
@@ -163,7 +173,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `WANTQ` = .TRUE., Q is an N-by-N matrix. On exit, Q has been postmultiplied by the left unitary transformation matrix which reorder (A, B); The leading M columns of Q form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces). If `WANTQ` = .FALSE., Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -172,7 +183,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$. If `WANTQ` = .TRUE., $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "Z",
@@ -193,7 +205,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `WANTZ` = .TRUE., Z is an N-by-N matrix. On exit, Z has been postmultiplied by the left unitary transformation matrix which reorder (A, B); The leading M columns of Z form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces). If `WANTZ` = .FALSE., Z is not referenced."
 		},
 		{
 			"name": "ldz",
@@ -202,7 +215,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$. If `WANTZ` = .TRUE., $\\mathrm{LDZ} \\ge N$."
 		},
 		{
 			"name": "m",
@@ -210,7 +224,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The dimension of the specified pair of left and right eigenspaces, (deflating subspaces) $0 \\le M \\le N$."
 		},
 		{
 			"name": "pl",
@@ -226,7 +241,8 @@
 			"position": 18,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `IJOB = 1`, 4 or 5, `PL`, `PR` are lower bounds on the reciprocal of the norm of \"projections\" onto left and right eigenspace with respect to the selected cluster. $0 < \\mathrm{PL}$, $\\mathrm{PR} \\le 1$. If $M = 0$ or $M = N$, `PL = PR = 1`. If `IJOB = 0`, 2 or 3 `PL`, `PR` are not referenced."
 		},
 		{
 			"name": "DIF",
@@ -241,7 +257,8 @@
 			"length": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "If $\\mathrm{IJOB} \\ge 2$, `DIF(1:2)` store the estimates of Difu and Difl. If `IJOB = 2` or 4, `DIF(1:2)` are F-norm-based upper bounds on Difu and Difl. If `IJOB = 3` or 5, `DIF(1:2)` are 1-norm-based estimates of Difu and Difl, computed using reversed communication with ZLACN2. If $M = 0$ or N, $\\mathrm{DIF}(1:2) = F-\\operatorname{norm}([A, B])$. If `IJOB = 0` or 1, `DIF` is not referenced."
 		},
 		{
 			"name": "WORK",
@@ -257,7 +274,8 @@
 				"fortran": "LWMIN",
 				"js": "(ijob === 1 || ijob === 2) || ijob === 4 ? max( 1, 2 * m * (N - m) ) : (ijob === 3 || ijob === 5 ? max( 1, 4 * m * (N - m) ) : 1)",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -266,7 +284,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge 1$ If `IJOB = 1`, 2 or 4, $\\mathrm{LWORK} \\ge 2 \\, M \\, (N-M)$ If `IJOB = 3` or 5, $\\mathrm{LWORK} \\ge 4 \\, M \\, (N-M)$\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "IWORK",
@@ -282,7 +301,8 @@
 				"fortran": "LIWMIN",
 				"js": "(ijob === 1 || ijob === 2) || ijob === 4 ? max( 1, N + 2 ) : (ijob === 3 || ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 2 ) : 1)",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `IWORK(1)` returns the optimal `LIWORK`."
 		},
 		{
 			"name": "liwork",
@@ -291,7 +311,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "IWORK"
+			"of": "IWORK",
+			"reference": "The dimension of the array `IWORK`. $\\mathrm{LIWORK} \\ge 1$. If `IJOB = 1`, 2 or 4, $\\mathrm{LIWORK} \\ge N+2$; If `IJOB = 3` or 5, $\\mathrm{LIWORK} \\ge \\max (N+2, 2 \\, M \\, (N-M))$;\n\nIf `LIWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `IWORK` array, returns this value as the first entry of the `IWORK` array, and no error message related to `LIWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -299,7 +320,8 @@
 			"position": 24,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `=0`: Successful exit.\n-   `<0`: If `INFO = -i`, the i-th argument had an illegal value.\n-   `=1`: Reordering of (A, B) failed because the transformed matrix pair (A, B) would be too far from generalized Schur form; the problem is very ill-conditioned. (A, B) may have been partially reordered. If requested, 0 is returned in `DIF(*)`, `PL` and `PR`."
 		}
 	],
 	"checks": [

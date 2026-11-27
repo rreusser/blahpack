@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit, if `UPLO = 'U'`, the diagonal and first superdiagonal of A are overwritten by the corresponding elements of the tridiagonal matrix T, and the elements above the first superdiagonal, with the array `TAU`, represent the orthogonal matrix Q as a product of elementary reflectors; if `UPLO = 'L'`, the diagonal and first subdiagonal of A are over- written by the corresponding elements of the tridiagonal matrix T, and the elements below the first subdiagonal, with the array `TAU`, represent the orthogonal matrix Q as a product of elementary reflectors. See Further Details."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "d",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The diagonal elements of the tridiagonal matrix T: $D(i) = A(i,i)$."
 		},
 		{
 			"name": "e",
@@ -81,7 +86,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The off-diagonal elements of the tridiagonal matrix T: $E(i) = A(i,i+1)$ if `UPLO = 'U'`, $E(i) = A(i+1,i)$ if `UPLO = 'L'`."
 		},
 		{
 			"name": "TAU",
@@ -96,7 +102,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors (see Further Details)."
 		},
 		{
 			"name": "WORK",
@@ -113,7 +120,8 @@
 				"js": "1",
 				"source": "check"
 			},
-			"adaptive": true
+			"adaptive": true,
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -122,7 +130,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge 1$. For optimum performance $\\mathrm{LWORK} \\ge N \\, \\mathrm{NB}$, where NB is the optimal blocksize.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -130,7 +139,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

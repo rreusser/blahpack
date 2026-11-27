@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If .TRUE., then the Hessenberg matrix H is fully updated so that the triangular Schur factor may be computed (in cooperation with the calling subroutine). If .FALSE., then only enough of H is updated to preserve the eigenvalues."
 		},
 		{
 			"name": "wantz",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If .TRUE., then the unitary matrix Z is updated so so that the unitary Schur factor may be computed (in cooperation with the calling subroutine). If .FALSE., then Z is not referenced."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix H and (if `WANTZ` is .TRUE.) the order of the unitary matrix Z."
 		},
 		{
 			"name": "ktop",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "It is assumed that either `KTOP = 1` or $H(\\mathrm{KTOP},\\mathrm{KTOP}-1)=0$. `KBOT` and `KTOP` together determine an isolated block along the diagonal of the Hessenberg matrix."
 		},
 		{
 			"name": "kbot",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "It is assumed without a check that either `KBOT = N` or $H(\\mathrm{KBOT}+1,\\mathrm{KBOT})=0$. `KBOT` and `KTOP` together determine an isolated block along the diagonal of the Hessenberg matrix."
 		},
 		{
 			"name": "nw",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Deflation window size. $1 \\le \\mathrm{NW} \\le (\\mathrm{KBOT}-\\mathrm{KTOP}+1)$."
 		},
 		{
 			"name": "H",
@@ -72,6 +78,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "On input the initial N-by-N section of H stores the Hessenberg matrix undergoing aggressive early deflation. On output H has been transformed by a unitary similarity transformation, perturbed, and the returned to Hessenberg form that (it is to be hoped) has some zero subdiagonal entries.",
 			"workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense"
 		},
 		{
@@ -81,7 +88,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "Leading dimension of H just as declared in the calling subroutine. $N \\le \\mathrm{LDH}$"
 		},
 		{
 			"name": "iloz",
@@ -97,7 +105,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specify the rows of Z to which transformations must be applied if `WANTZ` is .TRUE.. $1 \\le \\mathrm{ILOZ} \\le \\mathrm{IHIZ} \\le N$."
 		},
 		{
 			"name": "Z",
@@ -115,6 +124,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "IF `WANTZ` is .TRUE., then on output, the unitary similarity transformation mentioned above has been accumulated into `Z(ILOZ:IHIZ,ILOZ:IHIZ)` from the right. If `WANTZ` is .FALSE., then Z is unreferenced.",
 			"workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense"
 		},
 		{
@@ -124,7 +134,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of Z just as declared in the calling subroutine. $1 \\le \\mathrm{LDZ}$."
 		},
 		{
 			"name": "ns",
@@ -132,7 +143,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of unconverged (ie approximate) eigenvalues returned in SR and SI that may be used as shifts by the calling subroutine."
 		},
 		{
 			"name": "nd",
@@ -140,7 +152,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of converged eigenvalues uncovered by this subroutine."
 		},
 		{
 			"name": "SH",
@@ -155,7 +168,8 @@
 			"length": {
 				"fortran": "KBOT",
 				"js": "kbot"
-			}
+			},
+			"reference": "On output, approximate eigenvalues that may be used for shifts are stored in `SH(KBOT-ND-NS+1)` through SR(`KBOT`-`ND`). Converged eigenvalues are stored in `SH(KBOT-ND+1)` through `SH(KBOT)`."
 		},
 		{
 			"name": "V",
@@ -173,6 +187,7 @@
 				"fortran": "NW",
 				"js": "nw"
 			},
+			"reference": "An `NW`-by-`NW` work array.",
 			"workDependent": "the window's Hessenberg reduction and its back-transformation round differently on the blocked and unblocked paths LWORK selects, and the reduction amplifies that in the forward sense"
 		},
 		{
@@ -182,7 +197,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of V just as declared in the calling subroutine. $\\mathrm{NW} \\le \\mathrm{LDV}$"
 		},
 		{
 			"name": "nh",
@@ -190,7 +206,8 @@
 			"position": 18,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of T. $\\mathrm{NH} \\ge \\mathrm{NW}$."
 		},
 		{
 			"name": "T",
@@ -217,7 +234,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of T just as declared in the calling subroutine. $\\mathrm{NW} \\le \\mathrm{LDT}$"
 		},
 		{
 			"name": "nv",
@@ -225,7 +243,8 @@
 			"position": 21,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of work array `WV` available for workspace. $\\mathrm{NV} \\ge \\mathrm{NW}$."
 		},
 		{
 			"name": "WV",
@@ -252,7 +271,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WV"
+			"of": "WV",
+			"reference": "The leading dimension of W just as declared in the calling subroutine. $\\mathrm{NW} \\le \\mathrm{LDV}$"
 		},
 		{
 			"name": "WORK",
@@ -264,7 +284,8 @@
 			"dims": [
 				"LWORK"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "On exit, `WORK(1)` is set to an estimate of the optimal value of `LWORK` for the given values of N, `NW`, `KTOP` and `KBOT`."
 		},
 		{
 			"name": "lwork",
@@ -273,7 +294,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the work array `WORK`. $\\mathrm{LWORK} = 2 \\, \\mathrm{NW}$ suffices, but greater efficiency may result from larger values of `LWORK`.\n\nIf `LWORK = -1`, then a workspace query is assumed; ZLAQR2 only estimates the optimal workspace size for the given values of N, `NW`, `KTOP` and `KBOT`. The estimate is returned in `WORK(1)`. No error message related to `LWORK` is issued by XERBLA. Neither H nor Z are accessed."
 		}
 	],
 	"checks": [],

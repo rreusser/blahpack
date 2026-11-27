@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "=.TRUE.: A-transpose will be used. =.FALSE.: A will be used (not transposed.)"
 		},
 		{
 			"name": "na",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The size of the matrix A. It may (only) be 1 or 2."
 		},
 		{
 			"name": "nw",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "1 if \"w\" is real, 2 if \"w\" is complex. It may only be 1 or 2."
 		},
 		{
 			"name": "smin",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The desired lower bound on the singular values of A. This should be a safe distance away from underflow or overflow, say, between (underflow/machine precision) and (machine precision \\* overflow ). (See BIGNUM and ULP.)"
 		},
 		{
 			"name": "ca",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The coefficient c, which A is multiplied by."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "NA",
 				"js": "na"
-			}
+			},
+			"reference": "The `NA` x `NA` matrix A."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A. It must be at least `NA`."
 		},
 		{
 			"name": "d1",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The 1,1 element in the diagonal matrix D."
 		},
 		{
 			"name": "d2",
@@ -91,7 +99,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The 2,2 element in the diagonal matrix D. Not used if `NA=1`."
 		},
 		{
 			"name": "B",
@@ -112,7 +121,8 @@
 			"cols": {
 				"fortran": "NW",
 				"js": "nw"
-			}
+			},
+			"reference": "The `NA` x `NW` matrix B (right-hand side). If `NW=2` (\"w\" is complex), column 1 contains the real part of B and column 2 contains the imaginary part."
 		},
 		{
 			"name": "ldb",
@@ -121,7 +131,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B. It must be at least `NA`."
 		},
 		{
 			"name": "wr",
@@ -129,7 +140,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The real part of the scalar \"w\"."
 		},
 		{
 			"name": "wi",
@@ -137,7 +149,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The imaginary part of the scalar \"w\". Not used if `NW=1`."
 		},
 		{
 			"name": "X",
@@ -158,7 +171,8 @@
 			"cols": {
 				"fortran": "NW",
 				"js": "nw"
-			}
+			},
+			"reference": "The `NA` x `NW` matrix X (unknowns), as computed by DLALN2. If `NW=2` (\"w\" is complex), on exit, column 1 will contain the real part of X and column 2 will contain the imaginary part."
 		},
 		{
 			"name": "ldx",
@@ -167,7 +181,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of X. It must be at least `NA`."
 		},
 		{
 			"name": "scale",
@@ -175,7 +190,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The scale factor that B must be multiplied by to insure that overflow does not occur when computing X. Thus, (ca A - w D) X will be $\\mathrm{SCALE} \\, B$, not B (ignoring perturbations of A.) It will be at most 1."
 		},
 		{
 			"name": "xnorm",
@@ -183,7 +199,8 @@
 			"position": 17,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The infinity-norm of X, when X is regarded as an `NA` x `NW` real matrix."
 		},
 		{
 			"name": "info",
@@ -191,7 +208,8 @@
 			"position": 18,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "An error flag. It will be set to zero if no error occurs, a negative number if an argument is in error, or a positive number if ca A - w D had to be perturbed. The possible values are:\n\n-   `= 0`: No error occurred, and (ca A - w D) did not have to be perturbed.\n-   `= 1`: (ca A - w D) had to be perturbed to make its smallest (or only) singular value greater than `SMIN`. NOTE: In the interests of speed, this routine does not check the inputs for errors."
 		}
 	],
 	"checks": [],

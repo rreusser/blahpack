@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `IDENT` = not 'I', or not 'i', then V1 is unit\n\n-   lower-triangular and stored in the left K-by-K block of\n-   the input matrix A,\n\nIf `IDENT = 'I'` or 'i', then V1 is an identity matrix and\n\nnot stored.\n\nSee Further Details section."
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number or rows of the matrix A. K is also order of the matrix T, i.e. the number of elementary reflectors whose product defines the block reflector. $0 \\le K \\le N$."
 		},
 		{
 			"name": "T",
@@ -59,7 +63,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The upper-triangular K-by-K matrix T in the representation of the block reflector."
 		},
 		{
 			"name": "ldt",
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge K$."
 		},
 		{
 			"name": "A",
@@ -89,7 +95,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry: a) In the K-by-N upper-trapezoidal part A: input matrix A. b) In the columns below the diagonal: columns of V1\n\n(ones are not stored on the diagonal).\n\nOn exit:\n\nA is overwritten by rectangular K-by-N product $H \\, A$.\n\nSee Further Details section."
 		},
 		{
 			"name": "lda",
@@ -98,7 +105,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "`LDB` is INTEGER The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,K)$."
 		},
 		{
 			"name": "B",
@@ -119,7 +127,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry:\n\n-   a) In the M-by-(N-K) right block: input matrix B.\n-   b) In the M-by-N left block: columns of V2.\n\nOn exit:\n\nB is overwritten by rectangular M-by-N product $H \\, B$.\n\nSee Further Details section."
 		},
 		{
 			"name": "ldb",
@@ -128,7 +137,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -149,7 +159,8 @@
 			"cols": {
 				"fortran": "MAX(K,N-K)",
 				"js": "max( K, N - K )"
-			}
+			},
+			"reference": "dimension (`LDWORK`,max(K,N-K))"
 		},
 		{
 			"name": "ldwork",
@@ -157,7 +168,8 @@
 			"position": 12,
 			"role": "lwork",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The leading dimension of the array `WORK`. $\\mathrm{LDWORK} \\ge \\max (1,K)$."
 		}
 	],
 	"checks": [],

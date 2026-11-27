@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "mb",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The block size to be used in the blocked QR. $\\min (M,N) \\ge \\mathrm{MB} \\ge 1$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix A. On exit, the elements on and below the diagonal of the array contain the M-by-MIN(M,N) lower trapezoidal matrix L (L is lower triangular if $M \\le N$); the elements above the diagonal are the rows of V."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "T",
@@ -80,7 +85,8 @@
 			"cols": {
 				"fortran": "MIN(M,N)",
 				"js": "min( M, N )"
-			}
+			},
+			"reference": "The upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See below for further details."
 		},
 		{
 			"name": "ldt",
@@ -89,7 +95,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\mathrm{MB}$."
 		},
 		{
 			"name": "WORK",
@@ -117,7 +124,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

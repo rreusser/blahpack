@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N > 0$."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N diagonal elements of the tridiagonal matrix T."
 		},
 		{
 			"name": "e",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the first (N-1) entries contain the subdiagonal elements of the tridiagonal matrix T; `E(N)` is set to ZERO."
 		},
 		{
 			"name": "info",
@@ -51,7 +54,8 @@
 			"position": 4,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "`INFO` = 0(default) : the matrix warrants computations preserving\n\nrelative accuracy.\n\n`INFO = 1` : the matrix warrants computations guaranteeing\n\nonly absolute accuracy."
 		}
 	],
 	"checks": [],

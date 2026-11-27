@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of D and X. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of X. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "Diagonal matrix D, stored as a vector of length M."
 		},
 		{
 			"name": "X",
@@ -58,7 +61,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix X to be scaled by D. On exit, the scaled matrix."
 		},
 		{
 			"name": "ldx",
@@ -67,7 +71,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the matrix X. $\\mathrm{LDX} \\ge M$."
 		}
 	],
 	"checks": [],

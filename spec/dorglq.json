@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix Q. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix Q. $N \\ge M$."
 		},
 		{
 			"name": "K",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elementary reflectors whose product defines the matrix Q. $M \\ge K \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the i-th row must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by DGELQF in the first k rows of its array argument A. On exit, the M-by-N matrix Q."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The first dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "TAU",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DGELQF."
 		},
 		{
 			"name": "WORK",
@@ -91,7 +97,8 @@
 				"js": "max( 1, M )",
 				"source": "check"
 			},
-			"adaptive": true
+			"adaptive": true,
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -100,7 +107,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,M)$. For optimum performance $\\mathrm{LWORK} \\ge M \\, \\mathrm{NB}$, where NB is the optimal blocksize.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -108,7 +116,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument has an illegal value"
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "The triangular factor U or L from the Cholesky factorization $A = U^T \\, U$ or $A = L \\, L^T$, packed columnwise in a linear array. The j-th column of U or L is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = U(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = L(i,j)` for $j \\le i \\le n$."
 		},
 		{
 			"name": "anorm",
@@ -45,7 +48,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The 1-norm (or infinity-norm) of the symmetric matrix A."
 		},
 		{
 			"name": "rcond",
@@ -53,7 +57,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\mathrm{ANORM} \\, \\mathrm{AINVNM})$, where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine."
 		},
 		{
 			"name": "WORK",
@@ -101,7 +106,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The band matrix A, stored in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(ku+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{ku}) \\le i \\le \\min (m,j+\\mathrm{kl})$."
 		},
 		{
 			"name": "ldab",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "r",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "If `INFO = 0`, or $\\mathrm{INFO} > M$, R contains the row scale factors for A."
 		},
 		{
 			"name": "c",
@@ -97,7 +104,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `INFO = 0`, C contains the column scale factors for A."
 		},
 		{
 			"name": "rowcnd",
@@ -105,7 +113,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `INFO = 0` or $\\mathrm{INFO} > M$, `ROWCND` contains the ratio of the smallest `R(i)` to the largest `R(i)`. If $\\mathrm{ROWCND} \\ge 0.1$ and `AMAX` is neither too large nor too small, it is not worth scaling by R."
 		},
 		{
 			"name": "colcnd",
@@ -113,7 +122,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `INFO = 0`, `COLCND` contains the ratio of the smallest `C(i)` to the largest `C(i)`. If $\\mathrm{COLCND} \\ge 0.1$, it is not worth scaling by C."
 		},
 		{
 			"name": "amax",
@@ -121,7 +131,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Absolute value of largest matrix element. If `AMAX` is very close to overflow or very close to underflow, the matrix should be scaled."
 		},
 		{
 			"name": "info",
@@ -129,7 +140,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, and i is \\<= M:  the i-th row of A is exactly zero\n-   `> M`: the (i-M)-th column of A is exactly zero"
 		}
 	],
 	"checks": [

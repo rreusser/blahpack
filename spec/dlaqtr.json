@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `LTRAN` specifies the option of conjugate transpose:\n\n```text\n= .FALSE.,    op(T+i*B) = T+i*B,\n= .TRUE.,     op(T+i*B) = (T+i*B)**T.\n```"
 		},
 		{
 			"name": "lreal",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `LREAL` specifies the input matrix structure:\n\n```text\n= .FALSE.,    the input is complex\n= .TRUE.,     the input is real\n```"
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of $T+i \\, B$. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, T contains a matrix in Schur canonical form. If `LREAL` = .FALSE., then the first diagonal block of T $\\mu$ be 1 by 1."
 		},
 		{
 			"name": "ldt",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the matrix T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "b",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, B contains the elements to form the matrix B as described above. If `LREAL` = .TRUE., B is not referenced."
 		},
 		{
 			"name": "w",
@@ -82,7 +88,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, W is the diagonal element of the matrix B. If `LREAL` = .TRUE., W is not referenced."
 		},
 		{
 			"name": "scale",
@@ -90,7 +97,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `SCALE` is the scale factor."
 		},
 		{
 			"name": "x",
@@ -105,7 +113,8 @@
 			"length": {
 				"fortran": "2*N",
 				"js": "2 * N"
-			}
+			},
+			"reference": "On entry, X contains the right hand side of the system. On exit, X is overwritten by the solution."
 		},
 		{
 			"name": "WORK",
@@ -133,7 +142,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, `INFO` is set to\n\n0: successful exit. 1: the some diagonal 1 by 1 block has been perturbed by a small number SMIN to keep nonsingularity. 2: the some diagonal 2 by 2 block has been perturbed by a small number in DLALN2 to keep nonsingularity.\n\nNOTE: In the interests of speed, this routine does not\n\ncheck the inputs for errors."
 		}
 	],
 	"checks": [],

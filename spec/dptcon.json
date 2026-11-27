@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the diagonal matrix D from the factorization of A, as computed by DPTTRF."
 		},
 		{
 			"name": "e",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization of A, as computed by DPTTRF."
 		},
 		{
 			"name": "anorm",
@@ -51,7 +54,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The 1-norm of the original matrix A."
 		},
 		{
 			"name": "rcond",
@@ -59,7 +63,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\mathrm{ANORM} \\, \\mathrm{AINVNM})$, where AINVNM is the 1-norm of inv(A) computed in this routine."
 		},
 		{
 			"name": "WORK",
@@ -87,7 +92,8 @@
 			"position": 7,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

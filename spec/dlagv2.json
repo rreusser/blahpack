@@ -27,7 +27,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On entry, the 2 x 2 matrix A. On exit, A is overwritten by the \\`\\`A-part'' of the generalized Schur form."
 		},
 		{
 			"name": "lda",
@@ -36,7 +37,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "THe leading dimension of the array A. $\\mathrm{LDA} \\ge 2$."
 		},
 		{
 			"name": "B",
@@ -57,7 +59,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "On entry, the upper triangular 2 x 2 matrix B. On exit, B is overwritten by the \\`\\`B-part'' of the generalized Schur form."
 		},
 		{
 			"name": "ldb",
@@ -66,7 +69,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "THe leading dimension of the array B. $\\mathrm{LDB} \\ge 2$."
 		},
 		{
 			"name": "ALPHAR",
@@ -111,7 +115,8 @@
 			"length": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "(`ALPHAR(k)`+i\\*`ALPHAI(k)`)/`BETA(k)` are the eigenvalues of the pencil (A,B), $k=1$,2, $i = \\sqrt{-1}$. Note that `BETA(k)` may be zero."
 		},
 		{
 			"name": "csl",
@@ -119,7 +124,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The cosine of the left rotation matrix."
 		},
 		{
 			"name": "snl",
@@ -127,7 +133,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The sine of the left rotation matrix."
 		},
 		{
 			"name": "csr",
@@ -135,7 +142,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The cosine of the right rotation matrix."
 		},
 		{
 			"name": "snr",
@@ -143,7 +151,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The sine of the right rotation matrix."
 		}
 	],
 	"checks": [],

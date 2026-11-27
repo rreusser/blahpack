@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Refer to DLAED4 for its significance."
 		},
 		{
 			"name": "orgati",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `ORGATI` is true, the needed root is between d(2) and d(3); otherwise it is between d(1) and d(2). See DLAED4 for further details."
 		},
 		{
 			"name": "rho",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Refer to the equation f(x) above."
 		},
 		{
 			"name": "d",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "3",
 				"js": "3"
-			}
+			},
+			"reference": "D satisfies $d(1) < d(2) < d(3)$."
 		},
 		{
 			"name": "z",
@@ -59,7 +63,8 @@
 			"length": {
 				"fortran": "3",
 				"js": "3"
-			}
+			},
+			"reference": "Each of the elements in z must be positive."
 		},
 		{
 			"name": "finit",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The value of f at 0. It is more accurate than the one evaluated inside this routine (if someone wants to do so)."
 		},
 		{
 			"name": "tau",
@@ -75,7 +81,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The root of the equation f(x)."
 		},
 		{
 			"name": "info",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `> 0`: if `INFO = 1`, failure to converge"
 		}
 	],
 	"checks": [],

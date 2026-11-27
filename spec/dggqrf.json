@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "M",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "P",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix B. $P \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, the N-by-M matrix A. On exit, the elements on and above the diagonal of the array contain the min(N,M)-by-M upper trapezoidal matrix R (R is upper triangular if $N \\ge M$); the elements below the diagonal, with the array `TAUA`, represent the orthogonal matrix Q as a product of min(N,M) elementary reflectors (see Further Details)."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "TAUA",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "MIN(N,M)",
 				"js": "min( N, M )"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors which represent the orthogonal matrix Q (see Further Details)."
 		},
 		{
 			"name": "B",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "P",
 				"js": "P"
-			}
+			},
+			"reference": "On entry, the N-by-P matrix B. On exit, if $N \\le P$, the upper triangle of the subarray `B(1:N,P-N+1:P)` contains the N-by-N upper triangular matrix T; if $N > P$, the elements on and above the (N-P)-th subdiagonal contain the N-by-P upper trapezoidal matrix T; the remaining elements, with the array `TAUB`, represent the orthogonal matrix Z as a product of elementary reflectors (see Further Details)."
 		},
 		{
 			"name": "ldb",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "TAUB",
@@ -119,7 +127,8 @@
 			"length": {
 				"fortran": "MIN(N,P)",
 				"js": "min( N, P )"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors which represent the orthogonal matrix Z (see Further Details)."
 		},
 		{
 			"name": "WORK",
@@ -135,7 +144,8 @@
 				"fortran": "MAX(1,N,M,P)",
 				"js": "max( max( max( 1, N ), M ), P )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -144,7 +154,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,N,M,P)$. For optimum performance $\\mathrm{LWORK} \\ge \\max (N,M,P) \\, \\max (\\mathrm{NB1},\\mathrm{NB2},\\mathrm{NB3})$, where NB1 is the optimal blocksize for the QR factorization of an N-by-M matrix, NB2 is the optimal blocksize for the RQ factorization of an N-by-P matrix, and NB3 is the optimal blocksize for a call of DORMQR.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -152,7 +163,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The length of the vector X. $N \\ge 0$."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the vector of length N to be conjugated. On exit, X is overwritten with conjg(X)."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The spacing between successive elements of X."
 		}
 	],
 	"checks": [],

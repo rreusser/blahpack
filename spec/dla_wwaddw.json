@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The length of vectors X, Y, and W."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The first part of the doubled-single accumulation vector."
 		},
 		{
 			"name": "y",
@@ -44,7 +46,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The second part of the doubled-single accumulation vector."
 		},
 		{
 			"name": "w",
@@ -59,7 +62,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector to be added."
 		}
 	],
 	"checks": [],

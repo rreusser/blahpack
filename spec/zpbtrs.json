@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangular factor stored in `AB`;\n-   `= 'L'`: Lower triangular factor stored in `AB`."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kd",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\\mathrm{KD} \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The triangular factor U or L from the Cholesky factorization $A = U^H \\, U$ or $A = L \\, L^H$ of the band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of U or L is stored in the j-th column of the array `AB` as follows: if `UPLO ='U'`, `AB(kd+1+i-j,j) = U(i,j)` for $\\max (1,j-\\mathrm{kd}) \\le i \\le j$; if `UPLO ='L'`, `AB(1+i-j,j) = L(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{kd})$."
 		},
 		{
 			"name": "ldab",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KD}+1$."
 		},
 		{
 			"name": "B",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the right hand side matrix B. On exit, the solution matrix X."
 		},
 		{
 			"name": "ldb",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -105,7 +113,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

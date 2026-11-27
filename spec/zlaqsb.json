@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the symmetric matrix A is stored.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kd",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of super-diagonals of the matrix A if `UPLO = 'U'`, or the number of sub-diagonals if `UPLO = 'L'`. $\\mathrm{KD} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{kd}) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{kd})$.\n\nOn exit, if $\\mathrm{INFO} = 0$, the triangular factor U or L from the Cholesky factorization $A = U^H \\, U$ or $A = L \\, L^H$ of the band matrix A, in the same storage format as A."
 		},
 		{
 			"name": "ldab",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KD}+1$."
 		},
 		{
 			"name": "s",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The scale factors for A."
 		},
 		{
 			"name": "scond",
@@ -83,7 +89,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Ratio of the smallest `S(i)` to the largest `S(i)`."
 		},
 		{
 			"name": "amax",
@@ -91,7 +98,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Absolute value of largest matrix entry."
 		},
 		{
 			"name": "equed",
@@ -99,7 +107,8 @@
 			"position": 9,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Specifies whether or not equilibration was done.\n\n-   `= 'N'`: No equilibration.\n-   `= 'Y'`: Equilibration was done, i.e., A has been replaced by $\\operatorname{diag}(S) \\, A \\, \\operatorname{diag}(S)$."
 		}
 	],
 	"checks": [],

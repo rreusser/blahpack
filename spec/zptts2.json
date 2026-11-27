@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the form of the factorization and whether the vector E is the superdiagonal of the upper bidiagonal factor U or the subdiagonal of the lower bidiagonal factor L.\n\n-   `= 1`: $A = U^H \\, D \\, U$, E is the superdiagonal of U\n-   `= 0`: $A = L \\, D \\, L^H$, E is the subdiagonal of L"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the tridiagonal matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the diagonal matrix D from the factorization $A = U^H \\, D \\, U$ or $A = L \\, D \\, L^H$."
 		},
 		{
 			"name": "e",
@@ -60,7 +64,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "If `IUPLO = 1`, the (n-1) superdiagonal elements of the unit bidiagonal factor U from the factorization $A = U^H \\, D \\, U$. If `IUPLO = 0`, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the factorization $A = L \\, D \\, L^H$."
 		},
 		{
 			"name": "B",
@@ -81,7 +86,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X."
 		},
 		{
 			"name": "ldb",
@@ -90,7 +96,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		}
 	],
 	"checks": [],

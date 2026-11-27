@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the scalar a. On exit, the scalar r."
 		},
 		{
 			"name": "b",
@@ -22,6 +23,7 @@
 			"role": "scalar",
 			"dtype": "complex128",
 			"intent": "in",
+			"reference": "The scalar b.",
 			"element": true
 		},
 		{
@@ -31,6 +33,7 @@
 			"role": "scalar",
 			"dtype": "float64",
 			"intent": "out",
+			"reference": "The scalar c.",
 			"element": true
 		},
 		{
@@ -39,7 +42,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The scalar s."
 		}
 	],
 	"checks": [],

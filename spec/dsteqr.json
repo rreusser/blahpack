@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only.\n-   `= 'V'`: Compute eigenvalues and eigenvectors of the original symmetric matrix.  On entry, Z must contain the orthogonal matrix used to reduce the original matrix to tridiagonal form.\n-   `= 'I'`: Compute eigenvalues and eigenvectors of the tridiagonal matrix.  Z is initialized to the identity matrix."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the diagonal elements of the tridiagonal matrix. On exit, if `INFO = 0`, the eigenvalues in ascending order."
 		},
 		{
 			"name": "e",
@@ -51,7 +54,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, the (n-1) subdiagonal elements of the tridiagonal matrix. On exit, E has been destroyed."
 		},
 		{
 			"name": "Z",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPZ = 'V'`, then Z contains the orthogonal matrix used in the reduction to tridiagonal form. On exit, if `INFO = 0`, then if `COMPZ = 'V'`, Z contains the orthonormal eigenvectors of the original symmetric matrix, and if `COMPZ = 'I'`, Z contains the orthonormal eigenvectors of the symmetric tridiagonal matrix. If `COMPZ = 'N'`, then Z is not referenced."
 		},
 		{
 			"name": "ldz",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if eigenvectors are desired, then $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -101,7 +107,8 @@
 				"fortran": "MAX(1,2*N-2)",
 				"js": "max( 1, 2 * N - 2 )",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `COMPZ = 'N'`, then `WORK` is not referenced."
 		},
 		{
 			"name": "info",
@@ -109,7 +116,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: the algorithm has failed to find all the eigenvalues in a total of $30 \\, N$ iterations; if `INFO = i`, then i elements of E have not converged to zero; on exit, D and E contain the elements of a symmetric tridiagonal matrix which is orthogonally similar to the original matrix."
 		}
 	],
 	"checks": [

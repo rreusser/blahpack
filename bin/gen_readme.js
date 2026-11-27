@@ -15,6 +15,7 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var util = require( './conformance/util.js' );
+var fortranDocsBlock = require( './lib/fortran-docs-block.cjs' );
 
 // Clean, curated descriptions keyed by routine name (see
 // bin/gen-descriptions.js). Preferred over the JSDoc-derived summary, which
@@ -315,7 +316,13 @@ function main() {
 				errors.push( mod.routine + ': could not generate' );
 				return;
 			}
-			fs.writeFileSync( path.join( mod.dir, 'README.md' ), content );
+			// Keep the generated reference-documentation block (bin/fortran-docs.mjs --readme).
+			var readmePath = path.join( mod.dir, 'README.md' );
+			var kept = fs.existsSync( readmePath ) ? fortranDocsBlock.block( fs.readFileSync( readmePath, 'utf8' ) ) : null;
+			if ( kept ) {
+				content = fortranDocsBlock.upsert( content, kept );
+			}
+			fs.writeFileSync( readmePath, content );
 			generated++;
 		} catch ( e ) {
 			errors.push( mod.routine + ': ' + e.message );

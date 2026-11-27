@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'E'`: Compute eigenvalues only;\n-   `= 'S'`: Computer eigenvalues and the Schur form."
 		},
 		{
 			"name": "compq",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Left Schur vectors (Q) are not computed;\n-   `= 'I'`: Q is initialized to the unit matrix and the matrix Q of left Schur vectors of (H,T) is returned;\n-   `= 'V'`: Q must contain a unitary matrix Q1 on entry and the product $Q_{1} \\, Q$ is returned."
 		},
 		{
 			"name": "compz",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Right Schur vectors (Z) are not computed;\n-   `= 'I'`: Q is initialized to the unit matrix and the matrix Z of right Schur vectors of (H,T) is returned;\n-   `= 'V'`: Z must contain a unitary matrix Z1 on entry and the product $Z_{1} \\, Z$ is returned."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices H, T, Q, and Z. $N \\ge 0$."
 		},
 		{
 			"name": "ilo",
@@ -53,7 +57,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`ILO` and `IHI` mark the rows and columns of H which are in Hessenberg form. It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. If $N > 0$, $1 \\le \\mathrm{ILO} \\le \\mathrm{IHI} \\le N$; if $N = 0$, `ILO=1` and `IHI=0`."
 		},
 		{
 			"name": "H",
@@ -74,7 +79,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N upper Hessenberg matrix H. On exit, if `JOB = 'S'`, H contains the upper triangular matrix S from the generalized Schur factorization. If `JOB = 'E'`, the diagonal of H matches that of S, but the rest of H is unspecified."
 		},
 		{
 			"name": "ldh",
@@ -83,7 +89,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of the array H. $\\mathrm{LDH} \\ge \\max ( 1, N )$."
 		},
 		{
 			"name": "T",
@@ -104,7 +111,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N upper triangular matrix T. On exit, if `JOB = 'S'`, T contains the upper triangular matrix P from the generalized Schur factorization. If `JOB = 'E'`, the diagonal of T matches that of P, but the rest of T is unspecified."
 		},
 		{
 			"name": "ldt",
@@ -113,7 +121,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max ( 1, N )$."
 		},
 		{
 			"name": "ALPHA",
@@ -128,7 +137,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The complex scalars $\\alpha$ that define the eigenvalues of GNEP. `ALPHA(i) = S(i,i)` in the generalized Schur factorization."
 		},
 		{
 			"name": "BETA",
@@ -143,7 +153,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The real non-negative scalars $\\beta$ that define the eigenvalues of GNEP. `BETA(i) = P(i,i)` in the generalized Schur factorization.\n\nTogether, the quantities $\\alpha = \\mathrm{ALPHA}(j)$ and $\\beta = \\mathrm{BETA}(j)$ represent the j-th eigenvalue of the matrix pair (A,B), in one of the forms $\\lambda = \\alpha /\\beta$ or $\\mu = \\beta /\\alpha$. Since either $\\lambda$ or $\\mu$ may overflow, they should not, in general, be computed."
 		},
 		{
 			"name": "Q",
@@ -164,7 +175,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPQ = 'V'`, the unitary matrix Q1 used in the reduction of (A,B) to generalized Hessenberg form. On exit, if `COMPQ = 'I'`, the unitary matrix of left Schur vectors of (H,T), and if `COMPQ = 'V'`, the unitary matrix of left Schur vectors of (A,B). Not referenced if `COMPQ = 'N'`."
 		},
 		{
 			"name": "ldq",
@@ -173,7 +185,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$. If `COMPQ='V'` or 'I', then $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "Z",
@@ -194,7 +207,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPZ = 'V'`, the unitary matrix Z1 used in the reduction of (A,B) to generalized Hessenberg form. On exit, if `COMPZ = 'I'`, the unitary matrix of right Schur vectors of (H,T), and if `COMPZ = 'V'`, the unitary matrix of right Schur vectors of (A,B). Not referenced if `COMPZ = 'N'`."
 		},
 		{
 			"name": "ldz",
@@ -203,7 +217,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$. If `COMPZ='V'` or 'I', then $\\mathrm{LDZ} \\ge N$."
 		},
 		{
 			"name": "WORK",
@@ -219,7 +234,8 @@
 				"fortran": "MAX(1,N)",
 				"js": "max( 1, N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if $\\mathrm{INFO} \\ge 0$, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -228,7 +244,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,N)$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -256,7 +273,8 @@
 			"position": 20,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `= 1,...,N`: the QZ iteration did not converge.  (H,T) is not in Schur form, but `ALPHA(i)` and `BETA(i)`, $i=\\mathrm{INFO}+1$,...,N should be correct. = N+1,...,$2 \\, N$: the shift calculation failed.  (H,T) is not in Schur form, but `ALPHA(i)` and `BETA(i)`, $i=\\mathrm{INFO}-N+1$,...,N should be correct."
 		}
 	],
 	"checks": [

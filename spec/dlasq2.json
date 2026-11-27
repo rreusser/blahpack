@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows and columns in the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "z",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "4*N",
 				"js": "4 * N"
-			}
+			},
+			"reference": "On entry Z holds the qd array. On exit, entries 1 to N hold the eigenvalues in decreasing order, Z( 2\\*N+1 ) holds the trace, and Z( 2\\*N+2 ) holds the sum of the eigenvalues. If $N > 2$, then Z( 2\\*N+3 ) holds the iteration count, Z( 2\\*N+4 ) holds NDIVS/NIN^2, and Z( 2\\*N+5 ) holds the percentage of shifts that failed."
 		},
 		{
 			"name": "info",
@@ -36,7 +38,8 @@
 			"position": 3,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if the i-th argument is a scalar and had an illegal value, then `INFO = -i`, if the i-th argument is an array and the j-entry had an illegal value, then `INFO = -(i*100+j)`\n-   `> 0`: the algorithm failed = 1, a split was marked by a positive value in $E = 2$, current block of Z not diagonalized after $100 \\, N$ iterations (in inner while loop).  On exit Z holds a qd array with the same eigenvalues as the given Z. = 3, termination criterion of outer while loop not met (program created more than N unreduced blocks)"
 		}
 	],
 	"checks": [

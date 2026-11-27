@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the output from this procedure is used to compute the matrix V:\n\n-   `= 'V'`: the product of the Jacobi rotations is accumulated by postmultiplying the N-by-N array V. (See the description of V.)\n-   `= 'A'`: the product of the Jacobi rotations is accumulated by postmultiplying the `MV`-by-N array V. (See the descriptions of `MV` and V.)\n-   `= 'N'`: the Jacobi rotations are not accumulated."
 		},
 		{
 			"name": "M",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the input matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the input matrix A. $M \\ge N \\ge 0$."
 		},
 		{
 			"name": "n1",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`N1` specifies the 2 x 2 block partition, the first `N1` columns are rotated 'against' the remaining N-`N1` columns of A."
 		},
 		{
 			"name": "A",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, M-by-N matrix A, such that $A \\, \\operatorname{diag}(D)$ represents the input matrix. On exit, A\\_onexit \\* D\\_onexit represents the input matrix $A \\, \\operatorname{diag}(D)$ post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of `N1`, D, `TOL` and `NSWEEP`.)"
 		},
 		{
 			"name": "lda",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "d",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The array D accumulates the scaling factors from the fast scaled Jacobi rotations. On entry, $A \\, \\operatorname{diag}(D)$ represents the input matrix. On exit, A\\_onexit\\*diag(D\\_onexit) represents the input matrix post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of `N1`, A, `TOL` and `NSWEEP`.)"
 		},
 		{
 			"name": "SVA",
@@ -97,7 +104,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, `SVA` contains the Euclidean norms of the columns of the matrix $A \\, \\operatorname{diag}(D)$. On exit, `SVA` contains the Euclidean norms of the columns of the matrix onexit\\*diag(D\\_onexit)."
 		},
 		{
 			"name": "mv",
@@ -105,7 +113,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `JOBV = 'A'`, then `MV` rows of V are post-multiplied by a\n\nsequence of Jacobi rotations.\n\nIf `JOBV = 'N'`, then `MV` is not referenced."
 		},
 		{
 			"name": "V",
@@ -126,7 +135,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBV = 'V'`, then N rows of V are post-multiplied by a\n\nsequence of Jacobi rotations.\n\nIf `JOBV = 'A'`, then `MV` rows of V are post-multiplied by a\n\nsequence of Jacobi rotations.\n\nIf `JOBV = 'N'`, then V is not referenced."
 		},
 		{
 			"name": "ldv",
@@ -135,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V, $\\mathrm{LDV} \\ge 1$. If `JOBV = 'V'`, $\\mathrm{LDV} \\ge N$. If `JOBV = 'A'`, $\\mathrm{LDV} \\ge \\mathrm{MV}$."
 		},
 		{
 			"name": "eps",
@@ -143,7 +154,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`EPS = DLAMCH('Epsilon')`"
 		},
 		{
 			"name": "sfmin",
@@ -151,7 +163,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`SFMIN` = DLAMCH('Safe Minimum')"
 		},
 		{
 			"name": "tol",
@@ -159,7 +172,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`TOL` is the threshold for Jacobi rotations. For a pair `A(:,p)`, `A(:,q)` of pivot columns, the Jacobi rotation is applied only if DABS(COS(angle(`A(:,p)`,`A(:,q)`))) \\> `TOL`."
 		},
 		{
 			"name": "nsweep",
@@ -167,7 +181,8 @@
 			"position": 15,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`NSWEEP` is the number of sweeps of Jacobi rotations to be performed."
 		},
 		{
 			"name": "WORK",
@@ -192,7 +207,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "`LWORK` is the dimension of `WORK`. $\\mathrm{LWORK} \\ge M$."
 		},
 		{
 			"name": "info",
@@ -200,7 +216,8 @@
 			"position": 18,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, then the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

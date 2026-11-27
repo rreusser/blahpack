@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the superdiagonal or the subdiagonal of the tridiagonal matrix A is stored and the form of the factorization:\n\n-   `= 'U'`: E is the superdiagonal of A, and $A = U^H \\, D \\, U$;\n-   `= 'L'`: E is the subdiagonal of A, and $A = L \\, D \\, L^H$. (The two forms are equivalent if A is real.)"
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n real diagonal elements of the tridiagonal matrix A."
 		},
 		{
 			"name": "e",
@@ -59,7 +63,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) off-diagonal elements of the tridiagonal matrix A (see `UPLO`)."
 		},
 		{
 			"name": "DF",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the diagonal matrix D from the factorization computed by ZPTTRF."
 		},
 		{
 			"name": "EF",
@@ -89,7 +95,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization computed by ZPTTRF (see `UPLO`)."
 		},
 		{
 			"name": "B",
@@ -110,7 +117,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The right hand side matrix B."
 		},
 		{
 			"name": "ldb",
@@ -119,7 +127,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "X",
@@ -140,7 +149,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the solution matrix X, as computed by ZPTTRS. On exit, the improved solution matrix X."
 		},
 		{
 			"name": "ldx",
@@ -149,7 +159,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "FERR",
@@ -164,7 +175,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`."
 		},
 		{
 			"name": "BERR",
@@ -179,7 +191,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution)."
 		},
 		{
 			"name": "WORK",
@@ -227,7 +240,8 @@
 			"position": 16,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

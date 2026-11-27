@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N diagonal elements of the diagonal matrix D."
 		},
 		{
 			"name": "LLD",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (N-1) elements $L(i) \\, L(i) \\, D(i)$."
 		},
 		{
 			"name": "ifirst",
@@ -51,7 +54,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the first eigenvalue to be computed."
 		},
 		{
 			"name": "ilast",
@@ -59,7 +63,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the last eigenvalue to be computed."
 		},
 		{
 			"name": "rtol1",
@@ -75,7 +80,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Tolerance for the convergence of the bisection intervals. An interval \\[LEFT,RIGHT\\] has converged if $\\mathrm{RIGHT}-\\mathrm{LEFT} < \\max ( \\mathrm{RTOL1} \\, \\mathrm{GAP}, \\mathrm{RTOL2} \\, \\max (|\\mathrm{LEFT}|,|\\mathrm{RIGHT}|) )$ where GAP is the (estimated) distance to the nearest eigenvalue."
 		},
 		{
 			"name": "offset",
@@ -83,7 +89,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Offset for the arrays W, `WGAP` and `WERR`, i.e., the `IFIRST`-`OFFSET` through `ILAST`-`OFFSET` elements of these arrays are to be used."
 		},
 		{
 			"name": "w",
@@ -98,7 +105,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ) are estimates of the eigenvalues of L D L^T indexed `IFIRST` through `ILAST`. On output, these estimates are refined."
 		},
 		{
 			"name": "WGAP",
@@ -113,7 +121,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, the (estimated) gaps between consecutive eigenvalues of L D L^T, i.e., `WGAP(I-OFFSET)` is the gap between eigenvalues I and I+1. Note that if `IFIRST = ILAST` then `WGAP(IFIRST-OFFSET)` must be set to ZERO. On output, these gaps are refined."
 		},
 		{
 			"name": "WERR",
@@ -128,7 +137,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, WERR( `IFIRST`-`OFFSET` ) through WERR( `ILAST`-`OFFSET` ) are the errors in the estimates of the corresponding elements in W. On output, these errors are refined."
 		},
 		{
 			"name": "WORK",
@@ -148,7 +158,8 @@
 				"fortran": "2*N",
 				"js": "2 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "IWORK",
@@ -168,7 +179,8 @@
 				"fortran": "2*N",
 				"js": "2 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "pivmin",
@@ -176,7 +188,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum pivot in the Sturm sequence."
 		},
 		{
 			"name": "spdiam",
@@ -184,7 +197,8 @@
 			"position": 15,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The spectral diameter of the matrix."
 		},
 		{
 			"name": "twist",
@@ -192,7 +206,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The twist index for the twisted factorization that is used for the negcount. `TWIST = N`: Compute negcount from L D L^T - LAMBDA $I = L+ D+ L$+^T `TWIST = 1`: Compute negcount from L D L^T - LAMBDA $I = U- D- U$-^T `TWIST = R`: Compute negcount from L D L^T - LAMBDA $I = N(r)$ `D(r)` `N(r)`"
 		},
 		{
 			"name": "info",
@@ -200,7 +215,8 @@
 			"position": 17,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Error flag."
 		}
 	],
 	"checks": [],

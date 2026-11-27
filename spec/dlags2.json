@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE.: the input matrices A and B are upper triangular. = .FALSE.: the input matrices A and B are lower triangular."
 		},
 		{
 			"name": "a1",
@@ -37,7 +38,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `A1`, `A2` and `A3` are elements of the input 2-by-2 upper (lower) triangular matrix A."
 		},
 		{
 			"name": "b1",
@@ -61,7 +63,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `B1`, `B2` and `B3` are elements of the input 2-by-2 upper (lower) triangular matrix B."
 		},
 		{
 			"name": "csu",
@@ -77,7 +80,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The desired orthogonal matrix U."
 		},
 		{
 			"name": "csv",
@@ -93,7 +97,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The desired orthogonal matrix V."
 		},
 		{
 			"name": "csq",
@@ -109,7 +114,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The desired orthogonal matrix Q."
 		}
 	],
 	"checks": [],

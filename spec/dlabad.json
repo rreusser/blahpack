@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the underflow threshold as computed by DLAMCH. On exit, the unchanged value `SMALL`."
 		},
 		{
 			"name": "large",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, the overflow threshold as computed by DLAMCH. On exit, the unchanged value `LARGE`."
 		}
 	],
 	"checks": [],

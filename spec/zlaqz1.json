@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines whether or not to update the matrix Q"
 		},
 		{
 			"name": "ilz",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines whether or not to update the matrix Z"
 		},
 		{
 			"name": "k",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Index indicating the position of the bulge. On entry, the bulge is located in\n\n```text\n(A(k+1,k),B(k+1,k)).\nOn exit, the bulge is located in\n(A(k+2,k+1),B(k+2,k+1)).\n```"
 		},
 		{
 			"name": "istartm",
@@ -46,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Updates to (A,B) are restricted to (istartm:k+2,k:istopm). It is assumed without checking that istartm \\<= k+1 and k+2 \\<= istopm"
 		},
 		{
 			"name": "ihi",
@@ -80,7 +84,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A as declared in the calling procedure."
 		},
 		{
 			"name": "B",
@@ -106,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B as declared in the calling procedure."
 		},
 		{
 			"name": "nq",
@@ -114,7 +120,8 @@
 			"position": 11,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix Q"
 		},
 		{
 			"name": "qstart",
@@ -122,7 +129,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Start index of the matrix Q. Rotations are applied To columns k+2-qStart:k+3-qStart of Q."
 		},
 		{
 			"name": "Q",
@@ -148,7 +156,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of Q as declared in the calling procedure."
 		},
 		{
 			"name": "nz",
@@ -156,7 +165,8 @@
 			"position": 15,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix Z"
 		},
 		{
 			"name": "zstart",
@@ -164,7 +174,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Start index of the matrix Z. Rotations are applied To columns k+1-qStart:k+2-qStart of Z."
 		},
 		{
 			"name": "Z",
@@ -190,7 +201,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of Q as declared in the calling procedure."
 		}
 	],
 	"checks": [],

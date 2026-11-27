@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrices B and X. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The symmetric matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "AF",
@@ -80,7 +85,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The factored form of the matrix A. `AF` contains the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization $A = U \\, D \\, U^T$ or $A = L \\, D \\, L^T$ as computed by ZSYTRF."
 		},
 		{
 			"name": "ldaf",
@@ -89,7 +95,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AF"
+			"of": "AF",
+			"reference": "The leading dimension of the array `AF`. $\\mathrm{LDAF} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "IPIV",
@@ -104,7 +111,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D as determined by ZSYTRF."
 		},
 		{
 			"name": "B",
@@ -125,7 +133,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The right hand side matrix B."
 		},
 		{
 			"name": "ldb",
@@ -134,7 +143,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "X",
@@ -155,7 +165,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the solution matrix X, as computed by ZSYTRS. On exit, the improved solution matrix X."
 		},
 		{
 			"name": "ldx",
@@ -164,7 +175,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "FERR",
@@ -179,7 +191,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error."
 		},
 		{
 			"name": "BERR",
@@ -194,7 +207,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution)."
 		},
 		{
 			"name": "WORK",
@@ -242,7 +256,8 @@
 			"position": 17,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

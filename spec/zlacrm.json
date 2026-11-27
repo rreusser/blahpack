@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A and of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns and rows of the matrix B and the number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -43,7 +45,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, A contains the M by N matrix A."
 		},
 		{
 			"name": "lda",
@@ -52,7 +55,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -73,7 +77,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, B contains the N by N matrix B."
 		},
 		{
 			"name": "ldb",
@@ -82,7 +87,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "C",
@@ -103,7 +109,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, C contains the M by N matrix C."
 		},
 		{
 			"name": "ldc",
@@ -112,7 +119,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "RWORK",

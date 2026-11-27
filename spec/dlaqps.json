@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$"
 		},
 		{
 			"name": "offset",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of A that have been factorized in previous steps."
 		},
 		{
 			"name": "nb",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns to factorize."
 		},
 		{
 			"name": "kb",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of columns actually factorized."
 		},
 		{
 			"name": "A",
@@ -67,7 +72,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix A. On exit, block `A(OFFSET+1:M,1:KB)` is the triangular factor obtained and block `A(1:OFFSET,1:N)` has been accordingly pivoted, but no factorized. The rest of the matrix, block `A(OFFSET+1:M,KB+1:N)` has been updated."
 		},
 		{
 			"name": "lda",
@@ -76,7 +82,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "JPVT",
@@ -91,7 +98,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`JPVT(I) = K` \\<==\\> Column K of the full matrix A has been permuted into position I in AP."
 		},
 		{
 			"name": "TAU",
@@ -106,7 +114,8 @@
 			"length": {
 				"fortran": "KB",
 				"js": "kb"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors."
 		},
 		{
 			"name": "VN1",
@@ -121,7 +130,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector with the partial column norms."
 		},
 		{
 			"name": "VN2",
@@ -136,7 +146,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector with the exact column norms."
 		},
 		{
 			"name": "AUXV",
@@ -151,7 +162,8 @@
 			"length": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "Auxiliary vector."
 		},
 		{
 			"name": "F",
@@ -172,7 +184,8 @@
 			"cols": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "Matrix $F^T = L \\, Y^T \\, A$."
 		},
 		{
 			"name": "ldf",
@@ -181,7 +194,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "F"
+			"of": "F",
+			"reference": "The leading dimension of the array F. $\\mathrm{LDF} \\ge \\max (1,N)$."
 		}
 	],
 	"checks": [],

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the tridiagonal matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "iw",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the eigenvalues to be returned."
 		},
 		{
 			"name": "gl",
@@ -37,7 +39,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "An upper and a lower bound on the eigenvalue."
 		},
 		{
 			"name": "d",
@@ -52,7 +55,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the tridiagonal matrix T."
 		},
 		{
 			"name": "E2",
@@ -67,7 +71,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) squared off-diagonal elements of the tridiagonal matrix T."
 		},
 		{
 			"name": "pivmin",
@@ -75,7 +80,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum pivot allowed in the Sturm sequence for T."
 		},
 		{
 			"name": "reltol",
@@ -83,7 +89,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum relative width of an interval. When an interval is narrower than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. Note: this should always be at least radix\\*machine $\\epsilon$."
 		},
 		{
 			"name": "w",
@@ -99,7 +106,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The error bound on the corresponding eigenvalue approximation in W."
 		},
 		{
 			"name": "info",
@@ -107,7 +115,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: Eigenvalue converged\n-   `= -1`: Eigenvalue did NOT converge"
 		}
 	],
 	"checks": [],

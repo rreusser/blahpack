@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "ilo",
@@ -29,7 +30,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. `ILO` and `IHI` are normally set by a previous call to ZGEBAL; otherwise they should be set to 1 and N respectively. See Further Details. $1 \\le \\mathrm{ILO} \\le \\mathrm{IHI} \\le \\max (1,N)$."
 		},
 		{
 			"name": "A",
@@ -50,7 +52,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the n by n general matrix to be reduced. On exit, the upper triangle and the first subdiagonal of A are overwritten with the upper Hessenberg matrix H, and the elements below the first subdiagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors. See Further Details."
 		},
 		{
 			"name": "lda",
@@ -59,7 +62,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "TAU",
@@ -74,7 +78,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors (see Further Details)."
 		},
 		{
 			"name": "WORK",
@@ -102,7 +107,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

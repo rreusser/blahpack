@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether condition numbers are required for eigenvalues (S) or eigenvectors (`SEP`):\n\n-   `= 'E'`: for eigenvalues only (S);\n-   `= 'V'`: for eigenvectors only (`SEP`);\n-   `= 'B'`: for both eigenvalues and eigenvectors (S and `SEP`)."
 		},
 		{
 			"name": "howmny",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: compute condition numbers for all eigenpairs;\n-   `= 'S'`: compute condition numbers for selected eigenpairs specified by the array `SELECT`."
 		},
 		{
 			"name": "SELECT",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `HOWMNY = 'S'`, `SELECT` specifies the eigenpairs for which condition numbers are required. To select condition numbers for the eigenpair corresponding to a real eigenvalue w(j), `SELECT(j)` must be set to .TRUE.. To select condition numbers corresponding to a complex conjugate pair of eigenvalues w(j) and w(j+1), either `SELECT(j)` or `SELECT(j+1)` or both, must be set to .TRUE.. If `HOWMNY = 'A'`, `SELECT` is not referenced."
 		},
 		{
 			"name": "N",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -65,7 +69,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper quasi-triangular matrix T, in Schur canonical form."
 		},
 		{
 			"name": "ldt",
@@ -74,7 +79,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "VL",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'E'` or 'B', `VL` must contain left eigenvectors of T (or of any $Q \\, T \\, Q^T$ with Q orthogonal), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VL`, as returned by DHSEIN or DTREVC. If `JOB = 'V'`, `VL` is not referenced."
 		},
 		{
 			"name": "ldvl",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the array `VL`. $\\mathrm{LDVL} \\ge 1$; and if `JOB = 'E'` or 'B', $\\mathrm{LDVL} \\ge N$."
 		},
 		{
 			"name": "VR",
@@ -125,7 +133,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'E'` or 'B', `VR` must contain right eigenvectors of T (or of any $Q \\, T \\, Q^T$ with Q orthogonal), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VR`, as returned by DHSEIN or DTREVC. If `JOB = 'V'`, `VR` is not referenced."
 		},
 		{
 			"name": "ldvr",
@@ -134,7 +143,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the array `VR`. $\\mathrm{LDVR} \\ge 1$; and if `JOB = 'E'` or 'B', $\\mathrm{LDVR} \\ge N$."
 		},
 		{
 			"name": "s",
@@ -149,7 +159,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'E'` or 'B', the reciprocal condition numbers of the selected eigenvalues, stored in consecutive elements of the array. For a complex conjugate pair of eigenvalues two consecutive elements of S are set to the same value. Thus `S(j)`, `SEP(j)`, and the j-th columns of `VL` and `VR` all correspond to the same eigenpair (but not in general the j-th eigenpair, unless all eigenpairs are selected). If `JOB = 'V'`, S is not referenced."
 		},
 		{
 			"name": "SEP",
@@ -164,7 +175,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'V'` or 'B', the estimated reciprocal condition numbers of the selected eigenvectors, stored in consecutive elements of the array. For a complex eigenvector two consecutive elements of `SEP` are set to the same value. If the eigenvalues cannot be reordered to compute `SEP(j)`, `SEP(j)` is set to 0; this can only occur when the true value would be very small anyway. If `JOB = 'E'`, `SEP` is not referenced."
 		},
 		{
 			"name": "mm",
@@ -172,7 +184,8 @@
 			"position": 13,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elements in the arrays S (if `JOB = 'E'` or 'B') and/or `SEP` (if `JOB = 'V'` or 'B'). $\\mathrm{MM} \\ge M$."
 		},
 		{
 			"name": "m",
@@ -180,7 +193,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of elements of the arrays S and/or `SEP` actually used to store the estimated condition numbers. If `HOWMNY = 'A'`, M is set to N."
 		},
 		{
 			"name": "WORK",
@@ -201,7 +215,8 @@
 			"cols": {
 				"fortran": "N+6",
 				"js": "N < 2 ? N : N + 6"
-			}
+			},
+			"reference": "If `JOB = 'E'`, `WORK` is not referenced."
 		},
 		{
 			"name": "ldwork",
@@ -209,7 +224,8 @@
 			"position": 16,
 			"role": "lwork",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The leading dimension of the array `WORK`. $\\mathrm{LDWORK} \\ge 1$; and if `JOB = 'V'` or 'B', $\\mathrm{LDWORK} \\ge N$."
 		},
 		{
 			"name": "IWORK",
@@ -229,7 +245,8 @@
 				"fortran": "2*(N-1)",
 				"js": "2 * (N - 1)",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `JOB = 'E'`, `IWORK` is not referenced."
 		},
 		{
 			"name": "info",
@@ -237,7 +254,8 @@
 			"position": 18,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

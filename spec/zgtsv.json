@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "DL",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, `DL` must contain the (n-1) subdiagonal elements of A. On exit, `DL` is overwritten by the (n-2) elements of the second superdiagonal of the upper triangular matrix U from the LU factorization of A, in `DL(1)`, ..., `DL(n-2)`."
 		},
 		{
 			"name": "d",
@@ -51,7 +54,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U."
 		},
 		{
 			"name": "DU",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, `DU` must contain the (n-1) superdiagonal elements of A. On exit, `DU` is overwritten by the (n-1) elements of the first superdiagonal of U."
 		},
 		{
 			"name": "B",
@@ -87,7 +92,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X."
 		},
 		{
 			"name": "ldb",
@@ -96,7 +102,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -104,7 +111,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, U(i,i) is exactly zero, and the solution has not been computed.  The factorization has not been completed unless $i = N$."
 		}
 	],
 	"checks": [

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in DLANTB as described above."
 		},
 		{
 			"name": "uplo",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the matrix A is upper or lower triangular.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "diag",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not the matrix A is unit triangular.\n\n-   `= 'N'`: Non-unit triangular\n-   `= 'U'`: Unit triangular"
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, DLANTB is set to zero."
 		},
 		{
 			"name": "K",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of super-diagonals of the matrix A if `UPLO = 'U'`, or the number of sub-diagonals of the matrix A if `UPLO = 'L'`. $K \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -67,7 +72,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper or lower triangular band matrix A, stored in the first k+1 rows of `AB`. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(k+1+i-j,j) = A(i,j)` for $\\max (1,j-k) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+k)$. Note that when `DIAG = 'U'`, the elements of the array `AB` corresponding to the diagonal elements of the matrix A are not referenced, but are assumed to be one."
 		},
 		{
 			"name": "ldab",
@@ -76,7 +82,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge K+1$."
 		},
 		{
 			"name": "WORK",
@@ -88,7 +95,8 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'`; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

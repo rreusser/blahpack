@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.\n\n-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, diagonal of the block diagonal matrix D and factors U or L as computed by ZHETRF\\_RK and ZHETRF\\_BK:\n\n-   a) ONLY diagonal elements of the Hermitian block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D should be provided on entry in array E), and\n-   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.\n\nOn exit, if `INFO = 0`, the Hermitian inverse of the original matrix.\n\n-   If `UPLO = 'U'`: the upper triangular part of the inverse\n-   is formed and the part of A below the diagonal is not\n-   referenced;\n-   If `UPLO = 'L'`: the lower triangular part of the inverse\n-   is formed and the part of A above the diagonal is not\n-   referenced."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "e",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, contains the superdiagonal (or subdiagonal) elements of the Hermitian block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$, $i=2$:N, `E(1)` not referenced; If `UPLO = 'L'`: $E(i) = D(i+1,i)$, $i=1$:N-1, `E(N)` not referenced.\n\nNOTE: For 1-by-1 diagonal block D(k), where $1 \\le k \\le N$, the element `E(k)` is not referenced in both `UPLO = 'U'` or `UPLO = 'L'` cases."
 		},
 		{
 			"name": "IPIV",
@@ -81,7 +86,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D as determined by ZHETRF\\_RK or ZHETRF\\_BK."
 		},
 		{
 			"name": "WORK",
@@ -110,7 +116,8 @@
 			"position": 8,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Block size."
 		},
 		{
 			"name": "info",
@@ -118,7 +125,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, $D(i,i) = 0$; the matrix is singular and its inverse could not be computed."
 		}
 	],
 	"checks": [

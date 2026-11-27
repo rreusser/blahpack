@@ -263,6 +263,8 @@ jobs:
       - run: npm ci
       - name: Every module example runs (bin/examples-smoke.sh)
         run: bin/examples-smoke.sh
+      - name: Every bench and example script outside lib/ runs (bin/scripts-smoke.sh)
+        run: bin/scripts-smoke.sh
 
   # Browser build (ticket 0112): dist/ holds one self-contained ES module per
   # routine plus the vendored stdlib runtime, for CDNs and notebooks. The check

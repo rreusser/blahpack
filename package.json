@@ -977,6 +977,7 @@
     "typecheck": "tsc -p tsconfig.json",
     "typecheck:callers": "tsc -p tsconfig.callers.json",
     "examples:smoke": "bash bin/examples-smoke.sh",
+    "scripts:smoke": "bash bin/scripts-smoke.sh",
     "tickets": "node bin/tickets.js",
     "tickets:check": "node bin/tickets.js check",
     "gen:fortran-signatures": "node bin/gen_fortran_signatures.js",

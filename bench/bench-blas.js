@@ -1,30 +1,41 @@
 #!/usr/bin/env node
-'use strict';
 
 // Microbenchmarks for the leaf-node BLAS/LAPACK functions that dominate
 // the zggev workload. Tests at workload-relevant sizes and parameter
 // combinations, reports throughput in GFLOPS and µs/call.
 //
 // Usage:
-//   node bin/bench-blas.js
-//   node bin/bench-blas.js --only zgemm
-//   node bin/bench-blas.js --only zrot
+//   node bench/bench-blas.js
+//   node bench/bench-blas.js --only zgemm
+//   node bench/bench-blas.js --only zrot
+//   node bench/bench-blas.js --target-ms 20     (quick pass)
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var Complex128 = require( '@stdlib/complex/float64/ctor' );
-var zgemm = require( '../lib/blas/base/zgemm/lib/base.js' );
-var ztrmm = require( '../lib/blas/base/ztrmm/lib/base.js' );
-var zgemv = require( '../lib/blas/base/zgemv/lib/base.js' );
-var zrot = require( '../lib/lapack/base/zrot/lib/base.js' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
+import zgemm from '../lib/blas/base/zgemm/lib/ndarray.js';
+import ztrmm from '../lib/blas/base/ztrmm/lib/ndarray.js';
+import zgemv from '../lib/blas/base/zgemv/lib/ndarray.js';
+import zrot from '../lib/lapack/base/zrot/lib/ndarray.js';
+
+// The tables below use LAPACK's single-letter flags; these are the names the
+// library takes.
+var TRANS = { 'N': 'no-transpose', 'C': 'conjugate-transpose' };
+var SIDE = { 'L': 'left', 'R': 'right' };
+var UPLO = { 'U': 'upper', 'L': 'lower' };
+var DIAG = { 'U': 'unit', 'N': 'non-unit' };
 
 var CONE = new Complex128( 1.0, 0.0 );
 var CZERO = new Complex128( 0.0, 0.0 );
 
 var ONLY = null;
+var TARGET_MS = 1000;
 var argv = process.argv.slice( 2 );
 for ( var i = 0; i < argv.length; i++ ) {
 	if ( argv[ i ] === '--only' && argv[ i + 1 ] ) {
 		ONLY = argv[ i + 1 ];
+		i += 1;
+	} else if ( argv[ i ] === '--target-ms' && argv[ i + 1 ] ) {
+		TARGET_MS = parseInt( argv[ i + 1 ], 10 );
 		i += 1;
 	}
 }
@@ -40,7 +51,7 @@ function fillRandom( arr ) {
 }
 
 function bench( label, fn, flopsPerCall, targetMs ) {
-	targetMs = targetMs || 1000;
+	targetMs = targetMs || TARGET_MS;
 
 	// Calibrate
 	var t0 = performance.now();
@@ -119,7 +130,7 @@ function benchZgemm() {
 
 		bench( label, ( function closure( ta_, tb_, M_, N_, K_, A_, B_, C_ ) {
 			return function callGemm() {
-				zgemm( ta_, tb_, M_, N_, K_, CONE,
+				zgemm( TRANS[ ta_ ], TRANS[ tb_ ], M_, N_, K_, CONE,
 					A_, 1, ( ta_ === 'N' ) ? M_ : K_, 0,
 					B_, 1, ( tb_ === 'N' ) ? K_ : N_, 0,
 					CZERO, C_, 1, M_, 0 );
@@ -173,7 +184,7 @@ function benchZtrmm() {
 
 		bench( label, ( function closure( side_, uplo_, trans_, diag_, M_, N_, A_, B_ ) {
 			return function callTrmm() {
-				ztrmm( side_, uplo_, trans_, diag_, M_, N_, CONE,
+				ztrmm( SIDE[ side_ ], UPLO[ uplo_ ], TRANS[ trans_ ], DIAG[ diag_ ], M_, N_, CONE,
 					A_, 1, Asize, 0,
 					B_, 1, M_, 0 );
 			};
@@ -228,7 +239,7 @@ function benchZgemv() {
 
 		bench( label, ( function closure( trans_, M_, N_, A_, x_, y_ ) {
 			return function callGemv() {
-				zgemv( trans_, M_, N_, CONE, A_, 1, M_, 0,
+				zgemv( TRANS[ trans_ ], M_, N_, CONE, A_, 1, M_, 0,
 					x_, 1, 0, CZERO, y_, 1, 0 );
 			};
 		})( trans, M, N, A, x, y ), flops );
@@ -249,7 +260,7 @@ function benchZrot() {
 	console.log( '' );
 
 	var sizes = [ 5, 10, 20, 50, 100, 200, 500 ];
-	var s = new Float64Array( [ 0.6, 0.8 ] );
+	var s = new Complex128( 0.48, 0.64 );
 	var c = 0.6;
 
 	for ( var i = 0; i < sizes.length; i++ ) {

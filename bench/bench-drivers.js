@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-'use strict';
-
 // Profiling benchmarks for LAPACK driver routines:
 //   zgesv  — complex linear solve (A*x = B)
 //   zgesvd — complex SVD
@@ -9,16 +7,22 @@
 // For each driver, shows subroutine-level profiling at multiple sizes.
 //
 // Usage:
-//   node bin/bench-drivers.js
-//   node bin/bench-drivers.js --only zgesv
-//   node bin/bench-drivers.js --sizes 50,100,200
+//   node bench/bench-drivers.js
+//   node bench/bench-drivers.js --only zgesv
+//   node bench/bench-drivers.js --sizes 50,100,200
 
-var instrument = require( './instrument.js' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import instrument from './instrument.js';
+
+// Install BEFORE loading any LAPACK modules
 instrument.install();
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var zgesv = require( '../lib/lapack/base/zgesv/lib/base.js' );
-var zgesvd = require( '../lib/lapack/base/zgesvd/lib/base.js' );
+const { default: zgesv } = await import( '../lib/lapack/base/zgesv/lib/ndarray.js' );
+const { default: zgesvd } = await import( '../lib/lapack/base/zgesvd/lib/ndarray.js' );
+
+// zgesvd's job flags, by the single-letter names this script reports.
+var JOB = { 'A': 'all-columns', 'N': 'none' };
+var JOBVT = { 'A': 'all-rows', 'N': 'none' };
 
 var ONLY = null;
 var SIZES = [ 50, 100, 200 ];
@@ -172,9 +176,9 @@ function benchZgesvd() {
 		var RWORK = new Float64Array( 5 * N );
 		var su2 = ( jobu === 'A' ) ? N : 1;
 		var svt2 = ( jobvt === 'A' ) ? N : 1;
-		zgesvd( jobu, jobvt, N, N, A, 1, N, 0, S, 1, 0,
+		zgesvd( JOB[ jobu ], JOBVT[ jobvt ], N, N, A, 1, N, 0, S, 1, 0,
 			U, 1, su2, 0, VT, 1, svt2, 0,
-			WORK, 1, 0, lwork, RWORK, 1, 0 );
+			WORK, 1, 0, RWORK, 1, 0 );
 	}
 
 	// Warmup

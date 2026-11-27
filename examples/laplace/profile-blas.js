@@ -54,14 +54,15 @@ function linspace(a, b, step) {
   return arr;
 }
 
+const STEP = parseFloat(process.env.STEP || '0.01');
 const vertices = [[0,0], [2,0], [2,1], [1,1], [1,2], [0,2]];
 const boundary = [];
-for (const x of linspace(0, 2, 0.01)) boundary.push([x, 0]);
-for (const y of linspace(0, 1, 0.01)) boundary.push([2, y]);
-for (const x of linspace(2, 1, 0.01)) boundary.push([x, 1]);
-for (const y of linspace(1, 2, 0.01)) boundary.push([1, y]);
-for (const x of linspace(1, 0, 0.01)) boundary.push([x, 2]);
-for (const y of linspace(2, 0, 0.01)) boundary.push([0, y]);
+for (const x of linspace(0, 2, STEP)) boundary.push([x, 0]);
+for (const y of linspace(0, 1, STEP)) boundary.push([2, y]);
+for (const x of linspace(2, 1, STEP)) boundary.push([x, 1]);
+for (const y of linspace(1, 2, STEP)) boundary.push([1, y]);
+for (const x of linspace(1, 0, STEP)) boundary.push([x, 2]);
+for (const y of linspace(2, 0, STEP)) boundary.push([0, y]);
 
 const boundaryValues = boundary.map(([x]) => x * x);
 

@@ -408,6 +408,9 @@
 		"npm:test:lint-rules": {
 			"kind": "gate"
 		},
+		"npm:test:notebooks": {
+			"kind": "gate"
+		},
 		"npm:test:tools": {
 			"kind": "gate"
 		},

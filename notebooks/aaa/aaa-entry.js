@@ -125,9 +125,11 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
 
   const Cr = new Float64Array(2 * M * mmax);
 
+  // J[0..nJ-1] are the sample points not yet removed from the sample set.
   const J = new Int32Array(M);
   for (let i = 0; i < M; i++) J[i] = i;
   let nJ = M;
+  const removed = new Int32Array(M);
 
   const Rr = new Float64Array(2 * M);
   let meanR = 0, meanI = 0;
@@ -173,8 +175,14 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
   for (let iter = 0; iter < mmax; iter++) {
     timings.iters++;
 
-    let maxVal = -1, j = 0;
-    for (let i = 0; i < M; i++) {
+    // The next support point is the remaining sample point with the largest
+    // error. Only remaining points are candidates: a point that left the sample
+    // set as a duplicate of a support point (below) must never be chosen, since
+    // two support points at the same z make the barycentric form singular.
+    if (nJ === 0) break;
+    let maxVal = -1, j = J[0];
+    for (let ii = 0; ii < nJ; ii++) {
+      const i = J[ii];
       const dr = Fr[2 * i] - Rr[2 * i], di = Fr[2 * i + 1] - Rr[2 * i + 1];
       const a = dr * dr + di * di;
       if (a > maxVal) { maxVal = a; j = i; }
@@ -184,16 +192,24 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
     fr[2 * m] = Fr[2 * j]; fr[2 * m + 1] = Fr[2 * j + 1];
     m++;
 
-    for (let i = 0; i < nJ; i++) {
-      if (J[i] === j) {
-        for (let k = i; k < nJ - 1; k++) J[k] = J[k + 1];
-        nJ--;
-        break;
+    // Remove the support point from the sample set, together with every other
+    // sample at exactly the same z. The approximant takes the value F[j] there
+    // whatever the weights are, so that is recorded once as its value at those
+    // points; a duplicate carrying a different F keeps a nonzero error.
+    const zjr = Zr[2 * j], zji = Zr[2 * j + 1];
+    let nRemoved = 0, nKept = 0;
+    for (let ii = 0; ii < nJ; ii++) {
+      const i = J[ii];
+      if (Zr[2 * i] === zjr && Zr[2 * i + 1] === zji) {
+        Rr[2 * i] = Fr[2 * j]; Rr[2 * i + 1] = Fr[2 * j + 1];
+        removed[nRemoved++] = i;
+      } else {
+        J[nKept++] = i;
       }
     }
+    nJ = nKept;
 
     let t0 = performance.now();
-    const zjr = Zr[2 * j], zji = Zr[2 * j + 1];
     for (let i = 0; i < M; i++) {
       const dr = Zr[2 * i] - zjr, di = Zr[2 * i + 1] - zji;
       const d = dr * dr + di * di;
@@ -206,7 +222,10 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
     t0 = performance.now();
     if (useQR) {
       const n = m - 1;
-      useQR = nJ >= m && (n === 0 || qrDeleteRow(Qq, Rq, M, mmax, n, j, colScratch, rowScratch, rowScratch2));
+      useQR = nJ >= m;
+      for (let k = 0; useQR && n > 0 && k < nRemoved; k++) {
+        useQR = qrDeleteRow(Qq, Rq, M, mmax, n, removed[k], colScratch, rowScratch, rowScratch2);
+      }
       if (useQR) {
         const fkr = fr[2 * n], fki = fr[2 * n + 1];
         colv.fill(0);
@@ -222,7 +241,9 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
       }
     }
     let svdRows = m;
-    if (useQR) {
+    if (nJ === 0) {
+      svdRows = 0;
+    } else if (useQR) {
       // The matrix handed to zgesvd is the m x m triangular factor.
       for (let k = 0; k < m; k++) {
         const src = 2 * k * mmax, dst = 2 * k * m;
@@ -249,7 +270,7 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
     for (let i = 0; i < 2 * m * m; i++) VTv[i] = 0;
 
     t0 = performance.now();
-    const info = zgesvd(
+    const info = (nJ === 0) ? 0 : zgesvd(
       'none', 'all-rows', svdRows, m,
       Adata, 1, svdRows, 0,
       sData, 1, 0,
@@ -268,9 +289,13 @@ export function aaa(Z, F, tol = 1e-13, mmax = 100) {
       wr[2 * jj] = VTv[idx];
       wr[2 * jj + 1] = -VTv[idx + 1];
     }
+    if (nJ === 0) {
+      // No sample points remain to constrain the weights; any nonzero weights
+      // give an interpolant through the support points.
+      for (let jj = 0; jj < m; jj++) { wr[2 * jj] = 1 / Math.sqrt(m); wr[2 * jj + 1] = 0; }
+    }
 
     t0 = performance.now();
-    for (let i = 0; i < 2 * M; i++) Rr[i] = Fr[i];
 
     for (let ii = 0; ii < nJ; ii++) {
       const ci = J[ii];

@@ -394,7 +394,7 @@ export function extractRoutine( pkg, name ) {
 	const refMd = FORTRAN_DOCS.extract( readme );
 	const reference = refMd ? {
 		'source': FORTRAN_DOCS.source( readme ),
-		'markdown': refMd.replace( /^## Reference documentation\s*\n/, '' ).trim()
+		'markdown': refMd.replace( /^## [^\n]*\n/, '' ).trim()
 	} : null;
 
 	const exportKey = './' + pkg + '/base/' + name;

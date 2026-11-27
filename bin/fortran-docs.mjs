@@ -79,7 +79,8 @@ function docLines( src ) {
 		const m = line.match( /^\s*[*!c]>(.*)$/i );
 		if ( m ) {
 			out.push( m[ 1 ].replace( /\s+$/, '' ) );
-		} else if ( /^\s*(SUBROUTINE|.*FUNCTION|RECURSIVE|PURE|ELEMENTAL)\b/i.test( line ) && out.length ) {
+		} else if ( /^[^*!cC]\s*(\w[\w*() ]*\s)?(SUBROUTINE|FUNCTION|RECURSIVE|PURE|ELEMENTAL)\b/i.test( line ) && out.length ) {
+			// The first code line (not a comment: the prologue's "Definition" block quotes the declaration).
 			break;
 		}
 	}
@@ -93,13 +94,20 @@ function parse( lines ) {
 	const doc = { 'brief': '', 'sections': [], 'params': [] };
 	let i = 0;
 	const verbatim = () => {
-		const body = [];
+		// A `\verbatim` block, or, when the next directive comes first, the plain lines before it
+		// (some sections, e.g. dlaqr5's References, are written without `\verbatim`).
+		const plain = [];
 		while ( i < lines.length && !/\\verbatim/.test( lines[ i ] ) ) {
-			if ( /\\(param|par)\b/.test( lines[ i ] ) ) {
-				return body;
+			if ( /^\s*\\\w/.test( lines[ i ] ) ) {
+				return plain;
 			}
+			plain.push( lines[ i ] );
 			i += 1;
 		}
+		if ( i >= lines.length ) {
+			return plain;
+		}
+		const body = [];
 		i += 1;
 		while ( i < lines.length && !/\\endverbatim/.test( lines[ i ] ) ) {
 			body.push( lines[ i ] );
@@ -128,6 +136,9 @@ function parse( lines ) {
 			if ( /^(Purpose|Further Details|References|Contributors)$/i.test( title ) ) {
 				doc.sections.push({ title, 'body': verbatim() });
 			}
+		} else if ( /^\s*\\return\b/.test( line ) ) {
+			i += 1;
+			doc.sections.push({ 'title': 'Returns', 'body': verbatim() });
 		} else if ( /^\s*\\details\b/.test( line ) ) {
 			i += 1;
 			doc.sections.push({ 'title': 'Further Details', 'body': verbatim() });
@@ -610,6 +621,12 @@ function body( lines, names ) {
 * formulas, art, or list items; those runs are split out and rendered on their own.
 */
 function block( p, base, names, out ) {
+	// A brace-style case analysis (`DLANGE = ( max(abs(A(i,j))), NORM = 'M'` / `( norm1(A), NORM = '1'`).
+	const cs = cases( p );
+	if ( cs ) {
+		out.push( cs );
+		return;
+	}
 	// Option list (possibly after a prose lead-in).
 	const k = p.findIndex( ( l ) => OPTION_RE.test( l.trim() ) );
 	if ( k >= 0 && ( k === 0 || indentOf( p[ k ] ) <= indentOf( p[ 0 ] ) + 4 ) ) {
@@ -717,6 +734,65 @@ function table( lines, names ) {
 }
 
 /**
+* Converts a brace-style case analysis to a TeX `cases` environment, or returns null:
+*
+*     DLANGE = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+*              (
+*              ( norm1(A),         NORM = '1', 'O' or 'o'
+*
+* Every line has a `(` in the same column, the first may carry a left-hand
+* side before it, and each non-empty row is `expression, condition`.
+*/
+function cases( p ) {
+	const col = p[ 0 ].indexOf( '(' );
+	if ( p.length < 3 || col < 0 || !p.every( ( l ) => l[ col ] === '(' && !l.slice( 0, col ).trim() || l === p[ 0 ] ) ) {
+		return null;
+	}
+	const lhs = p[ 0 ].slice( 0, col ).trim();
+	if ( lhs && !/=$/.test( lhs ) ) {
+		return null;
+	}
+	const rows = [];
+	for ( const l of p ) {
+		const t = l.slice( col + 1 ).trim();
+		if ( !t ) {
+			continue;
+		}
+		// Split at the first depth-0 comma.
+		let depth = 0;
+		let k = -1;
+		for ( let j = 0; j < t.length; j++ ) {
+			if ( t[ j ] === '(' ) {
+				depth += 1;
+			} else if ( t[ j ] === ')' ) {
+				depth -= 1;
+			} else if ( t[ j ] === ',' && depth === 0 ) {
+				k = j;
+				break;
+			}
+		}
+		if ( k < 0 || depth < 0 ) {
+			return null;
+		}
+		rows.push([ t.slice( 0, k ), t.slice( k + 1 ).trim() ]);
+	}
+	if ( rows.length < 2 ) {
+		return null;
+	}
+	try {
+		const text = ( c ) => '\\text{' + c.replace( /[\\{}$&#%_^~]/g, ( x ) => '\\' + x ) + '}';
+		let tex = ( lhs ? toTex( lhs.replace( /=$/, '' ) ) + ' = ' : '' ) + '\\begin{cases} ' + rows.map( ( [ e, c ] ) => toTex( e ) + ' & ' + text( c ) ).join( ' \\\\ ' ) + ' \\end{cases}';
+		tex = tex.replace( /\s+/g, ' ' );
+		katex.renderToString( tex, { 'throwOnError': true, 'strict': 'ignore' } );
+		STATS.displayMath += 1;
+		STATS.cases = ( STATS.cases || 0 ) + 1;
+		return '$$\n' + tex + '\n$$';
+	} catch ( err ) {
+		return null;
+	}
+}
+
+/**
 * Deeper-indented prose lines: one bullet per line at the run's margin, continuations folded in.
 */
 function items( lines, names ) {
@@ -785,8 +861,15 @@ function paramHead( name, lines ) {
 /**
 * Renders a routine's documentation.
 *
-* With `embed`, the output is the README block body: no title, headings one
-* level down under a `## Reference documentation` heading.
+* Standalone (a translator's reference): title, brief, Purpose, every argument,
+* Further Details, References.
+*
+* With `embed` (the README block): only what the module's own parameter docs
+* cannot hold, the mathematical and implementation content: Purpose, Further
+* Details and References, headings one level down under `## Reference notes`.
+* `substantive` is false when that leaves a single plain sentence or so (e.g.
+* "DCOPY copies a vector, x, to a vector, y."), which the README tagline
+* already says.
 */
 function render( routine, path, embed ) {
 	const doc = parse( docLines( readFileSync( path, 'utf8' ) ) );
@@ -798,11 +881,8 @@ function render( routine, path, embed ) {
 	const brief = doc.brief.replace( new RegExp( '^' + routine + '\\b\\s*', 'i' ), '' ).replace( /^./, ( c ) => c.toUpperCase() );
 	const note = 'Indices are the 1-based Fortran indices of the source.';
 	if ( embed ) {
-		out.push( '## Reference documentation', '' );
-		out.push( 'From the reference ' + lib + ' 3.12.0 source of `' + routine.toUpperCase() + '`, converted to Markdown with KaTeX math. ' + note );
-		if ( brief ) {
-			out.push( '', '> ' + prose( brief, names ) );
-		}
+		out.push( '## Reference notes', '' );
+		out.push( 'The mathematical description from the reference ' + lib + ' 3.12.0 source of `' + routine.toUpperCase() + '`. ' + note );
 	} else {
 		out.push( '<!-- Generated by bin/fortran-docs.mjs from ' + rel + '. Do not edit. -->', '' );
 		out.push( '# ' + routine.toUpperCase(), '' );
@@ -811,10 +891,16 @@ function render( routine, path, embed ) {
 		}
 		out.push( 'Reference ' + lib + ' 3.12.0 documentation, converted to Markdown with KaTeX math. ' + note );
 	}
+	let substance = 0;
 	for ( const sec of doc.sections.filter( ( s ) => s.title === 'Purpose' ) ) {
-		out.push( '', h + '## Purpose', '', body( sec.body, names ) );
+		const b = body( sec.body, names );
+		out.push( '', h + '## Purpose', '', b );
+		// Math, art, a table or list, a second paragraph, or several words the brief does not have.
+		const briefWords = new Set( ( doc.brief.toLowerCase().match( /[a-z]{4,}/g ) || [] ) );
+		const novel = new Set( ( joinLines( sec.body ).toLowerCase().match( /[a-z]{4,}/g ) || [] ).filter( ( w ) => !briefWords.has( w ) ) );
+		substance += /\$|```|^\||^-   /m.test( b ) || b.split( /\n\n/ ).length > 1 || novel.size >= 8 ? 2 : 0;
 	}
-	if ( doc.params.length ) {
+	if ( doc.params.length && !embed ) {
 		out.push( '', h + '## Arguments' );
 		for ( const p of doc.params ) {
 			const { type, rest } = paramHead( p.name, p.body );
@@ -830,13 +916,19 @@ function render( routine, path, embed ) {
 			}
 		}
 	}
-	for ( const sec of doc.sections.filter( ( s ) => s.title !== 'Purpose' ) ) {
+	// Contributors usually lists names and affiliations; some (zlahqr) also record what changed in the algorithm.
+	const prosey = ( sec ) => {
+		const ws = joinLines( sec.body ).match( /[A-Za-z]{3,}/g ) || [];
+		return ws.filter( ( w ) => /^[a-z]/.test( w ) ).length >= 15;
+	};
+	for ( const sec of doc.sections.filter( ( s ) => s.title !== 'Purpose' && !( embed && s.title === 'Contributors' && !prosey( s ) ) ) ) {
 		const b = body( sec.body, names );
 		if ( b ) {
 			out.push( '', h + '## ' + sec.title, '', b );
+			substance += 2;
 		}
 	}
-	return { 'markdown': out.join( '\n' ).replace( /\n{3,}/g, '\n\n' ).trim() + '\n', rel };
+	return { 'markdown': out.join( '\n' ).replace( /\n{3,}/g, '\n\n' ).trim() + '\n', rel, 'substantive': substance >= 1 };
 }
 
 
@@ -867,6 +959,7 @@ function readmes( dirs, report ) {
 	let written = 0;
 	let unchanged = 0;
 	const skipped = [];
+	const thin = [];
 	for ( const dir of dirs ) {
 		const routine = basename( dir );
 		const path = findSource( routine );
@@ -876,8 +969,11 @@ function readmes( dirs, report ) {
 		}
 		const file = join( dir, 'README.md' );
 		const before = readFileSync( file, 'utf8' );
-		const { markdown, rel } = render( routine, path, true );
-		const after = BLOCK.upsert( before, BLOCK.wrap( markdown, rel ) );
+		const { markdown, rel, substantive } = render( routine, path, true );
+		const after = BLOCK.upsert( before, substantive ? BLOCK.wrap( markdown, rel ) : null );
+		if ( !substantive ) {
+			thin.push( routine );
+		}
 		if ( after === before ) {
 			unchanged += 1;
 		} else {
@@ -885,7 +981,7 @@ function readmes( dirs, report ) {
 			written += 1;
 		}
 	}
-	console.error( 'READMEs: ' + written + ' written, ' + unchanged + ' unchanged, ' + skipped.length + ' without a reference source' + ( report && skipped.length ? ' (' + skipped.join( ', ' ) + ')' : '' ) );
+	console.error( 'READMEs: ' + written + ' written, ' + unchanged + ' unchanged, ' + thin.length + ' with no reference notes beyond the tagline' + ( report && thin.length ? ' (' + thin.join( ', ' ) + ')' : '' ) + ', ' + skipped.length + ' without a reference source' + ( report && skipped.length ? ' (' + skipped.join( ', ' ) + ')' : '' ) );
 }
 
 

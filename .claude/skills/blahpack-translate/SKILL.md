@@ -131,8 +131,11 @@ node bin/fortran-docs.mjs <routine>          # the routine's reference docs (Pur
 
 `fortran_body.py` strips the documentation; `fortran-docs.mjs` gives it back in
 readable form (argument semantics, workspace sizes, INFO codes, the storage
-layout of the output). Read it before translating. Once the module exists, put
-the same text in its README (it renders on GitHub and on the docs site):
+layout of the output). Read it before translating, and fold the argument
+semantics into the module's own parameter docs. Once the module exists, add the
+reference notes (Purpose, return value, Further Details, References: the
+mathematical and implementation content, not the argument list) to its README;
+they render on GitHub and on the docs site:
 
 ```bash
 node bin/fortran-docs.mjs --readme lib/<package>/base/<routine>

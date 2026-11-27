@@ -227,6 +227,13 @@
 			"kind": "ticket",
 			"ticket": "0034"
 		},
+		"bin/value-mutants-reporter.mjs": {
+			"kind": "part",
+			"of": "bin/value-mutants.mjs"
+		},
+		"bin/value-mutants.mjs": {
+			"kind": "gate"
+		},
 		"bin/workspace-guard-loader.mjs": {
 			"kind": "part",
 			"of": "bin/workspace-guard.mjs"
@@ -294,6 +301,7 @@
 			"kind": "alias",
 			"of": [
 				"bin/break-mutants.mjs",
+				"npm:mutants:value",
 				"bin/workspace-guard.mjs",
 				"bin/workspace-optimum.mjs",
 				"bin/workspace-minimum.mjs",
@@ -317,6 +325,9 @@
 		"npm:conformance:full": {
 			"kind": "ticket",
 			"ticket": "0069"
+		},
+		"npm:mutants:value": {
+			"kind": "gate"
 		},
 		"npm:dev": {
 			"kind": "tool",
@@ -458,7 +469,8 @@
 			"by": [
 				"npm:test:unit",
 				"npm:test:lint",
-				"npm:conformance:fast"
+				"npm:conformance:fast",
+				"npm:mutants:value"
 			]
 		},
 		"lib/ndarray.js": {

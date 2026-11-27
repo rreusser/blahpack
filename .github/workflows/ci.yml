@@ -74,6 +74,29 @@ jobs:
       - name: Every early loop exit in a changed module is pinned by a test
         run: node bin/break-mutants.mjs --changed --check
 
+  # Computed values (CONVENTIONS T4a; ticket 0093): coverage counts a line a
+  # test runs whether or not it checks the result. For every base.js line this
+  # PR adds or changes, each value mutant (a `± 1` dropped, a count one short,
+  # `<`/`<=` or `>`/`>=` swapped, a branch statement deleted) must fail one of
+  # the module's own tests, or be a proof in test/value-mutants.equivalent.json;
+  # there is no tolerated-survivor list.
+  value-mutants:
+    name: Value mutants (changed base.js lines)
+    runs-on: ubuntu-latest
+    steps:
+      # Full history: lines are selected by diff against the merge-base with
+      # origin/main.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every changed base.js line is checked by a test, not only run
+        run: npm run mutants:value
+
   # CONVENTIONS D5c (ticket 0060): a wrapper given WORK = null must allocate
   # enough. For every changed module, the module's own tests are rerun with
   # each null-allocated workspace forced to null and guarded by a sentinel

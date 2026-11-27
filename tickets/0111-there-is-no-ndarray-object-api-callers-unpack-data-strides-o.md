@@ -18,6 +18,16 @@ wrong stride, offset or dimension, a mistake no static check sees (ticket
 0013). It also differs from stdlib, whose top-level packages (e.g.
 `@stdlib/blas/ddot`) take ndarrays and infer dimensions from shapes.
 
+Decided (2026-11-27): the ndarray-object form is opt-in, not the default.
+`import zggev from '@rreusser/blahpack/lapack/zggev'` returns the layout form
+(ticket 0126); `import zggev from '@rreusser/blahpack/lapack/zggev/ndarray'`
+returns the ndarray-object form. It exists only for routines whose arrays are
+all full-storage matrices and vectors (740 of 917). Symmetric, Hermitian and
+triangular matrices in full storage fit ndarrays: the ndarray is the square
+matrix and `uplo` names the triangle. Banded (63 routines), packed (103), RFP
+(23) and ARPACK reverse-communication state (4) do not: the array's shape is
+not the matrix's shape. Those 177 routines get no ndarray form for now.
+
 ## Evidence
 
 - `lib/blas/` and `lib/lapack/` contain only `base/`; no module takes an

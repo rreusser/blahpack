@@ -21,10 +21,21 @@ loaded it from a CDN or from Observable.
 
 What is left:
 
-1. Publish the package.
-2. Load `https://cdn.jsdelivr.net/npm/@rreusser/blahpack@<version>/dist/lapack/base/dgesv.js`
-   in a browser and in an Observable notebook.
-3. Record whether jsDelivr's `+esm` and esm.sh work on the source as well.
+1. Publish this package. Decided (2026-11-27): no throwaway probe package;
+   the first real publish is the test.
+2. Until then, the published layout is a best guess that covers both ways
+   jsDelivr might resolve an extensionless subpath. Notebook Kit rewrites
+   `npm:@rreusser/blahpack/lapack/zggev` to
+   `https://cdn.jsdelivr.net/npm/@rreusser/blahpack/lapack/zggev/+esm`
+   (`@observablehq/notebook-kit`, `dist/src/javascript/imports/npm.js`), and a
+   bare specifier is passed to the browser unchanged. The guess:
+   - give each `exports` subpath a `browser` condition that points at its
+     self-contained `dist/` file;
+   - keep `dist/<pkg>/<routine>.js` reachable directly, which a CDN serves as
+     a raw file with no conversion.
+3. Load the `npm:` import and the direct `dist/` URL in a browser and in an
+   Observable notebook, and record whether jsDelivr's `+esm` and esm.sh
+   followed the `exports` map.
 4. Decide whether `dist/` stays in the main package (it nearly triples the
    npm download) or moves to a separate one: `docs/ndarray-layer.md`, open
    question 5.
@@ -38,7 +49,7 @@ What is left:
   server with no request outside `dist/`, and ddot, dgesv, dsyev and dgesvd
   match Node bit for bit. It was shown to fail on a leftover bare import, a
   missing file and a one-ulp change to ddot's result.
-- `npm pack`: 6.8 MB, 36.8 MB unpacked, 8,287 files with `dist/`; 2.5 MB,
+- `npm pack`: 6.7 MB, 36.6 MB unpacked, 8,233 files with `dist/`; 2.5 MB,
   23 MB unpacked, 7,383 files before.
 - Gzipped sizes: `dist/_stdlib.js` 21.5 KB; ddot 0.6 KB, zggbal 3.2 KB, dgesv
   4.8 KB, zgeev 29 KB, largest (zhegvx) 33.8 KB.

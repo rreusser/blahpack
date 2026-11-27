@@ -128,9 +128,11 @@ pkg.keywords = [
 pkg.main = './index.js';
 pkg.exports = exportsMap;
 
-// Whitelist shipped files. Per-module test/benchmark/examples and the
-// stdlib REPL/type-test artifacts are development-only; the negations
-// keep the tarball to source, types, and docs.
+// Whitelist shipped files. Per-module test/benchmark/examples, the stdlib
+// REPL/type-test artifacts, internal notes (LEARNINGS, DIFFERENCES) and
+// lint config are development-only; the negations keep the tarball to
+// source, types, READMEs and dist/. This list is the only packing rule:
+// there is no .npmignore (it could not exclude files listed here anyway).
 pkg.files = [
 	'index.js',
 	'dist/',
@@ -141,7 +143,10 @@ pkg.files = [
 	'!lib/**/docs/repl.txt',
 	'!lib/**/docs/types/test.ts',
 	'!lib/**/LEARNINGS.md',
-	'!lib/**/LEARNINGS.integrated.md'
+	'!lib/**/LEARNINGS.integrated.md',
+	'!lib/**/DIFFERENCES.md',
+	'!lib/**/*.test.js',
+	'!lib/**/.eslintrc.cjs'
 ];
 
 // Swap @stdlib/stdlib mega-dep for the actually-used scoped packages.

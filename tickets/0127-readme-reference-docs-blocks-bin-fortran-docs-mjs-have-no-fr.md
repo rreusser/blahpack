@@ -1,5 +1,5 @@
 ---
-id: 0118
+id: 0127
 title: README reference-docs blocks (bin/fortran-docs.mjs) have no freshness check: CI lacks the Fortran sources
 status: open
 area: general

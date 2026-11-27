@@ -16,6 +16,7 @@ Three collisions in one session, 2026-11-27:
 - PRs #61 and #62 both added a 0110 and both merged. main then failed `tickets.js check`, and PR #63 renumbered the stdlib ticket to 0114.
 - PR #61's own 0109 collided with main's AAA 0109 and was renumbered to 0110 before merging.
 - PR #65's 0117–0120 collided with main's notebook 0117; they were renumbered to 0118–0121.
+- PR #67's 0118–0120 (fortran-docs) collided with main's 0118–0120 (dlarrd, dgeevx/dgeev fixtures, dgehrd); they were renumbered to 0127–0129.
 
 Each renumbering also meant updating every `ticket NNNN` reference by hand: CONVENTIONS, docs and other tickets.
 

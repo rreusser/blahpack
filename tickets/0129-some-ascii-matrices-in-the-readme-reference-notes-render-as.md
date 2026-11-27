@@ -1,5 +1,5 @@
 ---
-id: 0120
+id: 0129
 title: Some ASCII matrices in the README reference notes render as text blocks instead of KaTeX
 status: open
 area: general

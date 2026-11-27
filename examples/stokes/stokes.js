@@ -211,9 +211,15 @@ export function stokes(options = {}) {
   }
 
   // ---- Step 7: Build evaluator ----
+  // Scratch for the VA basis values, reused across evaluate() calls.
+  const vaScratch = {
+    q: new Float64Array(2 * (nPoly + 1)),
+    dq: new Float64Array(2 * (nPoly + 1)),
+  };
+
   function evaluate(z) {
     // Evaluate VA basis at z
-    const { q, dq } = vaEval(va, z);
+    const { q, dq } = vaEval(va, z, vaScratch);
 
     // f(z) = Σ c_k/(z-β_k) + Σ a_n * q_n(z)
     let fr = 0, fi = 0, fdr = 0, fdi = 0;

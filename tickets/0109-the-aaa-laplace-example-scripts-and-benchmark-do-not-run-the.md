@@ -15,6 +15,7 @@ opened: 2026-11-27
 - `examples/aaa-pure.js:8` imports `./lib/lapack/base/zgesvd/lib/ndarray.js` (no such path under `examples/`), and `:167` passes the stale `lwork` to `zgesvd`.
 - `examples/laplace/laplace.js:7`, `examples/laplace/test.js:11`, `examples/laplace/profile.js:16` and `notebooks/aaa/generate-data.js:12` import `../../aaa-pure.js`, which resolves to the repository root, not `examples/`.
 - `bench/bench-laplace.js` fails first on `./instrument.js` having no default export.
+- 2026-11-27: the copies drifted further. `notebooks/aaa/aaa-entry.js` now carries the Loewner matrix as an updated QR factorization and hands only the m x m factor to `zgesvd` (about 2x faster); `examples/aaa-pure.js` still refactors the full matrix every iteration. `aaa-entry.js` now imports cleanly in plain Node (`@stdlib/.../lib/index.js` paths), so `aaa-pure.js` could be replaced by a re-export of it.
 
 ## Reproduce
 

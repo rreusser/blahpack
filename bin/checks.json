@@ -190,6 +190,10 @@
 			"kind": "tool",
 			"why": "marks bin/ as CommonJS"
 		},
+		"bin/reference-facts.mjs": {
+			"kind": "ticket",
+			"ticket": "0130"
+		},
 		"bin/remove_goto.py": {
 			"kind": "tool",
 			"why": "translation pipeline: GOTO removal"

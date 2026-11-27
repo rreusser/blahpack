@@ -137,11 +137,9 @@ console.log( y );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLA_HEAMV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes a matrix-vector product using a Hermitian indefinite matrix to calculate error bounds.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLA_HEAMV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -154,78 +152,6 @@ $$
 where $\alpha$ and $\beta$ are scalars, x and y are vectors and A is an n by n symmetric matrix.
 
 This function is primarily used in calculating error bounds. To protect against underflow during evaluation, components in the resulting vector are perturbed away from zero by (N+1) times the underflow threshold. To prevent unnecessarily large errors for block-structure embedded in general matrices, "symbolically" zero components are not perturbed. A zero entry is considered "symbolic" if all multiplications involved in computing that entry have at least one zero multiplicand.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_INTEGER_
-
-On entry, `UPLO` specifies whether the upper or lower triangular part of the array A is to be referenced as follows:
-
-`UPLO = BLAS_UPPER` Only the upper triangular part of A
-
-is to be referenced.
-
-`UPLO = BLAS_LOWER` Only the lower triangular part of A
-
-is to be referenced.
-
-Unchanged on exit.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of the matrix A. N must be at least zero. Unchanged on exit.
-
-#### ALPHA `[in]`
-
-_DOUBLE PRECISION _
-
-On entry, `ALPHA` specifies the scalar $\alpha$. Unchanged on exit.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension ( LDA, n )_
-
-Before entry, the leading m by n part of the array A must contain the matrix of coefficients. Unchanged on exit.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, n ). Unchanged on exit.
-
-#### X `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ) Before entry, the incremented array X must contain the vector x. Unchanged on exit.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero. Unchanged on exit.
-
-#### BETA `[in]`
-
-_DOUBLE PRECISION _
-
-On entry, `BETA` specifies the scalar $\beta$. When `BETA` is supplied as zero then Y need not be set on input. Unchanged on exit.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( n - 1 )\*abs( INCY ) )_
-
-Before entry with `BETA` non-zero, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero. Unchanged on exit.
 
 ### Further Details
 

@@ -134,68 +134,13 @@ console.log( T );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGELQT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGELQT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGELQT computes a blocked LQ factorization of a complex M-by-N matrix A using the compact WY representation of Q.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### MB `[in]`
-
-_INTEGER_
-
-The block size to be used in the blocked QR. $\min (M,N) \ge \mathrm{MB} \ge 1$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, the elements on and below the diagonal of the array contain the M-by-MIN(M,N) lower trapezoidal matrix L (L is lower triangular if $M \le N$); the elements above the diagonal are the rows of V.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_COMPLEX\*16 array, dimension (LDT,MIN(M,N))_
-
-The upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See below for further details.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{MB}$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MB\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

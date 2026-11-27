@@ -129,9 +129,9 @@ zgbcon.ndarray( 'one-norm', N, N, N, AB, N, 1, 0, IPIV, 1, 0, 1.0, 1.0, WORK, 1,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGBCON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGBCON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -142,79 +142,6 @@ An estimate is obtained for norm(inv(A)), and the reciprocal of the condition nu
 $$
 \mathrm{RCOND} = 1 / ( \operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)) )
 $$
-
-### Arguments
-
-#### NORM `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;
-
--   `= 'I'`: Infinity-norm.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KL `[in]`
-
-_INTEGER_
-
-The number of subdiagonals within the band of A. $\mathrm{KL} \ge 0$.
-
-#### KU `[in]`
-
-_INTEGER_
-
-The number of superdiagonals within the band of A. $\mathrm{KU} \ge 0$.
-
-#### AB `[in]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-Details of the LU factorization of the band matrix A, as computed by ZGBTRF. U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \, \mathrm{KL}+\mathrm{KU}+1$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge 2 \, \mathrm{KL}+\mathrm{KU}+1$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le N$, row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-If `NORM = '1'` or 'O', the 1-norm of the original matrix A. If `NORM = 'I'`, the infinity-norm of the original matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

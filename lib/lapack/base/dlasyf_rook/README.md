@@ -132,11 +132,9 @@ dlasyf_rook( 'column-major', 'lower', 2, 2, A, 2, IPIV, W, 2 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASYF_ROOK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> \*\> DLASYF\_ROOK computes a partial factorization of a real symmetric matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASYF_ROOK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -153,98 +151,6 @@ $A = ( L_{11} 0 )$ ( D 0 ) $( L_{11}^T L_{21}^T )$ if `UPLO = 'L'`
 where the order of D is at most `NB`. The actual order is returned in the argument `KB`, and is either `NB` or `NB`-1, or N if $N \le \mathrm{NB}$.
 
 DLASYF\_ROOK is an auxiliary routine called by DSYTRF\_ROOK. It uses blocked code (calling Level 3 BLAS) to update the submatrix A11 (if `UPLO = 'U'`) or A22 (if `UPLO = 'L'`).
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the symmetric matrix A is stored:
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The maximum number of columns of the matrix A that should be factored. `NB` should be at least 2 to allow for 2-by-2 pivot blocks.
-
-#### KB `[out]`
-
-_INTEGER_
-
-The number of columns of A that were actually factored. `KB` is either `NB`-1 or `NB`, or N if $N \le \mathrm{NB}$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading n-by-n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n-by-n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit, A contains details of the partial factorization.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D.
-
-If `UPLO = 'U'`:
-
-Only the last `KB` elements of `IPIV` are set.
-
-If $\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)` were interchanged and D(k,k) is a 1-by-1 diagonal block.
-
-If $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k-1) < 0$, then rows and columns k and -`IPIV(k)` were interchanged and rows and columns k-1 and -`IPIV(k-1)` were inerchaged, D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
-
-If `UPLO = 'L'`:
-
-Only the first `KB` elements of `IPIV` are set.
-
-If $\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)` were interchanged and D(k,k) is a 1-by-1 diagonal block.
-
-If $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k+1) < 0$, then rows and columns k and -`IPIV(k)` were interchanged and rows and columns k+1 and -`IPIV(k+1)` were inerchaged, D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
-
-#### W `[out]`
-
-_DOUBLE PRECISION array, dimension (LDW,NB)_
-
-#### LDW `[in]`
-
-_INTEGER_
-
-The leading dimension of the array W. $\mathrm{LDW} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `> 0`: if `INFO = k`, D(k,k) is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular.
-
-### Contributors
-
-November 2013, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
-
-September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
-
--   School of Mathematics,
--   University of Manchester
 
 </section>
 

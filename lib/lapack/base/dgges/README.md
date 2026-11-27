@@ -150,11 +150,31 @@ console.log( 'eigenvalues:', ALPHAR[0]/BETA[0], ALPHAR[1]/BETA[1], ALPHAR[2]/BET
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGGES`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGGES`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices
+### Purpose
+
+DGGES computes for a pair of N-by-N real nonsymmetric matrices (A,B), the generalized eigenvalues, the generalized real Schur form (S,T), optionally, the left and/or right matrices of Schur vectors (`VSL` and `VSR`). This gives the generalized Schur factorization
+
+$$
+(A,B) = ( (\mathrm{VSL}) \, S \, (\mathrm{VSR})^T, (\mathrm{VSL}) \, T \, (\mathrm{VSR})^T )
+$$
+
+Optionally, it also orders the eigenvalues so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper quasi-triangular matrix S and the upper triangular matrix T.The leading columns of `VSL` and `VSR` then form an orthonormal basis for the corresponding left and right eigenspaces (deflating subspaces).
+
+(If only the generalized eigenvalues are needed, use the driver DGGEV instead, which is faster.)
+
+A generalized eigenvalue for a pair of matrices (A,B) is a scalar w or a ratio $\alpha /\beta = w$, such that $A - w \, B$ is singular. It is usually represented as the pair ($\alpha$,$\beta$), as there is a reasonable interpretation for $\beta =0$ or both being zero.
+
+A pair of matrices (S,T) is in generalized real Schur form if T is upper triangular with non-negative diagonal and S is block upper triangular with 1-by-1 and 2-by-2 blocks. 1-by-1 blocks correspond to real generalized eigenvalues, while 2-by-2 blocks of S will be "standardized" by making the corresponding elements of T have the form:
+
+$$
+\begin{bmatrix} a & 0 \\ 0 & b \end{bmatrix}
+$$
+
+and the pair of corresponding 2-by-2 blocks in S and T will have a complex conjugate pair of generalized eigenvalues.
 
 </section>
 

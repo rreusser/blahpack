@@ -121,69 +121,15 @@ dpocon.ndarray( 'upper', N, A, N, 1, 0, 1.0, 1.0, WORK, 1, 0, IWORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPOCON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DPOCON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DPOCON estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite matrix using the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$ computed by DPOTRF.
 
 An estimate is obtained for norm(inv(A)), and the reciprocal of the condition number is computed as $\mathrm{RCOND} = 1 / (\mathrm{ANORM} \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The triangular factor U or L from the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$, as computed by DPOTRF.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-The 1-norm (or infinity-norm) of the symmetric matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\mathrm{ANORM} \, \mathrm{AINVNM})$, where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (3\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

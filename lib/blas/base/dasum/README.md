@@ -103,9 +103,17 @@ dasum.ndarray( 5, x, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DASUM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DASUM`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+DASUM takes the sum of the absolute values.
+
+### Further Details
+
+jack dongarra, linpack, 3/11/78. modified 3/93 to return if incx .le. 0. modified 12/3/93, array(1) declarations changed to array(\*)
 
 </section>
 

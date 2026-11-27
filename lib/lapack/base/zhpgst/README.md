@@ -111,9 +111,9 @@ zhpgst( 1, 'upper', 2, AP, BP );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZHPGST`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZHPGST`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -124,48 +124,6 @@ If `ITYPE = 1`, the problem is $A \, x = \lambda \, B \, x$, and A is overwritte
 If `ITYPE = 2` or 3, the problem is $A \, B \, x = \lambda \, x$ or $B \, A \, x = \lambda \, x$, and A is overwritten by $U \, A \, U^H$ or $L^H \, A \, L$.
 
 B must have been previously factorized as $U^H \, U$ or $L \, L^H$ by ZPPTRF.
-
-### Arguments
-
-#### ITYPE `[in]`
-
-_INTEGER_
-
--   `= 1`: compute $\operatorname{inv}(U^H) \, A \, \operatorname{inv}(U)$ or $\operatorname{inv}(L) \, A \, \operatorname{inv}(L^H)$; = 2 or 3: compute $U \, A \, U^H$ or $L^H \, A \, L$.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored and B is factored as $U^H \, U$;
--   `= 'L'`: Lower triangle of A is stored and B is factored as $L \, L^H$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### AP `[in,out]`
-
-_COMPLEX\*16 array, dimension (N\*(N+1)/2)_
-
-On entry, the upper or lower triangle of the Hermitian matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \le i \le n$.
-
-On exit, if `INFO = 0`, the transformed matrix, stored in the same format as A.
-
-#### BP `[in]`
-
-_COMPLEX\*16 array, dimension (N\*(N+1)/2)_
-
-The triangular factor from the Cholesky factorization of B, stored in the same format as A, as returned by ZPPTRF.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

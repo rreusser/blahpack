@@ -144,9 +144,9 @@ console.log( 'BETA:', BETA );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DHGEQZ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DHGEQZ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -198,135 +198,6 @@ Ref: C.B. Moler & G.W. Stewart, "An Algorithm for Generalized Matrix
 
 -   Eigenvalue Problems", SIAM J. Numer. Anal., 10(1973),
 -   pp. 241--256.
-
-### Arguments
-
-#### JOB `[in]`
-
-_CHARACTER\*1_
-
--   `= 'E'`: Compute eigenvalues only;
--   `= 'S'`: Compute eigenvalues and the Schur form.
-
-#### COMPQ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Left Schur vectors (Q) are not computed;
--   `= 'I'`: Q is initialized to the unit matrix and the matrix Q of left Schur vectors of (H,T) is returned;
--   `= 'V'`: Q must contain an orthogonal matrix Q1 on entry and the product $Q_{1} \, Q$ is returned.
-
-#### COMPZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Right Schur vectors (Z) are not computed;
--   `= 'I'`: Z is initialized to the unit matrix and the matrix Z of right Schur vectors of (H,T) is returned;
--   `= 'V'`: Z must contain an orthogonal matrix Z1 on entry and the product $Z_{1} \, Z$ is returned.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices H, T, Q, and Z. $N \ge 0$.
-
-#### ILO `[in]`
-
-_INTEGER_
-
-#### IHI `[in]`
-
-_INTEGER_
-
-`ILO` and `IHI` mark the rows and columns of H which are in Hessenberg form. It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. If $N > 0$, $1 \le \mathrm{ILO} \le \mathrm{IHI} \le N$; if $N = 0$, `ILO=1` and `IHI=0`.
-
-#### H `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDH, N)_
-
-On entry, the N-by-N upper Hessenberg matrix H. On exit, if `JOB = 'S'`, H contains the upper quasi-triangular matrix S from the generalized Schur factorization. If `JOB = 'E'`, the diagonal blocks of H match those of S, but the rest of H is unspecified.
-
-#### LDH `[in]`
-
-_INTEGER_
-
-The leading dimension of the array H. $\mathrm{LDH} \ge \max ( 1, N )$.
-
-#### T `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDT, N)_
-
-On entry, the N-by-N upper triangular matrix T. On exit, if `JOB = 'S'`, T contains the upper triangular matrix P from the generalized Schur factorization; 2-by-2 diagonal blocks of P corresponding to 2-by-2 blocks of S are reduced to positive diagonal form, i.e., if `H(j+1,j)` is non-zero, then $T(j+1,j) = T(j,j+1) = 0$, $T(j,j) > 0$, and $T(j+1,j+1) > 0$. If `JOB = 'E'`, the diagonal blocks of T match those of P, but the rest of T is unspecified.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max ( 1, N )$.
-
-#### ALPHAR `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The real parts of each scalar $\alpha$ defining an eigenvalue of GNEP.
-
-#### ALPHAI `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The imaginary parts of each scalar $\alpha$ defining an eigenvalue of GNEP. If `ALPHAI(j)` is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-st eigenvalues are a complex conjugate pair, with `ALPHAI(j+1) = -ALPHAI(j)`.
-
-#### BETA `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The scalars $\beta$ that define the eigenvalues of GNEP. Together, the quantities $\alpha = (\mathrm{ALPHAR}(j),\mathrm{ALPHAI}(j))$ and $\beta = \mathrm{BETA}(j)$ represent the j-th eigenvalue of the matrix pair (A,B), in one of the forms $\lambda = \alpha /\beta$ or $\mu = \beta /\alpha$. Since either $\lambda$ or $\mu$ may overflow, they should not, in general, be computed.
-
-#### Q `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDQ, N)_
-
-On entry, if `COMPQ = 'V'`, the orthogonal matrix Q1 used in the reduction of (A,B) to generalized Hessenberg form. On exit, if `COMPQ = 'I'`, the orthogonal matrix of left Schur vectors of (H,T), and if `COMPQ = 'V'`, the orthogonal matrix of left Schur vectors of (A,B). Not referenced if `COMPQ = 'N'`.
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Q. $\mathrm{LDQ} \ge 1$. If `COMPQ='V'` or 'I', then $\mathrm{LDQ} \ge N$.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDZ, N)_
-
-On entry, if `COMPZ = 'V'`, the orthogonal matrix Z1 used in the reduction of (A,B) to generalized Hessenberg form. On exit, if `COMPZ = 'I'`, the orthogonal matrix of right Schur vectors of (H,T), and if `COMPZ = 'V'`, the orthogonal matrix of right Schur vectors of (A,B). Not referenced if `COMPZ = 'N'`.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$. If `COMPZ='V'` or 'I', then $\mathrm{LDZ} \ge N$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if $\mathrm{INFO} \ge 0$, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,N)$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `= 1,...,N`: the QZ iteration did not converge.  (H,T) is not in Schur form, but `ALPHAR(i)`, `ALPHAI(i)`, and `BETA(i)`, $i=\mathrm{INFO}+1$,...,N should be correct. = N+1,...,$2 \, N$: the shift calculation failed.  (H,T) is not in Schur form, but `ALPHAR(i)`, `ALPHAI(i)`, and `BETA(i)`, $i=\mathrm{INFO}-N+1$,...,N should be correct.
 
 ### Further Details
 

@@ -103,11 +103,9 @@ dlags2.ndarray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAGS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAGS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -138,72 +136,6 @@ U = \begin{pmatrix} \mathrm{CSU} & \mathrm{SNU} \\ -\mathrm{SNU} & \mathrm{CSU} 
 $$
 
 $Z^T$ denotes the transpose of Z.
-
-### Arguments
-
-#### UPPER `[in]`
-
-_LOGICAL_
-
-= .TRUE.: the input matrices A and B are upper triangular. = .FALSE.: the input matrices A and B are lower triangular.
-
-#### A1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### A2 `[in]`
-
-_DOUBLE PRECISION_
-
-#### A3 `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `A1`, `A2` and `A3` are elements of the input 2-by-2 upper (lower) triangular matrix A.
-
-#### B1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### B2 `[in]`
-
-_DOUBLE PRECISION_
-
-#### B3 `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `B1`, `B2` and `B3` are elements of the input 2-by-2 upper (lower) triangular matrix B.
-
-#### CSU `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNU `[out]`
-
-_DOUBLE PRECISION_
-
-The desired orthogonal matrix U.
-
-#### CSV `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNV `[out]`
-
-_DOUBLE PRECISION_
-
-The desired orthogonal matrix V.
-
-#### CSQ `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNQ `[out]`
-
-_DOUBLE PRECISION_
-
-The desired orthogonal matrix Q.
 
 </section>
 

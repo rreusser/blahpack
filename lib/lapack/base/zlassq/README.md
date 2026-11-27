@@ -96,11 +96,9 @@ zlassq.ndarray( N, 1, 1, 0, 1.0, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLASSQ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Updates a sum of squares represented in scaled form.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLASSQ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -111,42 +109,6 @@ ZLASSQ returns the values scale\_out and sumsq\_out such that
 where $x( i ) = X( 1 + ( i - 1 ) \, \mathrm{INCX} )$. The value of sumsq is assumed to be non-negative.
 
 scale and sumsq must be supplied in `SCALE` and `SUMSQ` and scale\_out and sumsq\_out are overwritten on `SCALE` and `SUMSQ` respectively.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of elements to be used from the vector x.
-
-#### X `[in]`
-
-_DOUBLE COMPLEX array, dimension (1+(N-1)\*abs(INCX))_
-
-The vector for which a scaled sum of squares is computed.
-
-$$
-x( i ) = X( 1 + ( i - 1 ) \, \mathrm{INCX} ), 1 \le i \le n
-$$
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between successive values of the vector x. If $\mathrm{INCX} > 0$, $X(1+(i-1) \, \mathrm{INCX}) = x(i)$ for $1 \le i \le n$ If $\mathrm{INCX} < 0$, $X(1-(n-i) \, \mathrm{INCX}) = x(i)$ for $1 \le i \le n$ If `INCX = 0`, x isn't a vector so there is no need to call this subroutine. If you call it anyway, it will count x(1) in the vector norm N times.
-
-#### SCALE `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the value scale in the equation above. On exit, `SCALE` is overwritten by scale\_out, the scaling factor for the sum of squares.
-
-#### SUMSQ `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the value sumsq in the equation above. On exit, `SUMSQ` is overwritten by sumsq\_out, the basic sum of squares from which scale\_out has been factored out.
 
 ### Further Details
 

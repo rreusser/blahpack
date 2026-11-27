@@ -123,67 +123,13 @@ dlacn2.ndarray( N, v, 1, 0, x, 1, 0, ISGN, 1, 0, 1, 1, ISAVE, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLACN2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLACN2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLACN2 estimates the 1-norm of a square, real matrix A. Reverse communication is used for evaluating matrix-vector products.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 1$.
-
-#### V `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On the final return, $V = A \, W$, where $\mathrm{EST} = \operatorname{norm}(V)/\operatorname{norm}(W)$ (W is not returned).
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On an intermediate return, X should be overwritten by
-
-$$
-A \, X, \quad\text{if}\quad \mathrm{KASE}=1
-$$
-
-$$
-A^T \, X, \quad\text{if}\quad \mathrm{KASE}=2
-$$
-
-and DLACN2 must be re-called with all the other parameters unchanged.
-
-#### ISGN `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### EST `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry with `KASE = 1` or 2 and `ISAVE(1) = 3`, `EST` should be unchanged from the previous call to DLACN2. On exit, `EST` is an estimate (a lower bound) for norm(A).
-
-#### KASE `[in,out]`
-
-_INTEGER_
-
-On the initial call to DLACN2, `KASE` should be 0. On an intermediate return, `KASE` will be 1 or 2, indicating whether X should be overwritten by $A \, X$ or $A^T \, X$. On the final return from DLACN2, `KASE` will again be 0.
-
-#### ISAVE `[in,out]`
-
-_INTEGER array, dimension (3)_
-
-`ISAVE` is used to save variables between calls to DLACN2
 
 ### Further Details
 
@@ -196,6 +142,10 @@ This is a thread safe version of DLACON, which uses the array `ISAVE` in place o
 | JUMP | `ISAVE(1)` |
 | J | `ISAVE(2)` |
 | ITER | `ISAVE(3)` |
+
+### References
+
+N.J. Higham, "FORTRAN codes for estimating the one-norm of a real or complex matrix, with applications to condition estimation", ACM Trans. Math. Soft., vol. 14, no. 4, pp. 381-396, December 1988.
 
 </section>
 

@@ -155,133 +155,13 @@ console.log( B );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTPRFB`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies a complex "triangular-pentagonal" block reflector to a complex matrix, which is composed of two blocks.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTPRFB`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZTPRFB applies a complex "triangular-pentagonal" block reflector H or its conjugate transpose $H^H$ to a complex matrix C, which is composed of two blocks A and B, either from the left or right.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply H or $H^H$ from the Left
--   `= 'R'`: apply H or $H^H$ from the Right
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: apply H (No transpose)
--   `= 'C'`: apply $H^H$ (Conjugate transpose)
-
-#### DIRECT `[in]`
-
-_CHARACTER\*1_
-
-Indicates how H is formed from a product of elementary reflectors
-
--   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward)
--   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)
-
-#### STOREV `[in]`
-
-_CHARACTER\*1_
-
-Indicates how the vectors which define the elementary reflectors are stored:
-
--   `= 'C'`: Columns
--   `= 'R'`: Rows
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix B. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix B. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The order of the matrix T, i.e. the number of elementary reflectors whose product defines the block reflector. $K \ge 0$.
-
-#### L `[in]`
-
-_INTEGER_
-
-The order of the trapezoidal part of V. $K \ge L \ge 0$. See Further Details.
-
-#### V `[in]`
-
-_COMPLEX\*16 array, dimension (LDV,K) if STOREV = 'C'_
-
-(`LDV`,M) if `STOREV = 'R'` and `SIDE = 'L'` (`LDV`,N) if `STOREV = 'R'` and `SIDE = 'R'` The pentagonal matrix V, which contains the elementary reflectors H(1), H(2), ..., H(K). See Further Details.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. If `STOREV = 'C'` and `SIDE = 'L'`, $\mathrm{LDV} \ge \max (1,M)$; if `STOREV = 'C'` and `SIDE = 'R'`, $\mathrm{LDV} \ge \max (1,N)$; if `STOREV = 'R'`, $\mathrm{LDV} \ge K$.
-
-#### T `[in]`
-
-_COMPLEX\*16 array, dimension (LDT,K)_
-
-The triangular K-by-K matrix T in the representation of the block reflector.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge K$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N) if SIDE = 'L' or (LDA,K) if SIDE = 'R'_
-
-On entry, the K-by-N or M-by-K matrix A. On exit, A is overwritten by the corresponding block of $H \, C$ or $H^H \, C$ or $C \, H$ or $C \, H^H$. See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. If `SIDE = 'L'`, $\mathrm{LDA} \ge \max (1,K)$; If `SIDE = 'R'`, $\mathrm{LDA} \ge \max (1,M)$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,N)_
-
-On entry, the M-by-N matrix B. On exit, B is overwritten by the corresponding block of $H \, C$ or $H^H \, C$ or $C \, H$ or $C \, H^H$. See Further Details.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (LDWORK,N) if SIDE = 'L'_
-
-(`LDWORK`,K) if `SIDE = 'R'`.
-
-#### LDWORK `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `WORK`. If `SIDE = 'L'`, $\mathrm{LDWORK} \ge K$; if `SIDE = 'R'`, $\mathrm{LDWORK} \ge M$.
 
 ### Further Details
 

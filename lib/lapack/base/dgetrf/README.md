@@ -116,9 +116,9 @@ dgetrf( 'column-major', 3, 3, A, 3, IPIV, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGETRF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGETRF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -133,46 +133,6 @@ $$
 where P is a permutation matrix, L is lower triangular with unit diagonal elements (lower trapezoidal if $m > n$), and U is upper triangular (upper trapezoidal if $m < n$).
 
 This is the right-looking Level 3 BLAS version of the algorithm.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix to be factored. On exit, the factors L and U from the factorization $A = P \, L \, U$; the unit diagonal elements of L are not stored.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (min(M,N))_
-
-The pivot indices; for $1 \le i \le \min (M,N)$, row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, U(i,i) is exactly zero. The factorization has been completed, but the factor U is exactly singular, and division by zero will occur if it is used to solve a system of equations.
 
 </section>
 

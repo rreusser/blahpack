@@ -121,9 +121,9 @@ zungbr.ndarray( 'q', N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNGBR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNGBR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,74 +132,6 @@ ZUNGBR generates one of the complex unitary matrices Q or $P^H$ determined by ZG
 If `VECT = 'Q'`, A is assumed to have been an M-by-K matrix, and Q is of order M: if $m \ge k$, $Q = H(1)$ H(2) . . . H(k) and ZUNGBR returns the first n columns of Q, where $m \ge n \ge k$; if $m < k$, $Q = H(1)$ H(2) . . . H(m-1) and ZUNGBR returns Q as an M-by-M matrix.
 
 If `VECT = 'P'`, A is assumed to have been a K-by-N matrix, and $P^H$ is of order N: if $k < n$, $P^H = G(k)$ . . . G(2) G(1) and ZUNGBR returns the first m rows of $P^H$, where $n \ge m \ge k$; if $k \ge n$, $P^H = G(n-1)$ . . . G(2) G(1) and ZUNGBR returns $P^H$ as an N-by-N matrix.
-
-### Arguments
-
-#### VECT `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the matrix Q or the matrix $P^H$ is required, as defined in the transformation applied by ZGEBRD:
-
--   `= 'Q'`: generate Q;
--   `= 'P'`: generate $P^H$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix Q or $P^H$ to be returned. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix Q or $P^H$ to be returned. $N \ge 0$. If `VECT = 'Q'`, $M \ge N \ge \min (M,K)$; if `VECT = 'P'`, $N \ge M \ge \min (N,K)$.
-
-#### K `[in]`
-
-_INTEGER_
-
-If `VECT = 'Q'`, the number of columns in the original M-by-K matrix reduced by ZGEBRD. If `VECT = 'P'`, the number of rows in the original K-by-N matrix reduced by ZGEBRD. $K \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the vectors which define the elementary reflectors, as returned by ZGEBRD. On exit, the M-by-N matrix Q or $P^H$.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge M$.
-
-#### TAU `[in]`
-
-_COMPLEX\*16 array, dimension (min(M,K)) if VECT = 'Q'_
-
-(min(N,K)) if `VECT = 'P'` `TAU(i)` must contain the scalar factor of the elementary reflector H(i) or G(i), which determines Q or $P^H$, as returned by ZGEBRD in its array argument TAUQ or TAUP.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,\min (M,N))$. For optimum performance $\mathrm{LWORK} \ge \min (M,N) \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

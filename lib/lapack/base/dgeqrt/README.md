@@ -125,68 +125,13 @@ console.log( T );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGEQRT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGEQRT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGEQRT computes a blocked QR factorization of a real M-by-N matrix A using the compact WY representation of Q.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The block size to be used in the blocked QR. $\min (M,N) \ge \mathrm{NB} \ge 1$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, the elements on and above the diagonal of the array contain the min(M,N)-by-N upper trapezoidal matrix R (R is upper triangular if $M \ge N$); the elements below the diagonal are the columns of V.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_DOUBLE PRECISION array, dimension (LDT,MIN(M,N))_
-
-The upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See below for further details.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{NB}$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (NB\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

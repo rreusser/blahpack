@@ -128,11 +128,9 @@ dlatrd.ndarray( 'upper', N, N, A, N, 1, 0, e, 1, 0, TAU, 1, 0, W, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLATRD`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an orthogonal similarity transformation.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLATRD`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,79 +139,6 @@ DLATRD reduces `NB` rows and columns of a real symmetric matrix A to symmetric t
 If `UPLO = 'U'`, DLATRD reduces the last `NB` rows and columns of a matrix, of which the upper triangle is supplied; if `UPLO = 'L'`, DLATRD reduces the first `NB` rows and columns of a matrix, of which the lower triangle is supplied.
 
 This is an auxiliary routine called by DSYTRD.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the symmetric matrix A is stored:
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The number of rows and columns to be reduced.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading n-by-n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n-by-n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit: if `UPLO = 'U'`, the last `NB` columns have been reduced to
-
--   tridiagonal form, with the diagonal elements overwriting
--   the diagonal elements of A; the elements above the diagonal
--   with the array `TAU`, represent the orthogonal matrix Q as a
--   product of elementary reflectors;
-
-if `UPLO = 'L'`, the first `NB` columns have been reduced to
-
--   tridiagonal form, with the diagonal elements overwriting
--   the diagonal elements of A; the elements below the diagonal
--   with the array `TAU`, represent the orthogonal matrix Q as a
--   product of elementary reflectors.
-
-See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge (1,N)$.
-
-#### E `[out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-If `UPLO = 'U'`, `E(n-nb:n-1)` contains the superdiagonal elements of the last `NB` columns of the reduced matrix; if `UPLO = 'L'`, `E(1:nb)` contains the subdiagonal elements of the first `NB` columns of the reduced matrix.
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The scalar factors of the elementary reflectors, stored in `TAU(n-nb:n-1)` if `UPLO = 'U'`, and in `TAU(1:nb)` if `UPLO = 'L'`. See Further Details.
-
-#### W `[out]`
-
-_DOUBLE PRECISION array, dimension (LDW,NB)_
-
-The n-by-nb matrix W required to update the unreduced part of A.
-
-#### LDW `[in]`
-
-_INTEGER_
-
-The leading dimension of the array W. $\mathrm{LDW} \ge \max (1,N)$.
 
 ### Further Details
 

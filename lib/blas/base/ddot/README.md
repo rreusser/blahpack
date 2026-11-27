@@ -92,9 +92,17 @@ ddot( N, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DDOT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DDOT`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+DDOT forms the dot product of two vectors. uses unrolled loops for increments equal to one.
+
+### Further Details
+
+jack dongarra, linpack, 3/11/78. modified 12/3/93, array(1) declarations changed to array(\*)
 
 </section>
 

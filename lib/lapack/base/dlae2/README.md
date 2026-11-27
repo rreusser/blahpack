@@ -93,11 +93,9 @@ dlae2( 2.0, 1.0, 2.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAE2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues of a 2-by-2 symmetric matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAE2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -108,38 +106,6 @@ $$
 $$
 
 On return, `RT1` is the eigenvalue of larger absolute value, and `RT2` is the eigenvalue of smaller absolute value.
-
-### Arguments
-
-#### A `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,1) element of the 2-by-2 matrix.
-
-#### B `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,2) and (2,1) elements of the 2-by-2 matrix.
-
-#### C `[in]`
-
-_DOUBLE PRECISION_
-
-The (2,2) element of the 2-by-2 matrix.
-
-#### RT1 `[out]`
-
-_DOUBLE PRECISION_
-
-The eigenvalue of larger absolute value.
-
-#### RT2 `[out]`
-
-_DOUBLE PRECISION_
-
-The eigenvalue of smaller absolute value.
 
 ### Further Details
 

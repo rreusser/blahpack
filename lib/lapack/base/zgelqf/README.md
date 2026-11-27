@@ -119,9 +119,9 @@ zgelqf.ndarray( N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGELQF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGELQF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,59 +134,6 @@ $$
 where:
 
 Q is a N-by-N orthogonal matrix; L is a lower-triangular M-by-M matrix; 0 is a M-by-(N-M) zero matrix, if $M < N$.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, the elements on and below the diagonal of the array contain the m-by-min(m,n) lower trapezoidal matrix L (L is lower triangular if $m \le n$); the elements above the diagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,M)$. For optimum performance $\mathrm{LWORK} \ge M \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

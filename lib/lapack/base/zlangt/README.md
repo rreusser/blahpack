@@ -116,11 +116,21 @@ zlangt.ndarray( 'max', 4, dl, 1, 0, d, 1, 0, du, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLANGT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLANGT`. Indices are the 1-based Fortran indices of the source.
 
-> Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of a general tridiagonal matrix.
+### Purpose
+
+ZLANGT returns the value of the one norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex tridiagonal matrix A.
+
+### Returns
+
+$$
+\mathrm{ZLANGT} = \begin{cases} \max (\lvert A(i,j) \rvert) & \text{NORM = 'M' or 'm'} \\ \mathrm{norm1}(A) & \text{NORM = '1', 'O' or 'o'} \\ \mathrm{normI}(A) & \text{NORM = 'I' or 'i'} \\ \mathrm{normF}(A) & \text{NORM = 'F', 'f', 'E' or 'e'} \end{cases}
+$$
+
+where norm1 denotes the one norm of a matrix (maximum column sum), normI denotes the infinity norm of a matrix (maximum row sum) and normF denotes the Frobenius norm of a matrix (square root of sum of squares). Note that max(abs(A(i,j))) is not a consistent matrix norm.
 
 </section>
 

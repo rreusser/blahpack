@@ -163,11 +163,9 @@ ztgsy2.ndarray( 'no-transpose', 0, 2, 2, A, 1, 2, 0, B, 1, 2, 0, C, 1, 2, 0, D, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTGSY2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves the generalized Sylvester equation (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTGSY2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -195,137 +193,6 @@ $A^H \, R + D^H \, L$ = scale \* C (3) $R \, B^H + L \, E^H$ = scale \* -F
 This case is used to compute an estimate of Dif\[(A, D), (B, E)\] = = sigma\_min(Z) using reverse communication with ZLACON.
 
 ZTGSY2 also (`IJOB` \>= 1) contributes to the computation in ZTGSYL of an upper bound on the separation between to matrix pairs. Then the input (A, D), (B, E) are sub-pencils of two matrix pairs in ZTGSYL.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: solve the generalized Sylvester equation (1).
--   `= 'T'`: solve the 'transposed' system (3).
-
-#### IJOB `[in]`
-
-_INTEGER_
-
-Specifies what kind of functionality to be performed.
-
--   `=0`: solve (1) only.
--   `=1`: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. (look ahead strategy is used).
--   `=2`: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. (DGECON on sub-systems is used.) Not referenced if `TRANS = 'T'`.
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the order of A and D, and the row dimension of C, F, R and L.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of B and E, and the column dimension of C, F, R and L.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA, M)_
-
-On entry, A contains an upper triangular matrix.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix A. $\mathrm{LDA} \ge \max (1, M)$.
-
-#### B `[in]`
-
-_COMPLEX\*16 array, dimension (LDB, N)_
-
-On entry, B contains an upper triangular matrix.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix B. $\mathrm{LDB} \ge \max (1, N)$.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC, N)_
-
-On entry, C contains the right-hand-side of the first matrix equation in (1). On exit, if `IJOB = 0`, C has been overwritten by the solution R.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix C. $\mathrm{LDC} \ge \max (1, M)$.
-
-#### D `[in]`
-
-_COMPLEX\*16 array, dimension (LDD, M)_
-
-On entry, D contains an upper triangular matrix.
-
-#### LDD `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix D. $\mathrm{LDD} \ge \max (1, M)$.
-
-#### E `[in]`
-
-_COMPLEX\*16 array, dimension (LDE, N)_
-
-On entry, E contains an upper triangular matrix.
-
-#### LDE `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix E. $\mathrm{LDE} \ge \max (1, N)$.
-
-#### F `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDF, N)_
-
-On entry, F contains the right-hand-side of the second matrix equation in (1). On exit, if `IJOB = 0`, F has been overwritten by the solution L.
-
-#### LDF `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix F. $\mathrm{LDF} \ge \max (1, M)$.
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-On exit, $0 \le \mathrm{SCALE} \le 1$. If $0 < \mathrm{SCALE} < 1$, the solutions R and L (C and F on entry) will hold the solutions to a slightly perturbed system but the input matrices A, B, D and E have not been changed. If `SCALE = 0`, R and L will hold the solutions to the homogeneous system with $C = F = 0$. Normally, `SCALE = 1`.
-
-#### RDSUM `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the sum of squares of computed contributions to the Dif-estimate under computation by ZTGSYL, where the scaling factor `RDSCAL` (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. If `TRANS = 'T'` `RDSUM` is not touched. NOTE: `RDSUM` only makes sense when ZTGSY2 is called by ZTGSYL.
-
-#### RDSCAL `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, scaling factor used to prevent overflow in `RDSUM`. On exit, `RDSCAL` is updated w.r.t. the current contributions in `RDSUM`. If `TRANS = 'T'`, `RDSCAL` is not touched. NOTE: `RDSCAL` only makes sense when ZTGSY2 is called by ZTGSYL.
-
-#### INFO `[out]`
-
-_INTEGER_
-
-On exit, if `INFO` is set to
-
--   `=0`: Successful exit
--   `<0`: If `INFO = -i`, input argument number i is illegal.
--   `>0`: The matrix pairs (A, D) and (B, E) have common or very close eigenvalues.
 
 </section>
 

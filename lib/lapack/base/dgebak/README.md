@@ -116,80 +116,13 @@ dgebak.ndarray( 'both', 'left', N, N, N, SCALE, 1, 0, N, V, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGEBAK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGEBAK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGEBAK forms the right or left eigenvectors of a real general matrix by backward transformation on the computed eigenvectors of the balanced matrix output by DGEBAL.
-
-### Arguments
-
-#### JOB `[in]`
-
-_CHARACTER\*1_
-
-Specifies the type of backward transformation required:
-
--   `= 'N'`: do nothing, return immediately;
--   `= 'P'`: do backward transformation for permutation only;
--   `= 'S'`: do backward transformation for scaling only;
--   `= 'B'`: do backward transformations for both permutation and scaling. `JOB` must be the same as the argument `JOB` supplied to DGEBAL.
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'R'`: V contains right eigenvectors;
--   `= 'L'`: V contains left eigenvectors.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix V. $N \ge 0$.
-
-#### ILO `[in]`
-
-_INTEGER_
-
-#### IHI `[in]`
-
-_INTEGER_
-
-The integers `ILO` and `IHI` determined by DGEBAL. $1 \le \mathrm{ILO} \le \mathrm{IHI} \le N$, if $N > 0$; `ILO=1` and `IHI=0`, if $N=0$.
-
-#### SCALE `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-Details of the permutation and scaling factors, as returned by DGEBAL.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix V. $M \ge 0$.
-
-#### V `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDV,M)_
-
-On entry, the matrix of right or left eigenvectors to be transformed, as returned by DHSEIN or DTREVC. On exit, V is overwritten by the transformed eigenvectors.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. $\mathrm{LDV} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 </section>
 

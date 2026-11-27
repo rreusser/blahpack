@@ -98,11 +98,9 @@ dlanv2.ndarray( 1.0, -5.0, 1.0, 1.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLANV2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the Schur factorization of a real 2-by-2 nonsymmetric matrix in standard form.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLANV2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -113,54 +111,6 @@ $$
 $$
 
 where either 1) $\mathrm{CC} = 0$ so that AA and DD are real eigenvalues of the matrix, or 2) $\mathrm{AA} = \mathrm{DD}$ and $\mathrm{BB} \, \mathrm{CC} < 0$, so that AA + or - sqrt(BB\*CC) are complex conjugate eigenvalues.
-
-### Arguments
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the elements of the input matrix. On exit, they are overwritten by the elements of the standardised Schur form.
-
-#### RT1R `[out]`
-
-_DOUBLE PRECISION_
-
-#### RT1I `[out]`
-
-_DOUBLE PRECISION_
-
-#### RT2R `[out]`
-
-_DOUBLE PRECISION_
-
-#### RT2I `[out]`
-
-_DOUBLE PRECISION_
-
-The real and imaginary parts of the eigenvalues. If the eigenvalues are a complex conjugate pair, $\mathrm{RT1I} > 0$.
-
-#### CS `[out]`
-
-_DOUBLE PRECISION_
-
-#### SN `[out]`
-
-_DOUBLE PRECISION_
-
-Parameters of the rotation matrix.
 
 ### Further Details
 

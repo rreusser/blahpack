@@ -112,9 +112,9 @@ dtpmv.ndarray( 'upper', 'no-transpose', 'non-unit', 2, AP, 1, 0, x, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DTPMV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DTPMV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -125,72 +125,6 @@ x := A \, x, \quad\text{or}\quad x := A^T \, x
 $$
 
 where x is an n element vector and A is an n by n unit, or non-unit, upper or lower triangular matrix, supplied in packed form.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the matrix is an upper or lower triangular matrix as follows:
-
-`UPLO = 'U'` or 'u' A is an upper triangular matrix.
-
-`UPLO = 'L'` or 'l' A is a lower triangular matrix.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANS` specifies the operation to be performed as follows:
-
-$$
-\mathrm{TRANS} = \text{'N'} \quad\text{or}\quad \text{'n'} x := A \, x
-$$
-
-$$
-\mathrm{TRANS} = \text{'T'} \quad\text{or}\quad \text{'t'} x := A^T \, x
-$$
-
-$$
-\mathrm{TRANS} = \text{'C'} \quad\text{or}\quad \text{'c'} x := A^T \, x
-$$
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
-On entry, `DIAG` specifies whether or not A is unit triangular as follows:
-
-`DIAG = 'U'` or 'u' A is assumed to be unit triangular.
-
-`DIAG = 'N'` or 'n' A is not assumed to be unit
-
-triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of the matrix A. N must be at least zero.
-
-#### AP `[in]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( ( n\*( n + 1 ) )/2 ). Before entry with `UPLO = 'U'` or 'u', the array `AP` must contain the upper triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. Before entry with `UPLO = 'L'` or 'l', the array `AP` must contain the lower triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 ) and a( 3, 1 ) respectively, and so on. Note that when `DIAG = 'U'` or 'u', the diagonal elements of A are not referenced, but are assumed to be unity.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ). Before entry, the incremented array X must contain the n element vector x. On exit, X is overwritten with the transformed vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
 
 ### Further Details
 

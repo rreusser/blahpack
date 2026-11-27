@@ -114,62 +114,13 @@ dtrttf.ndarray( 'no-transpose', 'upper', N, A, N, 1, 0, ARF, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTRTTF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Copies a triangular matrix from the standard full format (TR) to the rectangular full packed format (TF).
+The mathematical description from the reference LAPACK 3.12.0 source of `DTRTTF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTRTTF copies a triangular matrix A from standard full format (TR) to rectangular full packed format (TF) .
-
-### Arguments
-
-#### TRANSR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: `ARF` in Normal form is wanted;
--   `= 'T'`: `ARF` in Transpose form is wanted.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the triangular matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of the array A contains the upper triangular matrix, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of the array A contains the lower triangular matrix, and the strictly upper triangular part of A is not referenced.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### ARF `[out]`
-
-_DOUBLE PRECISION array, dimension (NT)_
-
-$\mathrm{NT}=N \, (N+1)/2$. On exit, the triangular matrix A in RFP format.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

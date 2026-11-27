@@ -108,11 +108,9 @@ dpbtf2.ndarray( 'upper', N, 1, AB, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPBTF2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `DPBTF2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -131,51 +129,6 @@ $$
 where U is an upper triangular matrix, $U^T$ is the transpose of U, and L is lower triangular.
 
 This is the unblocked version of the algorithm, calling Level 2 BLAS.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the symmetric matrix A is stored:
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of super-diagonals of the matrix A if `UPLO = 'U'`, or the number of sub-diagonals if `UPLO = 'L'`. $\mathrm{KD} \ge 0$.
-
-#### AB `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDAB,N)_
-
-On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$.
-
-On exit, if `INFO = 0`, the triangular factor U or L from the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$ of the band matrix A, in the same storage format as A.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -k`, the k-th argument had an illegal value
--   `> 0`: if `INFO = k`, the leading principal minor of order k is not positive, and the factorization could not be completed.
 
 ### Further Details
 

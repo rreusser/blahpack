@@ -117,11 +117,9 @@ zlacrt.ndarray( 3, cx, 1, 0, cy, 1, 0, c, s );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLACRT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs a linear transformation of a pair of complex vectors.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLACRT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,52 +130,6 @@ $$
 $$
 
 where c and s are complex and the vectors x and y are complex.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of elements in the vectors `CX` and `CY`.
-
-#### CX `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On input, the vector x. On output, `CX` is overwritten with $c \, x + s \, y$.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between successive values of `CX`. `INCX` \<\> 0.
-
-#### CY `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On input, the vector y. On output, `CY` is overwritten with $-s \, x + c \, y$.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-The increment between successive values of `CY`. `INCY` \<\> 0.
-
-#### C `[in]`
-
-_COMPLEX\*16_
-
-#### S `[in]`
-
-_COMPLEX\*16_
-
-C and S define the matrix
-
-$$
-\begin{bmatrix} C & S \\ -S & C \end{bmatrix}
-$$
 
 </section>
 

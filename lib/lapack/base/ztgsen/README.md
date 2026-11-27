@@ -202,9 +202,9 @@ ztgsen( 'column-major', 0, true, true, SELECT, 1, 3, A, 3, B, 3, ALPHA, 1, BETA,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTGSEN`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTGSEN`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -219,161 +219,6 @@ $$
 of the reordered matrix pair (A, B).
 
 Optionally, the routine computes estimates of reciprocal condition numbers for eigenvalues and eigenspaces. These are Difu\[(A11,B11), (A22,B22)\] and Difl\[(A11,B11), (A22,B22)\], i.e. the separation(s) between the matrix pairs (A11, B11) and (A22,B22) that correspond to the selected cluster and the eigenvalues outside the cluster, resp., and norms of "projections" onto left and right eigenspaces w.r.t. the selected cluster in the (1,1)-block.
-
-### Arguments
-
-#### IJOB `[in]`
-
-_INTEGER_
-
-Specifies whether condition numbers are required for the cluster of eigenvalues (`PL` and `PR`) or the deflating subspaces (Difu and Difl):
-
--   `=0`: Only reorder w.r.t. `SELECT`. No extras.
--   `=1`: Reciprocal of norms of "projections" onto left and right eigenspaces w.r.t. the selected cluster (`PL` and `PR`).
--   `=2`: Upper bounds on Difu and Difl. F-norm-based estimate (`DIF(1:2)`).
--   `=3`: Estimate of Difu and Difl. 1-norm-based estimate (`DIF(1:2)`). About 5 times as expensive as `IJOB = 2`.
--   `=4`: Compute `PL`, `PR` and `DIF` (i.e. 0, 1 and 2 above): Economic version to get it all.
--   `=5`: Compute `PL`, `PR` and `DIF` (i.e. 0, 1 and 3 above)
-
-#### WANTQ `[in]`
-
-_LOGICAL_
-
-.TRUE. : update the left transformation matrix Q; .FALSE.: do not update Q.
-
-#### WANTZ `[in]`
-
-_LOGICAL_
-
-.TRUE. : update the right transformation matrix Z; .FALSE.: do not update Z.
-
-#### SELECT `[in]`
-
-_LOGICAL array, dimension (N)_
-
-`SELECT` specifies the eigenvalues in the selected cluster. To select an eigenvalue w(j), `SELECT(j)` must be set to .TRUE..
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension(LDA,N)_
-
-On entry, the upper triangular matrix A, in generalized Schur canonical form. On exit, A is overwritten by the reordered matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension(LDB,N)_
-
-On entry, the upper triangular matrix B, in generalized Schur canonical form. On exit, B is overwritten by the reordered matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### ALPHA `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-#### BETA `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-The diagonal elements of A and B, respectively, when the pair (A,B) has been reduced to generalized Schur form. `ALPHA(i)`/`BETA(i)` $i=1$,...,N are the generalized eigenvalues.
-
-#### Q `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDQ,N)_
-
-On entry, if `WANTQ` = .TRUE., Q is an N-by-N matrix. On exit, Q has been postmultiplied by the left unitary transformation matrix which reorder (A, B); The leading M columns of Q form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces). If `WANTQ` = .FALSE., Q is not referenced.
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Q. $\mathrm{LDQ} \ge 1$. If `WANTQ` = .TRUE., $\mathrm{LDQ} \ge N$.
-
-#### Z `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDZ,N)_
-
-On entry, if `WANTZ` = .TRUE., Z is an N-by-N matrix. On exit, Z has been postmultiplied by the left unitary transformation matrix which reorder (A, B); The leading M columns of Z form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces). If `WANTZ` = .FALSE., Z is not referenced.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$. If `WANTZ` = .TRUE., $\mathrm{LDZ} \ge N$.
-
-#### M `[out]`
-
-_INTEGER_
-
-The dimension of the specified pair of left and right eigenspaces, (deflating subspaces) $0 \le M \le N$.
-
-#### PL `[out]`
-
-_DOUBLE PRECISION_
-
-#### PR `[out]`
-
-_DOUBLE PRECISION_
-
-If `IJOB = 1`, 4 or 5, `PL`, `PR` are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspace with respect to the selected cluster. $0 < \mathrm{PL}$, $\mathrm{PR} \le 1$. If $M = 0$ or $M = N$, `PL = PR = 1`. If `IJOB = 0`, 2 or 3 `PL`, `PR` are not referenced.
-
-#### DIF `[out]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-If $\mathrm{IJOB} \ge 2$, `DIF(1:2)` store the estimates of Difu and Difl. If `IJOB = 2` or 4, `DIF(1:2)` are F-norm-based upper bounds on Difu and Difl. If `IJOB = 3` or 5, `DIF(1:2)` are 1-norm-based estimates of Difu and Difl, computed using reversed communication with ZLACN2. If $M = 0$ or N, $\mathrm{DIF}(1:2) = F-\operatorname{norm}([A, B])$. If `IJOB = 0` or 1, `DIF` is not referenced.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge 1$ If `IJOB = 1`, 2 or 4, $\mathrm{LWORK} \ge 2 \, M \, (N-M)$ If `IJOB = 3` or 5, $\mathrm{LWORK} \ge 4 \, M \, (N-M)$
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (MAX(1,LIWORK))_
-
-On exit, if `INFO = 0`, `IWORK(1)` returns the optimal `LIWORK`.
-
-#### LIWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `IWORK`. $\mathrm{LIWORK} \ge 1$. If `IJOB = 1`, 2 or 4, $\mathrm{LIWORK} \ge N+2$; If `IJOB = 3` or 5, $\mathrm{LIWORK} \ge \max (N+2, 2 \, M \, (N-M))$;
-
-If `LIWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `IWORK` array, returns this value as the first entry of the `IWORK` array, and no error message related to `LIWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `=0`: Successful exit.
--   `<0`: If `INFO = -i`, the i-th argument had an illegal value.
--   `=1`: Reordering of (A, B) failed because the transformed matrix pair (A, B) would be too far from generalized Schur form; the problem is very ill-conditioned. (A, B) may have been partially reordered. If requested, 0 is returned in `DIF(*)`, `PL` and `PR`.
 
 ### Further Details
 
@@ -456,6 +301,14 @@ max-angle(L, L') \<= arctan( $y \, \mathrm{PL} / (1 - y \, (1 - \mathrm{PL} \, \
 See LAPACK User's Guide section 4.11 or the following references for more information.
 
 Note that if the default method for computing the Frobenius-norm- based estimate `DIF` is not wanted (see ZLATDF), then the parameter IDIFJB (see below) should be changed from 3 to 4 (routine ZLATDF (`IJOB = 2` will be used)). See ZTGSYL for more details.
+
+### References
+
+\[1\] B. Kagstrom; A Direct Method for Reordering Eigenvalues in the
+
+-   Generalized Real Schur Form of a Regular Matrix Pair (A, B), in
+-   M.S. Moonen et al (eds), Linear Algebra for Large Scale and
+-   Real-Time Applications, Kluwer Academic Publ. 1993, pp 195-218.
 
 </section>
 

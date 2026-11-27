@@ -138,94 +138,13 @@ zunhr_col( 'column-major', M, N, nb, A, M, T, M, d, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNHR_COL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNHR_COL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZUNHR\_COL takes an M-by-N complex matrix Q\_in with orthonormal columns as input, stored in A, and performs Householder Reconstruction (HR), i.e. reconstructs Householder vectors V(i) implicitly representing another M-by-N matrix Q\_out, with the property that Q\_in = Q\_out\*S, where S is an N-by-N diagonal matrix with diagonal entries equal to +1 or -1. The Householder vectors (columns V(i) of V) are stored in A on output, and the diagonal entries of S are stored in D. Block reflectors are also returned in T (same output format as ZGEQRT).
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $M \ge N \ge 0$.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The column block size to be used in the reconstruction of Householder column vector blocks in the array A and corresponding block reflectors in the array T. $\mathrm{NB} \ge 1$. (Note that if $\mathrm{NB} > N$, then N is used instead of `NB` as the column block size.)
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry:
-
-The array A contains an M-by-N orthonormal matrix Q\_in, i.e the columns of A are orthogonal unit vectors.
-
-On exit:
-
-The elements below the diagonal of A represent the unit lower-trapezoidal matrix V of Householder column vectors V(i). The unit diagonal entries of V are not stored (same format as the output below the diagonal in A from ZGEQRT). The matrix T and the matrix V stored on output in A implicitly define Q\_out.
-
-```text
-The elements above the diagonal contain the factor U
-of the "modified" LU-decomposition:
-   Q_in - ( S ) = V * U
-          ( 0 )
-where 0 is a (M-N)-by-(M-N) zero matrix.
-```
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_COMPLEX\*16 array_
-
-dimension (`LDT`, N)
-
-Let NOCB = Number\_of\_output\_col\_blocks
-
-$$
-= \mathrm{CEIL}(N/\mathrm{NB})
-$$
-
-On exit, T(1:`NB`, 1:N) contains NOCB upper-triangular block reflectors used to define Q\_out stored in compact form as a sequence of upper-triangular `NB`-by-`NB` column blocks (same format as the output T in ZGEQRT). The matrix T and the matrix V stored on output in A implicitly define Q\_out. NOTE: The lower triangles below the upper-triangular blocks will be filled with zeros. See Further Details.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max (1,\min (\mathrm{NB},N))$.
-
-#### D `[out]`
-
-_COMPLEX\*16 array, dimension min(M,N)_
-
-The elements can be only plus or minus one.
-
-`D(i)` is constructed as `D(i)` = -SIGN(Q\_in\_i(i,i)), where $1 \le i \le \min (M,N)$, and Q\_in\_i is Q\_in after performing i-1 steps of “modified” Gaussian elimination. See Further Details.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 
@@ -298,13 +217,6 @@ For the details of the algorithm, see \[1\].
 -   G. Ballard, J. Demmel, L. Grigori, M. Jacquelin, H.D. Nguyen,
 -   E. Solomonik, J. Parallel Distrib. Comput.,
 -   vol. 85, pp. 3-31, 2015.
-
-### Contributors
-
-November 2019, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 </section>
 

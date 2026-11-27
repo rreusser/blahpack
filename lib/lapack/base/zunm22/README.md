@@ -141,11 +141,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNM22`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Multiplies a general matrix by a banded unitary matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNM22`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -163,85 +161,6 @@ Q = \begin{bmatrix} Q_{11} & Q_{12} \\  &  \\ Q_{21} & Q_{22} \end{bmatrix}
 $$
 
 where Q12 is an `N1`-by-`N1` lower triangular matrix and Q21 is an `N2`-by-`N2` upper triangular matrix.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^H$ from the Left;
--   `= 'R'`: apply Q or $Q^H$ from the Right.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: apply Q (No transpose);
--   `= 'C'`: apply $Q^H$ (Conjugate transpose).
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### N1 `[in]`
-
-#### N2 `[in]`
-
-`N1` is INTEGER `N2` is INTEGER The dimension of Q12 and Q21, respectively. `N1`, $N_{2} \ge 0$. The following requirement must be satisfied: $N_{1} + N_{2} = M$ if `SIDE = 'L'` and $N_{1} + N_{2} = N$ if `SIDE = 'R'`.
-
-#### Q `[in]`
-
-_COMPLEX\*16 array, dimension (LDQ,M) if SIDE = 'L'_
-
-(`LDQ`,N) if `SIDE = 'R'`
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Q. $\mathrm{LDQ} \ge \max (1,M)$ if `SIDE = 'L'`; $\mathrm{LDQ} \ge \max (1,N)$ if `SIDE = 'R'`.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC,N)_
-
-On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \, C$ or $Q^H \, C$ or $C \, Q^H$ or $C \, Q$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. If `SIDE = 'L'`, $\mathrm{LWORK} \ge \max (1,N)$; if `SIDE = 'R'`, $\mathrm{LWORK} \ge \max (1,M)$. For optimum performance $\mathrm{LWORK} \ge M \, N$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

@@ -141,11 +141,9 @@ dlaqps.ndarray( N, N, 0, N, N, A, N, 1, 0, JPVT, 1, 0, TAU, 1, 0, 1, N, 0, 1, 1,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAQPS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAQPS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -155,91 +153,9 @@ In some cases, due to catastrophic cancellations, it cannot factorize `NB` colum
 
 Block `A(1:OFFSET,1:N)` is accordingly pivoted, but not factorized.
 
-### Arguments
+### References
 
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$
-
-#### OFFSET `[in]`
-
-_INTEGER_
-
-The number of rows of A that have been factorized in previous steps.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The number of columns to factorize.
-
-#### KB `[out]`
-
-_INTEGER_
-
-The number of columns actually factorized.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, block `A(OFFSET+1:M,1:KB)` is the triangular factor obtained and block `A(1:OFFSET,1:N)` has been accordingly pivoted, but no factorized. The rest of the matrix, block `A(OFFSET+1:M,KB+1:N)` has been updated.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### JPVT `[in,out]`
-
-_INTEGER array, dimension (N)_
-
-`JPVT(I) = K` \<==\> Column K of the full matrix A has been permuted into position I in AP.
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION array, dimension (KB)_
-
-The scalar factors of the elementary reflectors.
-
-#### VN1 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The vector with the partial column norms.
-
-#### VN2 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The vector with the exact column norms.
-
-#### AUXV `[in,out]`
-
-_DOUBLE PRECISION array, dimension (NB)_
-
-Auxiliary vector.
-
-#### F `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDF,NB)_
-
-Matrix $F^T = L \, Y^T \, A$.
-
-#### LDF `[in]`
-
-_INTEGER_
-
-The leading dimension of the array F. $\mathrm{LDF} \ge \max (1,N)$.
+LAPACK Working Note 176
 
 </section>
 

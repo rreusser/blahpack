@@ -127,77 +127,13 @@ dsytrs2.ndarray( 'upper', N, N, A, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, WORK, 1, 0 )
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSYTRS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DSYTRS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DSYTRS2 solves a system of linear equations $A \, X = B$ with a real symmetric matrix A using the factorization $A = U \, D \, U^T$ or $A = L \, D \, L^T$ computed by DSYTRF and converted by DSYCONV.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.
-
--   `= 'U'`: Upper triangular, form is $A = U \, D \, U^T$;
--   `= 'L'`: Lower triangular, form is $A = L \, D \, L^T$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by DSYTRF. Note that A is input / output. This might be counter-intuitive, and one may think that A is input only. A is input / output. This is because, at the start of the subroutine, we permute A in a "better" form and then we permute A back to its original form at the end.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D as determined by DSYTRF.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-On entry, the right hand side matrix B. On exit, the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

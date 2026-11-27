@@ -131,11 +131,9 @@ console.log( berr );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLA_LIN_BERR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes a component-wise relative backward error.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLA_LIN_BERR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -146,44 +144,6 @@ $$
 $$
 
 where abs(Z) is the component-wise absolute value of the matrix or vector Z.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of linear equations, i.e., the order of the matrix A. $N \ge 0$.
-
-#### NZ `[in]`
-
-_INTEGER_
-
-We add (`NZ`+1)\*SLAMCH( 'Safe minimum' ) to R(i) in the numerator to guard against spuriously zero residuals. Default value is N.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices `AYB`, `RES`, and `BERR`. $\mathrm{NRHS} \ge 0$.
-
-#### RES `[in]`
-
-_DOUBLE PRECISION array, dimension (N,NRHS)_
-
-The residual matrix, i.e., the matrix R in the relative backward error formula above.
-
-#### AYB `[in]`
-
-_DOUBLE PRECISION array, dimension (N, NRHS)_
-
-The denominator in the relative backward error formula above, i.e., the matrix abs(op(A\_s))\*abs(Y) + abs(B\_s). The matrices A, Y, and B are from iterative refinement (see dla\_gerfsx\_extended.f).
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The component-wise relative backward error from the formula above.
 
 </section>
 

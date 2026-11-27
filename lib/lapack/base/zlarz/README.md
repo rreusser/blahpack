@@ -137,11 +137,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARZ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies an elementary reflector (as returned by stzrzf) to a general matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARZ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -158,69 +156,6 @@ If $\tau = 0$, then H is taken to be the unit matrix.
 To apply $H^H$ (the conjugate transpose of H), supply conjg($\tau$) instead $\tau$.
 
 H is a product of k elementary reflectors as returned by ZTZRZF.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: form  $H \, C$
--   `= 'R'`: form  $C \, H$
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C.
-
-#### L `[in]`
-
-_INTEGER_
-
-The number of entries of the vector V containing the meaningful part of the Householder vectors. If `SIDE = 'L'`, $M \ge L \ge 0$, if `SIDE = 'R'`, $N \ge L \ge 0$.
-
-#### V `[in]`
-
-_COMPLEX\*16 array, dimension (1+(L-1)\*abs(INCV))_
-
-The vector v in the representation of H as returned by ZTZRZF. V is not used if `TAU = 0`.
-
-#### INCV `[in]`
-
-_INTEGER_
-
-The increment between elements of v. `INCV` \<\> 0.
-
-#### TAU `[in]`
-
-_COMPLEX\*16_
-
-The value $\tau$ in the representation of H.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC,N)_
-
-On entry, the M-by-N matrix C. On exit, C is overwritten by the matrix $H \, C$ if `SIDE = 'L'`, or $C \, H$ if `SIDE = 'R'`.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N) if SIDE = 'L'_
-
-or (M) if `SIDE = 'R'`
 
 </section>
 

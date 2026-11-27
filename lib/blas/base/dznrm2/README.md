@@ -81,9 +81,23 @@ dznrm2( N, 1, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DZNRM2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DZNRM2`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+DZNRM2 returns the euclidean norm of a vector via the function name, so that
+
+$$
+\mathrm{DZNRM2} := \sqrt{ x^H \, x }
+$$
+
+### Further Details
+
+Anderson E. (2017) Algorithm 978: Safe Scaling in the Level 1 BLAS ACM Trans Math Softw 44:1--28 https://doi.org/10.1145/3061665
+
+Blue, James L. (1978) A Portable Fortran Program to Find the Euclidean Norm of a Vector ACM Trans Math Softw 4:15--23 https://doi.org/10.1145/355769.355771
 
 </section>
 

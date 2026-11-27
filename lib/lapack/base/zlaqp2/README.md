@@ -132,75 +132,17 @@ zlaqp2.ndarray( N, N, 0, A, N, 1, 0, JPVT, 1, 0, TAU, 1, 0, 1, N, 0, 1, 1, 0, WO
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAQP2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes a QR factorization with column pivoting of the matrix block.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAQP2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZLAQP2 computes a QR factorization with column pivoting of the block `A(OFFSET+1:M,1:N)`. The block `A(1:OFFSET,1:N)` is accordingly pivoted, but not factorized.
 
-### Arguments
+### References
 
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### OFFSET `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A that must be pivoted but no factorized. $\mathrm{OFFSET} \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, the upper triangle of block `A(OFFSET+1:M,1:N)` is the triangular factor obtained; the elements in block `A(OFFSET+1:M,1:N)` below the diagonal, together with the array `TAU`, represent the orthogonal matrix Q as a product of elementary reflectors. Block `A(1:OFFSET,1:N)` has been accordingly pivoted, but no factorized.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### JPVT `[in,out]`
-
-_INTEGER array, dimension (N)_
-
-On entry, if $\mathrm{JPVT}(i) \ne 0$, the i-th column of A is permuted to the front of $A \, P$ (a leading column); if `JPVT(i) = 0`, the i-th column of A is a free column. On exit, if `JPVT(i) = k`, then the i-th column of $A \, P$ was the k-th column of A.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors.
-
-#### VN1 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The vector with the partial column norms.
-
-#### VN2 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The vector with the exact column norms.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
+LAPACK Working Note 176
 
 </section>
 

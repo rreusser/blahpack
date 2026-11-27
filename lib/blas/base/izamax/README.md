@@ -103,9 +103,17 @@ izamax.ndarray( 3, zx, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `IZAMAX`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `IZAMAX`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+IZAMAX finds the index of the first element having maximum \|Re(.)\| + \|Im(.)\|
+
+### Further Details
+
+jack dongarra, 1/15/85. modified 3/93 to return if incx .le. 0. modified 12/3/93, array(1) declarations changed to array(\*)
 
 </section>
 

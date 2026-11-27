@@ -117,9 +117,9 @@ zptcon.ndarray( N, d, 1, 0, e, 1, 0, 1.0, 1.0, RWORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZPTCON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZPTCON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -130,49 +130,6 @@ Norm(inv(A)) is computed by a direct method, and the reciprocal of the condition
 $$
 \mathrm{RCOND} = 1 / (\mathrm{ANORM} \, \operatorname{norm}(\operatorname{inv}(A)))
 $$
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the diagonal matrix D from the factorization of A, as computed by ZPTTRF.
-
-#### E `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-The (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization of A, as computed by ZPTTRF.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-The 1-norm of the original matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\mathrm{ANORM} \, \mathrm{AINVNM})$, where AINVNM is the 1-norm of inv(A) computed in this routine.
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

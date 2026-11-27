@@ -109,41 +109,13 @@ dswap.ndarray( 3, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DSWAP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DSWAP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DSWAP interchanges two vectors. uses unrolled loops for increments equal to 1.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### DX `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DX`
-
-#### DY `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DY`
 
 ### Further Details
 

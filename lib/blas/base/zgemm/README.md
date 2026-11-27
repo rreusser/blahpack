@@ -134,9 +134,9 @@ zgemm.ndarray( 'no-transpose', 'no-transpose', 2, 2, 2, alpha, A, 2, 1, 0, B, 2,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZGEMM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZGEMM`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -153,110 +153,6 @@ $$
 $$
 
 $\alpha$ and $\beta$ are scalars, and A, B and C are matrices, with op( A ) an m by k matrix, op( B ) a k by n matrix and C an m by n matrix.
-
-### Arguments
-
-#### TRANSA `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANSA` specifies the form of op( A ) to be used in the matrix multiplication as follows:
-
-$$
-\mathrm{TRANSA} = \text{'N'} \quad\text{or}\quad \text{'n'}, \operatorname{op}( A ) = A
-$$
-
-$$
-\mathrm{TRANSA} = \text{'T'} \quad\text{or}\quad \text{'t'}, \operatorname{op}( A ) = A^T
-$$
-
-$$
-\mathrm{TRANSA} = \text{'C'} \quad\text{or}\quad \text{'c'}, \operatorname{op}( A ) = A^H
-$$
-
-#### TRANSB `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANSB` specifies the form of op( B ) to be used in the matrix multiplication as follows:
-
-$$
-\mathrm{TRANSB} = \text{'N'} \quad\text{or}\quad \text{'n'}, \operatorname{op}( B ) = B
-$$
-
-$$
-\mathrm{TRANSB} = \text{'T'} \quad\text{or}\quad \text{'t'}, \operatorname{op}( B ) = B^T
-$$
-
-$$
-\mathrm{TRANSB} = \text{'C'} \quad\text{or}\quad \text{'c'}, \operatorname{op}( B ) = B^H
-$$
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the number of rows of the matrix op( A ) and of the matrix C. M must be at least zero.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of the matrix op( B ) and the number of columns of the matrix C. N must be at least zero.
-
-#### K `[in]`
-
-_INTEGER_
-
-On entry, K specifies the number of columns of the matrix op( A ) and the number of rows of the matrix op( B ). K must be at least zero.
-
-#### ALPHA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension ( LDA, ka ), where ka is_
-
-k when `TRANSA = 'N'` or 'n', and is m otherwise. Before entry with `TRANSA = 'N'` or 'n', the leading m by k part of the array A must contain the matrix A, otherwise the leading k by m part of the array A must contain the matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. When `TRANSA = 'N'` or 'n' then `LDA` must be at least max( 1, m ), otherwise `LDA` must be at least max( 1, k ).
-
-#### B `[in]`
-
-_COMPLEX\*16 array, dimension ( LDB, kb ), where kb is_
-
-n when `TRANSB = 'N'` or 'n', and is k otherwise. Before entry with `TRANSB = 'N'` or 'n', the leading k by n part of the array B must contain the matrix B, otherwise the leading n by k part of the array B must contain the matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-On entry, `LDB` specifies the first dimension of B as declared in the calling (sub) program. When `TRANSB = 'N'` or 'n' then `LDB` must be at least max( 1, k ), otherwise `LDB` must be at least max( 1, n ).
-
-#### BETA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `BETA` specifies the scalar $\beta$. When `BETA` is supplied as zero then C need not be set on input.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension ( LDC, N )_
-
-Before entry, the leading m by n part of the array C must contain the matrix C, except when $\beta$ is zero, in which case C need not be set on entry. On exit, the array C is overwritten by the m by n matrix ( $\alpha$\*op( A )\*op( B ) + $\beta$\*C ).
-
-#### LDC `[in]`
-
-_INTEGER_
-
-On entry, `LDC` specifies the first dimension of C as declared in the calling (sub) program. `LDC` must be at least max( 1, m ).
 
 ### Further Details
 

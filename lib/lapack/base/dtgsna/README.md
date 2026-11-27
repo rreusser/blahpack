@@ -196,145 +196,15 @@ console.log( DIF );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTGSNA`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTGSNA`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTGSNA estimates reciprocal condition numbers for specified eigenvalues and/or eigenvectors of a matrix pair (A, B) in generalized real Schur canonical form (or of any matrix pair $(Q \, A \, Z^T, Q \, B \, Z^T)$ with orthogonal matrices Q and Z, where $Z^T$ denotes the transpose of Z.
 
 (A, B) must be in generalized real Schur form (as returned by DGGES), i.e. A is block upper triangular with 1-by-1 and 2-by-2 diagonal blocks. B is upper triangular.
-
-### Arguments
-
-#### JOB `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether condition numbers are required for eigenvalues (S) or eigenvectors (`DIF`):
-
--   `= 'E'`: for eigenvalues only (S);
--   `= 'V'`: for eigenvectors only (`DIF`);
--   `= 'B'`: for both eigenvalues and eigenvectors (S and `DIF`).
-
-#### HOWMNY `[in]`
-
-_CHARACTER\*1_
-
--   `= 'A'`: compute condition numbers for all eigenpairs;
--   `= 'S'`: compute condition numbers for selected eigenpairs specified by the array `SELECT`.
-
-#### SELECT `[in]`
-
-_LOGICAL array, dimension (N)_
-
-If `HOWMNY = 'S'`, `SELECT` specifies the eigenpairs for which condition numbers are required. To select condition numbers for the eigenpair corresponding to a real eigenvalue w(j), `SELECT(j)` must be set to .TRUE.. To select condition numbers corresponding to a complex conjugate pair of eigenvalues w(j) and w(j+1), either `SELECT(j)` or `SELECT(j+1)` or both, must be set to .TRUE.. If `HOWMNY = 'A'`, `SELECT` is not referenced.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the square matrix pair (A, B). $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The upper quasi-triangular matrix A in the pair (A,B).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-The upper triangular matrix B in the pair (A,B).
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### VL `[in]`
-
-_DOUBLE PRECISION array, dimension (LDVL,M)_
-
-If `JOB = 'E'` or 'B', `VL` must contain left eigenvectors of (A, B), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VL`, as returned by DTGEVC. If `JOB = 'V'`, `VL` is not referenced.
-
-#### LDVL `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VL`. $\mathrm{LDVL} \ge 1$. If `JOB = 'E'` or 'B', $\mathrm{LDVL} \ge N$.
-
-#### VR `[in]`
-
-_DOUBLE PRECISION array, dimension (LDVR,M)_
-
-If `JOB = 'E'` or 'B', `VR` must contain right eigenvectors of (A, B), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns ov `VR`, as returned by DTGEVC. If `JOB = 'V'`, `VR` is not referenced.
-
-#### LDVR `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VR`. $\mathrm{LDVR} \ge 1$. If `JOB = 'E'` or 'B', $\mathrm{LDVR} \ge N$.
-
-#### S `[out]`
-
-_DOUBLE PRECISION array, dimension (MM)_
-
-If `JOB = 'E'` or 'B', the reciprocal condition numbers of the selected eigenvalues, stored in consecutive elements of the array. For a complex conjugate pair of eigenvalues two consecutive elements of S are set to the same value. Thus `S(j)`, `DIF(j)`, and the j-th columns of `VL` and `VR` all correspond to the same eigenpair (but not in general the j-th eigenpair, unless all eigenpairs are selected). If `JOB = 'V'`, S is not referenced.
-
-#### DIF `[out]`
-
-_DOUBLE PRECISION array, dimension (MM)_
-
-If `JOB = 'V'` or 'B', the estimated reciprocal condition numbers of the selected eigenvectors, stored in consecutive elements of the array. For a complex eigenvector two consecutive elements of `DIF` are set to the same value. If the eigenvalues cannot be reordered to compute `DIF(j)`, `DIF(j)` is set to 0; this can only occur when the true value would be very small anyway. If `JOB = 'E'`, `DIF` is not referenced.
-
-#### MM `[in]`
-
-_INTEGER_
-
-The number of elements in the arrays S and `DIF`. $\mathrm{MM} \ge M$.
-
-#### M `[out]`
-
-_INTEGER_
-
-The number of elements of the arrays S and `DIF` used to store the specified condition numbers; for each selected real eigenvalue one element is used, and for each selected complex conjugate pair of eigenvalues, two elements are used. If `HOWMNY = 'A'`, M is set to N.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,N)$. If `JOB = 'V'` or 'B' $\mathrm{LWORK} \ge 2 \, N \, (N+2)+16$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N + 6)_
-
-If `JOB = 'E'`, `IWORK` is not referenced.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `=0`: Successful exit
--   `<0`: If `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

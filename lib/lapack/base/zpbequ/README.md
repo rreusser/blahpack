@@ -113,72 +113,13 @@ zpbequ.ndarray( 'upper', N, 1, AB, N, 1, 0, s, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZPBEQU`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZPBEQU`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZPBEQU computes row and column scalings intended to equilibrate a Hermitian positive definite band matrix A and reduce its condition number (with respect to the two-norm). S contains the scale factors, $S(i) = 1/\sqrt{A(i,i)}$, chosen so that the scaled matrix B with elements $B(i,j) = S(i) \, A(i,j) \, S(j)$ has ones on the diagonal. This choice of S puts the condition number of B within a factor N of the smallest possible condition number over all possible diagonal scalings.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangular of A is stored;
--   `= 'L'`: Lower triangular of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\mathrm{KD} \ge 0$.
-
-#### AB `[in]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-The upper or lower triangle of the Hermitian band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### S `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `INFO = 0`, S contains the scale factors for A.
-
-#### SCOND `[out]`
-
-_DOUBLE PRECISION_
-
-If `INFO = 0`, S contains the ratio of the smallest `S(i)` to the largest `S(i)`. If $\mathrm{SCOND} \ge 0.1$ and `AMAX` is neither too large nor too small, it is not worth scaling by S.
-
-#### AMAX `[out]`
-
-_DOUBLE PRECISION_
-
-Absolute value of largest matrix element. If `AMAX` is very close to overflow or very close to underflow, the matrix should be scaled.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
--   `> 0`: if `INFO = i`, the i-th diagonal element is nonpositive.
 
 </section>
 

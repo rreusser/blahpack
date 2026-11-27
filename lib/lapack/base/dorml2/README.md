@@ -130,11 +130,9 @@ dorml2.ndarray( 'left', 'no-transpose', N, N, N, A, N, 1, 0, TAU, 1, 0, C, N, 1,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DORML2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Multiplies a general matrix by the orthogonal matrix from a LQ factorization determined by sgelqf (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `DORML2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -163,83 +161,6 @@ Q = H(k) \cdots H(2) H(1)
 $$
 
 as returned by DGELQF. Q is of order m if `SIDE = 'L'` and of order n if `SIDE = 'R'`.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^T$ from the Left
--   `= 'R'`: apply Q or $Q^T$ from the Right
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: apply Q  (No transpose)
--   `= 'T'`: apply $Q^T$ (Transpose)
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \ge K \ge 0$; if `SIDE = 'R'`, $N \ge K \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,M) if SIDE = 'L'_
-
-(`LDA`,N) if `SIDE = 'R'` The i-th row must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by DGELQF in the first k rows of its array argument A. A is modified by the routine but restored on exit.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,K)$.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DGELQF.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the m by n matrix C. On exit, C is overwritten by $Q \, C$ or $Q^T \, C$ or $C \, Q^T$ or $C \, Q$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N) if SIDE = 'L'_
-
-(M) if `SIDE = 'R'`
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

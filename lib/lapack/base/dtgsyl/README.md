@@ -163,9 +163,9 @@ dtgsyl.ndarray( 'no-transpose', 1, N, N, A, N, 1, 0, B, N, 1, 0, C, N, 1, 0, D, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTGSYL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTGSYL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -195,149 +195,6 @@ This case (`TRANS` = 'T') is used to compute an one-norm-based estimate of Dif\[
 If $\mathrm{IJOB} \ge 1$, DTGSYL computes a Frobenius norm-based estimate of Dif\[(A,D),(B,E)\]. That is, the reciprocal of a lower bound on the reciprocal of the smallest singular value of Z. See \[1-2\] for more information.
 
 This is a level 3 BLAS algorithm.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: solve the generalized Sylvester equation (1).
--   `= 'T'`: solve the 'transposed' system (3).
-
-#### IJOB `[in]`
-
-_INTEGER_
-
-Specifies what kind of functionality to be performed.
-
--   `= 0`: solve (1) only.
--   `= 1`: The functionality of 0 and 3.
--   `= 2`: The functionality of 0 and 4.
--   `= 3`: Only an estimate of Dif\[(A,D), (B,E)\] is computed. (look ahead strategy `IJOB  = 1` is used).
--   `= 4`: Only an estimate of Dif\[(A,D), (B,E)\] is computed. ( DGECON on sub-systems is used ). Not referenced if `TRANS = 'T'`.
-
-#### M `[in]`
-
-_INTEGER_
-
-The order of the matrices A and D, and the row dimension of the matrices C, F, R and L.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices B and E, and the column dimension of the matrices C, F, R and L.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA, M)_
-
-The upper quasi triangular matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1, M)$.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB, N)_
-
-The upper quasi triangular matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1, N)$.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC, N)_
-
-On entry, C contains the right-hand-side of the first matrix equation in (1) or (3). On exit, if `IJOB = 0`, 1 or 2, C has been overwritten by the solution R. If `IJOB = 3` or 4 and `TRANS = 'N'`, C holds R, the solution achieved during the computation of the Dif-estimate.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1, M)$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (LDD, M)_
-
-The upper triangular matrix D.
-
-#### LDD `[in]`
-
-_INTEGER_
-
-The leading dimension of the array D. $\mathrm{LDD} \ge \max (1, M)$.
-
-#### E `[in]`
-
-_DOUBLE PRECISION array, dimension (LDE, N)_
-
-The upper triangular matrix E.
-
-#### LDE `[in]`
-
-_INTEGER_
-
-The leading dimension of the array E. $\mathrm{LDE} \ge \max (1, N)$.
-
-#### F `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDF, N)_
-
-On entry, F contains the right-hand-side of the second matrix equation in (1) or (3). On exit, if `IJOB = 0`, 1 or 2, F has been overwritten by the solution L. If `IJOB = 3` or 4 and `TRANS = 'N'`, F holds L, the solution achieved during the computation of the Dif-estimate.
-
-#### LDF `[in]`
-
-_INTEGER_
-
-The leading dimension of the array F. $\mathrm{LDF} \ge \max (1, M)$.
-
-#### DIF `[out]`
-
-_DOUBLE PRECISION_
-
-On exit `DIF` is the reciprocal of a lower bound of the reciprocal of the Dif-function, i.e. `DIF` is an upper bound of Dif\[(A,D), (B,E)\] = sigma\_min(Z), where Z as in (2). IF `IJOB = 0` or `TRANS = 'T'`, `DIF` is not touched.
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-On exit `SCALE` is the scaling factor in (1) or (3). If $0 < \mathrm{SCALE} < 1$, C and F hold the solutions R and L, resp., to a slightly perturbed system but the input matrices A, B, D and E have not been changed. If `SCALE = 0`, C and F hold the solutions R and L, respectively, to the homogeneous system with $C = F = 0$. Normally, `SCALE = 1`.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. `LWORK` \> = 1. If `IJOB = 1` or 2 and `TRANS = 'N'`, $\mathrm{LWORK} \ge \max (1,2 \, M \, N)$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (M+N+6)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `=0`: successful exit
--   `<0`: If `INFO = -i`, the i-th argument had an illegal value.
--   `>0`: (A, D) and (B, E) have common or close eigenvalues.
 
 ### References
 

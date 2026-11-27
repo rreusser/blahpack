@@ -144,11 +144,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSYTF2_RK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the factorization of a real symmetric indefinite matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method (BLAS2 unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `DSYTF2_RK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -161,124 +159,6 @@ $$
 where U (or L) is unit upper (or lower) triangular matrix, $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation matrix, $P^T$ is the transpose of P, and D is symmetric and block diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 
 This is the unblocked version of the algorithm, calling Level 2 BLAS. For more information see Further Details section.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the symmetric matrix A is stored:
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the symmetric matrix A.
-
--   If `UPLO = 'U'`: the leading N-by-N upper triangular part
--   of A contains the upper triangular part of the matrix A,
--   and the strictly lower triangular part of A is not
--   referenced.
-
-If `UPLO = 'L'`: the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced.
-
-On exit, contains:
-
--   a) ONLY diagonal elements of the symmetric block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D are stored on exit in array E), and
--   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### E `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On exit, contains the superdiagonal (or subdiagonal) elements of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$, $i=2$:N, `E(1)` is set to 0; If `UPLO = 'L'`: $E(i) = D(i+1,i)$, $i=1$:N-1, `E(N)` is set to 0.
-
-NOTE: For 1-by-1 diagonal block D(k), where $1 \le k \le N$, the element `E(k)` is set to 0 in both `UPLO = 'U'` or `UPLO = 'L'` cases.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-`IPIV` describes the permutation matrix P in the factorization of matrix A as follows. The absolute value of `IPIV(k)` represents the index of row and column that were interchanged with the k-th row and column. The value of `UPLO` describes the order in which the interchanges were applied. Also, the sign of `IPIV` represents the block structure of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks which correspond to 1 or 2 interchanges at each factorization step. For more info see Further Details section.
-
-If `UPLO = 'U'`, ( in factorization order, k decreases from N to 1 ):
-
-a) A single positive entry $\mathrm{IPIV}(k) > 0$ means: D(k,k) is a 1-by-1 diagonal block. If $\mathrm{IPIV}(k) \ne k$, rows and columns k and `IPIV(k)` were interchanged in the matrix `A(1:N,1:N)`; If `IPIV(k) = k`, no interchange occurred.
-
-b) A pair of consecutive negative entries
-
--   $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k-1) < 0$ means:
--   D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
--   (NOTE: negative entries in `IPIV` appear ONLY in pairs).
--   1) If $-\mathrm{IPIV}(k) \ne k$, rows and columns k and -`IPIV(k)` were interchanged in the matrix `A(1:N,1:N)`. If `-IPIV(k) = k`, no interchange occurred.
--   2) If $-\mathrm{IPIV}(k-1) \ne k-1$, rows and columns k-1 and -`IPIV(k-1)` were interchanged in the matrix `A(1:N,1:N)`. If $-\mathrm{IPIV}(k-1) = k-1$, no interchange occurred.
-
-c) In both cases a) and b), always $\lvert \mathrm{IPIV}(k) \rvert \le k$.
-
-d) NOTE: Any entry `IPIV(k)` is always NONZERO on output.
-
-If `UPLO = 'L'`, ( in factorization order, k increases from 1 to N ):
-
-a) A single positive entry $\mathrm{IPIV}(k) > 0$ means: D(k,k) is a 1-by-1 diagonal block. If $\mathrm{IPIV}(k) \ne k$, rows and columns k and `IPIV(k)` were interchanged in the matrix `A(1:N,1:N)`. If `IPIV(k) = k`, no interchange occurred.
-
-b) A pair of consecutive negative entries
-
--   $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k+1) < 0$ means:
--   D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
--   (NOTE: negative entries in `IPIV` appear ONLY in pairs).
--   1) If $-\mathrm{IPIV}(k) \ne k$, rows and columns k and -`IPIV(k)` were interchanged in the matrix `A(1:N,1:N)`. If `-IPIV(k) = k`, no interchange occurred.
--   2) If $-\mathrm{IPIV}(k+1) \ne k+1$, rows and columns k-1 and -`IPIV(k-1)` were interchanged in the matrix `A(1:N,1:N)`. If $-\mathrm{IPIV}(k+1) = k+1$, no interchange occurred.
-
-c) In both cases a) and b), always $\lvert \mathrm{IPIV}(k) \rvert \ge k$.
-
-d) NOTE: Any entry `IPIV(k)` is always NONZERO on output.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
-
--   `< 0`: If `INFO = -k`, the k-th argument had an illegal value
-
--   `> 0`: If `INFO = k`, the matrix A is singular, because: If `UPLO = 'U'`: column k in the upper triangular part of A contains all zeros. If `UPLO = 'L'`: column k in the lower triangular part of A contains all zeros.
-
-Therefore D(k,k) is exactly zero, and superdiagonal elements of column k of U (or subdiagonal elements of column k of L ) are all zeros. The factorization has been completed, but the block diagonal matrix D is exactly singular, and division by zero will occur if it is used to solve a system of equations.
-
-NOTE: `INFO` only stores the first occurrence of a singularity, any subsequent occurrence of singularity is not stored in `INFO` even though the factorization always completes.
-
-### Contributors
-
-December 2016, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
-
-September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
-
--   School of Mathematics,
--   University of Manchester
-
-01-01-96 - Based on modifications by
-
--   J. Lewis, Boeing Computer Services Company
--   A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville abd , USA
 
 </section>
 

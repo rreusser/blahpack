@@ -108,9 +108,9 @@ drotg.ndarray( ab, 1, 0, cs, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DROTG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DROTG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,32 +139,6 @@ This allows c and s to be reconstructed from z as follows:
    If |z| < 1, set c = sqrt(1 - z**2) and s = z.
    If |z| > 1, set c = 1/z and s = sqrt( 1 - c**2).
 ```
-
-### Arguments
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the scalar a. On exit, the scalar r.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the scalar b. On exit, the scalar z.
-
-#### C `[out]`
-
-_DOUBLE PRECISION_
-
-The scalar c.
-
-#### S `[out]`
-
-_DOUBLE PRECISION_
-
-The scalar s.
 
 ### Further Details
 

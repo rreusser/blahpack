@@ -109,9 +109,21 @@ zdotc.ndarray( 2, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZDOTC`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZDOTC`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+ZDOTC forms the dot product of two complex vectors
+
+$$
+\mathrm{ZDOTC} = X^H \, Y
+$$
+
+### Further Details
+
+jack dongarra, 3/11/78. modified 12/3/93, array(1) declarations changed to array(\*)
 
 </section>
 

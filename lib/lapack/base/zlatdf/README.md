@@ -132,11 +132,9 @@ zlatdf( 2, N, Z, N, RHS, 1, 0.0, 1.0, IPIV, 1, JPIV, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLATDF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Uses the LU factorization of the n-by-n matrix computed by sgetc2 and computes a contribution to the reciprocal Dif-estimate.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLATDF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -144,70 +142,17 @@ ZLATDF computes the contribution to the reciprocal Dif-estimate by solving for x
 
 The factorization of Z returned by ZGETC2 has the form $Z = P \, L \, U \, Q$, where P and Q are permutation matrices. L is lower triangular with unit diagonal elements and U is upper triangular.
 
-### Arguments
+### Further Details
 
-#### IJOB `[in]`
+This routine is a further developed implementation of algorithm BSOLVE in \[1\] using complete pivoting in the LU factorization.
 
-_INTEGER_
+### References
 
-`IJOB = 2`: First compute an approximative null-vector e
+\[1\] Bo Kagstrom and Lars Westin,
 
--   of Z using ZGECON, e is normalized and solve for
--   Zx = +-e - f with the sign giving the greater value of
--   2-norm(x). About 5 times as expensive as Default.
-
-$\mathrm{IJOB} \ne 2$: Local look ahead strategy where
-
--   all entries of the r.h.s. b is chosen as either +1 or
--   -1. Default.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix Z.
-
-#### Z `[in]`
-
-_COMPLEX\*16 array, dimension (LDZ, N)_
-
-On entry, the LU part of the factorization of the n-by-n matrix Z computed by ZGETC2: $Z = P \, L \, U \, Q$
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDA} \ge \max (1, N)$.
-
-#### RHS `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On entry, `RHS` contains contributions from other subsystems. On exit, `RHS` contains the solution of the subsystem with entries according to the value of `IJOB` (see above).
-
-#### RDSUM `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the sum of squares of computed contributions to the Dif-estimate under computation by ZTGSYL, where the scaling factor `RDSCAL` (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. If `TRANS = 'T'` `RDSUM` is not touched. NOTE: `RDSUM` only makes sense when ZTGSY2 is called by CTGSYL.
-
-#### RDSCAL `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, scaling factor used to prevent overflow in `RDSUM`. On exit, `RDSCAL` is updated w.r.t. the current contributions in `RDSUM`. If `TRANS = 'T'`, `RDSCAL` is not touched. NOTE: `RDSCAL` only makes sense when ZTGSY2 is called by ZTGSYL.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le N$, row i of the matrix has been interchanged with row `IPIV(i)`.
-
-#### JPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le j \le N$, column j of the matrix has been interchanged with column `JPIV(j)`.
+-   Generalized Schur Methods with Condition Estimators for
+-   Solving the Generalized Sylvester Equation, IEEE Transactions
+-   on Automatic Control, Vol. 34, No. 7, July 1989, pp 745-751.
 
 </section>
 

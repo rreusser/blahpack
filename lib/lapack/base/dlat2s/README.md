@@ -125,11 +125,9 @@ console.log( SA );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAT2S`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Converts a double-precision triangular matrix to a single-precision triangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAT2S`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -138,52 +136,6 @@ DLAT2S converts a DOUBLE PRECISION triangular matrix, `SA`, to a SINGLE PRECISIO
 RMAX is the overflow for the SINGLE PRECISION arithmetic DLAS2S checks that all the entries of A are between -RMAX and RMAX. If not the conversion is aborted and a flag is raised.
 
 This is an auxiliary routine so there is no argument checking.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of rows and columns of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the N-by-N triangular coefficient matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### SA `[out]`
-
-_REAL array, dimension (LDSA,N)_
-
-Only the `UPLO` part of `SA` is referenced. On exit, if `INFO=0`, the N-by-N coefficient matrix `SA`; if $\mathrm{INFO}>0$, the content of the `UPLO` part of `SA` is unspecified.
-
-#### LDSA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `SA`. $\mathrm{LDSA} \ge \max (1,M)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `= 1`: an entry of the matrix A is greater than the SINGLE PRECISION overflow threshold, in this case, the content of the `UPLO` part of `SA` in exit is unspecified.
 
 </section>
 

@@ -92,9 +92,13 @@ console.log( ieeeck( 1, 0.0, 1.0 ) );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `IEEECK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `IEEECK`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+IEEECK is called from the ILAENV to verify that Infinity and possibly NaN arithmetic is safe (i.e. will not trap).
 
 </section>
 

@@ -119,9 +119,9 @@ dorgtr.ndarray( 'upper', N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DORGTR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DORGTR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -130,60 +130,6 @@ DORGTR generates a real orthogonal matrix Q which is defined as the product of n
 if `UPLO = 'U'`, $Q = H(n-1)$ . . . H(2) H(1),
 
 if `UPLO = 'L'`, $Q = H(1)$ H(2) . . . H(n-1).
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A contains elementary reflectors from DSYTRD;
--   `= 'L'`: Lower triangle of A contains elementary reflectors from DSYTRD.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix Q. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the vectors which define the elementary reflectors, as returned by DSYTRD. On exit, the N-by-N orthogonal matrix Q.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DSYTRD.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,N-1)$. For optimum performance $\mathrm{LWORK} \ge (N-1) \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

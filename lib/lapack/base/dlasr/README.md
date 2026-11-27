@@ -122,11 +122,9 @@ dlasr.ndarray( 'left', 1, 'forward', N, N, c, 1, 0, s, 1, 0, A, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies a sequence of plane rotations to a general rectangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -191,72 +189,6 @@ P(k) = \begin{pmatrix} 1 &  &  &  &  &  &  &  \\  & .. &  &  &  &  &  &  \\  &  
 $$
 
 where R(k) appears in rows and columns k and z. The rotations are performed without ever forming P(k) explicitly.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the plane rotation matrix P is applied to A on the left or the right.
-
--   `= 'L'`: Left, compute A := $P \, A$
--   `= 'R'`: Right, compute A:= $A \, P^T$
-
-#### PIVOT `[in]`
-
-_CHARACTER\*1_
-
-Specifies the plane for which P(k) is a plane rotation matrix.
-
--   `= 'V'`: Variable pivot, the plane (k,k+1)
--   `= 'T'`: Top pivot, the plane (1,k+1)
--   `= 'B'`: Bottom pivot, the plane (k,z)
-
-#### DIRECT `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether P is a forward or backward sequence of plane rotations.
-
--   `= 'F'`: Forward, $P = P(z-1)$\*...\*$P(2) \, P(1)$
--   `= 'B'`: Backward, $P = P(1) \, P(2)$\*...\*P(z-1)
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. If $m \le 1$, an immediate return is effected.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. If $n \le 1$, an immediate return is effected.
-
-#### C `[in]`
-
-_DOUBLE PRECISION array, dimension (M-1) if SIDE = 'L'_
-
-(N-1) if `SIDE = 'R'` The cosines c(k) of the plane rotations.
-
-#### S `[in]`
-
-_DOUBLE PRECISION array, dimension (M-1) if SIDE = 'L'_
-
-(N-1) if `SIDE = 'R'` The sines s(k) of the plane rotations. The 2-by-2 plane rotation part of the matrix P(k), R(k), has the form $R(k) = ( c(k) s(k) )$ ( -s(k) c(k) ).
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The M-by-N matrix A. On exit, A is overwritten by $P \, A$ if `SIDE = 'L'` or by $A \, P^T$ if `SIDE = 'R'`.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
 
 </section>
 

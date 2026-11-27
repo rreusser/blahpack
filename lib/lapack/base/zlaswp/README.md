@@ -115,59 +115,13 @@ zlaswp.ndarray( N, A, N, 1, 0, 1, 1, IPIV, 1, 0, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLASWP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs a series of row interchanges on a general rectangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLASWP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZLASWP performs a series of row interchanges on the matrix A. One row interchange is initiated for each of rows `K1` through `K2` of A.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the matrix of column dimension N to which the row interchanges will be applied. On exit, the permuted matrix.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A.
-
-#### K1 `[in]`
-
-_INTEGER_
-
-The first element of `IPIV` for which a row interchange will be done.
-
-#### K2 `[in]`
-
-_INTEGER_
-
-(`K2`-`K1`+1) is the number of elements of `IPIV` for which a row interchange will be done.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (K1+(K2-K1)\*abs(INCX))_
-
-The vector of pivot indices. Only the elements in positions `K1` through $K_{1}+(K_{2}-K_{1}) \, \lvert \mathrm{INCX} \rvert$ of `IPIV` are accessed. `IPIV(K1+(K-K1)*abs(INCX)) = L` implies rows K and L are to be interchanged.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between successive values of `IPIV`. If `INCX` is negative, the pivots are applied in reverse order.
 
 ### Further Details
 

@@ -113,11 +113,9 @@ zlascl2.ndarray( N, N, d, 1, 0, X, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLASCL2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs diagonal scaling on a matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLASCL2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -130,38 +128,6 @@ $$
 where the DOUBLE PRECISION diagonal matrix D is stored as a vector.
 
 Eventually to be replaced by BLAS\_zge\_diag\_scale in the new BLAS standard.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of D and X. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of X. $N \ge 0$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, length M_
-
-Diagonal matrix D, stored as a vector of length M.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDX,N)_
-
-On entry, the matrix X to be scaled by D. On exit, the scaled matrix.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix X. $\mathrm{LDX} \ge M$.
 
 </section>
 

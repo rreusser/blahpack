@@ -164,11 +164,9 @@ dlaebz.ndarray( 1, 1, N, 1, 1, 1, 1.0, 1, 1.0, d, 1, 0, e, 1, 0, 1, 1, 0, NVAL, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAEBZ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the number of eigenvalues of a real symmetric tridiagonal matrix which are less than or equal to a given value, and performs other tasks required by the routine sstebz.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAEBZ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -199,154 +197,6 @@ To avoid underflow, the matrix should be scaled so that its largest element is n
 See W. Kahan "Accurate Eigenvalues of a Symmetric Tridiagonal Matrix", Report CS41, Computer Science Dept., Stanford University, July 21, 1966
 
 Note: the arguments are, in general, \*not\* checked for unreasonable values.
-
-### Arguments
-
-#### IJOB `[in]`
-
-_INTEGER_
-
-Specifies what is to be done:
-
--   `= 1`: Compute `NAB` for the initial intervals.
--   `= 2`: Perform bisection iteration to find eigenvalues of T.
--   `= 3`: Perform bisection iteration to invert `N(w)`, i.e., to find a point which has a specified number of eigenvalues of T to its left. Other values will cause DLAEBZ to return with `INFO=-1`.
-
-#### NITMAX `[in]`
-
-_INTEGER_
-
-The maximum number of "levels" of bisection to be performed, i.e., an interval of width W will not be made smaller than 2^$(-\mathrm{NITMAX}) \, W$. If not all intervals have converged after `NITMAX` iterations, then `INFO` is set to the number of non-converged intervals.
-
-#### N `[in]`
-
-_INTEGER_
-
-The dimension n of the tridiagonal matrix T. It must be at least 1.
-
-#### MMAX `[in]`
-
-_INTEGER_
-
-The maximum number of intervals. If more than `MMAX` intervals are generated, then DLAEBZ will quit with $\mathrm{INFO}=\mathrm{MMAX}+1$.
-
-#### MINP `[in]`
-
-_INTEGER_
-
-The initial number of intervals. It may not be greater than `MMAX`.
-
-#### NBMIN `[in]`
-
-_INTEGER_
-
-The smallest number of intervals that should be processed using a vector loop. If zero, then only the scalar loop will be used.
-
-#### ABSTOL `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum (absolute) width of an interval. When an interval is narrower than `ABSTOL`, or than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. This must be at least zero.
-
-#### RELTOL `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum relative width of an interval. When an interval is narrower than `ABSTOL`, or than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. Note: this should always be at least radix\*machine $\epsilon$.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum absolute value of a "pivot" in the Sturm sequence loop. This must be at least max \|$e(j)^2$\|\*safe\_min and at least safe\_min, where safe\_min is at least the smallest number that can divide one without overflow.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The diagonal elements of the tridiagonal matrix T.
-
-#### E `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The offdiagonal elements of the tridiagonal matrix T in positions 1 through N-1. `E(N)` is arbitrary.
-
-#### E2 `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The squares of the offdiagonal elements of the tridiagonal matrix T. `E2(N)` is ignored.
-
-#### NVAL `[in,out]`
-
-_INTEGER array, dimension (MINP)_
-
-If `IJOB=1` or 2, not referenced. If `IJOB=3`, the desired values of `N(w)`. The elements of `NVAL` will be reordered to correspond with the intervals in `AB`. Thus, `NVAL(j)` on output will not, in general be the same as `NVAL(j)` on input, but it will correspond with the interval (`AB(j,1)`,`AB(j,2)`\] on output.
-
-#### AB `[in,out]`
-
-_DOUBLE PRECISION array, dimension (MMAX,2)_
-
-The endpoints of the intervals. `AB(j,1)` is a(j), the left endpoint of the j-th interval, and `AB(j,2)` is b(j), the right endpoint of the j-th interval. The input intervals will, in general, be modified, split, and reordered by the calculation.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (MMAX)_
-
-If `IJOB=1`, ignored. If `IJOB=2`, workspace. If `IJOB=3`, then on input `C(j)` should be initialized to the first search point in the binary search.
-
-#### MOUT `[out]`
-
-_INTEGER_
-
-If `IJOB=1`, the number of eigenvalues in the intervals. If `IJOB=2` or 3, the number of intervals output. If `IJOB=3`, `MOUT` will equal `MINP`.
-
-#### NAB `[in,out]`
-
-_INTEGER array, dimension (MMAX,2)_
-
-If `IJOB=1`, then on output `NAB(i,j)` will be set to `N(AB(i,j))`. If `IJOB=2`, then on input, `NAB(i,j)` should be set. It must
-
--   satisfy the condition:
--   $N(\mathrm{AB}(i,1)) \le \mathrm{NAB}(i,1) \le \mathrm{NAB}(i,2) \le N(\mathrm{AB}(i,2))$,
--   which means that in interval i only eigenvalues
--   `NAB(i,1)`+1,...,`NAB(i,2)` will be considered. Usually,
--   `NAB(i,j)=N(AB(i,j))`, from a previous call to DLAEBZ with
--   `IJOB=1`.
--   On output, `NAB(i,j)` will contain
--   max(na(k),min(nb(k),`N(AB(i,j))`)), where k is the index of
--   the input interval that the output interval
--   (`AB(j,1)`,`AB(j,2)`\] came from, and na(k) and nb(k) are the
--   the input values of `NAB(k,1)` and `NAB(k,2)`.
-
-If `IJOB=3`, then on output, `NAB(i,j)` contains `N(AB(i,j))`,
-
--   unless $N(w) > \mathrm{NVAL}(i)$ for all search points w , in which
--   case `NAB(i,1)` will not be modified, i.e., the output
--   value will be the same as the input value (modulo
--   reorderings -- see `NVAL` and `AB`), or unless $N(w) < \mathrm{NVAL}(i)$
--   for all search points w , in which case `NAB(i,2)` will
--   not be modified. Normally, `NAB` should be set to some
--   distinctive value(s) before DLAEBZ is called.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MMAX)_
-
-Workspace.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (MMAX)_
-
-Workspace.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: All intervals converged. = 1--`MMAX`: The last `INFO` intervals did not converge. = `MMAX`+1:  More than `MMAX` intervals were generated.
 
 ### Further Details
 

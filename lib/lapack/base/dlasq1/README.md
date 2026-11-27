@@ -115,11 +115,9 @@ dlasq1.ndarray( N, d, 1, 0, e, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASQ1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the singular values of a real square bidiagonal matrix. Used by sbdsqr.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASQ1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -128,38 +126,6 @@ DLASQ1 computes the singular values of a real N-by-N bidiagonal matrix with diag
 "Accurate singular values and differential qd algorithms" by K. V. Fernando and B. N. Parlett, Numer. Math., Vol-67, No. 2, pp. 191-230, 1994,
 
 and the present implementation is described in "An implementation of the dqds Algorithm (Positive Case)", LAPACK Working Note.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of rows and columns in the matrix. $N \ge 0$.
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, D contains the diagonal elements of the bidiagonal matrix whose SVD is desired. On normal exit, D contains the singular values in decreasing order.
-
-#### E `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, elements `E(1:N-1)` contain the off-diagonal elements of the bidiagonal matrix whose SVD is desired. On exit, E is overwritten.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (4\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: the algorithm failed = 1, a split was marked by a positive value in $E = 2$, current block of Z not diagonalized after $100 \, N$ iterations (in inner while loop)  On exit D and E represent a matrix with the same singular values which the calling subroutine could use to finish the computation, or even feed back into $\mathrm{DLASQ1} = 3$, termination criterion of outer while loop not met (program created more than N unreduced blocks)
 
 </section>
 

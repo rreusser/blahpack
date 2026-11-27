@@ -134,9 +134,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARFY`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARFY`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -151,57 +151,6 @@ $$
 where $\tau$ is a scalar and v is a vector.
 
 If $\tau$ is zero, then H is taken to be the unit matrix.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the symmetric matrix C is stored.
-
--   `= 'U'`: Upper triangle
--   `= 'L'`: Lower triangle
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of rows and columns of the matrix C. $N \ge 0$.
-
-#### V `[in]`
-
-_DOUBLE PRECISION array, dimension (1 + (N-1)\*abs(INCV))_
-
-The vector v as described above.
-
-#### INCV `[in]`
-
-_INTEGER_
-
-The increment between successive elements of v. `INCV` must not be zero.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION_
-
-The value $\tau$ as described above.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC, N)_
-
-On entry, the matrix C. On exit, C is overwritten by $H \, C \, H$'.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max ( 1, N )$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
 
 </section>
 

@@ -109,37 +109,15 @@ dlaruv.ndarray( iseed, 1, 0, N, x, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARUV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Returns a vector of n random real numbers from a uniform distribution.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARUV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLARUV returns a vector of n random real numbers from a uniform (0,1) distribution (n \<= 128).
 
 This is an auxiliary routine called by DLARNV and ZLARNV.
-
-### Arguments
-
-#### ISEED `[in,out]`
-
-_INTEGER array, dimension (4)_
-
-On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and `ISEED(4)` must be odd. On exit, the seed is updated.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of random numbers to be generated. $N \le 128$.
-
-#### X `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The generated random numbers.
 
 ### Further Details
 

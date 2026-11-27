@@ -154,9 +154,9 @@ zstein.ndarray( N, d, 1, 0, e, 1, 0, N, w, 1, 0, IBLOCK, 1, 0, ISPLIT, 1, 0, Z, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZSTEIN`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZSTEIN`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -165,84 +165,6 @@ ZSTEIN computes the eigenvectors of a real symmetric tridiagonal matrix T corres
 The maximum number of iterations allowed for each eigenvector is specified by an internal parameter MAXITS (currently set to 5).
 
 Although the eigenvectors are real, they are stored in a complex array, which may be passed to ZUNMTR or ZUPMTR for back transformation to the eigenvectors of a complex Hermitian matrix which was reduced to tridiagonal form.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 0$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the tridiagonal matrix T.
-
-#### E `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) subdiagonal elements of the tridiagonal matrix T, stored in elements 1 to N-1.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of eigenvectors to be found. $0 \le M \le N$.
-
-#### W `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The first M elements of W contain the eigenvalues for which eigenvectors are to be computed. The eigenvalues should be grouped by split-off block and ordered from smallest to largest within the block. ( The output array W from DSTEBZ with `ORDER = 'B'` is expected here. )
-
-#### IBLOCK `[in]`
-
-_INTEGER array, dimension (N)_
-
-The submatrix indices associated with the corresponding eigenvalues in W; `IBLOCK(i)=1` if eigenvalue `W(i)` belongs to the first submatrix from the top, =2 if `W(i)` belongs to the second submatrix, etc. ( The output array `IBLOCK` from DSTEBZ is expected here. )
-
-#### ISPLIT `[in]`
-
-_INTEGER array, dimension (N)_
-
-The splitting points, at which T breaks up into submatrices. The first submatrix consists of rows/columns 1 to ISPLIT( 1 ), the second of rows/columns ISPLIT( 1 )+1 through ISPLIT( 2 ), etc. ( The output array `ISPLIT` from DSTEBZ is expected here. )
-
-#### Z `[out]`
-
-_COMPLEX\*16 array, dimension (LDZ, M)_
-
-The computed eigenvectors. The eigenvector associated with the eigenvalue `W(i)` is stored in the i-th column of Z. Any vector which fails to converge is set to its current iterate after MAXITS iterations. The imaginary parts of the eigenvectors are set to zero.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge \max (1,N)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (5\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### IFAIL `[out]`
-
-_INTEGER array, dimension (M)_
-
-On normal exit, all elements of `IFAIL` are zero. If one or more eigenvectors fail to converge after MAXITS iterations, then their indices are stored in array `IFAIL`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, then i eigenvectors failed to converge in MAXITS iterations.  Their indices are stored in array `IFAIL`.
 
 </section>
 

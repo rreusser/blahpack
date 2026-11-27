@@ -122,9 +122,9 @@ ztrcon.ndarray( '1', 'upper', 'non-unit', N, A, N, 1, 0, 1.0, WORK, 1, 0, RWORK,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTRCON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTRCON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -135,69 +135,6 @@ The norm of A is computed and an estimate is obtained for norm(inv(A)), then the
 $$
 \mathrm{RCOND} = 1 / ( \operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)) )
 $$
-
-### Arguments
-
-#### NORM `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;
-
--   `= 'I'`: Infinity-norm.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: A is non-unit triangular;
--   `= 'U'`: A is unit triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-The triangular matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of the array A contains the upper triangular matrix, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of the array A contains the lower triangular matrix, and the strictly upper triangular part of A is not referenced. If `DIAG = 'U'`, the diagonal elements of A are also not referenced and are assumed to be 1.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

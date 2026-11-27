@@ -136,84 +136,15 @@ zgtcon.ndarray( '1', N, DL, 1, 0, d, 1, 0, DU, 1, 0, 1, 1, 0, IPIV, 1, 0, 1.0, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGTCON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGTCON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGTCON estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF.
 
 An estimate is obtained for norm(inv(A)), and the reciprocal of the condition number is computed as $\mathrm{RCOND} = 1 / (\mathrm{ANORM} \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-### Arguments
-
-#### NORM `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;
-
--   `= 'I'`: Infinity-norm.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### DL `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-The (n-1) multipliers that define the matrix L from the LU factorization of A as computed by ZGTTRF.
-
-#### D `[in]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-The n diagonal elements of the upper triangular matrix U from the LU factorization of A.
-
-#### DU `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-The (n-1) elements of the first superdiagonal of U.
-
-#### DU2 `[in]`
-
-_COMPLEX\*16 array, dimension (N-2)_
-
-The (n-2) elements of the second superdiagonal of U.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le n$, row i of the matrix was interchanged with row `IPIV(i)`. `IPIV(i)` will always be either i or i+1; `IPIV(i) = i` indicates a row interchange was not required.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-If `NORM = '1'` or 'O', the 1-norm of the original matrix A. If `NORM = 'I'`, the infinity-norm of the original matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\mathrm{ANORM} \, \mathrm{AINVNM})$, where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

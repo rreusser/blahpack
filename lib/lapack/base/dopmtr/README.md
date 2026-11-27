@@ -121,9 +121,9 @@ dopmtr.ndarray( 'left', 'upper', 'no-transpose', 4, 4, AP, 1, 0, TAU, 1, 0, C, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DOPMTR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DOPMTR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,78 +139,6 @@ where Q is a real orthogonal matrix of order nq, with $\mathrm{nq} = m$ if `SIDE
 if `UPLO = 'U'`, $Q = H(\mathrm{nq}-1)$ . . . H(2) H(1);
 
 if `UPLO = 'L'`, $Q = H(1)$ H(2) . . . H(nq-1).
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^T$ from the Left;
--   `= 'R'`: apply Q or $Q^T$ from the Right.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangular packed storage used in previous call to DSPTRD;
--   `= 'L'`: Lower triangular packed storage used in previous call to DSPTRD.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: No transpose, apply Q;
--   `= 'T'`: Transpose, apply $Q^T$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### AP `[in]`
-
-_DOUBLE PRECISION array, dimension (M\*(M+1)/2) if SIDE = 'L'_
-
-(N\*(N+1)/2) if `SIDE = 'R'` The vectors which define the elementary reflectors, as returned by DSPTRD. `AP` is modified by the routine but restored on exit.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION array, dimension (M-1) if SIDE = 'L'_
-
-or (N-1) if `SIDE = 'R'` `TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DSPTRD.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \, C$ or $Q^T \, C$ or $C \, Q^T$ or $C \, Q$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N) if SIDE = 'L'_
-
-(M) if `SIDE = 'R'`
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

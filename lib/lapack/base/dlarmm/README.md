@@ -93,9 +93,21 @@ dlarmm( 1.0, 1.0, 1.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARMM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARMM`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+DLARMM returns a factor s in (0, 1\] such that the linear updates
+
+$$
+(s \, C) - A \, (s \, B) \quad\text{and}\quad (s \, C) - (s \, A) \, B
+$$
+
+cannot overflow, where A, B, and C are matrices of conforming dimensions.
+
+This is an auxiliary routine so there is no argument checking.
 
 </section>
 

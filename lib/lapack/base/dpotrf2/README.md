@@ -107,9 +107,9 @@ dpotrf2.ndarray( 'upper', N, A, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPOTRF2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DPOTRF2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -136,43 +136,6 @@ A = [ -----|----- ]  with n1 = n/2
 ```
 
 The subroutine calls itself to factor A11. Update and scale A21 or A12, update A22 then calls itself to factor A22.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced.
-
-On exit, if `INFO = 0`, the factor U or L from the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, the leading principal minor of order i is not positive, and the factorization could not be completed.
 
 </section>
 

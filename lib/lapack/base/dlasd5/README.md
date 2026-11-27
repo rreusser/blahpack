@@ -122,11 +122,9 @@ dlasd5.ndarray( 1, d, 1, 0, z, 1, 0, DELTA, 1, 0, 1.0, 1, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASD5`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix. Used by sbdsdc.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASD5`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,50 +139,6 @@ $$
 $$
 
 We also assume $\mathrm{RHO} > 0$ and that the Euclidean norm of the vector Z is one.
-
-### Arguments
-
-#### I `[in]`
-
-_INTEGER_
-
-The index of the eigenvalue to be computed. $I = 1$ or $I = 2$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension ( 2 )_
-
-The original eigenvalues. We assume $0 \le D(1) < D(2)$.
-
-#### Z `[in]`
-
-_DOUBLE PRECISION array, dimension ( 2 )_
-
-The components of the updating vector.
-
-#### DELTA `[out]`
-
-_DOUBLE PRECISION array, dimension ( 2 )_
-
-Contains (`D(j)` - sigma\_I) in its j-th component. The vector `DELTA` contains the information necessary to construct the eigenvectors.
-
-#### RHO `[in]`
-
-_DOUBLE PRECISION_
-
-The scalar in the symmetric updating formula.
-
-#### DSIGMA `[out]`
-
-_DOUBLE PRECISION_
-
-The computed sigma\_I, the I-th updated eigenvalue.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension ( 2 )_
-
-`WORK` contains (`D(j)` + sigma\_I) in its j-th component.
 
 </section>
 

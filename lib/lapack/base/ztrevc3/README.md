@@ -144,9 +144,9 @@ ztrevc3.ndarray( 'left', 'all', SELECT, 1, 0, N, T, N, 1, 0, VL, N, 1, 0, VR, N,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTREVC3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTREVC3`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -163,127 +163,6 @@ where $y^H$ denotes the conjugate transpose of the vector y. The eigenvalues are
 This routine returns the matrices X and/or Y of right and left eigenvectors of T, or the products $Q \, X$ and/or $Q \, Y$, where Q is an input matrix. If Q is the unitary factor that reduces a matrix A to Schur form T, then $Q \, X$ and $Q \, Y$ are the matrices of right and left eigenvectors of A.
 
 This uses a Level 3 BLAS version of the back transformation.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'R'`: compute right eigenvectors only;
--   `= 'L'`: compute left eigenvectors only;
--   `= 'B'`: compute both right and left eigenvectors.
-
-#### HOWMNY `[in]`
-
-_CHARACTER\*1_
-
--   `= 'A'`: compute all right and/or left eigenvectors;
--   `= 'B'`: compute all right and/or left eigenvectors, backtransformed using the matrices supplied in `VR` and/or `VL`;
--   `= 'S'`: compute selected right and/or left eigenvectors, as indicated by the logical array `SELECT`.
-
-#### SELECT `[in]`
-
-_LOGICAL array, dimension (N)_
-
-If `HOWMNY = 'S'`, `SELECT` specifies the eigenvectors to be computed. The eigenvector corresponding to the j-th eigenvalue is computed if `SELECT(j)` = .TRUE.. Not referenced if `HOWMNY = 'A'` or 'B'.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix T. $N \ge 0$.
-
-#### T `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDT,N)_
-
-The upper triangular matrix T. T is modified, but restored on exit.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max (1,N)$.
-
-#### VL `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDVL,MM)_
-
-On entry, if `SIDE = 'L'` or 'B' and `HOWMNY = 'B'`, `VL` must contain an N-by-N matrix Q (usually the unitary matrix Q of Schur vectors returned by ZHSEQR). On exit, if `SIDE = 'L'` or 'B', `VL` contains: if `HOWMNY = 'A'`, the matrix Y of left eigenvectors of T; if `HOWMNY = 'B'`, the matrix $Q \, Y$; if `HOWMNY = 'S'`, the left eigenvectors of T specified by
-
--   `SELECT`, stored consecutively in the columns
--   of `VL`, in the same order as their
--   eigenvalues.
-
-Not referenced if `SIDE = 'R'`.
-
-#### LDVL `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VL`. $\mathrm{LDVL} \ge 1$, and if `SIDE = 'L'` or 'B', $\mathrm{LDVL} \ge N$.
-
-#### VR `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDVR,MM)_
-
-On entry, if `SIDE = 'R'` or 'B' and `HOWMNY = 'B'`, `VR` must contain an N-by-N matrix Q (usually the unitary matrix Q of Schur vectors returned by ZHSEQR). On exit, if `SIDE = 'R'` or 'B', `VR` contains: if `HOWMNY = 'A'`, the matrix X of right eigenvectors of T; if `HOWMNY = 'B'`, the matrix $Q \, X$; if `HOWMNY = 'S'`, the right eigenvectors of T specified by
-
--   `SELECT`, stored consecutively in the columns
--   of `VR`, in the same order as their
--   eigenvalues.
-
-Not referenced if `SIDE = 'L'`.
-
-#### LDVR `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VR`. $\mathrm{LDVR} \ge 1$, and if `SIDE = 'R'` or 'B', $\mathrm{LDVR} \ge N$.
-
-#### MM `[in]`
-
-_INTEGER_
-
-The number of columns in the arrays `VL` and/or `VR`. $\mathrm{MM} \ge M$.
-
-#### M `[out]`
-
-_INTEGER_
-
-The number of columns in the arrays `VL` and/or `VR` actually used to store the eigenvectors. If `HOWMNY = 'A'` or 'B', M is set to N. Each selected eigenvector occupies one column.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of array `WORK`. $\mathrm{LWORK} \ge \max (1,2 \, N)$. For optimum performance, $\mathrm{LWORK} \ge N + 2 \, N \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (LRWORK)_
-
-#### LRWORK `[in]`
-
-_INTEGER_
-
-The dimension of array `RWORK`. $\mathrm{LRWORK} \ge \max (1,N)$.
-
-If `LRWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `RWORK` array, returns this value as the first entry of the `RWORK` array, and no error message related to `LRWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

@@ -113,11 +113,9 @@ dlarfg.ndarray( 4, alpha, 0, x, 1, 0, tau, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARFG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates an elementary reflector (Householder matrix).
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARFG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -138,38 +136,6 @@ where $\tau$ is a real scalar and v is a real (n-1)-element vector.
 If the elements of x are all zero, then $\tau = 0$ and H is taken to be the unit matrix.
 
 Otherwise $1 \le \tau \le 2$.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the elementary reflector.
-
-#### ALPHA `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the value $\alpha$. On exit, it is overwritten with the value $\beta$.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (1+(N-2)\*abs(INCX))_
-
-On entry, the vector x. On exit, it is overwritten with the vector v.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between elements of X. $\mathrm{INCX} > 0$.
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION_
-
-The value $\tau$.
 
 </section>
 

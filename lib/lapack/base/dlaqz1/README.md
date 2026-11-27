@@ -131,9 +131,9 @@ console.log( v );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAQZ1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAQZ1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -146,58 +146,6 @@ It is assumed that either
 1) sr1 = sr2 or 2) $\mathrm{si} = 0$.
 
 This is useful for starting double implicit shift bulges in the QZ algorithm.
-
-### Arguments
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The 3-by-3 matrix A in (\*).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of A as declared in the calling procedure.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-The 3-by-3 matrix B in (\*).
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of B as declared in the calling procedure.
-
-#### SR1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### SR2 `[in]`
-
-_DOUBLE PRECISION_
-
-#### SI `[in]`
-
-_DOUBLE PRECISION_
-
-#### BETA1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### BETA2 `[in]`
-
-_DOUBLE PRECISION_
-
-#### V `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-A scalar multiple of the first column of the matrix K in (\*).
 
 </section>
 

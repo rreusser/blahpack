@@ -118,58 +118,13 @@ zgerq2.ndarray( N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGERQ2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGERQ2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGERQ2 computes an RQ factorization of a complex m by n matrix A: $A = R \, Q$.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the m by n matrix A. On exit, if $m \le n$, the upper triangle of the subarray `A(1:m,n-m+1:n)` contains the m by m upper triangular matrix R; if $m \ge n$, the elements on and above the (m-n)-th subdiagonal contain the m by n upper trapezoidal matrix R; the remaining elements, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (M)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

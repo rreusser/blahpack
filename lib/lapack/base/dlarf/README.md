@@ -121,11 +121,9 @@ dlarf.ndarray( 'left', N, N, v, 1, 0, 1.0, C, N, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies an elementary reflector to a general rectangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -138,63 +136,6 @@ $$
 where $\tau$ is a real scalar and v is a real vector.
 
 If $\tau = 0$, then H is taken to be the unit matrix.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: form  $H \, C$
--   `= 'R'`: form  $C \, H$
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C.
-
-#### V `[in]`
-
-_DOUBLE PRECISION array, dimension (1 + (M-1)\*abs(INCV)) if SIDE = 'L'_
-
-or (1 + (N-1)\*abs(`INCV`)) if `SIDE = 'R'` The vector v in the representation of H. V is not used if `TAU = 0`.
-
-#### INCV `[in]`
-
-_INTEGER_
-
-The increment between elements of v. `INCV` \<\> 0.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION_
-
-The value $\tau$ in the representation of H.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the m by n matrix C. On exit, C is overwritten by the matrix $H \, C$ if `SIDE = 'L'`, or $C \, H$ if `SIDE = 'R'`.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N) if SIDE = 'L'_
-
-or (M) if `SIDE = 'R'`
 
 </section>
 

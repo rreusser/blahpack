@@ -124,9 +124,9 @@ zhpmv.ndarray( 'upper', 2, alpha, AP, 1, 0, x, 1, 0, beta, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZHPMV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZHPMV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -137,70 +137,6 @@ y := \alpha \, A \, x + \beta \, y
 $$
 
 where $\alpha$ and $\beta$ are scalars, x and y are n element vectors and A is an n by n hermitian matrix, supplied in packed form.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the upper or lower triangular part of the matrix A is supplied in the packed array `AP` as follows:
-
-`UPLO = 'U'` or 'u' The upper triangular part of A is
-
-supplied in `AP`.
-
-`UPLO = 'L'` or 'l' The lower triangular part of A is
-
-supplied in `AP`.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of the matrix A. N must be at least zero.
-
-#### ALPHA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### AP `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( ( n\*( n + 1 ) )/2 ). Before entry with `UPLO = 'U'` or 'u', the array `AP` must contain the upper triangular part of the hermitian matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. Before entry with `UPLO = 'L'` or 'l', the array `AP` must contain the lower triangular part of the hermitian matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 ) and a( 3, 1 ) respectively, and so on. Note that the imaginary parts of the diagonal elements need not be set and are assumed to be zero.
-
-#### X `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ). Before entry, the incremented array X must contain the n element vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
-
-#### BETA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `BETA` specifies the scalar $\beta$. When `BETA` is supplied as zero then Y need not be set on input.
-
-#### Y `[in,out]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCY` ) ). Before entry, the incremented array Y must contain the n element vector y. On exit, Y is overwritten by the updated vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero.
 
 ### Further Details
 

@@ -176,117 +176,13 @@ console.log( w );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARRB`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Provides limited bisection to locate eigenvalues for more accuracy.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARRB`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 Given the relatively robust representation(RRR) L D L^T, DLARRB does "limited" bisection to refine the eigenvalues of L D L^T, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ), to more accuracy. Initial guesses for these eigenvalues are input in W, the corresponding estimate of the error in these guesses and their gaps are input in `WERR` and `WGAP`, respectively. During bisection, intervals \[left, right\] are maintained by storing their mid-points and semi-widths in the arrays W and `WERR` respectively.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The N diagonal elements of the diagonal matrix D.
-
-#### LLD `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (N-1) elements $L(i) \, L(i) \, D(i)$.
-
-#### IFIRST `[in]`
-
-_INTEGER_
-
-The index of the first eigenvalue to be computed.
-
-#### ILAST `[in]`
-
-_INTEGER_
-
-The index of the last eigenvalue to be computed.
-
-#### RTOL1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### RTOL2 `[in]`
-
-_DOUBLE PRECISION_
-
-Tolerance for the convergence of the bisection intervals. An interval \[LEFT,RIGHT\] has converged if $\mathrm{RIGHT}-\mathrm{LEFT} < \max ( \mathrm{RTOL1} \, \mathrm{GAP}, \mathrm{RTOL2} \, \max (|\mathrm{LEFT}|,|\mathrm{RIGHT}|) )$ where GAP is the (estimated) distance to the nearest eigenvalue.
-
-#### OFFSET `[in]`
-
-_INTEGER_
-
-Offset for the arrays W, `WGAP` and `WERR`, i.e., the `IFIRST`-`OFFSET` through `ILAST`-`OFFSET` elements of these arrays are to be used.
-
-#### W `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On input, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ) are estimates of the eigenvalues of L D L^T indexed `IFIRST` through `ILAST`. On output, these estimates are refined.
-
-#### WGAP `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-On input, the (estimated) gaps between consecutive eigenvalues of L D L^T, i.e., `WGAP(I-OFFSET)` is the gap between eigenvalues I and I+1. Note that if `IFIRST = ILAST` then `WGAP(IFIRST-OFFSET)` must be set to ZERO. On output, these gaps are refined.
-
-#### WERR `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On input, WERR( `IFIRST`-`OFFSET` ) through WERR( `ILAST`-`OFFSET` ) are the errors in the estimates of the corresponding elements in W. On output, these errors are refined.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*N)_
-
-Workspace.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (2\*N)_
-
-Workspace.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum pivot in the Sturm sequence.
-
-#### SPDIAM `[in]`
-
-_DOUBLE PRECISION_
-
-The spectral diameter of the matrix.
-
-#### TWIST `[in]`
-
-_INTEGER_
-
-The twist index for the twisted factorization that is used for the negcount. `TWIST = N`: Compute negcount from L D L^T - LAMBDA $I = L+ D+ L$+^T `TWIST = 1`: Compute negcount from L D L^T - LAMBDA $I = U- D- U$-^T `TWIST = R`: Compute negcount from L D L^T - LAMBDA $I = N(r)$ `D(r)` `N(r)`
-
-#### INFO `[out]`
-
-_INTEGER_
-
-Error flag.
 
 </section>
 

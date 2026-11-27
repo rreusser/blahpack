@@ -122,80 +122,15 @@ zgeequ.ndarray( N, N, A, N, 1, 0, r, 1, 0, c, 1, 0, 1, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGEEQU`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGEEQU`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGEEQU computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number. R returns the row scale factors and C the column scale factors, chosen to try to make the largest element in each row and column of the matrix B with elements $B(i,j)=R(i) \, A(i,j) \, C(j)$ have absolute value 1.
 
 `R(i)` and `C(j)` are restricted to be between SMLNUM = smallest safe number and BIGNUM = largest safe number. Use of these scaling factors is not guaranteed to reduce the condition number of A but works well in practice.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-The M-by-N matrix whose equilibration factors are to be computed.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### R `[out]`
-
-_DOUBLE PRECISION array, dimension (M)_
-
-If `INFO = 0` or $\mathrm{INFO} > M$, R contains the row scale factors for A.
-
-#### C `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `INFO = 0`, C contains the column scale factors for A.
-
-#### ROWCND `[out]`
-
-_DOUBLE PRECISION_
-
-If `INFO = 0` or $\mathrm{INFO} > M$, `ROWCND` contains the ratio of the smallest `R(i)` to the largest `R(i)`. If $\mathrm{ROWCND} \ge 0.1$ and `AMAX` is neither too large nor too small, it is not worth scaling by R.
-
-#### COLCND `[out]`
-
-_DOUBLE PRECISION_
-
-If `INFO = 0`, `COLCND` contains the ratio of the smallest `C(i)` to the largest `C(i)`. If $\mathrm{COLCND} \ge 0.1$, it is not worth scaling by C.
-
-#### AMAX `[out]`
-
-_DOUBLE PRECISION_
-
-Absolute value of largest matrix element. If `AMAX` is very close to overflow or very close to underflow, the matrix should be scaled.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`,  and i is \<= M:  the i-th row of A is exactly zero
--   `> M`: the (i-M)-th column of A is exactly zero
 
 </section>
 

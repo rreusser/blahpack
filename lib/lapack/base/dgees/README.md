@@ -142,11 +142,23 @@ dgees.ndarray( 'compute-vectors', 'none', 1, N, A, N, 1, 0, 1, WR, 1, 0, WI, 1, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGEES`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGEES`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices
+### Purpose
+
+DGEES computes for an N-by-N real nonsymmetric matrix A, the eigenvalues, the real Schur form T, and, optionally, the matrix of Schur vectors Z. This gives the Schur factorization $A = Z \, T \, (Z^T)$.
+
+Optionally, it also orders the eigenvalues on the diagonal of the real Schur form so that selected eigenvalues are at the top left. The leading columns of Z then form an orthonormal basis for the invariant subspace corresponding to the selected eigenvalues.
+
+A matrix is in real Schur form if it is upper quasi-triangular with 1-by-1 and 2-by-2 blocks. 2-by-2 blocks will be standardized in the form
+
+$$
+\begin{bmatrix} a & b \\ c & a \end{bmatrix}
+$$
+
+where $b \, c < 0$. The eigenvalues of such a block are a +- sqrt(bc).
 
 </section>
 

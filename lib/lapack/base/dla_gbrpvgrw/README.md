@@ -117,11 +117,13 @@ dla_gbrpvgrw.ndarray( N, N, N, 1, AB, N, 1, 0, AFB, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLA_GBRPVGRW`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLA_GBRPVGRW`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the reciprocal pivot growth factor norm(A)/norm(U) for a general banded matrix.
+### Purpose
+
+DLA\_GBRPVGRW computes the reciprocal pivot growth factor norm(A)/norm(U). The "max absolute element" norm is used. If this is much less than 1, the stability of the LU factorization of the (equilibrated) matrix A could be poor. This also means that the solution X, estimated condition numbers, and error bounds could be unreliable.
 
 </section>
 

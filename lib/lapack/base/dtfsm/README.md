@@ -118,11 +118,9 @@ dtfsm.ndarray( 'no-transpose', 'left', 'lower', 'no-transpose', 'non-unit', 3, 2
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTFSM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves a matrix equation (one operand is a triangular matrix in RFP format).
+The mathematical description from the reference LAPACK 3.12.0 source of `DTFSM`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -143,105 +141,6 @@ $$
 A is in Rectangular Full Packed (RFP) Format.
 
 The matrix X is overwritten on B.
-
-### Arguments
-
-#### TRANSR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: The Normal Form of RFP A is stored;
--   `= 'T'`: The Transpose Form of RFP A is stored.
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
-On entry, `SIDE` specifies whether op( A ) appears on the left or right of X as follows:
-
-$$
-\mathrm{SIDE} = \text{'L'} \quad\text{or}\quad \text{'l'} \operatorname{op}( A ) \, X = \alpha \, B
-$$
-
-$$
-\mathrm{SIDE} = \text{'R'} \quad\text{or}\quad \text{'r'} X \, \operatorname{op}( A ) = \alpha \, B
-$$
-
-Unchanged on exit.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the RFP matrix A came from an upper or lower triangular matrix as follows: `UPLO = 'U'` or 'u' RFP A came from an upper triangular matrix `UPLO = 'L'` or 'l' RFP A came from a lower triangular matrix
-
-Unchanged on exit.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANS` specifies the form of op( A ) to be used in the matrix multiplication as follows:
-
-$$
-\mathrm{TRANS} = \text{'N'} \quad\text{or}\quad \text{'n'} \operatorname{op}( A ) = A
-$$
-
-$$
-\mathrm{TRANS} = \text{'T'} \quad\text{or}\quad \text{'t'} \operatorname{op}( A ) = A'
-$$
-
-Unchanged on exit.
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
-On entry, `DIAG` specifies whether or not RFP A is unit triangular as follows:
-
-`DIAG = 'U'` or 'u' A is assumed to be unit triangular.
-
-`DIAG = 'N'` or 'n' A is not assumed to be unit
-
-triangular.
-
-Unchanged on exit.
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the number of rows of B. M must be at least zero. Unchanged on exit.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of B. N must be at least zero. Unchanged on exit.
-
-#### ALPHA `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `ALPHA` specifies the scalar $\alpha$. When $\alpha$ is zero then A is not referenced and B need not be set before entry. Unchanged on exit.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (NT)_
-
-$\mathrm{NT} = N \, (N+1)/2$. On entry, the matrix A in RFP Format. RFP Format is described by `TRANSR`, `UPLO` and N as follows: If `TRANSR='N'` then RFP A is (0:N,0:K-1) when N is even; $K=N/2$. RFP A is (0:N-1,0:K) when N is odd; $K=N/2$. If `TRANSR = 'T'` then RFP is the transpose of RFP A as defined when `TRANSR = 'N'`. The contents of RFP A are defined by `UPLO` as follows: If `UPLO = 'U'` the RFP A contains the NT elements of upper packed A either in normal or transpose Format. If `UPLO = 'L'` the RFP A contains the NT elements of lower packed A either in normal or transpose Format. The LDA of RFP A is (N+1)/2 when `TRANSR = 'T'`. When `TRANSR` is 'N' the LDA is N+1 when N is even and is N when is odd. See the Note below for more details. Unchanged on exit.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-Before entry, the leading m by n part of the array B must contain the right-hand side matrix B, and on exit is overwritten by the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-On entry, `LDB` specifies the first dimension of B as declared in the calling (sub) program. `LDB` must be at least max( 1, m ). Unchanged on exit.
 
 ### Further Details
 

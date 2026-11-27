@@ -122,11 +122,9 @@ dlaed6( 2, true, rho, d, z, finit, tau );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAED6`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Used by DSTEDC. Computes one Newton step in solution of the secular equation.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAED6`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -143,57 +141,6 @@ It is assumed that
 if `ORGATI` = .true. the root is between d(2) and d(3); otherwise it is between d(1) and d(2)
 
 This routine will be called by DLAED4 when necessary. In most cases, the root sought is the smallest in magnitude, though it might not be in some extremely rare situations.
-
-### Arguments
-
-#### KNITER `[in]`
-
-_INTEGER_
-
-Refer to DLAED4 for its significance.
-
-#### ORGATI `[in]`
-
-_LOGICAL_
-
-If `ORGATI` is true, the needed root is between d(2) and d(3); otherwise it is between d(1) and d(2). See DLAED4 for further details.
-
-#### RHO `[in]`
-
-_DOUBLE PRECISION_
-
-Refer to the equation f(x) above.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (3)_
-
-D satisfies $d(1) < d(2) < d(3)$.
-
-#### Z `[in]`
-
-_DOUBLE PRECISION array, dimension (3)_
-
-Each of the elements in z must be positive.
-
-#### FINIT `[in]`
-
-_DOUBLE PRECISION_
-
-The value of f at 0. It is more accurate than the one evaluated inside this routine (if someone wants to do so).
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION_
-
-The root of the equation f(x).
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `> 0`: if `INFO = 1`, failure to converge
 
 ### Further Details
 

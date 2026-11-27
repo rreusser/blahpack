@@ -139,9 +139,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASWLQ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASWLQ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -154,75 +154,6 @@ $$
 where:
 
 Q is a n-by-N orthogonal matrix, stored on exit in an implicit form in the elements above the diagonal of the array A and in the elements of the array T; L is a lower-triangular M-by-M matrix stored on exit in the elements on and below the diagonal of the array A. 0 is a M-by-(N-M) zero matrix, if $M < N$, and is not stored.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge M \ge 0$.
-
-#### MB `[in]`
-
-_INTEGER_
-
-The row block size to be used in the blocked QR. $M \ge \mathrm{MB} \ge 1$
-
-#### NB `[in]`
-
-_INTEGER_
-
-The column block size to be used in the blocked QR. $\mathrm{NB} > 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, the elements on and below the diagonal of the array contain the N-by-N lower triangular matrix L; the elements above the diagonal represent Q by the rows of blocked V (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_DOUBLE PRECISION array_
-
-dimension (`LDT`, N \* Number\_of\_row\_blocks) where Number\_of\_row\_blocks = CEIL((N-M)/(`NB`-M)) The blocked upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See Further Details below.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{MB}$.
-
-#### WORK `[out]`
-
-```text
-(workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
-```
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \mathrm{MB} \, M$. If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

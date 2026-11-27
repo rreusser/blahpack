@@ -189,11 +189,13 @@ console.log( rcond );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLA_HERCOND_C`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLA_HERCOND_C`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the infinity norm condition number of $\operatorname{op}(A) \, \operatorname{inv}(\operatorname{diag}(c))$ for Hermitian indefinite matrices.
+### Purpose
+
+ZLA\_HERCOND\_C computes the infinity norm condition number of $\operatorname{op}(A) \, \operatorname{inv}(\operatorname{diag}(C))$ where C is a DOUBLE PRECISION vector.
 
 </section>
 

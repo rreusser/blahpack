@@ -165,11 +165,9 @@ console.log( Z );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAR1V`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the (scaled) r-th column of the inverse of the submatrix in rows b1 through bn of the tridiagonal matrix LDLT - λI.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAR1V`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -183,132 +181,6 @@ DLAR1V computes the (scaled) r-th column of the inverse of the sumbmatrix in row
 
 -   twisted factorization obtained by combining the top part of the
 -   the stationary and the bottom part of the progressive transform.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix L D $L^T$.
-
-#### B1 `[in]`
-
-_INTEGER_
-
-First index of the submatrix of L D $L^T$.
-
-#### BN `[in]`
-
-_INTEGER_
-
-Last index of the submatrix of L D $L^T$.
-
-#### LAMBDA `[in]`
-
-_DOUBLE PRECISION_
-
-The shift. In order to compute an accurate eigenvector, `LAMBDA` should be a good approximation to an eigenvalue of L D $L^T$.
-
-#### L `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) subdiagonal elements of the unit bidiagonal matrix L, in elements 1 to N-1.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the diagonal matrix D.
-
-#### LD `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The n-1 elements $L(i) \, D(i)$.
-
-#### LLD `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The n-1 elements $L(i) \, L(i) \, D(i)$.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum pivot in the Sturm sequence.
-
-#### GAPTOL `[in]`
-
-_DOUBLE PRECISION_
-
-Tolerance that indicates when eigenvector entries are negligible w.r.t. their contribution to the residual.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On input, all entries of Z must be set to 0. On output, Z contains the (scaled) r-th column of the inverse. The scaling is such that `Z(R)` equals 1.
-
-#### WANTNC `[in]`
-
-_LOGICAL_
-
-Specifies whether `NEGCNT` has to be computed.
-
-#### NEGCNT `[out]`
-
-_INTEGER_
-
-If `WANTNC` is .TRUE. then `NEGCNT` = the number of pivots \< pivmin in the matrix factorization L D $L^T$, and `NEGCNT = -1` otherwise.
-
-#### ZTZ `[out]`
-
-_DOUBLE PRECISION_
-
-The square of the 2-norm of Z.
-
-#### MINGMA `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the largest (in magnitude) diagonal element of the inverse of L D $L^T - \sigma$ I.
-
-#### R `[in,out]`
-
-_INTEGER_
-
-The twist index for the twisted factorization used to compute Z. On input, $0 \le R \le N$. If R is input as 0, R is set to the index where $(L D L^T - \sigma I)$^{-1} is largest in magnitude. If $1 \le R \le N$, R is unchanged. On output, R contains the twist index used to compute Z. Ideally, R designates the position of the maximum entry in the eigenvector.
-
-#### ISUPPZ `[out]`
-
-_INTEGER array, dimension (2)_
-
-The support of the vector in Z, i.e., the vector Z is nonzero only in elements `ISUPPZ(1)` through ISUPPZ( 2 ).
-
-#### NRMINV `[out]`
-
-_DOUBLE PRECISION_
-
-$\mathrm{NRMINV} = 1/\sqrt{ \mathrm{ZTZ} }$
-
-#### RESID `[out]`
-
-_DOUBLE PRECISION_
-
-The residual of the FP vector. $\mathrm{RESID} = \lvert \mathrm{MINGMA} \rvert/\sqrt{ \mathrm{ZTZ} }$
-
-#### RQCORR `[out]`
-
-_DOUBLE PRECISION_
-
-The Rayleigh Quotient correction to `LAMBDA`. $\mathrm{RQCORR} = \mathrm{MINGMA} \, \mathrm{TMP}$
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (4\*N)_
 
 </section>
 

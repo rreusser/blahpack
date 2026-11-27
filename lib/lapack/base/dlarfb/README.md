@@ -136,113 +136,13 @@ dlarfb.ndarray( 'left', 'no-transpose', 'forward', 'columnwise', N, N, N, V, N, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARFB`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies a block reflector or its transpose to a general rectangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARFB`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLARFB applies a real block reflector H or its transpose $H^T$ to a real m by n matrix C, from either the left or the right.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply H or $H^T$ from the Left
--   `= 'R'`: apply H or $H^T$ from the Right
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: apply H (No transpose)
--   `= 'T'`: apply $H^T$ (Transpose)
-
-#### DIRECT `[in]`
-
-_CHARACTER\*1_
-
-Indicates how H is formed from a product of elementary reflectors
-
--   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward)
--   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)
-
-#### STOREV `[in]`
-
-_CHARACTER\*1_
-
-Indicates how the vectors which define the elementary reflectors are stored:
-
--   `= 'C'`: Columnwise
--   `= 'R'`: Rowwise
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C.
-
-#### K `[in]`
-
-_INTEGER_
-
-The order of the matrix T (= the number of elementary reflectors whose product defines the block reflector). If `SIDE = 'L'`, $M \ge K \ge 0$; if `SIDE = 'R'`, $N \ge K \ge 0$.
-
-#### V `[in]`
-
-_DOUBLE PRECISION array, dimension (LDV,K) if STOREV = 'C'_
-
-(`LDV`,M) if `STOREV = 'R'` and `SIDE = 'L'` (`LDV`,N) if `STOREV = 'R'` and `SIDE = 'R'` The matrix V. See Further Details.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. If `STOREV = 'C'` and `SIDE = 'L'`, $\mathrm{LDV} \ge \max (1,M)$; if `STOREV = 'C'` and `SIDE = 'R'`, $\mathrm{LDV} \ge \max (1,N)$; if `STOREV = 'R'`, $\mathrm{LDV} \ge K$.
-
-#### T `[in]`
-
-_DOUBLE PRECISION array, dimension (LDT,K)_
-
-The triangular k by k matrix T in the representation of the block reflector.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge K$.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the m by n matrix C. On exit, C is overwritten by $H \, C$ or $H^T \, C$ or $C \, H$ or $C \, H^T$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (LDWORK,K)_
-
-#### LDWORK `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `WORK`. If `SIDE = 'L'`, $\mathrm{LDWORK} \ge \max (1,N)$; if `SIDE = 'R'`, $\mathrm{LDWORK} \ge \max (1,M)$.
 
 ### Further Details
 

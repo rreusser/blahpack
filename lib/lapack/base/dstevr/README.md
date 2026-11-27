@@ -151,11 +151,9 @@ dstevr.ndarray( 'compute-vectors', 'all', N, d, 1, 0, e, 1, 0, 1.0, 1.0, N, N, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSTEVR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for OTHER matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DSTEVR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -175,147 +173,6 @@ For more details, see "A new O(n^2) algorithm for the symmetric tridiagonal eige
 Note 1 : DSTEVR calls DSTEMR when the full spectrum is requested on machines which conform to the ieee-754 floating point standard. DSTEVR calls DSTEBZ and DSTEIN on non-ieee machines and when partial spectrum requests are made.
 
 Normal execution of DSTEMR may create NaNs and infinities and hence may abort due to a floating point exception in environments which do not handle NaNs and infinities in the ieee standard default manner.
-
-### Arguments
-
-#### JOBZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Compute eigenvalues only;
--   `= 'V'`: Compute eigenvalues and eigenvectors.
-
-#### RANGE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'A'`: all eigenvalues will be found.
--   `= 'V'`: all eigenvalues in the half-open interval (`VL`,`VU`\] will be found.
--   `= 'I'`: the `IL`-th through `IU`-th eigenvalues will be found. For `RANGE = 'V'` or 'I' and $\mathrm{IU} - \mathrm{IL} < N - 1$, DSTEBZ and DSTEIN are called
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 0$.
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues.
-
-#### E `[in,out]`
-
-_DOUBLE PRECISION array, dimension (max(1,N-1))_
-
-On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues.
-
-#### VL `[in]`
-
-_DOUBLE PRECISION_
-
-If `RANGE='V'`, the lower bound of the interval to be searched for eigenvalues. $\mathrm{VL} < \mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'.
-
-#### VU `[in]`
-
-_DOUBLE PRECISION_
-
-If `RANGE='V'`, the upper bound of the interval to be searched for eigenvalues. $\mathrm{VL} < \mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'.
-
-#### IL `[in]`
-
-_INTEGER_
-
-If `RANGE='I'`, the index of the smallest eigenvalue to be returned. $1 \le \mathrm{IL} \le \mathrm{IU} \le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'.
-
-#### IU `[in]`
-
-_INTEGER_
-
-If `RANGE='I'`, the index of the largest eigenvalue to be returned. $1 \le \mathrm{IL} \le \mathrm{IU} \le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'.
-
-#### ABSTOL `[in]`
-
-_DOUBLE PRECISION_
-
-The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval \[a,b\] of width less than or equal to
-
-$$
-\mathrm{ABSTOL} + \mathrm{EPS} \, \max ( |a|,|b| )
-$$
-
-where EPS is the machine precision. If `ABSTOL` is less than or equal to zero, then EPS\*\|T\| will be used in its place, where \|T\| is the 1-norm of the tridiagonal matrix obtained by reducing A to tridiagonal form.
-
-See "Computing Small Singular Values of Bidiagonal Matrices with Guaranteed High Relative Accuracy," by Demmel and Kahan, LAPACK Working Note #3.
-
-If high relative accuracy is important, set `ABSTOL` to DLAMCH( 'Safe minimum' ). Doing so will guarantee that eigenvalues are computed to high relative accuracy when possible in future releases. The current code does not make any guarantees about high relative accuracy, but future releases will. See J. Barlow and J. Demmel, "Computing Accurate Eigensystems of Scaled Diagonally Dominant Matrices", LAPACK Working Note #7, for a discussion of which matrices define their eigenvalues to high relative accuracy.
-
-#### M `[out]`
-
-_INTEGER_
-
-The total number of eigenvalues found. $0 \le M \le N$. If `RANGE = 'A'`, $M = N$, and if `RANGE = 'I'`, $M = \mathrm{IU}-\mathrm{IL}+1$.
-
-#### W `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The first M elements contain the selected eigenvalues in ascending order.
-
-#### Z `[out]`
-
-_DOUBLE PRECISION array, dimension (LDZ, max(1,M) )_
-
-If `JOBZ = 'V'`, then if `INFO = 0`, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with `W(i)`. Note: the user must ensure that at least max(1,M) columns are supplied in the array Z; if `RANGE = 'V'`, the exact value of M is not known in advance and an upper bound must be used.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$, and if `JOBZ = 'V'`, $\mathrm{LDZ} \ge \max (1,N)$.
-
-#### ISUPPZ `[out]`
-
-_INTEGER array, dimension ( 2\*max(1,M) )_
-
-The support of the eigenvectors in Z, i.e., the indices indicating the nonzero elements in Z. The i-th eigenvector is nonzero only in elements ISUPPZ( 2\*i-1 ) through ISUPPZ( 2\*i ). Implemented only for `RANGE = 'A'` or 'I' and $\mathrm{IU} - \mathrm{IL} = N - 1$
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal (and minimal) `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,20 \, N)$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal sizes of the `WORK` and `IWORK` arrays, returns these values as the first entries of the `WORK` and `IWORK` arrays, and no error message related to `LWORK` or `LIWORK` is issued by XERBLA.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (MAX(1,LIWORK))_
-
-On exit, if `INFO = 0`, `IWORK(1)` returns the optimal (and minimal) `LIWORK`.
-
-#### LIWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `IWORK`. $\mathrm{LIWORK} \ge \max (1,10 \, N)$.
-
-If `LIWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal sizes of the `WORK` and `IWORK` arrays, returns these values as the first entries of the `WORK` and `IWORK` arrays, and no error message related to `LWORK` or `LIWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: Internal error
 
 </section>
 

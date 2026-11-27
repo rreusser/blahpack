@@ -132,11 +132,9 @@ dlar2v.ndarray( N, x, 1, 0, y, 1, 0, z, 1, 0, c, 1, 0, s, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAR2V`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies a vector of plane rotations with real cosines and real sines from both sides to a sequence of 2-by-2 symmetric/Hermitian matrices.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAR2V`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -145,56 +143,6 @@ DLAR2V applies a vector of real plane rotations from both sides to a sequence of
 $$
 \begin{pmatrix} x(i) & z(i) \\ z(i) & y(i) \end{pmatrix} := \begin{pmatrix} c(i) & s(i) \\ -s(i) & c(i) \end{pmatrix} \begin{pmatrix} x(i) & z(i) \\ z(i) & y(i) \end{pmatrix} \begin{pmatrix} c(i) & -s(i) \\ s(i) & c(i) \end{pmatrix}
 $$
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of plane rotations to be applied.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array_
-
-dimension (1+(N-1)\*`INCX`) The vector x.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array_
-
-dimension (1+(N-1)\*`INCX`) The vector y.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array_
-
-dimension (1+(N-1)\*`INCX`) The vector z.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between elements of X, Y and Z. $\mathrm{INCX} > 0$.
-
-#### C `[in]`
-
-_DOUBLE PRECISION array, dimension (1+(N-1)\*INCC)_
-
-The cosines of the plane rotations.
-
-#### S `[in]`
-
-_DOUBLE PRECISION array, dimension (1+(N-1)\*INCC)_
-
-The sines of the plane rotations.
-
-#### INCC `[in]`
-
-_INTEGER_
-
-The increment between elements of C and S. $\mathrm{INCC} > 0$.
 
 </section>
 

@@ -122,43 +122,15 @@ console.log( y );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLA_WWADDW`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Adds a vector into a doubled-single vector.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLA_WWADDW`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLA\_WWADDW adds a vector W into a doubled-single vector (X, Y).
 
 This works for all extant IBM's hex and binary floating point arithmetic, but not for decimal.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The length of vectors X, Y, and W.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The first part of the doubled-single accumulation vector.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The second part of the doubled-single accumulation vector.
-
-#### W `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The vector to be added.
 
 </section>
 

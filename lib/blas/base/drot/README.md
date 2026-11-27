@@ -111,49 +111,13 @@ drot.ndarray( 3, x, 1, 0, y, 1, 0, 0.8, 0.6 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DROT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DROT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DROT applies a plane rotation.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### DX `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DX`
-
-#### DY `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DY`
-
-#### C `[in]`
-
-_DOUBLE PRECISION_
-
-#### S `[in]`
-
-_DOUBLE PRECISION_
 
 ### Further Details
 

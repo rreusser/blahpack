@@ -123,81 +123,15 @@ dgbsv.ndarray( N, N, N, N, AB, N, 1, 0, IPIV, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGBSV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for GB matrices (simple driver)
+The mathematical description from the reference LAPACK 3.12.0 source of `DGBSV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGBSV computes the solution to a real system of linear equations $A \, X = B$, where A is a band matrix of order N with `KL` subdiagonals and `KU` superdiagonals, and X and B are N-by-`NRHS` matrices.
 
 The LU decomposition with partial pivoting and row interchanges is used to factor A as $A = L \, U$, where L is a product of permutation and unit lower triangular matrices with `KL` subdiagonals, and U is upper triangular with `KL`+`KU` superdiagonals. The factored form of A is then used to solve the system of equations $A \, X = B$.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of linear equations, i.e., the order of the matrix A. $N \ge 0$.
-
-#### KL `[in]`
-
-_INTEGER_
-
-The number of subdiagonals within the band of A. $\mathrm{KL} \ge 0$.
-
-#### KU `[in]`
-
-_INTEGER_
-
-The number of superdiagonals within the band of A. $\mathrm{KU} \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### AB `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDAB,N)_
-
-On entry, the matrix A in band storage, in rows `KL`+1 to $2 \, \mathrm{KL}+\mathrm{KU}+1$; rows 1 to `KL` of the array need not be set. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(KL+KU+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{KU}) \le i \le \min (N,j+\mathrm{KL})$ On exit, details of the factorization: U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \, \mathrm{KL}+\mathrm{KU}+1$. See below for further details.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge 2 \, \mathrm{KL}+\mathrm{KU}+1$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices that define the permutation matrix P; row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, U(i,i) is exactly zero.  The factorization has been completed, but the factor U is exactly singular, and the solution has not been computed.
 
 ### Further Details
 

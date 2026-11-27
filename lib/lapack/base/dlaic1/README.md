@@ -119,11 +119,9 @@ console.log( 'sestpr =', out[ 0 ], ', s =', out[ 1 ], ', c =', out[ 2 ] );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAIC1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies one step of incremental condition estimation.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAIC1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -153,63 +151,6 @@ diag(sest\*sest, 0) + \[$\alpha$ $\gamma$\] \* \[ $\alpha$ \]
 \[ $\gamma$ \]
 
 where $\alpha = x^T \, w$.
-
-### Arguments
-
-#### JOB `[in]`
-
-_INTEGER_
-
--   `= 1`: an estimate for the largest singular value is computed.
--   `= 2`: an estimate for the smallest singular value is computed.
-
-#### J `[in]`
-
-_INTEGER_
-
-Length of X and W
-
-#### X `[in]`
-
-_DOUBLE PRECISION array, dimension (J)_
-
-The j-vector x.
-
-#### SEST `[in]`
-
-_DOUBLE PRECISION_
-
-Estimated singular value of j by j matrix L
-
-#### W `[in]`
-
-_DOUBLE PRECISION array, dimension (J)_
-
-The j-vector w.
-
-#### GAMMA `[in]`
-
-_DOUBLE PRECISION_
-
-The diagonal element $\gamma$.
-
-#### SESTPR `[out]`
-
-_DOUBLE PRECISION_
-
-Estimated singular value of (j+1) by (j+1) matrix Lhat.
-
-#### S `[out]`
-
-_DOUBLE PRECISION_
-
-Sine needed in forming xhat.
-
-#### C `[out]`
-
-_DOUBLE PRECISION_
-
-Cosine needed in forming xhat.
 
 </section>
 

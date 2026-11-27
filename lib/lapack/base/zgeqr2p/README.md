@@ -124,11 +124,9 @@ console.log( TAU );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGEQR2P`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the QR factorization of a general rectangular matrix with non-negative diagonal elements using an unblocked algorithm.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGEQR2P`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,49 +139,6 @@ $$
 where:
 
 Q is a m-by-m orthogonal matrix; R is an upper-triangular n-by-n matrix with nonnegative diagonal entries; 0 is a (m-n)-by-n zero matrix, if $m > n$.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the m by n matrix A. On exit, the elements on and above the diagonal of the array contain the min(m,n) by n upper trapezoidal matrix R (R is upper triangular if $m \ge n$). The diagonal entries of R are real and nonnegative; the elements below the diagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

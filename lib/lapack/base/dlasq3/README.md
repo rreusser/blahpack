@@ -112,125 +112,13 @@ dlasq3.ndarray( 1, 1, 1, 1, 0, 1, 1, 1.0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASQ3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Checks for deflation, computes a shift and calls dqds. Used by sbdsqr.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASQ3`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLASQ3 checks for deflation, computes a shift (`TAU`) and calls dqds. In case of failure it changes shifts, and tries again until output is positive.
-
-### Arguments
-
-#### I0 `[in]`
-
-_INTEGER_
-
-First index.
-
-#### N0 `[in,out]`
-
-_INTEGER_
-
-Last index.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 4\*N0 )_
-
-Z holds the qd array.
-
-#### PP `[in,out]`
-
-_INTEGER_
-
-`PP=0` for ping, `PP=1` for pong. `PP=2` indicates that flipping was applied to the Z array and that the initial tests for deflation should not be performed.
-
-#### DMIN `[out]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d.
-
-#### SIGMA `[out]`
-
-_DOUBLE PRECISION_
-
-Sum of shifts used in current segment.
-
-#### DESIG `[in,out]`
-
-_DOUBLE PRECISION_
-
-Lower order part of `SIGMA`
-
-#### QMAX `[in]`
-
-_DOUBLE PRECISION_
-
-Maximum value of q.
-
-#### NFAIL `[in,out]`
-
-_INTEGER_
-
-Increment `NFAIL` by 1 each time the shift was too big.
-
-#### ITER `[in,out]`
-
-_INTEGER_
-
-Increment `ITER` by 1 for each iteration.
-
-#### NDIV `[in,out]`
-
-_INTEGER_
-
-Increment `NDIV` by 1 for each division.
-
-#### IEEE `[in]`
-
-_LOGICAL_
-
-Flag for `IEEE` or non `IEEE` arithmetic (passed to DLASQ5).
-
-#### TTYPE `[in,out]`
-
-_INTEGER_
-
-Shift type.
-
-#### DMIN1 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DMIN2 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DN `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DN1 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DN2 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### G `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### TAU `[in,out]`
-
-_DOUBLE PRECISION_
-
-These are passed as arguments in order to save their values between calls to DLASQ3.
 
 </section>
 

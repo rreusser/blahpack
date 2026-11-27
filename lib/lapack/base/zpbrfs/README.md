@@ -153,115 +153,13 @@ zpbrfs.ndarray( 'upper', 3, 1, 1, AB, 1, 2, 0, AFB, 1, 2, 0, B, 1, 3, 0, X, 1, 3
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZPBRFS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZPBRFS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZPBRFS improves the computed solution to a system of linear equations when the coefficient matrix is Hermitian positive definite and banded, and provides error bounds and backward error estimates for the solution.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\mathrm{KD} \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices B and X. $\mathrm{NRHS} \ge 0$.
-
-#### AB `[in]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-The upper or lower triangle of the Hermitian band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### AFB `[in]`
-
-_COMPLEX\*16 array, dimension (LDAFB,N)_
-
-The triangular factor U or L from the Cholesky factorization $A = U^H \, U$ or $A = L \, L^H$ of the band matrix A as computed by ZPBTRF, in the same storage format as A (see `AB`).
-
-#### LDAFB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AFB`. $\mathrm{LDAFB} \ge \mathrm{KD}+1$.
-
-#### B `[in]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-The right hand side matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDX,NRHS)_
-
-On entry, the solution matrix X, as computed by ZPBTRS. On exit, the improved solution matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,N)$.
-
-#### FERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error.
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution).
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

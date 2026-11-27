@@ -128,9 +128,9 @@ dgghrd( 'column-major', 'initialize', 'initialize', 3, 1, 3, A, 3, B, 3, Q, 3, Z
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGGHRD`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGGHRD`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -173,95 +173,6 @@ Q_{1} \, B \, Z_{1}^T = (Q_{1} \, Q) \, T \, (Z_{1} \, Z)^T
 $$
 
 If Q1 is the orthogonal matrix from the QR factorization of B in the original equation $A \, x = \lambda \, B \, x$, then DGGHRD reduces the original problem to generalized Hessenberg form.
-
-### Arguments
-
-#### COMPQ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: do not compute Q;
--   `= 'I'`: Q is initialized to the unit matrix, and the orthogonal matrix Q is returned;
--   `= 'V'`: Q must contain an orthogonal matrix Q1 on entry, and the product $Q_{1} \, Q$ is returned.
-
-#### COMPZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: do not compute Z;
--   `= 'I'`: Z is initialized to the unit matrix, and the orthogonal matrix Z is returned;
--   `= 'V'`: Z must contain an orthogonal matrix Z1 on entry, and the product $Z_{1} \, Z$ is returned.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### ILO `[in]`
-
-_INTEGER_
-
-#### IHI `[in]`
-
-_INTEGER_
-
-`ILO` and `IHI` mark the rows and columns of A which are to be reduced. It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. `ILO` and `IHI` are normally set by a previous call to DGGBAL; otherwise they should be set to 1 and N respectively. $1 \le \mathrm{ILO} \le \mathrm{IHI} \le N$, if $N > 0$; `ILO=1` and `IHI=0`, if $N=0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA, N)_
-
-On entry, the N-by-N general matrix to be reduced. On exit, the upper triangle and the first subdiagonal of A are overwritten with the upper Hessenberg matrix H, and the rest is set to zero.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB, N)_
-
-On entry, the N-by-N upper triangular matrix B. On exit, the upper triangular matrix $T = Q^T$ B Z. The elements below the diagonal are set to zero.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### Q `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDQ, N)_
-
-On entry, if `COMPQ = 'V'`, the orthogonal matrix Q1, typically from the QR factorization of B. On exit, if `COMPQ='I'`, the orthogonal matrix Q, and if `COMPQ = 'V'`, the product $Q_{1} \, Q$. Not referenced if `COMPQ='N'`.
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Q. $\mathrm{LDQ} \ge N$ if `COMPQ='V'` or 'I'; $\mathrm{LDQ} \ge 1$ otherwise.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDZ, N)_
-
-On entry, if `COMPZ = 'V'`, the orthogonal matrix Z1. On exit, if `COMPZ='I'`, the orthogonal matrix Z, and if `COMPZ = 'V'`, the product $Z_{1} \, Z$. Not referenced if `COMPZ='N'`.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge N$ if `COMPZ='V'` or 'I'; $\mathrm{LDZ} \ge 1$ otherwise.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 ### Further Details
 

@@ -122,9 +122,9 @@ dgemv.ndarray( 'no-transpose', 2, 2, 1.0, A, 2, 1, 0, x, 1, 0, 0.0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DGEMV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DGEMV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -135,86 +135,6 @@ y := \alpha \, A \, x + \beta \, y, \quad\text{or}\quad y := \alpha \, A^T \, x 
 $$
 
 where $\alpha$ and $\beta$ are scalars, x and y are vectors and A is an m by n matrix.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANS` specifies the operation to be performed as follows:
-
-$$
-\mathrm{TRANS} = \text{'N'} \quad\text{or}\quad \text{'n'} y := \alpha \, A \, x + \beta \, y
-$$
-
-$$
-\mathrm{TRANS} = \text{'T'} \quad\text{or}\quad \text{'t'} y := \alpha \, A^T \, x + \beta \, y
-$$
-
-$$
-\mathrm{TRANS} = \text{'C'} \quad\text{or}\quad \text{'c'} y := \alpha \, A^T \, x + \beta \, y
-$$
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the number of rows of the matrix A. M must be at least zero.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of the matrix A. N must be at least zero.
-
-#### ALPHA `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension ( LDA, N )_
-
-Before entry, the leading m by n part of the array A must contain the matrix of coefficients.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, m ).
-
-#### X `[in]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ) when `TRANS = 'N'` or 'n' and at least ( 1 + ( m - 1 )\*abs( `INCX` ) ) otherwise. Before entry, the incremented array X must contain the vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
-
-#### BETA `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `BETA` specifies the scalar $\beta$. When `BETA` is supplied as zero then Y need not be set on input.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( 1 + ( m - 1 )\*abs( `INCY` ) ) when `TRANS = 'N'` or 'n' and at least ( 1 + ( n - 1 )\*abs( `INCY` ) ) otherwise. Before entry with `BETA` non-zero, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. If either m or n is zero, then Y not referenced and the function performs a quick return.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero.
 
 ### Further Details
 

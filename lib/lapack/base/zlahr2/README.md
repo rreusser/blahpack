@@ -120,79 +120,15 @@ zlahr2.ndarray( N, N, N, A, N, 1, 0, tau, 1, 0, T, N, 1, 0, Y, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAHR2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Reduces the specified number of first columns of a general rectangular matrix A so that elements below the specified subdiagonal are zero, and returns auxiliary matrices which are needed to apply the transformation to the unreduced part of A.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAHR2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZLAHR2 reduces the first `NB` columns of A complex general n-BY-(n-k+1) matrix A so that elements below the k-th subdiagonal are zero. The reduction is performed by an unitary similarity transformation $Q^H \, A \, Q$. The routine returns the matrices V and T which determine Q as a block reflector $I - V \, T \, V^H$, and also the matrix $Y = A \, V \, T$.
 
 This is an auxiliary routine called by ZGEHRD.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A.
-
-#### K `[in]`
-
-_INTEGER_
-
-The offset for the reduction. Elements below the k-th subdiagonal in the first `NB` columns are reduced to zero. $K < N$.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The number of columns to be reduced.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N-K+1)_
-
-On entry, the n-by-(n-k+1) general matrix A. On exit, the elements on and above the k-th subdiagonal in the first `NB` columns are overwritten with the corresponding elements of the reduced matrix; the elements below the k-th subdiagonal, with the array `TAU`, represent the matrix Q as a product of elementary reflectors. The other columns of A are unchanged. See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (NB)_
-
-The scalar factors of the elementary reflectors. See Further Details.
-
-#### T `[out]`
-
-_COMPLEX\*16 array, dimension (LDT,NB)_
-
-The upper triangular matrix T.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{NB}$.
-
-#### Y `[out]`
-
-_COMPLEX\*16 array, dimension (LDY,NB)_
-
-The n-by-nb matrix Y.
-
-#### LDY `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Y. $\mathrm{LDY} \ge N$.
 
 ### Further Details
 
@@ -221,6 +157,10 @@ $$
 where a denotes an element of the original matrix A, h denotes a modified element of the upper Hessenberg matrix H, and vi denotes an element of the vector defining H(i).
 
 This subroutine is a slight modification of LAPACK-3.0's ZLAHRD incorporating improvements proposed by Quintana-Orti and Van de Gejin. Note that the entries of `A(1:K,2:NB)` differ from those returned by the original LAPACK-3.0's ZLAHRD routine. (This subroutine is not backward compatible with LAPACK-3.0's ZLAHRD.)
+
+### References
+
+Gregorio Quintana-Orti and Robert van de Geijn, "Improving the performance of reduction to Hessenberg form," ACM Transactions on Mathematical Software, 32(2):180-194, June 2006.
 
 </section>
 

@@ -115,71 +115,15 @@ zgbtf2.ndarray( N, N, N, N, AB, N, 1, 0, IPIV, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGBTF2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the LU factorization of a general band matrix using the unblocked version of the algorithm.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGBTF2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGBTF2 computes an LU factorization of a complex m-by-n band matrix A using partial pivoting with row interchanges.
 
 This is the unblocked version of the algorithm, calling Level 2 BLAS.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### KL `[in]`
-
-_INTEGER_
-
-The number of subdiagonals within the band of A. $\mathrm{KL} \ge 0$.
-
-#### KU `[in]`
-
-_INTEGER_
-
-The number of superdiagonals within the band of A. $\mathrm{KU} \ge 0$.
-
-#### AB `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-On entry, the matrix A in band storage, in rows `KL`+1 to $2 \, \mathrm{KL}+\mathrm{KU}+1$; rows 1 to `KL` of the array need not be set. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(kl+ku+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{ku}) \le i \le \min (m,j+\mathrm{kl})$
-
-On exit, details of the factorization: U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \, \mathrm{KL}+\mathrm{KU}+1$. See below for further details.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge 2 \, \mathrm{KL}+\mathrm{KU}+1$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (min(M,N))_
-
-The pivot indices; for $1 \le i \le \min (M,N)$, row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO` = +i, U(i,i) is exactly zero. The factorization has been completed, but the factor U is exactly singular, and division by zero will occur if it is used to solve a system of equations.
 
 ### Further Details
 

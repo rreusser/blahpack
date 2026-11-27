@@ -97,9 +97,9 @@ zlags2( true, 4.0, new Complex128( 2.0, 1.0 ), 3.0, 1.0, new Complex128( 0.5, 0.
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAGS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAGS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,72 +134,6 @@ Q = \begin{pmatrix} \mathrm{CSQ} & \mathrm{SNQ} \\ -\mathrm{SNQ}^H & \mathrm{CSQ
 $$
 
 The rows of the transformed A and B are parallel. Moreover, if the input 2-by-2 matrix A is not zero, then the transformed (1,1) entry of A is not zero. If the input matrices A and B are both not zero, then the transformed (2,2) element of B is not zero, except when the first rows of input A and B are parallel and the second rows are zero.
-
-### Arguments
-
-#### UPPER `[in]`
-
-_LOGICAL_
-
-= .TRUE.: the input matrices A and B are upper triangular. = .FALSE.: the input matrices A and B are lower triangular.
-
-#### A1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### A2 `[in]`
-
-_COMPLEX\*16_
-
-#### A3 `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `A1`, `A2` and `A3` are elements of the input 2-by-2 upper (lower) triangular matrix A.
-
-#### B1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### B2 `[in]`
-
-_COMPLEX\*16_
-
-#### B3 `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `B1`, `B2` and `B3` are elements of the input 2-by-2 upper (lower) triangular matrix B.
-
-#### CSU `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNU `[out]`
-
-_COMPLEX\*16_
-
-The desired unitary matrix U.
-
-#### CSV `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNV `[out]`
-
-_COMPLEX\*16_
-
-The desired unitary matrix V.
-
-#### CSQ `[out]`
-
-_DOUBLE PRECISION_
-
-#### SNQ `[out]`
-
-_COMPLEX\*16_
-
-The desired unitary matrix Q.
 
 </section>
 

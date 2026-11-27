@@ -103,11 +103,15 @@ izmax1.ndarray( N, ZX, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `IZMAX1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `IZMAX1`. Indices are the 1-based Fortran indices of the source.
 
-> Finds the index of the first vector element of maximum absolute value.
+### Purpose
+
+IZMAX1 finds the index of the first vector element of maximum absolute value.
+
+Based on IZAMAX from Level 1 BLAS. The change is to use the 'genuine' absolute value.
 
 </section>
 

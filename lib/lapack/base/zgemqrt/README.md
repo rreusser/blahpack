@@ -132,9 +132,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGEMQRT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGEMQRT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -155,95 +155,6 @@ $$
 generated using the compact WY representation as returned by ZGEQRT.
 
 Q is of order M if `SIDE = 'L'` and of order N if `SIDE = 'R'`.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^H$ from the Left;
--   `= 'R'`: apply Q or $Q^H$ from the Right.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: No transpose, apply Q;
--   `= 'C'`: Conjugate transpose, apply $Q^H$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \ge K \ge 0$; if `SIDE = 'R'`, $N \ge K \ge 0$.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The block size used for the storage of T. $K \ge \mathrm{NB} \ge 1$. This must be the same value of `NB` used to generate T in ZGEQRT.
-
-#### V `[in]`
-
-_COMPLEX\*16 array, dimension (LDV,K)_
-
-The i-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZGEQRT in the first K columns of its array argument A.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. If `SIDE = 'L'`, $\mathrm{LDA} \ge \max (1,M)$; if `SIDE = 'R'`, $\mathrm{LDA} \ge \max (1,N)$.
-
-#### T `[in]`
-
-_COMPLEX\*16 array, dimension (LDT,K)_
-
-The upper triangular factors of the block reflectors as returned by ZGEQRT, stored as a `NB`-by-N matrix.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{NB}$.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC,N)_
-
-On entry, the M-by-N matrix C. On exit, C is overwritten by Q C, $Q^H$ C, C $Q^H$ or C Q.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array. The dimension of WORK is_
-
-$N \, \mathrm{NB}$ if `SIDE = 'L'`, or $M \, \mathrm{NB}$ if `SIDE = 'R'`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

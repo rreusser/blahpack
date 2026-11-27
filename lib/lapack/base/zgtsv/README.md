@@ -124,11 +124,9 @@ zgtsv.ndarray( N, N, DL, 1, 0, d, 1, 0, DU, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGTSV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for GT matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGTSV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,58 +139,6 @@ $$
 where A is an N-by-N tridiagonal matrix, by Gaussian elimination with partial pivoting.
 
 Note that the equation $A^T \, X = B$ may be solved by interchanging the order of the arguments `DU` and `DL`.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### DL `[in,out]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-On entry, `DL` must contain the (n-1) subdiagonal elements of A. On exit, `DL` is overwritten by the (n-2) elements of the second superdiagonal of the upper triangular matrix U from the LU factorization of A, in `DL(1)`, ..., `DL(n-2)`.
-
-#### D `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U.
-
-#### DU `[in,out]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-On entry, `DU` must contain the (n-1) superdiagonal elements of A. On exit, `DU` is overwritten by the (n-1) elements of the first superdiagonal of U.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, U(i,i) is exactly zero, and the solution has not been computed.  The factorization has not been completed unless $i = N$.
 
 </section>
 

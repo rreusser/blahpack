@@ -140,86 +140,13 @@ console.log( T );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTPQRT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTPQRT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTPQRT computes a blocked QR factorization of a real "triangular-pentagonal" matrix C, which is composed of a triangular block A and pentagonal block B, using the compact WY representation for Q.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix B. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix B, and the order of the triangular matrix A. $N \ge 0$.
-
-#### L `[in]`
-
-_INTEGER_
-
-The number of rows of the upper trapezoidal part of B. $\min (M,N) \ge L \ge 0$. See Further Details.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The block size to be used in the blocked QR. $N \ge \mathrm{NB} \ge 1$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the upper triangular N-by-N matrix A. On exit, the elements on and above the diagonal of the array contain the upper triangular matrix R.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-On entry, the pentagonal M-by-N matrix B. The first M-L rows are rectangular, and the last L rows are upper trapezoidal. On exit, B contains the pentagonal matrix V. See Further Details.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_DOUBLE PRECISION array, dimension (LDT,N)_
-
-The upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See Further Details.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{NB}$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (NB\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

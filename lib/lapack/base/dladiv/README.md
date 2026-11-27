@@ -95,11 +95,9 @@ dladiv.ndarray( 1, 1, 1.0, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLADIV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs complex division in real arithmetic, avoiding unnecessary overflow.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLADIV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -118,36 +116,6 @@ c + i \, d
 $$
 
 The algorithm is due to Michael Baudin and Robert L. Smith and can be found in the paper "A Robust Complex Division in Scilab"
-
-### Arguments
-
-#### A `[in]`
-
-_DOUBLE PRECISION_
-
-#### B `[in]`
-
-_DOUBLE PRECISION_
-
-#### C `[in]`
-
-_DOUBLE PRECISION_
-
-#### D `[in]`
-
-_DOUBLE PRECISION_
-
-The scalars a, b, c, and d in the above expression.
-
-#### P `[out]`
-
-_DOUBLE PRECISION_
-
-#### Q `[out]`
-
-_DOUBLE PRECISION_
-
-The scalars p and q in the above expression.
 
 </section>
 

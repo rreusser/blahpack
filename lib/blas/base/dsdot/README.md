@@ -109,9 +109,23 @@ dsdot.ndarray( 3, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DSDOT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DSDOT`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+Compute the inner product of two vectors with extended precision accumulation and result.
+
+Returns D.P. dot product accumulated in D.P., for S.P. `SX` and `SY` DSDOT = sum for $I = 0$ to N-1 of $\mathrm{SX}(\mathrm{LX}+I \, \mathrm{INCX}) \, \mathrm{SY}(\mathrm{LY}+I \, \mathrm{INCY})$, where $\mathrm{LX} = 1$ if `INCX` .GE. 0, else $\mathrm{LX} = 1+(1-N) \, \mathrm{INCX}$, and LY is defined in a similar way using `INCY`.
+
+### References
+
+C. L. Lawson, R. J. Hanson, D. R. Kincaid and F. T. Krogh, Basic linear algebra subprograms for Fortran usage, Algorithm No. 539, Transactions on Mathematical Software 5, 3 (September 1979), pp. 308-323.
+
+REVISION HISTORY (YYMMDD)
+
+791001 DATE WRITTEN 890831 Modified array declarations. (WRB) 890831 REVISION DATE from Version 3.2 891214 Prologue converted to Version 4.0 format. (BAB) 920310 Corrected definition of LX in DESCRIPTION. (WRB) 920501 Reformatted the REFERENCES section. (WRB) 070118 Reformat to LAPACK style (JL)
 
 </section>
 

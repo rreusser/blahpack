@@ -111,57 +111,13 @@ zdrot.ndarray( 2, zx, 1, 0, zy, 1, 0, 0.8, 0.6 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZDROT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZDROT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 Applies a plane rotation, where the cos and sin (c and s) are real and the vectors cx and cy are complex. jack dongarra, linpack, 3/11/78.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of the vectors cx and cy. N must be at least zero.
-
-#### ZX `[in,out]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( N - 1 )\*abs( `INCX` ) ). Before entry, the incremented array `ZX` must contain the n element vector cx. On exit, `ZX` is overwritten by the updated vector cx.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of `ZX`. `INCX` must not be zero.
-
-#### ZY `[in,out]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( N - 1 )\*abs( `INCY` ) ). Before entry, the incremented array `ZY` must contain the n element vector cy. On exit, `ZY` is overwritten by the updated vector cy.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of `ZY`. `INCY` must not be zero.
-
-#### C `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, C specifies the cosine, cos.
-
-#### S `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, S specifies the sine, sin.
 
 </section>
 

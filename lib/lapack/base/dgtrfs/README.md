@@ -187,136 +187,13 @@ dgtrfs.ndarray( 'no-transpose', N, N, DL, 1, 0, d, 1, 0, DU, 1, 0, DLF, 1, 0, DF
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGTRFS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGTRFS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGTRFS improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the form of the system of equations:
-
--   `= 'N'`: $A \, X = B$     (No transpose)
--   `= 'T'`: $A^T \, X = B$  (Transpose)
--   `= 'C'`: $A^H \, X = B$  (Conjugate transpose = Transpose)
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### DL `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) subdiagonal elements of A.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The diagonal elements of A.
-
-#### DU `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) superdiagonal elements of A.
-
-#### DLF `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF.
-
-#### DF `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the upper triangular matrix U from the LU factorization of A.
-
-#### DUF `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) elements of the first superdiagonal of U.
-
-#### DU2 `[in]`
-
-_DOUBLE PRECISION array, dimension (N-2)_
-
-The (n-2) elements of the second superdiagonal of U.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le n$, row i of the matrix was interchanged with row `IPIV(i)`. `IPIV(i)` will always be either i or i+1; `IPIV(i) = i` indicates a row interchange was not required.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-The right hand side matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX,NRHS)_
-
-On entry, the solution matrix X, as computed by DGTTRS. On exit, the improved solution matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,N)$.
-
-#### FERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error.
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (3\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

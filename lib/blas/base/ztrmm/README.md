@@ -123,9 +123,9 @@ ztrmm.ndarray( 'left', 'lower', 'no-transpose', 'non-unit', 2, 2, alpha, A, 2, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZTRMM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZTRMM`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -140,104 +140,6 @@ where $\alpha$ is a scalar, B is an m by n matrix, A is a unit, or non-unit, upp
 $$
 \operatorname{op}( A ) = A \quad\text{or}\quad \operatorname{op}( A ) = A^T \quad\text{or}\quad \operatorname{op}( A ) = A^H
 $$
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
-On entry, `SIDE` specifies whether op( A ) multiplies B from the left or right as follows:
-
-$$
-\mathrm{SIDE} = \text{'L'} \quad\text{or}\quad \text{'l'} B := \alpha \, \operatorname{op}( A ) \, B
-$$
-
-$$
-\mathrm{SIDE} = \text{'R'} \quad\text{or}\quad \text{'r'} B := \alpha \, B \, \operatorname{op}( A )
-$$
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the matrix A is an upper or lower triangular matrix as follows:
-
-`UPLO = 'U'` or 'u' A is an upper triangular matrix.
-
-`UPLO = 'L'` or 'l' A is a lower triangular matrix.
-
-#### TRANSA `[in]`
-
-_CHARACTER\*1_
-
-On entry, `TRANSA` specifies the form of op( A ) to be used in the matrix multiplication as follows:
-
-$$
-\mathrm{TRANSA} = \text{'N'} \quad\text{or}\quad \text{'n'} \operatorname{op}( A ) = A
-$$
-
-$$
-\mathrm{TRANSA} = \text{'T'} \quad\text{or}\quad \text{'t'} \operatorname{op}( A ) = A^T
-$$
-
-$$
-\mathrm{TRANSA} = \text{'C'} \quad\text{or}\quad \text{'c'} \operatorname{op}( A ) = A^H
-$$
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
-On entry, `DIAG` specifies whether or not A is unit triangular as follows:
-
-`DIAG = 'U'` or 'u' A is assumed to be unit triangular.
-
-`DIAG = 'N'` or 'n' A is not assumed to be unit
-
-triangular.
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the number of rows of B. M must be at least zero.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of B. N must be at least zero.
-
-#### ALPHA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ALPHA` specifies the scalar $\alpha$. When $\alpha$ is zero then A is not referenced and B need not be set before entry.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension ( LDA, k ), where k is m_
-
-when `SIDE = 'L'` or 'l' and is n when `SIDE = 'R'` or 'r'. Before entry with `UPLO = 'U'` or 'u', the leading k by k upper triangular part of the array A must contain the upper triangular matrix and the strictly lower triangular part of A is not referenced. Before entry with `UPLO = 'L'` or 'l', the leading k by k lower triangular part of the array A must contain the lower triangular matrix and the strictly upper triangular part of A is not referenced. Note that when `DIAG = 'U'` or 'u', the diagonal elements of A are not referenced either, but are assumed to be unity.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. When `SIDE = 'L'` or 'l' then `LDA` must be at least max( 1, m ), when `SIDE = 'R'` or 'r' then `LDA` must be at least max( 1, n ).
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension ( LDB, N )_
-
-Before entry, the leading m by n part of the array B must contain the matrix B, and on exit is overwritten by the transformed matrix.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-On entry, `LDB` specifies the first dimension of B as declared in the calling (sub) program. `LDB` must be at least max( 1, m ).
 
 ### Further Details
 

@@ -121,97 +121,13 @@ dpprfs.ndarray( 'upper', 3, 1, AP, 1, 0, AFP, 1, 0, B, 1, 3, 0, X, 1, 3, 0, FERR
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPPRFS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DPPRFS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DPPRFS improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite and packed, and provides error bounds and backward error estimates for the solution.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices B and X. $\mathrm{NRHS} \ge 0$.
-
-#### AP `[in]`
-
-_DOUBLE PRECISION array, dimension (N\*(N+1)/2)_
-
-The upper or lower triangle of the symmetric matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \le i \le n$.
-
-#### AFP `[in]`
-
-_DOUBLE PRECISION array, dimension (N\*(N+1)/2)_
-
-The triangular factor U or L from the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$, as computed by DPPTRF/ZPPTRF, packed columnwise in a linear array in the same format as A (see `AP`).
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-The right hand side matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX,NRHS)_
-
-On entry, the solution matrix X, as computed by DPPTRS. On exit, the improved solution matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,N)$.
-
-#### FERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error.
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (3\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

@@ -175,11 +175,27 @@ zgges( 'column-major', 'compute-vectors', 'compute-vectors', 'none', noop, 3, A,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGGES`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGGES`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices
+### Purpose
+
+ZGGES computes for a pair of N-by-N complex nonsymmetric matrices (A,B), the generalized eigenvalues, the generalized complex Schur form (S, T), and optionally left and/or right Schur vectors (`VSL` and `VSR`). This gives the generalized Schur factorization
+
+$$
+(A,B) = ( (\mathrm{VSL}) \, S \, (\mathrm{VSR})^H, (\mathrm{VSL}) \, T \, (\mathrm{VSR})^H )
+$$
+
+where $(\mathrm{VSR})^H$ is the conjugate-transpose of `VSR`.
+
+Optionally, it also orders the eigenvalues so that a selected cluster of eigenvalues appears in the leading diagonal blocks of the upper triangular matrix S and the upper triangular matrix T. The leading columns of `VSL` and `VSR` then form an unitary basis for the corresponding left and right eigenspaces (deflating subspaces).
+
+(If only the generalized eigenvalues are needed, use the driver ZGGEV instead, which is faster.)
+
+A generalized eigenvalue for a pair of matrices (A,B) is a scalar w or a ratio $\alpha /\beta = w$, such that $A - w \, B$ is singular. It is usually represented as the pair ($\alpha$,$\beta$), as there is a reasonable interpretation for $\beta =0$, and even for both being zero.
+
+A pair of matrices (S,T) is in generalized complex Schur form if S and T are upper triangular and, in addition, the diagonal elements of T are non-negative real numbers.
 
 </section>
 

@@ -113,11 +113,9 @@ dlapll( 4, x, 1, y, 1, ssmin );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAPLL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Measures the linear dependence of two vectors.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAPLL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -128,44 +126,6 @@ A = ( X Y )
 $$
 
 The subroutine first computes the QR factorization of $A = Q \, R$, and then computes the SVD of the 2-by-2 upper triangular matrix R. The smaller singular value of R is returned in `SSMIN`, which is used as the measurement of the linear dependency of the vectors X and Y.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The length of the vectors X and Y.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array_
-
-dimension (1+(N-1)\*`INCX`) On entry, X contains the N-vector X. On exit, X is overwritten.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between successive elements of X. $\mathrm{INCX} > 0$.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array_
-
-dimension (1+(N-1)\*`INCY`) On entry, Y contains the N-vector Y. On exit, Y is overwritten.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-The increment between successive elements of Y. $\mathrm{INCY} > 0$.
-
-#### SSMIN `[out]`
-
-_DOUBLE PRECISION_
-
-The smallest singular value of the N-by-2 matrix $A = ( X Y )$.
 
 </section>
 

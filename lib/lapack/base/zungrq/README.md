@@ -135,9 +135,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNGRQ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNGRQ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -148,65 +148,6 @@ Q = H(1)^H H(2)^H \cdots H(k)^H
 $$
 
 as returned by ZGERQF.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix Q. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix Q. $N \ge M$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. $M \ge K \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the (m-k+i)-th row must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZGERQF in the last k rows of its array argument A. On exit, the M-by-N matrix Q.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The first dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[in]`
-
-_COMPLEX\*16 array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by ZGERQF.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,M)$. For optimum performance $\mathrm{LWORK} \ge M \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument has an illegal value
 
 </section>
 

@@ -117,56 +117,15 @@ dgetc2.ndarray( N, A, N, 1, 0, IPIV, 1, 0, JPIV, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGETC2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the LU factorization with complete pivoting of the general n-by-n matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGETC2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGETC2 computes an LU factorization with complete pivoting of the n-by-n matrix A. The factorization has the form $A = P \, L \, U \, Q$, where P and Q are permutation matrices, L is lower triangular with unit diagonal elements and U is upper triangular.
 
 This is the Level 2 BLAS algorithm.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA, N)_
-
-On entry, the n-by-n matrix A to be factored. On exit, the factors L and U from the factorization $A = P \, L \, U \, Q$; the unit diagonal elements of L are not stored. If U(k, k) appears to be less than SMIN, U(k, k) is given the value of SMIN, i.e., giving a nonsingular perturbed system.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension(N)_
-
-The pivot indices; for $1 \le i \le N$, row i of the matrix has been interchanged with row `IPIV(i)`.
-
-#### JPIV `[out]`
-
-_INTEGER array, dimension(N)_
-
-The pivot indices; for $1 \le j \le N$, column j of the matrix has been interchanged with column `JPIV(j)`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `> 0`: if `INFO = k`, U(k, k) is likely to produce overflow if we try to solve for x in $\mathrm{Ax} = b$. So U is perturbed to avoid the overflow.
 
 </section>
 

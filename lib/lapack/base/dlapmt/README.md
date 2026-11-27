@@ -113,11 +113,9 @@ dlapmt.ndarray( 1, N, N, X, N, 1, 0, k, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAPMT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs a forward or backward permutation of the columns of a matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAPMT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -128,44 +126,6 @@ DLAPMT rearranges the columns of the M by N matrix X as specified by the permuta
 If `FORWRD` = .FALSE., backward permutation:
 
 `X(*,J)` is moved to `X(*,K(J))` for $J = 1$,2,...,N.
-
-### Arguments
-
-#### FORWRD `[in]`
-
-_LOGICAL_
-
-= .TRUE., forward permutation = .FALSE., backward permutation
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix X. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix X. $N \ge 0$.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX,N)_
-
-On entry, the M by N matrix X. On exit, X contains the permuted matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X, $\mathrm{LDX} \ge \max (1,M)$.
-
-#### K `[in,out]`
-
-_INTEGER array, dimension (N)_
-
-On entry, K contains the permutation vector. K is used as internal workspace, but reset to its original value on output.
 
 </section>
 

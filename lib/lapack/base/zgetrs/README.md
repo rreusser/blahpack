@@ -122,9 +122,9 @@ zgetrs.ndarray( 'no-transpose', N, N, A, N, 1, 0, IPIV, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGETRS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGETRS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -135,67 +135,6 @@ A \, X = B, A^T \, X = B, \quad\text{or}\quad A^H \, X = B
 $$
 
 with a general N-by-N matrix A using the LU factorization computed by ZGETRF.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the form of the system of equations:
-
--   `= 'N'`: $A \, X = B$     (No transpose)
--   `= 'T'`: $A^T \, X = B$  (Transpose)
--   `= 'C'`: $A^H \, X = B$  (Conjugate transpose)
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-The factors L and U from the factorization $A = P \, L \, U$ as computed by ZGETRF.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices from ZGETRF; for $1 \le i \le N$, row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the right hand side matrix B. On exit, the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

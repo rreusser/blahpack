@@ -134,83 +134,13 @@ console.log( info, reinterpret( AB, 0 ) );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZHETRD_HE2HB`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZHETRD_HE2HB`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZHETRD\_HE2HB reduces a complex Hermitian matrix A to complex Hermitian band-diagonal form `AB` by a unitary similarity transformation: $Q^H \, A \, Q = \mathrm{AB}$.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of superdiagonals of the reduced matrix if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\mathrm{KD} \ge 0$. The reduced matrix is stored in the array `AB`.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the Hermitian matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit, if `UPLO = 'U'`, the diagonal and first superdiagonal of A are overwritten by the corresponding elements of the tridiagonal matrix T, and the elements above the first superdiagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors; if `UPLO = 'L'`, the diagonal and first subdiagonal of A are over- written by the corresponding elements of the tridiagonal matrix T, and the elements below the first subdiagonal, with the array `TAU`, represent the unitary matrix Q as a product of elementary reflectors. See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### AB `[out]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-On exit, the upper or lower triangle of the Hermitian band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16 array, dimension (N-KD)_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (LWORK)_
-
-On exit, if `INFO = 0`, or if `LWORK=-1`, `WORK(1)` returns the size of `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK` which should be calculated by a workspace query. `LWORK = MAX(1, LWORK_QUERY)` If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA. $\mathrm{LWORK\_QUERY} = N \, \mathrm{KD} + N \, \max (\mathrm{KD},\mathrm{FACTOPTNB}) + 2 \, \mathrm{KD} \, \mathrm{KD}$ where FACTOPTNB is the blocking used by the QR or LQ algorithm, usually $\mathrm{FACTOPTNB}=128$ is a good choice otherwise putting `LWORK=-1` will provide the size of `WORK`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

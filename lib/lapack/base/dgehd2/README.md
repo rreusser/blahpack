@@ -120,62 +120,13 @@ dgehd2.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGEHD2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Reduces a general square matrix to upper Hessenberg form using an unblocked algorithm.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGEHD2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGEHD2 reduces a real general matrix A to upper Hessenberg form H by an orthogonal similarity transformation: $Q^T \, A \, Q = H$ .
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### ILO `[in]`
-
-_INTEGER_
-
-#### IHI `[in]`
-
-_INTEGER_
-
-It is assumed that A is already upper triangular in rows and columns 1:`ILO`-1 and `IHI`+1:N. `ILO` and `IHI` are normally set by a previous call to DGEBAL; otherwise they should be set to 1 and N respectively. See Further Details. $1 \le \mathrm{ILO} \le \mathrm{IHI} \le \max (1,N)$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the n by n general matrix to be reduced. On exit, the upper triangle and the first subdiagonal of A are overwritten with the upper Hessenberg matrix H, and the elements below the first subdiagonal, with the array `TAU`, represent the orthogonal matrix Q as a product of elementary reflectors. See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 ### Further Details
 

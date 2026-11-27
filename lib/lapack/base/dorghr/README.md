@@ -120,72 +120,15 @@ dorghr.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0, N );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DORGHR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DORGHR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DORGHR generates a real orthogonal matrix Q which is defined as the product of `IHI`-`ILO` elementary reflectors of order N, as returned by DGEHRD:
 
 Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix Q. $N \ge 0$.
-
-#### ILO `[in]`
-
-_INTEGER_
-
-#### IHI `[in]`
-
-_INTEGER_
-
-`ILO` and `IHI` must have the same values as in the previous call of DGEHRD. Q is equal to the unit matrix except in the submatrix Q(ilo+1:ihi,ilo+1:ihi). $1 \le \mathrm{ILO} \le \mathrm{IHI} \le N$, if $N > 0$; `ILO=1` and `IHI=0`, if $N=0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the vectors which define the elementary reflectors, as returned by DGEHRD. On exit, the N-by-N orthogonal matrix Q.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DGEHRD.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \mathrm{IHI}-\mathrm{ILO}$. For optimum performance $\mathrm{LWORK} \ge (\mathrm{IHI}-\mathrm{ILO}) \, \mathrm{NB}$, where NB is the optimal blocksize.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

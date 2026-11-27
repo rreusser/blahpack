@@ -142,11 +142,17 @@ zgees.ndarray( 'compute-vectors', 'none', 1, N, A, N, 1, 0, 1, W, 1, 0, VS, N, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGEES`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGEES`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices
+### Purpose
+
+ZGEES computes for an N-by-N complex nonsymmetric matrix A, the eigenvalues, the Schur form T, and, optionally, the matrix of Schur vectors Z. This gives the Schur factorization $A = Z \, T \, (Z^H)$.
+
+Optionally, it also orders the eigenvalues on the diagonal of the Schur form so that selected eigenvalues are at the top left. The leading columns of Z then form an orthonormal basis for the invariant subspace corresponding to the selected eigenvalues.
+
+A complex matrix is in Schur form if it is upper triangular.
 
 </section>
 

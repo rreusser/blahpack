@@ -114,11 +114,9 @@ dlaed5.ndarray( 1, D, 1, 0, Z, 1, 0, DELTA, 1, 0, 1.0, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAED5`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Used by DSTEDC. Solves the 2-by-2 secular equation.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAED5`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -133,44 +131,6 @@ D(i) < D(j) \quad\text{for}\quad i < j
 $$
 
 We also assume $\mathrm{RHO} > 0$ and that the Euclidean norm of the vector Z is one.
-
-### Arguments
-
-#### I `[in]`
-
-_INTEGER_
-
-The index of the eigenvalue to be computed. $I = 1$ or $I = 2$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-The original eigenvalues. We assume $D(1) < D(2)$.
-
-#### Z `[in]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-The components of the updating vector.
-
-#### DELTA `[out]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-The vector `DELTA` contains the information necessary to construct the eigenvectors.
-
-#### RHO `[in]`
-
-_DOUBLE PRECISION_
-
-The scalar in the symmetric updating formula.
-
-#### DLAM `[out]`
-
-_DOUBLE PRECISION_
-
-The computed lambda\_I, the I-th updated eigenvalue.
 
 </section>
 

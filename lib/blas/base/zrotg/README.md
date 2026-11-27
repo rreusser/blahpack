@@ -109,11 +109,9 @@ zrotg.ndarray( 3.0, 0.0, 4.0, 0.0, out, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZROTG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a Givens rotation with real cosine and complex sine.
+The mathematical description from the reference BLAS 3.12.0 source of `ZROTG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -140,32 +138,6 @@ When a and b are real and r /= 0, the formulas simplify to
 ```
 
 the same as in DROTG when \|a\| \> \|b\|. When \|b\| \>= \|a\|, the sign of c and s will be different from those computed by DROTG if the signs of a and b are not the same.
-
-### Arguments
-
-#### A `[in,out]`
-
-_DOUBLE COMPLEX_
-
-On entry, the scalar a. On exit, the scalar r.
-
-#### B `[in]`
-
-_DOUBLE COMPLEX_
-
-The scalar b.
-
-#### C `[out]`
-
-_DOUBLE PRECISION_
-
-The scalar c.
-
-#### S `[out]`
-
-_DOUBLE COMPLEX_
-
-The scalar s.
 
 ### Further Details
 

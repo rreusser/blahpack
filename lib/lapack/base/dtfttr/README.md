@@ -114,62 +114,13 @@ dtfttr.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, A, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTFTTR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Copies a triangular matrix from the rectangular full packed format (TF) to the standard full format (TR).
+The mathematical description from the reference LAPACK 3.12.0 source of `DTFTTR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTFTTR copies a triangular matrix A from rectangular full packed format (TF) to standard full format (TR).
-
-### Arguments
-
-#### TRANSR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: `ARF` is in Normal format;
--   `= 'T'`: `ARF` is in Transpose format.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices `ARF` and A. $N \ge 0$.
-
-#### ARF `[in]`
-
-_DOUBLE PRECISION array, dimension (N\*(N+1)/2)_
-
-On entry, the upper (if `UPLO = 'U'`) or lower (if `UPLO = 'L'`) matrix A in RFP format. See the "Notes" below for more details.
-
-#### A `[out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On exit, the triangular matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of the array A contains the upper triangular matrix, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of the array A contains the lower triangular matrix, and the strictly upper triangular part of A is not referenced.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

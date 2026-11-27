@@ -93,11 +93,9 @@ zlaesy.ndarray( 1, 1, 1.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAESY`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAESY`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -112,54 +110,6 @@ provided the norm of the matrix of eigenvectors is larger than some threshold va
 $$
 \begin{bmatrix} \mathrm{CS1} & \mathrm{SN1} \\ -\mathrm{SN1} & \mathrm{CS1} \end{bmatrix} \cdot \begin{bmatrix} A & B \\ B & C \end{bmatrix} \cdot \begin{bmatrix} \mathrm{CS1} & -\mathrm{SN1} \\ \mathrm{SN1} & \mathrm{CS1} \end{bmatrix} = \begin{bmatrix} \mathrm{RT1} & 0 \\ 0 & \mathrm{RT2} \end{bmatrix}
 $$
-
-### Arguments
-
-#### A `[in]`
-
-_COMPLEX\*16_
-
-The ( 1, 1 ) element of input matrix.
-
-#### B `[in]`
-
-_COMPLEX\*16_
-
-The ( 1, 2 ) element of input matrix. The ( 2, 1 ) element is also given by B, since the 2-by-2 matrix is symmetric.
-
-#### C `[in]`
-
-_COMPLEX\*16_
-
-The ( 2, 2 ) element of input matrix.
-
-#### RT1 `[out]`
-
-_COMPLEX\*16_
-
-The eigenvalue of larger modulus.
-
-#### RT2 `[out]`
-
-_COMPLEX\*16_
-
-The eigenvalue of smaller modulus.
-
-#### EVSCAL `[out]`
-
-_COMPLEX\*16_
-
-The complex value by which the eigenvector matrix was scaled to make it orthonormal. If `EVSCAL` is zero, the eigenvectors were not computed. This means one of two things: the 2-by-2 matrix could not be diagonalized, or the norm of the matrix of eigenvectors before scaling was larger than the threshold value THRESH (set below).
-
-#### CS1 `[out]`
-
-_COMPLEX\*16_
-
-#### SN1 `[out]`
-
-_COMPLEX\*16_
-
-If $\mathrm{EVSCAL} \ne 0$, ( `CS1`, `SN1` ) is the unit right eigenvector for `RT1`.
 
 </section>
 

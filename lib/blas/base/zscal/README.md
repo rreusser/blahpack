@@ -107,37 +107,13 @@ zscal.ndarray( 2, za, zx, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZSCAL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZSCAL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZSCAL scales a vector by a constant.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### ZA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ZA` specifies the scalar $\alpha$.
-
-#### ZX `[in,out]`
-
-_COMPLEX\*16 array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `ZX`
 
 ### Further Details
 

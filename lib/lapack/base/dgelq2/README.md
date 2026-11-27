@@ -119,11 +119,9 @@ dgelq2.ndarray( N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGELQ2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGELQ2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -136,49 +134,6 @@ $$
 where:
 
 Q is a n-by-n orthogonal matrix; L is a lower-triangular m-by-m matrix; 0 is a m-by-(n-m) zero matrix, if $m < n$.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the m by n matrix A. On exit, the elements on and below the diagonal of the array contain the m by min(m,n) lower trapezoidal matrix L (L is lower triangular if $m \le n$); the elements above the diagonal, with the array `TAU`, represent the orthogonal matrix Q as a product of elementary reflectors (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors (see Further Details).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (M)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

@@ -123,11 +123,9 @@ zlartv.ndarray( N, x, 1, 0, y, 1, 0, c, 1, 0, s, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARTV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Applies a vector of plane rotations with real cosines and complex sines to the elements of a pair of vectors.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARTV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -136,56 +134,6 @@ ZLARTV applies a vector of complex plane rotations with real cosines to elements
 $$
 \begin{pmatrix} x(i) \\ y(i) \end{pmatrix} := \begin{pmatrix} c(i) & s(i) \\ -\overline{s(i)} & c(i) \end{pmatrix} \begin{pmatrix} x(i) \\ y(i) \end{pmatrix}
 $$
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of plane rotations to be applied.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*INCX)_
-
-The vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between elements of X. $\mathrm{INCX} > 0$.
-
-#### Y `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*INCY)_
-
-The vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-The increment between elements of Y. $\mathrm{INCY} > 0$.
-
-#### C `[in]`
-
-_DOUBLE PRECISION array, dimension (1+(N-1)\*INCC)_
-
-The cosines of the plane rotations.
-
-#### S `[in]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*INCC)_
-
-The sines of the plane rotations.
-
-#### INCC `[in]`
-
-_INTEGER_
-
-The increment between elements of C and S. $\mathrm{INCC} > 0$.
 
 </section>
 

@@ -166,9 +166,9 @@ console.log( PHI );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DORBDB2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DORBDB2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -184,104 +184,17 @@ The orthogonal matrices P1, P2, and Q1 are P-by-P, (M-P)-by-(M-P), and (M-Q)-by-
 
 B11 and B12 are P-by-P bidiagonal matrices represented implicitly by angles `THETA`, `PHI`.
 
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows `X11` plus the number of rows in `X21`.
-
-#### P `[in]`
-
-_INTEGER_
-
-The number of rows in `X11`. $0 \le P \le \min (M-P,Q,M-Q)$.
-
-#### Q `[in]`
-
-_INTEGER_
-
-The number of columns in `X11` and `X21`. $0 \le Q \le M$.
-
-#### X11 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX11,Q)_
-
-On entry, the top block of the matrix X to be reduced. On exit, the columns of tril(`X11`) specify reflectors for P1 and the rows of triu(`X11`,1) specify reflectors for Q1.
-
-#### LDX11 `[in]`
-
-_INTEGER_
-
-The leading dimension of `X11`. $\mathrm{LDX11} \ge P$.
-
-#### X21 `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX21,Q)_
-
-On entry, the bottom block of the matrix X to be reduced. On exit, the columns of tril(`X21`) specify reflectors for P2.
-
-#### LDX21 `[in]`
-
-_INTEGER_
-
-The leading dimension of `X21`. $\mathrm{LDX21} \ge M-P$.
-
-#### THETA `[out]`
-
-_DOUBLE PRECISION array, dimension (Q)_
-
-The entries of the bidiagonal blocks B11, B21 are defined by `THETA` and `PHI`. See Further Details.
-
-#### PHI `[out]`
-
-_DOUBLE PRECISION array, dimension (Q-1)_
-
-The entries of the bidiagonal blocks B11, B21 are defined by `THETA` and `PHI`. See Further Details.
-
-#### TAUP1 `[out]`
-
-_DOUBLE PRECISION array, dimension (P-1)_
-
-The scalar factors of the elementary reflectors that define P1.
-
-#### TAUP2 `[out]`
-
-_DOUBLE PRECISION array, dimension (Q)_
-
-The scalar factors of the elementary reflectors that define P2.
-
-#### TAUQ1 `[out]`
-
-_DOUBLE PRECISION array, dimension (Q)_
-
-The scalar factors of the elementary reflectors that define Q1.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (LWORK)_
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge M-Q$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
-
 ### Further Details
 
 The upper-bidiagonal blocks B11, B21 are represented implicitly by angles `THETA(1)`, ..., `THETA(Q)` and `PHI(1)`, ..., `PHI(Q-1)`. Every entry in each bidiagonal band is a product of a sine or cosine of a `THETA` with a sine or cosine of a `PHI`. See \[1\] or DORCSD for details.
 
 P1, P2, and Q1 are represented as products of elementary reflectors. See DORCSD2BY1 for details on generating P1, P2, and Q1 using DORGQR and DORGLQ.
+
+### References
+
+\[1\] Brian D. Sutton. Computing the complete CS decomposition. Numer.
+
+Algorithms, 50(1):33-65, 2009.
 
 </section>
 

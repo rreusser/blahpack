@@ -121,9 +121,9 @@ dgecon.ndarray( '1', N, A, N, 1, 0, 1.0, 1.0, WORK, 1, 0, IWORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGECON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGECON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,62 +134,6 @@ An estimate is obtained for norm(inv(A)), and the reciprocal of the condition nu
 $$
 \mathrm{RCOND} = 1 / ( \operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)) )
 $$
-
-### Arguments
-
-#### NORM `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;
-
--   `= 'I'`: Infinity-norm.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-The factors L and U from the factorization $A = P \, L \, U$ as computed by DGETRF.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-If `NORM = '1'` or 'O', the 1-norm of the original matrix A. If `NORM = 'I'`, the infinity-norm of the original matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\operatorname{norm}(A) \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (4\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value. NaNs are illegal values for `ANORM`, and they propagate to the output parameter `RCOND`. Infinity is illegal for `ANORM`, and it propagates to the output parameter `RCOND` as 0.
--   `= 1`: if `RCOND` = NaN, or `RCOND` = Inf, or the computed norm of the inverse of A is 0. In the latter, `RCOND = 0` is returned.
 
 </section>
 

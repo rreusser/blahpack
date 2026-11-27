@@ -127,9 +127,9 @@ dggrqf( 3, 3, 3, A, 3, TAUA, 1, B, 3, TAUB, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGGRQF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGGRQF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -160,83 +160,6 @@ A \, \operatorname{inv}(B) = (R \, \operatorname{inv}(T)) \, Z^T
 $$
 
 where inv(B) denotes the inverse of the matrix B, and $Z^T$ denotes the transpose of the matrix Z.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### P `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix B. $P \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrices A and B. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit, if $M \le N$, the upper triangle of the subarray `A(1:M,N-M+1:N)` contains the M-by-M upper triangular matrix R; if $M > N$, the elements on and above the (M-N)-th subdiagonal contain the M-by-N upper trapezoidal matrix R; the remaining elements, with the array `TAUA`, represent the orthogonal matrix Q as a product of elementary reflectors (see Further Details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAUA `[out]`
-
-_DOUBLE PRECISION array, dimension (min(M,N))_
-
-The scalar factors of the elementary reflectors which represent the orthogonal matrix Q (see Further Details).
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-On entry, the P-by-N matrix B. On exit, the elements on and above the diagonal of the array contain the min(P,N)-by-N upper trapezoidal matrix T (T is upper triangular if $P \ge N$); the elements below the diagonal, with the array `TAUB`, represent the orthogonal matrix Z as a product of elementary reflectors (see Further Details).
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,P)$.
-
-#### TAUB `[out]`
-
-_DOUBLE PRECISION array, dimension (min(P,N))_
-
-The scalar factors of the elementary reflectors which represent the orthogonal matrix Z (see Further Details).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,N,M,P)$. For optimum performance $\mathrm{LWORK} \ge \max (N,M,P) \, \max (\mathrm{NB1},\mathrm{NB2},\mathrm{NB3})$, where NB1 is the optimal blocksize for the RQ factorization of an M-by-N matrix, NB2 is the optimal blocksize for the QR factorization of a P-by-N matrix, and NB3 is the optimal blocksize for a call of DORMRQ.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if $\mathrm{INF0}= -i$, the i-th argument had an illegal value.
 
 ### Further Details
 

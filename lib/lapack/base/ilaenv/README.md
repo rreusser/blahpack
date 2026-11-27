@@ -97,9 +97,46 @@ console.log( ilaenv( 1, 'DGEQRF', ' ', 100, 100, -1, -1 ) );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ILAENV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ILAENV`. Indices are the 1-based Fortran indices of the source.
+
+### Purpose
+
+ILAENV is called from the LAPACK routines to choose problem-dependent parameters for the local environment. See `ISPEC` for a description of the parameters.
+
+ILAENV returns an INTEGER if $\mathrm{ILAENV} \ge 0$: ILAENV returns the value of the parameter specified by `ISPEC` if $\mathrm{ILAENV} < 0$: if $\mathrm{ILAENV} = -k$, the k-th argument had an illegal value.
+
+This version provides a set of parameters which should give good, but not optimal, performance on many of the currently available computers. Users are encouraged to modify this subroutine to set the tuning parameters for their particular machine using the option and problem size information in the arguments.
+
+This routine will not function correctly if it is converted to all lower case. Converting it to all upper case is allowed.
+
+### Further Details
+
+The following conventions have been used when calling ILAENV from the LAPACK routines: 1) `OPTS` is a concatenation of all of the character options to
+
+-   subroutine `NAME`, in the same order that they appear in the
+-   argument list for `NAME`, even if they are not used in determining
+-   the value of the parameter specified by `ISPEC`.
+
+2) The problem dimensions `N1`, `N2`, `N3`, `N4` are specified in the order
+
+-   that they appear in the argument list for `NAME`. `N1` is used
+-   first, `N2` second, and so on, and unused problem dimensions are
+-   passed a value of -1.
+
+3) The parameter value returned by ILAENV is checked for validity in
+
+-   the calling subroutine. For example, ILAENV is used to retrieve
+-   the optimal blocksize for STRTRI as follows:
+
+$$
+\mathrm{NB} = \mathrm{ILAENV}( 1, \text{'STRTRI'}, \mathrm{UPLO} // \mathrm{DIAG}, N, -1, -1, -1 )
+$$
+
+$$
+\mathrm{IF}( \mathrm{NB}.\mathrm{LE}.1 ) \mathrm{NB} = \max ( 1, N )
+$$
 
 </section>
 

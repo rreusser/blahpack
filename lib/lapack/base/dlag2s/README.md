@@ -127,11 +127,9 @@ console.log( SA );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAG2S`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Converts a double precision matrix to a single precision matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAG2S`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -140,51 +138,6 @@ DLAG2S converts a DOUBLE PRECISION matrix, A, to a SINGLE PRECISION matrix, `SA`
 RMAX is the overflow for the SINGLE PRECISION arithmetic DLAG2S checks that all the entries of A are between -RMAX and RMAX. If not the conversion is aborted and a flag is raised.
 
 This is an auxiliary routine so there is no argument checking.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of lines of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N coefficient matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### SA `[out]`
-
-_REAL array, dimension (LDSA,N)_
-
-On exit, if `INFO=0`, the M-by-N coefficient matrix `SA`; if $\mathrm{INFO}>0$, the content of `SA` is unspecified.
-
-#### LDSA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `SA`. $\mathrm{LDSA} \ge \max (1,M)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `= 1`: an entry of the matrix A is greater than the SINGLE PRECISION overflow threshold, in this case, the content of `SA` in exit is unspecified.
 
 </section>
 

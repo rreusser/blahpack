@@ -93,11 +93,13 @@ dlapy3.ndarray( 1, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAPY3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAPY3`. Indices are the 1-based Fortran indices of the source.
 
-> Returns sqrt(x2+y2+z2).
+### Purpose
+
+DLAPY3 returns $\sqrt{x^2+y^2+z^2}$, taking care not to cause unnecessary overflow and unnecessary underflow.
 
 </section>
 

@@ -93,11 +93,9 @@ dlasv2.ndarray( 1, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASV2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the singular value decomposition of a 2-by-2 triangular matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASV2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -112,58 +110,6 @@ On return, abs(`SSMAX`) is the larger singular value, abs(`SSMIN`) is the smalle
 $$
 \begin{bmatrix} \mathrm{CSL} & \mathrm{SNL} \\ -\mathrm{SNL} & \mathrm{CSL} \end{bmatrix} \begin{bmatrix} F & G \\ 0 & H \end{bmatrix} \begin{bmatrix} \mathrm{CSR} & -\mathrm{SNR} \\ \mathrm{SNR} & \mathrm{CSR} \end{bmatrix} = \begin{bmatrix} \mathrm{SSMAX} & 0 \\ 0 & \mathrm{SSMIN} \end{bmatrix}
 $$
-
-### Arguments
-
-#### F `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,1) element of the 2-by-2 matrix.
-
-#### G `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,2) element of the 2-by-2 matrix.
-
-#### H `[in]`
-
-_DOUBLE PRECISION_
-
-The (2,2) element of the 2-by-2 matrix.
-
-#### SSMIN `[out]`
-
-_DOUBLE PRECISION_
-
-abs(`SSMIN`) is the smaller singular value.
-
-#### SSMAX `[out]`
-
-_DOUBLE PRECISION_
-
-abs(`SSMAX`) is the larger singular value.
-
-#### SNL `[out]`
-
-_DOUBLE PRECISION_
-
-#### CSL `[out]`
-
-_DOUBLE PRECISION_
-
-The vector (`CSL`, `SNL`) is a unit left singular vector for the singular value abs(`SSMAX`).
-
-#### SNR `[out]`
-
-_DOUBLE PRECISION_
-
-#### CSR `[out]`
-
-_DOUBLE PRECISION_
-
-The vector (`CSR`, `SNR`) is a unit right singular vector for the singular value abs(`SSMAX`).
 
 ### Further Details
 

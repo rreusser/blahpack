@@ -142,120 +142,13 @@ console.log( B );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTPMQRT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTPMQRT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTPMQRT applies a real orthogonal matrix Q obtained from a "triangular-pentagonal" real block reflector H to a general real matrix C, which consists of two blocks A and B.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^T$ from the Left;
--   `= 'R'`: apply Q or $Q^T$ from the Right.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: No transpose, apply Q;
--   `= 'T'`: Transpose, apply $Q^T$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix B. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix B. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q.
-
-#### L `[in]`
-
-_INTEGER_
-
-The order of the trapezoidal part of V. $K \ge L \ge 0$. See Further Details.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The block size used for the storage of T. $K \ge \mathrm{NB} \ge 1$. This must be the same value of `NB` used to generate T in CTPQRT.
-
-#### V `[in]`
-
-_DOUBLE PRECISION array, dimension (LDV,K)_
-
-The i-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by CTPQRT in B. See Further Details.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. If `SIDE = 'L'`, $\mathrm{LDV} \ge \max (1,M)$; if `SIDE = 'R'`, $\mathrm{LDV} \ge \max (1,N)$.
-
-#### T `[in]`
-
-_DOUBLE PRECISION array, dimension (LDT,K)_
-
-The upper triangular factors of the block reflectors as returned by CTPQRT, stored as a `NB`-by-K matrix.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{NB}$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N) if SIDE = 'L' or_
-
-(`LDA`,K) if `SIDE = 'R'` On entry, the K-by-N or M-by-K matrix A. On exit, A is overwritten by the corresponding block of $Q \, C$ or $Q^T \, C$ or $C \, Q$ or $C \, Q^T$. See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. If `SIDE = 'L'`, $\mathrm{LDC} \ge \max (1,K)$; If `SIDE = 'R'`, $\mathrm{LDC} \ge \max (1,M)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-On entry, the M-by-N matrix B. On exit, B is overwritten by the corresponding block of $Q \, C$ or $Q^T \, C$ or $C \, Q$ or $C \, Q^T$. See Further Details.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array. The dimension of WORK is_
-
-$N \, \mathrm{NB}$ if `SIDE = 'L'`, or $M \, \mathrm{NB}$ if `SIDE = 'R'`.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

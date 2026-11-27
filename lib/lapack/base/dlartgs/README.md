@@ -105,11 +105,9 @@ console.log( r );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARTGS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARTGS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -120,38 +118,6 @@ $$
 $$
 
 with R nonnegative. If X^2 - `SIGMA` and $X \, Y$ are 0, then the rotation is by PI/2.
-
-### Arguments
-
-#### X `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,1) entry of an upper bidiagonal matrix.
-
-#### Y `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,2) entry of an upper bidiagonal matrix.
-
-#### SIGMA `[in]`
-
-_DOUBLE PRECISION_
-
-The shift.
-
-#### CS `[out]`
-
-_DOUBLE PRECISION_
-
-The cosine of the rotation.
-
-#### SN `[out]`
-
-_DOUBLE PRECISION_
-
-The sine of the rotation.
 
 </section>
 

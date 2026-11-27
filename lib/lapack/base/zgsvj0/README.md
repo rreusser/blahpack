@@ -167,134 +167,21 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGSVJ0`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Pre-processor for the routine zgesvj.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGSVJ0`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZGSVJ0 is called from ZGESVJ as a pre-processor and that is its main purpose. It applies Jacobi rotations in the same way as ZGESVJ does, but it does not check convergence (stopping criterion). Few tuning parameters (marked by \[TP\]) are available for the implementer.
 
-### Arguments
+### Further Details
 
-#### JOBV `[in]`
+ZGSVJ0 is used just to enable ZGESVJ to call a simplified version of itself to work on a submatrix of the original matrix.
 
-_CHARACTER\*1_
+Contributor:
 
-Specifies whether the output from this procedure is used to compute the matrix V:
-
--   `= 'V'`: the product of the Jacobi rotations is accumulated by postmultiplying the N-by-N array V. (See the description of V.)
--   `= 'A'`: the product of the Jacobi rotations is accumulated by postmultiplying the `MV`-by-N array V. (See the descriptions of `MV` and V.)
--   `= 'N'`: the Jacobi rotations are not accumulated.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the input matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the input matrix A. $M \ge N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, M-by-N matrix A, such that $A \, \operatorname{diag}(D)$ represents the input matrix. On exit, A\_onexit \* diag(D\_onexit) represents the input matrix $A \, \operatorname{diag}(D)$ post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of D, `TOL` and `NSWEEP`.)
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### D `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-The array D accumulates the scaling factors from the complex scaled Jacobi rotations. On entry, $A \, \operatorname{diag}(D)$ represents the input matrix. On exit, A\_onexit\*diag(D\_onexit) represents the input matrix post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of A, `TOL` and `NSWEEP`.)
-
-#### SVA `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, `SVA` contains the Euclidean norms of the columns of the matrix $A \, \operatorname{diag}(D)$. On exit, `SVA` contains the Euclidean norms of the columns of the matrix A\_onexit\*diag(D\_onexit).
-
-#### MV `[in]`
-
-_INTEGER_
-
-If `JOBV = 'A'`, then `MV` rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'N'`, then `MV` is not referenced.
-
-#### V `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDV,N)_
-
-If `JOBV = 'V'` then N rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'A'` then `MV` rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'N'`, then V is not referenced.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V, $\mathrm{LDV} \ge 1$. If `JOBV = 'V'`, $\mathrm{LDV} \ge N$. If `JOBV = 'A'`, $\mathrm{LDV} \ge \mathrm{MV}$.
-
-#### EPS `[in]`
-
-_DOUBLE PRECISION_
-
-`EPS = DLAMCH('Epsilon')`
-
-#### SFMIN `[in]`
-
-_DOUBLE PRECISION_
-
-`SFMIN` = DLAMCH('Safe Minimum')
-
-#### TOL `[in]`
-
-_DOUBLE PRECISION_
-
-`TOL` is the threshold for Jacobi rotations. For a pair `A(:,p)`, `A(:,q)` of pivot columns, the Jacobi rotation is applied only if ABS(COS(angle(`A(:,p)`,`A(:,q)`))) \> `TOL`.
-
-#### NSWEEP `[in]`
-
-_INTEGER_
-
-`NSWEEP` is the number of sweeps of Jacobi rotations to be performed.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (LWORK)_
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-`LWORK` is the dimension of `WORK`. $\mathrm{LWORK} \ge M$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, then the i-th argument had an illegal value
+Zlatko Drmac (Zagreb, Croatia)
 
 </section>
 

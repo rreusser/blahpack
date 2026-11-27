@@ -126,9 +126,9 @@ dtrsyl.ndarray( 1, 1, 1, N, N, A, N, 1, 0, B, N, 1, 0, C, N, 1, 0, 1.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTRSYL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTRSYL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,98 +139,6 @@ $\operatorname{op}(A) \, X + X \, \operatorname{op}(B)$ = scale\*C or $\operator
 where $\operatorname{op}(A) = A$ or $A^T$, and A and B are both upper quasi- triangular. A is M-by-M and B is N-by-N; the right hand side C and the solution X are M-by-N; and scale is an output scale factor, set \<= 1 to avoid overflow in X.
 
 A and B must be in Schur canonical form (as returned by DHSEQR), that is, block upper triangular with 1-by-1 and 2-by-2 diagonal blocks; each 2-by-2 diagonal block has its diagonal elements equal and its off-diagonal elements of opposite sign.
-
-### Arguments
-
-#### TRANA `[in]`
-
-_CHARACTER\*1_
-
-Specifies the option op(A):
-
--   `= 'N'`: $\operatorname{op}(A) = A$    (No transpose)
--   `= 'T'`: $\operatorname{op}(A) = A^T$ (Transpose)
--   `= 'C'`: $\operatorname{op}(A) = A^H$ (Conjugate transpose = Transpose)
-
-#### TRANB `[in]`
-
-_CHARACTER\*1_
-
-Specifies the option op(B):
-
--   `= 'N'`: $\operatorname{op}(B) = B$    (No transpose)
--   `= 'T'`: $\operatorname{op}(B) = B^T$ (Transpose)
--   `= 'C'`: $\operatorname{op}(B) = B^H$ (Conjugate transpose = Transpose)
-
-#### ISGN `[in]`
-
-_INTEGER_
-
-Specifies the sign in the equation: = +1: solve $\operatorname{op}(A) \, X + X \, \operatorname{op}(B)$ = scale\*C
-
--   `= -1`: solve $\operatorname{op}(A) \, X - X \, \operatorname{op}(B)$ = scale\*C
-
-#### M `[in]`
-
-_INTEGER_
-
-The order of the matrix A, and the number of rows in the matrices X and C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix B, and the number of columns in the matrices X and C. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,M)_
-
-The upper quasi-triangular matrix A, in Schur canonical form.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,N)_
-
-The upper quasi-triangular matrix B, in Schur canonical form.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-The scale factor, scale, set \<= 1 to avoid overflow in X.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `= 1`: A and B have common or very close eigenvalues; perturbed values were used to solve the equation (but the matrices A and B are unchanged).
 
 </section>
 

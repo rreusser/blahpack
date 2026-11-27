@@ -158,11 +158,20 @@ console.log( 'rcond:', rcond );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLA_SYRCOND`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLA_SYRCOND`. Indices are the 1-based Fortran indices of the source.
 
-> Estimates the Skeel condition number for a symmetric indefinite matrix.
+### Purpose
+
+DLA\_SYRCOND estimates the Skeel condition number of op(A) \* op2(C) where op2 is determined by `CMODE` as follows
+
+| `CMODE =  1` | op2(C) = C |
+| --- | --- |
+| `CMODE =  0` | op2(C) = I |
+| `CMODE = -1` | op2(C) = inv(C) |
+
+The Skeel condition number cond(A) = norminf( \|inv(A)\|\|A\| ) is computed by computing scaling factors R such that $\operatorname{diag}(R) \, A$\*op2(C) is row equilibrated and computing the standard infinity-norm condition number.
 
 </section>
 

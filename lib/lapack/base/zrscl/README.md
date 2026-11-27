@@ -95,43 +95,13 @@ zrscl( 2, a, x, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZRSCL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> ZDRSCL multiplies a vector by the reciprocal of a real scalar.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZRSCL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZRSCL multiplies an n-element complex vector x by the complex scalar 1/a. This is done without overflow or underflow as long as the final result x/a does not overflow or underflow.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of components of the vector x.
-
-#### A `[in]`
-
-_COMPLEX\*16_
-
-The scalar a which is used to divide each component of x. A must not be 0, or the subroutine will divide by zero.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*abs(INCX))_
-
-The n-element vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between successive values of the vector SX.
-
--   `> 0`: $\mathrm{SX}(1) = X(1)$ and $\mathrm{SX}(1+(i-1) \, \mathrm{INCX}) = x(i)$,     $1< i \le n$
 
 </section>
 

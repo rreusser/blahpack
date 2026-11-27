@@ -109,41 +109,13 @@ dcopy.ndarray( 5, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DCOPY`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DCOPY`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DCOPY copies a vector, x, to a vector, y. uses unrolled loops for increments equal to 1.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### DX `[in]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DX`
-
-#### DY `[out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DY`
 
 ### Further Details
 

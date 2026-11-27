@@ -130,11 +130,9 @@ zgesc2.ndarray( 2, A, 1, 2, 0, RHS, 1, 0, IPIV, 1, 0, JPIV, 1, 0, scale );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGESC2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGESC2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -143,50 +141,6 @@ ZGESC2 solves a system of linear equations
 $A \, X$ = scale\* `RHS`
 
 with a general N-by-N matrix A using the LU factorization with complete pivoting computed by ZGETC2.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA, N)_
-
-On entry, the LU part of the factorization of the n-by-n matrix A computed by ZGETC2: $A = P \, L \, U \, Q$
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1, N)$.
-
-#### RHS `[in,out]`
-
-_COMPLEX\*16 array, dimension N_
-
-On entry, the right hand side vector b. On exit, the solution vector X.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le N$, row i of the matrix has been interchanged with row `IPIV(i)`.
-
-#### JPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le j \le N$, column j of the matrix has been interchanged with column `JPIV(j)`.
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-On exit, `SCALE` contains the scale factor. `SCALE` is chosen $0 \le \mathrm{SCALE} \le 1$ to prevent overflow in the solution.
 
 </section>
 

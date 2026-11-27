@@ -148,11 +148,9 @@ dlabrd.ndarray( N, N, N, A, N, 1, 0, d, 1, 0, e, 1, 0, TAUQ, 1, 0, TAUP, 1, 0, X
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLABRD`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Reduces the first nb rows and columns of a general matrix to a bidiagonal form.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLABRD`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -161,102 +159,6 @@ DLABRD reduces the first `NB` rows and columns of a real general m by n matrix A
 If $m \ge n$, A is reduced to upper bidiagonal form; if $m < n$, to lower bidiagonal form.
 
 This is an auxiliary routine called by DGEBRD
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows in the matrix A.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns in the matrix A.
-
-#### NB `[in]`
-
-_INTEGER_
-
-The number of leading rows and columns of A to be reduced.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the m by n general matrix to be reduced. On exit, the first `NB` rows and columns of the matrix are overwritten; the rest of the array is unchanged. If $m \ge n$, elements on and below the diagonal in the first `NB`
-
--   columns, with the array `TAUQ`, represent the orthogonal
--   matrix Q as a product of elementary reflectors; and
--   elements above the diagonal in the first `NB` rows, with the
--   array `TAUP`, represent the orthogonal matrix P as a product
--   of elementary reflectors.
-
-If $m < n$, elements below the diagonal in the first `NB`
-
--   columns, with the array `TAUQ`, represent the orthogonal
--   matrix Q as a product of elementary reflectors, and
--   elements on and above the diagonal in the first `NB` rows,
--   with the array `TAUP`, represent the orthogonal matrix P as
--   a product of elementary reflectors.
-
-See Further Details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### D `[out]`
-
-_DOUBLE PRECISION array, dimension (NB)_
-
-The diagonal elements of the first `NB` rows and columns of the reduced matrix. $D(i) = A(i,i)$.
-
-#### E `[out]`
-
-_DOUBLE PRECISION array, dimension (NB)_
-
-The off-diagonal elements of the first `NB` rows and columns of the reduced matrix.
-
-#### TAUQ `[out]`
-
-_DOUBLE PRECISION array, dimension (NB)_
-
-The scalar factors of the elementary reflectors which represent the orthogonal matrix Q. See Further Details.
-
-#### TAUP `[out]`
-
-_DOUBLE PRECISION array, dimension (NB)_
-
-The scalar factors of the elementary reflectors which represent the orthogonal matrix P. See Further Details.
-
-#### X `[out]`
-
-_DOUBLE PRECISION array, dimension (LDX,NB)_
-
-The m-by-nb matrix X required to update the unreduced part of A.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,M)$.
-
-#### Y `[out]`
-
-_DOUBLE PRECISION array, dimension (LDY,NB)_
-
-The n-by-nb matrix Y required to update the unreduced part of A.
-
-#### LDY `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Y. $\mathrm{LDY} \ge \max (1,N)$.
 
 ### Further Details
 

@@ -129,77 +129,13 @@ zhetrs2.ndarray( 'upper', N, N, A, N, 1, 0, IPIV, 1, 0, B, N, 1, 0, WORK, 1, 0 )
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZHETRS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZHETRS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZHETRS2 solves a system of linear equations $A \, X = B$ with a complex Hermitian matrix A using the factorization $A = U \, D \, U^H$ or $A = L \, D \, L^H$ computed by ZHETRF and converted by ZSYCONV.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.
-
--   `= 'U'`: Upper triangular, form is $A = U \, D \, U^H$;
--   `= 'L'`: Lower triangular, form is $A = L \, D \, L^H$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZHETRF.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D as determined by ZHETRF.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the right hand side matrix B. On exit, the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

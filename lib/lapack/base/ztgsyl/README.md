@@ -171,9 +171,9 @@ ztgsyl.ndarray( 'no-transpose', 0, 2, 2, A, 1, 2, 0, B, 1, 2, 0, C, 1, 2, 0, D, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTGSYL`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTGSYL`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -204,148 +204,16 @@ If $\mathrm{IJOB} \ge 1$, ZTGSYL computes a Frobenius norm-based estimate of Dif
 
 This is a level-3 BLAS algorithm.
 
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: solve the generalized sylvester equation (1).
--   `= 'C'`: solve the "conjugate transposed" system (3).
-
-#### IJOB `[in]`
-
-_INTEGER_
-
-Specifies what kind of functionality to be performed.
-
--   `=0`: solve (1) only.
--   `=1`: The functionality of 0 and 3.
--   `=2`: The functionality of 0 and 4.
--   `=3`: Only an estimate of Dif\[(A,D), (B,E)\] is computed. (look ahead strategy is used).
--   `=4`: Only an estimate of Dif\[(A,D), (B,E)\] is computed. (ZGECON on sub-systems is used). Not referenced if `TRANS = 'C'`.
-
-#### M `[in]`
-
-_INTEGER_
-
-The order of the matrices A and D, and the row dimension of the matrices C, F, R and L.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices B and E, and the column dimension of the matrices C, F, R and L.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA, M)_
-
-The upper triangular matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1, M)$.
-
-#### B `[in]`
-
-_COMPLEX\*16 array, dimension (LDB, N)_
-
-The upper triangular matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1, N)$.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC, N)_
-
-On entry, C contains the right-hand-side of the first matrix equation in (1) or (3). On exit, if `IJOB = 0`, 1 or 2, C has been overwritten by the solution R. If `IJOB = 3` or 4 and `TRANS = 'N'`, C holds R, the solution achieved during the computation of the Dif-estimate.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1, M)$.
-
-#### D `[in]`
-
-_COMPLEX\*16 array, dimension (LDD, M)_
-
-The upper triangular matrix D.
-
-#### LDD `[in]`
-
-_INTEGER_
-
-The leading dimension of the array D. $\mathrm{LDD} \ge \max (1, M)$.
-
-#### E `[in]`
-
-_COMPLEX\*16 array, dimension (LDE, N)_
-
-The upper triangular matrix E.
-
-#### LDE `[in]`
-
-_INTEGER_
-
-The leading dimension of the array E. $\mathrm{LDE} \ge \max (1, N)$.
-
-#### F `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDF, N)_
-
-On entry, F contains the right-hand-side of the second matrix equation in (1) or (3). On exit, if `IJOB = 0`, 1 or 2, F has been overwritten by the solution L. If `IJOB = 3` or 4 and `TRANS = 'N'`, F holds L, the solution achieved during the computation of the Dif-estimate.
-
-#### LDF `[in]`
-
-_INTEGER_
-
-The leading dimension of the array F. $\mathrm{LDF} \ge \max (1, M)$.
-
-#### DIF `[out]`
-
-_DOUBLE PRECISION_
-
-On exit `DIF` is the reciprocal of a lower bound of the reciprocal of the Dif-function, i.e. `DIF` is an upper bound of Dif\[(A,D), (B,E)\] = $\sigma$-min(Z), where Z as in (2). IF `IJOB = 0` or `TRANS = 'C'`, `DIF` is not referenced.
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-On exit `SCALE` is the scaling factor in (1) or (3). If $0 < \mathrm{SCALE} < 1$, C and F hold the solutions R and L, resp., to a slightly perturbed system but the input matrices A, B, D and E have not been changed. If `SCALE = 0`, R and L will hold the solutions to the homogeneous system with $C = F = 0$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. `LWORK` \> = 1. If `IJOB = 1` or 2 and `TRANS = 'N'`, $\mathrm{LWORK} \ge \max (1,2 \, M \, N)$.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (M+N+2)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `=0`: successful exit
--   `<0`: If `INFO = -i`, the i-th argument had an illegal value.
--   `>0`: (A, D) and (B, E) have common or very close eigenvalues.
+### References
+
+\[1\] B. Kagstrom and P. Poromaa, LAPACK-Style Algorithms and Software
+
+-   for Solving the Generalized Sylvester Equation and Estimating the
+-   Separation between Regular Matrix Pairs, Report UMINF - 93.23,
+-   Department of Computing Science, Umea University, S-901 87 Umea,
+-   Sweden, December 1993, Revised April 1994, Also as LAPACK Working
+-   Note 75. To appear in ACM Trans. on Math. Software, Vol 22,
+-   No 1, 1996.
 
 </section>
 

@@ -117,9 +117,9 @@ dspr2.ndarray( 'upper', 2, 1.0, x, 1, 0, y, 1, 0, AP, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DSPR2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DSPR2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -130,64 +130,6 @@ A := \alpha \, x \, y^T + \alpha \, y \, x^T + A
 $$
 
 where $\alpha$ is a scalar, x and y are n element vectors and A is an n by n symmetric matrix, supplied in packed form.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the upper or lower triangular part of the matrix A is supplied in the packed array `AP` as follows:
-
-`UPLO = 'U'` or 'u' The upper triangular part of A is
-
-supplied in `AP`.
-
-`UPLO = 'L'` or 'l' The lower triangular part of A is
-
-supplied in `AP`.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of the matrix A. N must be at least zero.
-
-#### ALPHA `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### X `[in]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ). Before entry, the incremented array X must contain the n element vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
-
-#### Y `[in]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCY` ) ). Before entry, the incremented array Y must contain the n element vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero.
-
-#### AP `[in,out]`
-
-_DOUBLE PRECISION array, dimension at least_
-
-( ( n\*( n + 1 ) )/2 ). Before entry with `UPLO = 'U'` or 'u', the array `AP` must contain the upper triangular part of the symmetric matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. On exit, the array `AP` is overwritten by the upper triangular part of the updated matrix. Before entry with `UPLO = 'L'` or 'l', the array `AP` must contain the lower triangular part of the symmetric matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 ) and a( 3, 1 ) respectively, and so on. On exit, the array `AP` is overwritten by the lower triangular part of the updated matrix.
 
 ### Further Details
 

@@ -117,9 +117,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSYTRF_ROOK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DSYTRF_ROOK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,77 +132,6 @@ $$
 where U (or L) is a product of permutation and unit upper (lower) triangular matrices, and D is symmetric and block diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 
 This is the blocked version of the algorithm, calling Level 3 BLAS.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced.
-
-On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L (see below for further details).
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D.
-
-If `UPLO = 'U'`:
-
--   If $\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)`
--   were interchanged and D(k,k) is a 1-by-1 diagonal block.
-
-If $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k-1) < 0$, then rows and columns k and -`IPIV(k)` were interchanged and rows and columns k-1 and -`IPIV(k-1)` were inerchaged, D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
-
-If `UPLO = 'L'`:
-
--   If $\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)`
--   were interchanged and D(k,k) is a 1-by-1 diagonal block.
-
-If $\mathrm{IPIV}(k) < 0$ and $\mathrm{IPIV}(k+1) < 0$, then rows and columns k and -`IPIV(k)` were interchanged and rows and columns k+1 and -`IPIV(k+1)` were inerchaged, D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The length of `WORK`. $\mathrm{LWORK} \ge 1$. For best performance $\mathrm{LWORK} \ge N \, \mathrm{NB}$, where NB is the block size returned by ILAENV.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, D(i,i) is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular, and division by zero will occur if it is used to solve a system of equations.
 
 ### Further Details
 
@@ -239,18 +168,6 @@ L(k) =  (   0    I     0   )  s
 ```
 
 If $s = 1$, D(k) overwrites `A(k,k)`, and v overwrites `A(k+1:n,k)`. If $s = 2$, the lower triangle of D(k) overwrites `A(k,k)`, `A(k+1,k)`, and `A(k+1,k+1)`, and v overwrites `A(k+2:n,k:k+1)`.
-
-### Contributors
-
-April 2012, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
-
-September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
-
--   School of Mathematics,
--   University of Manchester
 
 </section>
 

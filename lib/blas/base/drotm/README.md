@@ -115,9 +115,9 @@ drotm.ndarray( 3, x, 1, 0, y, 1, 0, param, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DROTM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DROTM`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,40 +134,6 @@ H= \begin{pmatrix} \mathrm{DH11} & \mathrm{DH12} \\  &  \\ \mathrm{DH21} & \math
 $$
 
 SEE DROTMG FOR A DESCRIPTION OF DATA STORAGE IN `DPARAM`.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### DX `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DX`
-
-#### DY `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DY`
-
-#### DPARAM `[in]`
-
-_DOUBLE PRECISION array, dimension (5)_
-
-`DPARAM(1)=DFLAG` `DPARAM(2)=DH11` `DPARAM(3)=DH21` `DPARAM(4)=DH12` `DPARAM(5)=DH22`
 
 </section>
 

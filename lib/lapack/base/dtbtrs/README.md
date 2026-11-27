@@ -119,9 +119,9 @@ dtbtrs( 'column-major', 'upper', 'no-transpose', 'non-unit', 3, 1, 1, AB, 2, B, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTBTRS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTBTRS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,82 +132,6 @@ A \, X = B \quad\text{or}\quad A^T \, X = B
 $$
 
 where A is a triangular band matrix of order N, and B is an N-by `NRHS` matrix. A check is made to verify that A is nonsingular.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the form the system of equations:
-
--   `= 'N'`: $A \, X = B$  (No transpose)
--   `= 'T'`: $A^T \, X = B$  (Transpose)
--   `= 'C'`: $A^H \, X = B$  (Conjugate transpose = Transpose)
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: A is non-unit triangular;
--   `= 'U'`: A is unit triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of superdiagonals or subdiagonals of the triangular band matrix A. $\mathrm{KD} \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### AB `[in]`
-
-_DOUBLE PRECISION array, dimension (LDAB,N)_
-
-The upper or lower triangular band matrix A, stored in the first kd+1 rows of `AB`. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$. If `DIAG = 'U'`, the diagonal elements of A are not referenced and are assumed to be 1.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-On entry, the right hand side matrix B. On exit, if `INFO = 0`, the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, the i-th diagonal element of A is zero, indicating that the matrix is singular and the solutions X have not been computed.
 
 </section>
 

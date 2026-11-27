@@ -129,61 +129,17 @@ dlacon.ndarray( n, v, 1, 0, x, 1, 0, ISGN, 1, 0, EST, KASE );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLACON`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLACON`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLACON estimates the 1-norm of a square, real matrix A. Reverse communication is used for evaluating matrix-vector products.
 
-### Arguments
+### References
 
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 1$.
-
-#### V `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On the final return, $V = A \, W$, where $\mathrm{EST} = \operatorname{norm}(V)/\operatorname{norm}(W)$ (W is not returned).
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On an intermediate return, X should be overwritten by
-
-$$
-A \, X, \quad\text{if}\quad \mathrm{KASE}=1
-$$
-
-$$
-A^T \, X, \quad\text{if}\quad \mathrm{KASE}=2
-$$
-
-and DLACON must be re-called with all the other parameters unchanged.
-
-#### ISGN `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### EST `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry with `KASE = 1` or 2 and $\mathrm{JUMP} = 3$, `EST` should be unchanged from the previous call to DLACON. On exit, `EST` is an estimate (a lower bound) for norm(A).
-
-#### KASE `[in,out]`
-
-_INTEGER_
-
-On the initial call to DLACON, `KASE` should be 0. On an intermediate return, `KASE` will be 1 or 2, indicating whether X should be overwritten by $A \, X$ or $A^T \, X$. On the final return from DLACON, `KASE` will again be 0.
+N.J. Higham, "FORTRAN codes for estimating the one-norm of a real or complex matrix, with applications to condition estimation", ACM Trans. Math. Soft., vol. 14, no. 4, pp. 381-396, December 1988.
 
 </section>
 

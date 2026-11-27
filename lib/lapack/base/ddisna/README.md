@@ -115,9 +115,9 @@ ddisna( 'eigenvalues', 4, 4, d, 1, SEP, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DDISNA`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DDISNA`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,49 +132,6 @@ $$
 where $\mathrm{ANORM} = 2-\operatorname{norm}(A) = \max ( \lvert D(j) \rvert )$. `SEP(I)` is not allowed to be smaller than $\mathrm{DLAMCH}( \text{'E'} ) \, \mathrm{ANORM}$ in order to limit the size of the error bound.
 
 DDISNA may also be used to compute error bounds for eigenvectors of the generalized symmetric definite eigenproblem.
-
-### Arguments
-
-#### JOB `[in]`
-
-_CHARACTER\*1_
-
-Specifies for which problem the reciprocal condition numbers should be computed:
-
--   `= 'E'`: the eigenvectors of a symmetric/Hermitian matrix;
--   `= 'L'`: the left singular vectors of a general matrix;
--   `= 'R'`: the right singular vectors of a general matrix.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-If `JOB = 'L'` or 'R', the number of columns of the matrix, in which case $N \ge 0$. Ignored if `JOB = 'E'`.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (M) if JOB = 'E'_
-
-dimension (min(M,N)) if `JOB = 'L'` or 'R' The eigenvalues (if `JOB = 'E'`) or singular values (if `JOB = 'L'` or 'R') of the matrix, in either increasing or decreasing order. If singular values, they must be non-negative.
-
-#### SEP `[out]`
-
-_DOUBLE PRECISION array, dimension (M) if JOB = 'E'_
-
-dimension (min(M,N)) if `JOB = 'L'` or 'R' The reciprocal condition numbers of the vectors.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 </section>
 

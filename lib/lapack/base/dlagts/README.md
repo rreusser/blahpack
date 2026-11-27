@@ -135,11 +135,9 @@ dlagts.ndarray( 'both', N, a, 1, 0, b, 1, 0, c, 1, 0, d, 1, 0, IN, 1, 0, y, 1, 0
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAGTS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves the system of equations (T-λI)x = y or (T-λI)^$\mathrm{Tx} = y$, where T is a general tridiagonal matrix and λ a scalar, using the LU factorization computed by slagtf.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAGTS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -156,77 +154,6 @@ $$
 $$
 
 by routine DLAGTF. The choice of equation to be solved is controlled by the argument `JOB`, and in each case there is an option to perturb zero or very small diagonal elements of U, this option being intended for use in applications such as inverse iteration.
-
-### Arguments
-
-#### JOB `[in]`
-
-_INTEGER_
-
-Specifies the job to be performed by DLAGTS as follows:
-
--   `= 1`: The equations  (T - $\lambda$\*I)x = y  are to be solved, but diagonal elements of U are not to be perturbed.
--   `= -1`: The equations  (T - $\lambda$\*I)x = y  are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed. See argument `TOL` below.
--   `= 2`: The equations  $(T - \lambda \, I)^{\mathrm{Tx}} = y$  are to be solved, but diagonal elements of U are not to be perturbed.
--   `= -2`: The equations  $(T - \lambda \, I)^{\mathrm{Tx}} = y$  are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed. See argument `TOL` below.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix T.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, A must contain the diagonal elements of U as returned from DLAGTF.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-On entry, B must contain the first super-diagonal elements of U as returned from DLAGTF.
-
-#### C `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-On entry, C must contain the sub-diagonal elements of L as returned from DLAGTF.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N-2)_
-
-On entry, D must contain the second super-diagonal elements of U as returned from DLAGTF.
-
-#### IN `[in]`
-
-_INTEGER array, dimension (N)_
-
-On entry, `IN` must contain details of the matrix P as returned from DLAGTF.
-
-#### Y `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, the right hand side vector y. On exit, Y is overwritten by the solution vector x.
-
-#### TOL `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, with $\mathrm{JOB} < 0$, `TOL` should be the minimum perturbation to be made to very small diagonal elements of U. `TOL` should normally be chosen as about $\mathrm{eps} \, \operatorname{norm}(U)$, where eps is the relative machine precision, but if `TOL` is supplied as non-positive, then it is reset to $\mathrm{eps} \, \max ( \lvert u(i,j) \rvert )$. If $\mathrm{JOB} > 0$ then `TOL` is not referenced.
-
-On exit, `TOL` is changed as described above, only if `TOL` is non-positive on entry. Otherwise `TOL` is unchanged.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: overflow would occur when computing the `INFO(th)` element of the solution vector x. This can only occur when `JOB` is supplied as positive and either means that a diagonal element of U is very small, or that the elements of the right-hand side vector y are very large.
 
 </section>
 

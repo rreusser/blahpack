@@ -105,49 +105,13 @@ dtptri( 'upper', 'non-unit', 3, AP );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTPTRI`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTPTRI`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTPTRI computes the inverse of a real upper or lower triangular matrix A stored in packed format.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: A is non-unit triangular;
--   `= 'U'`: A is unit triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### AP `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N\*(N+1)/2)_
-
-On entry, the upper or lower triangular matrix A, stored columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, AP($i + (j-1) \, ((2 \, n-j)/2) = A(i,j)$ for $j \le i \le n$. See below for further details. On exit, the (triangular) inverse of the original matrix, in the same packed storage format.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, A(i,i) is exactly zero.  The triangular matrix is singular and its inverse can not be computed.
 
 ### Further Details
 

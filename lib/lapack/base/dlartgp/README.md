@@ -117,11 +117,9 @@ console.log( r2 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARTGP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a plane rotation so that the diagonal is nonnegative.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARTGP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -138,40 +136,6 @@ This is a slower, more accurate version of the Level 1 BLAS routine DROTG, with 
 -   If $F=0$ and (G .ne. 0), then `CS=0` and `SN`=(+/-)1.
 
 The sign is chosen so that $R \ge 0$.
-
-### Arguments
-
-#### F `[in]`
-
-_DOUBLE PRECISION_
-
-The first component of vector to be rotated.
-
-#### G `[in]`
-
-_DOUBLE PRECISION_
-
-The second component of vector to be rotated.
-
-#### CS `[out]`
-
-_DOUBLE PRECISION_
-
-The cosine of the rotation.
-
-#### SN `[out]`
-
-_DOUBLE PRECISION_
-
-The sine of the rotation.
-
-#### R `[out]`
-
-_DOUBLE PRECISION_
-
-The nonzero component of the rotated vector.
-
-This version has a few statements commented out for thread safety (machine parameters are computed on each entry). 10 feb 03, SJH.
 
 </section>
 

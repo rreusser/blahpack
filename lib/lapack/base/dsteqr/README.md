@@ -125,67 +125,13 @@ dsteqr.ndarray( 'update', N, d, 1, 0, e, 1, 0, Z, N, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSTEQR`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DSTEQR`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DSTEQR computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method. The eigenvectors of a full or band symmetric matrix can also be found if DSYTRD or DSPTRD or DSBTRD has been used to reduce this matrix to tridiagonal form.
-
-### Arguments
-
-#### COMPZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Compute eigenvalues only.
--   `= 'V'`: Compute eigenvalues and eigenvectors of the original symmetric matrix.  On entry, Z must contain the orthogonal matrix used to reduce the original matrix to tridiagonal form.
--   `= 'I'`: Compute eigenvalues and eigenvectors of the tridiagonal matrix.  Z is initialized to the identity matrix.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 0$.
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, the diagonal elements of the tridiagonal matrix. On exit, if `INFO = 0`, the eigenvalues in ascending order.
-
-#### E `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-On entry, the (n-1) subdiagonal elements of the tridiagonal matrix. On exit, E has been destroyed.
-
-#### Z `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDZ, N)_
-
-On entry, if `COMPZ = 'V'`, then Z contains the orthogonal matrix used in the reduction to tridiagonal form. On exit, if `INFO = 0`, then if `COMPZ = 'V'`, Z contains the orthonormal eigenvectors of the original symmetric matrix, and if `COMPZ = 'I'`, Z contains the orthonormal eigenvectors of the symmetric tridiagonal matrix. If `COMPZ = 'N'`, then Z is not referenced.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$, and if eigenvectors are desired, then $\mathrm{LDZ} \ge \max (1,N)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (max(1,2\*N-2))_
-
-If `COMPZ = 'N'`, then `WORK` is not referenced.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: the algorithm has failed to find all the eigenvalues in a total of $30 \, N$ iterations; if `INFO = i`, then i elements of E have not converged to zero; on exit, D and E contain the elements of a symmetric tridiagonal matrix which is orthogonally similar to the original matrix.
 
 </section>
 

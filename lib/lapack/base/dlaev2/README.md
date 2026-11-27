@@ -93,11 +93,9 @@ dlaev2.ndarray( 2.0, 1.0, 3.0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAEV2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and eigenvectors of a 2-by-2 symmetric/Hermitian matrix.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAEV2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -112,48 +110,6 @@ On return, `RT1` is the eigenvalue of larger absolute value, `RT2` is the eigenv
 $$
 \begin{bmatrix} \mathrm{CS1} & \mathrm{SN1} \\ -\mathrm{SN1} & \mathrm{CS1} \end{bmatrix} \begin{bmatrix} A & B \\ B & C \end{bmatrix} \begin{bmatrix} \mathrm{CS1} & -\mathrm{SN1} \\ \mathrm{SN1} & \mathrm{CS1} \end{bmatrix} = \begin{bmatrix} \mathrm{RT1} & 0 \\ 0 & \mathrm{RT2} \end{bmatrix}
 $$
-
-### Arguments
-
-#### A `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,1) element of the 2-by-2 matrix.
-
-#### B `[in]`
-
-_DOUBLE PRECISION_
-
-The (1,2) element and the conjugate of the (2,1) element of the 2-by-2 matrix.
-
-#### C `[in]`
-
-_DOUBLE PRECISION_
-
-The (2,2) element of the 2-by-2 matrix.
-
-#### RT1 `[out]`
-
-_DOUBLE PRECISION_
-
-The eigenvalue of larger absolute value.
-
-#### RT2 `[out]`
-
-_DOUBLE PRECISION_
-
-The eigenvalue of smaller absolute value.
-
-#### CS1 `[out]`
-
-_DOUBLE PRECISION_
-
-#### SN1 `[out]`
-
-_DOUBLE PRECISION_
-
-The vector (`CS1`, `SN1`) is a unit right eigenvector for `RT1`.
 
 ### Further Details
 

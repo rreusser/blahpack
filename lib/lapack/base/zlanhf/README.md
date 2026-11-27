@@ -109,11 +109,128 @@ zlanhf( 'one-norm', 'no-transpose', 'upper', 3, A, WORK );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLANHF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLANHF`. Indices are the 1-based Fortran indices of the source.
 
-> Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a Hermitian matrix in RFP format.
+### Purpose
+
+ZLANHF returns the value of the one norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a complex Hermitian matrix A in RFP format.
+
+### Returns
+
+$$
+\mathrm{ZLANHF} = \begin{cases} \max (\lvert A(i,j) \rvert) & \text{NORM = 'M' or 'm'} \\ \mathrm{norm1}(A) & \text{NORM = '1', 'O' or 'o'} \\ \mathrm{normI}(A) & \text{NORM = 'I' or 'i'} \\ \mathrm{normF}(A) & \text{NORM = 'F', 'f', 'E' or 'e'} \end{cases}
+$$
+
+where norm1 denotes the one norm of a matrix (maximum column sum), normI denotes the infinity norm of a matrix (maximum row sum) and normF denotes the Frobenius norm of a matrix (square root of sum of squares). Note that max(abs(`A(i,j)`)) is not a matrix norm.
+
+### Further Details
+
+We first consider Standard Packed Format when N is even. We give an example where $N = 6$.
+
+```text
+AP is Upper             AP is Lower
+```
+
+```text
+00 01 02 03 04 05       00
+   11 12 13 14 15       10 11
+      22 23 24 25       20 21 22
+         33 34 35       30 31 32 33
+            44 45       40 41 42 43 44
+               55       50 51 52 53 54 55
+```
+
+Let `TRANSR = 'N'`. RFP holds AP as follows: For `UPLO = 'U'` the upper trapezoid `A(0:5,0:2)` consists of the last three columns of AP upper. The lower triangle `A(4:6,0:2)` consists of conjugate-transpose of the first three columns of AP upper. For `UPLO = 'L'` the lower trapezoid `A(1:6,0:2)` consists of the first three columns of AP lower. The upper triangle `A(0:2,0:2)` consists of conjugate-transpose of the last three columns of AP lower. To denote conjugate we place -- above the element. This covers the case N even and `TRANSR = 'N'`.
+
+```text
+RFP A                   RFP A
+```
+
+```text
+                        -- -- --
+03 04 05                33 43 53
+                           -- --
+13 14 15                00 44 54
+                              --
+23 24 25                10 11 55
+```
+
+```text
+33 34 35                20 21 22
+--
+00 44 45                30 31 32
+-- --
+01 11 55                40 41 42
+-- -- --
+02 12 22                50 51 52
+```
+
+Now let `TRANSR = 'C'`. RFP A in both `UPLO` cases is just the conjugate- transpose of RFP A above. One therefore gets:
+
+```text
+RFP A                   RFP A
+```
+
+```text
+-- -- -- --                -- -- -- -- -- --
+03 13 23 33 00 01 02    33 00 10 20 30 40 50
+-- -- -- -- --                -- -- -- -- --
+04 14 24 34 44 11 12    43 44 11 21 31 41 51
+-- -- -- -- -- --                -- -- -- --
+05 15 25 35 45 55 22    53 54 55 22 32 42 52
+```
+
+We next consider Standard Packed Format when N is odd. We give an example where $N = 5$.
+
+```text
+AP is Upper                 AP is Lower
+```
+
+```text
+00 01 02 03 04              00
+   11 12 13 14              10 11
+      22 23 24              20 21 22
+         33 34              30 31 32 33
+            44              40 41 42 43 44
+```
+
+Let `TRANSR = 'N'`. RFP holds AP as follows: For `UPLO = 'U'` the upper trapezoid `A(0:4,0:2)` consists of the last three columns of AP upper. The lower triangle `A(3:4,0:1)` consists of conjugate-transpose of the first two columns of AP upper. For `UPLO = 'L'` the lower trapezoid `A(0:4,0:2)` consists of the first three columns of AP lower. The upper triangle `A(0:1,1:2)` consists of conjugate-transpose of the last two columns of AP lower. To denote conjugate we place -- above the element. This covers the case N odd and `TRANSR = 'N'`.
+
+```text
+RFP A                   RFP A
+```
+
+```text
+                           -- --
+02 03 04                00 33 43
+                              --
+12 13 14                10 11 44
+```
+
+```text
+22 23 24                20 21 22
+--
+00 33 34                30 31 32
+-- --
+01 11 44                40 41 42
+```
+
+Now let `TRANSR = 'C'`. RFP A in both `UPLO` cases is just the conjugate- transpose of RFP A above. One therefore gets:
+
+```text
+RFP A                   RFP A
+```
+
+```text
+-- -- --                   -- -- -- -- -- --
+02 12 22 00 01             00 10 20 30 40 50
+-- -- -- --                   -- -- -- -- --
+03 13 23 33 11             33 11 21 31 41 51
+-- -- -- -- --                   -- -- -- --
+04 14 24 34 44             43 44 22 32 42 52
+```
 
 </section>
 

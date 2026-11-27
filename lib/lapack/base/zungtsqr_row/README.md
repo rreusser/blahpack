@@ -128,9 +128,9 @@ zungtsqr_row( 'column-major', 6, 2, 4, 2, A, 6, T, 2, WORK );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNGTSQR_ROW`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNGTSQR_ROW`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,96 +139,6 @@ ZUNGTSQR\_ROW generates an M-by-N complex matrix Q\_out with orthonormal columns
 Q\_out = first\_N\_columns\_of( Q(1)\_in \* Q(2)\_in \* ... \* Q(k)\_in ).
 
 The input matrices Q(k)\_in are stored in row and column blocks in A. See the documentation of ZLATSQR for more details on the format of Q(k)\_in, where each Q(k)\_in is represented by block Householder transformations. This routine calls an auxiliary routine ZLARFB\_GETT, where the computation is performed on each individual block. The algorithm first sweeps `NB`-sized column blocks from the right to left starting in the bottom row block and continues to the top row block (hence \_ROW in the routine name). This sweep is in reverse order of the order in which ZLATSQR generates the output blocks.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $M \ge N \ge 0$.
-
-#### MB `[in]`
-
-_INTEGER_
-
-The row block size used by ZLATSQR to return arrays A and T. $\mathrm{MB} > N$. (Note that if $\mathrm{MB} > M$, then M is used instead of `MB` as the row block size).
-
-#### NB `[in]`
-
-_INTEGER_
-
-The column block size used by ZLATSQR to return arrays A and T. $\mathrm{NB} \ge 1$. (Note that if $\mathrm{NB} > N$, then N is used instead of `NB` as the column block size).
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry:
-
-The elements on and above the diagonal are not used as input. The elements below the diagonal represent the unit lower-trapezoidal blocked matrix V computed by ZLATSQR that defines the input matrices Q\_in(k) (ones on the diagonal are not stored). See ZLATSQR for more details.
-
-On exit:
-
-The array A contains an M-by-N orthonormal matrix Q\_out, i.e the columns of A are orthogonal unit vectors.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[in]`
-
-_COMPLEX\*16 array_
-
-dimension (`LDT`, N \* NIRB) where NIRB = Number\_of\_input\_row\_blocks
-
-$$
-= \max ( 1, \mathrm{CEIL}((M-N)/(\mathrm{MB}-N)) )
-$$
-
-Let NICB = Number\_of\_input\_col\_blocks
-
-$$
-= \mathrm{CEIL}(N/\mathrm{NB})
-$$
-
-The upper-triangular block reflectors used to define the input matrices Q\_in(k), $k=(1:\mathrm{NIRB} \, \mathrm{NICB})$. The block reflectors are stored in compact form in NIRB block reflector sequences. Each of the NIRB block reflector sequences is stored in a larger `NB`-by-N column block of T and consists of NICB smaller `NB`-by-`NB` upper-triangular column blocks. See ZLATSQR for more details on the format of T.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max (1,\min (\mathrm{NB},N))$.
-
-#### WORK `[out]`
-
-(workspace) COMPLEX\*16 array, dimension (MAX(1,`LWORK`)) On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \mathrm{NBLOCAL} \, \max (\mathrm{NBLOCAL},(N-\mathrm{NBLOCAL}))$, where $\mathrm{NBLOCAL}=\min (\mathrm{NB},N)$. If `LWORK = -1`, then a workspace query is assumed. The routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-November 2020, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 </section>
 

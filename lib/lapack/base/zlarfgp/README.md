@@ -124,11 +124,9 @@ console.log( 'v    =', reinterpret( x, 0 ) );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARFGP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates an elementary reflector (Householder matrix) with non-negative $\beta$.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARFGP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -147,38 +145,6 @@ $$
 where $\tau$ is a complex scalar and v is a complex (n-1)-element vector. Note that H is not hermitian.
 
 If the elements of x are all zero and $\alpha$ is real, then $\tau = 0$ and H is taken to be the unit matrix.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the elementary reflector.
-
-#### ALPHA `[in,out]`
-
-_COMPLEX\*16_
-
-On entry, the value $\alpha$. On exit, it is overwritten with the value $\beta$.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-2)\*abs(INCX))_
-
-On entry, the vector x. On exit, it is overwritten with the vector v.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between elements of X. $\mathrm{INCX} > 0$.
-
-#### TAU `[out]`
-
-_COMPLEX\*16_
-
-The value $\tau$.
 
 </section>
 

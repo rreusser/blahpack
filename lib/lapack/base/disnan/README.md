@@ -91,11 +91,13 @@ disnan.ndarray( 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DISNAN`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DISNAN`. Indices are the 1-based Fortran indices of the source.
 
-> Tests input for NaN.
+### Purpose
+
+DISNAN returns .TRUE. if its argument is NaN, and .FALSE. otherwise. To be replaced by the Fortran 2003 intrinsic in the future.
 
 </section>
 

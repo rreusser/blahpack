@@ -115,11 +115,9 @@ dlaqr1.ndarray( N, H, N, 1, 0, 1, 1, 1, 1, v, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAQR1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAQR1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,50 +130,6 @@ scaling to avoid overflows and most underflows. It is assumed that either
 1) sr1 = sr2 and si1 = -si2 or 2) si1 = si2 = 0.
 
 This is useful for starting double implicit shift bulges in the QR algorithm.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-Order of the matrix H. N must be either 2 or 3.
-
-#### H `[in]`
-
-_DOUBLE PRECISION array, dimension (LDH,N)_
-
-The 2-by-2 or 3-by-3 matrix H in (\*).
-
-#### LDH `[in]`
-
-_INTEGER_
-
-The leading dimension of H as declared in the calling procedure. $\mathrm{LDH} \ge N$
-
-#### SR1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### SI1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### SR2 `[in]`
-
-_DOUBLE PRECISION_
-
-#### SI2 `[in]`
-
-_DOUBLE PRECISION_
-
-The shifts in (\*).
-
-#### V `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-A scalar multiple of the first column of the matrix K in (\*).
 
 </section>
 

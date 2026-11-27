@@ -136,101 +136,13 @@ dlarrj.ndarray( N, d, 1, 0, 1, 1, 0, 1, 1, 1, 0, w, 1, 0, WERR, 1, 0, WORK, 1, 0
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARRJ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Performs refinement of the initial estimates of the eigenvalues of the matrix T.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARRJ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 Given the initial eigenvalue approximations of T, DLARRJ does bisection to refine the eigenvalues of T, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ), to more accuracy. Initial guesses for these eigenvalues are input in W, the corresponding estimate of the error in these guesses in `WERR`. During bisection, intervals \[left, right\] are maintained by storing their mid-points and semi-widths in the arrays W and `WERR` respectively.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The N diagonal elements of T.
-
-#### E2 `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The Squares of the (N-1) subdiagonal elements of T.
-
-#### IFIRST `[in]`
-
-_INTEGER_
-
-The index of the first eigenvalue to be computed.
-
-#### ILAST `[in]`
-
-_INTEGER_
-
-The index of the last eigenvalue to be computed.
-
-#### RTOL `[in]`
-
-_DOUBLE PRECISION_
-
-Tolerance for the convergence of the bisection intervals. An interval \[LEFT,RIGHT\] has converged if $\mathrm{RIGHT}-\mathrm{LEFT} < \mathrm{RTOL} \, \max (|\mathrm{LEFT}|,|\mathrm{RIGHT}|)$.
-
-#### OFFSET `[in]`
-
-_INTEGER_
-
-Offset for the arrays W and `WERR`, i.e., the `IFIRST`-`OFFSET` through `ILAST`-`OFFSET` elements of these arrays are to be used.
-
-#### W `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On input, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ) are estimates of the eigenvalues of L D L^T indexed `IFIRST` through `ILAST`. On output, these estimates are refined.
-
-#### WERR `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On input, WERR( `IFIRST`-`OFFSET` ) through WERR( `ILAST`-`OFFSET` ) are the errors in the estimates of the corresponding elements in W. On output, these errors are refined.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*N)_
-
-Workspace.
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (2\*N)_
-
-Workspace.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum pivot in the Sturm sequence for T.
-
-#### SPDIAM `[in]`
-
-_DOUBLE PRECISION_
-
-The spectral diameter of T.
-
-#### INFO `[out]`
-
-_INTEGER_
-
-Error flag.
 
 </section>
 

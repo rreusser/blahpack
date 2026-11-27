@@ -166,130 +166,13 @@ dgbrfs.ndarray( 'no-transpose', 1, 0, 0, 1, ab, 1, 1, 0, afb, 1, 1, 0, ipiv, 1, 
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGBRFS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGBRFS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGBRFS improves the computed solution to a system of linear equations when the coefficient matrix is banded, and provides error bounds and backward error estimates for the solution.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the form of the system of equations:
-
--   `= 'N'`: $A \, X = B$     (No transpose)
--   `= 'T'`: $A^T \, X = B$  (Transpose)
--   `= 'C'`: $A^H \, X = B$  (Conjugate transpose = Transpose)
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KL `[in]`
-
-_INTEGER_
-
-The number of subdiagonals within the band of A. $\mathrm{KL} \ge 0$.
-
-#### KU `[in]`
-
-_INTEGER_
-
-The number of superdiagonals within the band of A. $\mathrm{KU} \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices B and X. $\mathrm{NRHS} \ge 0$.
-
-#### AB `[in]`
-
-_DOUBLE PRECISION array, dimension (LDAB,N)_
-
-The original band matrix A, stored in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(ku+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{ku}) \le i \le \min (n,j+\mathrm{kl})$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KL}+\mathrm{KU}+1$.
-
-#### AFB `[in]`
-
-_DOUBLE PRECISION array, dimension (LDAFB,N)_
-
-Details of the LU factorization of the band matrix A, as computed by DGBTRF. U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \, \mathrm{KL}+\mathrm{KU}+1$.
-
-#### LDAFB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AFB`. $\mathrm{LDAFB} \ge 2 \, \mathrm{KL} \, \mathrm{KU}+1$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices from DGBTRF; for $1 \le i \le N$, row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-The right hand side matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### X `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDX,NRHS)_
-
-On entry, the solution matrix X, as computed by DGBTRS. On exit, the improved solution matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,N)$.
-
-#### FERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error.
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (3\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

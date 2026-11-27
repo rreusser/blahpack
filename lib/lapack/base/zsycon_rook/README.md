@@ -143,85 +143,15 @@ console.log( rcond[ 0 ] );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZSYCON_ROOK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZSYCON_ROOK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZSYCON\_ROOK estimates the reciprocal of the condition number (in the 1-norm) of a complex symmetric matrix A using the factorization $A = U \, D \, U^T$ or $A = L \, D \, L^T$ computed by ZSYTRF\_ROOK.
 
 An estimate is obtained for norm(inv(A)), and the reciprocal of the condition number is computed as $\mathrm{RCOND} = 1 / (\mathrm{ANORM} \, \operatorname{norm}(\operatorname{inv}(A)))$.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.
-
--   `= 'U'`: Upper triangular, form is $A = U \, D \, U^T$;
--   `= 'L'`: Lower triangular, form is $A = L \, D \, L^T$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF\_ROOK.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D as determined by ZSYTRF\_ROOK.
-
-#### ANORM `[in]`
-
-_DOUBLE PRECISION_
-
-The 1-norm of the original matrix A.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal of the condition number of the matrix A, computed as $\mathrm{RCOND} = 1/(\mathrm{ANORM} \, \mathrm{AINVNM})$, where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-December 2016, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
-
-September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
-
--   School of Mathematics,
--   University of Manchester
 
 </section>
 

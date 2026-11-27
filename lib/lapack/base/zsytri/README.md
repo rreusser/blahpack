@@ -124,62 +124,13 @@ zsytri.ndarray( 'upper', 1, A, 1, 1, 0, IPIV, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZSYTRI`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZSYTRI`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZSYTRI computes the inverse of a complex symmetric indefinite matrix A using the factorization $A = U \, D \, U^T$ or $A = L \, D \, L^T$ computed by ZSYTRF.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.
-
--   `= 'U'`: Upper triangular, form is $A = U \, D \, U^T$;
--   `= 'L'`: Lower triangular, form is $A = L \, D \, L^T$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF.
-
-On exit, if `INFO = 0`, the (symmetric) inverse of the original matrix. If `UPLO = 'U'`, the upper triangular part of the inverse is formed and the part of A below the diagonal is not referenced; if `UPLO = 'L'` the lower triangular part of the inverse is formed and the part of A above the diagonal is not referenced.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D as determined by ZSYTRF.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (2\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, $D(i,i) = 0$; the matrix is singular and its inverse could not be computed.
 
 </section>
 

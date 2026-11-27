@@ -115,9 +115,9 @@ drotmg.ndarray( D, 1, 0, x1, 1, 0, 4.0, param, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DROTMG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DROTMG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -132,30 +132,6 @@ $$
 LOCATIONS 2-4 OF `DPARAM` CONTAIN DH11, DH21, DH12, AND DH22 RESPECTIVELY. (VALUES OF 1.D0, -1.D0, OR 0.D0 IMPLIED BY THE VALUE OF `DPARAM(1)` ARE NOT STORED IN `DPARAM`.)
 
 THE VALUES OF GAMSQ AND RGAMSQ SET IN THE DATA STATEMENT MAY BE INEXACT. THIS IS OK AS THEY ARE ONLY USED FOR TESTING THE SIZE OF `DD1` AND `DD2`. ALL ACTUAL SCALING OF DATA IS DONE USING GAM.
-
-### Arguments
-
-#### DD1 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DD2 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DX1 `[in,out]`
-
-_DOUBLE PRECISION_
-
-#### DY1 `[in]`
-
-_DOUBLE PRECISION_
-
-#### DPARAM `[out]`
-
-_DOUBLE PRECISION array, dimension (5)_
-
-`DPARAM(1)=DFLAG` `DPARAM(2)=DH11` `DPARAM(3)=DH21` `DPARAM(4)=DH12` `DPARAM(5)=DH22`
 
 </section>
 

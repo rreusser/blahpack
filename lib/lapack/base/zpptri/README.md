@@ -104,44 +104,13 @@ zpptri( 'upper', 2, AP );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZPPTRI`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZPPTRI`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZPPTRI computes the inverse of a complex Hermitian positive definite matrix A using the Cholesky factorization $A = U^H \, U$ or $A = L \, L^H$ computed by ZPPTRF.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangular factor is stored in `AP`;
--   `= 'L'`: Lower triangular factor is stored in `AP`.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### AP `[in,out]`
-
-_COMPLEX\*16 array, dimension (N\*(N+1)/2)_
-
-On entry, the triangular factor U or L from the Cholesky factorization $A = U^H \, U$ or $A = L \, L^H$, packed columnwise as a linear array. The j-th column of U or L is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = U(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = L(i,j)` for $j \le i \le n$.
-
-On exit, the upper or lower triangle of the (Hermitian) inverse of A, overwriting the input factor U or L.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, the (i,i) element of the factor U or L is zero, and the inverse could not be computed.
 
 </section>
 

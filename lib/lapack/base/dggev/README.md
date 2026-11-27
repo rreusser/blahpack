@@ -162,11 +162,9 @@ var info = dggev( 'column-major', 'no-vectors', 'compute-vectors', N, A, N, B, N
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGGEV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DGGEV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -187,115 +185,6 @@ u(j)^H \, A = \lambda (j) \, u(j)^H \, B
 $$
 
 where $u(j)^H$ is the conjugate-transpose of u(j).
-
-### Arguments
-
-#### JOBVL `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: do not compute the left generalized eigenvectors;
--   `= 'V'`: compute the left generalized eigenvectors.
-
-#### JOBVR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: do not compute the right generalized eigenvectors;
--   `= 'V'`: compute the right generalized eigenvectors.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A, B, `VL`, and `VR`. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA, N)_
-
-On entry, the matrix A in the pair (A,B). On exit, A has been overwritten.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB, N)_
-
-On entry, the matrix B in the pair (A,B). On exit, B has been overwritten.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### ALPHAR `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### ALPHAI `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-#### BETA `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On exit, (`ALPHAR(j)` + `ALPHAI(j)`\*i)/`BETA(j)`, $j=1$,...,N, will be the generalized eigenvalues. If `ALPHAI(j)` is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-st eigenvalues are a complex conjugate pair, with `ALPHAI(j+1)` negative.
-
-Note: the quotients `ALPHAR(j)`/`BETA(j)` and `ALPHAI(j)`/`BETA(j)` may easily over- or underflow, and `BETA(j)` may even be zero. Thus, the user should avoid naively computing the ratio $\alpha$/$\beta$. However, `ALPHAR` and `ALPHAI` will be always less than and usually comparable with norm(A) in magnitude, and `BETA` always less than and usually comparable with norm(B).
-
-#### VL `[out]`
-
-_DOUBLE PRECISION array, dimension (LDVL,N)_
-
-If `JOBVL = 'V'`, the left eigenvectors u(j) are stored one after another in the columns of `VL`, in the same order as their eigenvalues. If the j-th eigenvalue is real, then $u(j) = \mathrm{VL}(:,j)$, the j-th column of `VL`. If the j-th and (j+1)-th eigenvalues form a complex conjugate pair, then $u(j) = \mathrm{VL}(:,j)+i \, \mathrm{VL}(:,j+1)$ and $u(j+1) = \mathrm{VL}(:,j)-i \, \mathrm{VL}(:,j+1)$. Each eigenvector is scaled so the largest component has abs(real part)+abs(imag. part)=1. Not referenced if `JOBVL = 'N'`.
-
-#### LDVL `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix `VL`. $\mathrm{LDVL} \ge 1$, and if `JOBVL = 'V'`, $\mathrm{LDVL} \ge N$.
-
-#### VR `[out]`
-
-_DOUBLE PRECISION array, dimension (LDVR,N)_
-
-If `JOBVR = 'V'`, the right eigenvectors v(j) are stored one after another in the columns of `VR`, in the same order as their eigenvalues. If the j-th eigenvalue is real, then $v(j) = \mathrm{VR}(:,j)$, the j-th column of `VR`. If the j-th and (j+1)-th eigenvalues form a complex conjugate pair, then $v(j) = \mathrm{VR}(:,j)+i \, \mathrm{VR}(:,j+1)$ and $v(j+1) = \mathrm{VR}(:,j)-i \, \mathrm{VR}(:,j+1)$. Each eigenvector is scaled so the largest component has abs(real part)+abs(imag. part)=1. Not referenced if `JOBVR = 'N'`.
-
-#### LDVR `[in]`
-
-_INTEGER_
-
-The leading dimension of the matrix `VR`. $\mathrm{LDVR} \ge 1$, and if `JOBVR = 'V'`, $\mathrm{LDVR} \ge N$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,8 \, N)$. For good performance, `LWORK` must generally be larger.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
--   `= 1,...,N`:  The QZ iteration failed.  No eigenvectors have been calculated, but `ALPHAR(j)`, `ALPHAI(j)`, and `BETA(j)` should be correct for $j=\mathrm{INFO}+1$,...,N.
--   `> N`: =N+1: other than QZ iteration failed in DHGEQZ. =N+2: error return from DTGEVC.
 
 </section>
 

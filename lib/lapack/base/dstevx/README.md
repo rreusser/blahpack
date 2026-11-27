@@ -149,136 +149,13 @@ dstevx.ndarray( 'compute-vectors', 'all', N, d, 1, 0, e, 1, 0, 1.0, 1.0, N, N, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSTEVX`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for OTHER matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DSTEVX`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DSTEVX computes selected eigenvalues and, optionally, eigenvectors of a real symmetric tridiagonal matrix A. Eigenvalues and eigenvectors can be selected by specifying either a range of values or a range of indices for the desired eigenvalues.
-
-### Arguments
-
-#### JOBZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Compute eigenvalues only;
--   `= 'V'`: Compute eigenvalues and eigenvectors.
-
-#### RANGE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'A'`: all eigenvalues will be found.
--   `= 'V'`: all eigenvalues in the half-open interval (`VL`,`VU`\] will be found.
--   `= 'I'`: the `IL`-th through `IU`-th eigenvalues will be found.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix. $N \ge 0$.
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues.
-
-#### E `[in,out]`
-
-_DOUBLE PRECISION array, dimension (max(1,N-1))_
-
-On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues.
-
-#### VL `[in]`
-
-_DOUBLE PRECISION_
-
-If `RANGE='V'`, the lower bound of the interval to be searched for eigenvalues. $\mathrm{VL} < \mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'.
-
-#### VU `[in]`
-
-_DOUBLE PRECISION_
-
-If `RANGE='V'`, the upper bound of the interval to be searched for eigenvalues. $\mathrm{VL} < \mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'.
-
-#### IL `[in]`
-
-_INTEGER_
-
-If `RANGE='I'`, the index of the smallest eigenvalue to be returned. $1 \le \mathrm{IL} \le \mathrm{IU} \le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'.
-
-#### IU `[in]`
-
-_INTEGER_
-
-If `RANGE='I'`, the index of the largest eigenvalue to be returned. $1 \le \mathrm{IL} \le \mathrm{IU} \le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'.
-
-#### ABSTOL `[in]`
-
-_DOUBLE PRECISION_
-
-The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval \[a,b\] of width less than or equal to
-
-$$
-\mathrm{ABSTOL} + \mathrm{EPS} \, \max ( |a|,|b| )
-$$
-
-where EPS is the machine precision. If `ABSTOL` is less than or equal to zero, then EPS\*\|T\| will be used in its place, where \|T\| is the 1-norm of the tridiagonal matrix.
-
-Eigenvalues will be computed most accurately when `ABSTOL` is set to twice the underflow threshold $2 \, \mathrm{DLAMCH}(\text{'S'})$, not zero. If this routine returns with $\mathrm{INFO}>0$, indicating that some eigenvectors did not converge, try setting `ABSTOL` to $2 \, \mathrm{DLAMCH}(\text{'S'})$.
-
-See "Computing Small Singular Values of Bidiagonal Matrices with Guaranteed High Relative Accuracy," by Demmel and Kahan, LAPACK Working Note #3.
-
-#### M `[out]`
-
-_INTEGER_
-
-The total number of eigenvalues found. $0 \le M \le N$. If `RANGE = 'A'`, $M = N$, and if `RANGE = 'I'`, $M = \mathrm{IU}-\mathrm{IL}+1$.
-
-#### W `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The first M elements contain the selected eigenvalues in ascending order.
-
-#### Z `[out]`
-
-_DOUBLE PRECISION array, dimension (LDZ, max(1,M) )_
-
-If `JOBZ = 'V'`, then if `INFO = 0`, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with `W(i)`. If an eigenvector fails to converge (`INFO` \> 0), then that column of Z contains the latest approximation to the eigenvector, and the index of the eigenvector is returned in `IFAIL`. If `JOBZ = 'N'`, then Z is not referenced. Note: the user must ensure that at least max(1,M) columns are supplied in the array Z; if `RANGE = 'V'`, the exact value of M is not known in advance and an upper bound must be used.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$, and if `JOBZ = 'V'`, $\mathrm{LDZ} \ge \max (1,N)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (5\*N)_
-
-#### IWORK `[out]`
-
-_INTEGER array, dimension (5\*N)_
-
-#### IFAIL `[out]`
-
-_INTEGER array, dimension (N)_
-
-If `JOBZ = 'V'`, then if `INFO = 0`, the first M elements of `IFAIL` are zero. If $\mathrm{INFO} > 0$, then `IFAIL` contains the indices of the eigenvectors that failed to converge. If `JOBZ = 'N'`, then `IFAIL` is not referenced.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, then i eigenvectors failed to converge. Their indices are stored in array `IFAIL`.
 
 </section>
 

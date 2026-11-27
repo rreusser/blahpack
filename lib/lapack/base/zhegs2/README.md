@@ -115,11 +115,9 @@ zhegs2.ndarray( N, 'upper', N, A, N, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZHEGS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Reduces a Hermitian definite generalized eigenproblem to standard form, using the factorization results obtained from cpotrf (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `ZHEGS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -130,62 +128,6 @@ If `ITYPE = 1`, the problem is $A \, x = \lambda \, B \, x$, and A is overwritte
 If `ITYPE = 2` or 3, the problem is $A \, B \, x = \lambda \, x$ or $B \, A \, x = \lambda \, x$, and A is overwritten by $U \, A \, U^H$ or $L^H \, A \, L$.
 
 B must have been previously factorized as $U^H \, U$ or $L \, L^H$ by ZPOTRF.
-
-### Arguments
-
-#### ITYPE `[in]`
-
-_INTEGER_
-
--   `= 1`: compute $\operatorname{inv}(U^H) \, A \, \operatorname{inv}(U)$ or $\operatorname{inv}(L) \, A \, \operatorname{inv}(L^H)$; = 2 or 3: compute $U \, A \, U^H$ or $L^H \, A \, L$.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored, and how B has been factorized.
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the Hermitian matrix A. If `UPLO = 'U'`, the leading n by n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n by n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced.
-
-On exit, if `INFO = 0`, the transformed matrix, stored in the same format as A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,N)_
-
-The triangular factor from the Cholesky factorization of B, as returned by ZPOTRF. B is modified by the routine but restored on exit.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 </section>
 

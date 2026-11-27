@@ -137,9 +137,9 @@ zgttrs.ndarray( 'no-transpose', N, N, DL, 1, 0, d, 1, 0, DU, 1, 0, 1, 1, 0, IPIV
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGTTRS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGTTRS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -150,79 +150,6 @@ A \, X = B, A^T \, X = B, \quad\text{or}\quad A^H \, X = B
 $$
 
 with a tridiagonal matrix A using the LU factorization computed by ZGTTRF.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the form of the system of equations.
-
--   `= 'N'`: $A \, X = B$     (No transpose)
--   `= 'T'`: $A^T \, X = B$  (Transpose)
--   `= 'C'`: $A^H \, X = B$  (Conjugate transpose)
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### DL `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-The (n-1) multipliers that define the matrix L from the LU factorization of A.
-
-#### D `[in]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-The n diagonal elements of the upper triangular matrix U from the LU factorization of A.
-
-#### DU `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-The (n-1) elements of the first super-diagonal of U.
-
-#### DU2 `[in]`
-
-_COMPLEX\*16 array, dimension (N-2)_
-
-The (n-2) elements of the second super-diagonal of U.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices; for $1 \le i \le n$, row i of the matrix was interchanged with row `IPIV(i)`. `IPIV(i)` will always be either i or i+1; `IPIV(i) = i` indicates a row interchange was not required.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -k`, the k-th argument had an illegal value
 
 </section>
 

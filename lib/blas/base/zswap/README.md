@@ -109,41 +109,13 @@ zswap.ndarray( 2, zx, 1, 0, zy, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZSWAP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZSWAP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZSWAP interchanges two vectors.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### ZX `[in,out]`
-
-_COMPLEX\*16 array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `ZX`
-
-#### ZY `[in,out]`
-
-_COMPLEX\*16 array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `ZY`
 
 ### Further Details
 

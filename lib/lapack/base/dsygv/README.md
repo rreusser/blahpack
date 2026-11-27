@@ -129,102 +129,13 @@ dsygv.ndarray( N, 'compute-vectors', 'upper', N, A, N, 1, 0, B, N, 1, 0, w, 1, 0
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSYGV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DSYGV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DSYGV computes all the eigenvalues, and optionally, the eigenvectors of a real generalized symmetric-definite eigenproblem, of the form $A \, x=(\lambda ) \, B \, x$, $A \, \mathrm{Bx}=(\lambda ) \, x$, or $B \, A \, x=(\lambda ) \, x$. Here A and B are assumed to be symmetric and B is also positive definite.
-
-### Arguments
-
-#### ITYPE `[in]`
-
-_INTEGER_
-
-Specifies the problem type to be solved:
-
--   `= 1`: $A \, x = (\lambda ) \, B \, x$
--   `= 2`: $A \, B \, x = (\lambda ) \, x$
--   `= 3`: $B \, A \, x = (\lambda ) \, x$
-
-#### JOBZ `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: Compute eigenvalues only;
--   `= 'V'`: Compute eigenvalues and eigenvectors.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangles of A and B are stored;
--   `= 'L'`: Lower triangles of A and B are stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA, N)_
-
-On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading N-by-N upper triangular part of A contains the upper triangular part of the matrix A. If `UPLO = 'L'`, the leading N-by-N lower triangular part of A contains the lower triangular part of the matrix A.
-
-On exit, if `JOBZ = 'V'`, then if `INFO = 0`, A contains the matrix Z of eigenvectors. The eigenvectors are normalized as follows: if `ITYPE = 1` or 2, $Z^T \, B \, Z = I$; if `ITYPE = 3`, $Z^T \, \operatorname{inv}(B) \, Z = I$. If `JOBZ = 'N'`, then on exit the upper triangle (if `UPLO='U'`) or the lower triangle (if `UPLO='L'`) of A, including the diagonal, is destroyed.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB, N)_
-
-On entry, the symmetric positive definite matrix B. If `UPLO = 'U'`, the leading N-by-N upper triangular part of B contains the upper triangular part of the matrix B. If `UPLO = 'L'`, the leading N-by-N lower triangular part of B contains the lower triangular part of the matrix B.
-
-On exit, if $\mathrm{INFO} \le N$, the part of B containing the matrix is overwritten by the triangular factor U or L from the Cholesky factorization $B = U^T \, U$ or $B = L \, L^T$.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### W `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `INFO = 0`, the eigenvalues in ascending order.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The length of the array `WORK`. $\mathrm{LWORK} \ge \max (1,3 \, N-1)$. For optimal efficiency, $\mathrm{LWORK} \ge (\mathrm{NB}+2) \, N$, where NB is the blocksize for DSYTRD returned by ILAENV.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: DPOTRF or DSYEV returned an error code: \<= N:  if `INFO = i`, DSYEV failed to converge; i off-diagonal elements of an intermediate tridiagonal form did not converge to zero;
--   `> N`: if $\mathrm{INFO} = N + i$, for $1 \le i \le N$, then the leading principal minor of order i of B is not positive. The factorization of B could not be completed and no eigenvalues or eigenvectors were computed.
 
 </section>
 

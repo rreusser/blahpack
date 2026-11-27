@@ -152,118 +152,13 @@ console.log( A );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARFB_GETT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARFB_GETT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZLARFB\_GETT applies a complex Householder block reflector H from the left to a complex (K+M)-by-N "triangular-pentagonal" matrix composed of two block matrices: an upper trapezoidal K-by-N matrix A stored in the array A, and a rectangular M-by-(N-K) matrix B, stored in the array B. The block reflector H is stored in a compact WY-representation, where the elementary reflectors are in the arrays A, B and T. See Further Details section.
-
-### Arguments
-
-#### IDENT `[in]`
-
-_CHARACTER\*1_
-
-If `IDENT` = not 'I', or not 'i', then V1 is unit
-
--   lower-triangular and stored in the left K-by-K block of
--   the input matrix A,
-
-If `IDENT = 'I'` or 'i', then V1 is an identity matrix and
-
-not stored.
-
-See Further Details section.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix B. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrices A and B. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number or rows of the matrix A. K is also order of the matrix T, i.e. the number of elementary reflectors whose product defines the block reflector. $0 \le K \le N$.
-
-#### T `[in]`
-
-_COMPLEX\*16 array, dimension (LDT,K)_
-
-The upper-triangular K-by-K matrix T in the representation of the block reflector.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge K$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry: a) In the K-by-N upper-trapezoidal part A: input matrix A. b) In the columns below the diagonal: columns of V1
-
-(ones are not stored on the diagonal).
-
-On exit:
-
-A is overwritten by rectangular K-by-N product $H \, A$.
-
-See Further Details section.
-
-#### LDA `[in]`
-
-`LDB` is INTEGER The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,K)$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,N)_
-
-On entry:
-
--   a) In the M-by-(N-K) right block: input matrix B.
--   b) In the M-by-N left block: columns of V2.
-
-On exit:
-
-B is overwritten by rectangular M-by-N product $H \, B$.
-
-See Further Details section.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array_
-
-dimension (`LDWORK`,max(K,N-K))
-
-#### LDWORK `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `WORK`. $\mathrm{LDWORK} \ge \max (1,K)$.
-
-### Contributors
-
-November 2020, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 ### Further Details
 

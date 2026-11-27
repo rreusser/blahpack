@@ -134,11 +134,9 @@ console.log( 'Third eigenvalue:', w[ 0 ], '(info:', info, ')' );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARRK`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes one eigenvalue of a symmetric tridiagonal matrix T to suitable accuracy.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARRK`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -147,71 +145,6 @@ DLARRK computes one eigenvalue of a symmetric tridiagonal matrix T to suitable a
 To avoid overflow, the matrix must be scaled so that its largest element is no greater than overflow\*\*(1/2) \* underflow\*\*(1/4) in absolute value, and for greatest accuracy, it should not be much smaller than that.
 
 See W. Kahan "Accurate Eigenvalues of a Symmetric Tridiagonal Matrix", Report CS41, Computer Science Dept., Stanford University, July 21, 1966.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the tridiagonal matrix T. $N \ge 0$.
-
-#### IW `[in]`
-
-_INTEGER_
-
-The index of the eigenvalues to be returned.
-
-#### GL `[in]`
-
-_DOUBLE PRECISION_
-
-#### GU `[in]`
-
-_DOUBLE PRECISION_
-
-An upper and a lower bound on the eigenvalue.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the tridiagonal matrix T.
-
-#### E2 `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) squared off-diagonal elements of the tridiagonal matrix T.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum pivot allowed in the Sturm sequence for T.
-
-#### RELTOL `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum relative width of an interval. When an interval is narrower than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. Note: this should always be at least radix\*machine $\epsilon$.
-
-#### W `[out]`
-
-_DOUBLE PRECISION_
-
-#### WERR `[out]`
-
-_DOUBLE PRECISION_
-
-The error bound on the corresponding eigenvalue approximation in W.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: Eigenvalue converged
--   `= -1`: Eigenvalue did NOT converge
 
 </section>
 

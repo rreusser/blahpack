@@ -107,45 +107,13 @@ dlarnv.ndarray( 1, iseed, 1, 0, N, 1, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARNV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Returns a vector of random numbers from a uniform or normal distribution.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARNV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLARNV returns a vector of n random real numbers from a uniform or normal distribution.
-
-### Arguments
-
-#### IDIST `[in]`
-
-_INTEGER_
-
-Specifies the distribution of the random numbers:
-
--   `= 1`: uniform (0,1)
--   `= 2`: uniform (-1,1)
--   `= 3`: normal (0,1)
-
-#### ISEED `[in,out]`
-
-_INTEGER array, dimension (4)_
-
-On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and `ISEED(4)` must be odd. On exit, the seed is updated.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of random numbers to be generated.
-
-#### X `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The generated random numbers.
 
 ### Further Details
 

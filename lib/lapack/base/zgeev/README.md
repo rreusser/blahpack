@@ -142,11 +142,9 @@ zgeev.ndarray( 'compute-vectors', 'compute-vectors', N, A, N, 1, 0, w, 1, 0, VL,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGEEV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGEEV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -167,96 +165,6 @@ $$
 where $u(j)^H$ denotes the conjugate transpose of u(j).
 
 The computed eigenvectors are normalized to have Euclidean norm equal to 1 and largest component real.
-
-### Arguments
-
-#### JOBVL `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: left eigenvectors of A are not computed;
--   `= 'V'`: left eigenvectors of are computed.
-
-#### JOBVR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: right eigenvectors of A are not computed;
--   `= 'V'`: right eigenvectors of A are computed.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the N-by-N matrix A. On exit, A has been overwritten.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### W `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-W contains the computed eigenvalues.
-
-#### VL `[out]`
-
-_COMPLEX\*16 array, dimension (LDVL,N)_
-
-If `JOBVL = 'V'`, the left eigenvectors u(j) are stored one after another in the columns of `VL`, in the same order as their eigenvalues. If `JOBVL = 'N'`, `VL` is not referenced. $u(j) = \mathrm{VL}(:,j)$, the j-th column of `VL`.
-
-#### LDVL `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VL`. $\mathrm{LDVL} \ge 1$; if `JOBVL = 'V'`, $\mathrm{LDVL} \ge N$.
-
-#### VR `[out]`
-
-_COMPLEX\*16 array, dimension (LDVR,N)_
-
-If `JOBVR = 'V'`, the right eigenvectors v(j) are stored one after another in the columns of `VR`, in the same order as their eigenvalues. If `JOBVR = 'N'`, `VR` is not referenced. $v(j) = \mathrm{VR}(:,j)$, the j-th column of `VR`.
-
-#### LDVR `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VR`. $\mathrm{LDVR} \ge 1$; if `JOBVR = 'V'`, $\mathrm{LDVR} \ge N$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max (1,2 \, N)$. For good performance, `LWORK` must generally be larger.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
--   `> 0`: if `INFO = i`, the QR algorithm failed to compute all the eigenvalues, and no eigenvectors have been computed; elements i+1:N of W contain eigenvalues which have converged.
 
 </section>
 

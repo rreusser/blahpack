@@ -150,117 +150,13 @@ zlaqz1( 'column-major', true, true, 1, 0, 4, 4, A, 5, B, 5, 5, 0, Q, 5, 5, 0, Z,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAQZ1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAQZ1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZLAQZ1 chases a 1x1 shift bulge in a matrix pencil down a single position
-
-### Arguments
-
-#### ILQ `[in]`
-
-_LOGICAL_
-
-Determines whether or not to update the matrix Q
-
-#### ILZ `[in]`
-
-_LOGICAL_
-
-Determines whether or not to update the matrix Z
-
-#### K `[in]`
-
-_INTEGER_
-
-Index indicating the position of the bulge. On entry, the bulge is located in
-
-```text
-(A(k+1,k),B(k+1,k)).
-On exit, the bulge is located in
-(A(k+2,k+1),B(k+2,k+1)).
-```
-
-#### ISTARTM `[in]`
-
-_INTEGER_
-
-#### ISTOPM `[in]`
-
-_INTEGER_
-
-Updates to (A,B) are restricted to (istartm:k+2,k:istopm). It is assumed without checking that istartm \<= k+1 and k+2 \<= istopm
-
-#### IHI `[in]`
-
-_INTEGER_
-
-#### A `[inout]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of A as declared in the calling procedure.
-
-#### B `[inout]`
-
-_COMPLEX\*16 array, dimension (LDB,N)_
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of B as declared in the calling procedure.
-
-#### NQ `[in]`
-
-_INTEGER_
-
-The order of the matrix Q
-
-#### QSTART `[in]`
-
-_INTEGER_
-
-Start index of the matrix Q. Rotations are applied To columns k+2-qStart:k+3-qStart of Q.
-
-#### Q `[inout]`
-
-_COMPLEX\*16 array, dimension (LDQ,NQ)_
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of Q as declared in the calling procedure.
-
-#### NZ `[in]`
-
-_INTEGER_
-
-The order of the matrix Z
-
-#### ZSTART `[in]`
-
-_INTEGER_
-
-Start index of the matrix Z. Rotations are applied To columns k+1-qStart:k+2-qStart of Z.
-
-#### Z `[inout]`
-
-_COMPLEX\*16 array, dimension (LDZ,NZ)_
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of Q as declared in the calling procedure.
 
 </section>
 

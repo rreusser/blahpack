@@ -129,62 +129,15 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGEQRT3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Recursively computes a QR factorization of a general real or complex matrix using the compact WY representation of Q.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGEQRT3`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DGEQRT3 recursively computes a QR factorization of a real M-by-N matrix A, using the compact WY representation of Q.
 
 Based on the algorithm of Elmroth and Gustavson, IBM J. Res. Develop. Vol 44 No. 4 July 2000.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge N$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the real M-by-N matrix A. On exit, the elements on and above the diagonal contain the N-by-N upper triangular matrix R; the elements below the diagonal are the columns of V. See below for further details.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### T `[out]`
-
-_DOUBLE PRECISION array, dimension (LDT,N)_
-
-The N-by-N upper triangular factor of the block reflector. The elements on and above the diagonal contain the block reflector T; the elements below the diagonal are not used. See below for further details.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

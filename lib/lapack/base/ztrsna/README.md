@@ -176,129 +176,13 @@ console.log( SEP );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTRSNA`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTRSNA`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 ZTRSNA estimates reciprocal condition numbers for specified eigenvalues and/or right eigenvectors of a complex upper triangular matrix T (or of any matrix $Q \, T \, Q^H$ with Q unitary).
-
-### Arguments
-
-#### JOB `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether condition numbers are required for eigenvalues (S) or eigenvectors (`SEP`):
-
--   `= 'E'`: for eigenvalues only (S);
--   `= 'V'`: for eigenvectors only (`SEP`);
--   `= 'B'`: for both eigenvalues and eigenvectors (S and `SEP`).
-
-#### HOWMNY `[in]`
-
-_CHARACTER\*1_
-
--   `= 'A'`: compute condition numbers for all eigenpairs;
--   `= 'S'`: compute condition numbers for selected eigenpairs specified by the array `SELECT`.
-
-#### SELECT `[in]`
-
-_LOGICAL array, dimension (N)_
-
-If `HOWMNY = 'S'`, `SELECT` specifies the eigenpairs for which condition numbers are required. To select condition numbers for the j-th eigenpair, `SELECT(j)` must be set to .TRUE.. If `HOWMNY = 'A'`, `SELECT` is not referenced.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix T. $N \ge 0$.
-
-#### T `[in]`
-
-_COMPLEX\*16 array, dimension (LDT,N)_
-
-The upper triangular matrix T.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \max (1,N)$.
-
-#### VL `[in]`
-
-_COMPLEX\*16 array, dimension (LDVL,M)_
-
-If `JOB = 'E'` or 'B', `VL` must contain left eigenvectors of T (or of any $Q \, T \, Q^H$ with Q unitary), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VL`, as returned by ZHSEIN or ZTREVC. If `JOB = 'V'`, `VL` is not referenced.
-
-#### LDVL `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VL`. $\mathrm{LDVL} \ge 1$; and if `JOB = 'E'` or 'B', $\mathrm{LDVL} \ge N$.
-
-#### VR `[in]`
-
-_COMPLEX\*16 array, dimension (LDVR,M)_
-
-If `JOB = 'E'` or 'B', `VR` must contain right eigenvectors of T (or of any $Q \, T \, Q^H$ with Q unitary), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VR`, as returned by ZHSEIN or ZTREVC. If `JOB = 'V'`, `VR` is not referenced.
-
-#### LDVR `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `VR`. $\mathrm{LDVR} \ge 1$; and if `JOB = 'E'` or 'B', $\mathrm{LDVR} \ge N$.
-
-#### S `[out]`
-
-_DOUBLE PRECISION array, dimension (MM)_
-
-If `JOB = 'E'` or 'B', the reciprocal condition numbers of the selected eigenvalues, stored in consecutive elements of the array. Thus `S(j)`, `SEP(j)`, and the j-th columns of `VL` and `VR` all correspond to the same eigenpair (but not in general the j-th eigenpair, unless all eigenpairs are selected). If `JOB = 'V'`, S is not referenced.
-
-#### SEP `[out]`
-
-_DOUBLE PRECISION array, dimension (MM)_
-
-If `JOB = 'V'` or 'B', the estimated reciprocal condition numbers of the selected eigenvectors, stored in consecutive elements of the array. If `JOB = 'E'`, `SEP` is not referenced.
-
-#### MM `[in]`
-
-_INTEGER_
-
-The number of elements in the arrays S (if `JOB = 'E'` or 'B') and/or `SEP` (if `JOB = 'V'` or 'B'). $\mathrm{MM} \ge M$.
-
-#### M `[out]`
-
-_INTEGER_
-
-The number of elements of the arrays S and/or `SEP` actually used to store the estimated condition numbers. If `HOWMNY = 'A'`, M is set to N.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (LDWORK,N+6)_
-
-If `JOB = 'E'`, `WORK` is not referenced.
-
-#### LDWORK `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `WORK`. $\mathrm{LDWORK} \ge 1$; and if `JOB = 'V'` or 'B', $\mathrm{LDWORK} \ge N$.
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `JOB = 'E'`, `RWORK` is not referenced.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

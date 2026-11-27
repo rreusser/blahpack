@@ -137,9 +137,9 @@ console.log( X2 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNBDB6`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNBDB6`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -160,91 +160,6 @@ The projection is computed with at most two iterations of the classical Gram-Sch
 -   analysis of the Gram-Schmidt algorithm with reorthogonalization."
 -   2002. CERFACS Technical Report No. TR/PA/02/33. URL:
 -   https://www.cerfacs.fr/algor/reports/2002/TR\_PA\_02\_33.pdf
-
-### Arguments
-
-#### M1 `[in]`
-
-_INTEGER_
-
-The dimension of `X1` and the number of rows in `Q1`. $0 \le M_{1}$.
-
-#### M2 `[in]`
-
-_INTEGER_
-
-The dimension of `X2` and the number of rows in `Q2`. $0 \le M_{2}$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns in `Q1` and `Q2`. $0 \le N$.
-
-#### X1 `[in,out]`
-
-_COMPLEX\*16 array, dimension (M1)_
-
-On entry, the top part of the vector to be orthogonalized. On exit, the top part of the projected vector.
-
-#### INCX1 `[in]`
-
-_INTEGER_
-
-Increment for entries of `X1`.
-
-#### X2 `[in,out]`
-
-_COMPLEX\*16 array, dimension (M2)_
-
-On entry, the bottom part of the vector to be orthogonalized. On exit, the bottom part of the projected vector.
-
-#### INCX2 `[in]`
-
-_INTEGER_
-
-Increment for entries of `X2`.
-
-#### Q1 `[in]`
-
-_COMPLEX\*16 array, dimension (LDQ1, N)_
-
-The top part of the orthonormal basis matrix.
-
-#### LDQ1 `[in]`
-
-_INTEGER_
-
-The leading dimension of `Q1`. $\mathrm{LDQ1} \ge M_{1}$.
-
-#### Q2 `[in]`
-
-_COMPLEX\*16 array, dimension (LDQ2, N)_
-
-The bottom part of the orthonormal basis matrix.
-
-#### LDQ2 `[in]`
-
-_INTEGER_
-
-The leading dimension of `Q2`. $\mathrm{LDQ2} \ge M_{2}$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (LWORK)_
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge N$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.
 
 </section>
 

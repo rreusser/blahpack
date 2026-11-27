@@ -113,11 +113,9 @@ dppsv( 'upper', 3, 1, AP, B, 3 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPPSV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for OTHER matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DPPSV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -140,55 +138,6 @@ A = L \, L^T, \quad\text{if}\quad \mathrm{UPLO} = \text{'L'}
 $$
 
 where U is an upper triangular matrix and L is a lower triangular matrix. The factored form of A is then used to solve the system of equations $A \, X = B$.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of linear equations, i.e., the order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### AP `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N\*(N+1)/2)_
-
-On entry, the upper or lower triangle of the symmetric matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \le i \le n$. See below for further details.
-
-On exit, if `INFO = 0`, the factor U or L from the Cholesky factorization $A = U^T \, U$ or $A = L \, L^T$, in the same storage format as A.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, the leading principal minor of order i of A is not positive, so the factorization could not be completed, and the solution has not been computed.
 
 ### Further Details
 

@@ -117,9 +117,9 @@ console.log( D );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAORHR_COL_GETRFNP2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAORHR_COL_GETRFNP2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -173,52 +173,6 @@ DLAORHR\_COL\_GETRFNP2 is called to factorize a block by the blocked routine DLA
 
 -   algebra algorithms", F. Gustavson, IBM J. of Res. and Dev.,
 -   vol. 41, no. 6, pp. 737-755, 1997.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix to be factored. On exit, the factors L and U from the factorization $A-S=L \, U$; the unit diagonal elements of L are not stored.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### D `[out]`
-
-_DOUBLE PRECISION array, dimension min(M,N)_
-
-The diagonal elements of the diagonal M-by-N sign matrix S, $D(i) = S(i,i)$, where $1 \le i \le \min (M,N)$. The elements can be only plus or minus one.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-November 2019, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 </section>
 

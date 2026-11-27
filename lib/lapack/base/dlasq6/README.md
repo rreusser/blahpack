@@ -96,77 +96,13 @@ dlasq6.ndarray( 1, 1, 1, 1, 0, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASQ6`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes one dqd transform in ping-pong form. Used by sbdsqr and sstegr.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASQ6`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLASQ6 computes one dqd (shift equal to zero) transform in ping-pong form, with protection against underflow and overflow.
-
-### Arguments
-
-#### I0 `[in]`
-
-_INTEGER_
-
-First index.
-
-#### N0 `[in]`
-
-_INTEGER_
-
-Last index.
-
-#### Z `[in]`
-
-_DOUBLE PRECISION array, dimension ( 4\*N )_
-
-Z holds the qd array. EMIN is stored in `Z(4*N0)` to avoid an extra argument.
-
-#### PP `[in]`
-
-_INTEGER_
-
-`PP=0` for ping, `PP=1` for pong.
-
-#### DMIN `[out]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d.
-
-#### DMIN1 `[out]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d, excluding D( `N0` ).
-
-#### DMIN2 `[out]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d, excluding D( `N0` ) and D( `N0`-1 ).
-
-#### DN `[out]`
-
-_DOUBLE PRECISION_
-
-d(`N0`), the last value of d.
-
-#### DNM1 `[out]`
-
-_DOUBLE PRECISION_
-
-d(`N0`-1).
-
-#### DNM2 `[out]`
-
-_DOUBLE PRECISION_
-
-d(`N0`-2).
 
 </section>
 

@@ -132,111 +132,15 @@ console.log( E );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DSYCONVF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DSYCONVF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 If parameter `WAY = 'C'`: DSYCONVF converts the factorization output format used in DSYTRF provided on entry in parameter A into the factorization output format used in DSYTRF\_RK (or DSYTRF\_BK) that is stored on exit in parameters A and E. It also converts in place details of the interchanges stored in `IPIV` from the format used in DSYTRF into the format used in DSYTRF\_RK (or DSYTRF\_BK).
 
 If parameter `WAY = 'R'`: DSYCONVF performs the conversion in reverse direction, i.e. converts the factorization output format used in DSYTRF\_RK (or DSYTRF\_BK) provided on entry in parameters A and E into the factorization output format used in DSYTRF that is stored on exit in parameter A. It also converts in place details of the interchanges stored in `IPIV` from the format used in DSYTRF\_RK (or DSYTRF\_BK) into the format used in DSYTRF.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix A.
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### WAY `[in]`
-
-_CHARACTER\*1_
-
--   `= 'C'`: Convert
--   `= 'R'`: Revert
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-1) If `WAY ='C'`:
-
-On entry, contains factorization details in format used in DSYTRF:
-
--   a) all elements of the symmetric block diagonal matrix D on the diagonal of A and on superdiagonal (or subdiagonal) of A, and
--   b) If `UPLO = 'U'`: multipliers used to obtain factor U in the superdiagonal part of A. If `UPLO = 'L'`: multipliers used to obtain factor L in the superdiagonal part of A.
-
-On exit, contains factorization details in format used in DSYTRF\_RK or DSYTRF\_BK:
-
--   a) ONLY diagonal elements of the symmetric block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D are stored on exit in array E), and
--   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.
-
-2) If `WAY = 'R'`:
-
-On entry, contains factorization details in format used in DSYTRF\_RK or DSYTRF\_BK:
-
--   a) ONLY diagonal elements of the symmetric block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D are stored on exit in array E), and
--   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.
-
-On exit, contains factorization details in format used in DSYTRF:
-
--   a) all elements of the symmetric block diagonal matrix D on the diagonal of A and on superdiagonal (or subdiagonal) of A, and
--   b) If `UPLO = 'U'`: multipliers used to obtain factor U in the superdiagonal part of A. If `UPLO = 'L'`: multipliers used to obtain factor L in the superdiagonal part of A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### E `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-1) If `WAY ='C'`:
-
-On entry, just a workspace.
-
-On exit, contains the superdiagonal (or subdiagonal) elements of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$, $i=2$:N, `E(1)` is set to 0; If `UPLO = 'L'`: $E(i) = D(i+1,i)$, $i=1$:N-1, `E(N)` is set to 0.
-
-2) If `WAY = 'R'`:
-
-On entry, contains the superdiagonal (or subdiagonal) elements of the symmetric block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$,$i=2$:N, `E(1)` not referenced; If `UPLO = 'L'`: $E(i) = D(i+1,i)$,$i=1$:N-1, `E(N)` not referenced.
-
-On exit, is not changed
-
-#### IPIV `[in,out]`
-
-_INTEGER array, dimension (N)_
-
-1) If `WAY ='C'`: On entry, details of the interchanges and the block structure of D in the format used in DSYTRF. On exit, details of the interchanges and the block structure of D in the format used in DSYTRF\_RK ( or DSYTRF\_BK).
-
-1) If `WAY ='R'`: On entry, details of the interchanges and the block structure of D in the format used in DSYTRF\_RK ( or DSYTRF\_BK). On exit, details of the interchanges and the block structure of D in the format used in DSYTRF.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-November 2017, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 </section>
 

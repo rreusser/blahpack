@@ -111,56 +111,13 @@ dtfttp.ndarray( 'no-transpose', 'upper', N, ARF, 1, 0, AP, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTFTTP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Copies a triangular matrix from the rectangular full packed format (TF) to the standard packed format (TP).
+The mathematical description from the reference LAPACK 3.12.0 source of `DTFTTP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTFTTP copies a triangular matrix A from rectangular full packed format (TF) to standard packed format (TP).
-
-### Arguments
-
-#### TRANSR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: `ARF` is in Normal format;
--   `= 'T'`: `ARF` is in Transpose format;
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### ARF `[in]`
-
-_DOUBLE PRECISION array, dimension ( N\*(N+1)/2 )_
-
-On entry, the upper or lower triangular matrix A stored in RFP format. For a further discussion see Notes below.
-
-#### AP `[out]`
-
-_DOUBLE PRECISION array, dimension ( N\*(N+1)/2 )_
-
-On exit, the upper or lower triangular matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \le i \le n$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

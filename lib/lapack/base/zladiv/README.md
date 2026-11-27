@@ -96,11 +96,13 @@ zladiv.ndarray( 1, 0, 1, 0, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLADIV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLADIV`. Indices are the 1-based Fortran indices of the source.
 
-> Performs complex division in real arithmetic, avoiding unnecessary overflow.
+### Purpose
+
+ZLADIV := X / Y, where X and Y are complex. The computation of X / Y will not overflow on an intermediary step unless the results overflows.
 
 </section>
 

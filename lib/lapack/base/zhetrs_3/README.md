@@ -118,9 +118,9 @@ console.log( B );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZHETRS_3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZHETRS_3`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -133,89 +133,6 @@ $$
 where U (or L) is unit upper (or lower) triangular matrix, $U^H$ (or $L^H$) is the conjugate of U (or L), P is a permutation matrix, $P^T$ is the transpose of P, and D is Hermitian and block diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 
 This algorithm is using Level 3 BLAS.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the details of the factorization are stored as an upper or lower triangular matrix:
-
--   `= 'U'`: Upper triangular, form is $A = P \, U \, D \, (U^H) \, (P^T)$;
--   `= 'L'`: Lower triangular, form is $A = P \, L \, D \, (L^H) \, (P^T)$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-Diagonal of the block diagonal matrix D and factors U or L as computed by ZHETRF\_RK and ZHETRF\_BK:
-
--   a) ONLY diagonal elements of the Hermitian block diagonal matrix D on the diagonal of A, i.e. $D(k,k) = A(k,k)$; (superdiagonal (or subdiagonal) elements of D should be provided on entry in array E), and
--   b) If `UPLO = 'U'`: factor U in the superdiagonal part of A. If `UPLO = 'L'`: factor L in the subdiagonal part of A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### E `[in]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On entry, contains the superdiagonal (or subdiagonal) elements of the Hermitian block diagonal matrix D with 1-by-1 or 2-by-2 diagonal blocks, where If `UPLO = 'U'`: $E(i) = D(i-1,i)$,$i=2$:N, `E(1)` not referenced; If `UPLO = 'L'`: $E(i) = D(i+1,i)$,$i=1$:N-1, `E(N)` not referenced.
-
-NOTE: For 1-by-1 diagonal block D(k), where $1 \le k \le N$, the element `E(k)` is not referenced in both `UPLO = 'U'` or `UPLO = 'L'` cases.
-
-#### IPIV `[in]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D as determined by ZHETRF\_RK or ZHETRF\_BK.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the right hand side matrix B. On exit, the solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-June 2017, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
-
-September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
-
--   School of Mathematics,
--   University of Manchester
 
 </section>
 

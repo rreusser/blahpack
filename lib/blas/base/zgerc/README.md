@@ -123,9 +123,9 @@ zgerc.ndarray( 2, 2, alpha, x, 1, 0, y, 1, 0, A, 2, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZGERC`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZGERC`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -136,62 +136,6 @@ A := \alpha \, x \, y^H + A
 $$
 
 where $\alpha$ is a scalar, x is an m element vector, y is an n element vector and A is an m by n matrix.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-On entry, M specifies the number of rows of the matrix A. M must be at least zero.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the number of columns of the matrix A. N must be at least zero.
-
-#### ALPHA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### X `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( m - 1 )\*abs( `INCX` ) ). Before entry, the incremented array X must contain the m element vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
-
-#### Y `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCY` ) ). Before entry, the incremented array Y must contain the n element vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension ( LDA, N )_
-
-Before entry, the leading m by n part of the array A must contain the matrix of coefficients. On exit, A is overwritten by the updated matrix.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, m ).
 
 ### Further Details
 

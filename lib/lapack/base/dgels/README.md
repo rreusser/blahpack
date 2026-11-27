@@ -117,11 +117,9 @@ dgels.ndarray( 'no-transpose', N, N, N, A, N, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGELS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves overdetermined or underdetermined systems for GE matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DGELS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -146,82 +144,6 @@ an underdetermined system $A^T \, X = B$.
 an overdetermined system, i.e., solve the least squares problem minimize \|\| $B - A^T \, X$ \|\|.
 
 Several right hand side vectors b and solution vectors x can be handled in a single call; they are stored as the columns of the M-by-`NRHS` right hand side matrix B and the N-by-`NRHS` solution matrix X.
-
-### Arguments
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: the linear system involves A;
--   `= 'T'`: the linear system involves $A^T$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices B and X. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix A. On exit,
-
--   if $M \ge N$, A is overwritten by details of its QR factorization as returned by DGEQRF;
--   if $M < N$, A is overwritten by details of its LQ factorization as returned by DGELQF.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-On entry, the matrix B of right hand side vectors, stored columnwise; B is M-by-`NRHS` if `TRANS = 'N'`, or N-by-`NRHS` if `TRANS = 'T'`. On exit, if `INFO = 0`, B is overwritten by the solution vectors, stored columnwise: if `TRANS = 'N'` and $m \ge n$, rows 1 to n of B contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements N+1 to M in that column; if `TRANS = 'N'` and $m < n$, rows 1 to N of B contain the minimum norm solution vectors; if `TRANS = 'T'` and $m \ge n$, rows 1 to M of B contain the minimum norm solution vectors; if `TRANS = 'T'` and $m < n$, rows 1 to M of B contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements M+1 to N in that column.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M,N)$.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (MAX(1,LWORK))_
-
-On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`.
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. $\mathrm{LWORK} \ge \max ( 1, \mathrm{MN} + \max ( \mathrm{MN}, \mathrm{NRHS} ) )$. For optimal performance, $\mathrm{LWORK} \ge \max ( 1, \mathrm{MN} + \max ( \mathrm{MN}, \mathrm{NRHS} ) \, \mathrm{NB} )$. where $\mathrm{MN} = \min (M,N)$ and NB is the optimum block size.
-
-If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO =  i`, the i-th diagonal element of the triangular factor of A is zero, so that A does not have full rank; the least squares solution could not be computed.
 
 </section>
 

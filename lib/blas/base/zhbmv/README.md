@@ -128,9 +128,9 @@ zhbmv.ndarray( 'upper', 2, 1, alpha, A, 2, 1, 0, x, 1, 0, beta, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `ZHBMV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `ZHBMV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,104 +141,6 @@ y := \alpha \, A \, x + \beta \, y
 $$
 
 where $\alpha$ and $\beta$ are scalars, x and y are n element vectors and A is an n by n hermitian band matrix, with k super-diagonals.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-On entry, `UPLO` specifies whether the upper or lower triangular part of the band matrix A is being supplied as follows:
-
-`UPLO = 'U'` or 'u' The upper triangular part of A is
-
-being supplied.
-
-`UPLO = 'L'` or 'l' The lower triangular part of A is
-
-being supplied.
-
-#### N `[in]`
-
-_INTEGER_
-
-On entry, N specifies the order of the matrix A. N must be at least zero.
-
-#### K `[in]`
-
-_INTEGER_
-
-On entry, K specifies the number of super-diagonals of the matrix A. K must satisfy 0 .le. K.
-
-#### ALPHA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `ALPHA` specifies the scalar $\alpha$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension ( LDA, N )_
-
-Before entry with `UPLO = 'U'` or 'u', the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the hermitian matrix, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. The top left k by k triangle of the array A is not referenced. The following program segment will transfer the upper triangular part of a hermitian band matrix from conventional full matrix storage to band storage:
-
-```text
-   DO 20, J = 1, N
-      M = K + 1 - J
-      DO 10, I = MAX( 1, J - K ), J
-         A( M + I, J ) = matrix( I, J )
-10    CONTINUE
-20 CONTINUE
-```
-
-Before entry with `UPLO = 'L'` or 'l', the leading ( k + 1 ) by n part of the array A must contain the lower triangular band part of the hermitian matrix, supplied column by column, with the leading diagonal of the matrix in row 1 of the array, the first sub-diagonal starting at position 1 in row 2, and so on. The bottom right k by k triangle of the array A is not referenced. The following program segment will transfer the lower triangular part of a hermitian band matrix from conventional full matrix storage to band storage:
-
-```text
-   DO 20, J = 1, N
-      M = 1 - J
-      DO 10, I = J, MIN( N, J + K )
-         A( M + I, J ) = matrix( I, J )
-10    CONTINUE
-20 CONTINUE
-```
-
-Note that the imaginary parts of the diagonal elements need not be set and are assumed to be zero.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least ( k + 1 ).
-
-#### X `[in]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCX` ) ). Before entry, the incremented array X must contain the vector x.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero.
-
-#### BETA `[in]`
-
-_COMPLEX\*16_
-
-On entry, `BETA` specifies the scalar $\beta$.
-
-#### Y `[in,out]`
-
-_COMPLEX\*16 array, dimension at least_
-
-( 1 + ( n - 1 )\*abs( `INCY` ) ). Before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero.
 
 ### Further Details
 

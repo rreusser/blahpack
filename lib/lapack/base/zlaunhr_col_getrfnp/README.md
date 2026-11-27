@@ -119,9 +119,9 @@ console.log( D );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLAUNHR_COL_GETRFNP`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLAUNHR_COL_GETRFNP`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -156,52 +156,6 @@ This is the blocked right-looking version of the algorithm, calling Level 3 BLAS
 -   G. Ballard, J. Demmel, L. Grigori, M. Jacquelin, H.D. Nguyen,
 -   E. Solomonik, J. Parallel Distrib. Comput.,
 -   vol. 85, pp. 3-31, 2015.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the M-by-N matrix to be factored. On exit, the factors L and U from the factorization $A-S=L \, U$; the unit diagonal elements of L are not stored.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### D `[out]`
-
-_COMPLEX\*16 array, dimension min(M,N)_
-
-The diagonal elements of the diagonal M-by-N sign matrix S, $D(i) = S(i,i)$, where $1 \le i \le \min (M,N)$. The elements can be only ( +1.0, 0.0 ) or (-1.0, 0.0 ).
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
-
-### Contributors
-
-November 2019, Igor Kozachenko,
-
--   Computer Science Division,
--   University of California, Berkeley
 
 </section>
 

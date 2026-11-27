@@ -123,11 +123,9 @@ dlarft.ndarray( 'forward', 'columnwise', N, N, V, N, 1, 0, TAU, 1, 0, T, N, 1, 0
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARFT`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Forms the triangular factor T of a block reflector $H = I$ - vtvH
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARFT`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -148,68 +146,6 @@ If `STOREV = 'R'`, the vector which defines the elementary reflector H(i) is sto
 $$
 H = I - V^T \, T \, V
 $$
-
-### Arguments
-
-#### DIRECT `[in]`
-
-_CHARACTER\*1_
-
-Specifies the order in which the elementary reflectors are multiplied to form the block reflector:
-
--   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward)
--   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)
-
-#### STOREV `[in]`
-
-_CHARACTER\*1_
-
-Specifies how the vectors which define the elementary reflectors are stored (see also Further Details):
-
--   `= 'C'`: columnwise
--   `= 'R'`: rowwise
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the block reflector H. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The order of the triangular factor T (= the number of elementary reflectors). $K \ge 1$.
-
-#### V `[in]`
-
-_DOUBLE PRECISION array, dimension (LDV,K) if STOREV = 'C'_
-
-(`LDV`,N) if `STOREV = 'R'` The matrix V. See further details.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V. If `STOREV = 'C'`, $\mathrm{LDV} \ge \max (1,N)$; if `STOREV = 'R'`, $\mathrm{LDV} \ge K$.
-
-#### TAU `[in]`
-
-_DOUBLE PRECISION array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i).
-
-#### T `[out]`
-
-_DOUBLE PRECISION array, dimension (LDT,K)_
-
-The k by k triangular factor T of the block reflector. If `DIRECT = 'F'`, T is upper triangular; if `DIRECT = 'B'`, T is lower triangular. The rest of the array is not used.
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge K$.
 
 ### Further Details
 

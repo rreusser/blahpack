@@ -171,11 +171,9 @@ console.log( info );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DGSVJ1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Pre-processor for the routine dgesvj, applies Jacobi rotations targeting only particular pivots.
+The mathematical description from the reference LAPACK 3.12.0 source of `DGSVJ1`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -193,131 +191,6 @@ Further Details ~~~~~~~~~~~~~~~ DGSVJ1 applies few sweeps of Jacobi rotations in
 ```
 
 In terms of the columns of A, the first `N1` columns are rotated 'against' the remaining N-`N1` columns, trying to increase the angle between the corresponding subspaces. The off-diagonal block is `N1`-by(N-`N1`) and it is tiled using quadratic tiles of side KBL. Here, KBL is a tuning parameter. The number of sweeps is given in `NSWEEP` and the orthogonality threshold is given in `TOL`.
-
-### Arguments
-
-#### JOBV `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the output from this procedure is used to compute the matrix V:
-
--   `= 'V'`: the product of the Jacobi rotations is accumulated by postmultiplying the N-by-N array V. (See the description of V.)
--   `= 'A'`: the product of the Jacobi rotations is accumulated by postmultiplying the `MV`-by-N array V. (See the descriptions of `MV` and V.)
--   `= 'N'`: the Jacobi rotations are not accumulated.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the input matrix A. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the input matrix A. $M \ge N \ge 0$.
-
-#### N1 `[in]`
-
-_INTEGER_
-
-`N1` specifies the 2 x 2 block partition, the first `N1` columns are rotated 'against' the remaining N-`N1` columns of A.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA,N)_
-
-On entry, M-by-N matrix A, such that $A \, \operatorname{diag}(D)$ represents the input matrix. On exit, A\_onexit \* D\_onexit represents the input matrix $A \, \operatorname{diag}(D)$ post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of `N1`, D, `TOL` and `NSWEEP`.)
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### D `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The array D accumulates the scaling factors from the fast scaled Jacobi rotations. On entry, $A \, \operatorname{diag}(D)$ represents the input matrix. On exit, A\_onexit\*diag(D\_onexit) represents the input matrix post-multiplied by a sequence of Jacobi rotations, where the rotation threshold and the total number of sweeps are given in `TOL` and `NSWEEP`, respectively. (See the descriptions of `N1`, A, `TOL` and `NSWEEP`.)
-
-#### SVA `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-On entry, `SVA` contains the Euclidean norms of the columns of the matrix $A \, \operatorname{diag}(D)$. On exit, `SVA` contains the Euclidean norms of the columns of the matrix onexit\*diag(D\_onexit).
-
-#### MV `[in]`
-
-_INTEGER_
-
-If `JOBV = 'A'`, then `MV` rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'N'`, then `MV` is not referenced.
-
-#### V `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDV,N)_
-
-If `JOBV = 'V'`, then N rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'A'`, then `MV` rows of V are post-multiplied by a
-
-sequence of Jacobi rotations.
-
-If `JOBV = 'N'`, then V is not referenced.
-
-#### LDV `[in]`
-
-_INTEGER_
-
-The leading dimension of the array V, $\mathrm{LDV} \ge 1$. If `JOBV = 'V'`, $\mathrm{LDV} \ge N$. If `JOBV = 'A'`, $\mathrm{LDV} \ge \mathrm{MV}$.
-
-#### EPS `[in]`
-
-_DOUBLE PRECISION_
-
-`EPS = DLAMCH('Epsilon')`
-
-#### SFMIN `[in]`
-
-_DOUBLE PRECISION_
-
-`SFMIN` = DLAMCH('Safe Minimum')
-
-#### TOL `[in]`
-
-_DOUBLE PRECISION_
-
-`TOL` is the threshold for Jacobi rotations. For a pair `A(:,p)`, `A(:,q)` of pivot columns, the Jacobi rotation is applied only if DABS(COS(angle(`A(:,p)`,`A(:,q)`))) \> `TOL`.
-
-#### NSWEEP `[in]`
-
-_INTEGER_
-
-`NSWEEP` is the number of sweeps of Jacobi rotations to be performed.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (LWORK)_
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-`LWORK` is the dimension of `WORK`. $\mathrm{LWORK} \ge M$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit.
--   `< 0`: if `INFO = -i`, then the i-th argument had an illegal value
 
 </section>
 

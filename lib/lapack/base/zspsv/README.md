@@ -119,11 +119,9 @@ zspsv.ndarray( 'upper', 3, 1, AP, 1, 0, IPIV, 1, 0, B, 1, 3, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZSPSV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for OTHER matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `ZSPSV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -146,61 +144,6 @@ A = L \, D \, L^T, \quad\text{if}\quad \mathrm{UPLO} = \text{'L'}
 $$
 
 where U (or L) is a product of permutation and unit upper (lower) triangular matrices, D is symmetric and block diagonal with 1-by-1 and 2-by-2 diagonal blocks. The factored form of A is then used to solve the system of equations $A \, X = B$.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: Upper triangle of A is stored;
--   `= 'L'`: Lower triangle of A is stored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of linear equations, i.e., the order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### AP `[in,out]`
-
-_COMPLEX\*16 array, dimension (N\*(N+1)/2)_
-
-On entry, the upper or lower triangle of the symmetric matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \le i \le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \le i \le n$. See below for further details.
-
-On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization $A = U \, D \, U^T$ or $A = L \, D \, L^T$ as computed by ZSPTRF, stored as a packed triangular matrix in the same storage format as A.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-Details of the interchanges and the block structure of D, as determined by ZSPTRF. If $\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)` were interchanged, and D(k,k) is a 1-by-1 diagonal block. If `UPLO = 'U'` and $\mathrm{IPIV}(k) = \mathrm{IPIV}(k-1) < 0$, then rows and columns k-1 and -`IPIV(k)` were interchanged and D(k-1:k,k-1:k) is a 2-by-2 diagonal block. If `UPLO = 'L'` and $\mathrm{IPIV}(k) = \mathrm{IPIV}(k+1) < 0$, then rows and columns k+1 and -`IPIV(k)` were interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, D(i,i) is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular, so the solution could not be computed.
 
 ### Further Details
 

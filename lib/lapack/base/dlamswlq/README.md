@@ -145,9 +145,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAMSWLQ`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAMSWLQ`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -159,105 +159,6 @@ DLAMSWLQ overwrites the general real M-by-N matrix C with
 | `TRANS = 'T'`: | $Q^T \, C$ | $C \, Q^T$ |
 
 where Q is a real orthogonal matrix defined as the product of blocked elementary reflectors computed by short wide LQ factorization (DLASWLQ)
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^T$ from the Left;
--   `= 'R'`: apply Q or $Q^T$ from the Right.
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: No transpose, apply Q;
--   `= 'T'`: Transpose, apply $Q^T$.
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. $M \ge K \ge 0$;
-
-#### MB `[in]`
-
-_INTEGER_
-
-The row block size to be used in the blocked LQ. $M \ge \mathrm{MB} \ge 1$
-
-#### NB `[in]`
-
-_INTEGER_
-
-The column block size to be used in the blocked LQ. $\mathrm{NB} > M$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA,M) if SIDE = 'L'_
-
-(`LDA`,N) if `SIDE = 'R'` The i-th row must contain the vector which defines the blocked elementary reflector H(i), for $i = 1$,2,...,k, as returned by DLASWLQ in the first k rows of its array argument A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,K)$.
-
-#### T `[in]`
-
-_DOUBLE PRECISION array, dimension ( M \* Number of blocks(CEIL(N-K/NB-K)), The blocked upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks.  See below for further details_
-
-#### LDT `[in]`
-
-_INTEGER_
-
-The leading dimension of the array T. $\mathrm{LDT} \ge \mathrm{MB}$.
-
-#### C `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDC,N)_
-
-On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \, C$ or $Q^T \, C$ or $C \, Q^T$ or $C \, Q$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-```text
-(workspace) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
-```
-
-#### LWORK `[in]`
-
-_INTEGER_
-
-The dimension of the array `WORK`. If `SIDE = 'L'`, $\mathrm{LWORK} \ge \max (1,\mathrm{NB}) \, \mathrm{MB}$; if `SIDE = 'R'`, $\mathrm{LWORK} \ge \max (1,M) \, \mathrm{MB}$. If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 ### Further Details
 

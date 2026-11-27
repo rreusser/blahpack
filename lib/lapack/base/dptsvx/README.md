@@ -161,118 +161,15 @@ dptsvx.ndarray( 'not-factored', 4, 1, d, 1, 0, e, 1, 0, df, 1, 0, ef, 1, 0, b, 1
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DPTSVX`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for PT matrices
+The mathematical description from the reference LAPACK 3.12.0 source of `DPTSVX`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DPTSVX uses the factorization $A = L \, D \, L^T$ to compute the solution to a real system of linear equations $A \, X = B$, where A is an N-by-N symmetric positive definite tridiagonal matrix and X and B are N-by-`NRHS` matrices.
 
 Error bounds on the solution and a condition estimate are also provided.
-
-### Arguments
-
-#### FACT `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether or not the factored form of A has been supplied on entry.
-
--   `= 'F'`: On entry, `DF` and `EF` contain the factored form of A. D, E, `DF`, and `EF` will not be modified.
--   `= 'N'`: The matrix A will be copied to `DF` and `EF` and factored.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrices B and X. $\mathrm{NRHS} \ge 0$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the tridiagonal matrix A.
-
-#### E `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (n-1) subdiagonal elements of the tridiagonal matrix A.
-
-#### DF `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `FACT = 'F'`, then `DF` is an input argument and on entry contains the n diagonal elements of the diagonal matrix D from the $L \, D \, L^T$ factorization of A. If `FACT = 'N'`, then `DF` is an output argument and on exit contains the n diagonal elements of the diagonal matrix D from the $L \, D \, L^T$ factorization of A.
-
-#### EF `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-If `FACT = 'F'`, then `EF` is an input argument and on entry contains the (n-1) subdiagonal elements of the unit bidiagonal factor L from the $L \, D \, L^T$ factorization of A. If `FACT = 'N'`, then `EF` is an output argument and on exit contains the (n-1) subdiagonal elements of the unit bidiagonal factor L from the $L \, D \, L^T$ factorization of A.
-
-#### B `[in]`
-
-_DOUBLE PRECISION array, dimension (LDB,NRHS)_
-
-The N-by-`NRHS` right hand side matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### X `[out]`
-
-_DOUBLE PRECISION array, dimension (LDX,NRHS)_
-
-If `INFO = 0` of $\mathrm{INFO} = N+1$, the N-by-`NRHS` solution matrix X.
-
-#### LDX `[in]`
-
-_INTEGER_
-
-The leading dimension of the array X. $\mathrm{LDX} \ge \max (1,N)$.
-
-#### RCOND `[out]`
-
-_DOUBLE PRECISION_
-
-The reciprocal condition number of the matrix A. If `RCOND` is less than the machine precision (in particular, if `RCOND = 0`), the matrix is singular to working precision. This condition is indicated by a return code of $\mathrm{INFO} > 0$.
-
-#### FERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`.
-
-#### BERR `[out]`
-
-_DOUBLE PRECISION array, dimension (NRHS)_
-
-The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution).
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, and i is \<= N:  the leading principal minor of order i of A is not positive, so the factorization could not be completed, and the solution has not been computed. `RCOND = 0` is returned. = N+1: U is nonsingular, but `RCOND` is less than machine precision, meaning that the matrix is singular to working precision.  Nevertheless, the solution and error bounds are computed because there are a number of situations where the computed solution can be more accurate than the value of `RCOND` would suggest.
 
 </section>
 

@@ -98,11 +98,9 @@ dlartg.ndarray( 1, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARTG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a plane rotation with real cosine and real sine.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARTG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,38 +137,6 @@ This is a more accurate version of the BLAS1 routine DROTG, with the following o
 -   If $F=0$ and (G .ne. 0), then $C=0$ and $S=\operatorname{sign}(1,G)$ without doing any floating point operations (saves work in DBDSQR when there are zeros on the diagonal).
 
 Below, wp=\>dp stands for double precision from LA\_CONSTANTS module.
-
-### Arguments
-
-#### F `[in]`
-
-_REAL(wp)_
-
-The first component of vector to be rotated.
-
-#### G `[in]`
-
-_REAL(wp)_
-
-The second component of vector to be rotated.
-
-#### C `[out]`
-
-_REAL(wp)_
-
-The cosine of the rotation.
-
-#### S `[out]`
-
-_REAL(wp)_
-
-The sine of the rotation.
-
-#### R `[out]`
-
-_REAL(wp)_
-
-The nonzero component of the rotated vector.
 
 ### Further Details
 

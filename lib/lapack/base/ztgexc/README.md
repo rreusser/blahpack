@@ -146,9 +146,9 @@ console.log( 'A:', reinterpret( A, 0 ) );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZTGEXC`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZTGEXC`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -160,91 +160,13 @@ Optionally, the matrices Q and Z of generalized Schur vectors are updated.
 
 `Q(in)` \* `A(in)` \* `Z(in)`\*\*H = `Q(out)` \* `A(out)` \* `Z(out)`\*\*H `Q(in)` \* `B(in)` \* `Z(in)`\*\*H = `Q(out)` \* `B(out)` \* `Z(out)`\*\*H
 
-### Arguments
+### References
 
-#### WANTQ `[in]`
+\[1\] B. Kagstrom; A Direct Method for Reordering Eigenvalues in the
 
-_LOGICAL_
-
-.TRUE. : update the left transformation matrix Q; .FALSE.: do not update Q.
-
-#### WANTZ `[in]`
-
-_LOGICAL_
-
-.TRUE. : update the right transformation matrix Z; .FALSE.: do not update Z.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrices A and B. $N \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the upper triangular matrix A in the pair (A, B). On exit, the updated matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,N)_
-
-On entry, the upper triangular matrix B in the pair (A, B). On exit, the updated matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### Q `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDQ,N)_
-
-On entry, if `WANTQ` = .TRUE., the unitary matrix Q. On exit, the updated matrix Q. If `WANTQ` = .FALSE., Q is not referenced.
-
-#### LDQ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Q. $\mathrm{LDQ} \ge 1$; If `WANTQ` = .TRUE., $\mathrm{LDQ} \ge N$.
-
-#### Z `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDZ,N)_
-
-On entry, if `WANTZ` = .TRUE., the unitary matrix Z. On exit, the updated matrix Z. If `WANTZ` = .FALSE., Z is not referenced.
-
-#### LDZ `[in]`
-
-_INTEGER_
-
-The leading dimension of the array Z. $\mathrm{LDZ} \ge 1$; If `WANTZ` = .TRUE., $\mathrm{LDZ} \ge N$.
-
-#### IFST `[in]`
-
-_INTEGER_
-
-#### ILST `[in,out]`
-
-_INTEGER_
-
-Specify the reordering of the diagonal blocks of (A, B). The block with row index `IFST` is moved to row `ILST`, by a sequence of swapping between adjacent blocks.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `=0`: Successful exit.
--   `<0`: if `INFO = -i`, the i-th argument had an illegal value.
--   `=1`: The transformed matrix pair (A, B) would be too far from generalized Schur form; the problem is ill- conditioned. (A, B) may have been partially reordered, and `ILST` points to the first row of the current position of the block being moved.
+-   Generalized Real Schur Form of a Regular Matrix Pair (A, B), in
+-   M.S. Moonen et al (eds), Linear Algebra for Large Scale and
+-   Real-Time Applications, Kluwer Academic Publ. 1993, pp 195-218.
 
 </section>
 

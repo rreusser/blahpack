@@ -130,11 +130,9 @@ dlagv2.ndarray( A, 1, 2, 0, B, 1, 2, 0, alphar, 1, 0, alphai, 1, 0, beta, 1, 0 )
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLAGV2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLAGV2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -167,70 +165,6 @@ $$
 $$
 \quad\text{where}\quad b_{11} \ge b_{22} > 0
 $$
-
-### Arguments
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDA, 2)_
-
-On entry, the 2 x 2 matrix A. On exit, A is overwritten by the \`\`A-part'' of the generalized Schur form.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-THe leading dimension of the array A. $\mathrm{LDA} \ge 2$.
-
-#### B `[in,out]`
-
-_DOUBLE PRECISION array, dimension (LDB, 2)_
-
-On entry, the upper triangular 2 x 2 matrix B. On exit, B is overwritten by the \`\`B-part'' of the generalized Schur form.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-THe leading dimension of the array B. $\mathrm{LDB} \ge 2$.
-
-#### ALPHAR `[out]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-#### ALPHAI `[out]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-#### BETA `[out]`
-
-_DOUBLE PRECISION array, dimension (2)_
-
-(`ALPHAR(k)`+i\*`ALPHAI(k)`)/`BETA(k)` are the eigenvalues of the pencil (A,B), $k=1$,2, $i = \sqrt{-1}$. Note that `BETA(k)` may be zero.
-
-#### CSL `[out]`
-
-_DOUBLE PRECISION_
-
-The cosine of the left rotation matrix.
-
-#### SNL `[out]`
-
-_DOUBLE PRECISION_
-
-The sine of the left rotation matrix.
-
-#### CSR `[out]`
-
-_DOUBLE PRECISION_
-
-The cosine of the right rotation matrix.
-
-#### SNR `[out]`
-
-_DOUBLE PRECISION_
-
-The sine of the right rotation matrix.
 
 </section>
 

@@ -120,11 +120,9 @@ zgesv.ndarray( N, N, A, N, 1, 0, IPIV, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZGESV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes the solution to system of linear equations $A \, X = B$ for GE matrices (simple driver)
+The mathematical description from the reference LAPACK 3.12.0 source of `ZGESV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -143,58 +141,6 @@ A = P \, L \, U
 $$
 
 where P is a permutation matrix, L is unit lower triangular, and U is upper triangular. The factored form of A is then used to solve the system of equations $A \, X = B$.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of linear equations, i.e., the order of the matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the N-by-N coefficient matrix A. On exit, the factors L and U from the factorization $A = P \, L \, U$; the unit diagonal elements of L are not stored.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,N)$.
-
-#### IPIV `[out]`
-
-_INTEGER array, dimension (N)_
-
-The pivot indices that define the permutation matrix P; row i of the matrix was interchanged with row `IPIV(i)`.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the N-by-`NRHS` matrix of right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, U(i,i) is exactly zero.  The factorization has been completed, but the factor U is exactly singular, so the solution could not be computed.
 
 </section>
 

@@ -103,11 +103,15 @@ dzsum1.ndarray( N, CX, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DZSUM1`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DZSUM1`. Indices are the 1-based Fortran indices of the source.
 
-> Forms the 1-norm of the complex vector using the true absolute value.
+### Purpose
+
+DZSUM1 takes the sum of the absolute values of a complex vector and returns a double precision result.
+
+Based on DZASUM from the Level 1 BLAS. The change is to use the 'genuine' absolute value.
 
 </section>
 

@@ -120,11 +120,19 @@ console.log( negcnt );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLANEG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLANEG`. Indices are the 1-based Fortran indices of the source.
 
-> Computes the Sturm count.
+### Purpose
+
+DLANEG computes the Sturm count, the number of negative pivots encountered while factoring tridiagonal T - $\sigma$ $I = L$ D L^T. This implementation works directly on the factors without forming the tridiagonal matrix T. The Sturm count is also the number of eigenvalues of T less than $\sigma$.
+
+This routine is called from DLARRB.
+
+The current routine does not use the `PIVMIN` parameter but rather requires IEEE-754 propagation of Infinities and NaNs. This routine also has no input range restrictions but does require default exception handling such that x/0 produces Inf when x is non-zero, and Inf/Inf produces NaN. For more information, see:
+
+Marques, Riedy, and Voemel, "Benefits of IEEE-754 Features in Modern Symmetric Tridiagonal Eigensolvers," SIAM Journal on Scientific Computing, v28, n5, 2006. DOI 10.1137/050641624 (Tech report version in LAWN 172 with the same title.)
 
 </section>
 

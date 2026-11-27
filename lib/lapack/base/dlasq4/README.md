@@ -106,101 +106,13 @@ dlasq4.ndarray( 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1.0, 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLASQ4`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Computes an approximation to the smallest eigenvalue using values of d from the previous transform. Used by sbdsqr.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLASQ4`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLASQ4 computes an approximation `TAU` to the smallest eigenvalue using values of d from the previous transform.
-
-### Arguments
-
-#### I0 `[in]`
-
-_INTEGER_
-
-First index.
-
-#### N0 `[in]`
-
-_INTEGER_
-
-Last index.
-
-#### Z `[in]`
-
-_DOUBLE PRECISION array, dimension ( 4\*N0 )_
-
-Z holds the qd array.
-
-#### PP `[in]`
-
-_INTEGER_
-
-`PP=0` for ping, `PP=1` for pong.
-
-#### N0IN `[in]`
-
-_INTEGER_
-
-The value of `N0` at start of EIGTEST.
-
-#### DMIN `[in]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d.
-
-#### DMIN1 `[in]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d, excluding D( `N0` ).
-
-#### DMIN2 `[in]`
-
-_DOUBLE PRECISION_
-
-Minimum value of d, excluding D( `N0` ) and D( `N0`-1 ).
-
-#### DN `[in]`
-
-_DOUBLE PRECISION_
-
-d(N)
-
-#### DN1 `[in]`
-
-_DOUBLE PRECISION_
-
-d(N-1)
-
-#### DN2 `[in]`
-
-_DOUBLE PRECISION_
-
-d(N-2)
-
-#### TAU `[out]`
-
-_DOUBLE PRECISION_
-
-This is the shift.
-
-#### TTYPE `[out]`
-
-_INTEGER_
-
-Shift type.
-
-#### G `[in,out]`
-
-_DOUBLE PRECISION_
-
-G is passed as an argument in order to save its value between calls to DLASQ4.
 
 ### Further Details
 

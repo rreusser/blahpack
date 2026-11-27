@@ -110,47 +110,13 @@ daxpy.ndarray( 5, 2.0, x, 1, 0, y, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference BLAS 3.12.0 source of `DAXPY`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference BLAS 3.12.0 source of `DAXPY`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DAXPY constant times a vector plus a vector. uses unrolled loops for increments equal to one.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-number of elements in input vector(s)
-
-#### DA `[in]`
-
-_DOUBLE PRECISION_
-
-On entry, `DA` specifies the scalar $\alpha$.
-
-#### DX `[in]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCX ) )_
-
-#### INCX `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DX`
-
-#### DY `[in,out]`
-
-_DOUBLE PRECISION array, dimension ( 1 + ( N - 1 )\*abs( INCY ) )_
-
-#### INCY `[in]`
-
-_INTEGER_
-
-storage spacing between elements of `DY`
 
 ### Further Details
 

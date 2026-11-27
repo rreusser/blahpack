@@ -92,27 +92,13 @@ dlabad.ndarray( 1, 1 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLABAD`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLABAD`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DLABAD is a no-op and kept for compatibility reasons. It used to correct the overflow/underflow behavior of machines that are not IEEE-754 compliant.
-
-### Arguments
-
-#### SMALL `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the underflow threshold as computed by DLAMCH. On exit, the unchanged value `SMALL`.
-
-#### LARGE `[in,out]`
-
-_DOUBLE PRECISION_
-
-On entry, the overflow threshold as computed by DLAMCH. On exit, the unchanged value `LARGE`.
 
 </section>
 

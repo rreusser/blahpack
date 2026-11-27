@@ -119,11 +119,9 @@ zung2l.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNG2L`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNG2L`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,55 +132,6 @@ Q = H(k) \cdots H(2) H(1)
 $$
 
 as returned by ZGEQLF.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix Q. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix Q. $M \ge N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. $N \ge K \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the (n-k+i)-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZGEQLF in the last k columns of its array argument A. On exit, the m-by-n matrix Q.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The first dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[in]`
-
-_COMPLEX\*16 array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by ZGEQLF.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument has an illegal value
 
 </section>
 

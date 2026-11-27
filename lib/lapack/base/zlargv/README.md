@@ -118,11 +118,9 @@ zlargv.ndarray( 2, x, 1, 0, y, 1, 0, c, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARGV`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a vector of plane rotations with real cosines and complex sines.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARGV`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -141,50 +139,6 @@ The following conventions are used (these are the same as in ZLARTG, but differ 
 
 -   If $y(i)=0$, then $c(i)=1$ and $s(i)=0$.
 -   If $x(i)=0$, then $c(i)=0$ and s(i) is chosen so that r(i) is real.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of plane rotations to be generated.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*INCX)_
-
-On entry, the vector x. On exit, x(i) is overwritten by r(i), for $i = 1$,...,n.
-
-#### INCX `[in]`
-
-_INTEGER_
-
-The increment between elements of X. $\mathrm{INCX} > 0$.
-
-#### Y `[in,out]`
-
-_COMPLEX\*16 array, dimension (1+(N-1)\*INCY)_
-
-On entry, the vector y. On exit, the sines of the plane rotations.
-
-#### INCY `[in]`
-
-_INTEGER_
-
-The increment between elements of Y. $\mathrm{INCY} > 0$.
-
-#### C `[out]`
-
-_DOUBLE PRECISION array, dimension (1+(N-1)\*INCC)_
-
-The cosines of the plane rotations.
-
-#### INCC `[in]`
-
-_INTEGER_
-
-The increment between elements of C. $\mathrm{INCC} > 0$.
 
 ### Further Details
 

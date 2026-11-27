@@ -130,11 +130,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARCM`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Copies all or part of a real two-dimensional array to a complex array.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARCM`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -145,60 +143,6 @@ C := A \, B
 $$
 
 where A is M by M and real; B is M by N and complex; C is M by N and complex.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix A and of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns and rows of the matrix B and the number of columns of the matrix C. $N \ge 0$.
-
-#### A `[in]`
-
-_DOUBLE PRECISION array, dimension (LDA, M)_
-
-On entry, A contains the M by M matrix A.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### B `[in]`
-
-_COMPLEX\*16 array, dimension (LDB, N)_
-
-On entry, B contains the M by N matrix B.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,M)$.
-
-#### C `[out]`
-
-_COMPLEX\*16 array, dimension (LDC, N)_
-
-On exit, C contains the M by N matrix C.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### RWORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*M\*N)_
 
 </section>
 

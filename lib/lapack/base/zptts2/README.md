@@ -119,11 +119,9 @@ zptts2.ndarray( 1, N, N, d, 1, 0, e, 1, 0, B, N, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZPTTS2`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves a tridiagonal system of the form $\mathrm{AX}=B$ using the L D LH factorization computed by spttrf.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZPTTS2`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -134,53 +132,6 @@ A \, X = B
 $$
 
 using the factorization $A = U^H \, D \, U$ or $A = L \, D \, L^H$ computed by ZPTTRF. D is a diagonal matrix specified in the vector D, U (or L) is a unit bidiagonal matrix whose superdiagonal (subdiagonal) is specified in the vector E, and X and B are N by `NRHS` matrices.
-
-### Arguments
-
-#### IUPLO `[in]`
-
-_INTEGER_
-
-Specifies the form of the factorization and whether the vector E is the superdiagonal of the upper bidiagonal factor U or the subdiagonal of the lower bidiagonal factor L.
-
--   `= 1`: $A = U^H \, D \, U$, E is the superdiagonal of U
--   `= 0`: $A = L \, D \, L^H$, E is the subdiagonal of L
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the tridiagonal matrix A. $N \ge 0$.
-
-#### NRHS `[in]`
-
-_INTEGER_
-
-The number of right hand sides, i.e., the number of columns of the matrix B. $\mathrm{NRHS} \ge 0$.
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The n diagonal elements of the diagonal matrix D from the factorization $A = U^H \, D \, U$ or $A = L \, D \, L^H$.
-
-#### E `[in]`
-
-_COMPLEX\*16 array, dimension (N-1)_
-
-If `IUPLO = 1`, the (n-1) superdiagonal elements of the unit bidiagonal factor U from the factorization $A = U^H \, D \, U$. If `IUPLO = 0`, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the factorization $A = L \, D \, L^H$.
-
-#### B `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDB,NRHS)_
-
-On entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X.
-
-#### LDB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array B. $\mathrm{LDB} \ge \max (1,N)$.
 
 </section>
 

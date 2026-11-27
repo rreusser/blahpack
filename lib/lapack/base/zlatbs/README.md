@@ -124,11 +124,9 @@ zlatbs.ndarray( 'upper', 'no-transpose', 'non-unit', 'no', N, 1, AB, N, 1, 0, x,
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLATBS`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Solves a triangular banded system of equations.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLATBS`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -139,102 +137,6 @@ A \, x = s \, b, A^T \, x = s \, b, \quad\text{or}\quad A^H \, x = s \, b
 $$
 
 with scaling to prevent overflow, where A is an upper or lower triangular band matrix. Here $A^T$ denotes the transpose of A, x and b are n-element vectors, and s is a scaling factor, usually less than or equal to 1, chosen so that the components of x will be less than the overflow threshold. If the unscaled problem will not cause overflow, the Level 2 BLAS routine ZTBSV is called. If the matrix A is singular ($A(j,j) = 0$ for some j), then s is set to 0 and a non-trivial solution to $A \, x = 0$ is returned.
-
-### Arguments
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether the matrix A is upper or lower triangular.
-
--   `= 'U'`: Upper triangular
--   `= 'L'`: Lower triangular
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
-Specifies the operation applied to A.
-
--   `= 'N'`: Solve $A \, x = s \, b$     (No transpose)
--   `= 'T'`: Solve $A^T \, x = s \, b$  (Transpose)
--   `= 'C'`: Solve $A^H \, x = s \, b$  (Conjugate transpose)
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether or not the matrix A is unit triangular.
-
--   `= 'N'`: Non-unit triangular
--   `= 'U'`: Unit triangular
-
-#### NORMIN `[in]`
-
-_CHARACTER\*1_
-
-Specifies whether `CNORM` has been set or not.
-
--   `= 'Y'`: `CNORM` contains the column norms on entry
--   `= 'N'`: `CNORM` is not set on entry.  On exit, the norms will be computed and stored in `CNORM`.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### KD `[in]`
-
-_INTEGER_
-
-The number of subdiagonals or superdiagonals in the triangular matrix A. $\mathrm{KD} \ge 0$.
-
-#### AB `[in]`
-
-_COMPLEX\*16 array, dimension (LDAB,N)_
-
-The upper or lower triangular band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\max (1,j-\mathrm{kd}) \le i \le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \le i \le \min (n,j+\mathrm{kd})$.
-
-#### LDAB `[in]`
-
-_INTEGER_
-
-The leading dimension of the array `AB`. $\mathrm{LDAB} \ge \mathrm{KD}+1$.
-
-#### X `[in,out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-On entry, the right hand side b of the triangular system. On exit, X is overwritten by the solution vector x.
-
-#### SCALE `[out]`
-
-_DOUBLE PRECISION_
-
-The scaling factor s for the triangular system
-
-$$
-A \, x = s \, b, A^T \, x = s \, b, \quad\text{or}\quad A^H \, x = s \, b
-$$
-
-If `SCALE = 0`, the matrix A is singular or badly scaled, and the vector x is an exact or approximate solution to $A \, x = 0$.
-
-#### CNORM `[in,out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-If `NORMIN = 'Y'`, `CNORM` is an input argument and `CNORM(j)` contains the norm of the off-diagonal part of the j-th column of A. If `TRANS = 'N'`, `CNORM(j)` must be greater than or equal to the infinity-norm, and if `TRANS = 'T'` or 'C', `CNORM(j)` must be greater than or equal to the 1-norm.
-
-If `NORMIN = 'N'`, `CNORM` is an output argument and `CNORM(j)` returns the 1-norm of the offdiagonal part of the j-th column of A.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -k`, the k-th argument had an illegal value
 
 ### Further Details
 

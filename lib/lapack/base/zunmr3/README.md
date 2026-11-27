@@ -140,11 +140,9 @@ console.log( C );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNMR3`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Multiplies a general matrix by the unitary matrix from a RZ factorization determined by ctzrzf (unblocked algorithm).
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNMR3`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -173,89 +171,6 @@ Q = H(1) H(2) \cdots H(k)
 $$
 
 as returned by ZTZRZF. Q is of order m if `SIDE = 'L'` and of order n if `SIDE = 'R'`.
-
-### Arguments
-
-#### SIDE `[in]`
-
-_CHARACTER\*1_
-
--   `= 'L'`: apply Q or $Q^H$ from the Left
--   `= 'R'`: apply Q or $Q^H$ from the Right
-
-#### TRANS `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: apply Q  (No transpose)
--   `= 'C'`: apply $Q^H$ (Conjugate transpose)
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix C. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix C. $N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \ge K \ge 0$; if `SIDE = 'R'`, $N \ge K \ge 0$.
-
-#### L `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix A containing the meaningful part of the Householder reflectors. If `SIDE = 'L'`, $M \ge L \ge 0$, if `SIDE = 'R'`, $N \ge L \ge 0$.
-
-#### A `[in]`
-
-_COMPLEX\*16 array, dimension (LDA,M) if SIDE = 'L'_
-
-(`LDA`,N) if `SIDE = 'R'` The i-th row must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZTZRZF in the last k rows of its array argument A. A is modified by the routine but restored on exit.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The leading dimension of the array A. $\mathrm{LDA} \ge \max (1,K)$.
-
-#### TAU `[in]`
-
-_COMPLEX\*16 array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by ZTZRZF.
-
-#### C `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDC,N)_
-
-On entry, the m-by-n matrix C. On exit, C is overwritten by $Q \, C$ or $Q^H \, C$ or $C \, Q^H$ or $C \, Q$.
-
-#### LDC `[in]`
-
-_INTEGER_
-
-The leading dimension of the array C. $\mathrm{LDC} \ge \max (1,M)$.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N) if SIDE = 'L'_
-
-(M) if `SIDE = 'R'`
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
 
 </section>
 

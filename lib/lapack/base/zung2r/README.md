@@ -120,9 +120,9 @@ zung2r.ndarray( N, N, N, A, N, 1, 0, TAU, 1, 0, WORK, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZUNG2R`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZUNG2R`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -133,55 +133,6 @@ Q = H(1) H(2) \cdots H(k)
 $$
 
 as returned by ZGEQRF.
-
-### Arguments
-
-#### M `[in]`
-
-_INTEGER_
-
-The number of rows of the matrix Q. $M \ge 0$.
-
-#### N `[in]`
-
-_INTEGER_
-
-The number of columns of the matrix Q. $M \ge N \ge 0$.
-
-#### K `[in]`
-
-_INTEGER_
-
-The number of elementary reflectors whose product defines the matrix Q. $N \ge K \ge 0$.
-
-#### A `[in,out]`
-
-_COMPLEX\*16 array, dimension (LDA,N)_
-
-On entry, the i-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZGEQRF in the first k columns of its array argument A. On exit, the m by n matrix Q.
-
-#### LDA `[in]`
-
-_INTEGER_
-
-The first dimension of the array A. $\mathrm{LDA} \ge \max (1,M)$.
-
-#### TAU `[in]`
-
-_COMPLEX\*16 array, dimension (K)_
-
-`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by ZGEQRF.
-
-#### WORK `[out]`
-
-_COMPLEX\*16 array, dimension (N)_
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument has an illegal value
 
 </section>
 

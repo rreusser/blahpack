@@ -97,60 +97,15 @@ dtftri( 'no-transpose', 'lower', 'non-unit', 3, A );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DTFTRI`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
+The mathematical description from the reference LAPACK 3.12.0 source of `DTFTRI`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 DTFTRI computes the inverse of a triangular matrix A stored in RFP format.
 
 This is a Level 3 BLAS version of the algorithm.
-
-### Arguments
-
-#### TRANSR `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: The Normal `TRANSR` of RFP A is stored;
--   `= 'T'`: The Transpose `TRANSR` of RFP A is stored.
-
-#### UPLO `[in]`
-
-_CHARACTER\*1_
-
--   `= 'U'`: A is upper triangular;
--   `= 'L'`: A is lower triangular.
-
-#### DIAG `[in]`
-
-_CHARACTER\*1_
-
--   `= 'N'`: A is non-unit triangular;
--   `= 'U'`: A is unit triangular.
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix A. $N \ge 0$.
-
-#### A `[in,out]`
-
-_DOUBLE PRECISION array, dimension (0:nt-1);_
-
-$\mathrm{nt}=N \, (N+1)/2$. On entry, the triangular factor of a Hermitian Positive Definite matrix A in RFP format. RFP format is described by `TRANSR`, `UPLO`, and N as follows: If `TRANSR = 'N'` then RFP A is (0:N,0:k-1) when N is even; $k=N/2$. RFP A is (0:N-1,0:k) when N is odd; $k=N/2$. IF `TRANSR = 'T'` then RFP is the transpose of RFP A as defined when `TRANSR = 'N'`. The contents of RFP A are defined by `UPLO` as follows: If `UPLO = 'U'` the RFP A contains the nt elements of upper packed A; If `UPLO = 'L'` the RFP A contains the nt elements of lower packed A. The LDA of RFP A is (N+1)/2 when `TRANSR = 'T'`. When `TRANSR` is 'N' the LDA is N+1 when N is even and N is odd. See the Note below for more details.
-
-On exit, the (triangular) inverse of the original matrix, in the same storage format.
-
-#### INFO `[out]`
-
-_INTEGER_
-
--   `= 0`: successful exit
--   `< 0`: if `INFO = -i`, the i-th argument had an illegal value
--   `> 0`: if `INFO = i`, `A(i,i)` is exactly zero.  The triangular matrix is singular and its inverse can not be computed.
 
 ### Further Details
 

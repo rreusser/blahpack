@@ -193,123 +193,13 @@ console.log( 'info=' + info + ' sigma=' + sigma[ 0 ] );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `DLARRF`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Finds a new relatively robust representation such that at least one of the eigenvalues is relatively isolated.
+The mathematical description from the reference LAPACK 3.12.0 source of `DLARRF`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
 Given the initial representation L D L^T and its cluster of close eigenvalues (in a relative measure), W( `CLSTRT` ), W( `CLSTRT`+1 ), ... W( `CLEND` ), DLARRF finds a new relatively robust representation L D L^T - `SIGMA` $I = L(+)$ `D(+)` `L(+)`^T such that at least one of the eigenvalues of `L(+)` `D(+)` `L(+)`^T is relatively isolated.
-
-### Arguments
-
-#### N `[in]`
-
-_INTEGER_
-
-The order of the matrix (subblock, if the matrix split).
-
-#### D `[in]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The N diagonal elements of the diagonal matrix D.
-
-#### L `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (N-1) subdiagonal elements of the unit bidiagonal matrix L.
-
-#### LD `[in]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The (N-1) elements $L(i) \, D(i)$.
-
-#### CLSTRT `[in]`
-
-_INTEGER_
-
-The index of the first eigenvalue in the cluster.
-
-#### CLEND `[in]`
-
-_INTEGER_
-
-The index of the last eigenvalue in the cluster.
-
-#### W `[in]`
-
-_DOUBLE PRECISION array, dimension dimension is >=  (CLEND-CLSTRT+1)_
-
-The eigenvalue APPROXIMATIONS of L D L^T in ascending order. W( `CLSTRT` ) through W( `CLEND` ) form the cluster of relatively close eigenalues.
-
-#### WGAP `[in,out]`
-
-_DOUBLE PRECISION array, dimension dimension is >=  (CLEND-CLSTRT+1)_
-
-The separation from the right neighbor eigenvalue in W.
-
-#### WERR `[in]`
-
-_DOUBLE PRECISION array, dimension dimension is  >=  (CLEND-CLSTRT+1)_
-
-`WERR` contain the semiwidth of the uncertainty interval of the corresponding eigenvalue APPROXIMATION in W
-
-#### SPDIAM `[in]`
-
-_DOUBLE PRECISION_
-
-estimate of the spectral diameter obtained from the Gerschgorin intervals
-
-#### CLGAPL `[in]`
-
-_DOUBLE PRECISION_
-
-#### CLGAPR `[in]`
-
-_DOUBLE PRECISION_
-
-absolute gap on each end of the cluster. Set by the calling routine to protect against shifts too close to eigenvalues outside the cluster.
-
-#### PIVMIN `[in]`
-
-_DOUBLE PRECISION_
-
-The minimum pivot allowed in the Sturm sequence.
-
-#### SIGMA `[out]`
-
-_DOUBLE PRECISION_
-
-The shift used to form `L(+)` `D(+)` `L(+)`^T.
-
-#### DPLUS `[out]`
-
-_DOUBLE PRECISION array, dimension (N)_
-
-The N diagonal elements of the diagonal matrix `D(+)`.
-
-#### LPLUS `[out]`
-
-_DOUBLE PRECISION array, dimension (N-1)_
-
-The first (N-1) elements of `LPLUS` contain the subdiagonal elements of the unit bidiagonal matrix `L(+)`.
-
-#### WORK `[out]`
-
-_DOUBLE PRECISION array, dimension (2\*N)_
-
-Workspace.
-
-#### INFO `[out]`
-
-_INTEGER_
-
-Signals processing OK (=0) or failure (=1)
 
 </section>
 

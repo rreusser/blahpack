@@ -100,11 +100,9 @@ zlartg.ndarray( 1, 0, 1, 0, 1.0, 0, 1.0, 0, 1, 0 );
 
 <section class="fortran-docs">
 
-## Reference documentation
+## Reference notes
 
-From the reference LAPACK 3.12.0 source of `ZLARTG`, converted to Markdown with KaTeX math. Indices are the 1-based Fortran indices of the source.
-
-> Generates a plane rotation with real cosine and complex sine.
+The mathematical description from the reference LAPACK 3.12.0 source of `ZLARTG`. Indices are the 1-based Fortran indices of the source.
 
 ### Purpose
 
@@ -150,38 +148,6 @@ The algorithm used to compute these quantities incorporates scaling to avoid ove
 This is the same routine ZROTG fom BLAS1, except that F and G are unchanged on return.
 
 Below, wp=\>dp stands for double precision from LA\_CONSTANTS module.
-
-### Arguments
-
-#### F `[in]`
-
-_COMPLEX(wp)_
-
-The first component of vector to be rotated.
-
-#### G `[in]`
-
-_COMPLEX(wp)_
-
-The second component of vector to be rotated.
-
-#### C `[out]`
-
-_REAL(wp)_
-
-The cosine of the rotation.
-
-#### S `[out]`
-
-_COMPLEX(wp)_
-
-The sine of the rotation.
-
-#### R `[out]`
-
-_COMPLEX(wp)_
-
-The nonzero component of the rotated vector.
 
 ### Further Details
 

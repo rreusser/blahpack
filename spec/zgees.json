@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Schur vectors are not computed;\n-   `= 'V'`: Schur vectors are computed."
 		},
 		{
 			"name": "sort",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not to order the eigenvalues on the diagonal of the Schur form.\n\n-   `= 'N'`: Eigenvalues are not ordered:\n-   `= 'S'`: Eigenvalues are ordered (see `SELECT`)."
 		},
 		{
 			"name": "select",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "function",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`SELECT` must be declared EXTERNAL in the calling subroutine. If `SORT = 'S'`, `SELECT` is used to select eigenvalues to order to the top left of the Schur form. IF `SORT = 'N'`, `SELECT` is not referenced. The eigenvalue `W(j)` is selected if `SELECT(W(j))` is true."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -59,6 +63,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "On entry, the N-by-N matrix A. On exit, A has been overwritten by its Schur form T.",
 			"workDependent": "the Schur form T is unique only up to unit phases, which the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "sdim",
@@ -76,7 +82,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `SORT = 'N'`, `SDIM = 0`. If `SORT = 'S'`, `SDIM` = number of eigenvalues for which\n\n`SELECT` is true."
 		},
 		{
 			"name": "w",
@@ -91,7 +98,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "W contains the computed eigenvalues, in the same order that they appear on the diagonal of the output Schur form T."
 		},
 		{
 			"name": "VS",
@@ -113,6 +121,7 @@
 				"fortran": "N",
 				"js": "N"
 			},
+			"reference": "If `JOBVS = 'V'`, `VS` contains the unitary matrix Z of Schur vectors. If `JOBVS = 'N'`, `VS` is not referenced.",
 			"workDependent": "the Schur vectors are unique only up to the same unit phases as T, which the LWORK-dependent Hessenberg blocking can change"
 		},
 		{
@@ -122,7 +131,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VS"
+			"of": "VS",
+			"reference": "The leading dimension of the array `VS`. $\\mathrm{LDVS} \\ge 1$; if `JOBVS = 'V'`, $\\mathrm{LDVS} \\ge N$."
 		},
 		{
 			"name": "WORK",
@@ -138,7 +148,8 @@
 				"fortran": "MINWRK",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -147,7 +158,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. For good performance, `LWORK` must generally be larger.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -187,7 +199,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Not referenced if `SORT = 'N'`."
 		},
 		{
 			"name": "info",
@@ -195,7 +208,8 @@
 			"position": 15,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `> 0`: if `INFO = i`, and i is \\<= N:  the QR algorithm failed to compute all the eigenvalues; elements 1:ILO-1 and i+1:N of W contain those eigenvalues which have converged; if `JOBVS = 'V'`, `VS` contains the matrix which reduces A to its partially converged Schur form. = N+1: the eigenvalues could not be reordered because some eigenvalues were too close to separate (the problem is very ill-conditioned); = N+2: after reordering, roundoff changed values of some complex eigenvalues so that leading eigenvalues in the Schur form no longer satisfy `SELECT` = .TRUE..  This could also be caused by underflow due to scaling."
 		}
 	],
 	"checks": [

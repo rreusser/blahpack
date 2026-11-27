@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: U must contain a unitary matrix U1 on entry, and the product $U_{1} \\, U$ is returned;\n-   `= 'I'`: U is initialized to the unit matrix, and the unitary matrix U is returned;\n-   `= 'N'`: U is not computed."
 		},
 		{
 			"name": "jobv",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: V must contain a unitary matrix V1 on entry, and the product $V_{1} \\, V$ is returned;\n-   `= 'I'`: V is initialized to the unit matrix, and the unitary matrix V is returned;\n-   `= 'N'`: V is not computed."
 		},
 		{
 			"name": "jobq",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'Q'`: Q must contain a unitary matrix Q1 on entry, and the product $Q_{1} \\, Q$ is returned;\n-   `= 'I'`: Q is initialized to the unit matrix, and the unitary matrix Q is returned;\n-   `= 'N'`: Q is not computed."
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "P",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B. $P \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "k",
@@ -69,7 +75,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "K and L specify the subblocks in the input matrices A and B: $A_{23} = A(K+1:\\min (K+L,M),N-L+1:N)$ and $B_{13} = B(1:L,,N-L+1:N)$ of A and B, whose GSVD is going to be computed by ZTGSJA. See Further Details."
 		},
 		{
 			"name": "A",
@@ -90,7 +97,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix A. On exit, A(N-K+1:N,1:MIN(K+L,M) ) contains the triangular matrix R or part of R. See Purpose for details."
 		},
 		{
 			"name": "lda",
@@ -99,7 +107,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -120,7 +129,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the P-by-N matrix B. On exit, if necessary, `B(M-K+1:L,N+M-K-L+1:N)` contains a part of R. See Purpose for details."
 		},
 		{
 			"name": "ldb",
@@ -129,7 +139,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,P)$."
 		},
 		{
 			"name": "tola",
@@ -145,7 +156,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "`TOLA` and `TOLB` are the convergence criteria for the Jacobi- Kogbetliantz iteration procedure. Generally, they are the same as used in the preprocessing step, say\n\n$$\n\\mathrm{TOLA} = \\max (M,N) \\, \\operatorname{norm}(A) \\, \\mathrm{MAZHEPS}\n$$\n\n$$\n\\mathrm{TOLB} = \\max (P,N) \\, \\operatorname{norm}(B) \\, \\mathrm{MAZHEPS}\n$$"
 		},
 		{
 			"name": "ALPHA",
@@ -175,7 +187,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `ALPHA` and `BETA` contain the generalized singular value pairs of A and B;\n\n$$\n\\mathrm{ALPHA}(1:K) = 1\n$$\n\n$$\n\\mathrm{BETA}(1:K) = 0\n$$\n\nand if $M-K-L \\ge 0$,\n\n$$\n\\mathrm{ALPHA}(K+1:K+L) = \\operatorname{diag}(C)\n$$\n\n$$\n\\mathrm{BETA}(K+1:K+L) = \\operatorname{diag}(S)\n$$\n\nor if $M-K-L < 0$,\n\n$$\n\\mathrm{ALPHA}(K+1:M)= C, \\mathrm{ALPHA}(M+1:K+L)= 0\n$$\n\n$$\n\\mathrm{BETA}(K+1:M) = S, \\mathrm{BETA}(M+1:K+L) = 1\n$$\n\nFurthermore, if $K+L < N$,\n\n$$\n\\mathrm{ALPHA}(K+L+1:N) = 0 \\quad\\text{and}\\quad\n$$\n\n$$\n\\mathrm{BETA}(K+L+1:N) = 0\n$$"
 		},
 		{
 			"name": "U",
@@ -196,7 +209,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, if `JOBU = 'U'`, U must contain a matrix U1 (usually the unitary matrix returned by ZGGSVP). On exit, if `JOBU = 'I'`, U contains the unitary matrix U; if `JOBU = 'U'`, U contains the product $U_{1} \\, U$. If `JOBU = 'N'`, U is not referenced."
 		},
 		{
 			"name": "ldu",
@@ -205,7 +219,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "The leading dimension of the array U. $\\mathrm{LDU} \\ge \\max (1,M)$ if `JOBU = 'U'`; $\\mathrm{LDU} \\ge 1$ otherwise."
 		},
 		{
 			"name": "V",
@@ -226,7 +241,8 @@
 			"cols": {
 				"fortran": "P",
 				"js": "P"
-			}
+			},
+			"reference": "On entry, if `JOBV = 'V'`, V must contain a matrix V1 (usually the unitary matrix returned by ZGGSVP). On exit, if `JOBV = 'I'`, V contains the unitary matrix V; if `JOBV = 'V'`, V contains the product $V_{1} \\, V$. If `JOBV = 'N'`, V is not referenced."
 		},
 		{
 			"name": "ldv",
@@ -235,7 +251,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. $\\mathrm{LDV} \\ge \\max (1,P)$ if `JOBV = 'V'`; $\\mathrm{LDV} \\ge 1$ otherwise."
 		},
 		{
 			"name": "Q",
@@ -256,7 +273,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `JOBQ = 'Q'`, Q must contain a matrix Q1 (usually the unitary matrix returned by ZGGSVP). On exit, if `JOBQ = 'I'`, Q contains the unitary matrix Q; if `JOBQ = 'Q'`, Q contains the product $Q_{1} \\, Q$. If `JOBQ = 'N'`, Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -265,7 +283,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,N)$ if `JOBQ = 'Q'`; $\\mathrm{LDQ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "WORK",
@@ -293,7 +312,8 @@
 			"position": 24,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of cycles required for convergence."
 		},
 		{
 			"name": "info",
@@ -301,7 +321,8 @@
 			"position": 25,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `= 1`: the procedure does not converge after MAXIT cycles."
 		}
 	],
 	"checks": [

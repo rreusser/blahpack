@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the job to be performed by DLAGTS as follows:\n\n-   `= 1`: The equations  (T - $\\lambda$\\*I)x = y  are to be solved, but diagonal elements of U are not to be perturbed.\n-   `= -1`: The equations  (T - $\\lambda$\\*I)x = y  are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed. See argument `TOL` below.\n-   `= 2`: The equations  $(T - \\lambda \\, I)^{\\mathrm{Tx}} = y$  are to be solved, but diagonal elements of U are not to be perturbed.\n-   `= -2`: The equations  $(T - \\lambda \\, I)^{\\mathrm{Tx}} = y$  are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed. See argument `TOL` below."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T."
 		},
 		{
 			"name": "a",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, A must contain the diagonal elements of U as returned from DLAGTF."
 		},
 		{
 			"name": "b",
@@ -51,7 +54,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, B must contain the first super-diagonal elements of U as returned from DLAGTF."
 		},
 		{
 			"name": "c",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, C must contain the sub-diagonal elements of L as returned from DLAGTF."
 		},
 		{
 			"name": "d",
@@ -81,7 +86,8 @@
 			"length": {
 				"fortran": "N-2",
 				"js": "N - 2"
-			}
+			},
+			"reference": "On entry, D must contain the second super-diagonal elements of U as returned from DLAGTF."
 		},
 		{
 			"name": "IN",
@@ -96,7 +102,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, `IN` must contain details of the matrix P as returned from DLAGTF."
 		},
 		{
 			"name": "y",
@@ -111,7 +118,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the right hand side vector y. On exit, Y is overwritten by the solution vector x."
 		},
 		{
 			"name": "tol",
@@ -119,7 +127,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "inout"
+			"intent": "inout",
+			"reference": "On entry, with $\\mathrm{JOB} < 0$, `TOL` should be the minimum perturbation to be made to very small diagonal elements of U. `TOL` should normally be chosen as about $\\mathrm{eps} \\, \\operatorname{norm}(U)$, where eps is the relative machine precision, but if `TOL` is supplied as non-positive, then it is reset to $\\mathrm{eps} \\, \\max ( \\lvert u(i,j) \\rvert )$. If $\\mathrm{JOB} > 0$ then `TOL` is not referenced.\n\nOn exit, `TOL` is changed as described above, only if `TOL` is non-positive on entry. Otherwise `TOL` is unchanged."
 		},
 		{
 			"name": "info",
@@ -127,7 +136,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: overflow would occur when computing the `INFO(th)` element of the solution vector x. This can only occur when `JOB` is supplied as positive and either means that a diagonal element of U is very small, or that the elements of the right-hand side vector y are very large."
 		}
 	],
 	"checks": [

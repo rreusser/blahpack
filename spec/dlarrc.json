@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'T'`: Compute Sturm count for matrix T.\n-   `= 'L'`: Compute Sturm count for matrix L D L^T."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N > 0$."
 		},
 		{
 			"name": "vl",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The lower bound for the eigenvalues."
 		},
 		{
 			"name": "vu",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The upper bound for the eigenvalues."
 		},
 		{
 			"name": "d",
@@ -52,7 +56,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`JOBT = 'T'`: The N diagonal elements of the tridiagonal matrix T. `JOBT = 'L'`: The N diagonal elements of the diagonal matrix D."
 		},
 		{
 			"name": "e",
@@ -67,7 +72,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`JOBT = 'T'`: The N-1 offdiagonal elements of the matrix T. `JOBT = 'L'`: The N-1 offdiagonal elements of the matrix L."
 		},
 		{
 			"name": "pivmin",
@@ -75,7 +81,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum pivot in the Sturm sequence for T."
 		},
 		{
 			"name": "eigcnt",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of eigenvalues of the symmetric tridiagonal matrix T that are in the interval (`VL`,`VU`\\]"
 		},
 		{
 			"name": "lcnt",
@@ -99,7 +107,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The left and right negcounts of the interval."
 		},
 		{
 			"name": "info",

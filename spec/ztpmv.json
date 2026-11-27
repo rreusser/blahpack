@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the matrix is an upper or lower triangular matrix as follows:\n\n`UPLO = 'U'` or 'u' A is an upper triangular matrix.\n\n`UPLO = 'L'` or 'l' A is a lower triangular matrix."
 		},
 		{
 			"name": "trans",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the operation to be performed as follows:\n\n$$\n\\mathrm{TRANS} = \\text{'N'} \\quad\\text{or}\\quad \\text{'n'} x := A \\, x\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'T'} \\quad\\text{or}\\quad \\text{'t'} x := A^T \\, x\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'C'} \\quad\\text{or}\\quad \\text{'c'} x := A^H \\, x\n$$"
 		},
 		{
 			"name": "diag",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `DIAG` specifies whether or not A is unit triangular as follows:\n\n`DIAG = 'U'` or 'u' A is assumed to be unit triangular.\n\n`DIAG = 'N'` or 'n' A is not assumed to be unit\n\ntriangular."
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of the matrix A. N must be at least zero."
 		},
 		{
 			"name": "AP",
@@ -54,7 +58,8 @@
 			"length": {
 				"fortran": "(N*(N+1))/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "( ( n\\*( n + 1 ) )/2 ). Before entry with `UPLO = 'U'` or 'u', the array `AP` must contain the upper triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. Before entry with `UPLO = 'L'` or 'l', the array `AP` must contain the lower triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 ) and a( 3, 1 ) respectively, and so on. Note that when `DIAG = 'U'` or 'u', the diagonal elements of A are not referenced, but are assumed to be unity."
 		},
 		{
 			"name": "x",
@@ -69,7 +74,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "( 1 + ( n - 1 )\\*abs( `INCX` ) ). Before entry, the incremented array X must contain the n element vector x. On exit, X is overwritten with the transformed vector x."
 		},
 		{
 			"name": "incx",
@@ -78,7 +84,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero."
 		}
 	],
 	"checks": [

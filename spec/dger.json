@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the number of rows of the matrix A. M must be at least zero."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of the matrix A. N must be at least zero."
 		},
 		{
 			"name": "alpha",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$."
 		},
 		{
 			"name": "x",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "( 1 + ( m - 1 )\\*abs( `INCX` ) ). Before entry, the incremented array X must contain the m element vector x."
 		},
 		{
 			"name": "incx",
@@ -54,7 +58,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero."
 		},
 		{
 			"name": "y",
@@ -69,7 +74,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "( 1 + ( n - 1 )\\*abs( `INCY` ) ). Before entry, the incremented array Y must contain the n element vector y."
 		},
 		{
 			"name": "incy",
@@ -78,7 +84,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero."
 		},
 		{
 			"name": "A",
@@ -99,7 +106,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the leading m by n part of the array A must contain the matrix of coefficients. On exit, A is overwritten by the updated matrix."
 		},
 		{
 			"name": "lda",
@@ -108,7 +116,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, m )."
 		}
 	],
 	"checks": [

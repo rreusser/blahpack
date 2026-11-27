@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the 1-norm condition number or the infinity-norm condition number is required: = '1' or 'O': 1-norm;\n\n-   `= 'I'`: Infinity-norm."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the LU factorization of the band matrix A, as computed by DGBTRF. U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \\, \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "ldab",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge 2 \\, \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "IPIV",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le i \\le N$, row i of the matrix was interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "anorm",
@@ -90,7 +97,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `NORM = '1'` or 'O', the 1-norm of the original matrix A. If `NORM = 'I'`, the infinity-norm of the original matrix A."
 		},
 		{
 			"name": "rcond",
@@ -98,7 +106,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The reciprocal of the condition number of the matrix A, computed as $\\mathrm{RCOND} = 1/(\\operatorname{norm}(A) \\, \\operatorname{norm}(\\operatorname{inv}(A)))$."
 		},
 		{
 			"name": "WORK",
@@ -146,7 +155,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

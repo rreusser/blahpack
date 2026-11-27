@@ -37,7 +37,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The scalars a, b, c, and d in the above expression."
 		},
 		{
 			"name": "p",
@@ -53,7 +54,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The scalars p and q in the above expression."
 		}
 	],
 	"checks": [],

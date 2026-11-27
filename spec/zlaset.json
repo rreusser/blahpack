@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the part of the matrix A to be set.\n\n-   `= 'U'`: Upper triangular part is set. The lower triangle is unchanged.\n-   `= 'L'`: Lower triangular part is set. The upper triangle is unchanged. Otherwise:  All of the matrix A is set."
 		},
 		{
 			"name": "m",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the number of rows of A."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of A."
 		},
 		{
 			"name": "alpha",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "All the offdiagonal array elements are set to `ALPHA`."
 		},
 		{
 			"name": "beta",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "All the diagonal array elements are set to `BETA`."
 		},
 		{
 			"name": "A",
@@ -67,7 +72,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m by n matrix A. On exit, $A(i,j) = \\mathrm{ALPHA}$, $1 \\le i \\le m$, $1 \\le j \\le n$, $i \\ne j$;\n\n$$\nA(i,i) = \\mathrm{BETA} , 1 \\le i \\le \\min (m,n)\n$$"
 		},
 		{
 			"name": "lda",
@@ -76,7 +82,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		}
 	],
 	"checks": [],

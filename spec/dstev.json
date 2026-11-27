@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only;\n-   `= 'V'`: Compute eigenvalues and eigenvectors."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the n diagonal elements of the tridiagonal matrix A. On exit, if `INFO = 0`, the eigenvalues in ascending order."
 		},
 		{
 			"name": "e",
@@ -51,7 +54,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A, stored in elements 1 to N-1 of E. On exit, the contents of E are destroyed."
 		},
 		{
 			"name": "Z",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, Z contains the orthonormal eigenvectors of the matrix A, with the i-th column of Z holding the eigenvector associated with `D(i)`. If `JOBZ = 'N'`, then Z is not referenced."
 		},
 		{
 			"name": "ldz",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if `JOBZ = 'V'`, $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -101,7 +107,8 @@
 				"fortran": "MAX(1,2*N-2)",
 				"js": "max( 1, 2 * N - 2 )",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `JOBZ = 'N'`, `WORK` is not referenced."
 		},
 		{
 			"name": "info",
@@ -109,7 +116,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, the algorithm failed to converge; i off-diagonal elements of E did not converge to zero."
 		}
 	],
 	"checks": [

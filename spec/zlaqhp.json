@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -38,7 +40,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the Hermitian matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \\le i \\le n$.\n\nOn exit, the equilibrated matrix: $\\operatorname{diag}(S) \\, A \\, \\operatorname{diag}(S)$, in the same storage format as A."
 		},
 		{
 			"name": "s",
@@ -53,7 +56,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The scale factors for A."
 		},
 		{
 			"name": "scond",
@@ -61,7 +65,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Ratio of the smallest `S(i)` to the largest `S(i)`."
 		},
 		{
 			"name": "amax",
@@ -69,7 +74,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Absolute value of largest matrix entry."
 		},
 		{
 			"name": "equed",
@@ -77,7 +83,8 @@
 			"position": 7,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Specifies whether or not equilibration was done.\n\n-   `= 'N'`: No equilibration.\n-   `= 'Y'`: Equilibration was done, i.e., A has been replaced by $\\operatorname{diag}(S) \\, A \\, \\operatorname{diag}(S)$."
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply H or $H^T$ from the Left\n-   `= 'R'`: apply H or $H^T$ from the Right"
 		},
 		{
 			"name": "trans",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: apply H (No transpose)\n-   `= 'T'`: apply $H^T$ (Transpose)"
 		},
 		{
 			"name": "direct",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how H is formed from a product of elementary reflectors\n\n-   `= 'F'`: $H = H(1)$ H(2) . . . H(k) (Forward)\n-   `= 'B'`: $H = H(k)$ . . . H(2) H(1) (Backward)"
 		},
 		{
 			"name": "storev",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Indicates how the vectors which define the elementary reflectors are stored:\n\n-   `= 'C'`: Columns\n-   `= 'R'`: Rows"
 		},
 		{
 			"name": "M",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix B. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -62,7 +68,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T, i.e. the number of elementary reflectors whose product defines the block reflector. $K \\ge 0$."
 		},
 		{
 			"name": "L",
@@ -70,7 +77,8 @@
 			"position": 8,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the trapezoidal part of V. $K \\ge L \\ge 0$. See Further Details."
 		},
 		{
 			"name": "V",
@@ -91,7 +99,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "(`LDV`,M) if `STOREV = 'R'` and `SIDE = 'L'` (`LDV`,N) if `STOREV = 'R'` and `SIDE = 'R'` The pentagonal matrix V, which contains the elementary reflectors H(1), H(2), ..., H(K). See Further Details."
 		},
 		{
 			"name": "ldv",
@@ -100,7 +109,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. If `STOREV = 'C'` and `SIDE = 'L'`, $\\mathrm{LDV} \\ge \\max (1,M)$; if `STOREV = 'C'` and `SIDE = 'R'`, $\\mathrm{LDV} \\ge \\max (1,N)$; if `STOREV = 'R'`, $\\mathrm{LDV} \\ge K$."
 		},
 		{
 			"name": "T",
@@ -121,7 +131,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The triangular K-by-K matrix T in the representation of the block reflector."
 		},
 		{
 			"name": "ldt",
@@ -130,7 +141,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge K$."
 		},
 		{
 			"name": "A",
@@ -151,7 +163,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the K-by-N or M-by-K matrix A. On exit, A is overwritten by the corresponding block of $H \\, C$ or $H^T \\, C$ or $C \\, H$ or $C \\, H^T$. See Further Details."
 		},
 		{
 			"name": "lda",
@@ -160,7 +173,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. If `SIDE = 'L'`, $\\mathrm{LDA} \\ge \\max (1,K)$; If `SIDE = 'R'`, $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -181,7 +195,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix B. On exit, B is overwritten by the corresponding block of $H \\, C$ or $H^T \\, C$ or $C \\, H$ or $C \\, H^T$. See Further Details."
 		},
 		{
 			"name": "ldb",
@@ -190,7 +205,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -211,7 +227,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "(`LDWORK`,K) if `SIDE = 'R'`."
 		},
 		{
 			"name": "ldwork",
@@ -219,7 +236,8 @@
 			"position": 18,
 			"role": "lwork",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The leading dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LDWORK} \\ge K$; if `SIDE = 'R'`, $\\mathrm{LDWORK} \\ge M$."
 		}
 	],
 	"checks": [],

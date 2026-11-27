@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kd",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix A if `UPLO = 'U'`, or the number of subdiagonals if `UPLO = 'L'`. $\\mathrm{KD} \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrices B and X. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper or lower triangle of the Hermitian band matrix A, stored in the first `KD`+1 rows of the array. The j-th column of A is stored in the j-th column of the array `AB` as follows: if `UPLO = 'U'`, `AB(kd+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{kd}) \\le i \\le j$; if `UPLO = 'L'`, `AB(1+i-j,j) = A(i,j)` for $j \\le i \\le \\min (n,j+\\mathrm{kd})$."
 		},
 		{
 			"name": "ldab",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KD}+1$."
 		},
 		{
 			"name": "AFB",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The triangular factor U or L from the Cholesky factorization $A = U^H \\, U$ or $A = L \\, L^H$ of the band matrix A as computed by ZPBTRF, in the same storage format as A (see `AB`)."
 		},
 		{
 			"name": "ldafb",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AFB"
+			"of": "AFB",
+			"reference": "The leading dimension of the array `AFB`. $\\mathrm{LDAFB} \\ge \\mathrm{KD}+1$."
 		},
 		{
 			"name": "B",
@@ -118,7 +126,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The right hand side matrix B."
 		},
 		{
 			"name": "ldb",
@@ -127,7 +136,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "X",
@@ -148,7 +158,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the solution matrix X, as computed by ZPBTRS. On exit, the improved solution matrix X."
 		},
 		{
 			"name": "ldx",
@@ -157,7 +168,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "FERR",
@@ -172,7 +184,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for RCOND, and is almost always a slight overestimate of the true error."
 		},
 		{
 			"name": "BERR",
@@ -187,7 +200,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution)."
 		},
 		{
 			"name": "WORK",
@@ -235,7 +249,8 @@
 			"position": 17,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

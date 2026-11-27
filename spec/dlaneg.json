@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix."
 		},
 		{
 			"name": "d",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N diagonal elements of the diagonal matrix D."
 		},
 		{
 			"name": "LLD",
@@ -44,7 +46,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (N-1) elements $L(i) \\, L(i) \\, D(i)$."
 		},
 		{
 			"name": "sigma",
@@ -52,7 +55,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Shift amount in T - $\\sigma$ $I = L$ D L^T."
 		},
 		{
 			"name": "pivmin",
@@ -60,7 +64,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum pivot in the Sturm sequence. May be used when zero pivots are encountered on non-IEEE-754 architectures."
 		},
 		{
 			"name": "r",
@@ -68,7 +73,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The twist index for the twisted factorization that is used for the negcount."
 		}
 	],
 	"checks": [],

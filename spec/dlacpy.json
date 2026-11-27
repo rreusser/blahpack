@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the part of the matrix A to be copied to B.\n\n-   `= 'U'`: Upper triangular part\n-   `= 'L'`: Lower triangular part Otherwise:  All of the matrix A"
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The m by n matrix A. If `UPLO = 'U'`, only the upper triangle or trapezoid is accessed; if `UPLO = 'L'`, only the lower triangle or trapezoid is accessed."
 		},
 		{
 			"name": "lda",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -81,7 +86,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, $B = A$ in the locations specified by `UPLO`."
 		},
 		{
 			"name": "ldb",
@@ -90,7 +96,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,M)$."
 		}
 	],
 	"checks": [],

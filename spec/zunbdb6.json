@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension of `X1` and the number of rows in `Q1`. $0 \\le M_{1}$."
 		},
 		{
 			"name": "m2",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension of `X2` and the number of rows in `Q2`. $0 \\le M_{2}$."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns in `Q1` and `Q2`. $0 \\le N$."
 		},
 		{
 			"name": "X1",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "M1",
 				"js": "m1"
-			}
+			},
+			"reference": "On entry, the top part of the vector to be orthogonalized. On exit, the top part of the projected vector."
 		},
 		{
 			"name": "incx1",
@@ -53,7 +57,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X1"
+			"of": "X1",
+			"reference": "Increment for entries of `X1`."
 		},
 		{
 			"name": "X2",
@@ -68,7 +73,8 @@
 			"length": {
 				"fortran": "M2",
 				"js": "m2"
-			}
+			},
+			"reference": "On entry, the bottom part of the vector to be orthogonalized. On exit, the bottom part of the projected vector."
 		},
 		{
 			"name": "incx2",
@@ -77,7 +83,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X2"
+			"of": "X2",
+			"reference": "Increment for entries of `X2`."
 		},
 		{
 			"name": "Q1",
@@ -98,7 +105,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The top part of the orthonormal basis matrix."
 		},
 		{
 			"name": "ldq1",
@@ -107,7 +115,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q1"
+			"of": "Q1",
+			"reference": "The leading dimension of `Q1`. $\\mathrm{LDQ1} \\ge M_{1}$."
 		},
 		{
 			"name": "Q2",
@@ -128,7 +137,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The bottom part of the orthonormal basis matrix."
 		},
 		{
 			"name": "ldq2",
@@ -137,7 +147,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q2"
+			"of": "Q2",
+			"reference": "The leading dimension of `Q2`. $\\mathrm{LDQ2} \\ge M_{2}$."
 		},
 		{
 			"name": "WORK",
@@ -162,7 +173,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge N$."
 		},
 		{
 			"name": "info",
@@ -170,7 +182,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

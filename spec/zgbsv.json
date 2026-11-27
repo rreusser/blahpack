@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of linear equations, i.e., the order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in band storage, in rows `KL`+1 to $2 \\, \\mathrm{KL}+\\mathrm{KU}+1$; rows 1 to `KL` of the array need not be set. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(KL+KU+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{KU}) \\le i \\le \\min (N,j+\\mathrm{KL})$ On exit, details of the factorization: U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \\, \\mathrm{KL}+\\mathrm{KU}+1$. See below for further details."
 		},
 		{
 			"name": "ldab",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge 2 \\, \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "IPIV",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices that define the permutation matrix P; row i of the matrix was interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "B",
@@ -103,7 +110,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X."
 		},
 		{
 			"name": "ldb",
@@ -112,7 +120,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -120,7 +129,8 @@
 			"position": 10,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, U(i,i) is exactly zero.  The factorization has been completed, but the factor U is exactly singular, and the solution has not been computed."
 		}
 	],
 	"checks": [

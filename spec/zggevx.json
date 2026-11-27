@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the balance option to be performed:\n\n-   `= 'N'`: do not diagonally scale or permute;\n-   `= 'P'`: permute only;\n-   `= 'S'`: scale only;\n-   `= 'B'`: both permute and scale. Computed reciprocal condition numbers will be for the matrices after permuting and/or balancing. Permuting does not change condition numbers (in exact arithmetic), but balancing does."
 		},
 		{
 			"name": "jobvl",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the left generalized eigenvectors;\n-   `= 'V'`: compute the left generalized eigenvectors."
 		},
 		{
 			"name": "jobvr",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the right generalized eigenvectors;\n-   `= 'V'`: compute the right generalized eigenvectors."
 		},
 		{
 			"name": "sense",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines which reciprocal condition numbers are computed.\n\n-   `= 'N'`: none are computed;\n-   `= 'E'`: computed for eigenvalues only;\n-   `= 'V'`: computed for eigenvectors only;\n-   `= 'B'`: computed for eigenvalues and eigenvectors."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A, B, `VL`, and `VR`. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in the pair (A,B). On exit, A has been overwritten. If `JOBVL='V'` or `JOBVR='V'` or both, then A contains the first part of the complex Schur form of the \"balanced\" versions of the input A and B."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix B in the pair (A,B). On exit, B has been overwritten. If `JOBVL='V'` or `JOBVR='V'` or both, then B contains the second part of the complex Schur form of the \"balanced\" versions of the input A and B."
 		},
 		{
 			"name": "ldb",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ALPHA",
@@ -135,7 +144,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `ALPHA(j)`/`BETA(j)`, $j=1$,...,N, will be the generalized eigenvalues.\n\nNote: the quotient `ALPHA(j)`/`BETA(j)` ) may easily over- or underflow, and `BETA(j)` may even be zero. Thus, the user should avoid naively computing the ratio `ALPHA`/`BETA`. However, `ALPHA` will be always less than and usually comparable with norm(A) in magnitude, and `BETA` always less than and usually comparable with norm(B)."
 		},
 		{
 			"name": "VL",
@@ -156,7 +166,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVL = 'V'`, the left generalized eigenvectors u(j) are stored one after another in the columns of `VL`, in the same order as their eigenvalues. Each eigenvector will be scaled so the largest component will have abs(real part) + abs(imag. part) = 1. Not referenced if `JOBVL = 'N'`."
 		},
 		{
 			"name": "ldvl",
@@ -165,7 +176,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the matrix `VL`. $\\mathrm{LDVL} \\ge 1$, and if `JOBVL = 'V'`, $\\mathrm{LDVL} \\ge N$."
 		},
 		{
 			"name": "VR",
@@ -186,7 +198,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVR = 'V'`, the right generalized eigenvectors v(j) are stored one after another in the columns of `VR`, in the same order as their eigenvalues. Each eigenvector will be scaled so the largest component will have abs(real part) + abs(imag. part) = 1. Not referenced if `JOBVR = 'N'`."
 		},
 		{
 			"name": "ldvr",
@@ -195,7 +208,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the matrix `VR`. $\\mathrm{LDVR} \\ge 1$, and if `JOBVR = 'V'`, $\\mathrm{LDVR} \\ge N$."
 		},
 		{
 			"name": "ilo",
@@ -211,7 +225,8 @@
 			"position": 17,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "`ILO` and `IHI` are integer values such that on exit $A(i,j) = 0$ and $B(i,j) = 0$ if $i > j$ and $j = 1$,...,`ILO`-1 or $i = \\mathrm{IHI}+1$,...,N. If `BALANC = 'N'` or 'S', `ILO = 1` and `IHI = N`."
 		},
 		{
 			"name": "LSCALE",
@@ -226,7 +241,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the permutations and scaling factors applied to the left side of A and B. If PL(j) is the index of the row interchanged with row j, and DL(j) is the scaling factor applied to row j, then\n\n$$\n\\mathrm{LSCALE}(j) = \\mathrm{PL}(j) \\quad\\text{for}\\quad j = 1, \\cdots ,\\mathrm{ILO}-1\n$$\n\n$$\n= \\mathrm{DL}(j) \\quad\\text{for}\\quad j = \\mathrm{ILO}, \\cdots ,\\mathrm{IHI}\n$$\n\n$$\n= \\mathrm{PL}(j) \\quad\\text{for}\\quad j = \\mathrm{IHI}+1, \\cdots ,N\n$$\n\nThe order in which the interchanges are made is N to `IHI`+1, then 1 to `ILO`-1."
 		},
 		{
 			"name": "RSCALE",
@@ -241,7 +257,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the permutations and scaling factors applied to the right side of A and B. If PR(j) is the index of the column interchanged with column j, and DR(j) is the scaling factor applied to column j, then\n\n$$\n\\mathrm{RSCALE}(j) = \\mathrm{PR}(j) \\quad\\text{for}\\quad j = 1, \\cdots ,\\mathrm{ILO}-1\n$$\n\n$$\n= \\mathrm{DR}(j) \\quad\\text{for}\\quad j = \\mathrm{ILO}, \\cdots ,\\mathrm{IHI}\n$$\n\n$$\n= \\mathrm{PR}(j) \\quad\\text{for}\\quad j = \\mathrm{IHI}+1, \\cdots ,N\n$$\n\nThe order in which the interchanges are made is N to `IHI`+1, then 1 to `ILO`-1."
 		},
 		{
 			"name": "abnrm",
@@ -249,7 +266,8 @@
 			"position": 20,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The one-norm of the balanced matrix A."
 		},
 		{
 			"name": "bbnrm",
@@ -257,7 +275,8 @@
 			"position": 21,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The one-norm of the balanced matrix B."
 		},
 		{
 			"name": "RCONDE",
@@ -272,7 +291,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `SENSE = 'E'` or 'B', the reciprocal condition numbers of the eigenvalues, stored in consecutive elements of the array. If `SENSE = 'N'` or 'V', `RCONDE` is not referenced."
 		},
 		{
 			"name": "RCONDV",
@@ -287,7 +307,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOB = 'V'` or 'B', the estimated reciprocal condition numbers of the eigenvectors, stored in consecutive elements of the array. If the eigenvalues cannot be reordered to compute `RCONDV(j)`, `RCONDV(j)` is set to 0; this can only occur when the true value would be very small anyway. If `SENSE = 'N'` or 'E', `RCONDV` is not referenced."
 		},
 		{
 			"name": "WORK",
@@ -303,7 +324,8 @@
 				"fortran": "MINWRK",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -312,7 +334,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. If `SENSE = 'E'`, $\\mathrm{LWORK} \\ge \\max (1,4 \\, N)$. If `SENSE = 'V'` or 'B', $\\mathrm{LWORK} \\ge \\max (1,2 \\, N \\, N+2 \\, N)$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -324,7 +347,8 @@
 			"dims": [
 				"LRWORK"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "lrwork must be at least max(1,6\\*N) if `BALANC = 'S'` or 'B', and at least max(1,2\\*N) otherwise. Real workspace."
 		},
 		{
 			"name": "IWORK",
@@ -344,7 +368,8 @@
 				"fortran": "N+2",
 				"js": "N + 2",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `SENSE = 'E'`, `IWORK` is not referenced."
 		},
 		{
 			"name": "BWORK",
@@ -364,7 +389,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `SENSE = 'N'`, `BWORK` is not referenced."
 		},
 		{
 			"name": "info",
@@ -372,7 +398,8 @@
 			"position": 29,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `= 1,...,N`:  The QZ iteration failed.  No eigenvectors have been calculated, but `ALPHA(j)` and `BETA(j)` should be correct for $j=\\mathrm{INFO}+1$,...,N.\n-   `> N`: =N+1: other than QZ iteration failed in ZHGEQZ. =N+2: error return from ZTGEVC."
 		}
 	],
 	"checks": [

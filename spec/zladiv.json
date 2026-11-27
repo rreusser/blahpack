@@ -24,6 +24,7 @@
 			"role": "scalar",
 			"dtype": "complex128",
 			"intent": "in",
+			"reference": "The complex scalars X and Y.",
 			"element": true
 		},
 		{

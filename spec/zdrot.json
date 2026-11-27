@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of the vectors cx and cy. N must be at least zero."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "( 1 + ( N - 1 )\\*abs( `INCX` ) ). Before entry, the incremented array `ZX` must contain the n element vector cx. On exit, `ZX` is overwritten by the updated vector cx."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "ZX"
+			"of": "ZX",
+			"reference": "On entry, `INCX` specifies the increment for the elements of `ZX`. `INCX` must not be zero."
 		},
 		{
 			"name": "y",
@@ -53,7 +56,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "( 1 + ( N - 1 )\\*abs( `INCY` ) ). Before entry, the incremented array `ZY` must contain the n element vector cy. On exit, `ZY` is overwritten by the updated vector cy."
 		},
 		{
 			"name": "incy",
@@ -62,7 +66,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "ZY"
+			"of": "ZY",
+			"reference": "On entry, `INCY` specifies the increment for the elements of `ZY`. `INCY` must not be zero."
 		},
 		{
 			"name": "c",
@@ -70,7 +75,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, C specifies the cosine, cos."
 		},
 		{
 			"name": "s",
@@ -78,7 +84,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, S specifies the sine, sin."
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows in the matrix A."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns in the matrix A."
 		},
 		{
 			"name": "nb",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of leading rows and columns of A to be reduced."
 		},
 		{
 			"name": "A",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m by n general matrix to be reduced. On exit, the first `NB` rows and columns of the matrix are overwritten; the rest of the array is unchanged. If $m \\ge n$, elements on and below the diagonal in the first `NB`\n\n-   columns, with the array `TAUQ`, represent the orthogonal\n-   matrix Q as a product of elementary reflectors; and\n-   elements above the diagonal in the first `NB` rows, with the\n-   array `TAUP`, represent the orthogonal matrix P as a product\n-   of elementary reflectors.\n\nIf $m < n$, elements below the diagonal in the first `NB`\n\n-   columns, with the array `TAUQ`, represent the orthogonal\n-   matrix Q as a product of elementary reflectors, and\n-   elements on and above the diagonal in the first `NB` rows,\n-   with the array `TAUP`, represent the orthogonal matrix P as\n-   a product of elementary reflectors.\n\nSee Further Details."
 		},
 		{
 			"name": "lda",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "d",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The diagonal elements of the first `NB` rows and columns of the reduced matrix. $D(i) = A(i,i)$."
 		},
 		{
 			"name": "e",
@@ -90,7 +96,8 @@
 			"length": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The off-diagonal elements of the first `NB` rows and columns of the reduced matrix."
 		},
 		{
 			"name": "TAUQ",
@@ -105,7 +112,8 @@
 			"length": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors which represent the orthogonal matrix Q. See Further Details."
 		},
 		{
 			"name": "TAUP",
@@ -120,7 +128,8 @@
 			"length": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors which represent the orthogonal matrix P. See Further Details."
 		},
 		{
 			"name": "X",
@@ -141,7 +150,8 @@
 			"cols": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The m-by-nb matrix X required to update the unreduced part of A."
 		},
 		{
 			"name": "ldx",
@@ -150,7 +160,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "Y",
@@ -171,7 +182,8 @@
 			"cols": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The n-by-nb matrix Y required to update the unreduced part of A."
 		},
 		{
 			"name": "ldy",
@@ -180,7 +192,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "The leading dimension of the array Y. $\\mathrm{LDY} \\ge \\max (1,N)$."
 		}
 	],
 	"checks": [],

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B, and the order of the triangular matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix B. $N \\ge 0$."
 		},
 		{
 			"name": "L",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the lower trapezoidal part of B. $\\min (M,N) \\ge L \\ge 0$. See Further Details."
 		},
 		{
 			"name": "mb",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The block size to be used in the blocked QR. $M \\ge \\mathrm{MB} \\ge 1$."
 		},
 		{
 			"name": "A",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On entry, the lower triangular M-by-M matrix A. On exit, the elements on and below the diagonal of the array contain the lower triangular matrix L."
 		},
 		{
 			"name": "lda",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the pentagonal M-by-N matrix B. The first N-L columns are rectangular, and the last L columns are lower trapezoidal. On exit, B contains the pentagonal matrix V. See Further Details."
 		},
 		{
 			"name": "ldb",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "T",
@@ -118,7 +126,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "M"
-			}
+			},
+			"reference": "The lower triangular block reflectors stored in compact form as a sequence of upper triangular blocks. See Further Details."
 		},
 		{
 			"name": "ldt",
@@ -127,7 +136,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\mathrm{MB}$."
 		},
 		{
 			"name": "WORK",
@@ -155,7 +165,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

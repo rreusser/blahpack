@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $M \\ge N \\ge 0$."
 		},
 		{
 			"name": "mb",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The row block size used by DLATSQR to return arrays A and T. $\\mathrm{MB} > N$. (Note that if $\\mathrm{MB} > M$, then M is used instead of `MB` as the row block size)."
 		},
 		{
 			"name": "nb",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The column block size used by DLATSQR to return arrays A and T. $\\mathrm{NB} \\ge 1$. (Note that if $\\mathrm{NB} > N$, then N is used instead of `NB` as the column block size)."
 		},
 		{
 			"name": "A",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry:\n\nThe elements on and above the diagonal are not accessed. The elements below the diagonal represent the unit lower-trapezoidal blocked matrix V computed by DLATSQR that defines the input matrices Q\\_in(k) (ones on the diagonal are not stored) (same format as the output A below the diagonal in DLATSQR).\n\nOn exit:\n\nThe array A contains an M-by-N orthonormal matrix Q\\_out, i.e the columns of A are orthogonal unit vectors."
 		},
 		{
 			"name": "lda",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "T",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "N*NIRB",
 				"js": null
-			}
+			},
+			"reference": "dimension (`LDT`, N \\* NIRB) where NIRB = Number\\_of\\_input\\_row\\_blocks\n\n$$\n= \\max ( 1, \\mathrm{CEIL}((M-N)/(\\mathrm{MB}-N)) )\n$$\n\nLet NICB = Number\\_of\\_input\\_col\\_blocks\n\n$$\n= \\mathrm{CEIL}(N/\\mathrm{NB})\n$$\n\nThe upper-triangular block reflectors used to define the input matrices Q\\_in(k), $k=(1:\\mathrm{NIRB} \\, \\mathrm{NICB})$. The block reflectors are stored in compact form in NIRB block reflector sequences. Each of NIRB block reflector sequences is stored in a larger `NB`-by-N column block of T and consists of NICB smaller `NB`-by-`NB` upper-triangular column blocks. (same format as the output T in DLATSQR)."
 		},
 		{
 			"name": "ldt",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,\\min (\\mathrm{NB1},N))$."
 		},
 		{
 			"name": "WORK",
@@ -113,7 +121,8 @@
 				"fortran": "MAX(1,LWORKOPT)",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "(workspace) DOUBLE PRECISION array, dimension (MAX(2,`LWORK`)) On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -122,7 +131,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge (M+\\mathrm{NB}) \\, N$. If `LWORK = -1`, then a workspace query is assumed. The routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -130,7 +140,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

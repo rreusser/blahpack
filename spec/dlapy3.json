@@ -30,7 +30,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "X, Y and Z specify the values x, y and z."
 		}
 	],
 	"checks": [],

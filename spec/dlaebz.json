@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies what is to be done:\n\n-   `= 1`: Compute `NAB` for the initial intervals.\n-   `= 2`: Perform bisection iteration to find eigenvalues of T.\n-   `= 3`: Perform bisection iteration to invert `N(w)`, i.e., to find a point which has a specified number of eigenvalues of T to its left. Other values will cause DLAEBZ to return with `INFO=-1`."
 		},
 		{
 			"name": "nitmax",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The maximum number of \"levels\" of bisection to be performed, i.e., an interval of width W will not be made smaller than 2^$(-\\mathrm{NITMAX}) \\, W$. If not all intervals have converged after `NITMAX` iterations, then `INFO` is set to the number of non-converged intervals."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension n of the tridiagonal matrix T. It must be at least 1."
 		},
 		{
 			"name": "mmax",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The maximum number of intervals. If more than `MMAX` intervals are generated, then DLAEBZ will quit with $\\mathrm{INFO}=\\mathrm{MMAX}+1$."
 		},
 		{
 			"name": "minp",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The initial number of intervals. It may not be greater than `MMAX`."
 		},
 		{
 			"name": "nbmin",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The smallest number of intervals that should be processed using a vector loop. If zero, then only the scalar loop will be used."
 		},
 		{
 			"name": "abstol",
@@ -61,7 +67,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum (absolute) width of an interval. When an interval is narrower than `ABSTOL`, or than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. This must be at least zero."
 		},
 		{
 			"name": "reltol",
@@ -69,7 +76,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum relative width of an interval. When an interval is narrower than `ABSTOL`, or than `RELTOL` times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, i.e., converged. Note: this should always be at least radix\\*machine $\\epsilon$."
 		},
 		{
 			"name": "pivmin",
@@ -77,7 +85,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum absolute value of a \"pivot\" in the Sturm sequence loop. This must be at least max \\|$e(j)^2$\\|\\*safe\\_min and at least safe\\_min, where safe\\_min is at least the smallest number that can divide one without overflow."
 		},
 		{
 			"name": "d",
@@ -92,7 +101,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The diagonal elements of the tridiagonal matrix T."
 		},
 		{
 			"name": "e",
@@ -107,7 +117,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The offdiagonal elements of the tridiagonal matrix T in positions 1 through N-1. `E(N)` is arbitrary."
 		},
 		{
 			"name": "E2",
@@ -122,7 +133,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The squares of the offdiagonal elements of the tridiagonal matrix T. `E2(N)` is ignored."
 		},
 		{
 			"name": "NVAL",
@@ -137,7 +149,8 @@
 			"length": {
 				"fortran": "MINP",
 				"js": "minp"
-			}
+			},
+			"reference": "If `IJOB=1` or 2, not referenced. If `IJOB=3`, the desired values of `N(w)`. The elements of `NVAL` will be reordered to correspond with the intervals in `AB`. Thus, `NVAL(j)` on output will not, in general be the same as `NVAL(j)` on input, but it will correspond with the interval (`AB(j,1)`,`AB(j,2)`\\] on output."
 		},
 		{
 			"name": "AB",
@@ -158,7 +171,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "The endpoints of the intervals. `AB(j,1)` is a(j), the left endpoint of the j-th interval, and `AB(j,2)` is b(j), the right endpoint of the j-th interval. The input intervals will, in general, be modified, split, and reordered by the calculation."
 		},
 		{
 			"name": "c",
@@ -173,7 +187,8 @@
 			"length": {
 				"fortran": "MMAX",
 				"js": "mmax"
-			}
+			},
+			"reference": "If `IJOB=1`, ignored. If `IJOB=2`, workspace. If `IJOB=3`, then on input `C(j)` should be initialized to the first search point in the binary search."
 		},
 		{
 			"name": "mout",
@@ -181,7 +196,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `IJOB=1`, the number of eigenvalues in the intervals. If `IJOB=2` or 3, the number of intervals output. If `IJOB=3`, `MOUT` will equal `MINP`."
 		},
 		{
 			"name": "NAB",
@@ -202,7 +218,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "If `IJOB=1`, then on output `NAB(i,j)` will be set to `N(AB(i,j))`. If `IJOB=2`, then on input, `NAB(i,j)` should be set. It must\n\n-   satisfy the condition:\n-   $N(\\mathrm{AB}(i,1)) \\le \\mathrm{NAB}(i,1) \\le \\mathrm{NAB}(i,2) \\le N(\\mathrm{AB}(i,2))$,\n-   which means that in interval i only eigenvalues\n-   `NAB(i,1)`+1,...,`NAB(i,2)` will be considered. Usually,\n-   `NAB(i,j)=N(AB(i,j))`, from a previous call to DLAEBZ with\n-   `IJOB=1`.\n-   On output, `NAB(i,j)` will contain\n-   max(na(k),min(nb(k),`N(AB(i,j))`)), where k is the index of\n-   the input interval that the output interval\n-   (`AB(j,1)`,`AB(j,2)`\\] came from, and na(k) and nb(k) are the\n-   the input values of `NAB(k,1)` and `NAB(k,2)`.\n\nIf `IJOB=3`, then on output, `NAB(i,j)` contains `N(AB(i,j))`,\n\n-   unless $N(w) > \\mathrm{NVAL}(i)$ for all search points w , in which\n-   case `NAB(i,1)` will not be modified, i.e., the output\n-   value will be the same as the input value (modulo\n-   reorderings -- see `NVAL` and `AB`), or unless $N(w) < \\mathrm{NVAL}(i)$\n-   for all search points w , in which case `NAB(i,2)` will\n-   not be modified. Normally, `NAB` should be set to some\n-   distinctive value(s) before DLAEBZ is called."
 		},
 		{
 			"name": "WORK",
@@ -222,7 +239,8 @@
 				"fortran": "MMAX",
 				"js": "mmax",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "IWORK",
@@ -242,7 +260,8 @@
 				"fortran": "MMAX",
 				"js": "mmax",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "info",
@@ -250,7 +269,8 @@
 			"position": 20,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: All intervals converged. = 1--`MMAX`: The last `INFO` intervals did not converge. = `MMAX`+1:  More than `MMAX` intervals were generated."
 		}
 	],
 	"checks": [],

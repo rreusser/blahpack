@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in ZLANGB as described above."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, ZLANGB is set to zero."
 		},
 		{
 			"name": "kl",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of sub-diagonals of the matrix A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of super-diagonals of the matrix A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -59,7 +63,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The band matrix A, stored in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(ku+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{ku}) \\le i \\le \\min (n,j+\\mathrm{kl})$."
 		},
 		{
 			"name": "ldab",
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "WORK",
@@ -80,7 +86,8 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'`; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

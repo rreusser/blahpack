@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Orthogonal matrix U is computed;\n-   `= 'N'`: U is not computed."
 		},
 		{
 			"name": "jobv",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: Orthogonal matrix V is computed;\n-   `= 'N'`: V is not computed."
 		},
 		{
 			"name": "jobq",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'Q'`: Orthogonal matrix Q is computed;\n-   `= 'N'`: Q is not computed."
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrices A and B. $N \\ge 0$."
 		},
 		{
 			"name": "P",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix B. $P \\ge 0$."
 		},
 		{
 			"name": "k",
@@ -69,7 +75,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, K and L specify the dimension of the subblocks described in Purpose. K + L = effective numerical rank of $(A^T,B^T)^T$."
 		},
 		{
 			"name": "A",
@@ -90,7 +97,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix A. On exit, A contains the triangular matrix R, or part of R. See Purpose for details."
 		},
 		{
 			"name": "lda",
@@ -99,7 +107,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -120,7 +129,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the P-by-N matrix B. On exit, B contains the triangular matrix R if $M-K-L < 0$. See Purpose for details."
 		},
 		{
 			"name": "ldb",
@@ -129,7 +139,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,P)$."
 		},
 		{
 			"name": "ALPHA",
@@ -159,7 +170,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `ALPHA` and `BETA` contain the generalized singular value pairs of A and B;\n\n$$\n\\mathrm{ALPHA}(1:K) = 1\n$$\n\n$$\n\\mathrm{BETA}(1:K) = 0\n$$\n\nand if $M-K-L \\ge 0$,\n\n$$\n\\mathrm{ALPHA}(K+1:K+L) = C\n$$\n\n$$\n\\mathrm{BETA}(K+1:K+L) = S\n$$\n\nor if $M-K-L < 0$,\n\n$$\n\\mathrm{ALPHA}(K+1:M)=C, \\mathrm{ALPHA}(M+1:K+L)=0\n$$\n\n$$\n\\mathrm{BETA}(K+1:M) =S, \\mathrm{BETA}(M+1:K+L) =1\n$$\n\nand\n\n$$\n\\mathrm{ALPHA}(K+L+1:N) = 0\n$$\n\n$$\n\\mathrm{BETA}(K+L+1:N) = 0\n$$"
 		},
 		{
 			"name": "U",
@@ -180,7 +192,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "If `JOBU = 'U'`, U contains the M-by-M orthogonal matrix U. If `JOBU = 'N'`, U is not referenced."
 		},
 		{
 			"name": "ldu",
@@ -189,7 +202,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "The leading dimension of the array U. $\\mathrm{LDU} \\ge \\max (1,M)$ if `JOBU = 'U'`; $\\mathrm{LDU} \\ge 1$ otherwise."
 		},
 		{
 			"name": "V",
@@ -210,7 +224,8 @@
 			"cols": {
 				"fortran": "P",
 				"js": "P"
-			}
+			},
+			"reference": "If `JOBV = 'V'`, V contains the P-by-P orthogonal matrix V. If `JOBV = 'N'`, V is not referenced."
 		},
 		{
 			"name": "ldv",
@@ -219,7 +234,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. $\\mathrm{LDV} \\ge \\max (1,P)$ if `JOBV = 'V'`; $\\mathrm{LDV} \\ge 1$ otherwise."
 		},
 		{
 			"name": "Q",
@@ -240,7 +256,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBQ = 'Q'`, Q contains the N-by-N orthogonal matrix Q. If `JOBQ = 'N'`, Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -249,7 +266,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,N)$ if `JOBQ = 'Q'`; $\\mathrm{LDQ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "WORK",
@@ -265,7 +283,8 @@
 				"fortran": "1",
 				"js": "1",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -274,7 +293,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "IWORK",
@@ -294,7 +314,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "On exit, `IWORK` stores the sorting information. More precisely, the following loop will sort `ALPHA`\n\n-   for $I = K+1$, min(M,K+L) swap `ALPHA(I)` and `ALPHA(IWORK(I))`\n-   endfor\n\nsuch that $\\mathrm{ALPHA}(1) \\ge \\mathrm{ALPHA}(2)$ \\>= ... \\>= `ALPHA(N)`."
 		},
 		{
 			"name": "info",
@@ -302,7 +323,8 @@
 			"position": 24,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `> 0`: if `INFO = 1`, the Jacobi-type procedure failed to converge.  For further details, see subroutine DTGSJA."
 		}
 	],
 	"checks": [

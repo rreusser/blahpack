@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^H$ from the Left;\n-   `= 'R'`: apply Q or $Q^H$ from the Right."
 		},
 		{
 			"name": "uplo",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangular packed storage used in previous call to ZHPTRD;\n-   `= 'L'`: Lower triangular packed storage used in previous call to ZHPTRD."
 		},
 		{
 			"name": "trans",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: No transpose, apply Q;\n-   `= 'C'`: Conjugate transpose, apply $Q^H$."
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -61,7 +66,8 @@
 			"length": {
 				"fortran": "(M*(M+1)/2) if SIDE = 'L' or (N*(N+1)/2) if SIDE = 'R'",
 				"js": "( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "(N\\*(N+1)/2) if `SIDE = 'R'` The vectors which define the elementary reflectors, as returned by ZHPTRD. `AP` is modified by the routine but restored on exit."
 		},
 		{
 			"name": "TAU",
@@ -76,7 +82,8 @@
 			"length": {
 				"fortran": "(M-1) if SIDE = 'L' or (N-1) if SIDE = 'R'",
 				"js": "( side === 'left' ) ? M - 1 : N - 1"
-			}
+			},
+			"reference": "or (N-1) if `SIDE = 'R'` `TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by ZHPTRD."
 		},
 		{
 			"name": "C",
@@ -97,7 +104,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^H \\, C$ or $C \\, Q^H$ or $C \\, Q$."
 		},
 		{
 			"name": "ldc",
@@ -106,7 +114,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -126,7 +135,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "(M) if `SIDE = 'R'`"
 		},
 		{
 			"name": "info",
@@ -134,7 +144,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

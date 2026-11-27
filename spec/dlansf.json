@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the value to be returned in DLANSF as described above."
 		},
 		{
 			"name": "transr",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the RFP format of A is normal or transposed format.\n\n-   `= 'N'`: RFP format is Normal;\n-   `= 'T'`: RFP format is Transpose."
 		},
 		{
 			"name": "uplo",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the RFP matrix A came from an upper or lower triangular matrix as follows:\n\n-   `= 'U'`: RFP A came from an upper triangular matrix;\n-   `= 'L'`: RFP A came from a lower triangular matrix."
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$. When $N = 0$, DLANSF is set to zero."
 		},
 		{
 			"name": "a",
@@ -53,7 +57,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the upper (if `UPLO = 'U'`) or lower (if `UPLO = 'L'`) part of the symmetric matrix A stored in RFP format. See the \"Notes\" below for more details. Unchanged on exit."
 		},
 		{
 			"name": "WORK",
@@ -65,7 +70,8 @@
 			"dims": [
 				"MAX(1,LWORK)"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "where $\\mathrm{LWORK} \\ge N$ when `NORM = 'I'` or '1' or 'O'; otherwise, `WORK` is not referenced."
 		}
 	],
 	"checks": [],

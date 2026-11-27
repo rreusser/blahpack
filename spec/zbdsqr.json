@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: B is upper bidiagonal;\n-   `= 'L'`: B is lower bidiagonal."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix B. $N \\ge 0$."
 		},
 		{
 			"name": "ncvt",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix `VT`. $\\mathrm{NCVT} \\ge 0$."
 		},
 		{
 			"name": "nru",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix U. $\\mathrm{NRU} \\ge 0$."
 		},
 		{
 			"name": "ncc",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $\\mathrm{NCC} \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -60,7 +65,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the n diagonal elements of the bidiagonal matrix B. On exit, if `INFO=0`, the singular values of B in decreasing order."
 		},
 		{
 			"name": "e",
@@ -75,7 +81,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, the N-1 offdiagonal elements of the bidiagonal matrix B. On exit, if `INFO = 0`, E is destroyed; if $\\mathrm{INFO} > 0$, D and E will contain the diagonal and superdiagonal elements of a bidiagonal matrix orthogonally equivalent to the one given as input."
 		},
 		{
 			"name": "VT",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "NCVT",
 				"js": "ncvt"
-			}
+			},
+			"reference": "On entry, an N-by-`NCVT` matrix `VT`. On exit, `VT` is overwritten by $P^H \\, \\mathrm{VT}$. Not referenced if `NCVT = 0`."
 		},
 		{
 			"name": "ldvt",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VT"
+			"of": "VT",
+			"reference": "The leading dimension of the array `VT`. $\\mathrm{LDVT} \\ge \\max (1,N)$ if $\\mathrm{NCVT} > 0$; $\\mathrm{LDVT} \\ge 1$ if `NCVT = 0`."
 		},
 		{
 			"name": "U",
@@ -126,7 +135,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, an `NRU`-by-N matrix U. On exit, U is overwritten by $U \\, Q$. Not referenced if `NRU = 0`."
 		},
 		{
 			"name": "ldu",
@@ -135,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "U"
+			"of": "U",
+			"reference": "The leading dimension of the array U. $\\mathrm{LDU} \\ge \\max (1,\\mathrm{NRU})$."
 		},
 		{
 			"name": "C",
@@ -156,7 +167,8 @@
 			"cols": {
 				"fortran": "NCC",
 				"js": "ncc"
-			}
+			},
+			"reference": "On entry, an N-by-`NCC` matrix C. On exit, C is overwritten by $Q^H \\, C$. Not referenced if `NCC = 0`."
 		},
 		{
 			"name": "ldc",
@@ -165,7 +177,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,N)$ if $\\mathrm{NCC} > 0$; $\\mathrm{LDC} \\ge 1$ if `NCC = 0`."
 		},
 		{
 			"name": "RWORK",
@@ -193,7 +206,8 @@
 			"position": 15,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: If `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: the algorithm did not converge; D and E contain the elements of a bidiagonal matrix which is orthogonally similar to the input matrix B;  if `INFO = i`, i elements of E have not converged to zero."
 		}
 	],
 	"checks": [

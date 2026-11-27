@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^H$ from the Left;\n-   `= 'R'`: apply Q or $Q^H$ from the Right."
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: No transpose, apply Q;\n-   `= 'C'`: Conjugate Transpose, apply $Q^H$."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elementary reflectors whose product defines the matrix Q. $M \\ge K \\ge 0$;"
 		},
 		{
 			"name": "mb",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The block size to be used in the blocked QR. $\\mathrm{MB} > N$. (must be the same as ZLATSQR)"
 		},
 		{
 			"name": "nb",
@@ -61,7 +67,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The column block size to be used in the blocked QR. $N \\ge \\mathrm{NB} \\ge 1$."
 		},
 		{
 			"name": "A",
@@ -82,7 +89,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The i-th column must contain the vector which defines the blockedelementary reflector H(i), for $i = 1$,2,...,k, as returned by ZLATSQR in the first k columns of its array argument A."
 		},
 		{
 			"name": "lda",
@@ -91,7 +99,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. If `SIDE = 'L'`, $\\mathrm{LDA} \\ge \\max (1,M)$; if `SIDE = 'R'`, $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "T",
@@ -117,7 +126,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\mathrm{NB}$."
 		},
 		{
 			"name": "C",
@@ -138,7 +148,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^H \\, C$ or $C \\, Q^H$ or $C \\, Q$."
 		},
 		{
 			"name": "ldc",
@@ -147,7 +158,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -163,7 +175,8 @@
 				"fortran": "MAX(1,LW)",
 				"js": "max( 1, side === 'left' ? N * nb : M * nb )",
 				"source": "check"
-			}
+			},
+			"reference": "```text\n(workspace) COMPLEX*16 array, dimension (MAX(1,LWORK))\n```"
 		},
 		{
 			"name": "lwork",
@@ -172,7 +185,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`.\n\nIf `SIDE = 'L'`, $\\mathrm{LWORK} \\ge \\max (1,N) \\, \\mathrm{NB}$; if `SIDE = 'R'`, $\\mathrm{LWORK} \\ge \\max (1,\\mathrm{MB}) \\, \\mathrm{NB}$. If `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -180,7 +194,8 @@
 			"position": 16,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

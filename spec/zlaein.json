@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE. : compute right eigenvector; = .FALSE.: compute left eigenvector."
 		},
 		{
 			"name": "noinit",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE. : no initial vector supplied in V = .FALSE.: initial vector supplied in V."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix H. $N \\ge 0$."
 		},
 		{
 			"name": "H",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper Hessenberg matrix H."
 		},
 		{
 			"name": "ldh",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of the array H. $\\mathrm{LDH} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "w",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "complex128",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The eigenvalue of H whose corresponding right or left eigenvector is to be computed."
 		},
 		{
 			"name": "v",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `NOINIT` = .FALSE., V must contain a starting vector for inverse iteration; otherwise V need not be set. On exit, V contains the computed eigenvector, normalized so that the component of largest magnitude has magnitude 1; here the magnitude of a complex number (x,y) is taken to be \\|x\\| + \\|y\\|."
 		},
 		{
 			"name": "B",
@@ -112,7 +119,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "RWORK",
@@ -140,7 +148,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "A small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots."
 		},
 		{
 			"name": "smlnum",
@@ -148,7 +157,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "A machine-dependent value close to the underflow threshold."
 		},
 		{
 			"name": "info",
@@ -156,7 +166,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `= 1`: inverse iteration did not converge; V is set to the last iterate."
 		}
 	],
 	"checks": [],

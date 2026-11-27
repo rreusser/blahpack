@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "number of elements in input vector(s)"
 		},
 		{
 			"name": "x",
@@ -25,7 +26,8 @@
 			"intent": "in",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "complex vector with N elements"
 		},
 		{
 			"name": "incx",
@@ -34,7 +36,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "If $\\mathrm{INCX} > 0$, $X(1+(i-1) \\, \\mathrm{INCX}) = x(i)$ for $1 \\le i \\le n$ If $\\mathrm{INCX} < 0$, $X(1-(n-i) \\, \\mathrm{INCX}) = x(i)$ for $1 \\le i \\le n$ If `INCX = 0`, x isn't a vector so there is no need to call this subroutine. If you call it anyway, it will count x(1) in the vector norm N times."
 		}
 	],
 	"checks": [],

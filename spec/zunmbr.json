@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'Q'`: apply Q or $Q^H$;\n-   `= 'P'`: apply P or $P^H$."
 		},
 		{
 			"name": "side",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q, $Q^H$, P or $P^H$ from the Left;\n-   `= 'R'`: apply Q, $Q^H$, P or $P^H$ from the Right."
 		},
 		{
 			"name": "trans",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: No transpose, apply Q or P;\n-   `= 'C'`: Conjugate transpose, apply $Q^H$ or $P^H$."
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `VECT = 'Q'`, the number of columns in the original matrix reduced by ZGEBRD. If `VECT = 'P'`, the number of rows in the original matrix reduced by ZGEBRD. $K \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -74,7 +80,8 @@
 			"cols": {
 				"fortran": "MIN(NQ,K)",
 				"js": "min( side === 'left' ? M : N, K )"
-			}
+			},
+			"reference": "(`LDA`,nq) if `VECT = 'P'` The vectors which define the elementary reflectors H(i) and G(i), whose products determine the matrices Q and P, as returned by ZGEBRD."
 		},
 		{
 			"name": "lda",
@@ -83,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. If `VECT = 'Q'`, $\\mathrm{LDA} \\ge \\max (1,\\mathrm{nq})$; if `VECT = 'P'`, $\\mathrm{LDA} \\ge \\max (1,\\min (\\mathrm{nq},K))$."
 		},
 		{
 			"name": "TAU",
@@ -98,7 +106,8 @@
 			"length": {
 				"fortran": "MIN(NQ,K)",
 				"js": "min( side === 'left' ? M : N, K )"
-			}
+			},
+			"reference": "`TAU(i)` must contain the scalar factor of the elementary reflector H(i) or G(i) which determines Q or P, as returned by ZGEBRD in the array argument TAUQ or TAUP."
 		},
 		{
 			"name": "C",
@@ -119,7 +128,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^H \\, C$ or $C \\, Q^H$ or $C \\, Q$ or $P \\, C$ or $P^H \\, C$ or $C \\, P$ or $C \\, P^H$."
 		},
 		{
 			"name": "ldc",
@@ -128,7 +138,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -144,7 +155,8 @@
 				"fortran": "NW",
 				"js": "side === 'left' ? max( 1, N ) : max( 1, M )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -153,7 +165,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LWORK} \\ge \\max (1,N)$; if `SIDE = 'R'`, $\\mathrm{LWORK} \\ge \\max (1,M)$; if $N = 0$ or $M = 0$, $\\mathrm{LWORK} \\ge 1$. For optimum performance $\\mathrm{LWORK} \\ge \\max (1,N \\, \\mathrm{NB})$ if `SIDE = 'L'`, and $\\mathrm{LWORK} \\ge \\max (1,M \\, \\mathrm{NB})$ if `SIDE = 'R'`, where NB is the optimal blocksize. ($\\mathrm{NB} = 0$ if $M = 0$ or $N = 0$.)\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -161,7 +174,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

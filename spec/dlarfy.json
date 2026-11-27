@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the symmetric matrix C is stored.\n\n-   `= 'U'`: Upper triangle\n-   `= 'L'`: Lower triangle"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows and columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "v",
@@ -37,7 +39,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector v as described above."
 		},
 		{
 			"name": "incv",
@@ -46,7 +49,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The increment between successive elements of v. `INCV` must not be zero."
 		},
 		{
 			"name": "tau",
@@ -54,7 +58,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The value $\\tau$ as described above."
 		},
 		{
 			"name": "C",
@@ -75,7 +80,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix C. On exit, C is overwritten by $H \\, C \\, H$'."
 		},
 		{
 			"name": "ldc",
@@ -84,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max ( 1, N )$."
 		},
 		{
 			"name": "WORK",

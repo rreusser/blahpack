@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'U'`: Upper triangle of A is stored;\n-   `= 'L'`: Lower triangle of A is stored."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of linear equations, i.e., the order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "AP",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "N*(N+1)/2",
 				"js": "trunc( N * (N + 1) / 2 )"
-			}
+			},
+			"reference": "On entry, the upper or lower triangle of the Hermitian matrix A, packed columnwise in a linear array. The j-th column of A is stored in the array `AP` as follows: if `UPLO = 'U'`, `AP(i + (j-1)*j/2) = A(i,j)` for $1 \\le i \\le j$; if `UPLO = 'L'`, `AP(i + (j-1)*(2n-j)/2) = A(i,j)` for $j \\le i \\le n$. See below for further details.\n\nOn exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization $A = U \\, D \\, U^H$ or $A = L \\, D \\, L^H$ as computed by ZHPTRF, stored as a packed triangular matrix in the same storage format as A."
 		},
 		{
 			"name": "IPIV",
@@ -60,7 +64,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the interchanges and the block structure of D, as determined by ZHPTRF. If $\\mathrm{IPIV}(k) > 0$, then rows and columns k and `IPIV(k)` were interchanged, and D(k,k) is a 1-by-1 diagonal block. If `UPLO = 'U'` and $\\mathrm{IPIV}(k) = \\mathrm{IPIV}(k-1) < 0$, then rows and columns k-1 and -`IPIV(k)` were interchanged and D(k-1:k,k-1:k) is a 2-by-2 diagonal block. If `UPLO = 'L'` and $\\mathrm{IPIV}(k) = \\mathrm{IPIV}(k+1) < 0$, then rows and columns k+1 and -`IPIV(k)` were interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block."
 		},
 		{
 			"name": "B",
@@ -81,7 +86,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the N-by-`NRHS` right hand side matrix B. On exit, if `INFO = 0`, the N-by-`NRHS` solution matrix X."
 		},
 		{
 			"name": "ldb",
@@ -90,7 +96,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -98,7 +105,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, D(i,i) is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular, so the solution could not be computed."
 		}
 	],
 	"checks": [

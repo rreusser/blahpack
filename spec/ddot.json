@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "number of elements in input vector(s)"
 		},
 		{
 			"name": "x",
@@ -38,7 +39,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "DX"
+			"of": "DX",
+			"reference": "storage spacing between elements of `DX`"
 		},
 		{
 			"name": "y",
@@ -62,7 +64,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "DY"
+			"of": "DY",
+			"reference": "storage spacing between elements of `DY`"
 		}
 	],
 	"checks": [],

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines whether or not to update the full Schur form"
 		},
 		{
 			"name": "ilq",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines whether or not to update the matrix Q"
 		},
 		{
 			"name": "ilz",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Determines whether or not to update the matrix Z"
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A, B, Q, and Z. $N \\ge 0$."
 		},
 		{
 			"name": "ilo",
@@ -61,7 +65,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The desired number of shifts to use"
 		},
 		{
 			"name": "nblock_desired",
@@ -69,7 +74,8 @@
 			"position": 8,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The desired size of the computational windows"
 		},
 		{
 			"name": "SR",
@@ -80,7 +86,8 @@
 			"intent": "in",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "the real parts of the shifts to use."
 		},
 		{
 			"name": "SI",
@@ -91,7 +98,8 @@
 			"intent": "in",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "the imaginary parts of the shifts to use."
 		},
 		{
 			"name": "SS",
@@ -102,7 +110,8 @@
 			"intent": "in",
 			"dims": [
 				"*"
-			]
+			],
+			"reference": "the scale of the shifts to use."
 		},
 		{
 			"name": "A",
@@ -132,7 +141,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max ( 1, N )$."
 		},
 		{
 			"name": "B",
@@ -162,7 +172,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max ( 1, N )$."
 		},
 		{
 			"name": "Q",
@@ -266,7 +277,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "ZC"
+			"of": "ZC",
+			"reference": "`LDZ` is INTEGER"
 		},
 		{
 			"name": "WORK",
@@ -282,7 +294,8 @@
 				"fortran": "MAX(1,N)",
 				"js": "max( 1, N )",
 				"source": "doc"
-			}
+			},
+			"reference": "On exit, if $\\mathrm{INFO} \\ge 0$, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -291,7 +304,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,N)$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -299,7 +313,8 @@
 			"position": 26,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

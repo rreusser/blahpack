@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of lines of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N coefficient matrix A."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "SA",
@@ -72,7 +76,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, if `INFO=0`, the M-by-N coefficient matrix `SA`; if $\\mathrm{INFO}>0$, the content of `SA` is unspecified."
 		},
 		{
 			"name": "ldsa",
@@ -81,7 +86,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "SA"
+			"of": "SA",
+			"reference": "The leading dimension of the array `SA`. $\\mathrm{LDSA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "info",
@@ -89,7 +95,8 @@
 			"position": 7,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `= 1`: an entry of the matrix A is greater than the SINGLE PRECISION overflow threshold, in this case, the content of `SA` in exit is unspecified."
 		}
 	],
 	"checks": [],

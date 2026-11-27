@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the left generalized eigenvectors;\n-   `= 'V'`: compute the left generalized eigenvectors."
 		},
 		{
 			"name": "jobvr",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: do not compute the right generalized eigenvectors;\n-   `= 'V'`: compute the right generalized eigenvectors."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrices A, B, `VL`, and `VR`. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -50,7 +53,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in the pair (A,B). On exit, A has been overwritten."
 		},
 		{
 			"name": "lda",
@@ -59,7 +63,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -80,7 +85,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix B in the pair (A,B). On exit, B has been overwritten."
 		},
 		{
 			"name": "ldb",
@@ -89,7 +95,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ALPHA",
@@ -119,7 +126,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `ALPHA(j)`/`BETA(j)`, $j=1$,...,N, will be the generalized eigenvalues.\n\nNote: the quotients `ALPHA(j)`/`BETA(j)` may easily over- or underflow, and `BETA(j)` may even be zero. Thus, the user should avoid naively computing the ratio $\\alpha$/$\\beta$. However, `ALPHA` will be always less than and usually comparable with norm(A) in magnitude, and `BETA` always less than and usually comparable with norm(B)."
 		},
 		{
 			"name": "VL",
@@ -140,7 +148,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVL = 'V'`, the left generalized eigenvectors u(j) are stored one after another in the columns of `VL`, in the same order as their eigenvalues. Each eigenvector is scaled so the largest component has abs(real part) + abs(imag. part) = 1. Not referenced if `JOBVL = 'N'`."
 		},
 		{
 			"name": "ldvl",
@@ -149,7 +158,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the matrix `VL`. $\\mathrm{LDVL} \\ge 1$, and if `JOBVL = 'V'`, $\\mathrm{LDVL} \\ge N$."
 		},
 		{
 			"name": "VR",
@@ -170,7 +180,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `JOBVR = 'V'`, the right generalized eigenvectors v(j) are stored one after another in the columns of `VR`, in the same order as their eigenvalues. Each eigenvector is scaled so the largest component has abs(real part) + abs(imag. part) = 1. Not referenced if `JOBVR = 'N'`."
 		},
 		{
 			"name": "ldvr",
@@ -179,7 +190,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the matrix `VR`. $\\mathrm{LDVR} \\ge 1$, and if `JOBVR = 'V'`, $\\mathrm{LDVR} \\ge N$."
 		},
 		{
 			"name": "WORK",
@@ -195,7 +207,8 @@
 				"fortran": "LWKMIN",
 				"js": "max( 1, 2 * N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -204,7 +217,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. For good performance, `LWORK` must generally be larger.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -232,7 +246,8 @@
 			"position": 17,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value.\n-   `=1,...,N`:  The QZ iteration failed.  No eigenvectors have been calculated, but `ALPHA(j)` and `BETA(j)` should be correct for $j=\\mathrm{INFO}+1$,...,N.\n-   `> N`: =N+1: other then QZ iteration failed in ZHGEQZ, =N+2: error return from ZTGEVC."
 		}
 	],
 	"checks": [

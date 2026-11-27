@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^T$ from the Left\n-   `= 'R'`: apply Q or $Q^T$ from the Right"
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: apply Q  (No transpose)\n-   `= 'T'`: apply $Q^T$ (Transpose)"
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \\ge K \\ge 0$; if `SIDE = 'R'`, $N \\ge K \\ge 0$."
 		},
 		{
 			"name": "L",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A containing the meaningful part of the Householder reflectors. If `SIDE = 'L'`, $M \\ge L \\ge 0$, if `SIDE = 'R'`, $N \\ge L \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -74,7 +80,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "side === 'left' ? M : N"
-			}
+			},
+			"reference": "(`LDA`,N) if `SIDE = 'R'` The i-th row must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by DTZRZF in the last k rows of its array argument A. A is modified by the routine but restored on exit."
 		},
 		{
 			"name": "lda",
@@ -83,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,K)$."
 		},
 		{
 			"name": "TAU",
@@ -98,7 +106,8 @@
 			"length": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DTZRZF."
 		},
 		{
 			"name": "C",
@@ -119,7 +128,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m-by-n matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^T \\, C$ or $C \\, Q^T$ or $C \\, Q$."
 		},
 		{
 			"name": "ldc",
@@ -128,7 +138,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -148,7 +159,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "(M) if `SIDE = 'R'`"
 		},
 		{
 			"name": "info",
@@ -156,7 +168,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

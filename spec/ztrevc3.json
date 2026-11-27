@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'R'`: compute right eigenvectors only;\n-   `= 'L'`: compute left eigenvectors only;\n-   `= 'B'`: compute both right and left eigenvectors."
 		},
 		{
 			"name": "howmny",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: compute all right and/or left eigenvectors;\n-   `= 'B'`: compute all right and/or left eigenvectors, backtransformed using the matrices supplied in `VR` and/or `VL`;\n-   `= 'S'`: compute selected right and/or left eigenvectors, as indicated by the logical array `SELECT`."
 		},
 		{
 			"name": "SELECT",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `HOWMNY = 'S'`, `SELECT` specifies the eigenvectors to be computed. The eigenvector corresponding to the j-th eigenvalue is computed if `SELECT(j)` = .TRUE.. Not referenced if `HOWMNY = 'A'` or 'B'."
 		},
 		{
 			"name": "N",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -65,7 +69,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper triangular matrix T. T is modified, but restored on exit."
 		},
 		{
 			"name": "ldt",
@@ -74,7 +79,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "VL",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "On entry, if `SIDE = 'L'` or 'B' and `HOWMNY = 'B'`, `VL` must contain an N-by-N matrix Q (usually the unitary matrix Q of Schur vectors returned by ZHSEQR). On exit, if `SIDE = 'L'` or 'B', `VL` contains: if `HOWMNY = 'A'`, the matrix Y of left eigenvectors of T; if `HOWMNY = 'B'`, the matrix $Q \\, Y$; if `HOWMNY = 'S'`, the left eigenvectors of T specified by\n\n-   `SELECT`, stored consecutively in the columns\n-   of `VL`, in the same order as their\n-   eigenvalues.\n\nNot referenced if `SIDE = 'R'`."
 		},
 		{
 			"name": "ldvl",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the array `VL`. $\\mathrm{LDVL} \\ge 1$, and if `SIDE = 'L'` or 'B', $\\mathrm{LDVL} \\ge N$."
 		},
 		{
 			"name": "VR",
@@ -125,7 +133,8 @@
 			"cols": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "On entry, if `SIDE = 'R'` or 'B' and `HOWMNY = 'B'`, `VR` must contain an N-by-N matrix Q (usually the unitary matrix Q of Schur vectors returned by ZHSEQR). On exit, if `SIDE = 'R'` or 'B', `VR` contains: if `HOWMNY = 'A'`, the matrix X of right eigenvectors of T; if `HOWMNY = 'B'`, the matrix $Q \\, X$; if `HOWMNY = 'S'`, the right eigenvectors of T specified by\n\n-   `SELECT`, stored consecutively in the columns\n-   of `VR`, in the same order as their\n-   eigenvalues.\n\nNot referenced if `SIDE = 'L'`."
 		},
 		{
 			"name": "ldvr",
@@ -134,7 +143,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the array `VR`. $\\mathrm{LDVR} \\ge 1$, and if `SIDE = 'R'` or 'B', $\\mathrm{LDVR} \\ge N$."
 		},
 		{
 			"name": "mm",
@@ -142,7 +152,8 @@
 			"position": 11,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns in the arrays `VL` and/or `VR`. $\\mathrm{MM} \\ge M$."
 		},
 		{
 			"name": "m",
@@ -150,7 +161,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of columns in the arrays `VL` and/or `VR` actually used to store the eigenvectors. If `HOWMNY = 'A'` or 'B', M is set to N. Each selected eigenvector occupies one column."
 		},
 		{
 			"name": "WORK",
@@ -176,7 +188,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,2 \\, N)$. For optimum performance, $\\mathrm{LWORK} \\ge N + 2 \\, N \\, \\mathrm{NB}$, where NB is the optimal blocksize.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "RWORK",
@@ -201,7 +214,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "RWORK"
+			"of": "RWORK",
+			"reference": "The dimension of array `RWORK`. $\\mathrm{LRWORK} \\ge \\max (1,N)$.\n\nIf `LRWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `RWORK` array, returns this value as the first entry of the `RWORK` array, and no error message related to `LRWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -209,7 +223,8 @@
 			"position": 17,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

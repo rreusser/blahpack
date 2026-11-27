@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the option op(A):\n\n-   `= 'N'`: $\\operatorname{op}(A) = A$    (No transpose)\n-   `= 'T'`: $\\operatorname{op}(A) = A^T$ (Transpose)\n-   `= 'C'`: $\\operatorname{op}(A) = A^H$ (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "tranb",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the option op(B):\n\n-   `= 'N'`: $\\operatorname{op}(B) = B$    (No transpose)\n-   `= 'T'`: $\\operatorname{op}(B) = B^T$ (Transpose)\n-   `= 'C'`: $\\operatorname{op}(B) = B^H$ (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "isgn",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the sign in the equation: = +1: solve $\\operatorname{op}(A) \\, X + X \\, \\operatorname{op}(B)$ = scale\\*C\n\n-   `= -1`: solve $\\operatorname{op}(A) \\, X - X \\, \\operatorname{op}(B)$ = scale\\*C"
 		},
 		{
 			"name": "M",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A, and the number of rows in the matrices X and C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix B, and the number of columns in the matrices X and C. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "The upper quasi-triangular matrix A, in Schur canonical form."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper quasi-triangular matrix B, in Schur canonical form."
 		},
 		{
 			"name": "ldb",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "C",
@@ -126,7 +135,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X."
 		},
 		{
 			"name": "ldc",
@@ -135,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$"
 		},
 		{
 			"name": "scale",
@@ -143,7 +154,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The scale factor, scale, set \\<= 1 to avoid overflow in X."
 		},
 		{
 			"name": "info",
@@ -151,7 +163,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `= 1`: A and B have common or very close eigenvalues; perturbed values were used to solve the equation (but the matrices A and B are unchanged)."
 		}
 	],
 	"checks": [

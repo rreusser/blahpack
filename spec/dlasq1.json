@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows and columns in the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, D contains the diagonal elements of the bidiagonal matrix whose SVD is desired. On normal exit, D contains the singular values in decreasing order."
 		},
 		{
 			"name": "e",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, elements `E(1:N-1)` contain the off-diagonal elements of the bidiagonal matrix whose SVD is desired. On exit, E is overwritten."
 		},
 		{
 			"name": "WORK",
@@ -71,7 +74,8 @@
 			"position": 5,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: the algorithm failed = 1, a split was marked by a positive value in $E = 2$, current block of Z not diagonalized after $100 \\, N$ iterations (in inner while loop)  On exit D and E represent a matrix with the same singular values which the calling subroutine could use to finish the computation, or even feed back into $\\mathrm{DLASQ1} = 3$, termination criterion of outer while loop not met (program created more than N unreduced blocks)"
 		}
 	],
 	"checks": [

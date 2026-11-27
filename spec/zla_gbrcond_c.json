@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the form of the system of equations:\n\n-   `= 'N'`: $A \\, X = B$     (No transpose)\n-   `= 'T'`: $A^T \\, X = B$  (Transpose)\n-   `= 'C'`: $A^H \\, X = B$  (Conjugate Transpose = Transpose)"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of linear equations, i.e., the order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -59,7 +63,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in band storage, in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(KU+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{KU}) \\le i \\le \\min (N,j+\\mathrm{kl})$"
 		},
 		{
 			"name": "ldab",
@@ -68,7 +73,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDAB} \\ge \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "AFB",
@@ -89,7 +95,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the LU factorization of the band matrix A, as computed by ZGBTRF. U is stored as an upper triangular band matrix with `KL`+`KU` superdiagonals in rows 1 to `KL`+`KU`+1, and the multipliers used during the factorization are stored in rows `KL`+`KU`+2 to $2 \\, \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "ldafb",
@@ -98,7 +105,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AFB"
+			"of": "AFB",
+			"reference": "The leading dimension of the array `AFB`. $\\mathrm{LDAFB} \\ge 2 \\, \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "IPIV",
@@ -113,7 +121,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices from the factorization $A = P \\, L \\, U$ as computed by ZGBTRF; row i of the matrix was interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "c",
@@ -128,7 +137,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The vector C in the formula $\\operatorname{op}(A) \\, \\operatorname{inv}(\\operatorname{diag}(C))$."
 		},
 		{
 			"name": "capply",
@@ -136,7 +146,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If .TRUE. then access the vector C in the formula above."
 		},
 		{
 			"name": "info",
@@ -144,7 +155,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: Successful exit. $i > 0$:  The ith argument is invalid."
 		},
 		{
 			"name": "WORK",
@@ -164,7 +176,8 @@
 				"fortran": "2*N",
 				"js": "2 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "RWORK",
@@ -184,7 +197,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		}
 	],
 	"checks": [

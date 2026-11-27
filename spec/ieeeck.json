@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether to test just for infinity arithmetic or whether to test for infinity and NaN arithmetic.\n\n-   `= 0`: Verify infinity arithmetic only.\n-   `= 1`: Verify infinity and NaN arithmetic."
 		},
 		{
 			"name": "zero",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Must contain the value 0.0 This is passed to prevent the compiler from optimizing away this code."
 		},
 		{
 			"name": "one",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Must contain the value 1.0 This is passed to prevent the compiler from optimizing away this code.\n\nRETURN VALUE: INTEGER\n\n-   = 0: Arithmetic failed to produce the correct answers\n-   = 1: Arithmetic produced the correct answers"
 		}
 	],
 	"checks": [],

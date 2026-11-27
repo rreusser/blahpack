@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the matrix is an upper or lower triangular matrix as follows:\n\n`UPLO = 'U'` or 'u' A is an upper triangular matrix.\n\n`UPLO = 'L'` or 'l' A is a lower triangular matrix."
 		},
 		{
 			"name": "trans",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the equations to be solved as follows:\n\n$$\n\\mathrm{TRANS} = \\text{'N'} \\quad\\text{or}\\quad \\text{'n'} A \\, x = b\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'T'} \\quad\\text{or}\\quad \\text{'t'} A^T \\, x = b\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'C'} \\quad\\text{or}\\quad \\text{'c'} A^T \\, x = b\n$$"
 		},
 		{
 			"name": "diag",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `DIAG` specifies whether or not A is unit triangular as follows:\n\n`DIAG = 'U'` or 'u' A is assumed to be unit triangular.\n\n`DIAG = 'N'` or 'n' A is not assumed to be unit\n\ntriangular."
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of the matrix A. N must be at least zero."
 		},
 		{
 			"name": "K",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry with `UPLO = 'U'` or 'u', K specifies the number of super-diagonals of the matrix A. On entry with `UPLO = 'L'` or 'l', K specifies the number of sub-diagonals of the matrix A. K must satisfy 0 .le. K."
 		},
 		{
 			"name": "A",
@@ -67,7 +72,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry with `UPLO = 'U'` or 'u', the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. The top left k by k triangle of the array A is not referenced. The following program segment will transfer an upper triangular band matrix from conventional full matrix storage to band storage:\n\n```text\n   DO 20, J = 1, N\n      M = K + 1 - J\n      DO 10, I = MAX( 1, J - K ), J\n         A( M + I, J ) = matrix( I, J )\n10    CONTINUE\n20 CONTINUE\n```\n\nBefore entry with `UPLO = 'L'` or 'l', the leading ( k + 1 ) by n part of the array A must contain the lower triangular band part of the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row 1 of the array, the first sub-diagonal starting at position 1 in row 2, and so on. The bottom right k by k triangle of the array A is not referenced. The following program segment will transfer a lower triangular band matrix from conventional full matrix storage to band storage:\n\n```text\n   DO 20, J = 1, N\n      M = 1 - J\n      DO 10, I = J, MIN( N, J + K )\n         A( M + I, J ) = matrix( I, J )\n10    CONTINUE\n20 CONTINUE\n```\n\nNote that when `DIAG = 'U'` or 'u' the elements of the array A corresponding to the diagonal elements of the matrix are not referenced, but are assumed to be unity."
 		},
 		{
 			"name": "lda",
@@ -76,7 +82,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least ( k + 1 )."
 		},
 		{
 			"name": "x",
@@ -91,7 +98,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "( 1 + ( n - 1 )\\*abs( `INCX` ) ). Before entry, the incremented array X must contain the n element right-hand side vector b. On exit, X is overwritten with the solution vector x."
 		},
 		{
 			"name": "incx",
@@ -100,7 +108,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero."
 		}
 	],
 	"checks": [

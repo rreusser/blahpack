@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: form  $H \\, C$\n-   `= 'R'`: form  $C \\, H$"
 		},
 		{
 			"name": "m",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C."
 		},
 		{
 			"name": "L",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of entries of the vector V containing the meaningful part of the Householder vectors. If `SIDE = 'L'`, $M \\ge L \\ge 0$, if `SIDE = 'R'`, $N \\ge L \\ge 0$."
 		},
 		{
 			"name": "v",
@@ -53,7 +57,8 @@
 			"length": {
 				"fortran": "L",
 				"js": "L"
-			}
+			},
+			"reference": "The vector v in the representation of H as returned by ZTZRZF. V is not used if `TAU = 0`."
 		},
 		{
 			"name": "incv",
@@ -62,7 +67,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The increment between elements of v. `INCV` \\<\\> 0."
 		},
 		{
 			"name": "tau",
@@ -71,6 +77,7 @@
 			"role": "scalar",
 			"dtype": "complex128",
 			"intent": "in",
+			"reference": "The value $\\tau$ in the representation of H.",
 			"element": true
 		},
 		{
@@ -92,7 +99,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by the matrix $H \\, C$ if `SIDE = 'L'`, or $C \\, H$ if `SIDE = 'R'`."
 		},
 		{
 			"name": "ldc",
@@ -101,7 +109,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -121,7 +130,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "or (M) if `SIDE = 'R'`"
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the elementary reflector."
 		},
 		{
 			"name": "alpha",
@@ -23,6 +24,7 @@
 			"role": "scalar",
 			"dtype": "float64",
 			"intent": "inout",
+			"reference": "On entry, the value $\\alpha$. On exit, it is overwritten with the value $\\beta$.",
 			"element": true
 		},
 		{
@@ -38,7 +40,8 @@
 			"length": {
 				"fortran": "1+(N-2)*ABS(INCX)",
 				"js": "1 + (N - 2) * abs( incx )"
-			}
+			},
+			"reference": "On entry, the vector x. On exit, it is overwritten with the vector v."
 		},
 		{
 			"name": "incx",
@@ -47,7 +50,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between elements of X. $\\mathrm{INCX} > 0$."
 		},
 		{
 			"name": "tau",
@@ -56,6 +60,7 @@
 			"role": "scalar",
 			"dtype": "float64",
 			"intent": "out",
+			"reference": "The value $\\tau$.",
 			"element": true
 		}
 	],

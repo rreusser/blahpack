@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the operation applied to A.\n\n-   `= 'N'`: No transpose, B := $\\alpha \\, A \\, X + \\beta \\, B$\n-   `= 'T'`: Transpose,    B := $\\alpha \\, A^T \\, X + \\beta \\, B$\n-   `= 'C'`: Conjugate transpose, B := $\\alpha \\, A^H \\, X + \\beta \\, B$"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrices X and B."
 		},
 		{
 			"name": "alpha",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The scalar $\\alpha$. `ALPHA` must be 0., 1., or -1.; otherwise, it is assumed to be 0."
 		},
 		{
 			"name": "DL",
@@ -53,7 +57,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) sub-diagonal elements of T."
 		},
 		{
 			"name": "d",
@@ -68,7 +73,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The diagonal elements of T."
 		},
 		{
 			"name": "DU",
@@ -83,7 +89,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) super-diagonal elements of T."
 		},
 		{
 			"name": "X",
@@ -104,7 +111,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The N by `NRHS` matrix X."
 		},
 		{
 			"name": "ldx",
@@ -113,7 +121,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (N,1)$."
 		},
 		{
 			"name": "beta",
@@ -121,7 +130,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The scalar $\\beta$. `BETA` must be 0., 1., or -1.; otherwise, it is assumed to be 1."
 		},
 		{
 			"name": "B",
@@ -142,7 +152,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the N by `NRHS` matrix B. On exit, B is overwritten by the matrix expression B := $\\alpha \\, A \\, X + \\beta \\, B$."
 		},
 		{
 			"name": "ldb",
@@ -151,7 +162,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (N,1)$."
 		}
 	],
 	"checks": [],

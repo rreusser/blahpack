@@ -22,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Two numbers to compare for inequality."
 		}
 	],
 	"checks": [],

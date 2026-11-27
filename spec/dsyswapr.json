@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the details of the factorization are stored as an upper or lower triangular matrix.\n\n-   `= 'U'`: Upper triangular, form is $A = U \\, D \\, U^T$;\n-   `= 'L'`: Lower triangular, form is $A = L \\, D \\, L^T$."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -39,7 +41,8 @@
 			"rows": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the N-by-N matrix A. On exit, the permuted matrix where the rows `I1` and `I2` and columns `I1` and `I2` are interchanged. If `UPLO = 'U'`, the interchanges are applied to the upper triangular part and the strictly lower triangular part of A is not referenced; if `UPLO = 'L'`, the interchanges are applied to the lower triangular part and the part of A above the diagonal is not referenced."
 		},
 		{
 			"name": "lda",
@@ -48,7 +51,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "i1",
@@ -56,7 +60,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Index of the first row to swap"
 		},
 		{
 			"name": "i2",
@@ -64,7 +69,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Index of the second row to swap"
 		}
 	],
 	"checks": [],

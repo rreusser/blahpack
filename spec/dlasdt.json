@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, the number of diagonal elements of the bidiagonal matrix."
 		},
 		{
 			"name": "lvl",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, the number of levels on the computation tree."
 		},
 		{
 			"name": "nd",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "On exit, the number of nodes on the tree."
 		},
 		{
 			"name": "INODE",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, centers of subproblems."
 		},
 		{
 			"name": "NDIML",
@@ -60,7 +64,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, row dimensions of left children."
 		},
 		{
 			"name": "NDIMR",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, row dimensions of right children."
 		},
 		{
 			"name": "msub",
@@ -83,7 +89,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, the maximum row dimension each subproblem at the bottom of the tree can be of."
 		}
 	],
 	"checks": [],

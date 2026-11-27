@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the operations to be performed on A:\n\n-   `= 'N'`: none:  simply set `ILO = 1`, `IHI = N`, `SCALE(I) = 1.0` for $i = 1$,...,N;\n-   `= 'P'`: permute only;\n-   `= 'S'`: scale only;\n-   `= 'B'`: both permute and scale."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -42,7 +44,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the input matrix A. On exit, A is overwritten by the balanced matrix. If `JOB = 'N'`, A is not referenced. See Further Details."
 		},
 		{
 			"name": "lda",
@@ -51,7 +54,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ilo",
@@ -67,7 +71,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "`ILO` and `IHI` are set to integers such that on exit $A(i,j) = 0$ if $i > j$ and $j = 1$,...,`ILO`-1 or $I = \\mathrm{IHI}+1$,...,N. If `JOB = 'N'` or 'S', `ILO = 1` and `IHI = N`."
 		},
 		{
 			"name": "SCALE",
@@ -82,7 +87,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Details of the permutations and scaling factors applied to A. If P(j) is the index of the row and column interchanged with row and column j and D(j) is the scaling factor applied to row and column j, then\n\n```text\nSCALE(j) = P(j)    for j = 1,...,ILO-1\n         = D(j)    for j = ILO,...,IHI\n         = P(j)    for j = IHI+1,...,N.\n```\n\nThe order in which the interchanges are made is N to `IHI`+1, then 1 to `ILO`-1."
 		},
 		{
 			"name": "info",
@@ -90,7 +96,8 @@
 			"position": 8,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

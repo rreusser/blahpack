@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the form of the system of equations.\n\n-   `= 'N'`: $A \\, X = B$  (No transpose)\n-   `= 'T'`: $A^T \\, X = B$  (Transpose)\n-   `= 'C'`: $A^T \\, X = B$  (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A."
 		},
 		{
 			"name": "nrhs",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "DL",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) multipliers that define the matrix L from the LU factorization of A."
 		},
 		{
 			"name": "d",
@@ -59,7 +63,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the upper triangular matrix U from the LU factorization of A."
 		},
 		{
 			"name": "DU",
@@ -74,7 +79,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) elements of the first super-diagonal of U."
 		},
 		{
 			"name": "DU2",
@@ -89,7 +95,8 @@
 			"length": {
 				"fortran": "N-2",
 				"js": "N - 2"
-			}
+			},
+			"reference": "The (n-2) elements of the second super-diagonal of U."
 		},
 		{
 			"name": "IPIV",
@@ -104,7 +111,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices; for $1 \\le i \\le n$, row i of the matrix was interchanged with row `IPIV(i)`. `IPIV(i)` will always be either i or i+1; `IPIV(i) = i` indicates a row interchange was not required."
 		},
 		{
 			"name": "B",
@@ -125,7 +133,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X."
 		},
 		{
 			"name": "ldb",
@@ -134,7 +143,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -142,7 +152,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

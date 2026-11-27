@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The N diagonal elements of T."
 		},
 		{
 			"name": "E2",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The Squares of the (N-1) subdiagonal elements of T."
 		},
 		{
 			"name": "ifirst",
@@ -51,7 +54,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the first eigenvalue to be computed."
 		},
 		{
 			"name": "ilast",
@@ -59,7 +63,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The index of the last eigenvalue to be computed."
 		},
 		{
 			"name": "rtol",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Tolerance for the convergence of the bisection intervals. An interval \\[LEFT,RIGHT\\] has converged if $\\mathrm{RIGHT}-\\mathrm{LEFT} < \\mathrm{RTOL} \\, \\max (|\\mathrm{LEFT}|,|\\mathrm{RIGHT}|)$."
 		},
 		{
 			"name": "offset",
@@ -75,7 +81,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Offset for the arrays W and `WERR`, i.e., the `IFIRST`-`OFFSET` through `ILAST`-`OFFSET` elements of these arrays are to be used."
 		},
 		{
 			"name": "w",
@@ -90,7 +97,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, W( `IFIRST`-`OFFSET` ) through W( `ILAST`-`OFFSET` ) are estimates of the eigenvalues of L D L^T indexed `IFIRST` through `ILAST`. On output, these estimates are refined."
 		},
 		{
 			"name": "WERR",
@@ -105,7 +113,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On input, WERR( `IFIRST`-`OFFSET` ) through WERR( `ILAST`-`OFFSET` ) are the errors in the estimates of the corresponding elements in W. On output, these errors are refined."
 		},
 		{
 			"name": "WORK",
@@ -125,7 +134,8 @@
 				"fortran": "2*N",
 				"js": "2 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "IWORK",
@@ -145,7 +155,8 @@
 				"fortran": "2*N",
 				"js": "2 * N",
 				"source": "dimension"
-			}
+			},
+			"reference": "Workspace."
 		},
 		{
 			"name": "pivmin",
@@ -153,7 +164,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The minimum pivot in the Sturm sequence for T."
 		},
 		{
 			"name": "spdiam",
@@ -161,7 +173,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The spectral diameter of T."
 		},
 		{
 			"name": "info",
@@ -169,7 +182,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Error flag."
 		}
 	],
 	"checks": [],

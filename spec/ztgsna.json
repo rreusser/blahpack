@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether condition numbers are required for eigenvalues (S) or eigenvectors (`DIF`):\n\n-   `= 'E'`: for eigenvalues only (S);\n-   `= 'V'`: for eigenvectors only (`DIF`);\n-   `= 'B'`: for both eigenvalues and eigenvectors (S and `DIF`)."
 		},
 		{
 			"name": "howmny",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: compute condition numbers for all eigenpairs;\n-   `= 'S'`: compute condition numbers for selected eigenpairs specified by the array `SELECT`."
 		},
 		{
 			"name": "SELECT",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `HOWMNY = 'S'`, `SELECT` specifies the eigenpairs for which condition numbers are required. To select condition numbers for the corresponding j-th eigenvalue and/or eigenvector, `SELECT(j)` must be set to .TRUE.. If `HOWMNY = 'A'`, `SELECT` is not referenced."
 		},
 		{
 			"name": "N",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the square matrix pair (A, B). $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -65,7 +69,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper triangular matrix A in the pair (A,B)."
 		},
 		{
 			"name": "lda",
@@ -74,7 +79,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "B",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper triangular matrix B in the pair (A, B)."
 		},
 		{
 			"name": "ldb",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "VL",
@@ -125,7 +133,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "mm"
-			}
+			},
+			"reference": "IF `JOB = 'E'` or 'B', `VL` must contain left eigenvectors of (A, B), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VL`, as returned by ZTGEVC. If `JOB = 'V'`, `VL` is not referenced."
 		},
 		{
 			"name": "ldvl",
@@ -134,7 +143,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VL"
+			"of": "VL",
+			"reference": "The leading dimension of the array `VL`. $\\mathrm{LDVL} \\ge 1$; and If `JOB = 'E'` or 'B', $\\mathrm{LDVL} \\ge N$."
 		},
 		{
 			"name": "VR",
@@ -155,7 +165,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "mm"
-			}
+			},
+			"reference": "IF `JOB = 'E'` or 'B', `VR` must contain right eigenvectors of (A, B), corresponding to the eigenpairs specified by `HOWMNY` and `SELECT`. The eigenvectors must be stored in consecutive columns of `VR`, as returned by ZTGEVC. If `JOB = 'V'`, `VR` is not referenced."
 		},
 		{
 			"name": "ldvr",
@@ -164,7 +175,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "VR"
+			"of": "VR",
+			"reference": "The leading dimension of the array `VR`. $\\mathrm{LDVR} \\ge 1$; If `JOB = 'E'` or 'B', $\\mathrm{LDVR} \\ge N$."
 		},
 		{
 			"name": "s",
@@ -179,7 +191,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'E'` or 'B', the reciprocal condition numbers of the selected eigenvalues, stored in consecutive elements of the array. If `JOB = 'V'`, S is not referenced."
 		},
 		{
 			"name": "DIF",
@@ -194,7 +207,8 @@
 			"length": {
 				"fortran": "MM",
 				"js": "mm"
-			}
+			},
+			"reference": "If `JOB = 'V'` or 'B', the estimated reciprocal condition numbers of the selected eigenvectors, stored in consecutive elements of the array. If the eigenvalues cannot be reordered to compute `DIF(j)`, `DIF(j)` is set to 0; this can only occur when the true value would be very small anyway. For each eigenvalue/vector specified by `SELECT`, `DIF` stores a Frobenius norm-based estimate of Difl. If `JOB = 'E'`, `DIF` is not referenced."
 		},
 		{
 			"name": "mm",
@@ -202,7 +216,8 @@
 			"position": 15,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elements in the arrays S and `DIF`. $\\mathrm{MM} \\ge M$."
 		},
 		{
 			"name": "m",
@@ -210,7 +225,8 @@
 			"position": 16,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of elements of the arrays S and `DIF` used to store the specified condition numbers; for each selected eigenvalue one element is used. If `HOWMNY = 'A'`, M is set to N."
 		},
 		{
 			"name": "WORK",
@@ -226,7 +242,8 @@
 				"fortran": "LWMIN",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -235,7 +252,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,N)$. If `JOB = 'V'` or 'B', $\\mathrm{LWORK} \\ge \\max (1,2 \\, N \\, N)$."
 		},
 		{
 			"name": "IWORK",
@@ -255,7 +273,8 @@
 				"fortran": "N+2",
 				"js": "N + 2",
 				"source": "dimension"
-			}
+			},
+			"reference": "If `JOB = 'E'`, `IWORK` is not referenced."
 		},
 		{
 			"name": "info",
@@ -263,7 +282,8 @@
 			"position": 20,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: Successful exit\n-   `< 0`: If `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

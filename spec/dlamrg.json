@@ -22,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "These arguments contain the respective lengths of the two sorted lists to be merged."
 		},
 		{
 			"name": "a",
@@ -37,7 +38,8 @@
 			"length": {
 				"fortran": "N1+N2",
 				"js": "n1 + n2"
-			}
+			},
+			"reference": "The first `N1` elements of A contain a list of numbers which are sorted in either ascending or descending order. Likewise for the final `N2` elements."
 		},
 		{
 			"name": "dtrd1",
@@ -53,7 +55,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "These are the strides to be taken through the array A. Allowable strides are 1 and -1. They indicate whether a subset of A is sorted in ascending (DTRDx = 1) or descending (DTRDx = -1) order."
 		},
 		{
 			"name": "INDEX",
@@ -68,7 +71,8 @@
 			"length": {
 				"fortran": "N1+N2",
 				"js": "n1 + n2"
-			}
+			},
+			"reference": "On exit this array will contain a permutation such that if $B( I ) = A( \\mathrm{INDEX}( I ) )$ for $I=1$,`N1`+`N2`, then B will be sorted in ascending order."
 		}
 	],
 	"checks": [],

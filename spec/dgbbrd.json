@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not the matrices Q and $P^T$ are to be formed.\n\n-   `= 'N'`: do not form Q or $P^T$;\n-   `= 'Q'`: form Q only;\n-   `= 'P'`: form $P^T$ only;\n-   `= 'B'`: form both."
 		},
 		{
 			"name": "M",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "ncc",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $\\mathrm{NCC} \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals of the matrix A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals of the matrix A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -74,7 +80,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m-by-n band matrix A, stored in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(ku+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{ku}) \\le i \\le \\min (m,j+\\mathrm{kl})$. On exit, A is overwritten by values generated during the reduction."
 		},
 		{
 			"name": "ldab",
@@ -83,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDAB} \\ge \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "d",
@@ -98,7 +106,8 @@
 			"length": {
 				"fortran": "MIN(M,N)",
 				"js": "min( M, N )"
-			}
+			},
+			"reference": "The diagonal elements of the bidiagonal matrix B."
 		},
 		{
 			"name": "e",
@@ -113,7 +122,8 @@
 			"length": {
 				"fortran": "MIN(M,N)-1",
 				"js": "min( M, N ) - 1"
-			}
+			},
+			"reference": "The superdiagonal elements of the bidiagonal matrix B."
 		},
 		{
 			"name": "Q",
@@ -134,7 +144,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "If `VECT = 'Q'` or 'B', the m-by-m orthogonal matrix Q. If `VECT = 'N'` or 'P', the array Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -143,7 +154,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge \\max (1,M)$ if `VECT = 'Q'` or 'B'; $\\mathrm{LDQ} \\ge 1$ otherwise."
 		},
 		{
 			"name": "PT",
@@ -164,7 +176,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `VECT = 'P'` or 'B', the n-by-n orthogonal matrix P'. If `VECT = 'N'` or 'Q', the array `PT` is not referenced."
 		},
 		{
 			"name": "ldpt",
@@ -173,7 +186,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "PT"
+			"of": "PT",
+			"reference": "The leading dimension of the array `PT`. $\\mathrm{LDPT} \\ge \\max (1,N)$ if `VECT = 'P'` or 'B'; $\\mathrm{LDPT} \\ge 1$ otherwise."
 		},
 		{
 			"name": "C",
@@ -194,7 +208,8 @@
 			"cols": {
 				"fortran": "NCC",
 				"js": "ncc"
-			}
+			},
+			"reference": "On entry, an m-by-ncc matrix C. On exit, C is overwritten by $Q^T \\, C$. C is not referenced if `NCC = 0`."
 		},
 		{
 			"name": "ldc",
@@ -203,7 +218,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$ if $\\mathrm{NCC} > 0$; $\\mathrm{LDC} \\ge 1$ if `NCC = 0`."
 		},
 		{
 			"name": "WORK",
@@ -231,7 +247,8 @@
 			"position": 18,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

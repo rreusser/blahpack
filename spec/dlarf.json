@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: form  $H \\, C$\n-   `= 'R'`: form  $C \\, H$"
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C."
 		},
 		{
 			"name": "v",
@@ -45,7 +48,8 @@
 			"length": {
 				"fortran": "(M) if SIDE = 'L' or (N) if SIDE = 'R'",
 				"js": "( side === 'left' ) ? M : N"
-			}
+			},
+			"reference": "or (1 + (N-1)\\*abs(`INCV`)) if `SIDE = 'R'` The vector v in the representation of H. V is not used if `TAU = 0`."
 		},
 		{
 			"name": "incv",
@@ -54,7 +58,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The increment between elements of v. `INCV` \\<\\> 0."
 		},
 		{
 			"name": "tau",
@@ -62,7 +67,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The value $\\tau$ in the representation of H."
 		},
 		{
 			"name": "C",
@@ -83,7 +89,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the m by n matrix C. On exit, C is overwritten by the matrix $H \\, C$ if `SIDE = 'L'`, or $C \\, H$ if `SIDE = 'R'`."
 		},
 		{
 			"name": "ldc",
@@ -92,7 +99,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -112,7 +120,8 @@
 				"fortran": "N",
 				"js": "N",
 				"source": "dimension"
-			}
+			},
+			"reference": "or (M) if `SIDE = 'R'`"
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the symmetric matrix A is stored:\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A."
 		},
 		{
 			"name": "nb",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows and columns to be reduced."
 		},
 		{
 			"name": "A",
@@ -47,7 +50,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the symmetric matrix A. If `UPLO = 'U'`, the leading n-by-n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n-by-n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced. On exit: if `UPLO = 'U'`, the last `NB` columns have been reduced to\n\n-   tridiagonal form, with the diagonal elements overwriting\n-   the diagonal elements of A; the elements above the diagonal\n-   with the array `TAU`, represent the orthogonal matrix Q as a\n-   product of elementary reflectors;\n\nif `UPLO = 'L'`, the first `NB` columns have been reduced to\n\n-   tridiagonal form, with the diagonal elements overwriting\n-   the diagonal elements of A; the elements below the diagonal\n-   with the array `TAU`, represent the orthogonal matrix Q as a\n-   product of elementary reflectors.\n\nSee Further Details."
 		},
 		{
 			"name": "lda",
@@ -56,7 +60,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge (1,N)$."
 		},
 		{
 			"name": "e",
@@ -71,7 +76,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "If `UPLO = 'U'`, `E(n-nb:n-1)` contains the superdiagonal elements of the last `NB` columns of the reduced matrix; if `UPLO = 'L'`, `E(1:nb)` contains the subdiagonal elements of the first `NB` columns of the reduced matrix."
 		},
 		{
 			"name": "TAU",
@@ -86,7 +92,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The scalar factors of the elementary reflectors, stored in `TAU(n-nb:n-1)` if `UPLO = 'U'`, and in `TAU(1:nb)` if `UPLO = 'L'`. See Further Details."
 		},
 		{
 			"name": "W",
@@ -107,7 +114,8 @@
 			"cols": {
 				"fortran": "NB",
 				"js": "nb"
-			}
+			},
+			"reference": "The n-by-nb matrix W required to update the unreduced part of A."
 		},
 		{
 			"name": "ldw",
@@ -116,7 +124,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "W"
+			"of": "W",
+			"reference": "The leading dimension of the array W. $\\mathrm{LDW} \\ge \\max (1,N)$."
 		}
 	],
 	"checks": [],

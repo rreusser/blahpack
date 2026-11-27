@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The dimension of the symmetric tridiagonal matrix. $N \\ge 0$."
 		},
 		{
 			"name": "tlvls",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The total number of merging levels in the overall divide and conquer tree."
 		},
 		{
 			"name": "curlvl",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The current level in the overall merge routine, 0 \\<= curlvl \\<= tlvls."
 		},
 		{
 			"name": "curpbm",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The current problem in the current level in the overall merge routine (counting from upper left to lower right)."
 		},
 		{
 			"name": "PRMPTR",
@@ -52,7 +56,8 @@
 			"length": {
 				"fortran": "NLGN",
 				"js": null
-			}
+			},
+			"reference": "Contains a list of pointers which indicate where in `PERM` a level's permutation is stored. `PRMPTR(i+1)` - `PRMPTR(i)` indicates the size of the permutation and incidentally the size of the full, non-deflated problem."
 		},
 		{
 			"name": "PERM",
@@ -67,7 +72,8 @@
 			"length": {
 				"fortran": "NLGN",
 				"js": null
-			}
+			},
+			"reference": "Contains the permutations (from deflation and sorting) to be applied to each eigenblock."
 		},
 		{
 			"name": "GIVPTR",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "NLGN",
 				"js": null
-			}
+			},
+			"reference": "Contains a list of pointers which indicate where in `GIVCOL` a level's Givens rotations are stored. `GIVPTR(i+1)` - `GIVPTR(i)` indicates the number of Givens rotations."
 		},
 		{
 			"name": "GIVCOL",
@@ -103,7 +110,8 @@
 			"cols": {
 				"fortran": "NLGN",
 				"js": null
-			}
+			},
+			"reference": "Each pair of numbers indicates a pair of columns to take place in a Givens rotation."
 		},
 		{
 			"name": "GIVNUM",
@@ -124,7 +132,8 @@
 			"cols": {
 				"fortran": "NLGN",
 				"js": null
-			}
+			},
+			"reference": "Each number indicates the S value to be used in the corresponding Givens rotation."
 		},
 		{
 			"name": "q",
@@ -139,7 +148,8 @@
 			"length": {
 				"fortran": "N**2",
 				"js": "N**2"
-			}
+			},
+			"reference": "Contains the square eigenblocks from previous levels, the starting positions for blocks are given by `QPTR`."
 		},
 		{
 			"name": "QPTR",
@@ -154,7 +164,8 @@
 			"length": {
 				"fortran": "N+2",
 				"js": "N + 2"
-			}
+			},
+			"reference": "Contains a list of pointers which indicate where in Q an eigenblock is stored. SQRT( `QPTR(i+1)` - `QPTR(i)` ) indicates the size of the block."
 		},
 		{
 			"name": "z",
@@ -169,7 +180,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On output this vector contains the updating vector (the last row of the first sub-eigenvector matrix and the first row of the second sub-eigenvector matrix)."
 		},
 		{
 			"name": "ZTEMP",
@@ -192,7 +204,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

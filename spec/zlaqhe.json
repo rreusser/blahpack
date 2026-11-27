@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored.\n\n-   `= 'U'`: Upper triangular\n-   `= 'L'`: Lower triangular"
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -43,7 +45,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the Hermitian matrix A. If `UPLO = 'U'`, the leading n by n upper triangular part of A contains the upper triangular part of the matrix A, and the strictly lower triangular part of A is not referenced. If `UPLO = 'L'`, the leading n by n lower triangular part of A contains the lower triangular part of the matrix A, and the strictly upper triangular part of A is not referenced.\n\nOn exit, if `EQUED = 'Y'`, the equilibrated matrix: $\\operatorname{diag}(S) \\, A \\, \\operatorname{diag}(S)$."
 		},
 		{
 			"name": "lda",
@@ -52,7 +55,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (N,1)$."
 		},
 		{
 			"name": "s",
@@ -67,7 +71,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The scale factors for A."
 		},
 		{
 			"name": "scond",
@@ -75,7 +80,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Ratio of the smallest `S(i)` to the largest `S(i)`."
 		},
 		{
 			"name": "amax",
@@ -83,7 +89,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Absolute value of largest matrix entry."
 		},
 		{
 			"name": "equed",
@@ -91,7 +98,8 @@
 			"position": 8,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Specifies whether or not equilibration was done.\n\n-   `= 'N'`: No equilibration.\n-   `= 'Y'`: Equilibration was done, i.e., A has been replaced by $\\operatorname{diag}(S) \\, A \\, \\operatorname{diag}(S)$."
 		}
 	],
 	"checks": [],

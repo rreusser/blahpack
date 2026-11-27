@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether condition numbers are required for the cluster of eigenvalues (S) or the invariant subspace (`SEP`):\n\n-   `= 'N'`: none;\n-   `= 'E'`: for eigenvalues only (S);\n-   `= 'V'`: for invariant subspace only (`SEP`);\n-   `= 'B'`: for both eigenvalues and invariant subspace (S and `SEP`)."
 		},
 		{
 			"name": "compq",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'V'`: update the matrix Q of Schur vectors;\n-   `= 'N'`: do not update Q."
 		},
 		{
 			"name": "SELECT",
@@ -36,7 +38,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "`SELECT` specifies the eigenvalues in the selected cluster. To select the j-th eigenvalue, `SELECT(j)` must be set to .TRUE.."
 		},
 		{
 			"name": "N",
@@ -44,7 +47,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T. $N \\ge 0$."
 		},
 		{
 			"name": "T",
@@ -65,7 +69,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper triangular matrix T. On exit, T is overwritten by the reordered matrix T, with the selected eigenvalues as the leading diagonal elements."
 		},
 		{
 			"name": "ldt",
@@ -74,7 +79,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "Q",
@@ -95,7 +101,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, if `COMPQ = 'V'`, the matrix Q of Schur vectors. On exit, if `COMPQ = 'V'`, Q has been postmultiplied by the unitary transformation matrix which reorders T; the leading M columns of Q form an orthonormal basis for the specified invariant subspace. If `COMPQ = 'N'`, Q is not referenced."
 		},
 		{
 			"name": "ldq",
@@ -104,7 +111,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Q"
+			"of": "Q",
+			"reference": "The leading dimension of the array Q. $\\mathrm{LDQ} \\ge 1$; and if `COMPQ = 'V'`, $\\mathrm{LDQ} \\ge N$."
 		},
 		{
 			"name": "w",
@@ -119,7 +127,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The reordered eigenvalues of T, in the same order as they appear on the diagonal of T."
 		},
 		{
 			"name": "m",
@@ -127,7 +136,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The dimension of the specified invariant subspace. $0 \\le M \\le N$."
 		},
 		{
 			"name": "s",
@@ -135,7 +145,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `JOB = 'E'` or 'B', S is a lower bound on the reciprocal condition number for the selected cluster of eigenvalues. S cannot underestimate the true reciprocal condition number by more than a factor of sqrt(N). If $M = 0$ or N, $S = 1$. If `JOB = 'N'` or 'V', S is not referenced."
 		},
 		{
 			"name": "sep",
@@ -143,7 +154,8 @@
 			"position": 12,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "If `JOB = 'V'` or 'B', `SEP` is the estimated reciprocal condition number of the specified invariant subspace. If $M = 0$ or N, `SEP = norm(T)`. If `JOB = 'N'` or 'E', `SEP` is not referenced."
 		},
 		{
 			"name": "WORK",
@@ -159,7 +171,8 @@
 				"fortran": "LWMIN",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -168,7 +181,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. If `JOB = 'N'`, $\\mathrm{LWORK} \\ge 1$; if `JOB = 'E'`, `LWORK = max(1,M*(N-M))`; if `JOB = 'V'` or 'B', $\\mathrm{LWORK} \\ge \\max (1,2 \\, M \\, (N-M))$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -176,7 +190,8 @@
 			"position": 15,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

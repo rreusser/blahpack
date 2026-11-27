@@ -53,7 +53,8 @@
 			"length": {
 				"fortran": "5",
 				"js": "5"
-			}
+			},
+			"reference": "`DPARAM(1)=DFLAG` `DPARAM(2)=DH11` `DPARAM(3)=DH21` `DPARAM(4)=DH12` `DPARAM(5)=DH22`"
 		}
 	],
 	"checks": [],

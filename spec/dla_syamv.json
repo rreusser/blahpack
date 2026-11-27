@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the upper or lower triangular part of the array A is to be referenced as follows:\n\n`UPLO = BLAS_UPPER` Only the upper triangular part of A\n\nis to be referenced.\n\n`UPLO = BLAS_LOWER` Only the lower triangular part of A\n\nis to be referenced.\n\nUnchanged on exit."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of the matrix A. N must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "alpha",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$. Unchanged on exit."
 		},
 		{
 			"name": "A",
@@ -51,7 +54,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the leading m by n part of the array A must contain the matrix of coefficients. Unchanged on exit."
 		},
 		{
 			"name": "lda",
@@ -60,7 +64,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. `LDA` must be at least max( 1, n ). Unchanged on exit."
 		},
 		{
 			"name": "x",
@@ -75,7 +80,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the incremented array X must contain the vector x. Unchanged on exit."
 		},
 		{
 			"name": "incx",
@@ -84,7 +90,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero. Unchanged on exit."
 		},
 		{
 			"name": "beta",
@@ -92,7 +99,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `BETA` specifies the scalar $\\beta$. When `BETA` is supplied as zero then Y need not be set on input. Unchanged on exit."
 		},
 		{
 			"name": "y",
@@ -107,7 +115,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry with `BETA` non-zero, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y."
 		},
 		{
 			"name": "incy",
@@ -116,7 +125,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero. Unchanged on exit."
 		}
 	],
 	"checks": [

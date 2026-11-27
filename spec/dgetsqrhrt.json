@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $M \\ge N \\ge 0$."
 		},
 		{
 			"name": "mb1",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The row block size to be used in the blocked TSQR. $\\mathrm{MB1} > N$."
 		},
 		{
 			"name": "nb1",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The column block size to be used in the blocked TSQR. $N \\ge \\mathrm{NB1} \\ge 1$."
 		},
 		{
 			"name": "nb2",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The block size to be used in the blocked QR that is output. $\\mathrm{NB2} \\ge 1$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry: an M-by-N matrix A.\n\nOn exit: a) the elements on and above the diagonal\n\n-   of the array contain the N-by-N upper-triangular\n-   matrix R corresponding to the Householder QR;\n\nb) the elements below the diagonal represent Q by\n\nthe columns of blocked V (compact WY-representation)."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "T",
@@ -96,7 +103,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The upper triangular block reflectors stored in compact form as a sequence of upper triangular blocks."
 		},
 		{
 			"name": "ldt",
@@ -105,7 +113,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\mathrm{NB2}$."
 		},
 		{
 			"name": "WORK",
@@ -121,7 +130,8 @@
 				"fortran": "MAX(1,LWORKOPT)",
 				"js": null,
 				"source": "check"
-			}
+			},
+			"reference": "(workspace) DOUBLE PRECISION array, dimension (MAX(1,`LWORK`)) On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -130,7 +140,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max ( \\mathrm{LWT} + \\mathrm{LW1}, \\max ( \\mathrm{LWT}+N \\, N+\\mathrm{LW2}, \\mathrm{LWT}+N \\, N+N ) )$, where\n\n$$\n\\mathrm{NUM\\_ALL\\_ROW\\_BLOCKS} = \\mathrm{CEIL}((M-N)/(\\mathrm{MB1}-N))\n$$\n\n$$\n\\mathrm{NB1LOCAL} = \\min (\\mathrm{NB1},N)\n$$\n\n$$\n\\mathrm{LWT} = \\mathrm{NUM\\_ALL\\_ROW\\_BLOCKS} \\, N \\, \\mathrm{NB1LOCAL}\n$$\n\n$$\n\\mathrm{LW1} = \\mathrm{NB1LOCAL} \\, N\n$$\n\n$$\n\\mathrm{LW2} = \\mathrm{NB1LOCAL} \\, \\max ( \\mathrm{NB1LOCAL}, ( N - \\mathrm{NB1LOCAL} ) )\n$$\n\nIf `LWORK = -1`, then a workspace query is assumed. The routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -138,7 +149,8 @@
 			"position": 12,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

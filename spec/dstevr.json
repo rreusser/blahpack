@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: Compute eigenvalues only;\n-   `= 'V'`: Compute eigenvalues and eigenvectors."
 		},
 		{
 			"name": "range",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'A'`: all eigenvalues will be found.\n-   `= 'V'`: all eigenvalues in the half-open interval (`VL`,`VU`\\] will be found.\n-   `= 'I'`: the `IL`-th through `IU`-th eigenvalues will be found. For `RANGE = 'V'` or 'I' and $\\mathrm{IU} - \\mathrm{IL} < N - 1$, DSTEBZ and DSTEIN are called"
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -44,7 +47,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues."
 		},
 		{
 			"name": "e",
@@ -59,7 +63,8 @@
 			"length": {
 				"fortran": "MAX(1,N-1)",
 				"js": "max( 1, N - 1 )"
-			}
+			},
+			"reference": "On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues."
 		},
 		{
 			"name": "vl",
@@ -67,7 +72,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the lower bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "vu",
@@ -75,7 +81,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='V'`, the upper bound of the interval to be searched for eigenvalues. $\\mathrm{VL} < \\mathrm{VU}$. Not referenced if `RANGE = 'A'` or 'I'."
 		},
 		{
 			"name": "il",
@@ -83,7 +90,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the smallest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "iu",
@@ -91,7 +99,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "If `RANGE='I'`, the index of the largest eigenvalue to be returned. $1 \\le \\mathrm{IL} \\le \\mathrm{IU} \\le N$, if $N > 0$; `IL = 1` and `IU = 0` if $N = 0$. Not referenced if `RANGE = 'A'` or 'V'."
 		},
 		{
 			"name": "abstol",
@@ -99,7 +108,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval \\[a,b\\] of width less than or equal to\n\n$$\n\\mathrm{ABSTOL} + \\mathrm{EPS} \\, \\max ( |a|,|b| )\n$$\n\nwhere EPS is the machine precision. If `ABSTOL` is less than or equal to zero, then EPS\\*\\|T\\| will be used in its place, where \\|T\\| is the 1-norm of the tridiagonal matrix obtained by reducing A to tridiagonal form.\n\nSee \"Computing Small Singular Values of Bidiagonal Matrices with Guaranteed High Relative Accuracy,\" by Demmel and Kahan, LAPACK Working Note #3.\n\nIf high relative accuracy is important, set `ABSTOL` to DLAMCH( 'Safe minimum' ). Doing so will guarantee that eigenvalues are computed to high relative accuracy when possible in future releases. The current code does not make any guarantees about high relative accuracy, but future releases will. See J. Barlow and J. Demmel, \"Computing Accurate Eigensystems of Scaled Diagonally Dominant Matrices\", LAPACK Working Note #7, for a discussion of which matrices define their eigenvalues to high relative accuracy."
 		},
 		{
 			"name": "m",
@@ -107,7 +117,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The total number of eigenvalues found. $0 \\le M \\le N$. If `RANGE = 'A'`, $M = N$, and if `RANGE = 'I'`, $M = \\mathrm{IU}-\\mathrm{IL}+1$."
 		},
 		{
 			"name": "w",
@@ -122,7 +133,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The first M elements contain the selected eigenvalues in ascending order."
 		},
 		{
 			"name": "Z",
@@ -143,7 +155,8 @@
 			"cols": {
 				"fortran": "MAX(1,M)",
 				"js": "range === 'index' ? iu - il + 1 : N"
-			}
+			},
+			"reference": "If `JOBZ = 'V'`, then if `INFO = 0`, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with `W(i)`. Note: the user must ensure that at least max(1,M) columns are supplied in the array Z; if `RANGE = 'V'`, the exact value of M is not known in advance and an upper bound must be used."
 		},
 		{
 			"name": "ldz",
@@ -152,7 +165,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge 1$, and if `JOBZ = 'V'`, $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "ISUPPZ",
@@ -167,7 +181,8 @@
 			"length": {
 				"fortran": "2*MAX(1,M)",
 				"js": "2 * max( 1, m )"
-			}
+			},
+			"reference": "The support of the eigenvectors in Z, i.e., the indices indicating the nonzero elements in Z. The i-th eigenvector is nonzero only in elements ISUPPZ( 2\\*i-1 ) through ISUPPZ( 2\\*i ). Implemented only for `RANGE = 'A'` or 'I' and $\\mathrm{IU} - \\mathrm{IL} = N - 1$"
 		},
 		{
 			"name": "WORK",
@@ -183,7 +198,8 @@
 				"fortran": "LWMIN",
 				"js": "max( 1, 20 * N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal (and minimal) `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -192,7 +208,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,20 \\, N)$.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal sizes of the `WORK` and `IWORK` arrays, returns these values as the first entries of the `WORK` and `IWORK` arrays, and no error message related to `LWORK` or `LIWORK` is issued by XERBLA."
 		},
 		{
 			"name": "IWORK",
@@ -208,7 +225,8 @@
 				"fortran": "LIWMIN",
 				"js": "max( 1, 10 * N )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `IWORK(1)` returns the optimal (and minimal) `LIWORK`."
 		},
 		{
 			"name": "liwork",
@@ -217,7 +235,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "IWORK"
+			"of": "IWORK",
+			"reference": "The dimension of the array `IWORK`. $\\mathrm{LIWORK} \\ge \\max (1,10 \\, N)$.\n\nIf `LIWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal sizes of the `WORK` and `IWORK` arrays, returns these values as the first entries of the `WORK` and `IWORK` arrays, and no error message related to `LWORK` or `LIWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -225,7 +244,8 @@
 			"position": 20,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: Internal error"
 		}
 	],
 	"checks": [

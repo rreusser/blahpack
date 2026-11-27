@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether singular vectors are to be computed in compact form, as follows:\n\n-   `= 0`: Compute singular values only.\n-   `= 1`: Compute singular vectors of upper bidiagonal matrix in compact form."
 		},
 		{
 			"name": "nl",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The row dimension of the upper block. $\\mathrm{NL} \\ge 1$."
 		},
 		{
 			"name": "nr",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The row dimension of the lower block. $\\mathrm{NR} \\ge 1$."
 		},
 		{
 			"name": "sqre",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 0`: the lower block is an `NR`-by-`NR` square matrix.\n-   `= 1`: the lower block is an `NR`-by-(`NR`+1) rectangular matrix.\n\nThe bidiagonal matrix has $N = \\mathrm{NL} + \\mathrm{NR} + 1$ rows and $M = N + \\mathrm{SQRE} \\ge N$ columns."
 		},
 		{
 			"name": "k",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Contains the dimension of the non-deflated matrix, this is the order of the related secular equation. $1 \\le K \\le N$."
 		},
 		{
 			"name": "d",
@@ -60,7 +65,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "On entry D contains the singular values of the two submatrices to be combined. On exit D contains the trailing (N-K) updated singular values (those which were deflated) sorted into increasing order."
 		},
 		{
 			"name": "z",
@@ -75,7 +81,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "On exit Z contains the updating row vector in the secular equation."
 		},
 		{
 			"name": "ZW",
@@ -90,7 +97,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "Workspace for Z."
 		},
 		{
 			"name": "VF",
@@ -105,7 +113,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "On entry, `VF(1:NL+1)` contains the first components of all right singular vectors of the upper block; and `VF(NL+2:M)` contains the first components of all right singular vectors of the lower block. On exit, `VF` contains the first components of all right singular vectors of the bidiagonal matrix."
 		},
 		{
 			"name": "VFW",
@@ -120,7 +129,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "Workspace for `VF`."
 		},
 		{
 			"name": "VL",
@@ -135,7 +145,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "On entry, `VL(1:NL+1)` contains the last components of all right singular vectors of the upper block; and `VL(NL+2:M)` contains the last components of all right singular vectors of the lower block. On exit, `VL` contains the last components of all right singular vectors of the bidiagonal matrix."
 		},
 		{
 			"name": "VLW",
@@ -150,7 +161,8 @@
 			"length": {
 				"fortran": "M",
 				"js": null
-			}
+			},
+			"reference": "Workspace for `VL`."
 		},
 		{
 			"name": "alpha",
@@ -158,7 +170,8 @@
 			"position": 13,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Contains the diagonal element associated with the added row."
 		},
 		{
 			"name": "beta",
@@ -166,7 +179,8 @@
 			"position": 14,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Contains the off-diagonal element associated with the added row."
 		},
 		{
 			"name": "DSIGMA",
@@ -181,7 +195,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "Contains a copy of the diagonal elements (K-1 singular values and one zero) in the secular equation."
 		},
 		{
 			"name": "IDX",
@@ -196,7 +211,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "This will contain the permutation used to sort the contents of D into ascending order."
 		},
 		{
 			"name": "IDXP",
@@ -211,7 +227,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "This will contain the permutation used to place deflated values of D at the end of the array. On output `IDXP(2:K)` points to the nondeflated D-values and `IDXP(K+1:N)` points to the deflated singular values."
 		},
 		{
 			"name": "IDXQ",
@@ -226,7 +243,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "This contains the permutation which separately sorts the two sub-problems in D into ascending order. Note that entries in the first half of this permutation must first be moved one position backward; and entries in the second half must first have `NL`+1 added to their values."
 		},
 		{
 			"name": "PERM",
@@ -241,7 +259,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "nl + nr + 1"
-			}
+			},
+			"reference": "The permutations (from deflation and sorting) to be applied to each singular block. Not referenced if `ICOMPQ = 0`."
 		},
 		{
 			"name": "givptr",
@@ -249,7 +268,8 @@
 			"position": 20,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The number of Givens rotations which took place in this subproblem. Not referenced if `ICOMPQ = 0`."
 		},
 		{
 			"name": "GIVCOL",
@@ -270,7 +290,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "Each pair of numbers indicates a pair of columns to take place in a Givens rotation. Not referenced if `ICOMPQ = 0`."
 		},
 		{
 			"name": "ldgcol",
@@ -279,7 +300,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "GIVCOL"
+			"of": "GIVCOL",
+			"reference": "The leading dimension of `GIVCOL`, must be at least N."
 		},
 		{
 			"name": "GIVNUM",
@@ -300,7 +322,8 @@
 			"cols": {
 				"fortran": "2",
 				"js": "2"
-			}
+			},
+			"reference": "Each number indicates the C or S value to be used in the corresponding Givens rotation. Not referenced if `ICOMPQ = 0`."
 		},
 		{
 			"name": "ldgnum",
@@ -309,7 +332,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "GIVNUM"
+			"of": "GIVNUM",
+			"reference": "The leading dimension of `GIVNUM`, must be at least N."
 		},
 		{
 			"name": "c",
@@ -317,7 +341,8 @@
 			"position": 25,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "C contains garbage if `SQRE =0` and the C-value of a Givens rotation related to the right null space if `SQRE = 1`."
 		},
 		{
 			"name": "s",
@@ -325,7 +350,8 @@
 			"position": 26,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "S contains garbage if `SQRE =0` and the S-value of a Givens rotation related to the right null space if `SQRE = 1`."
 		},
 		{
 			"name": "info",
@@ -333,7 +359,8 @@
 			"position": 27,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value."
 		}
 	],
 	"checks": [

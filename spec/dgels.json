@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: the linear system involves A;\n-   `= 'T'`: the linear system involves $A^T$."
 		},
 		{
 			"name": "M",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrices B and X. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -58,7 +62,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix A. On exit,\n\n-   if $M \\ge N$, A is overwritten by details of its QR factorization as returned by DGEQRF;\n-   if $M < N$, A is overwritten by details of its LQ factorization as returned by DGELQF."
 		},
 		{
 			"name": "lda",
@@ -67,7 +72,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "B",
@@ -88,7 +94,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "On entry, the matrix B of right hand side vectors, stored columnwise; B is M-by-`NRHS` if `TRANS = 'N'`, or N-by-`NRHS` if `TRANS = 'T'`. On exit, if `INFO = 0`, B is overwritten by the solution vectors, stored columnwise: if `TRANS = 'N'` and $m \\ge n$, rows 1 to n of B contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements N+1 to M in that column; if `TRANS = 'N'` and $m < n$, rows 1 to N of B contain the minimum norm solution vectors; if `TRANS = 'T'` and $m \\ge n$, rows 1 to M of B contain the minimum norm solution vectors; if `TRANS = 'T'` and $m < n$, rows 1 to M of B contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements M+1 to N in that column."
 		},
 		{
 			"name": "ldb",
@@ -97,7 +104,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,M,N)$."
 		},
 		{
 			"name": "WORK",
@@ -113,7 +121,8 @@
 				"fortran": "MAX(1,MN+MAX(MN,NRHS))",
 				"js": "max( 1, min( M, N ) + max( min( M, N ), nrhs ) )",
 				"source": "check"
-			}
+			},
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -122,7 +131,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max ( 1, \\mathrm{MN} + \\max ( \\mathrm{MN}, \\mathrm{NRHS} ) )$. For optimal performance, $\\mathrm{LWORK} \\ge \\max ( 1, \\mathrm{MN} + \\max ( \\mathrm{MN}, \\mathrm{NRHS} ) \\, \\mathrm{NB} )$. where $\\mathrm{MN} = \\min (M,N)$ and NB is the optimum block size.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -130,7 +140,8 @@
 			"position": 11,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO =  i`, the i-th diagonal element of the triangular factor of A is zero, so that A does not have full rank; the least squares solution could not be computed."
 		}
 	],
 	"checks": [

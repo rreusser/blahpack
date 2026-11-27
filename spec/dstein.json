@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix. $N \\ge 0$."
 		},
 		{
 			"name": "d",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of the tridiagonal matrix T."
 		},
 		{
 			"name": "e",
@@ -43,7 +45,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) subdiagonal elements of the tridiagonal matrix T, in elements 1 to N-1."
 		},
 		{
 			"name": "M",
@@ -51,7 +54,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of eigenvectors to be found. $0 \\le M \\le N$."
 		},
 		{
 			"name": "w",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The first M elements of W contain the eigenvalues for which eigenvectors are to be computed. The eigenvalues should be grouped by split-off block and ordered from smallest to largest within the block. ( The output array W from DSTEBZ with `ORDER = 'B'` is expected here. )"
 		},
 		{
 			"name": "IBLOCK",
@@ -81,7 +86,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The submatrix indices associated with the corresponding eigenvalues in W; `IBLOCK(i)=1` if eigenvalue `W(i)` belongs to the first submatrix from the top, =2 if `W(i)` belongs to the second submatrix, etc. ( The output array `IBLOCK` from DSTEBZ is expected here. )"
 		},
 		{
 			"name": "ISPLIT",
@@ -96,7 +102,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The splitting points, at which T breaks up into submatrices. The first submatrix consists of rows/columns 1 to ISPLIT( 1 ), the second of rows/columns ISPLIT( 1 )+1 through ISPLIT( 2 ), etc. ( The output array `ISPLIT` from DSTEBZ is expected here. )"
 		},
 		{
 			"name": "Z",
@@ -117,7 +124,8 @@
 			"cols": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "The computed eigenvectors. The eigenvector associated with the eigenvalue `W(i)` is stored in the i-th column of Z. Any vector which fails to converge is set to its current iterate after MAXITS iterations."
 		},
 		{
 			"name": "ldz",
@@ -126,7 +134,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "WORK",
@@ -181,7 +190,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "On normal exit, all elements of `IFAIL` are zero. If one or more eigenvectors fail to converge after MAXITS iterations, then their indices are stored in array `IFAIL`."
 		},
 		{
 			"name": "info",
@@ -189,7 +199,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit.\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, then i eigenvectors failed to converge in MAXITS iterations.  Their indices are stored in array `IFAIL`."
 		}
 	],
 	"checks": [

@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^T$ from the Left;\n-   `= 'R'`: apply Q or $Q^T$ from the Right."
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: No transpose, apply Q;\n-   `= 'T'`: Transpose, apply $Q^T$."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \\ge K \\ge 0$; if `SIDE = 'R'`, $N \\ge K \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -66,7 +71,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The i-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by DGEQLF in the last k columns of its array argument A."
 		},
 		{
 			"name": "lda",
@@ -75,7 +81,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. If `SIDE = 'L'`, $\\mathrm{LDA} \\ge \\max (1,M)$; if `SIDE = 'R'`, $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "TAU",
@@ -90,7 +97,8 @@
 			"length": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "`TAU(i)` must contain the scalar factor of the elementary reflector H(i), as returned by DGEQLF."
 		},
 		{
 			"name": "C",
@@ -111,7 +119,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by $Q \\, C$ or $Q^T \\, C$ or $C \\, Q^T$ or $C \\, Q$."
 		},
 		{
 			"name": "ldc",
@@ -120,7 +129,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -137,7 +147,8 @@
 				"js": "side === 'left' ? max( 1, N ) : max( 1, M )",
 				"source": "check"
 			},
-			"adaptive": true
+			"adaptive": true,
+			"reference": "On exit, if `INFO = 0`, `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -146,7 +157,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. If `SIDE = 'L'`, $\\mathrm{LWORK} \\ge \\max (1,N)$; if `SIDE = 'R'`, $\\mathrm{LWORK} \\ge \\max (1,M)$. For good performance, `LWORK` should generally be larger.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -154,7 +166,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

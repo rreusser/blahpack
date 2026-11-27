@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: The Normal Form of RFP A is stored;\n-   `= 'T'`: The Transpose Form of RFP A is stored."
 		},
 		{
 			"name": "uplo",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the upper or lower triangular part of the array C is to be referenced as follows:\n\n`UPLO = 'U'` or 'u' Only the upper triangular part of C\n\nis to be referenced.\n\n`UPLO = 'L'` or 'l' Only the lower triangular part of C\n\nis to be referenced.\n\nUnchanged on exit."
 		},
 		{
 			"name": "trans",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the operation to be performed as follows:\n\n$$\n\\mathrm{TRANS} = \\text{'N'} \\quad\\text{or}\\quad \\text{'n'} C := \\alpha \\, A \\, A^T + \\beta \\, C\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'T'} \\quad\\text{or}\\quad \\text{'t'} C := \\alpha \\, A^T \\, A + \\beta \\, C\n$$\n\nUnchanged on exit."
 		},
 		{
 			"name": "N",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the order of the matrix C. N must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "K",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry with `TRANS = 'N'` or 'n', K specifies the number of columns of the matrix A, and on entry with `TRANS = 'T'` or 't', K specifies the number of rows of the matrix A. K must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "alpha",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$. Unchanged on exit."
 		},
 		{
 			"name": "A",
@@ -75,7 +81,8 @@
 			"cols": {
 				"fortran": "KA",
 				"js": "trans === 'no-transpose' ? K : N"
-			}
+			},
+			"reference": "where KA is K when `TRANS = 'N'` or 'n', and is N otherwise. Before entry with `TRANS = 'N'` or 'n', the leading N--by--K part of the array A must contain the matrix A, otherwise the leading K--by--N part of the array A must contain the matrix A. Unchanged on exit."
 		},
 		{
 			"name": "lda",
@@ -84,7 +91,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "On entry, `LDA` specifies the first dimension of A as declared in the calling (sub) program. When `TRANS = 'N'` or 'n' then `LDA` must be at least max( 1, n ), otherwise `LDA` must be at least max( 1, k ). Unchanged on exit."
 		},
 		{
 			"name": "beta",
@@ -92,7 +100,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `BETA` specifies the scalar $\\beta$. Unchanged on exit."
 		},
 		{
 			"name": "c",
@@ -107,7 +116,8 @@
 			"length": {
 				"fortran": "NT",
 				"js": null
-			}
+			},
+			"reference": "$\\mathrm{NT} = N \\, (N+1)/2$. On entry, the symmetric matrix C in RFP Format. RFP Format is described by `TRANSR`, `UPLO` and N."
 		}
 	],
 	"checks": [

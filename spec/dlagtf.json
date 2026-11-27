@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix T."
 		},
 		{
 			"name": "a",
@@ -28,7 +29,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, A must contain the diagonal elements of T.\n\nOn exit, A is overwritten by the n diagonal elements of the upper triangular matrix U of the factorization of T."
 		},
 		{
 			"name": "lambda",
@@ -36,7 +38,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, the scalar $\\lambda$."
 		},
 		{
 			"name": "b",
@@ -51,7 +54,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, B must contain the (n-1) super-diagonal elements of T.\n\nOn exit, B is overwritten by the (n-1) super-diagonal elements of the matrix U of the factorization of T."
 		},
 		{
 			"name": "c",
@@ -66,7 +70,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "On entry, C must contain the (n-1) sub-diagonal elements of T.\n\nOn exit, C is overwritten by the (n-1) sub-diagonal elements of the matrix L of the factorization of T."
 		},
 		{
 			"name": "tol",
@@ -74,7 +79,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, a relative tolerance used to indicate whether or not the matrix (T - $\\lambda$\\*I) is nearly singular. `TOL` should normally be chose as approximately the largest relative error in the elements of T. For example, if the elements of T are correct to about 4 significant figures, then `TOL` should be set to about $5 \\cdot 10^{-4}$. If `TOL` is supplied as less than eps, where eps is the relative machine precision, then the value eps is used in place of `TOL`."
 		},
 		{
 			"name": "d",
@@ -89,7 +95,8 @@
 			"length": {
 				"fortran": "N-2",
 				"js": "N - 2"
-			}
+			},
+			"reference": "On exit, D is overwritten by the (n-2) second super-diagonal elements of the matrix U of the factorization of T."
 		},
 		{
 			"name": "IN",
@@ -104,7 +111,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, `IN` contains details of the permutation matrix P. If an interchange occurred at the kth step of the elimination, then `IN(k) = 1`, otherwise `IN(k) = 0`. The element `IN(n)` returns the smallest positive integer j such that\n\n$$\n\\lvert u(j,j) \\rvert \\le \\operatorname{norm}( (T - \\lambda \\, I)(j) ) \\, \\mathrm{TOL}\n$$\n\nwhere norm( `A(j)` ) denotes the sum of the absolute values of the jth row of the matrix A. If no such j exists then `IN(n)` is returned as zero. If `IN(n)` is returned as positive, then a diagonal element of U is small, indicating that (T - $\\lambda$\\*I) is singular or nearly singular,"
 		},
 		{
 			"name": "info",
@@ -112,7 +120,8 @@
 			"position": 9,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -k`, the kth argument had an illegal value"
 		}
 	],
 	"checks": [

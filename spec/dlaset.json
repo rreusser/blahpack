@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the part of the matrix A to be set.\n\n-   `= 'U'`: Upper triangular part is set; the strictly lower triangular part of A is not changed.\n-   `= 'L'`: Lower triangular part is set; the strictly upper triangular part of A is not changed. Otherwise:  All of the matrix A is set."
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "alpha",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The constant to which the offdiagonal elements are to be set."
 		},
 		{
 			"name": "beta",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The constant to which the diagonal elements are to be set."
 		},
 		{
 			"name": "A",
@@ -67,7 +72,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On exit, the leading m-by-n submatrix of A is set as follows:\n\nif `UPLO = 'U'`, $A(i,j) = \\mathrm{ALPHA}$, $1 \\le i \\le j-1$, $1 \\le j \\le n$, if `UPLO = 'L'`, $A(i,j) = \\mathrm{ALPHA}$, $j+1 \\le i \\le m$, $1 \\le j \\le n$, otherwise, $A(i,j) = \\mathrm{ALPHA}$, $1 \\le i \\le m$, $1 \\le j \\le n$, $i \\ne j$,\n\nand, for all `UPLO`, $A(i,i) = \\mathrm{BETA}$, $1 \\le i \\le \\min (m,n)$."
 		},
 		{
 			"name": "lda",
@@ -76,7 +82,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,M)$."
 		}
 	],
 	"checks": [],

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the operation to be performed as follows:\n\n| BLAS\\_NO\\_TRANS | y := $\\alpha \\, \\lvert A \\rvert \\, \\lvert x \\rvert + \\beta \\, \\lvert y \\rvert$ |\n| --- | --- |\n| BLAS\\_TRANS | y := $\\alpha \\, \\lvert A^T \\rvert \\, \\lvert x \\rvert + \\beta \\, \\lvert y \\rvert$ |\n| BLAS\\_CONJ\\_TRANS | y := $\\alpha \\, \\lvert A^T \\rvert \\, \\lvert x \\rvert + \\beta \\, \\lvert y \\rvert$ |\n\nUnchanged on exit."
 		},
 		{
 			"name": "M",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the number of rows of the matrix A. M must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "N",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of the matrix A. N must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "kl",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "alpha",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$. Unchanged on exit."
 		},
 		{
 			"name": "AB",
@@ -75,7 +81,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the leading m by n part of the array `AB` must contain the matrix of coefficients. Unchanged on exit."
 		},
 		{
 			"name": "ldab",
@@ -84,7 +91,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "On entry, `LDAB` specifies the first dimension of `AB` as declared in the calling (sub) program. `LDAB` must be at least max( 1, m ). Unchanged on exit."
 		},
 		{
 			"name": "x",
@@ -99,7 +107,8 @@
 			"length": {
 				"fortran": "(N) if TRANS = 'N' or (M) otherwise",
 				"js": "( trans === 'no-transpose' ) ? N : M"
-			}
+			},
+			"reference": "and at least ( 1 + ( m - 1 )\\*abs( `INCX` ) ) otherwise. Before entry, the incremented array X must contain the vector x. Unchanged on exit."
 		},
 		{
 			"name": "incx",
@@ -108,7 +117,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "On entry, `INCX` specifies the increment for the elements of X. `INCX` must not be zero. Unchanged on exit."
 		},
 		{
 			"name": "beta",
@@ -116,7 +126,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `BETA` specifies the scalar $\\beta$. When `BETA` is supplied as zero then Y need not be set on input. Unchanged on exit."
 		},
 		{
 			"name": "y",
@@ -131,7 +142,8 @@
 			"length": {
 				"fortran": "(M) if TRANS = 'N' or (N) otherwise",
 				"js": "( trans === 'no-transpose' ) ? M : N"
-			}
+			},
+			"reference": "and at least ( 1 + ( n - 1 )\\*abs( `INCY` ) ) otherwise. Before entry with `BETA` non-zero, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. If either m or n is zero, then Y not referenced and the function performs a quick return."
 		},
 		{
 			"name": "incy",
@@ -140,7 +152,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "On entry, `INCY` specifies the increment for the elements of Y. `INCY` must not be zero. Unchanged on exit.\n\nLevel 2 Blas routine."
 		}
 	],
 	"checks": [

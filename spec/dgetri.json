@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "A",
@@ -34,7 +35,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the factors L and U from the factorization $A = P \\, L \\, U$ as computed by DGETRF. On exit, if `INFO = 0`, the inverse of the original matrix A."
 		},
 		{
 			"name": "lda",
@@ -43,7 +45,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "A"
+			"of": "A",
+			"reference": "The leading dimension of the array A. $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "IPIV",
@@ -58,7 +61,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The pivot indices from DGETRF; for $1 \\le i \\le N$, row i of the matrix was interchanged with row `IPIV(i)`."
 		},
 		{
 			"name": "WORK",
@@ -75,7 +79,8 @@
 				"js": "max( 1, N )",
 				"source": "check"
 			},
-			"adaptive": true
+			"adaptive": true,
+			"reference": "On exit, if `INFO=0`, then `WORK(1)` returns the optimal `LWORK`."
 		},
 		{
 			"name": "lwork",
@@ -84,7 +89,8 @@
 			"role": "lwork",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "WORK"
+			"of": "WORK",
+			"reference": "The dimension of the array `WORK`. $\\mathrm{LWORK} \\ge \\max (1,N)$. For optimal performance $\\mathrm{LWORK} \\ge N \\, \\mathrm{NB}$, where NB is the optimal blocksize returned by ILAENV.\n\nIf `LWORK = -1`, then a workspace query is assumed; the routine only calculates the optimal size of the `WORK` array, returns this value as the first entry of the `WORK` array, and no error message related to `LWORK` is issued by XERBLA."
 		},
 		{
 			"name": "info",
@@ -92,7 +98,8 @@
 			"position": 7,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, U(i,i) is exactly zero; the matrix is singular and its inverse could not be computed."
 		}
 	],
 	"checks": [

@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of plane rotations to be applied."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCX",
 				"js": "1 + (N - 1) * incx"
-			}
+			},
+			"reference": "dimension (1+(N-1)\\*`INCX`) The vector x."
 		},
 		{
 			"name": "y",
@@ -44,7 +46,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCX",
 				"js": "1 + (N - 1) * incx"
-			}
+			},
+			"reference": "dimension (1+(N-1)\\*`INCX`) The vector y."
 		},
 		{
 			"name": "z",
@@ -59,7 +62,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCX",
 				"js": "1 + (N - 1) * incx"
-			}
+			},
+			"reference": "dimension (1+(N-1)\\*`INCX`) The vector z."
 		},
 		{
 			"name": "incx",
@@ -68,7 +72,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between elements of X, Y and Z. $\\mathrm{INCX} > 0$."
 		},
 		{
 			"name": "c",
@@ -83,7 +88,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCC",
 				"js": "1 + (N - 1) * incc"
-			}
+			},
+			"reference": "The cosines of the plane rotations."
 		},
 		{
 			"name": "s",
@@ -98,7 +104,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCC",
 				"js": "1 + (N - 1) * incc"
-			}
+			},
+			"reference": "The sines of the plane rotations."
 		},
 		{
 			"name": "incc",
@@ -107,7 +114,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The increment between elements of C and S. $\\mathrm{INCC} > 0$."
 		}
 	],
 	"checks": [],

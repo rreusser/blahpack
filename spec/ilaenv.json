@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the parameter to be returned as the value of ILAENV.\n\n-   `= 1`: the optimal blocksize; if this value is 1, an unblocked algorithm will give the best performance.\n-   `= 2`: the minimum block size for which the block routine should be used; if the usable block size is less than this value, an unblocked routine should be used.\n-   `= 3`: the crossover point (in a block routine, for N less than this value, an unblocked routine should be used)\n-   `= 4`: the number of shifts, used in the nonsymmetric eigenvalue routines (DEPRECATED)\n-   `= 5`: the minimum column dimension for blocking to be used; rectangular blocks must have dimension at least k by m, where k is given by ILAENV(2,...) and m by ILAENV(5,...)\n-   `= 6`: the crossover point for the SVD (when reducing an m by n matrix to bidiagonal form, if max(m,n)/min(m,n) exceeds this value, a QR factorization is used first to reduce the matrix to a triangular form.)\n-   `= 7`: the number of processors\n-   `= 8`: the crossover point for the multishift QR method for nonsymmetric eigenvalue problems (DEPRECATED)\n-   `= 9`: maximum size of the subproblems at the bottom of the computation tree in the divide-and-conquer algorithm (used by xGELSD and xGESDD)\n-   `=10`: ieee infinity and NaN arithmetic can be trusted not to trap\n-   `=11`: infinity arithmetic can be trusted not to trap $12 \\le \\mathrm{ISPEC} \\le 17$: xHSEQR or related subroutines, see IPARMQ for detailed explanation"
 		},
 		{
 			"name": "name",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The name of the calling subroutine, in either upper case or lower case."
 		},
 		{
 			"name": "opts",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "scalar",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The character options to the subroutine `NAME`, concatenated into a single character string. For example, `UPLO = 'U'`, `TRANS = 'T'`, and `DIAG = 'N'` for a triangular routine would be specified as `OPTS = 'UTN'`."
 		},
 		{
 			"name": "n1",
@@ -62,7 +65,8 @@
 			"position": 7,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Problem dimensions for the subroutine `NAME`; these may not all be required."
 		}
 	],
 	"checks": [],

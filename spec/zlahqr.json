@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE. : the full Schur form T is required; = .FALSE.: only eigenvalues are required."
 		},
 		{
 			"name": "wantz",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "scalar",
 			"dtype": "bool",
-			"intent": "in"
+			"intent": "in",
+			"reference": "= .TRUE. : the matrix of Schur vectors Z is required; = .FALSE.: Schur vectors are not required."
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix H. $N \\ge 0$."
 		},
 		{
 			"name": "ilo",
@@ -45,7 +48,8 @@
 			"position": 5,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "It is assumed that H is already upper triangular in rows and columns `IHI`+1:N, and that $H(\\mathrm{ILO},\\mathrm{ILO}-1) = 0$ (unless `ILO = 1`). ZLAHQR works primarily with the Hessenberg submatrix in rows and columns `ILO` to `IHI`, but applies transformations to all of H if `WANTT` is .TRUE.. $1 \\le \\mathrm{ILO} \\le \\max (1,\\mathrm{IHI})$; $\\mathrm{IHI} \\le N$."
 		},
 		{
 			"name": "H",
@@ -66,7 +70,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the upper Hessenberg matrix H. On exit, if `INFO` is zero and if `WANTT` is .TRUE., then H is upper triangular in rows and columns `ILO`:`IHI`. If `INFO` is zero and if `WANTT` is .FALSE., then the contents of H are unspecified on exit. The output state of H in case INF is positive is below under the description of `INFO`."
 		},
 		{
 			"name": "ldh",
@@ -75,7 +80,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "H"
+			"of": "H",
+			"reference": "The leading dimension of the array H. $\\mathrm{LDH} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "w",
@@ -90,7 +96,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The computed eigenvalues `ILO` to `IHI` are stored in the corresponding elements of W. If `WANTT` is .TRUE., the eigenvalues are stored in the same order as on the diagonal of the Schur form returned in H, with $W(i) = H(i,i)$."
 		},
 		{
 			"name": "iloz",
@@ -106,7 +113,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specify the rows of Z to which transformations must be applied if `WANTZ` is .TRUE.. $1 \\le \\mathrm{ILOZ} \\le \\mathrm{ILO}$; $\\mathrm{IHI} \\le \\mathrm{IHIZ} \\le N$."
 		},
 		{
 			"name": "Z",
@@ -127,7 +135,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `WANTZ` is .TRUE., on entry Z must contain the current matrix Z of transformations accumulated by CHSEQR, and on exit Z has been updated; transformations are applied only to the submatrix `Z(ILOZ:IHIZ,ILO:IHI)`. If `WANTZ` is .FALSE., Z is not referenced."
 		},
 		{
 			"name": "ldz",
@@ -136,7 +145,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Z"
+			"of": "Z",
+			"reference": "The leading dimension of the array Z. $\\mathrm{LDZ} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "info",
@@ -144,7 +154,8 @@
 			"position": 13,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `> 0`: if `INFO = i`, ZLAHQR failed to compute all the eigenvalues `ILO` to `IHI` in a total of 30 iterations per eigenvalue; elements i+1:ihi of W contain those eigenvalues which have been successfully computed.\n\nIf $\\mathrm{INFO} > 0$ and `WANTT` is .FALSE., then on exit, the remaining unconverged eigenvalues are the eigenvalues of the upper Hessenberg matrix rows and columns `ILO` through `INFO` of the final, output value of H.\n\n```text\n        If INFO > 0 and WANTT is .TRUE., then on exit\n(*)       (initial value of H)*U  = U*(final value of H)\n        where U is an orthogonal matrix.    The final\n        value of H is upper Hessenberg and triangular in\n        rows and columns INFO+1 through IHI.\n```\n\nIf $\\mathrm{INFO} > 0$ and `WANTZ` is .TRUE., then on exit\n\n(final value of Z) = (initial value of Z)\\*U\n\nwhere U is the orthogonal matrix in (\\*) (regardless of the value of `WANTT`.)"
 		}
 	],
 	"checks": [],

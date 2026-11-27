@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'L'`: apply Q or $Q^H$ from the Left;\n-   `= 'R'`: apply Q or $Q^H$ from the Right."
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: No transpose, apply Q;\n-   `= 'C'`: Conjugate transpose, apply $Q^H$."
 		},
 		{
 			"name": "M",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix C. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix C. $N \\ge 0$."
 		},
 		{
 			"name": "K",
@@ -45,7 +49,8 @@
 			"position": 5,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of elementary reflectors whose product defines the matrix Q. If `SIDE = 'L'`, $M \\ge K \\ge 0$; if `SIDE = 'R'`, $N \\ge K \\ge 0$."
 		},
 		{
 			"name": "nb",
@@ -53,7 +58,8 @@
 			"position": 6,
 			"role": "scalar",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The block size used for the storage of T. $K \\ge \\mathrm{NB} \\ge 1$. This must be the same value of `NB` used to generate T in ZGEQRT."
 		},
 		{
 			"name": "V",
@@ -74,7 +80,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The i-th column must contain the vector which defines the elementary reflector H(i), for $i = 1$,2,...,k, as returned by ZGEQRT in the first K columns of its array argument A."
 		},
 		{
 			"name": "ldv",
@@ -83,7 +90,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "V"
+			"of": "V",
+			"reference": "The leading dimension of the array V. If `SIDE = 'L'`, $\\mathrm{LDA} \\ge \\max (1,M)$; if `SIDE = 'R'`, $\\mathrm{LDA} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "T",
@@ -104,7 +112,8 @@
 			"cols": {
 				"fortran": "K",
 				"js": "K"
-			}
+			},
+			"reference": "The upper triangular factors of the block reflectors as returned by ZGEQRT, stored as a `NB`-by-N matrix."
 		},
 		{
 			"name": "ldt",
@@ -113,7 +122,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "T"
+			"of": "T",
+			"reference": "The leading dimension of the array T. $\\mathrm{LDT} \\ge \\mathrm{NB}$."
 		},
 		{
 			"name": "C",
@@ -134,7 +144,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the M-by-N matrix C. On exit, C is overwritten by Q C, $Q^H$ C, C $Q^H$ or C Q."
 		},
 		{
 			"name": "ldc",
@@ -143,7 +154,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The leading dimension of the array C. $\\mathrm{LDC} \\ge \\max (1,M)$."
 		},
 		{
 			"name": "WORK",
@@ -155,7 +167,8 @@
 			"dims": [
 				"*"
 			],
-			"minLength": null
+			"minLength": null,
+			"reference": "$N \\, \\mathrm{NB}$ if `SIDE = 'L'`, or $M \\, \\mathrm{NB}$ if `SIDE = 'R'`."
 		},
 		{
 			"name": "info",
@@ -163,7 +176,8 @@
 			"position": 14,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value"
 		}
 	],
 	"checks": [

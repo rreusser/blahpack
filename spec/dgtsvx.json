@@ -13,7 +13,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies whether or not the factored form of A has been supplied on entry.\n\n-   `= 'F'`: `DLF`, `DF`, `DUF`, `DU2`, and `IPIV` contain the factored form of A; `DL`, D, `DU`, `DLF`, `DF`, `DUF`, `DU2` and `IPIV` will not be modified.\n-   `= 'N'`: The matrix will be copied to `DLF`, `DF`, and `DUF` and factored."
 		},
 		{
 			"name": "trans",
@@ -21,7 +22,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Specifies the form of the system of equations:\n\n-   `= 'N'`: $A \\, X = B$     (No transpose)\n-   `= 'T'`: $A^T \\, X = B$  (Transpose)\n-   `= 'C'`: $A^H \\, X = B$  (Conjugate transpose = Transpose)"
 		},
 		{
 			"name": "N",
@@ -29,7 +31,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The order of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "nrhs",
@@ -37,7 +40,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of right hand sides, i.e., the number of columns of the matrix B. $\\mathrm{NRHS} \\ge 0$."
 		},
 		{
 			"name": "DL",
@@ -52,7 +56,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) subdiagonal elements of A."
 		},
 		{
 			"name": "d",
@@ -67,7 +72,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The n diagonal elements of A."
 		},
 		{
 			"name": "DU",
@@ -82,7 +88,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "The (n-1) superdiagonal elements of A."
 		},
 		{
 			"name": "DLF",
@@ -97,7 +104,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "If `FACT = 'F'`, then `DLF` is an input argument and on entry contains the (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF.\n\nIf `FACT = 'N'`, then `DLF` is an output argument and on exit contains the (n-1) multipliers that define the matrix L from the LU factorization of A."
 		},
 		{
 			"name": "DF",
@@ -112,7 +120,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `FACT = 'F'`, then `DF` is an input argument and on entry contains the n diagonal elements of the upper triangular matrix U from the LU factorization of A.\n\nIf `FACT = 'N'`, then `DF` is an output argument and on exit contains the n diagonal elements of the upper triangular matrix U from the LU factorization of A."
 		},
 		{
 			"name": "DUF",
@@ -127,7 +136,8 @@
 			"length": {
 				"fortran": "N-1",
 				"js": "N - 1"
-			}
+			},
+			"reference": "If `FACT = 'F'`, then `DUF` is an input argument and on entry contains the (n-1) elements of the first superdiagonal of U.\n\nIf `FACT = 'N'`, then `DUF` is an output argument and on exit contains the (n-1) elements of the first superdiagonal of U."
 		},
 		{
 			"name": "DU2",
@@ -142,7 +152,8 @@
 			"length": {
 				"fortran": "N-2",
 				"js": "N - 2"
-			}
+			},
+			"reference": "If `FACT = 'F'`, then `DU2` is an input argument and on entry contains the (n-2) elements of the second superdiagonal of U.\n\nIf `FACT = 'N'`, then `DU2` is an output argument and on exit contains the (n-2) elements of the second superdiagonal of U."
 		},
 		{
 			"name": "IPIV",
@@ -157,7 +168,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "If `FACT = 'F'`, then `IPIV` is an input argument and on entry contains the pivot indices from the LU factorization of A as computed by DGTTRF.\n\nIf `FACT = 'N'`, then `IPIV` is an output argument and on exit contains the pivot indices from the LU factorization of A; row i of the matrix was interchanged with row `IPIV(i)`. `IPIV(i)` will always be either i or i+1; `IPIV(i) = i` indicates a row interchange was not required."
 		},
 		{
 			"name": "B",
@@ -178,7 +190,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The N-by-`NRHS` right hand side matrix B."
 		},
 		{
 			"name": "ldb",
@@ -187,7 +200,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "The leading dimension of the array B. $\\mathrm{LDB} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "X",
@@ -208,7 +222,8 @@
 			"cols": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "If `INFO = 0` or $\\mathrm{INFO} = N+1$, the N-by-`NRHS` solution matrix X."
 		},
 		{
 			"name": "ldx",
@@ -217,7 +232,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The leading dimension of the array X. $\\mathrm{LDX} \\ge \\max (1,N)$."
 		},
 		{
 			"name": "rcond",
@@ -225,7 +241,8 @@
 			"position": 17,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "out"
+			"intent": "out",
+			"reference": "The estimate of the reciprocal condition number of the matrix A. If `RCOND` is less than the machine precision (in particular, if `RCOND = 0`), the matrix is singular to working precision. This condition is indicated by a return code of $\\mathrm{INFO} > 0$."
 		},
 		{
 			"name": "FERR",
@@ -240,7 +257,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The estimated forward error bound for each solution vector `X(j)` (the j-th column of the solution matrix X). If XTRUE is the true solution corresponding to `X(j)`, `FERR(j)` is an estimated upper bound for the magnitude of the largest element in (`X(j)` - XTRUE) divided by the magnitude of the largest element in `X(j)`. The estimate is as reliable as the estimate for `RCOND`, and is almost always a slight overestimate of the true error."
 		},
 		{
 			"name": "BERR",
@@ -255,7 +273,8 @@
 			"length": {
 				"fortran": "NRHS",
 				"js": "nrhs"
-			}
+			},
+			"reference": "The componentwise relative backward error of each solution vector `X(j)` (i.e., the smallest relative change in any element of A or B that makes `X(j)` an exact solution)."
 		},
 		{
 			"name": "WORK",
@@ -303,7 +322,8 @@
 			"position": 22,
 			"role": "info",
 			"dtype": "int32",
-			"intent": "out"
+			"intent": "out",
+			"reference": "-   `= 0`: successful exit\n-   `< 0`: if `INFO = -i`, the i-th argument had an illegal value\n-   `> 0`: if `INFO = i`, and i is \\<= N:  U(i,i) is exactly zero.  The factorization has not been completed unless $i = N$, but the factor U is exactly singular, so the solution and error bounds could not be computed. `RCOND = 0` is returned. = N+1: U is nonsingular, but `RCOND` is less than machine precision, meaning that the matrix is singular to working precision.  Nevertheless, the solution and error bounds are computed because there are a number of situations where the computed solution can be more accurate than the value of `RCOND` would suggest."
 		}
 	],
 	"checks": [

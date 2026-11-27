@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of plane rotations to be generated."
 		},
 		{
 			"name": "x",
@@ -29,7 +30,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCX",
 				"js": "1 + (N - 1) * incx"
-			}
+			},
+			"reference": "On entry, the vector x. On exit, x(i) is overwritten by r(i), for $i = 1$,...,n."
 		},
 		{
 			"name": "incx",
@@ -38,7 +40,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "X"
+			"of": "X",
+			"reference": "The increment between elements of X. $\\mathrm{INCX} > 0$."
 		},
 		{
 			"name": "y",
@@ -53,7 +56,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCY",
 				"js": "1 + (N - 1) * incy"
-			}
+			},
+			"reference": "On entry, the vector y. On exit, the sines of the plane rotations."
 		},
 		{
 			"name": "incy",
@@ -62,7 +66,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "Y"
+			"of": "Y",
+			"reference": "The increment between elements of Y. $\\mathrm{INCY} > 0$."
 		},
 		{
 			"name": "c",
@@ -77,7 +82,8 @@
 			"length": {
 				"fortran": "1+(N-1)*INCC",
 				"js": "1 + (N - 1) * incc"
-			}
+			},
+			"reference": "The cosines of the plane rotations."
 		},
 		{
 			"name": "incc",
@@ -86,7 +92,8 @@
 			"role": "inc",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "C"
+			"of": "C",
+			"reference": "The increment between elements of C. $\\mathrm{INCC} > 0$."
 		}
 	],
 	"checks": [],

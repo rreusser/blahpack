@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "-   `= 'N'`: The Normal Form of RFP A is stored;\n-   `= 'T'`: The Transpose Form of RFP A is stored."
 		},
 		{
 			"name": "side",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `SIDE` specifies whether op( A ) appears on the left or right of X as follows:\n\n$$\n\\mathrm{SIDE} = \\text{'L'} \\quad\\text{or}\\quad \\text{'l'} \\operatorname{op}( A ) \\, X = \\alpha \\, B\n$$\n\n$$\n\\mathrm{SIDE} = \\text{'R'} \\quad\\text{or}\\quad \\text{'r'} X \\, \\operatorname{op}( A ) = \\alpha \\, B\n$$\n\nUnchanged on exit."
 		},
 		{
 			"name": "uplo",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `UPLO` specifies whether the RFP matrix A came from an upper or lower triangular matrix as follows: `UPLO = 'U'` or 'u' RFP A came from an upper triangular matrix `UPLO = 'L'` or 'l' RFP A came from a lower triangular matrix\n\nUnchanged on exit."
 		},
 		{
 			"name": "trans",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `TRANS` specifies the form of op( A ) to be used in the matrix multiplication as follows:\n\n$$\n\\mathrm{TRANS} = \\text{'N'} \\quad\\text{or}\\quad \\text{'n'} \\operatorname{op}( A ) = A\n$$\n\n$$\n\\mathrm{TRANS} = \\text{'T'} \\quad\\text{or}\\quad \\text{'t'} \\operatorname{op}( A ) = A'\n$$\n\nUnchanged on exit."
 		},
 		{
 			"name": "diag",
@@ -46,7 +50,8 @@
 			"position": 5,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `DIAG` specifies whether or not RFP A is unit triangular as follows:\n\n`DIAG = 'U'` or 'u' A is assumed to be unit triangular.\n\n`DIAG = 'N'` or 'n' A is not assumed to be unit\n\ntriangular.\n\nUnchanged on exit."
 		},
 		{
 			"name": "M",
@@ -54,7 +59,8 @@
 			"position": 6,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, M specifies the number of rows of B. M must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "N",
@@ -62,7 +68,8 @@
 			"position": 7,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, N specifies the number of columns of B. N must be at least zero. Unchanged on exit."
 		},
 		{
 			"name": "alpha",
@@ -70,7 +77,8 @@
 			"position": 8,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "On entry, `ALPHA` specifies the scalar $\\alpha$. When $\\alpha$ is zero then A is not referenced and B need not be set before entry. Unchanged on exit."
 		},
 		{
 			"name": "a",
@@ -85,7 +93,8 @@
 			"length": {
 				"fortran": "NT",
 				"js": null
-			}
+			},
+			"reference": "$\\mathrm{NT} = N \\, (N+1)/2$. On entry, the matrix A in RFP Format. RFP Format is described by `TRANSR`, `UPLO` and N as follows: If `TRANSR='N'` then RFP A is (0:N,0:K-1) when N is even; $K=N/2$. RFP A is (0:N-1,0:K) when N is odd; $K=N/2$. If `TRANSR = 'T'` then RFP is the transpose of RFP A as defined when `TRANSR = 'N'`. The contents of RFP A are defined by `UPLO` as follows: If `UPLO = 'U'` the RFP A contains the NT elements of upper packed A either in normal or transpose Format. If `UPLO = 'L'` the RFP A contains the NT elements of lower packed A either in normal or transpose Format. The LDA of RFP A is (N+1)/2 when `TRANSR = 'T'`. When `TRANSR` is 'N' the LDA is N+1 when N is even and is N when is odd. See the Note below for more details. Unchanged on exit."
 		},
 		{
 			"name": "B",
@@ -106,7 +115,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "Before entry, the leading m by n part of the array B must contain the right-hand side matrix B, and on exit is overwritten by the solution matrix X."
 		},
 		{
 			"name": "ldb",
@@ -115,7 +125,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "B"
+			"of": "B",
+			"reference": "On entry, `LDB` specifies the first dimension of B as declared in the calling (sub) program. `LDB` must be at least max( 1, m ). Unchanged on exit."
 		}
 	],
 	"checks": [

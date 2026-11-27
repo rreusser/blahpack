@@ -14,7 +14,8 @@
 			"position": 1,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of rows of the matrix A. $M \\ge 0$."
 		},
 		{
 			"name": "N",
@@ -22,7 +23,8 @@
 			"position": 2,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of columns of the matrix A. $N \\ge 0$."
 		},
 		{
 			"name": "kl",
@@ -30,7 +32,8 @@
 			"position": 3,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of subdiagonals within the band of A. $\\mathrm{KL} \\ge 0$."
 		},
 		{
 			"name": "ku",
@@ -38,7 +41,8 @@
 			"position": 4,
 			"role": "dim",
 			"dtype": "int32",
-			"intent": "in"
+			"intent": "in",
+			"reference": "The number of superdiagonals within the band of A. $\\mathrm{KU} \\ge 0$."
 		},
 		{
 			"name": "AB",
@@ -55,7 +59,8 @@
 			"cols": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "On entry, the matrix A in band storage, in rows 1 to `KL`+`KU`+1. The j-th column of A is stored in the j-th column of the array `AB` as follows: `AB(ku+1+i-j,j) = A(i,j)` for $\\max (1,j-\\mathrm{ku}) \\le i \\le \\min (m,j+\\mathrm{kl})$\n\nOn exit, the equilibrated matrix, in the same storage format as A. See `EQUED` for the form of the equilibrated matrix."
 		},
 		{
 			"name": "ldab",
@@ -64,7 +69,8 @@
 			"role": "ld",
 			"dtype": "int32",
 			"intent": "in",
-			"of": "AB"
+			"of": "AB",
+			"reference": "The leading dimension of the array `AB`. $\\mathrm{LDA} \\ge \\mathrm{KL}+\\mathrm{KU}+1$."
 		},
 		{
 			"name": "r",
@@ -79,7 +85,8 @@
 			"length": {
 				"fortran": "M",
 				"js": "M"
-			}
+			},
+			"reference": "The row scale factors for A."
 		},
 		{
 			"name": "c",
@@ -94,7 +101,8 @@
 			"length": {
 				"fortran": "N",
 				"js": "N"
-			}
+			},
+			"reference": "The column scale factors for A."
 		},
 		{
 			"name": "rowcnd",
@@ -102,7 +110,8 @@
 			"position": 9,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Ratio of the smallest `R(i)` to the largest `R(i)`."
 		},
 		{
 			"name": "colcnd",
@@ -110,7 +119,8 @@
 			"position": 10,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Ratio of the smallest `C(i)` to the largest `C(i)`."
 		},
 		{
 			"name": "amax",
@@ -118,7 +128,8 @@
 			"position": 11,
 			"role": "scalar",
 			"dtype": "float64",
-			"intent": "in"
+			"intent": "in",
+			"reference": "Absolute value of largest matrix entry."
 		},
 		{
 			"name": "equed",
@@ -126,7 +137,8 @@
 			"position": 12,
 			"role": "flag",
 			"dtype": "string",
-			"intent": "out"
+			"intent": "out",
+			"reference": "Specifies the form of equilibration that was done.\n\n-   `= 'N'`: No equilibration\n-   `= 'R'`: Row equilibration, i.e., A has been premultiplied by diag(R).\n-   `= 'C'`: Column equilibration, i.e., A has been postmultiplied by diag(C).\n-   `= 'B'`: Both row and column equilibration, i.e., A has been replaced by $\\operatorname{diag}(R) \\, A \\, \\operatorname{diag}(C)$."
 		}
 	],
 	"checks": [],

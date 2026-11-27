@@ -55,11 +55,11 @@ jobs:
       # API reference, generated from JSDoc + spec/*.json. Written at the site
       # root, alongside (never over) the notebook build above.
       - name: Build API reference
-        run: node bin/docs/build.js --out dist
+        run: node bin/docs/build.js --out site
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build

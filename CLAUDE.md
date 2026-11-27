@@ -30,6 +30,7 @@ bin/                           # Pipeline scripts
   gen_test.py                  #   Generate JS test scaffold from fixtures
   lint.sh                      #   Lint gate: one ESLint run over lib/ (rules from lint/)
   lint-fix.sh                  #   Full fix pipeline (codemods + eslint + test verify)
+  build-dist.mjs               #   Browser/CDN build into dist/ (vendors stdlib); run by prepack
   codemod-tests.js             #   Test file mechanical fixes
   codemod-index.js             #   Index.js mechanical fixes
 lint/                          # THE rule library: one dir per rule (rule, README, fixtures, test)
@@ -56,6 +57,7 @@ docs/                          # Reference documentation
   goto-patterns.md             #   Fortran GOTO → JS restructuring
   performance-patterns.md      #   Optimization patterns with code examples
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
+  ndarray-layer.md             #   Proposal: ndarray-object API layer + piecemeal CDN distribution
 bench/                         # Performance benchmarks
 ```
 
@@ -80,6 +82,8 @@ node bin/wrapper-replay.mjs --all     # Per-module corpus checks (also coverage.
                                       #   every input; reruns redo only what changed.
                                       #   --no-cache, --jobs <n>, --slowest <n>
 npm run check:modules                 # The per-module CI gates (incl. benchmark smoke) on modules changed vs origin/main
+npm run build:dist                    # Browser/CDN build: dist/_stdlib.js + one ES module per routine
+npm run check:dist                    # dist/ is self-contained, loads in Chromium, matches Node, fits its budget
 ```
 
 ## Context Efficiency

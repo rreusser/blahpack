@@ -937,10 +937,12 @@
     "./lapack/base/zunmrq": "./lib/lapack/base/zunmrq/lib/index.js",
     "./lapack/base/zunmtr": "./lib/lapack/base/zunmtr/lib/index.js",
     "./lapack/base/zupgtr": "./lib/lapack/base/zupgtr/lib/index.js",
-    "./lapack/base/zupmtr": "./lib/lapack/base/zupmtr/lib/index.js"
+    "./lapack/base/zupmtr": "./lib/lapack/base/zupmtr/lib/index.js",
+    "./dist/*": "./dist/*"
   },
   "files": [
     "index.js",
+    "dist/",
     "lib/",
     "!lib/**/test/",
     "!lib/**/benchmark/",
@@ -993,7 +995,10 @@
     "gen-exports": "node bin/gen-exports.js",
     "docs:build": "node bin/docs/build.js",
     "docs:serve": "node bin/docs/build.js && node bin/docs/serve.js",
-    "docs:examples": "node bin/docs/run-examples.js"
+    "docs:examples": "node bin/docs/run-examples.js",
+    "build:dist": "node bin/build-dist.mjs",
+    "check:dist": "node bin/check-dist.mjs",
+    "prepack": "npm run build:dist"
   },
   "dependencies": {
     "@stdlib/array": "^0.3.3",
@@ -1012,8 +1017,10 @@
     "@rreusser/mcp-observable-notebook-kit-debug": "^1.0.1",
     "@stdlib/bench": "^0.5.1",
     "doctrine": "^3.0.0",
+    "esbuild": "0.27.4",
     "eslint": "^8.57.1",
     "eslint-plugin-node": "^11.1.0",
+    "playwright": "1.63.0",
     "prettier": "^3.4.2"
   }
 }

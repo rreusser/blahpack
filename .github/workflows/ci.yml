@@ -239,6 +239,27 @@ jobs:
       - name: Every module example runs (bin/examples-smoke.sh)
         run: bin/examples-smoke.sh
 
+  # Browser build (ticket 0112): dist/ holds one self-contained ES module per
+  # routine plus the vendored stdlib runtime, for CDNs and notebooks. The check
+  # loads every routine in headless Chromium with no request outside dist/,
+  # compares a few calls with Node bit for bit, and enforces a size budget.
+  dist:
+    name: Browser dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Build dist/
+        run: npm run build:dist
+      - name: dist/ is self-contained, loads in Chromium, matches Node, fits its budget
+        run: npm run check:dist
+
   # Generated files are in sync + the published package imports and runs.
   package:
     name: Package
@@ -264,6 +285,7 @@ jobs:
           cd /tmp/pack-smoke
           npm init -y > /dev/null
           npm install "./$TARBALL"
+          test -f "node_modules/$PKG_NAME/dist/_stdlib.js" || { echo 'tarball has no dist/ (prepack runs npm run build:dist)'; exit 1; }
           PKG_NAME="$PKG_NAME" node -e "
             import(process.env.PKG_NAME).then((m) => {
               const n = Object.keys(m).length;

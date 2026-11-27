@@ -9,12 +9,12 @@ function copyStaticFiles(files) {
     apply: "build",
     closeBundle() {
       for (const { src, dest } of files) {
-        mkdirSync(resolve(import.meta.dirname, "dist", dest, ".."), {
+        mkdirSync(resolve(import.meta.dirname, "site", dest, ".."), {
           recursive: true,
         });
         copyFileSync(
           resolve(import.meta.dirname, src),
-          resolve(import.meta.dirname, "dist", dest)
+          resolve(import.meta.dirname, "site", dest)
         );
       }
     },
@@ -40,7 +40,7 @@ export default defineConfig(async ({ command }) => {
     base: process.env.BASE_URL || "/",
     root: "notebooks",
     build: {
-      outDir: resolve(import.meta.dirname, "dist"),
+      outDir: resolve(import.meta.dirname, "site"),
       emptyOutDir: true,
       rollupOptions: {
         input: [

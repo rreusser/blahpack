@@ -17,9 +17,15 @@
 		"bin/break-mutants.mjs": {
 			"kind": "gate"
 		},
+		"bin/build-dist.mjs": {
+			"kind": "gate"
+		},
 		"bin/changed-modules.mjs": {
 			"kind": "part",
 			"of": "bin/bench-smoke.sh"
+		},
+		"bin/check-dist.mjs": {
+			"kind": "gate"
 		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",
@@ -269,6 +275,9 @@
 		"npm:audit": {
 			"kind": "gate"
 		},
+		"npm:build:dist": {
+			"kind": "gate"
+		},
 		"npm:bundle:naca": {
 			"kind": "gate"
 		},
@@ -276,6 +285,9 @@
 			"kind": "gate"
 		},
 		"npm:bundle:pseudospectra": {
+			"kind": "gate"
+		},
+		"npm:check:dist": {
 			"kind": "gate"
 		},
 		"npm:check:modules": {
@@ -312,7 +324,7 @@
 		},
 		"npm:docs:build": {
 			"kind": "tool",
-			"why": "generator: the API reference site (bin/docs), built into dist/ by deploy.yml"
+			"why": "generator: the API reference site (bin/docs), built into site/ by deploy.yml"
 		},
 		"npm:docs:examples": {
 			"kind": "ticket",
@@ -384,6 +396,12 @@
 		},
 		"npm:lint:learnings": {
 			"kind": "gate"
+		},
+		"npm:prepack": {
+			"kind": "alias",
+			"of": [
+				"npm:build:dist"
+			]
 		},
 		"npm:report": {
 			"kind": "tool",

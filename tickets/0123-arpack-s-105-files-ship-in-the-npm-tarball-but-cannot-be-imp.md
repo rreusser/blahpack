@@ -1,9 +1,10 @@
 ---
 id: 0123
 title: ARPACK's 105 files ship in the npm tarball but cannot be imported: the exports map has no ARPACK entries
-status: open
+status: resolved
 area: distribution
 opened: 2026-11-27
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -32,3 +33,7 @@ conformance-checked.
 ```bash
 npm pack --dry-run --json --ignore-scripts 2>/dev/null | node -e 'const j=JSON.parse(require("fs").readFileSync(0))[0];console.log("packed:",j.files.filter(f=>f.path.startsWith("lib/arpack/")).length,"exported:",Object.keys(require("./package.json").exports).filter(k=>k.includes("arpack")).length)'
 ```
+
+## Resolution
+
+On branch slop/awesome-wright-lxi5gy, bin/gen-exports.js discovers lib/arpack/base/* alongside blas and lapack, so package.json exports ./arpack/base/<routine> for all 13 ARPACK modules (917 export entries), the root index.js re-exports each with its <routine>Ndarray, and dist/ builds them (bin/build-dist.mjs reads the exports map): npm run check:dist loads all 915 routines in Chromium. What prevents a recurrence: the exports map is generated from the lib/ tree, and the package CI job fails if package.json or index.js differ from bin/gen-exports.js's output. The subpath moves to ./arpack/<routine> with the rest when the layout is flattened (ticket 0125).

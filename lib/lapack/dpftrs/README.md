@@ -148,7 +148,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dpftrf from '../dpftrf/lib/index.js';
+import dpftrf from './../../dpftrf/lib/index.js';
 import dpftrs from '@rreusser/blahpack/lapack/dpftrs';
 
 // 3x3 symmetric positive definite matrix in RFP format (TRANSR='no-transpose', UPLO='lower'):

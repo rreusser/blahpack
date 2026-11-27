@@ -60,7 +60,7 @@ dcabs1.ndarray( z ) → number
 
 ```js
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
-import dcabs1 from '../base/lib/base.js';
+import dcabs1 from './../lib/base.js';
 
 // Compute |Re(z)| + |Im(z)| for z = 3 + 4i:
 const z = new Complex128( 3.0, 4.0 );

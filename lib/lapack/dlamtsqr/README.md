@@ -212,7 +212,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlatsqr from '../dlatsqr/lib/index.js';
+import dlatsqr from './../../dlatsqr/lib/index.js';
 import dlamtsqr from '@rreusser/blahpack/lapack/dlamtsqr';
 
 // Build a tall 6-by-2 matrix and factor it with TSQR (row block size MB=3).

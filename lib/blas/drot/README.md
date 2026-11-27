@@ -92,7 +92,7 @@ drot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Float64Arr
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import drot from '../base/lib/base.js';
+import drot from './../lib/base.js';
 
 // Apply a Givens rotation to vectors x and y:
 const x = new Float64Array( [ 1.0, 2.0, 3.0 ] );

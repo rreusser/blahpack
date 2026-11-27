@@ -187,7 +187,7 @@ import Int32Array from '@stdlib/array/int32/lib/index.js';
 import Uint8Array from '@stdlib/array/uint8/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import dlamch from '../../../lapack/dlamch/lib/index.js';
-import dsaupd from '../dsaupd/lib/index.js';
+import dsaupd from './../../dsaupd/lib/index.js';
 import dseupd from '@rreusser/blahpack/arpack/dseupd';
 
 // `dseupd` post-processes a converged ARPACK Lanczos factorization produced by

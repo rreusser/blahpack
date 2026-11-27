@@ -117,7 +117,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dpptrf from '../dpptrf/lib/index.js';
+import dpptrf from '../../dpptrf/lib/index.js';
 import dpptri from '@rreusser/blahpack/lapack/dpptri';
 
 // 3x3 SPD matrix A = [25 5 -5; 5 10 2; -5 2 6] in upper packed format:

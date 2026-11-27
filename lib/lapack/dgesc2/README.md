@@ -136,7 +136,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgetc2 from '../dgetc2/lib/index.js';
+import dgetc2 from './../../dgetc2/lib/index.js';
 import dgesc2 from '@rreusser/blahpack/lapack/dgesc2';
 
 const N = 3;

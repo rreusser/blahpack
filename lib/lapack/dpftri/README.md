@@ -130,7 +130,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dpftrf from '../dpftrf/lib/base.js';
+import dpftrf from '../../dpftrf/lib/base.js';
 import dpftri from '@rreusser/blahpack/lapack/dpftri';
 
 // 3x3 SPD matrix in RFP format (TRANSR='N', UPLO='L'):

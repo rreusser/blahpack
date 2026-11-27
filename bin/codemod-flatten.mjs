@@ -158,7 +158,22 @@ for ( const f of tracked() ) {
 	const copy = mods.length > 0 && f.startsWith( 'test/harness/fixtures/' );
 	const VOLD = path.join( ROOT, 'lib', 'lapack', 'base', 'fixture', 'lib' );
 	const VNEW = path.join( ROOT, 'lib', 'lapack', 'fixture', 'lib' );
-	const dirsFor = ( spec ) => ( copy && !fs.existsSync( path.resolve( oldDir, spec ) ) && fs.existsSync( path.resolve( VOLD, spec ) ) ) ? [ VOLD, VNEW ] : [ oldDir, newDir ];
+	// Inside a module, example code in docs (README, LEARNINGS) is written for
+	// the module's lib/; a path that finds nothing from the file's own
+	// directory is resolved there.
+	const home = mods.find( ( m ) => oldAbs.startsWith( m.from + path.sep ) );
+	const dirsFor = ( spec ) => {
+		if ( fs.existsSync( path.resolve( oldDir, spec ) ) ) {
+			return [ oldDir, newDir ];
+		}
+		if ( copy && fs.existsSync( path.resolve( VOLD, spec ) ) ) {
+			return [ VOLD, VNEW ];
+		}
+		if ( home && fs.existsSync( path.resolve( home.from, 'lib', spec ) ) ) {
+			return [ path.join( home.from, 'lib' ), path.join( home.to, 'lib' ) ];
+		}
+		return [ oldDir, newDir ];
+	};
 	const src = fs.readFileSync( oldAbs, 'utf8' );
 	let out = src;
 
@@ -180,7 +195,13 @@ for ( const f of tracked() ) {
 	// while it still names the same (moved) target.
 	const fix = ( spec ) => {
 		const [ from, to ] = dirsFor( spec );
-		const target = mapPath( path.resolve( from, spec ) );
+		const old = path.resolve( from, spec );
+		const target = mapPath( old );
+		// A path to nothing is not this file's to fix: example code in a
+		// README is written for the module's lib/, not the README's directory.
+		if ( target === old && !fs.existsSync( old ) ) {
+			return spec;
+		}
 		if ( path.resolve( to, spec ) === target ) {
 			return spec;
 		}

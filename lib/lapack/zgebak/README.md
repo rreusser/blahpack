@@ -180,7 +180,7 @@ import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgebal from '../zgebal/lib/index.js';
+import zgebal from './../../zgebal/lib/index.js';
 import zgebak from '@rreusser/blahpack/lapack/zgebak';
 
 // Balance a 3x3 complex matrix with zgebal, then back-transform its (here: identity) right eigenvectors:

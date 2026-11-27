@@ -191,8 +191,8 @@ The reference documents `INFO` as:
 /* eslint-disable camelcase */
 
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlatsqr from '../dlatsqr/lib/ndarray.js';
-import dorgtsqr_row from '../base/lib/ndarray.js';
+import dlatsqr from './../../dlatsqr/lib/ndarray.js';
+import dorgtsqr_row from './../lib/ndarray.js';
 
 // Reconstruct Q from a TSQR factorization of an 8-by-3 matrix.
 const M = 8;

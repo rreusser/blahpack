@@ -83,7 +83,7 @@ dasum.ndarray( N, x, strideX, offsetX ) → number
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dasum from '../base/lib/base.js';
+import dasum from './../lib/base.js';
 
 const x = new Float64Array( [ 1.0, -2.0, 3.0, -4.0, 5.0 ] );
 

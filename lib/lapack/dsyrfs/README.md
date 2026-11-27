@@ -217,8 +217,8 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dsytrf from '../dsytrf/lib/index.js';
-import dsytrs from '../dsytrs/lib/index.js';
+import dsytrf from './../../dsytrf/lib/index.js';
+import dsytrs from './../../dsytrs/lib/index.js';
 import dsyrfs from '@rreusser/blahpack/lapack/dsyrfs';
 
 const N = 3;

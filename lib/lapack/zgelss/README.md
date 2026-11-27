@@ -202,7 +202,7 @@ import Float64Array from '@stdlib/array/float64/lib/index.js';
 import discreteUniform from '@stdlib/random/array/discrete-uniform/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import zgelss from '@rreusser/blahpack/lapack/zgelss';
-import { computeMinWorkSize } from '../base/lib/base.js';
+import { computeMinWorkSize } from './../lib/base.js';
 
 /** @type {{ dtype: 'float64' }} */
 const opts = {

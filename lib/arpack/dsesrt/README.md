@@ -90,7 +90,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsesrt from '../base/lib/base.js';
+import dsesrt from './../lib/base.js';
 
 // Ritz values and a 2-row companion matrix (columns pair with the values):
 const x = new Float64Array( [ 3.0, 1.0, 4.0, 2.0 ] );

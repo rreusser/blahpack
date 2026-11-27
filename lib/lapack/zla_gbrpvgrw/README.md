@@ -120,7 +120,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zgbtrf from '../zgbtrf/lib/index.js';
+import zgbtrf from './../../zgbtrf/lib/index.js';
 import zla_gbrpvgrw from '@rreusser/blahpack/lapack/zla_gbrpvgrw';
 
 // 3x3 complex tridiagonal matrix (KL=1, KU=1):

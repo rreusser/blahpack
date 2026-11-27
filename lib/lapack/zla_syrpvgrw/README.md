@@ -147,7 +147,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zsytrf from '../zsytrf/lib/index.js';
+import zsytrf from './../../zsytrf/lib/index.js';
 import zla_syrpvgrw from '@rreusser/blahpack/lapack/zla_syrpvgrw';
 
 // 3x3 complex symmetric matrix (column-major, interleaved real/imaginary parts):

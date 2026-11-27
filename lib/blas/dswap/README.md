@@ -86,7 +86,7 @@ Interchange two double-precision floating-point vectors.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dswap from '../base/lib/base.js';
+import dswap from './../lib/base.js';
 
 // Swap vectors x and y:
 const x = new Float64Array( [ 1.0, 2.0, 3.0 ] );

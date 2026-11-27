@@ -165,8 +165,8 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import zpotrf from '../zpotrf/lib/base.js';
-import zla_porcond_c from '../base/lib/base.js';
+import zpotrf from './../../zpotrf/lib/base.js';
+import zla_porcond_c from './../lib/base.js';
 
 const N = 3;
 const A = new Complex128Array([

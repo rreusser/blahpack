@@ -343,7 +343,7 @@ DLASD2 is called from DLASD1.
 
 ## See also
 
--   Calls: [`dcopy`](../../blas/dcopy), [`drot`](../../blas/drot)
+-   Calls: [`dcopy`](../../blas/dcopy), [`dlacpy`](../dlacpy), [`dlamch`](../dlamch), [`dlamrg`](../dlamrg), [`dlapy2`](../dlapy2), [`dlaset`](../dlaset), [`drot`](../../blas/drot)
 
 </section>
 

@@ -195,7 +195,7 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgebrd from '../zgebrd/lib/index.js';
+import zgebrd from './../../zgebrd/lib/index.js';
 import zunmbr from '@rreusser/blahpack/lapack/zunmbr';
 
 const M = 4;

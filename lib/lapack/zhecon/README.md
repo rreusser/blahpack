@@ -159,8 +159,8 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zlanhe from '../zlanhe/lib/index.js';
-import zhetrf from '../zhetrf/lib/index.js';
+import zlanhe from './../../zlanhe/lib/index.js';
+import zhetrf from './../../zhetrf/lib/index.js';
 import zhecon from '@rreusser/blahpack/lapack/zhecon';
 
 // 3x3 Hermitian matrix A (column-major):

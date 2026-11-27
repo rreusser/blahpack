@@ -20,7 +20,7 @@ learnings here are one-time setup that apply to the whole `lib/arpack` effort.
 ## Dependency interface surprises
 
 -   `dlamch` lives at `lib/lapack/dlamch`; the import depth from
-    `lib/arpack/<r>/lib/base.js` is `../../../lapack/...`.
+    `lib/arpack/<r>/lib/base.js` is `./../../../../lapack/...`.
 
 ## Fixture toolchain (ARPACK, one-time infra)
 

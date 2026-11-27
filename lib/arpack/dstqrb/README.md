@@ -89,7 +89,7 @@ An `info` status code: `0` on success. A positive value reports a numerical cond
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dstqrb from '../base/lib/base.js';
+import dstqrb from './../lib/base.js';
 
 // Symmetric tridiagonal matrix with diagonal 2 and subdiagonal -1:
 const d = new Float64Array( [ 2.0, 2.0, 2.0, 2.0 ] );

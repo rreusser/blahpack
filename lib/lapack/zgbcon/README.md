@@ -175,7 +175,7 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
-import zgbtrf from '../zgbtrf/lib/index.js';
+import zgbtrf from './../../zgbtrf/lib/index.js';
 import zgbcon from '@rreusser/blahpack/lapack/zgbcon';
 
 // 4x4 complex tridiagonal matrix (kl=ku=1) in column-major band storage with LDAB = 2*kl+ku+1 = 4:

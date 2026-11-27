@@ -83,7 +83,7 @@ dnrm2.ndarray( N, x, strideX, offsetX ) → number
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dnrm2 from '../base/lib/base.js';
+import dnrm2 from './../lib/base.js';
 
 // Compute the Euclidean norm of a vector:
 const x = new Float64Array( [ 3.0, 4.0 ] );

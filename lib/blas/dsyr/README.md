@@ -138,7 +138,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsyr from '../base/lib/base.js';
+import dsyr from './../lib/base.js';
 
 // Perform A = alpha*x*x' + A for symmetric A:
 const x = new Float64Array( [ 1.0, 2.0 ] );

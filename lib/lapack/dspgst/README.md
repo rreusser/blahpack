@@ -140,7 +140,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dpptrf from '../dpptrf/lib/index.js';
+import dpptrf from './../../dpptrf/lib/index.js';
 import dspgst from '@rreusser/blahpack/lapack/dspgst';
 
 // 3x3 SPD matrix B in upper packed format: [4 2 1; 2 5 1; 1 1 3]

@@ -176,7 +176,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dsytrf from '../dsytrf/lib/index.js';
+import dsytrf from './../../dsytrf/lib/index.js';
 import dsytrs2 from '@rreusser/blahpack/lapack/dsytrs2';
 
 const N = 3;

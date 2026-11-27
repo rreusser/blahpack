@@ -221,7 +221,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zsprfs from '../base/lib/base.js';
+import zsprfs from './../lib/base.js';
 
 // 1x1 complex symmetric system: A = (3+i), B = (1+i), X = (0.4+0.2i)
 const AP = new Complex128Array( new Float64Array( [ 3.0, 1.0 ] ) );

@@ -178,7 +178,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zsytf2 from '../zsytf2/lib/index.js';
+import zsytf2 from './../../zsytf2/lib/index.js';
 import zsytrs2 from '@rreusser/blahpack/lapack/zsytrs2';
 
 const N = 3;

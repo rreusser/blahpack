@@ -458,9 +458,9 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
-import zgetrf from '../zgetrf/lib/base.js';
-import zgetrs from '../zgetrs/lib/base.js';
-import zla_gerfsx_extended from '../base/lib/ndarray.js';
+import zgetrf from './../../zgetrf/lib/base.js';
+import zgetrs from './../../zgetrs/lib/base.js';
+import zla_gerfsx_extended from './../lib/ndarray.js';
 
 // 3x3 diagonally dominant complex matrix (column-major):
 const N = 3;

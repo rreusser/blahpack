@@ -195,7 +195,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zlatsqr from '../zlatsqr/lib/base.js';
+import zlatsqr from './../../zlatsqr/lib/base.js';
 import zungtsqr from '@rreusser/blahpack/lapack/zungtsqr';
 
 const M = 6;

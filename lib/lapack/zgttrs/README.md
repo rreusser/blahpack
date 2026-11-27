@@ -191,7 +191,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgttrf from '../zgttrf/lib/index.js';
+import zgttrf from './../../zgttrf/lib/index.js';
 import zgttrs from '@rreusser/blahpack/lapack/zgttrs';
 
 // Complex tridiagonal matrix A (N = 4); the right-hand side is b = A*[1,2,3,4]:

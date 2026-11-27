@@ -440,8 +440,8 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import zla_porfsx_extended from '@rreusser/blahpack/lapack/zla_porfsx_extended';
-import zpotrf from '../zpotrf/lib/base.js';
-import zpotrs from '../zpotrs/lib/base.js';
+import zpotrf from './../../zpotrf/lib/base.js';
+import zpotrs from './../../zpotrs/lib/base.js';
 
 // 3x3 Hermitian positive-definite matrix (column-major).
 const A = new Complex128Array([

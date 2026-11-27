@@ -189,7 +189,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgttrf from '../dgttrf/lib/index.js';
+import dgttrf from './../../dgttrf/lib/index.js';
 import dgtcon from '@rreusser/blahpack/lapack/dgtcon';
 
 // Tridiagonal matrix A (N = 4) with sub-, main and super-diagonals:

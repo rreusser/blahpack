@@ -187,7 +187,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlatsqr from '../dlatsqr/lib/index.js';
+import dlatsqr from './../../dlatsqr/lib/index.js';
 import dorgtsqr from '@rreusser/blahpack/lapack/dorgtsqr';
 
 // 8-by-3 column-major matrix:

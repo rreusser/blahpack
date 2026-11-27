@@ -90,7 +90,7 @@ Computes the dot product of two vectors with extended precision accumulation.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsdot from '../base/lib/base.js';
+import dsdot from './../lib/base.js';
 
 // Compute the dot product with extended precision:
 const x = new Float64Array( [ 1.0, 2.0, 3.0 ] );

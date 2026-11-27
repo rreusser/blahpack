@@ -149,7 +149,7 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zhetrd from '../zhetrd/lib/index.js';
+import zhetrd from './../../zhetrd/lib/index.js';
 import zungtr from '@rreusser/blahpack/lapack/zungtr';
 
 const N = 4;

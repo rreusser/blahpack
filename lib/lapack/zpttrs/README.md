@@ -153,7 +153,7 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpttrf from '../zpttrf/lib/index.js';
+import zpttrf from './../../zpttrf/lib/index.js';
 import zpttrs from '@rreusser/blahpack/lapack/zpttrs';
 
 // Hermitian positive definite tridiagonal matrix A = [ 4, 1-i, 0; 1+i, 5, 2i; 0, -2i, 6 ]

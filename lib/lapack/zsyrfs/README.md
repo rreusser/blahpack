@@ -224,8 +224,8 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zsytrf from '../zsytrf/lib/index.js';
-import zsytrs from '../zsytrs/lib/index.js';
+import zsytrf from './../../zsytrf/lib/index.js';
+import zsytrs from './../../zsytrs/lib/index.js';
 import zsyrfs from '@rreusser/blahpack/lapack/zsyrfs';
 
 const N = 3;

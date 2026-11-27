@@ -172,7 +172,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgelqf from '../zgelqf/lib/index.js';
+import zgelqf from './../../zgelqf/lib/index.js';
 import zunmlq from '@rreusser/blahpack/lapack/zunmlq';
 
 const M = 3;

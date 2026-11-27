@@ -106,7 +106,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zgetrf from '../zgetrf/lib/index.js';
+import zgetrf from './../../zgetrf/lib/index.js';
 import zla_gerpvgrw from '@rreusser/blahpack/lapack/zla_gerpvgrw';
 
 // 3x3 complex matrix (column-major, interleaved real/imaginary parts):

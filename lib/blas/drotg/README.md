@@ -97,7 +97,7 @@ where `c**2 + s**2 = 1`.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import drotg from '../base/lib/base.js';
+import drotg from './../lib/base.js';
 
 const ab = new Float64Array( [ 3.0, 4.0 ] );
 const cs = new Float64Array( 2 );

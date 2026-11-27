@@ -105,7 +105,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dseigt from '../base/lib/base.js';
+import dseigt from './../lib/base.js';
 
 // Symmetric tridiagonal H (diagonal 2, subdiagonal -1) in 2-column layout.
 // Column 0 (rows 1..N-1) is the subdiagonal; column 1 is the main diagonal.

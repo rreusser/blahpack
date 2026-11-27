@@ -184,7 +184,7 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import sqrt from '@stdlib/math/base/special/sqrt/lib/index.js';
-import zgttrf from '../zgttrf/lib/index.js';
+import zgttrf from './../../zgttrf/lib/index.js';
 import zgtcon from '@rreusser/blahpack/lapack/zgtcon';
 
 // Complex tridiagonal matrix A (N = 4) with sub-, main and super-diagonals:

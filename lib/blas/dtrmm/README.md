@@ -207,7 +207,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dtrmm from '../base/lib/base.js';
+import dtrmm from './../lib/base.js';
 
 // Perform B = alpha*A*B for triangular A:
 const A = new Float64Array( [ 2.0, 0.0, 3.0, 4.0 ] );

@@ -193,7 +193,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsytrd from '../dsytrd/lib/index.js';
+import dsytrd from './../../dsytrd/lib/index.js';
 import dormtr from '@rreusser/blahpack/lapack/dormtr';
 
 const N = 4;

@@ -235,7 +235,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dgsvj1 from '../base/lib/dgsvj1.js';
+import dgsvj1 from './../lib/dgsvj1.js';
 
 const EPS = 2.220446049250313e-16;
 const SFMIN = 2.2250738585072014e-308;

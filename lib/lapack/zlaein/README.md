@@ -166,7 +166,7 @@ The reference documents `INFO` as:
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import zlaein from '../base/lib/base.js';
+import zlaein from './../lib/base.js';
 
 const N = 3;
 const LDH = 3;

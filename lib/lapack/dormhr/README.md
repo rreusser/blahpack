@@ -197,7 +197,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dgehrd from '../dgehrd/lib/index.js';
+import dgehrd from './../../dgehrd/lib/index.js';
 import dormhr from '@rreusser/blahpack/lapack/dormhr';
 
 const N = 4;

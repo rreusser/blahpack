@@ -133,7 +133,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dpttrf from '../dpttrf/lib/index.js';
+import dpttrf from './../../dpttrf/lib/index.js';
 import dptcon from '@rreusser/blahpack/lapack/dptcon';
 
 // Symmetric positive definite tridiagonal matrix A = [ 4, 1, 0; 1, 5, 2; 0, 2, 6 ]:

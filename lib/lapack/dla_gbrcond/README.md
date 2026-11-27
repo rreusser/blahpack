@@ -200,7 +200,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgbtrf from '../dgbtrf/lib/index.js';
+import dgbtrf from './../../dgbtrf/lib/index.js';
 import dla_gbrcond from '@rreusser/blahpack/lapack/dla_gbrcond';
 
 // 3x3 tridiagonal matrix (KL=1, KU=1):

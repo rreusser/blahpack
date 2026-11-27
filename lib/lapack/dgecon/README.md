@@ -143,7 +143,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgetrf from '../dgetrf/lib/index.js';
+import dgetrf from './../../dgetrf/lib/index.js';
 import dgecon from '@rreusser/blahpack/lapack/dgecon';
 
 // Estimate the reciprocal condition number of a 3x3 matrix (column-major) from its LU factorization:

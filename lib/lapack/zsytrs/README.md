@@ -149,7 +149,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import discreteUniform from '@stdlib/random/array/discrete-uniform/lib/index.js';
-import zsytrf from '../zsytrf/lib/index.js';
+import zsytrf from './../../zsytrf/lib/index.js';
 import zsytrs from '@rreusser/blahpack/lapack/zsytrs';
 
 /** @type {{ dtype: 'float64' }} */

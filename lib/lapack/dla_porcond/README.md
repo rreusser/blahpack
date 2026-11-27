@@ -175,7 +175,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dpotrf from '../dpotrf/lib/base.js';
+import dpotrf from './../../dpotrf/lib/base.js';
 import dla_porcond from '@rreusser/blahpack/lapack/dla_porcond';
 
 // 3x3 SPD matrix (column-major):

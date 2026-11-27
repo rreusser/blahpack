@@ -20,4 +20,4 @@
 
 ## Doctest gotcha
 
-- `index.js` `@example` blocks are *executed* by `stdlib/jsdoc-doctest` against the stdlib node_modules tree. Requiring a sibling module like `@stdlib/lapack/base/dlatsqr` fails when that module is not yet present in the install. Workaround: use `require( '../base/lib' )` for self-reference and avoid cross-module requires in the `@example` block; refer to dependencies in prose comments instead.
+- `index.js` `@example` blocks are *executed* by `stdlib/jsdoc-doctest` against the stdlib node_modules tree. Requiring a sibling module like `@stdlib/lapack/base/dlatsqr` fails when that module is not yet present in the install. Workaround: use `require( './../lib' )` for self-reference and avoid cross-module requires in the `@example` block; refer to dependencies in prose comments instead.

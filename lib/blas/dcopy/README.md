@@ -88,7 +88,7 @@ dcopy.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dcopy from '../base/lib/base.js';
+import dcopy from './../lib/base.js';
 
 // Copy x into y:
 const x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );

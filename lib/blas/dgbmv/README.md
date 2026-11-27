@@ -215,7 +215,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dgbmv from '../base/lib/base.js';
+import dgbmv from './../lib/base.js';
 
 // Perform y = alpha*A*x + beta*y for a banded matrix:
 const A = new Float64Array( [ 0.0, 1.0, 2.0, 3.0, 4.0, 0.0 ] );

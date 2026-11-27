@@ -154,7 +154,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dsptrf from '../dsptrf/lib/index.js';
+import dsptrf from '../../dsptrf/lib/index.js';
 import dsptrs from '@rreusser/blahpack/lapack/dsptrs';
 
 // 3x3 SPD matrix in lower packed storage:

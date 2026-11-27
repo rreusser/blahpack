@@ -163,7 +163,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgbtrf from '../dgbtrf/lib/index.js';
+import dgbtrf from './../../dgbtrf/lib/index.js';
 import dgbtrs from '@rreusser/blahpack/lapack/dgbtrs';
 
 // 4x4 tridiagonal matrix (kl=ku=1) in column-major band storage with LDAB = 2*kl+ku+1 = 4:

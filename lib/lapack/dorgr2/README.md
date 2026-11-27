@@ -134,7 +134,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import { ndarray as dgerq2 } from '../dgerq2/lib/index.js';
+import { ndarray as dgerq2 } from './../../dgerq2/lib/index.js';
 import dorgr2 from '@rreusser/blahpack/lapack/dorgr2';
 
 // 3x5 matrix in column-major order:

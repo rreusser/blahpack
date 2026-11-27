@@ -97,7 +97,7 @@ Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standar
 ## Examples
 
 ```js
-import dlanv2 from '../base/lib/base.js';
+import dlanv2 from './../lib/base.js';
 
 // Compute the Schur factorization of a 2x2 matrix with real eigenvalues:
 const a = new Float64Array( 1 );

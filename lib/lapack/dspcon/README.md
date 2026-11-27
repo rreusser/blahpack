@@ -155,7 +155,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dsptrf from '../dsptrf/lib/index.js';
+import dsptrf from '../../dsptrf/lib/index.js';
 import dspcon from '@rreusser/blahpack/lapack/dspcon';
 
 // 3x3 symmetric positive definite matrix in upper packed storage:

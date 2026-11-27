@@ -137,7 +137,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpftrf from '../zpftrf/lib/index.js';
+import zpftrf from '../../zpftrf/lib/index.js';
 import zpftri from '@rreusser/blahpack/lapack/zpftri';
 
 // 3x3 HPD matrix in RFP format (TRANSR='no-transpose', UPLO='lower'):

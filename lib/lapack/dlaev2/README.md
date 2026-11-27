@@ -95,7 +95,7 @@ dlaev2.ndarray( a, b, c, rt1, rt2, cs1, sn1 ) → void
 ## Examples
 
 ```js
-import dlaev2 from '../base/lib/base.js';
+import dlaev2 from './../lib/base.js';
 
 // Compute the eigendecomposition of a 2-by-2 symmetric matrix:
 

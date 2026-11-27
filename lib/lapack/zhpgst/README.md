@@ -141,7 +141,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpptrf from '../zpptrf/lib/index.js';
+import zpptrf from '../../zpptrf/lib/index.js';
 import zhpgst from '@rreusser/blahpack/lapack/zhpgst';
 
 // Hermitian positive-definite B (2x2), upper packed: b11, b12, b22

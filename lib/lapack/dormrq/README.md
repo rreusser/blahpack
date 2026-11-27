@@ -177,7 +177,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dgerqf from '../dgerqf/lib/index.js';
+import dgerqf from './../../dgerqf/lib/index.js';
 import dormrq from '@rreusser/blahpack/lapack/dormrq';
 
 const N = 4;

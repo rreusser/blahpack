@@ -125,7 +125,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zgetrf from '../zgetrf/lib/index.js';
+import zgetrf from './../../zgetrf/lib/index.js';
 import zgetri from '@rreusser/blahpack/lapack/zgetri';
 
 const N = 3;

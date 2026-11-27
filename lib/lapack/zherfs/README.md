@@ -227,8 +227,8 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zhetrf from '../zhetrf/lib/index.js';
-import zhetrs from '../zhetrs/lib/index.js';
+import zhetrf from './../../zhetrf/lib/index.js';
+import zhetrs from './../../zhetrs/lib/index.js';
 import zherfs from '@rreusser/blahpack/lapack/zherfs';
 
 // 3x3 Hermitian matrix A (column-major) and right-hand side b = A*[1,1,1]:

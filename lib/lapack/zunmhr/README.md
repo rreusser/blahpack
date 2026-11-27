@@ -198,7 +198,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgehrd from '../zgehrd/lib/index.js';
+import zgehrd from './../../zgehrd/lib/index.js';
 import zunmhr from '@rreusser/blahpack/lapack/zunmhr';
 
 const N = 4;

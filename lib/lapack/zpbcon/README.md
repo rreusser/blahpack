@@ -154,7 +154,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import zpbtrf from '../zpbtrf/lib/index.js';
+import zpbtrf from './../../zpbtrf/lib/index.js';
 import zpbcon from '@rreusser/blahpack/lapack/zpbcon';
 
 const N = 3;

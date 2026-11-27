@@ -156,7 +156,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dpbtrf from '../dpbtrf/lib/index.js';
+import dpbtrf from './../../dpbtrf/lib/index.js';
 import dpbcon from '@rreusser/blahpack/lapack/dpbcon';
 
 const N = 3;

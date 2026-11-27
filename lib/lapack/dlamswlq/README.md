@@ -212,7 +212,7 @@ The reference documents `INFO` as:
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlaswlq from '../dlaswlq/lib/index.js';
+import dlaswlq from './../../dlaswlq/lib/index.js';
 import dlamswlq from '@rreusser/blahpack/lapack/dlamswlq';
 
 // Build a short-wide 2-by-6 matrix and factor it with SWLQ (column block size NB=4).

@@ -158,7 +158,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpotrf from '../zpotrf/lib/index.js';
+import zpotrf from './../../zpotrf/lib/index.js';
 import zhegst from '@rreusser/blahpack/lapack/zhegst';
 
 // Reduce the generalized Hermitian-definite problem A*x = lambda*B*x to standard form (3x3, column-major):

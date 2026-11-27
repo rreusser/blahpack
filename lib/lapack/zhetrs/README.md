@@ -154,7 +154,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zhetrf from '../zhetrf/lib/index.js';
+import zhetrf from './../../zhetrf/lib/index.js';
 import zhetrs from '@rreusser/blahpack/lapack/zhetrs';
 
 const N = 3;

@@ -209,9 +209,9 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dpbtrf from '../dpbtrf/lib/base.js';
-import dpbtrs from '../dpbtrs/lib/base.js';
-import dpbrfs from '../base/lib/base.js';
+import dpbtrf from './../../dpbtrf/lib/base.js';
+import dpbtrs from './../../dpbtrs/lib/base.js';
+import dpbrfs from './../lib/base.js';
 
 // 3x3 SPD band matrix with KD=1, upper band storage (LDAB=2):
 

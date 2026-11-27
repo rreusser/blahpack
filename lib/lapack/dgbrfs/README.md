@@ -234,9 +234,9 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgbtrf from '../dgbtrf/lib/base.js';
-import dgbtrs from '../dgbtrs/lib/base.js';
-import dgbrfs from '../base/lib/base.js';
+import dgbtrf from './../../dgbtrf/lib/base.js';
+import dgbtrs from './../../dgbtrs/lib/base.js';
+import dgbrfs from './../lib/base.js';
 
 // 1x1 system: 3*x = 5
 const ab = new Float64Array( [ 3.0 ] );

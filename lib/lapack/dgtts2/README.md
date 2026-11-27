@@ -168,7 +168,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgttrf from '../dgttrf/lib/index.js';
+import dgttrf from './../../dgttrf/lib/index.js';
 import dgtts2 from '@rreusser/blahpack/lapack/dgtts2';
 
 // Tridiagonal matrix A (N = 4); the right-hand side is b = A*[1,2,3,4]:

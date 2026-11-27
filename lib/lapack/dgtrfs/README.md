@@ -255,8 +255,8 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgttrf from '../dgttrf/lib/index.js';
-import dgttrs from '../dgttrs/lib/index.js';
+import dgttrf from './../../dgttrf/lib/index.js';
+import dgttrs from './../../dgttrs/lib/index.js';
 import dgtrfs from '@rreusser/blahpack/lapack/dgtrfs';
 
 // Tridiagonal matrix A (N = 4); the right-hand side is b = A*[1,2,3,4]:

@@ -235,9 +235,9 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgbtrf from '../zgbtrf/lib/base.js';
-import zgbtrs from '../zgbtrs/lib/base.js';
-import zgbrfs from '../base/lib/base.js';
+import zgbtrf from './../../zgbtrf/lib/base.js';
+import zgbtrs from './../../zgbtrs/lib/base.js';
+import zgbrfs from './../lib/base.js';
 
 // 1x1 system: (3+2i)*x = (5+i)
 const ab = new Complex128Array( 1 );

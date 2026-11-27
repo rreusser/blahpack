@@ -190,7 +190,7 @@ The reference documents `INFO` as:
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zlatsqr from '../zlatsqr/lib/index.js';
+import zlatsqr from './../../zlatsqr/lib/index.js';
 import zungtsqr_row from '@rreusser/blahpack/lapack/zungtsqr_row';
 
 // Build a tall 6x2 column-major complex matrix.

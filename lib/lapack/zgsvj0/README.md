@@ -248,7 +248,7 @@ The reference documents `INFO` as:
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgsvj0 from '../base/lib/zgsvj0.js';
+import zgsvj0 from './../lib/zgsvj0.js';
 
 const EPS = 2.220446049250313e-16;
 const SFMIN = 2.2250738585072014e-308;

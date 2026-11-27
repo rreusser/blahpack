@@ -140,7 +140,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpotrf from '../zpotrf/lib/index.js';
+import zpotrf from './../../zpotrf/lib/index.js';
 import zpotrs from '@rreusser/blahpack/lapack/zpotrs';
 
 // Hermitian positive definite matrix A = [ 4, 1-i, 0; 1+i, 5, 2i; 0, -2i, 6 ] (column-major):

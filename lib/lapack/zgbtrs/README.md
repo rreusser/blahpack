@@ -164,7 +164,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zgbtrf from '../zgbtrf/lib/index.js';
+import zgbtrf from './../../zgbtrf/lib/index.js';
 import zgbtrs from '@rreusser/blahpack/lapack/zgbtrs';
 
 // 4x4 complex tridiagonal matrix (kl=ku=1) in column-major band storage with LDAB = 2*kl+ku+1 = 4:
@@ -223,7 +223,7 @@ with a general band matrix A using the LU factorization computed by ZGBTRF.
 ## See also
 
 -   Other precisions: [`dgbtrs`](../dgbtrs)
--   Calls: [`zgemv`](../../blas/zgemv), [`zgeru`](../../blas/zgeru), [`zswap`](../../blas/zswap), [`ztbsv`](../../blas/ztbsv)
+-   Calls: [`zgemv`](../../blas/zgemv), [`zgeru`](../../blas/zgeru), [`zlacgv`](../zlacgv), [`zswap`](../../blas/zswap), [`ztbsv`](../../blas/ztbsv)
 -   Called by: [`zgbrfs`](../zgbrfs), [`zgbsv`](../zgbsv), [`zgbsvx`](../zgbsvx), [`zla_gbrcond_c`](../zla_gbrcond_c), [`zla_gbrcond_x`](../zla_gbrcond_x), [`zla_gbrfsx_extended`](../zla_gbrfsx_extended)
 
 </section>

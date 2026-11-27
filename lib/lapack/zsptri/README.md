@@ -145,8 +145,8 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zsptrf from '../zsptrf/lib/base.js';
-import zsptri from '../base/lib/base.js';
+import zsptrf from '../../zsptrf/lib/base.js';
+import zsptri from './../lib/base.js';
 
 // 2x2 complex symmetric matrix (upper packed): A = [ 2+i, 1+2i; 1+2i, 3+i ]
 const AP = new Complex128Array( [ 2.0, 1.0, 1.0, 2.0, 3.0, 1.0 ] );

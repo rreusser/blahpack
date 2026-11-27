@@ -227,8 +227,8 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zgetrf from '../zgetrf/lib/index.js';
-import zgetrs from '../zgetrs/lib/index.js';
+import zgetrf from './../../zgetrf/lib/index.js';
+import zgetrs from './../../zgetrs/lib/index.js';
 import zgerfs from '@rreusser/blahpack/lapack/zgerfs';
 
 const N = 3;

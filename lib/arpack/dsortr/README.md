@@ -80,7 +80,7 @@ dsortr.ndarray(
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsortr from '../base/lib/base.js';
+import dsortr from './../lib/base.js';
 
 // Ritz values and a companion vector (e.g. their error bounds):
 const x1 = new Float64Array( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );

@@ -172,7 +172,7 @@ lower triangular matrix, supplied in packed form.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dtpmv from '../base/lib/base.js';
+import dtpmv from './../lib/base.js';
 
 // Perform x = A*x for triangular packed A:
 const AP = new Float64Array( [ 2.0, 3.0, 4.0 ] );

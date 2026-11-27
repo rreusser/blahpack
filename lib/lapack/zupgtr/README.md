@@ -152,7 +152,7 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
-import zhptrd from '../zhptrd/lib/index.js';
+import zhptrd from './../../zhptrd/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import zupgtr from '@rreusser/blahpack/lapack/zupgtr';
 

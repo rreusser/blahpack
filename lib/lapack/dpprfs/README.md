@@ -204,8 +204,8 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dpptrf from '../dpptrf/lib/index.js';
-import dpptrs from '../dpptrs/lib/index.js';
+import dpptrf from '../../dpptrf/lib/index.js';
+import dpptrs from '../../dpptrs/lib/index.js';
 import dpprfs from '@rreusser/blahpack/lapack/dpprfs';
 
 // 3x3 SPD matrix in upper packed storage: [ 4 2 1; 2 5 3; 1 3 6 ]

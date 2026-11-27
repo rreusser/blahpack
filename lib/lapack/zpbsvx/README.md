@@ -264,7 +264,7 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpbsvx from '../base/lib/base.js';
+import zpbsvx from './../lib/base.js';
 
 // 3x3 Hermitian positive definite band matrix, KD=1, upper band storage:
 // A = [ 4     -1+0.5i  0       ]

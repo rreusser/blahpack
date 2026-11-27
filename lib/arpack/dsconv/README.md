@@ -78,7 +78,7 @@ dsconv.ndarray(
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsconv from '../base/lib/base.js';
+import dsconv from './../lib/base.js';
 
 // Ritz values and their associated Ritz estimates (bounds):
 const nconvOut = new Int32Array( 1 );

@@ -137,7 +137,7 @@ console.log( out );
 
 ## See also
 
--   Called by: [`dlaed2`](../dlaed2), [`dlasd7`](../dlasd7)
+-   Called by: [`dlaed2`](../dlaed2), [`dlasd2`](../dlasd2), [`dlasd7`](../dlasd7)
 
 </section>
 

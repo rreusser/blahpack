@@ -93,7 +93,7 @@ dsgets.ndarray(
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsgets from '../base/lib/base.js';
+import dsgets from './../lib/base.js';
 
 // Current Ritz values and their error bounds:
 const ritz = new Float64Array( [ 3.0, -1.0, 4.0, -1.5, 2.0 ] );

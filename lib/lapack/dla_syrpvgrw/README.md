@@ -146,7 +146,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dsytrf from '../dsytrf/lib/index.js';
+import dsytrf from './../../dsytrf/lib/index.js';
 import dla_syrpvgrw from '@rreusser/blahpack/lapack/dla_syrpvgrw';
 
 // 3x3 symmetric indefinite matrix (column-major):

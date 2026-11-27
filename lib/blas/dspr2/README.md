@@ -147,7 +147,7 @@ Performs the symmetric rank-2 operation `A := alpha*x*y^T + alpha*y*x^T + A`.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dspr2 from '../base/lib/base.js';
+import dspr2 from './../lib/base.js';
 
 // Perform A = alpha*x*y' + alpha*y*x' + A:
 const x = new Float64Array( [ 1.0, 2.0 ] );

@@ -149,7 +149,7 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import zgeqp3 from '@rreusser/blahpack/lapack/zgeqp3';
-import { computeWorkSize } from '../base/lib/base.js';
+import { computeWorkSize } from './../lib/base.js';
 
 /** @type {{ dtype: 'float64' }} */
 const opts = {

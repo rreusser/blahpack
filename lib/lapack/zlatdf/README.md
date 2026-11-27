@@ -164,7 +164,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgetc2 from '../zgetc2/lib/index.js';
+import zgetc2 from './../../zgetc2/lib/index.js';
 import zlatdf from '@rreusser/blahpack/lapack/zlatdf';
 
 // Build a 2x2 complex matrix and factor it via zgetc2 to obtain the LU

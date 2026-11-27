@@ -108,7 +108,7 @@ DLAPY2 returns $\sqrt{x^2+y^2}$, taking care not to cause unnecessary overflow a
 
 ## See also
 
--   Called by: [`dgeev`](../dgeev), [`dgeevx`](../dgeevx), [`dhgeqz`](../dhgeqz), [`dlaed2`](../dlaed2), [`dlaein`](../dlaein), [`dlagv2`](../dlagv2), [`dlanv2`](../dlanv2), [`dlarfg`](../dlarfg), [`dlarfgp`](../dlarfgp), [`dlasd7`](../dlasd7), [`dsteqr`](../dsteqr), [`dsterf`](../dsterf), [`dstqrb`](../../arpack/dstqrb), [`dtgsna`](../dtgsna), [`dtrsna`](../dtrsna), [`zhptrf`](../zhptrf), [`zlarfgp`](../zlarfgp), [`zlargv`](../zlargv), [`zsteqr`](../zsteqr), [`ztgsna`](../ztgsna)
+-   Called by: [`dgeev`](../dgeev), [`dgeevx`](../dgeevx), [`dhgeqz`](../dhgeqz), [`dlaed2`](../dlaed2), [`dlaein`](../dlaein), [`dlagv2`](../dlagv2), [`dlanv2`](../dlanv2), [`dlarfg`](../dlarfg), [`dlarfgp`](../dlarfgp), [`dlasd2`](../dlasd2), [`dlasd7`](../dlasd7), [`dsteqr`](../dsteqr), [`dsterf`](../dsterf), [`dstqrb`](../../arpack/dstqrb), [`dtgsna`](../dtgsna), [`dtrsna`](../dtrsna), [`zhptrf`](../zhptrf), [`zlarfgp`](../zlarfgp), [`zlargv`](../zlargv), [`zsteqr`](../zsteqr), [`ztgsna`](../ztgsna)
 
 </section>
 

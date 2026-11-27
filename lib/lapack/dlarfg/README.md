@@ -95,7 +95,7 @@ dlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) →
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dlarfg from '../base/lib/base.js';
+import dlarfg from './../lib/base.js';
 
 // Generate a Householder reflector for a 4-element vector [3; 4; 0; 0]:
 const alpha = new Float64Array( [ 3.0 ] );

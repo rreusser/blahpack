@@ -124,7 +124,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import zpotrf from '../zpotrf/lib/index.js';
+import zpotrf from './../../zpotrf/lib/index.js';
 import zla_porpvgrw from '@rreusser/blahpack/lapack/zla_porpvgrw';
 
 // 3x3 Hermitian positive definite matrix (column-major, interleaved real/imaginary parts):

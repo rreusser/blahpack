@@ -136,7 +136,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zgeqlf from '../zgeqlf/lib/index.js';
+import zgeqlf from './../../zgeqlf/lib/index.js';
 import zungql from '@rreusser/blahpack/lapack/zungql';
 
 const M = 4;

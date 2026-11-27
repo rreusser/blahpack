@@ -219,8 +219,8 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dgetrf from '../dgetrf/lib/index.js';
-import dgetrs from '../dgetrs/lib/index.js';
+import dgetrf from './../../dgetrf/lib/index.js';
+import dgetrs from './../../dgetrs/lib/index.js';
 import dgerfs from '@rreusser/blahpack/lapack/dgerfs';
 
 const N = 3;

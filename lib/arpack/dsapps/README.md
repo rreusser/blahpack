@@ -121,7 +121,7 @@ Matrix shapes are logical (rows × columns). The reference's leading dimension (
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import dsapps from '../base/lib/base.js';
+import dsapps from './../lib/base.js';
 
 // Apply a single implicit shift to a small symmetric Lanczos factorization.
 const n = 5;

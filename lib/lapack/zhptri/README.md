@@ -143,8 +143,8 @@ The reference documents `INFO` as:
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zhptrf from '../zhptrf/lib/base.js';
-import zhptri from '../base/lib/base.js';
+import zhptrf from '../../zhptrf/lib/base.js';
+import zhptri from './../lib/base.js';
 
 // 2x2 Hermitian positive definite matrix (upper packed): A = [ 4, 1+2i; 1-2i, 5 ]
 const AP = new Complex128Array( [ 4.0, 0.0, 1.0, 2.0, 5.0, 0.0 ] );

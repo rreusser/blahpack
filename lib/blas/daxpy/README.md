@@ -92,7 +92,7 @@ daxpy.ndarray( N, alpha, x, strideX, offsetX, y, strideY, offsetY ) → Float64A
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import daxpy from '../base/lib/base.js';
+import daxpy from './../lib/base.js';
 
 // Scale x by alpha and add to y: y = alpha*x + y
 const x = new Float64Array( [ 1.0, 2.0, 3.0, 4.0, 5.0 ] );

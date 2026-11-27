@@ -205,8 +205,8 @@ The reference documents `INFO` as:
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dpotrf from '../dpotrf/lib/index.js';
-import dpotrs from '../dpotrs/lib/index.js';
+import dpotrf from './../../dpotrf/lib/index.js';
+import dpotrs from './../../dpotrs/lib/index.js';
 import dporfs from '@rreusser/blahpack/lapack/dporfs';
 
 // Symmetric positive definite matrix A = [ 4, 1, 0; 1, 5, 2; 0, 2, 6 ] (column-major):

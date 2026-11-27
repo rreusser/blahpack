@@ -145,7 +145,7 @@ The reference documents `INFO` as:
 ```js
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
-import zpbtrf from '../zpbtrf/lib/index.js';
+import zpbtrf from './../../zpbtrf/lib/index.js';
 import zpbtrs from '@rreusser/blahpack/lapack/zpbtrs';
 
 // Hermitian positive definite tridiagonal matrix A = [ 4, 1-i, 0; 1+i, 5, 2i; 0, -2i, 6 ]

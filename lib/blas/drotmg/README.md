@@ -103,7 +103,7 @@ respectively. Values implied by the value of `DPARAM[0]` are not stored.
 
 ```js
 import Float64Array from '@stdlib/array/float64/lib/index.js';
-import drotmg from '../base/lib/base.js';
+import drotmg from './../lib/base.js';
 
 const D = new Float64Array( [ 1.0, 1.0 ] );
 const x1 = new Float64Array( [ 3.0 ] );

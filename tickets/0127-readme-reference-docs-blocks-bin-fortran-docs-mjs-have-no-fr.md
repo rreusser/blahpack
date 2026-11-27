@@ -1,9 +1,10 @@
 ---
 id: 0127
 title: README reference-docs blocks (bin/fortran-docs.mjs) have no freshness check: CI lacks the Fortran sources
-status: open
+status: resolved
 area: general
 opened: 2026-11-27
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -30,3 +31,7 @@ node bin/fortran-docs.mjs --readme --all   # locally, with data/ populated: "0 w
 A fix is either a `--check` mode run in a CI job that fetches the sources
 (`bin/fetch-reference.sh`, or a shallow git clone of the v3.12.0 tag where the
 netlib tarball is blocked), or a lint rule that rejects edits inside the block.
+
+## Resolution
+
+Module READMEs are now generated whole by bin/docs/readme.js from committed inputs (JSDoc, spec, data/fortran-routine-docs.json, examples/index.js), and CI runs npm run readme:check, so a stale README fails CI. The data files themselves are refreshed at developer time by bin/gen_spec --extract, like data/fortran-checks.json (CONVENTIONS T6).

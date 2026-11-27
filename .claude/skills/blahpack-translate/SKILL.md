@@ -132,13 +132,19 @@ node bin/fortran-docs.mjs <routine>          # the routine's reference docs (Pur
 `fortran_body.py` strips the documentation; `fortran-docs.mjs` gives it back in
 readable form (argument semantics, workspace sizes, INFO codes, the storage
 layout of the output). Read it before translating, and fold the argument
-semantics into the module's own parameter docs. Once the module exists, add the
-reference notes (Purpose, return value, Further Details, References: the
-mathematical and implementation content, not the argument list) to its README;
-they render on GitHub and on the docs site:
+semantics into the module's own `@param` docs (the spec's `params[].reference`
+carries the reference's text; `node bin/reference-facts.mjs <routine>` lists
+not-referenced and destroyed-on-exit facts a description leaves out).
+
+The module README is generated, never written by hand: it is the same content
+as the API reference site, from the JSDoc, the spec, `examples/index.js` and
+the reference's routine notes. Usage facts specific to the translation (0-based
+pivots, scalar outputs in length-1 arrays, ...) go in `lib/index.js`'s module
+JSDoc under a `## Notes` heading. Once the module is done:
 
 ```bash
-node bin/fortran-docs.mjs --readme lib/<package>/base/<routine>
+node bin/fortran-docs.mjs --extract-params      # refresh data/fortran-*-docs.json (new routine)
+node bin/docs/readme.js lib/<package>/base/<routine>
 ```
 
 Translate the stripped body following the reference sections below:

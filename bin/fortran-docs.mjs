@@ -23,14 +23,13 @@
 *   node bin/fortran-docs.mjs <routine>...            # print Markdown to stdout
 *   node bin/fortran-docs.mjs --out <dir> <routine>... # write <dir>/<routine>.md
 *   node bin/fortran-docs.mjs --out <dir> --all        # every d/z/i/blas routine with a source
-*   node bin/fortran-docs.mjs --readme <module-dir>...  # write the block into each module README
-*   node bin/fortran-docs.mjs --readme --all            # ... for every module with a reference source
-*   node bin/fortran-docs.mjs --extract-params          # write data/fortran-param-docs.json (run by bin/gen_spec --extract)
+*   node bin/fortran-docs.mjs --extract-params          # write data/fortran-param-docs.json and
+*                                                       #   data/fortran-routine-docs.json (run by bin/gen_spec --extract)
 *   node bin/fortran-docs.mjs --report ...              # also print fallback stats to stderr
 *
-* README blocks sit between `<!-- fortran-docs:start ... -->` and
-* `<!-- fortran-docs:end -->` (see bin/lib/fortran-docs-block.cjs); they render
-* on GitHub and bin/docs lifts them into the documentation site.
+* The committed data files feed `spec/*.json` (`params[].reference`, via
+* bin/gen_spec) and the module READMEs and API site (bin/docs), so neither
+* needs the gitignored sources.
 *
 * @module bin/fortran-docs
 */
@@ -42,7 +41,6 @@ import { createRequire } from 'node:module';
 const ROOT = resolve( import.meta.dirname, '..' );
 const require = createRequire( import.meta.url );
 const katex = require( 'katex' );
-const BLOCK = require( './lib/fortran-docs-block.cjs' );
 const SRC_DIRS = [
 	join( ROOT, 'data', 'lapack-3.12.0', 'SRC' ),
 	join( ROOT, 'data', 'BLAS-3.12.0' ),
@@ -865,7 +863,7 @@ function paramHead( name, lines ) {
 * Standalone (a translator's reference): title, brief, Purpose, every argument,
 * Further Details, References.
 *
-* With `embed` (the README block): only what the module's own parameter docs
+* With `embed` (the README's Reference notes section): only what the module's own parameter docs
 * cannot hold, the mathematical and implementation content: Purpose, Further
 * Details and References, headings one level down under `## Reference notes`.
 * `substantive` is false when that leaves a single plain sentence or so (e.g.
@@ -873,9 +871,29 @@ function paramHead( name, lines ) {
 * already says.
 */
 function render( routine, path, embed ) {
-	const doc = parse( docLines( readFileSync( path, 'utf8' ) ) );
+	return renderDoc( routine, parse( docLines( readFileSync( path, 'utf8' ) ) ), path.slice( ROOT.length + 1 ), embed );
+}
+
+/**
+* The README reference notes from a data/fortran-routine-docs.json record
+* (`{ source, brief, names, sections: [{ title, lines }] }`), so the README
+* generator runs without the Fortran sources.
+*
+* @param {string} routine - routine name
+* @param {Object} rec - record
+* @returns {Object} `{ markdown, rel, substantive }`
+*/
+function referenceNotes( routine, rec ) {
+	const doc = {
+		'brief': rec.brief || '',
+		'params': ( rec.names || [] ).map( ( name ) => ({ name, 'dir': '', 'body': [] }) ),
+		'sections': ( rec.sections || [] ).map( ( sec ) => ({ 'title': sec.title, 'body': sec.lines.split( '\n' ) }) )
+	};
+	return renderDoc( routine, doc, rec.source, true );
+}
+
+function renderDoc( routine, doc, rel, embed ) {
 	const names = new Set( doc.params.map( ( p ) => p.name ) );
-	const rel = path.slice( ROOT.length + 1 );
 	const lib = /BLAS/.test( rel ) && !/lapack-3\.12\.0\/SRC/.test( rel ) ? 'BLAS' : 'LAPACK';
 	const h = embed ? '#' : '';
 	const out = [];
@@ -934,7 +952,7 @@ function render( routine, path, embed ) {
 
 
 /**
-* Module directories (`lib/<pkg>/base/<routine>`) with a README.
+* Module directories (`lib/<pkg>/base/<routine>`).
 */
 function modules() {
 	const out = [];
@@ -953,37 +971,6 @@ function modules() {
 	return out.sort();
 }
 
-/**
-* Writes (or refreshes) the reference-documentation block of each module README.
-*/
-function readmes( dirs, report ) {
-	let written = 0;
-	let unchanged = 0;
-	const skipped = [];
-	const thin = [];
-	for ( const dir of dirs ) {
-		const routine = basename( dir );
-		const path = findSource( routine );
-		if ( !path ) {
-			skipped.push( routine );
-			continue;
-		}
-		const file = join( dir, 'README.md' );
-		const before = readFileSync( file, 'utf8' );
-		const { markdown, rel, substantive } = render( routine, path, true );
-		const after = BLOCK.upsert( before, substantive ? BLOCK.wrap( markdown, rel ) : null );
-		if ( !substantive ) {
-			thin.push( routine );
-		}
-		if ( after === before ) {
-			unchanged += 1;
-		} else {
-			writeFileSync( file, after );
-			written += 1;
-		}
-	}
-	console.error( 'READMEs: ' + written + ' written, ' + unchanged + ' unchanged, ' + thin.length + ' with no reference notes beyond the tagline' + ( report && thin.length ? ' (' + thin.join( ', ' ) + ')' : '' ) + ', ' + skipped.length + ' without a reference source' + ( report && skipped.length ? ' (' + skipped.join( ', ' ) + ')' : '' ) );
-}
 
 
 /**
@@ -1003,9 +990,11 @@ function paramMarkdown( name, lines, names ) {
 }
 
 /**
-* Writes data/fortran-param-docs.json: the raw doc lines of every argument of
-* every routine bin/gen_spec generates (a module or an existing spec), so the
-* spec build can carry them without the gitignored sources.
+* Writes data/fortran-param-docs.json (the raw doc lines of every argument) and
+* data/fortran-routine-docs.json (each routine's brief, argument names and
+* Purpose/Returns/Further Details/References/Contributors text) for every
+* routine bin/gen_spec generates (a module or an existing spec), so the spec
+* build and the README generator run without the gitignored sources.
 */
 function extractParams() {
 	const set = new Set( modules().map( ( d ) => basename( d ) ) );
@@ -1016,6 +1005,7 @@ function extractParams() {
 		}
 	}
 	const out = {};
+	const routines = {};
 	let missing = 0;
 	for ( const r of [ ...set ].sort() ) {
 		const path = findSource( r );
@@ -1024,6 +1014,22 @@ function extractParams() {
 			continue;
 		}
 		const doc = parse( docLines( readFileSync( path, 'utf8' ) ) );
+		const trim = ( lines ) => {
+			const l = lines.slice();
+			while ( l.length && !l[ 0 ].trim() ) {
+				l.shift();
+			}
+			while ( l.length && !l[ l.length - 1 ].trim() ) {
+				l.pop();
+			}
+			return l.join( '\n' );
+		};
+		routines[ r ] = {
+			'source': path.slice( ROOT.length + 1 ),
+			'brief': doc.brief,
+			'names': doc.params.map( ( p ) => p.name ),
+			'sections': doc.sections.map( ( sec ) => ({ 'title': sec.title, 'lines': trim( sec.body ) }) ).filter( ( sec ) => sec.lines )
+		};
 		const params = {};
 		for ( const p of doc.params ) {
 			const lines = p.body.slice();
@@ -1043,6 +1049,7 @@ function extractParams() {
 	}
 	const file = join( ROOT, 'data', 'fortran-param-docs.json' );
 	writeFileSync( file, JSON.stringify( out, null, '\t' ) + '\n' );
+	writeFileSync( join( ROOT, 'data', 'fortran-routine-docs.json' ), JSON.stringify( routines, null, '\t' ) + '\n' );
 	console.error( 'wrote argument docs for ' + Object.keys( out ).length + ' routines to data/fortran-param-docs.json (' + missing + ' without a reference source)' );
 }
 
@@ -1054,7 +1061,6 @@ function main() {
 	let outDir = null;
 	let all = false;
 	let report = false;
-	let readme = false;
 	const routines = [];
 	for ( let i = 0; i < args.length; i++ ) {
 		if ( args[ i ] === '--out' ) {
@@ -1063,21 +1069,12 @@ function main() {
 			all = true;
 		} else if ( args[ i ] === '--report' ) {
 			report = true;
-		} else if ( args[ i ] === '--readme' ) {
-			readme = true;
 		} else if ( args[ i ] === '--extract-params' ) {
 			extractParams();
 			return;
 		} else {
-			routines.push( ( readme ? args[ i ] : args[ i ].toLowerCase() ) );
+			routines.push( args[ i ].toLowerCase() );
 		}
-	}
-	if ( readme ) {
-		readmes( all ? modules() : routines.map( ( r ) => resolve( r ) ), report );
-		if ( report ) {
-			console.error( JSON.stringify({ ...STATS, 'fallbacks': STATS.fallbacks.length }, null, 2 ) );
-		}
-		return;
 	}
 	if ( all ) {
 		for ( const dir of SRC_DIRS ) {
@@ -1130,4 +1127,4 @@ if ( process.argv[ 1 ] && resolve( process.argv[ 1 ] ) === resolve( import.meta.
 	main();
 }
 
-export { findSource, docLines, parse, paramHead, paramMarkdown, render, body };
+export { findSource, docLines, parse, paramHead, paramMarkdown, referenceNotes, render, body };

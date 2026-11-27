@@ -8,8 +8,8 @@
 *   2. `spec/<routine>.json`: parameter roles, intents, shapes and argument
 *      checks, generated from the reference Fortran.
 *   3. `lib/base.js` imports: the call graph.
-*   4. The README's reference-documentation block, generated from the
-*      reference Fortran by `bin/fortran-docs.mjs --readme`.
+*   4. `data/fortran-routine-docs.json`: the reference's routine-level
+*      documentation (bin/fortran-docs.mjs), and `examples/index.js`.
 *
 * Nothing here is hand-written prose about a routine. The site is a pure function
 * of the code, so it can be deleted and rebuilt at any time.
@@ -22,10 +22,11 @@ import { join, resolve } from 'node:path';
 import doctrine from 'doctrine';
 import { createRequire } from 'node:module';
 import { classify, precision, stem } from './taxonomy.js';
+import { referenceNotes } from '../fortran-docs.mjs';
 
 const ROOT = resolve( import.meta.dirname, '..', '..' );
 const H = createRequire( import.meta.url )( '../../lint/lib/doc-health.cjs' );
-const FORTRAN_DOCS = createRequire( import.meta.url )( '../lib/fortran-docs-block.cjs' );
+const ROUTINE_DOCS = JSON.parse( readFileSync( join( ROOT, 'data', 'fortran-routine-docs.json' ), 'utf8' ) );
 const PACKAGE_JSON = JSON.parse( readFileSync( join( ROOT, 'package.json' ), 'utf8' ) );
 const ARRAY_ROLES = new Set([ 'matrix', 'banded', 'packed', 'vector', 'workspace', 'index', 'result' ]);
 const DTYPE_ARRAY = {
@@ -169,8 +170,14 @@ function shapeOf( sp ) {
 		return null;
 	}
 	if ( sp.rows || sp.cols ) {
-		const wrap = ( e ) => ( /[?:]/.test( e || '' ) ? '(' + e + ')' : e );
-		return wrap( expr( sp.rows ) ) + ' × ' + wrap( expr( sp.cols ) );
+		// A compound extent gets parentheses (`(kl + ku + 1) × N`); an unknown one reads `?`.
+		const wrap = ( e ) => {
+			if ( e === null || e === undefined || e === 'null' ) {
+				return '?';
+			}
+			return ( /[?:]|\s[-+*/]\s/.test( e ) ? '(' + e + ')' : e );
+		};
+		return wrap( sp.rows ? expr( sp.rows ) : null ) + ' × ' + wrap( sp.cols ? expr( sp.cols ) : null );
 	}
 	if ( sp.minLength ) {
 		return '≥ ' + expr( sp.minLength );
@@ -241,6 +248,8 @@ function signature( ctx, kind, file, fname ) {
 			name,
 			type,
 			'description': tag ? ( tag.description || '' ) : '',
+			'optional': !!( tag && tag.type && tag.type.type === 'OptionalType' ),
+			'default': ( tag && tag.default !== undefined ) ? tag.default : null,
 			'role': sp ? sp.role : ( op ? op.aux : null ),
 			'intent': sp ? sp.intent : ( op ? 'in' : null ),
 			'dtype': sp ? sp.dtype : null,
@@ -373,6 +382,13 @@ export function extractRoutine( pkg, name ) {
 		ctx.health.push({ 'code': 'no-summary', 'where': dir, 'message': 'no description in the JSDoc of lib/index.js, the wrapper or ndarray.js (fell back to package.json)' });
 		description = pkgJson.description || '';
 	}
+	// Module JSDoc may carry a `## Notes` part (usage facts specific to this translation).
+	let notes = '';
+	const ni = description.search( /^## Notes\s*$/m );
+	if ( ni >= 0 ) {
+		notes = description.slice( ni ).replace( /^## Notes\s*\n/, '' ).trim();
+		description = description.slice( 0, ni ).trim();
+	}
 	const summary = firstSentence( description );
 	const sp = H.summaryProblem({ description, 'tags': [] });
 	if ( sp ) {
@@ -392,13 +408,24 @@ export function extractRoutine( pkg, name ) {
 	const baseSrc = read( join( ROOT, dir, 'lib', 'base.js' ) ) || '';
 	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/base\/)?(\w+)\/lib\/(?:base|ndarray|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
 
-	// Reference BLAS/LAPACK documentation block of the README (bin/fortran-docs.mjs --readme):
-	const readme = read( join( ROOT, dir, 'README.md' ) ) || '';
-	const refMd = FORTRAN_DOCS.extract( readme );
-	const reference = refMd ? {
-		'source': FORTRAN_DOCS.source( readme ),
-		'markdown': refMd.replace( /^## [^\n]*\n/, '' ).trim()
-	} : null;
+	// The reference's routine-level documentation (Purpose, Further Details, ...), from
+	// data/fortran-routine-docs.json; omitted when it only restates the summary.
+	let reference = null;
+	if ( ROUTINE_DOCS[ name ] ) {
+		const notes = referenceNotes( name, ROUTINE_DOCS[ name ] );
+		if ( notes.substantive ) {
+			reference = { 'source': notes.rel, 'markdown': notes.markdown.replace( /^## [^\n]*\n/, '' ).trim() };
+		}
+	}
+
+	// The runnable example (examples/index.js, run by bin/examples-smoke.sh), license header
+	// dropped and the relative import replaced by the package path.
+	let exampleFile = read( join( ROOT, dir, 'examples', 'index.js' ) );
+	if ( exampleFile ) {
+		exampleFile = exampleFile.replace( /^\/\*\*[\s\S]*?@license[\s\S]*?\*\/\s*/, '' )
+			.replace( /(['"])\.\/\.\.\/lib(?:\/index\.js)?\1/g, '\'' + PACKAGE_JSON.name + '/' + pkg + '/base/' + name + '\'' )
+			.trim();
+	}
 
 	const exportKey = './' + pkg + '/base/' + name;
 	return {
@@ -413,6 +440,9 @@ export function extractRoutine( pkg, name ) {
 		'stem': stem( name ),
 		'fortran': spec ? { 'signature': fortranSignature( spec ), 'kind': spec.kind } : null,
 		reference,
+		'referenceSource': ROUTINE_DOCS[ name ] ? ROUTINE_DOCS[ name ].source : null,
+		notes,
+		exampleFile,
 		'returns': spec ? spec.returns : null,
 		'infoReference': spec ? ( ( spec.params.find( ( q ) => q.role === 'info' ) || {} ).reference || null ) : null,
 		'quickReturn': spec ? ( spec.quickReturn || [] ).map( ( q ) => q.js || q.fortran ) : [],

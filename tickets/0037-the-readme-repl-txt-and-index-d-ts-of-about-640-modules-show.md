@@ -26,3 +26,8 @@ Comparing each module's `function <r>( ... )` in `lib/<r>.js` with its docs, ove
 ```bash
 grep -n '^function' lib/blas/base/ddot/lib/ddot.js; head -2 lib/blas/base/ddot/docs/repl.txt; grep -n 'number' lib/blas/base/ddot/docs/types/index.d.ts | head -1
 ```
+
+## Progress
+
+- 2026-11-27: `README.md` is fixed. `bin/docs/readme.js` generates every module README from the same model as the API reference site (the JSDoc of `lib/index.js`, the layout wrapper and `ndarray.js`; `spec/<routine>.json`; `examples/index.js`; `data/fortran-routine-docs.json`), and CI runs `npm run readme:check`. The hand-written README prose (intro and notes of 179 modules) moved into the module JSDoc first (`bin/codemod-readme-notes.mjs`).
+- Still open: `docs/repl.txt` and `docs/types/index.d.ts` (and `docs/types/test.ts`) show the wrong signatures and nothing generates or checks them. `repl.txt` could come from the same model (`bin/docs/extract.js`); `index.d.ts` needs its types from the JSDoc.

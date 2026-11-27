@@ -5,6 +5,7 @@
 */
 
 import { esc, inline, markdown, markdownMath, codeBlock, signatureHTML, signatureText, groupParams, intentLabel, returnLabel, page } from './common.js';
+import { posix } from 'node:path';
 import { PACKAGES } from '../taxonomy.js';
 
 const SIG_TITLES = {
@@ -45,6 +46,9 @@ function paramRow( p, prefix ) {
 	if ( p.format ) {
 		meta.push( '<span class="p-shape">' + esc( p.format ) + ' storage</span>' );
 	}
+	if ( p.optional ) {
+		extras.push( '<div class="p-constraint"><span class="p-label">optional</span>' + ( p.default !== null ? ' default <code>' + esc( p.default ) + '</code>' : '' ) + '</div>' );
+	}
 	if ( p.values ) {
 		extras.push( '<div class="p-values"><span class="p-label">One of</span> ' + p.values.map( ( v ) => '<code class="val">\'' + esc( v ) + '\'</code>' ).join( ' ' ) + '</div>' );
 	}
@@ -53,7 +57,7 @@ function paramRow( p, prefix ) {
 	}
 	return '<tr id="' + prefix + esc( p.name ) + '" class="' + ( sub ? 'p-sub' : 'p-main' ) + '">' +
 		'<td class="p-name"><a class="anchor" href="#' + prefix + esc( p.name ) + '"><code>' + esc( p.name ) + '</code></a>' + ( meta.length ? '<div class="p-meta">' + meta.join( '' ) + '</div>' : '' ) + '</td>' +
-		'<td class="p-type"><code>' + esc( p.type || '—' ) + '</code></td>' +
+		'<td class="p-type"><code>' + esc( displayType( p.type ) || '—' ) + '</code></td>' +
 		'<td class="p-intent">' + ( p.intent && !sub ? '<span class="intent intent-' + esc( p.intent ) + '">' + intentLabel( p.intent ) + '</span>' : '' ) + '</td>' +
 		'<td class="p-desc">' + inline( p.description ) + extras.join( '' ) + ( p.reference && !sub ? '<details class="p-ref"><summary>Reference</summary>' + markdownMath( p.reference ) + '</details>' : '' ) + '</td>' +
 		'</tr>';
@@ -133,9 +137,14 @@ export function routineHTML( r, ctx ) {
 		body += '</section>';
 	}
 
-	if ( r.examples.length ) {
+	if ( r.notes ) {
+		toc.push([ 'notes', 'Notes' ]);
+		body += '<section id="notes"><h2><a class="anchor" href="#notes">Notes</a></h2>' + markdownMath( r.notes ) + '</section>';
+	}
+
+	if ( r.exampleFile || r.examples.length ) {
 		toc.push([ 'examples', 'Examples' ]);
-		body += '<section id="examples"><h2><a class="anchor" href="#examples">Examples</a></h2>' + r.examples.map( ( e ) => codeBlock( e ) ).join( '' ) + '</section>';
+		body += '<section id="examples"><h2><a class="anchor" href="#examples">Examples</a></h2>' + ( r.exampleFile ? codeBlock( r.exampleFile ) : r.examples.map( ( e ) => codeBlock( e ) ).join( '' ) ) + '</section>';
 	}
 
 	toc.push([ 'reference', 'Reference implementation' ]);
@@ -183,8 +192,140 @@ export function routineHTML( r, ctx ) {
 	return html.replace( /\{\{repo\}\}/g, ctx.site.repo );
 }
 
+// Prose from JSDoc: `*` is multiplication (`alpha*A*x`, `A**T`), never emphasis, so it is
+// escaped outside code spans.
+function prose( s ) {
+	return String( s == null ? '' : s ).split( /(`[^`]*`)/ ).map( ( part, i ) => ( i % 2 ? part : part.replace( /\*/g, '\\*' ) ) ).join( '' );
+}
+
 function mdCell( s ) {
 	return String( s == null ? '' : s ).replace( /\s*\n\s*/g, ' ' ).replace( /\|/g, '\\|' );
+}
+
+// A JSDoc type for display: no optional marker (`=`), and a union without its
+// parentheses, with spaces around `|` so it wraps between alternatives.
+function displayType( type ) {
+	return type ? type.replace( /=$/, '' ).replace( /^\((.*\|.*)\)$/, '$1' ).replace( /\|/g, ' | ' ) : '';
+}
+
+// Keeps a short math-like expression on one line in a narrow table cell:
+// `max( 1, N )` → `max(1, N)`, and the spaces around operators become no-break spaces.
+function tight( expr ) {
+	return String( expr ).replace( /\(\s+/g, '(' ).replace( /\s+\)/g, ')' ).replace( / ([×≥≤=<>+*\-−]) /g, '\u00a0$1\u00a0' );
+}
+
+/**
+* The three cells of a parameter-table row (README and agent page): name;
+* type with the logical shape under it; description with the intent (when not
+* plain input), the accepted values (when the description does not already
+* name them) and the argument checks.
+*
+* @private
+* @param {Object} p - signature parameter
+* @returns {Array<string>} cells
+*/
+function paramCells( p ) {
+	const name = ( p.operand ? '↳\u00a0' : '' ) + '`' + p.name + '`';
+	let shape = '';
+	if ( p.shape ) {
+		// Matrices: `M × N`; 1-D arrays: the length (or its lower bound).
+		shape = p.shape.includes( '×' ) ? tight( p.shape ) : 'length' + ( /^≥/.test( p.shape ) ? ' ' : '\u00a0' ) + tight( p.shape );
+	}
+	// A union reads (and wraps) best without its parentheses, with spaces around `|`.
+	const t = displayType( p.type );
+	const type = ( t ? '`' + mdCell( t ) + '`' : '' ) + ( shape ? '<br><sub>' + mdCell( shape ).replace( /</g, '&lt;' ) + '</sub>' : '' );
+	// Sentence case, unless the description opens with code or a symbol.
+	const desc = mdCell( prose( p.description || '' ) ).replace( /^[a-z]/, ( c ) => c.toUpperCase() );
+	const lines = [];
+	const intent = { 'out': '**out**', 'inout': '**in/out**' }[ p.intent ];
+	lines.push( ( intent && !p.operand ? intent + ' · ' : '' ) + desc );
+	if ( p.optional ) {
+		lines.push( 'Optional' + ( p.default !== null ? ', default `' + mdCell( p.default ) + '`' : '' ) + '.' );
+	}
+	if ( p.values && !p.values.every( ( v ) => desc.includes( v ) ) ) {
+		lines.push( 'One of ' + p.values.map( ( v ) => '`\'' + v + '\'`' ).join( ', ' ) + '.' );
+	}
+	for ( const c of p.constraints ) {
+		lines.push( c.label.replace( /^./, ( x ) => x.toUpperCase() ) + ' `' + mdCell( tight( c.text ) ) + '`' + ( c.layout ? '' : '' ) );
+	}
+	return [ name, type, lines.filter( Boolean ).join( '<br>' ) ];
+}
+
+/**
+* Markdown for the parts of a routine page, shared by the agent-facing `.md`
+* page and the module README (`routineReadme`), so the two cannot drift.
+*
+* @private
+* @param {Object} r - routine IR
+* @param {Object} opts - `{ level }`: heading level of the signature sections
+* @returns {Object} Markdown strings (empty when a part does not apply)
+*/
+function markdownParts( r, opts ) {
+	const h = '#'.repeat( opts.level );
+	const parts = {};
+
+	// Extended description: the module JSDoc beyond its summary sentence.
+	const desc = ( r.description || '' ).trim();
+	const summary = ( r.summary || '' ).trim();
+	parts.intro = desc.startsWith( summary ) ? desc.slice( summary.length ).trim() : ( desc !== summary ? desc : '' );
+
+	parts.signatures = r.signatures.map( ( s ) => {
+		const out = [];
+		out.push( h + ' ' + SIG_TITLES[ s.kind ], '' );
+		out.push( SIG_BLURBS[ s.kind ], '' );
+		out.push( '```js', signatureText( s ), '```', '' );
+		if ( s.description && norm( s.description ) !== norm( r.description ) ) {
+			out.push( s.description.trim(), '' );
+		}
+		if ( s.kind === 'ndarray' && s.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
+			out.push( 'Matrix shapes are logical (rows × columns). The reference\'s leading dimension (`LDA`, …) is replaced by the two strides and the offset.', '' );
+		}
+		out.push( '| Parameter | Type | Description |' );
+		out.push( '|---|---|---|' );
+		for ( const p of s.params ) {
+			out.push( '| ' + paramCells( p ).join( ' | ' ) + ' |' );
+		}
+		out.push( '' );
+		const refs = s.params.filter( ( p ) => p.reference && !p.operand );
+		if ( refs.length ) {
+			out.push( '<details>', '<summary>Reference notes for each argument (the reference implementation\'s own documentation; 1-based indices)</summary>', '' );
+			for ( const p of refs ) {
+				// Continuation lines are indented under the item, so nested lists and math stay inside it.
+				const lines = p.reference.split( '\n' ).map( ( l ) => ( l ? '  ' + l : l ) );
+				if ( /^\s*-   /.test( lines[ 0 ] ) ) {
+					out.push( '- `' + p.name + '`:', '', ...lines );
+				} else {
+					out.push( '- `' + p.name + '`: ' + lines[ 0 ].trim(), ...lines.slice( 1 ) );
+				}
+			}
+			out.push( '', '</details>', '' );
+		}
+		out.push( '**Returns** `' + returnLabel( s ) + '`' + ( s.returns && s.returns.description ? ': ' + mdCell( prose( s.returns.description ) ) : '' ), '' );
+		if ( s.throws.length ) {
+			out.push( '**Throws**', '' );
+			for ( const t of s.throws ) {
+				out.push( '- `' + t.type + '` ' + mdCell( prose( t.description ) ) );
+			}
+			out.push( '' );
+		}
+		return out.join( '\n' ).trim();
+	});
+
+	parts.status = '';
+	if ( r.returns && r.returns.kind === 'info' ) {
+		const out = [];
+		out.push( RETURN_KINDS.info + ' Invalid arguments throw instead of returning a negative `info`.' + ( r.quickReturn.length ? ' Returns immediately when ' + r.quickReturn.map( ( q ) => '`' + q + '`' ).join( ' or ' ) + '.' : '' ) );
+		if ( r.infoReference ) {
+			out.push( '', 'The reference documents `INFO` as:', '', r.infoReference );
+		}
+		parts.status = out.join( '\n' );
+	}
+
+	parts.notes = ( r.notes || '' ).trim();
+	parts.example = r.exampleFile ? '```js\n' + r.exampleFile + '\n```' : '';
+	parts.snippets = r.examples.map( ( e ) => '```js\n' + e + '\n```' ).join( '\n\n' );
+	parts.reference = r.reference ? r.reference.markdown : '';
+	return parts;
 }
 
 /**
@@ -195,11 +336,10 @@ function mdCell( s ) {
 * @returns {string} Markdown
 */
 export function routineMarkdown( r, ctx ) {
+	const parts = markdownParts( r, { 'level': 2 } );
 	const out = [];
-	out.push( '# ' + r.name );
-	out.push( '' );
-	out.push( '> ' + r.summary.replace( /\n/g, ' ' ) );
-	out.push( '' );
+	out.push( '# ' + r.name, '' );
+	out.push( '> ' + r.summary.replace( /\n/g, ' ' ), '' );
 	out.push( '- package: ' + PACKAGES[ r.package ].title + ' · group: ' + r.group.label + ' · precision: ' + r.precision );
 	if ( r.importPath ) {
 		out.push( '- import: `import ' + r.name + ' from \'' + r.importPath + '\';`' );
@@ -207,83 +347,24 @@ export function routineMarkdown( r, ctx ) {
 	if ( r.fortran ) {
 		out.push( '- reference: `' + r.fortran.signature + '`' );
 	}
-	out.push( '- source: ' + ctx.site.repo + '/tree/main/' + r.path );
-	out.push( '' );
-	if ( r.description && r.description.trim() !== r.summary.trim() ) {
-		out.push( r.description.trim() );
-		out.push( '' );
+	out.push( '- source: ' + ctx.site.repo + '/tree/main/' + r.path, '' );
+	if ( parts.intro ) {
+		out.push( parts.intro, '' );
 	}
-	for ( const s of r.signatures ) {
-		out.push( '## ' + SIG_TITLES[ s.kind ] );
-		out.push( '' );
-		out.push( '```js' );
-		out.push( signatureText( s ) );
-		out.push( '```' );
-		out.push( '' );
-		if ( s.description && norm( s.description ) !== norm( r.description ) ) {
-			out.push( s.description.trim() );
-			out.push( '' );
-		}
-		out.push( '| param | type | intent | shape | constraints | description |' );
-		out.push( '|---|---|---|---|---|---|' );
-		for ( const p of s.params ) {
-			const cons = ( p.values ? [ 'one of ' + p.values.map( ( v ) => '`\'' + v + '\'`' ).join( ', ' ) ] : [] ).concat( p.constraints.map( ( c ) => c.label + ' `' + c.text + '`' ) );
-			out.push( '| ' + [ ( p.operand ? '↳ ' : '' ) + '`' + p.name + '`', p.type ? '`' + p.type + '`' : '', intentLabel( p.intent ), p.shape ? '`' + p.shape + '`' : '', cons.join( '; ' ), p.description ].map( mdCell ).join( ' | ' ) + ' |' );
-		}
-		out.push( '' );
-		const refs = s.params.filter( ( p ) => p.reference && !p.operand );
-		if ( refs.length ) {
-			out.push( '**Reference notes** (the reference implementation\'s own argument docs; 1-based indices)' );
-			out.push( '' );
-			for ( const p of refs ) {
-				// Continuation lines are indented under the item, so nested lists and math stay inside it.
-				const lines = p.reference.split( '\n' ).map( ( l ) => ( l ? '  ' + l : l ) );
-				if ( /^\s*-   /.test( lines[ 0 ] ) ) {
-					out.push( '- `' + p.name + '`:', '', ...lines );
-				} else {
-					out.push( '- `' + p.name + '`: ' + lines[ 0 ].trim(), ...lines.slice( 1 ) );
-				}
-			}
-			out.push( '' );
-		}
-		out.push( '**Returns** `' + returnLabel( s ) + '`' + ( s.returns && s.returns.description ? ': ' + mdCell( s.returns.description ) : '' ) );
-		out.push( '' );
-		if ( s.throws.length ) {
-			out.push( '**Throws**' );
-			out.push( '' );
-			for ( const t of s.throws ) {
-				out.push( '- `' + t.type + '` ' + mdCell( t.description ) );
-			}
-			out.push( '' );
-		}
+	for ( const sig of parts.signatures ) {
+		out.push( sig, '' );
 	}
-	if ( r.returns && r.returns.kind === 'info' ) {
-		out.push( '## Status codes' );
-		out.push( '' );
-		out.push( RETURN_KINDS.info + ' Invalid arguments throw instead of returning a negative `info`.' + ( r.quickReturn.length ? ' Returns immediately when ' + r.quickReturn.map( ( q ) => '`' + q + '`' ).join( ' or ' ) + '.' : '' ) );
-		out.push( '' );
-		if ( r.infoReference ) {
-			out.push( 'The reference documents `INFO` as:' );
-			out.push( '' );
-			out.push( r.infoReference );
-			out.push( '' );
-		}
+	if ( parts.status ) {
+		out.push( '## Status codes', '', parts.status, '' );
 	}
-	if ( r.examples.length ) {
-		out.push( '## Examples' );
-		out.push( '' );
-		for ( const e of r.examples ) {
-			out.push( '```js' );
-			out.push( e );
-			out.push( '```' );
-			out.push( '' );
-		}
+	if ( parts.notes ) {
+		out.push( '## Notes', '', parts.notes, '' );
 	}
-	if ( r.reference ) {
-		out.push( '## Reference notes' );
-		out.push( '' );
-		out.push( r.reference.markdown );
-		out.push( '' );
+	if ( parts.example || parts.snippets ) {
+		out.push( '## Examples', '', parts.example || parts.snippets, '' );
+	}
+	if ( parts.reference ) {
+		out.push( '## Reference notes', '', parts.reference, '' );
 	}
 	const rel = [];
 	if ( r.siblings.length ) {
@@ -296,10 +377,86 @@ export function routineMarkdown( r, ctx ) {
 		rel.push( '- called by: ' + r.usedBy.join( ', ' ) );
 	}
 	if ( rel.length ) {
-		out.push( '## Related' );
-		out.push( '' );
-		out.push( ...rel );
-		out.push( '' );
+		out.push( '## Related', '', ...rel, '' );
 	}
 	return out.join( '\n' );
+}
+
+// The upstream file a reference source path names (data/lapack-3.12.0/SRC/x.f → SRC/x.f).
+function upstreamURL( source ) {
+	if ( !source ) {
+		return null;
+	}
+	const m = source.match( /^data\/lapack-3\.12\.0\/(.*)$/ ) || source.match( /^data\/BLAS-3\.12\.0\/(.*)$/ );
+	if ( !m ) {
+		return null;
+	}
+	return 'https://github.com/Reference-LAPACK/lapack/blob/v3.12.0/' + ( /^data\/BLAS/.test( source ) ? 'BLAS/SRC/' : '' ) + m[ 1 ];
+}
+
+/**
+* Renders the module README.md: the routine page's content in the stdlib README
+* section layout, generated from the same IR as the site (bin/docs/readme.js).
+*
+* @param {Object} r - routine IR
+* @param {Object} ctx - `{ byName, packageName }`
+* @returns {string} Markdown
+*/
+export function routineReadme( r, ctx ) {
+	const parts = markdownParts( r, { 'level': 3 } );
+	const lib = PACKAGES[ r.package ] ? ( r.package === 'blas' ? 'BLAS' : ( r.package === 'lapack' ? 'LAPACK' : r.package.toUpperCase() ) ) : r.package;
+	const relLink = ( n ) => {
+		const t = ctx.byName.get( n );
+		if ( !t ) {
+			return '`' + n + '`';
+		}
+		return '[`' + n + '`](' + posix.relative( r.path, t.path ) + ')';
+	};
+	const section = ( cls, body ) => [ '<section class="' + cls + '">', '', body.trim(), '', '</section>', '', '<!-- /.' + cls + ' -->', '' ];
+	const out = [];
+	out.push( '<!-- Generated by bin/docs/readme.js from this module\'s JSDoc, spec/' + r.name + '.json and data/; do not edit. Regenerate: node bin/docs/readme.js ' + r.path + ' -->', '' );
+	out.push( '# ' + r.name, '' );
+	out.push( '> ' + r.summary.replace( /\n/g, ' ' ), '' );
+	if ( parts.intro ) {
+		out.push( ...section( 'intro', parts.intro ) );
+	}
+	const usage = [ '## Usage', '', '```js', 'import ' + r.name.replace( /_(\w)/g, ( _, c ) => c.toUpperCase() ) + ' from \'' + ( r.importPath || ( ctx.packageName + '/' + r.package + '/base/' + r.name ) ) + '\';', '```', '' ];
+	for ( const sig of parts.signatures ) {
+		usage.push( sig, '' );
+	}
+	if ( parts.status ) {
+		usage.push( '### Status codes', '', parts.status, '' );
+	}
+	out.push( ...section( 'usage', usage.join( '\n' ) ) );
+	const upstream = upstreamURL( r.referenceSource );
+	const notes = [ '## Notes', '' ];
+	if ( upstream ) {
+		notes.push( '-   `' + r.name + '()` corresponds to the reference ' + lib + ' routine [`' + r.name.toUpperCase() + '`](' + upstream + ').' );
+	}
+	if ( parts.notes ) {
+		notes.push( parts.notes );
+	}
+	if ( notes.length > 2 ) {
+		out.push( ...section( 'notes', notes.join( '\n' ) ) );
+	}
+	if ( parts.example || parts.snippets ) {
+		out.push( ...section( 'examples', '## Examples\n\n' + ( parts.example || parts.snippets ) ) );
+	}
+	if ( parts.reference ) {
+		out.push( ...section( 'reference-notes', '## Reference notes\n\n' + parts.reference ) );
+	}
+	const rel = [];
+	if ( r.siblings.length ) {
+		rel.push( '-   Other precisions: ' + r.siblings.map( relLink ).join( ', ' ) );
+	}
+	if ( r.uses.length ) {
+		rel.push( '-   Calls: ' + r.uses.map( relLink ).join( ', ' ) );
+	}
+	if ( r.usedBy.length ) {
+		rel.push( '-   Called by: ' + r.usedBy.map( relLink ).join( ', ' ) );
+	}
+	if ( rel.length ) {
+		out.push( ...section( 'related', '## See also\n\n' + rel.join( '\n' ) ) );
+	}
+	return out.join( '\n' ).replace( /\n{3,}/g, '\n\n' ).trim() + '\n';
 }

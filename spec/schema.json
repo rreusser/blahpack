@@ -95,6 +95,7 @@
 				"dtype": { "$ref": "#/definitions/dtype" },
 				"intent": { "enum": [ "in", "out", "inout" ] },
 				"of": { "type": "string", "description": "ld/inc/lwork: the Fortran array it belongs to." },
+				"reference": { "type": "string", "minLength": 1, "description": "The reference's own documentation of this argument (its \\param text without the type line), as Markdown with KaTeX math: contents on entry and exit, parts not referenced, conventions. Generated from data/fortran-param-docs.json by bin/fortran-docs.mjs; indices are the reference's 1-based ones." },
 				"base": { "enum": [ 0 ], "description": "scalar index: the JS takes it 0-based (the reference is 1-based); its checks are restated 1-based. Set only by an override." },
 				"workDependent": { "type": "string", "minLength": 20, "description": "An output whose exact contents the reference itself makes depend on the workspace it is given (the path LWORK selects), with why; the wrapper replay's workspace-size variants do not compare it (ticket 0096). Set only by an override." },
 				"adaptive": { "const": true, "description": "workspace: the reference tests its LWORK after the argument checks to pick its path (a block size shrunk to fit, an unblocked fallback), so base.js reads the workspace's length to do the same (CONVENTIONS W6; ticket 0100). Generated from data/fortran-checks.json `adaptive`." },

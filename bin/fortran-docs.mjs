@@ -25,6 +25,7 @@
 *   node bin/fortran-docs.mjs --out <dir> --all        # every d/z/i/blas routine with a source
 *   node bin/fortran-docs.mjs --readme <module-dir>...  # write the block into each module README
 *   node bin/fortran-docs.mjs --readme --all            # ... for every module with a reference source
+*   node bin/fortran-docs.mjs --extract-params          # write data/fortran-param-docs.json (run by bin/gen_spec --extract)
 *   node bin/fortran-docs.mjs --report ...              # also print fallback stats to stderr
 *
 * README blocks sit between `<!-- fortran-docs:start ... -->` and
@@ -985,6 +986,67 @@ function readmes( dirs, report ) {
 }
 
 
+/**
+* Converts one argument's raw doc lines (the `\verbatim` body of its `\param`)
+* to Markdown, without the leading "X is TYPE array, dimension (...)" line,
+* which the spec's dtype and shape already state. `names` are the routine's
+* argument names (they become code spans).
+*
+* @param {string} name - Fortran argument name
+* @param {Array<string>} lines - raw doc lines
+* @param {Array<string>} names - all argument names of the routine
+* @returns {string} Markdown (empty when the doc says nothing beyond the type)
+*/
+function paramMarkdown( name, lines, names ) {
+	const { rest } = paramHead( name, lines );
+	return body( rest, new Set( names ) ).trim();
+}
+
+/**
+* Writes data/fortran-param-docs.json: the raw doc lines of every argument of
+* every routine bin/gen_spec generates (a module or an existing spec), so the
+* spec build can carry them without the gitignored sources.
+*/
+function extractParams() {
+	const set = new Set( modules().map( ( d ) => basename( d ) ) );
+	for ( const f of readdirSync( join( ROOT, 'spec' ) ) ) {
+		const m = f.match( /^(\w+)\.json$/ );
+		if ( m && m[ 1 ] !== 'options' && m[ 1 ] !== 'schema' ) {
+			set.add( m[ 1 ] );
+		}
+	}
+	const out = {};
+	let missing = 0;
+	for ( const r of [ ...set ].sort() ) {
+		const path = findSource( r );
+		if ( !path ) {
+			missing += 1;
+			continue;
+		}
+		const doc = parse( docLines( readFileSync( path, 'utf8' ) ) );
+		const params = {};
+		for ( const p of doc.params ) {
+			const lines = p.body.slice();
+			while ( lines.length && !lines[ 0 ].trim() ) {
+				lines.shift();
+			}
+			while ( lines.length && !lines[ lines.length - 1 ].trim() ) {
+				lines.pop();
+			}
+			if ( lines.length ) {
+				params[ p.name.toUpperCase() ] = lines.join( '\n' );
+			}
+		}
+		if ( Object.keys( params ).length ) {
+			out[ r ] = params;
+		}
+	}
+	const file = join( ROOT, 'data', 'fortran-param-docs.json' );
+	writeFileSync( file, JSON.stringify( out, null, '\t' ) + '\n' );
+	console.error( 'wrote argument docs for ' + Object.keys( out ).length + ' routines to data/fortran-param-docs.json (' + missing + ' without a reference source)' );
+}
+
+
 // MAIN //
 
 function main() {
@@ -1003,6 +1065,9 @@ function main() {
 			report = true;
 		} else if ( args[ i ] === '--readme' ) {
 			readme = true;
+		} else if ( args[ i ] === '--extract-params' ) {
+			extractParams();
+			return;
 		} else {
 			routines.push( ( readme ? args[ i ] : args[ i ].toLowerCase() ) );
 		}
@@ -1060,4 +1125,9 @@ function main() {
 	}
 }
 
-main();
+// Run as a script; importing the module (bin/docs, analyses) exposes the parser instead.
+if ( process.argv[ 1 ] && resolve( process.argv[ 1 ] ) === resolve( import.meta.filename ) ) {
+	main();
+}
+
+export { findSource, docLines, parse, paramHead, paramMarkdown, render, body };

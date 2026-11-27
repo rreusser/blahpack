@@ -287,3 +287,10 @@ dl.defs dd { margin: 4px 0 0 0; color: var(--text-soft); }
 .reference-docs blockquote { margin: 0 0 1rem; }
 .reference-docs .math-display { overflow-x: auto; overflow-y: hidden; margin: 1rem 0; }
 .reference-docs table { display: block; overflow-x: auto; }
+.sig-note { color: var(--muted); font-size: .9rem; margin: .25rem 0 .75rem; }
+.p-ref { margin-top: .4rem; font-size: .9rem; }
+.p-ref > summary { cursor: pointer; color: var(--muted); font-size: .8rem; letter-spacing: .02em; }
+.p-ref > summary:hover { color: inherit; }
+.p-ref p, .p-ref ul { margin: .35rem 0; }
+.p-ref .math-display { overflow-x: auto; }
+.info-ref ul { margin-top: .25rem; }

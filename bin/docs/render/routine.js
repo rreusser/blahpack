@@ -55,7 +55,7 @@ function paramRow( p, prefix ) {
 		'<td class="p-name"><a class="anchor" href="#' + prefix + esc( p.name ) + '"><code>' + esc( p.name ) + '</code></a>' + ( meta.length ? '<div class="p-meta">' + meta.join( '' ) + '</div>' : '' ) + '</td>' +
 		'<td class="p-type"><code>' + esc( p.type || '—' ) + '</code></td>' +
 		'<td class="p-intent">' + ( p.intent && !sub ? '<span class="intent intent-' + esc( p.intent ) + '">' + intentLabel( p.intent ) + '</span>' : '' ) + '</td>' +
-		'<td class="p-desc">' + inline( p.description ) + extras.join( '' ) + '</td>' +
+		'<td class="p-desc">' + inline( p.description ) + extras.join( '' ) + ( p.reference && !sub ? '<details class="p-ref"><summary>Reference</summary>' + markdownMath( p.reference ) + '</details>' : '' ) + '</td>' +
 		'</tr>';
 }
 
@@ -75,6 +75,12 @@ function signatureSection( sig, routineDescription ) {
 		html += '<div class="sig-desc">' + markdown( sig.description ) + '</div>';
 	}
 	html += '<h3>Parameters</h3>';
+	if ( sig.kind === 'ndarray' && sig.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
+		html += '<p class="sig-note">Matrix shapes are logical (rows × columns). The reference\'s leading dimension (<code>LDA</code>, …) is replaced by the two strides and the offset.</p>';
+	}
+	if ( sig.params.some( ( p ) => p.reference ) ) {
+		html += '<p class="sig-note">“Reference” expands the reference implementation\'s own documentation of an argument; its indices are 1-based.</p>';
+	}
 	html += '<div class="table-wrap"><table class="params"><thead><tr><th>Name</th><th>Type</th><th>Intent</th><th>Description</th></tr></thead>' + rows + '</table></div>';
 	html += '<h3>Returns</h3>';
 	html += sig.returns ? '<dl class="returns"><dt><code>' + esc( returnLabel( sig ) ) + '</code></dt><dd>' + inline( sig.returns.description ) + '</dd></dl>' : '<p class="muted">Nothing documented.</p>';
@@ -118,6 +124,9 @@ export function routineHTML( r, ctx ) {
 	if ( r.returns && RETURN_KINDS[ r.returns.kind ] && r.returns.kind === 'info' ) {
 		toc.push([ 'status', 'Status codes' ]);
 		body += '<section id="status"><h2><a class="anchor" href="#status">Status codes</a></h2><p>' + inline( RETURN_KINDS.info ) + ' Invalid arguments throw instead of returning a negative <code>info</code>.</p>';
+		if ( r.infoReference ) {
+			body += '<div class="info-ref"><p class="muted">The reference documents <code>INFO</code> as:</p>' + markdownMath( r.infoReference ) + '</div>';
+		}
 		if ( r.quickReturn.length ) {
 			body += '<p>Returns immediately when ' + r.quickReturn.map( ( q ) => '<code>' + esc( q ) + '</code>' ).join( ' or ' ) + '.</p>';
 		}
@@ -169,7 +178,7 @@ export function routineHTML( r, ctx ) {
 		'alternates': [ { 'type': 'text/markdown', 'href': r.name + '.md' }, { 'type': 'application/json', 'href': r.name + '.json' } ],
 		'site': ctx.site,
 		'section': r.package,
-		'math': !!r.reference
+		'math': !!r.reference || !!r.infoReference || r.signatures.some( ( sg ) => sg.params.some( ( p ) => p.reference ) )
 	});
 	return html.replace( /\{\{repo\}\}/g, ctx.site.repo );
 }
@@ -222,6 +231,21 @@ export function routineMarkdown( r, ctx ) {
 			out.push( '| ' + [ ( p.operand ? '↳ ' : '' ) + '`' + p.name + '`', p.type ? '`' + p.type + '`' : '', intentLabel( p.intent ), p.shape ? '`' + p.shape + '`' : '', cons.join( '; ' ), p.description ].map( mdCell ).join( ' | ' ) + ' |' );
 		}
 		out.push( '' );
+		const refs = s.params.filter( ( p ) => p.reference && !p.operand );
+		if ( refs.length ) {
+			out.push( '**Reference notes** (the reference implementation\'s own argument docs; 1-based indices)' );
+			out.push( '' );
+			for ( const p of refs ) {
+				// Continuation lines are indented under the item, so nested lists and math stay inside it.
+				const lines = p.reference.split( '\n' ).map( ( l ) => ( l ? '  ' + l : l ) );
+				if ( /^\s*-   /.test( lines[ 0 ] ) ) {
+					out.push( '- `' + p.name + '`:', '', ...lines );
+				} else {
+					out.push( '- `' + p.name + '`: ' + lines[ 0 ].trim(), ...lines.slice( 1 ) );
+				}
+			}
+			out.push( '' );
+		}
 		out.push( '**Returns** `' + returnLabel( s ) + '`' + ( s.returns && s.returns.description ? ': ' + mdCell( s.returns.description ) : '' ) );
 		out.push( '' );
 		if ( s.throws.length ) {
@@ -238,6 +262,12 @@ export function routineMarkdown( r, ctx ) {
 		out.push( '' );
 		out.push( RETURN_KINDS.info + ' Invalid arguments throw instead of returning a negative `info`.' + ( r.quickReturn.length ? ' Returns immediately when ' + r.quickReturn.map( ( q ) => '`' + q + '`' ).join( ' or ' ) + '.' : '' ) );
 		out.push( '' );
+		if ( r.infoReference ) {
+			out.push( 'The reference documents `INFO` as:' );
+			out.push( '' );
+			out.push( r.infoReference );
+			out.push( '' );
+		}
 	}
 	if ( r.examples.length ) {
 		out.push( '## Examples' );

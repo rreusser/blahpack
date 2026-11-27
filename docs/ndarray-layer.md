@@ -1,10 +1,10 @@
 # ndarray-Object Layer and Piecemeal Distribution
 
-**Status: proposal.** Nothing here is built yet. The problems are tracked in
-ticket 0111 (no ndarray-object API), ticket 0112 (no piecemeal browser/CDN
-loading) and ticket 0110 (the per-routine bundle floor). Measurements were
-taken on 2026-11-27 with esbuild 0.24 (minified, ESM, gzipped with `gzip -c`)
-against `@stdlib/*` 0.3.3.
+**Status.** The browser build (`dist/`, below) is built and checked in CI; it
+is not yet on a CDN because the package is not published (ticket 0112). The
+ndarray-object layer is a proposal; nothing of it is built (ticket 0111).
+Ticket 0110 tracks the per-routine bundle floor. Measurements were taken on
+2026-11-27 with esbuild (minified, ESM, gzipped) against `@stdlib/*` 0.3.3.
 
 ## Why
 
@@ -155,15 +155,18 @@ output count).
 
 ## Distribution
 
-### What ships today
+### What ships
 
 | Measure | Size |
 | --- | --- |
 | `lib/` on disk | 145 MB (57 MB apparent; the rest is per-file block overhead) |
-| npm tarball (`npm pack --dry-run`) | 2.5 MB; 23 MB unpacked; 7,383 files |
+| npm tarball before `dist/` | 2.5 MB; 23 MB unpacked; 7,383 files |
+| npm tarball with `dist/` | 6.8 MB; 36.8 MB unpacked; 8,287 files |
 
-The `files` field already excludes tests, fixtures and benchmarks. npm users
-do not download the repository.
+The `files` field excludes tests, fixtures and benchmarks, so npm users do
+not download the repository. `dist/` nearly triples the download for Node and
+bundler users, who never load it; publishing it as a separate package would
+avoid that, at the cost of a second name to import from.
 
 ### Bundler users
 
@@ -193,43 +196,95 @@ but no one has checked that yet.
 
 ### Browser / CDN users
 
-Raw files from unpkg or jsDelivr do not load (ticket 0112). Relative imports
-between modules resolve against the CDN URL, but the 43 distinct bare
-`@stdlib/...` specifiers do not. Unbundled, zggbal alone pulls 265 stdlib
-modules. jsDelivr's `+esm` and esm.sh rewrite bare imports, but whether they
-work on this package is untested.
+The source cannot be loaded by a browser directly. The library imports stdlib
+by bare specifier (`@stdlib/...`), which a browser cannot resolve, and stdlib
+on npm is CommonJS, which a browser cannot run even with an import map.
+jsDelivr's `+esm` and esm.sh convert on the fly, but are untested on this
+package: it is not published, and those hosts are unreachable from the
+development container.
 
-Options measured:
+So the package ships a build, `dist/`, made by `npm run build:dist`
+(`bin/build-dist.mjs`, run by `prepack`):
 
-| Build | Result |
+| File | Contents |
 | --- | --- |
-| esbuild code-splitting over all 915 entries | 642 chunks; 29 (zggbal) to 91 (zgeev) requests per routine. Too fragmented. |
-| One standalone bundle per routine | 1 request; 4–53 KB each; stdlib duplicated in every file. |
-| **Shared runtime + one file per routine** | The runtime with all 43 stdlib imports is 36 KB; routine files are 0.6–30 KB. 2 requests per routine; the runtime is cached across routines. |
+| `dist/_stdlib.js` | Every stdlib module the library imports (47 specifiers from 13 packages), converted to ESM and bundled once: 21.5 KB gzipped |
+| `dist/<pkg>/base/<routine>.js` | One file per `./<pkg>/base/<routine>` export (902): the routine and its in-library dependencies, importing only `../../_stdlib.js` |
+| `dist/THIRD_PARTY_LICENSES.txt` | The licenses and notices of the vendored stdlib packages (Apache-2.0) |
 
-Recommended: build `dist/` with the shared runtime and one file per routine,
-published in the npm tarball so jsDelivr and unpkg serve it as static files:
+A routine costs two requests, and `_stdlib.js` is cached across routines.
+Sizes, gzipped: ddot 0.6 KB, zggbal 3.2 KB, dgesv 4.8 KB, zgeev 29 KB, the
+largest (zhegvx) 33.8 KB. The paths mirror the package's subpaths, so
+`dist/lapack/<routine>.js` stays free for the ndarray-object layer.
+
+Once published, a notebook imports a routine with no bundler:
 
 ```js
-import zggbal from 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/zggbal.js';
+// Observable notebook
+dgesv = ( await import( 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/base/dgesv.js' ) ).default
+
+// Observable Framework, or any ESM page
+import dgesv from 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/base/dgesv.js';
 ```
 
-The ndarray-object layer would be built into `dist/` the same way, and the
-CDN path for it would be the convenient one to document.
+`npm run check:dist` (`bin/check-dist.mjs`, in CI) checks that:
 
-Routine files still duplicate shared LAPACK helpers (`dlarfg`, `dlamch`,
-`ilaenv`, the BLAS) among themselves. Loading many routines on one page would
-benefit from a second shared "core" chunk. esbuild cannot place chunks by
-hand; rollup's `manualChunks` can.
+- the files match the exports map exactly;
+- no file imports anything but the runtime, and none calls `require`;
+- headless Chromium loads all 902 routines with no request outside `dist/`;
+- a few calls (ddot, dgesv, dsyev and dgesvd with `WORK = null`) give
+  bit-identical results in the browser and in Node;
+- the gzipped sizes stay under a budget (runtime, largest routine, total).
 
-The ndarray layer must also stay browser-bundleable. `@stdlib/ndarray/zeros`
+When it was added, the check was shown to fail on a leftover bare import, a
+missing file, and a one-ulp change to ddot's result.
+
+### Shared dependencies between routines
+
+Each routine file includes its whole dependency tree once. Two routine files
+loaded on the same page repeat the dependencies they share. Measured (KB
+gzipped, cold load, not counting the runtime):
+
+| Layout | dgesv alone | zgeev alone | 5 real drivers¹ | 4 complex eigen-drivers² |
+| --- | --- | --- | --- | --- |
+| **One file per routine (built)** | 5 | 29 | 77 | 103 |
+| Same, plus one shared "core" file³ | 22 | 41 | 67 | 86 |
+| One file per module | 7 | 44 | 75 | 80 |
+| No repetition (the set bundled together) | 5 | 29 | 51 | 53 |
+
+¹ dgesv, dgeev, dgesvd, dsyev, dposv. ² zgeev, zggev, zgees, zheev.
+³ the 64 modules used by 40 or more routines (20 KB).
+
+- **The cost is bounded:** at most about twice the minimum, only on pages
+  that load several large drivers with overlapping dependencies. A page with
+  one or two routines pays nothing.
+- **A single shared core does not work.** It adds 17 KB to every
+  single-routine page and still lands well above the minimum, because no one
+  core fits every combination of routines.
+- **One file per module repeats nothing but costs more for one routine.**
+  Each small file compresses alone and nothing is optimized across files.
+  zgeev would also be 67 files in an import chain 14 levels deep: about 14
+  round trips on a cold load, unless each entry imports its whole closure
+  directly so the browser fetches it in parallel.
+- **Repeated copies are harmless.** The 16 modules with mutable top-level
+  variables hold scratch values (a packing buffer, complex-division
+  temporaries), not caches.
+
+A page that loads many drivers can install from npm and bundle the set
+itself, which gives the minimum. If such pages turn out to be common, the
+build can also write a one-file-per-module layout from the same script.
+
+Other options measured: esbuild code-splitting over all entries produced 642
+chunks and 29 (zggbal) to 91 (zgeev) requests per routine, which is too
+fragmented to serve.
+
+### The ndarray layer in `dist/`
+
+The ndarray layer must stay browser-bundleable. `@stdlib/ndarray/zeros`
 fails to bundle for the browser (it requires Node's `buffer`), and
 `@stdlib/ndarray/ctor` is 34 KB alone. The layer should build its returned
 ndarrays with `@stdlib/ndarray/base/ctor` (17 KB, largely shared with the
 runtime) or return plain ndarray-like objects.
-
-A `dist/` build needs a CI size budget so that a stdlib upgrade or a new
-import cannot silently double it.
 
 ## Open questions
 
@@ -240,3 +295,5 @@ import cannot silently double it.
    allocation the whole contract for this layer?
 4. Ticket 0110: keep stdlib's option asserts for conformance, or inline
    whitelists for size?
+5. Ship `dist/` in the main package (built; nearly triples the npm download)
+   or as a separate browser package?

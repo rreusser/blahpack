@@ -8,39 +8,47 @@ opened: 2026-11-27
 
 ## Problem
 
-A browser user who wants one routine has no way to load just that routine from
-unpkg or jsDelivr. Imports between this library's own modules are relative and
-would resolve against a CDN URL. The modules also import `@stdlib/...` by bare
-specifier, which a browser cannot resolve without an import map. Even with
-one, loading stdlib unbundled means hundreds of module requests per routine.
-There is no prebuilt browser `dist/`. The only alternatives are to install from
-npm and run a bundler, or to import the root `index.js`, which pulls in the
-whole library. Nothing records whether jsDelivr's `+esm` or esm.sh rewriting
-works on this package.
+A browser or notebook user who wants one routine cannot load it from unpkg
+or jsDelivr. The source imports stdlib by bare specifier (`@stdlib/...`),
+which a browser cannot resolve, and stdlib on npm is CommonJS, which a
+browser cannot run even with an import map.
+
+The package now ships a browser build, `dist/` (`bin/build-dist.mjs`, run by
+`prepack`): one self-contained ES module per routine plus the vendored stdlib
+runtime, checked in CI by `bin/check-dist.mjs`. The problem remains because
+the package is not published, so no CDN serves `dist/`, and nothing has
+loaded it from a CDN or from Observable.
+
+What is left:
+
+1. Publish the package.
+2. Load `https://cdn.jsdelivr.net/npm/@rreusser/blahpack@<version>/dist/lapack/base/dgesv.js`
+   in a browser and in an Observable notebook.
+3. Record whether jsDelivr's `+esm` and esm.sh work on the source as well.
+4. Decide whether `dist/` stays in the main package (it nearly triples the
+   npm download) or moves to a separate one: `docs/ndarray-layer.md`, open
+   question 5.
 
 ## Evidence
 
-- 43 distinct bare `@stdlib/...` specifiers are imported from
-  `lib/{blas,lapack}/base/*/lib/*.js`.
-- esbuild's metafile for zggbal lists 277 input modules, 265 of them stdlib.
-- No `dist/` directory, and `package.json` has no `sideEffects` field.
-- Sizes measured with esbuild 0.24 (minified, gzipped):
-  - **Per-routine standalone bundles:** ddot 4 KB, zggbal 25 KB, dgesv 27 KB,
-    dgesvd 45 KB, zgeev 53 KB, root `index.js` 680 KB.
-  - **Global code-splitting over all 915 entries:** 642 chunks, and 29 requests
-    (zggbal) to 91 requests (zgeev) per routine. Too fragmented to serve.
-  - **One shared runtime plus one file per routine:** the runtime holding all
-    43 stdlib imports is 36 KB; the routines' own code with stdlib external is
-    ddot 0.6 KB, zggbal 3.4 KB, dgesvd 23 KB, zgeev 30 KB. Two requests per
-    routine, with the runtime cached across routines.
-- `npm pack --dry-run`: tarball 2.5 MB, 23 MB unpacked, 7,383 files.
-  The 145 MB of `lib/` on disk (57 MB apparent) is mostly tests, fixtures,
-  docs and per-file block overhead, which `files` already excludes.
-- Ticket 0110 sets the per-routine floor. Full analysis:
-  `docs/ndarray-layer.md` (Distribution).
+- `npm view @rreusser/blahpack` returns 404 from the registry (2026-11-27).
+- The source imports 47 distinct stdlib specifiers from 13 packages (esbuild's
+  resolution, as `bin/build-dist.mjs` collects them).
+- `npm run check:dist` passes: Chromium loads all 902 routines from a local
+  server with no request outside `dist/`, and ddot, dgesv, dsyev and dgesvd
+  match Node bit for bit. It was shown to fail on a leftover bare import, a
+  missing file and a one-ulp change to ddot's result.
+- `npm pack`: 6.8 MB, 36.8 MB unpacked, 8,287 files with `dist/`; 2.5 MB,
+  23 MB unpacked, 7,383 files before.
+- Gzipped sizes: `dist/_stdlib.js` 21.5 KB; ddot 0.6 KB, zggbal 3.2 KB, dgesv
+  4.8 KB, zgeev 29 KB, largest (zhegvx) 33.8 KB.
+- Shared dependencies are repeated between routine files. The measured cost
+  and the alternatives are in `docs/ndarray-layer.md` ("Shared dependencies
+  between routines").
+- Ticket 0110 sets the per-routine floor.
 
 ## Reproduce
 
 ```bash
-ls dist; grep -hoE "from '@stdlib/[^']+'" lib/blas/base/*/lib/*.js lib/lapack/base/*/lib/*.js | sort -u | wc -l
+npm view @rreusser/blahpack version 2>&1 | grep -m1 -E "404|^[0-9]"
 ```

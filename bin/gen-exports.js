@@ -85,6 +85,10 @@ for ( const m of modules ) {
 	exportsMap[ m.subpath ] = m.relIndex;
 }
 
+// Prebuilt browser ESM (bin/build-dist.mjs, run by `prepack`): one file per
+// routine plus the vendored stdlib runtime, for CDNs and notebooks.
+exportsMap[ './dist/*' ] = './dist/*';
+
 // --- Patch package.json -----------------------------------------------------
 
 const pkgPath = join( ROOT, 'package.json' );
@@ -129,6 +133,7 @@ pkg.exports = exportsMap;
 // keep the tarball to source, types, and docs.
 pkg.files = [
 	'index.js',
+	'dist/',
 	'lib/',
 	'!lib/**/test/',
 	'!lib/**/benchmark/',

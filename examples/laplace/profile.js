@@ -13,7 +13,7 @@
 //   - Evaluation (final solution at interior points)
 
 import { laplace, pointInPolygon } from './laplace.js';
-import { timings as aaaTimings } from '../../aaa-pure.js';
+import { timings as aaaTimings } from '../aaa-pure.js';
 
 // ---- Configuration ----
 const BOUNDARY_STEP = parseFloat(process.env.STEP || '0.01');

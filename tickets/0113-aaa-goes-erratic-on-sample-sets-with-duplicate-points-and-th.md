@@ -1,9 +1,10 @@
 ---
 id: 0113
 title: AAA goes erratic on sample sets with duplicate points, and the notebook boundaries contain duplicate corners
-status: open
+status: resolved
 area: general
 opened: 2026-11-27
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -28,3 +29,7 @@ for (const [label, Z] of [['60 distinct', pts(60, 60)], ['60 points, each twice'
   console.log(label + ': converged=' + r.converged + ' iterations=' + r.errvec.length + ' final error=' + r.errvec.at(-1).toExponential(1));
 }"
 ```
+
+## Resolution
+
+Fixed in 3ddc2791e: choosing a support point removes every sample at the same z, and only remaining samples can become support points. notebooks/aaa/aaa-entry.test.mjs (npm run test:notebooks, a CI step) fails on the old behaviour.

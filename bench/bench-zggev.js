@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-'use strict';
-
 // Profiling benchmark for zggev (generalized eigenvalue decomposition).
 //
 // Instruments every LAPACK/BLAS subroutine to show where time is spent.
@@ -10,17 +8,27 @@
 //   - Scaling summary across matrix sizes
 //
 // Usage:
-//   node bin/bench-zggev.js
-//   node bin/bench-zggev.js --sizes 20,50,100
-//   node bin/bench-zggev.js --target-ms 5000
+//   node bench/bench-zggev.js
+//   node bench/bench-zggev.js --sizes 20,50,100
+//   node bench/bench-zggev.js --target-ms 5000
 
-var instrument = require( './instrument.js' );
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import instrument from './instrument.js';
 
 // Install BEFORE loading any LAPACK modules
 instrument.install();
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var zggev = require( '../lib/lapack/base/zggev/lib/base.js' );
+const { default: zggev } = await import( '../lib/lapack/base/zggev/lib/ndarray.js' );
+
+// Flags, by the single-letter names this script reports.
+var JOB = { 'N': 'no-vectors', 'V': 'compute-vectors' };
+
+/**
+* Workspace for one zggev call of order N (optimal size, see zggev's docs).
+*/
+function workspace( N ) {
+	return [ new Complex128Array( N + ( 32 * N ) + 4160 ), 1, 0, new Float64Array( 8 * N ), 1, 0 ];
+}
 
 // CONFIGURATION //
 
@@ -94,13 +102,14 @@ function calibrate( N, jobvl, jobvr ) {
 	VR = new Complex128Array( N * N );
 
 	t0 = performance.now();
-	zggev( jobvl, jobvr, N,
+	zggev( JOB[ jobvl ], JOB[ jobvr ], N,
 		A, 1, N, 0,
 		B, 1, N, 0,
 		ALPHA, 1, 0,
 		BETA, 1, 0,
 		VL, 1, N, 0,
-		VR, 1, N, 0
+		VR, 1, N, 0,
+		...workspace( N )
 	);
 	ms = performance.now() - t0;
 
@@ -140,13 +149,14 @@ function runBenchmark( N, jobvl, jobvr, iters ) {
 		BETA = new Complex128Array( N );
 		VL = new Complex128Array( N * N );
 		VR = new Complex128Array( N * N );
-		zggev( jobvl, jobvr, N,
+		zggev( JOB[ jobvl ], JOB[ jobvr ], N,
 			A, 1, N, 0,
 			B, 1, N, 0,
 			ALPHA, 1, 0,
 			BETA, 1, 0,
 			VL, 1, N, 0,
-			VR, 1, N, 0
+			VR, 1, N, 0,
+			...workspace( N )
 		);
 	}
 	totalMs = performance.now() - t0;
@@ -183,7 +193,7 @@ console.log( '=' .repeat( 80 ) );
 	var k;
 
 	for ( k = 0; k < 5; k++ ) {
-		zggev( 'V', 'V', 10, A, 1, 10, 0, B, 1, 10, 0, AL, 1, 0, BE, 1, 0, VL, 1, 10, 0, VR, 1, 10, 0 );
+		zggev( JOB.V, JOB.V, 10, A, 1, 10, 0, B, 1, 10, 0, AL, 1, 0, BE, 1, 0, VL, 1, 10, 0, VR, 1, 10, 0, ...workspace( 10 ) );
 	}
 })();
 

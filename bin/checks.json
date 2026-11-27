@@ -201,6 +201,9 @@
 			"kind": "tool",
 			"why": "generator: module scaffold"
 		},
+		"bin/scripts-smoke.sh": {
+			"kind": "gate"
+		},
 		"bin/signature.py": {
 			"kind": "tool",
 			"why": "prints a stdlib-js signature for a Fortran routine"
@@ -437,6 +440,9 @@
 		"npm:test:lint-rules": {
 			"kind": "gate"
 		},
+		"npm:test:notebooks": {
+			"kind": "gate"
+		},
 		"npm:test:tools": {
 			"kind": "gate"
 		},
@@ -460,6 +466,12 @@
 			"kind": "alias",
 			"of": [
 				"bin/examples-smoke.sh"
+			]
+		},
+		"npm:scripts:smoke": {
+			"kind": "alias",
+			"of": [
+				"bin/scripts-smoke.sh"
 			]
 		}
 	},

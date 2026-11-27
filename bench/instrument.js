@@ -1,67 +1,32 @@
-'use strict';
-
 // Generic LAPACK/BLAS subroutine profiler.
 //
-// Hooks into Module._load to wrap every base.js function with timing
-// instrumentation. Tracks inclusive time (wall clock), exclusive time
-// (minus children), call counts, and caller→callee edges.
+// Registers a module loader hook (instrument-loader.mjs) that wraps the default
+// export of every lib/{blas,lapack}/base/<routine>/lib/base.js with timing
+// instrumentation. Tracks inclusive time (wall clock), exclusive time (minus
+// children), call counts, and caller→callee edges.
 //
 // Usage:
-//   var instrument = require('./instrument.js');
+//   import instrument from './instrument.js';
 //   instrument.install();            // BEFORE loading target routines
-//   var zggev = require('../lib/lapack/base/zggev/lib/base.js');
+//   const { default: zggev } = await import( '../lib/lapack/base/zggev/lib/base.js' );
 //   // ... run workload ...
-//   instrument.printReport(totalMs);
-//   instrument.printCallTree('zggev');
+//   instrument.printReport( totalMs );
+//   instrument.printCallTree( 'zggev' );
+//
+// Target routines must be loaded with a dynamic import() after install(): a
+// static import is resolved before install() runs and stays uninstrumented.
 
-var Module = require( 'module' );
-var path = require( 'path' );
-
-var LIB_ROOT = path.resolve( __dirname, '..', 'lib' );
-var origLoad = Module._load;
+import { register } from 'node:module';
 
 // Shared mutable state — closures in wrapped functions reference these
 // directly, so reset() must mutate in place (not replace).
 var stats = {};
 var callGraph = {};
 var callStack = [];
+var observers = {};
 var installed = false;
 
 // FUNCTIONS //
-
-/**
-* Extract routine name from a resolved file path.
-*
-* Expected pattern:
-*   <LIB_ROOT>/blas/base/<routine>/lib/base.js
-*   <LIB_ROOT>/lapack/base/<routine>/lib/base.js
-*
-* @private
-* @param {string} filepath - absolute file path
-* @returns {string|null} routine name, or null if not a match
-*/
-function extractName( filepath ) {
-	var parts;
-	var rel;
-
-	if ( !filepath.startsWith( LIB_ROOT ) ) {
-		return null;
-	}
-	rel = path.relative( LIB_ROOT, filepath );
-	parts = rel.split( path.sep );
-
-	// blas/base/<routine>/lib/base.js  →  5 parts
-	// lapack/base/<routine>/lib/base.js  →  5 parts
-	if (
-		parts.length === 5 &&
-		parts[ 1 ] === 'base' &&
-		parts[ 3 ] === 'lib' &&
-		parts[ 4 ] === 'base.js'
-	) {
-		return parts[ 2 ];
-	}
-	return null;
-}
 
 /**
 * Create a timing wrapper around a LAPACK/BLAS function.
@@ -88,6 +53,9 @@ function wrapFunction( name, fn ) {
 		var ret;
 
 		entry.calls += 1;
+		if ( observers[ name ] ) {
+			observers[ name ].apply( null, arguments );
+		}
 		start = performance.now();
 		parentName = ( callStack.length > 0 ) ?
 			callStack[ callStack.length - 1 ].name :
@@ -126,7 +94,7 @@ function wrapFunction( name, fn ) {
 // MAIN //
 
 /**
-* Install the require hook. Must be called BEFORE loading target routines.
+* Install the loader hook. Must be called BEFORE loading target routines.
 */
 function install() {
 	if ( installed ) {
@@ -134,29 +102,21 @@ function install() {
 	}
 	installed = true;
 
-	Module._load = function hookedLoad( request, parent, isMain ) {
-		var resolved;
-		var exports;
-		var wrapped;
-		var name;
+	// The loader rewrites each routine's `export default <name>;` into a call
+	// to this global, on the main thread, as the module is evaluated.
+	globalThis.__blahpackInstrument = wrapFunction;
+	register( new URL( './instrument-loader.mjs', import.meta.url ) );
+}
 
-		exports = origLoad.call( this, request, parent, isMain );
-
-		if ( typeof exports === 'function' && !exports.__instrumented ) {
-			try {
-				resolved = Module._resolveFilename( request, parent, isMain );
-				name = extractName( resolved );
-				if ( name !== null ) {
-					wrapped = wrapFunction( name, exports );
-					require.cache[ resolved ].exports = wrapped;
-					return wrapped;
-				}
-			} catch ( e ) {
-				// resolution failed — skip
-			}
-		}
-		return exports;
-	};
+/**
+* Call `fn` with a routine's arguments on each of its calls, before the routine
+* runs and outside its timing. For studying call patterns (sizes, flags).
+*
+* @param {string} name - routine name
+* @param {Function} fn - observer
+*/
+function observe( name, fn ) {
+	observers[ name ] = fn;
 }
 
 /**
@@ -412,8 +372,9 @@ function printCallTree( rootName, opts ) {
 
 // EXPORTS //
 
-module.exports = {
+export default {
 	install: install,
+	observe: observe,
 	reset: reset,
 	snapshot: snapshot,
 	topK: topK,

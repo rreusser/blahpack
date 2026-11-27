@@ -8,7 +8,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { laplace, pointInPolygon } from './laplace.js';
-import { aaa, timings } from '../../aaa-pure.js';
+import { aaa, timings } from '../aaa-pure.js';
 
 function linspace(a, b, step) {
   const arr = [];

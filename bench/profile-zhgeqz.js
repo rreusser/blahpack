@@ -1,19 +1,24 @@
 #!/usr/bin/env node
-'use strict';
 
 // Profile zhgeqz's inner loops using V8's CPU profiler (inspector API).
 // Shows per-function and per-line breakdown to identify exactly which
 // rotation loops dominate the 50%+ exclusive time.
 //
 // Usage:
-//   node bin/profile-zhgeqz.js
-//   node bin/profile-zhgeqz.js --size 200 --iters 10
+//   node bench/profile-zhgeqz.js
+//   node bench/profile-zhgeqz.js --size 200 --iters 10
 
-var inspector = require( 'node:inspector' );
-var path = require( 'path' );
+import inspector from 'node:inspector';
+import path from 'node:path';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import Complex128Array from '@stdlib/array/complex128/lib/index.js';
+import zggev from '../lib/lapack/base/zggev/lib/ndarray.js';
 
-var Complex128Array = require( '@stdlib/array/complex128' );
-var zggev = require( '../lib/lapack/base/zggev/lib/base.js' );
+var ZHGEQZ_SOURCE = fileURLToPath( new URL( '../lib/lapack/base/zhgeqz/lib/base.js', import.meta.url ) );
+
+// zggev's job flags, by the single-letter names this script reports.
+var JOB = { 'N': 'no-vectors', 'V': 'compute-vectors' };
 
 // CONFIGURATION //
 
@@ -77,49 +82,43 @@ function runWorkload( count ) {
 		BETA = new Complex128Array( N );
 		VL = new Complex128Array( N * N );
 		VR = new Complex128Array( N * N );
-		zggev( MODE, MODE, N,
+		zggev( JOB[ MODE ], JOB[ MODE ], N,
 			A, 1, N, 0,
 			B, 1, N, 0,
 			ALPHA, 1, 0,
 			BETA, 1, 0,
 			VL, 1, N, 0,
-			VR, 1, N, 0
+			VR, 1, N, 0,
+			new Complex128Array( N + ( 32 * N ) + 4160 ), 1, 0,
+			new Float64Array( 8 * N ), 1, 0
 		);
 	}
 }
 
 // SECTION MAPPING //
-// Maps line-number ranges in zhgeqz/lib/base.js to named code sections.
+// A line of zhgeqz/lib/base.js belongs to the section named by the nearest
+// comment line above it. The names are read from the source on each run, so
+// they follow the file as it changes.
 
-var SECTIONS = [
-	{ start: 1061, end: 1086, name: 'QZ sweep: left rotation (H+T cols)' },
-	{ start: 1088, end: 1104, name: 'QZ sweep: Q rotation (rows)' },
-	{ start: 1106, end: 1126, name: 'QZ sweep: zlartg T(j+1,j+1)' },
-	{ start: 1128, end: 1144, name: 'QZ sweep: right rotation (H rows)' },
-	{ start: 1146, end: 1157, name: 'QZ sweep: right rotation (T rows)' },
-	{ start: 1159, end: 1172, name: 'QZ sweep: Z rotation (rows)' },
-	{ start: 1037, end: 1059, name: 'QZ sweep: zlartg H(j,j-1)' },
-	{ start: 898, end: 1023, name: 'Wilkinson shift computation' },
-	{ start: 326, end: 373, name: 'Main loop control + convergence' },
-	{ start: 533, end: 593, name: 'scanAndProcess' },
-	{ start: 600, end: 677, name: 'handleBothTestsPass' },
-	{ start: 682, end: 790, name: 'chaseZeroToBottom' },
-	{ start: 416, end: 468, name: 'handleZeroTdiag' },
-	{ start: 474, end: 526, name: 'deflateAndExtract' },
-	{ start: 803, end: 893, name: 'doQZStep control + shift sel.' },
-	{ start: 242, end: 272, name: 'Initialization (zlaset, norms)' },
-	{ start: 274, end: 310, name: 'Set eigenvalues outside active' },
-	{ start: 382, end: 410, name: 'setEigenvaluesBelow' }
-];
+var SECTION_OF_LINE = ( function build() {
+	var lines = readFileSync( ZHGEQZ_SOURCE, 'utf8' ).split( '\n' );
+	var out = new Array( lines.length + 1 );
+	var current = '(file header)';
+	var text;
+	var j;
+	for ( j = 0; j < lines.length; j++ ) {
+		text = lines[ j ].trim();
+		if ( text.startsWith( '// ' ) && !text.startsWith( '// eslint' ) ) {
+			current = text.slice( 3 );
+		}
+		out[ j + 1 ] = current;
+	}
+	return out;
+})();
 
 function lineToSection( lineNo ) {
-	var j;
-	for ( j = 0; j < SECTIONS.length; j++ ) {
-		if ( lineNo >= SECTIONS[ j ].start && lineNo <= SECTIONS[ j ].end ) {
-			return SECTIONS[ j ].name;
-		}
-	}
-	return 'other (line ' + lineNo + ')';
+	var name = SECTION_OF_LINE[ lineNo ] || ( 'line ' + lineNo );
+	return ( name.length > 40 ) ? name.slice( 0, 39 ) + '…' : name;
 }
 
 // ANALYSIS //

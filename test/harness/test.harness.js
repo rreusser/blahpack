@@ -97,6 +97,27 @@ test( 'unreferenced storage is poisoned (NaN)', function t() {
 	assert.ok( Number.isNaN( R.read( 4, 1 ) ), 'strict-lower slot is poisoned' );
 });
 
+test( 'assertZeroBlock: a nonzero entry fails even when the scale is NaN (ticket 0081)', function t() {
+	var sc = S.real;
+	var M = new LogicalMatrix( sc, 3, 3 );
+	var i;
+	var j;
+	for ( j = 0; j < 3; j++ ) {
+		for ( i = 0; i < 3; i++ ) {
+			M.set( i, j, sc.zero );
+		}
+	}
+	check.assertZeroBlock( sc, M, 0, 3, 0, 3, { 'scale': 1.0 } );
+	M.set( 2, 0, sc.one );
+	assert.throws( function zeroBlock() {
+		check.assertZeroBlock( sc, M, 1, 3, 0, 1, { 'scale': 1.0 } );
+	}, /is not zero/ );
+	// The old `if ( mag > t * ( scale + EPS ) )` was false for a NaN scale, so this passed:
+	assert.throws( function zeroBlock() {
+		check.assertZeroBlock( sc, M, 1, 3, 0, 1, { 'scale': NaN } );
+	}, /is not zero/ );
+});
+
 
 // PROPERTY VALIDATION (records to the ledger) //
 

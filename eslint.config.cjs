@@ -95,25 +95,56 @@ var LANGUAGE = {
 	sourceType: 'module'
 };
 
+// Test files import their fixtures with JSON import attributes
+// (`import x from './f.json' with { type: 'json' }`, ES2025). ESLint 8.57's
+// bundled espree 9 stops at ES2024, so tests are parsed by espree 10 (the same
+// parser, one major newer; a devDependency pinned exactly). Scope analysis is
+// unchanged: ESLint's own eslint-scope runs on the AST. `ecmaVersion` stays at
+// 2024, the newest ESLint 8 has a global set for (Math, Float64Array, ...);
+// only the parser is told 2025.
+var TEST_LANGUAGE = {
+	parser: require( 'espree' ),
+	parserOptions: {
+		ecmaVersion: 2025
+	},
+	ecmaVersion: 2024,
+	sourceType: 'module',
+	globals: {
+		// The Node globals the tests use (ESLint 8 knows only the ES
+		// built-ins). Add one here when a test needs it.
+		'process': 'readonly',
+		'URL': 'readonly'
+	}
+};
+
+// Project rules for test files.
+var TEST_RULES = {
+	// A failure guarded by a comparison that is false on NaN never fires on a
+	// NaN result (T2a; ticket 0081).
+	'no-nan-blind-comparison': 'error'
+};
+
 module.exports = [
 	{
 		ignores: [
 			'node_modules/**',
 			'data/**',
-			'test/**',
+			// Of test/, only the validation harness is linted (with the test
+			// rules); its fixtures are verbatim copies of old module files.
+			'test/*',
+			'!test/harness',
+			'test/harness/fixtures/**',
 			'bench/**',
 			'notebooks/**',
 			'examples/**',
 			'index.js',
-			// Test files are not linted: ESLint 8.57 cannot parse their
-			// `import ... with { type: 'json' }` import attributes.
-			'lib/**/test/**',
 			'lib/**/benchmark/**',
 			'lib/**/examples/**'
 		]
 	},
 	{
 		files: [ 'lib/**/*.js' ],
+		ignores: [ 'lib/**/test/**' ],
 		languageOptions: LANGUAGE,
 		plugins: {
 			blahpack: lintLibrary
@@ -134,5 +165,27 @@ module.exports = [
 			'no-unused-vars': [ 'error', { 'args': 'none' } ],
 			'no-undef': 'error'
 		}, namespaced( SOURCE_RULES ) )
+	},
+	{
+		// Module tests and the validation harness (ticket 0081; CONVENTIONS
+		// T2a, T2b): a small set of correctness rules, not the source rules
+		// above, which are about module form.
+		files: [ 'lib/**/test/**/*.js', 'test/harness/**/*.js', 'test/harness/**/*.mjs' ],
+		languageOptions: TEST_LANGUAGE,
+		plugins: {
+			blahpack: lintLibrary
+		},
+		rules: Object.assign( {
+			'no-dupe-args': 'error',
+			'no-dupe-keys': 'error',
+			'no-duplicate-case': 'error',
+			'no-func-assign': 'error',
+			'no-unreachable': 'error',
+			'no-self-compare': 'error',
+			'use-isnan': 'error',
+			'valid-typeof': 'error',
+			'no-unused-vars': [ 'error', { 'args': 'none' } ],
+			'no-undef': 'error'
+		}, namespaced( TEST_RULES ) )
 	}
 ];

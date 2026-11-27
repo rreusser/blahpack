@@ -106,6 +106,18 @@ scaffolding/convention defects:
 | [`no-todo-params`](rules/no-todo-params/) | all | No `TODO` scaffolding in `@param` descriptions or types. |
 | [`stride-provenance`](rules/stride-provenance/) | `base.js` | Element indices use the array's offset; callees get the array's own strides and offset (S13). Autofixes 1-D arrays. |
 | [`no-nary-stdlib-minmax`](rules/no-nary-stdlib-minmax/) | all | stdlib `max`/`min` take exactly two args. |
+| [`no-nan-blind-comparison`](rules/no-nan-blind-comparison/) | test files | A test failure is never guarded by a comparison that is false on NaN (`if ( err > tol ) throw`); fail unless the passing condition holds (T2a). |
+
+### Test files
+
+`eslint.config.cjs` lints test files (`lib/**/test/**`, `test/harness/**`)
+with their own small rule set, not the source rules above (those are about
+module form): parse errors, `no-undef`, `no-unused-vars` (args ignored),
+`no-dupe-keys`, `no-unreachable`, `no-self-compare` and a few other core
+correctness rules, plus `no-nan-blind-comparison` (CONVENTIONS T2a, T2b).
+Tests import fixtures with JSON import attributes (ES2025), which ESLint 8's
+bundled espree 9 cannot parse, so the test block names espree 10 as its parser.
+`bin/lint.sh` with no arguments lints both.
 
 New rules' tests are one line calling the shared fixture runner,
 [`lib/fixture-test.cjs`](lib/fixture-test.cjs): fixtures declare their virtual

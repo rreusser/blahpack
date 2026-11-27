@@ -512,13 +512,15 @@
 		"test/test.js": {
 			"kind": "gate",
 			"by": [
-				"npm:test:unit"
+				"npm:test:unit",
+				"npm:test:lint"
 			]
 		},
 		"test/test.*.js": {
 			"kind": "gate",
 			"by": [
-				"npm:test:unit"
+				"npm:test:unit",
+				"npm:test:lint"
 			]
 		},
 		"test/fixtures/**": {

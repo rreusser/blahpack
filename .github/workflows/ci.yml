@@ -216,6 +216,8 @@ jobs:
       - run: npm ci
       - name: Specs in sync with the committed Fortran facts and overrides
         run: npm run spec:check
+      - name: Module READMEs in sync with the code (bin/docs/readme.js)
+        run: npm run readme:check
       - name: Run conformance checks (fast; structural)
         run: npm run conformance:fast
       - name: Run conformance checks (full; includes per-module ESLint)

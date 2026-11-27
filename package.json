@@ -968,6 +968,8 @@
     "lint:corpus": "node lint/verify-corpus.cjs",
     "lint:escape-hatches": "node lint/verify-no-escape-hatches.cjs",
     "spec:check": "node bin/gen_spec --check",
+    "readme:build": "node bin/docs/readme.js --all",
+    "readme:check": "node bin/docs/readme.js --all --check",
     "spec:xcheck": "node bin/spec xcheck",
     "gen:spec": "node bin/gen_spec",
     "gen:lwkopt": "node bin/gen-lwkopt.mjs",

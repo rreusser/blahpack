@@ -58,6 +58,10 @@
 			"kind": "tool",
 			"why": "codemod: package.json name import for benchmarks"
 		},
+		"bin/codemod-readme-notes.mjs": {
+			"kind": "tool",
+			"why": "codemod: one-time move of the hand-written README intro/notes into the module JSDoc (ticket 0037)"
+		},
 		"bin/codemod-tests.js": {
 			"kind": "tool",
 			"why": "codemod: mechanical test-file fixes"
@@ -141,10 +145,6 @@
 		"bin/gen_fortran_signatures.js": {
 			"kind": "tool",
 			"why": "generator: data/fortran-signatures.json"
-		},
-		"bin/gen_readme.js": {
-			"kind": "tool",
-			"why": "generator: module README.md"
 		},
 		"bin/gen_repl_txt.js": {
 			"kind": "tool",
@@ -424,6 +424,13 @@
 			"of": [
 				"npm:build:dist"
 			]
+		},
+		"npm:readme:build": {
+			"kind": "tool",
+			"why": "generator: every module README.md, from the same model as the API reference site (bin/docs/readme.js)"
+		},
+		"npm:readme:check": {
+			"kind": "gate"
 		},
 		"npm:report": {
 			"kind": "tool",

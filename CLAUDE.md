@@ -85,8 +85,8 @@ node bin/wrapper-replay.mjs --all     # Per-module corpus checks (also coverage.
                                       #   --no-cache, --jobs <n>, --slowest <n>
 npm run check:modules                 # The per-module CI gates (incl. benchmark smoke) on modules changed vs origin/main
 node bin/fortran-docs.mjs <routine>           # Reference BLAS/LAPACK docs as Markdown + KaTeX math
-node bin/fortran-docs.mjs --readme --all      # Refresh the generated reference notes (math/implementation, no argument docs) in every module README
-                                              #   (between <!-- fortran-docs:start/end --> markers; bin/docs renders it)
+node bin/docs/readme.js --all                 # Regenerate every module README.md (same model as the docs site;
+                                              #   never edit a README by hand: edit the JSDoc/spec; CI: npm run readme:check)
 npm run build:dist                    # Browser/CDN build: dist/_stdlib.js + one ES module per routine
 npm run check:dist                    # dist/ is self-contained, loads in Chromium, matches Node, fits its budget
 ```

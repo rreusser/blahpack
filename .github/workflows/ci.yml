@@ -76,6 +76,29 @@ jobs:
       - name: Every early loop exit in a changed module is pinned by a test
         run: node bin/break-mutants.mjs --changed --check
 
+  # Computed values (CONVENTIONS T4a; ticket 0093): coverage counts a line a
+  # test runs whether or not it checks the result. For every base.js line this
+  # PR adds or changes, each value mutant (a `± 1` dropped, a count one short,
+  # `<`/`<=` or `>`/`>=` swapped, a branch statement deleted) must fail one of
+  # the module's own tests, or be a proof in test/value-mutants.equivalent.json;
+  # there is no tolerated-survivor list.
+  value-mutants:
+    name: Value mutants (changed base.js lines)
+    runs-on: ubuntu-latest
+    steps:
+      # Full history: lines are selected by diff against the merge-base with
+      # origin/main.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Every changed base.js line is checked by a test, not only run
+        run: npm run mutants:value
+
   # CONVENTIONS D5c (ticket 0060): a wrapper given WORK = null must allocate
   # enough. For every changed module, the module's own tests are rerun with
   # each null-allocated workspace forced to null and guarded by a sentinel
@@ -241,6 +264,27 @@ jobs:
       - name: Every module example runs (bin/examples-smoke.sh)
         run: bin/examples-smoke.sh
 
+  # Browser build (ticket 0112): dist/ holds one self-contained ES module per
+  # routine plus the vendored stdlib runtime, for CDNs and notebooks. The check
+  # loads every routine in headless Chromium with no request outside dist/,
+  # compares a few calls with Node bit for bit, and enforces a size budget.
+  dist:
+    name: Browser dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Build dist/
+        run: npm run build:dist
+      - name: dist/ is self-contained, loads in Chromium, matches Node, fits its budget
+        run: npm run check:dist
+
   # Generated files are in sync + the published package imports and runs.
   package:
     name: Package
@@ -266,6 +310,7 @@ jobs:
           cd /tmp/pack-smoke
           npm init -y > /dev/null
           npm install "./$TARBALL"
+          test -f "node_modules/$PKG_NAME/dist/_stdlib.js" || { echo 'tarball has no dist/ (prepack runs npm run build:dist)'; exit 1; }
           PKG_NAME="$PKG_NAME" node -e "
             import(process.env.PKG_NAME).then((m) => {
               const n = Object.keys(m).length;

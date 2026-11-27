@@ -17,9 +17,15 @@
 		"bin/break-mutants.mjs": {
 			"kind": "gate"
 		},
+		"bin/build-dist.mjs": {
+			"kind": "gate"
+		},
 		"bin/changed-modules.mjs": {
 			"kind": "part",
 			"of": "bin/bench-smoke.sh"
+		},
+		"bin/check-dist.mjs": {
+			"kind": "gate"
 		},
 		"bin/check-stub-tests.sh": {
 			"kind": "ticket",
@@ -221,6 +227,13 @@
 			"kind": "ticket",
 			"ticket": "0034"
 		},
+		"bin/value-mutants-reporter.mjs": {
+			"kind": "part",
+			"of": "bin/value-mutants.mjs"
+		},
+		"bin/value-mutants.mjs": {
+			"kind": "gate"
+		},
 		"bin/workspace-guard-loader.mjs": {
 			"kind": "part",
 			"of": "bin/workspace-guard.mjs"
@@ -269,6 +282,9 @@
 		"npm:audit": {
 			"kind": "gate"
 		},
+		"npm:build:dist": {
+			"kind": "gate"
+		},
 		"npm:bundle:naca": {
 			"kind": "gate"
 		},
@@ -278,10 +294,14 @@
 		"npm:bundle:pseudospectra": {
 			"kind": "gate"
 		},
+		"npm:check:dist": {
+			"kind": "gate"
+		},
 		"npm:check:modules": {
 			"kind": "alias",
 			"of": [
 				"bin/break-mutants.mjs",
+				"npm:mutants:value",
 				"bin/workspace-guard.mjs",
 				"bin/workspace-optimum.mjs",
 				"bin/workspace-minimum.mjs",
@@ -306,13 +326,16 @@
 			"kind": "ticket",
 			"ticket": "0069"
 		},
+		"npm:mutants:value": {
+			"kind": "gate"
+		},
 		"npm:dev": {
 			"kind": "tool",
 			"why": "local dev server"
 		},
 		"npm:docs:build": {
 			"kind": "tool",
-			"why": "generator: the API reference site (bin/docs), built into dist/ by deploy.yml"
+			"why": "generator: the API reference site (bin/docs), built into site/ by deploy.yml"
 		},
 		"npm:docs:examples": {
 			"kind": "ticket",
@@ -385,6 +408,12 @@
 		"npm:lint:learnings": {
 			"kind": "gate"
 		},
+		"npm:prepack": {
+			"kind": "alias",
+			"of": [
+				"npm:build:dist"
+			]
+		},
 		"npm:report": {
 			"kind": "tool",
 			"why": "generator: progress.html report"
@@ -443,7 +472,8 @@
 			"by": [
 				"npm:test:unit",
 				"npm:test:lint",
-				"npm:conformance:fast"
+				"npm:conformance:fast",
+				"npm:mutants:value"
 			]
 		},
 		"lib/ndarray.js": {
@@ -485,13 +515,15 @@
 		"test/test.js": {
 			"kind": "gate",
 			"by": [
-				"npm:test:unit"
+				"npm:test:unit",
+				"npm:test:lint"
 			]
 		},
 		"test/test.*.js": {
 			"kind": "gate",
 			"by": [
-				"npm:test:unit"
+				"npm:test:unit",
+				"npm:test:lint"
 			]
 		},
 		"test/fixtures/**": {

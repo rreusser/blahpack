@@ -151,7 +151,7 @@ function assertZeroBlock( scalar, M, r0, r1, c0, c1, opts ) {
 				fail( label+': non-finite value at ('+i+','+j+')' );
 			}
 			mag = scalar.abs( M.get( i, j ) );
-			if ( mag > t * ( scale + EPS ) ) {
+			if ( !( mag <= t * ( scale + EPS ) ) ) {
 				fail( label+': entry ('+i+','+j+') modulus '+mag.toExponential( 3 )+' is not zero (tol '+( t * scale ).toExponential( 3 )+')' );
 			}
 		}

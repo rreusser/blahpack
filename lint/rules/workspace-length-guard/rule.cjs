@@ -24,11 +24,28 @@
 // problem needs no workspace, and the JS may accept less there, never demand
 // more (W3).
 //
+// Message: every guard on a spec workspace (a known minimum or not) throws
+//
+//   new RangeError( format( 'invalid argument. <NAME> array must have at least %d elements from offset %d. Provided length: %d.', min, offset, length ) )
+//
+// with <NAME> the workspace's name (case-insensitively) and the minimum a
+// `%d` argument, not a literal. The wrapper replay's `min-work` and
+// `short-work` variants read the minimum from this message; a guard in
+// another shape gave them none, so both skipped that workspace (ticket 0108).
+//
 // Why: a short IWORK/RWORK/BWORK that is not checked runs silently; typed-array
 // writes past the end are dropped and reads give `undefined`, so the result is
 // wrong or NaN.
 
 var specTarget = require( '../../lib/spec-target.cjs' );
+
+var CANONICAL = /^invalid argument\. (\w+) array must have at least %d elements from offset %d\. Provided length: %d\.$/;
+
+function workspaces( spec ) {
+	return spec.params.filter( function f( p ) {
+		return p.role === 'workspace';
+	});
+}
 
 function guarded( spec ) {
 	return spec.params.filter( function f( p ) {
@@ -89,6 +106,56 @@ function guardsOf( stmt, names ) {
 	});
 }
 
+// The RangeError throws in `stmt` (not descending into functions).
+function rangeThrows( stmt ) {
+	var out = [];
+	some( stmt, function pred( n ) {
+		if ( n.type === 'ThrowStatement' && n.argument && n.argument.type === 'NewExpression' && n.argument.callee.type === 'Identifier' && n.argument.callee.name === 'RangeError' ) {
+			out.push( n );
+		}
+		return false;
+	});
+	return out;
+}
+
+// Whether the throw `t` uses the canonical message for workspace `lname`.
+function canonical( t, lname ) {
+	var a = t.argument.arguments[ 0 ];
+	var m;
+	if ( !a || a.type !== 'CallExpression' || a.callee.type !== 'Identifier' || a.callee.name !== 'format' || a.arguments.length !== 4 ) {
+		return false;
+	}
+	if ( a.arguments[ 0 ].type !== 'Literal' || typeof a.arguments[ 0 ].value !== 'string' ) {
+		return false;
+	}
+	m = CANONICAL.exec( a.arguments[ 0 ].value );
+	return !!m && m[ 1 ].toLowerCase() === lname;
+}
+
+// Reports each guard (an `if` reading `<name>.length` that throws RangeError)
+// on a spec workspace whose throw is not in the canonical form.
+function checkMessages( context, fnBody, allWs ) {
+	var lnames = allWs.map( function m( p ) {
+		return p.name.toLowerCase();
+	});
+	some( fnBody, function pred( n ) {
+		if ( n.type !== 'IfStatement' ) {
+			return false;
+		}
+		lnames.forEach( function each( lname, i ) {
+			if ( !readsLength( n.test, lname ) ) {
+				return;
+			}
+			rangeThrows( n.consequent ).forEach( function eachThrow( t ) {
+				if ( !canonical( t, lname ) ) {
+					context.report( { 'node': t, 'messageId': 'message', 'data': { 'name': allWs[ i ].name } } );
+				}
+			});
+		});
+		return false;
+	});
+}
+
 var rule = {
 	'meta': {
 		'type': 'problem',
@@ -98,6 +165,7 @@ var rule = {
 		'schema': [],
 		'messages': {
 			'missing': '{{name}} has no length guard: the spec gives its minimum (`{{js}}`), so `ndarray.js` must throw RangeError when `{{name}}.length - offset < {{js}}` (CONVENTIONS W3; ticket 0107). Fix: `node bin/codemod-workspace-guard.mjs {{routine}}`.',
+			'message': 'The {{name}} length guard must throw `new RangeError( format( \'invalid argument. {{name}} array must have at least %d elements from offset %d. Provided length: %d.\', min, offset, length ) )`, the form the wrapper replay reads the minimum from (ticket 0108).',
 			'order': 'This return follows the {{name}} length guard. A zero-dimension quick return comes before the workspace checks: an empty problem needs no workspace (CONVENTIONS W3).'
 		}
 	},
@@ -113,6 +181,7 @@ var rule = {
 				if ( !r || r.form !== 'ndarray' || !r.spec ) {
 					return;
 				}
+				checkMessages( context, r.fn.body, workspaces( r.spec ) );
 				ws = guarded( r.spec );
 				if ( ws.length === 0 ) {
 					return;

@@ -1,9 +1,10 @@
 ---
 id: 0108
 title: Workspace guards in 23 ndarray.js files use a message the replay cannot parse, so min-work and short-work skip them
-status: open
+status: resolved
 area: workspace
 opened: 2026-11-26
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -24,3 +25,9 @@ for f in lib/*/base/*/lib/ndarray.js; do grep -oE "RangeError\( *(format\( *)?'i
 ## Direction
 
 - Make `lint:workspace-length-guard` also require the canonical message, `invalid argument. <NAME> array must have at least %d elements from offset %d. Provided length: %d.`, with the minimum as a `%d` argument (not a literal), and rewrite the 23 guards (a codemod: the minimum expression and the offset are already in each guard).
+
+## Resolution
+
+`lint:workspace-length-guard` now requires every guard on a spec workspace, whether or not its minimum is known, to throw `format( 'invalid argument. <NAME> array must have at least %d elements from offset %d. Provided length: %d.', min, offset, length )`, with the minimum as an argument. The 27 guards in 24 modules that differed (the 23 listed, plus dporfs, whose stride-in-message form parsed but was not canonical) were rewritten. The guards' conditions are unchanged.
+
+With the minimums now readable, the replay's `min-work` variant found a real defect on its first run: zlahef's upper row-max search skipped row K, so zhetrf's upper blocked path picked pivots the reference does not. It is fixed, with Fortran fixtures. See the LEARNINGS entry of 2026-11-27 and the evidence on ticket 0093.

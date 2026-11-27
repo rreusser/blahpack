@@ -1,10 +1,11 @@
+la_constants
+la_xisnan
 disnan
 dlaisnan
 dlamch
 ieeeck
 ilaenv
 iparmq
-la_xisnan
 zgsvj0
 zlascl
 zlassq

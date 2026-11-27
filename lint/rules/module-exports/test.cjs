@@ -1,8 +1,7 @@
 'use strict';
 
 // Tests for the module-exports rule, driven by fixtures. Each fixture is linted
-// under a virtual `main.js` or `index.js` path (chosen by the fixture name) so
-// the rule selects it.
+// under a virtual module `lib/index.js` path so the rule selects it.
 //
 // Run:  node --test lint/rules/module-exports/test.cjs
 
@@ -26,16 +25,9 @@ var config = {
 };
 config.rules[ RULE_ID ] = 'error';
 
-// A fixture whose name starts with "main" stands in for main.js; otherwise it
-// stands in for index.js.
-function targetBasename( fixtureName ) {
-	return ( /^main/.test( fixtureName ) ) ? 'main.js' : 'index.js';
-}
-
 function lintFixture( file ) {
 	var code = fs.readFileSync( file, 'utf8' );
-	var base = targetBasename( path.basename( file ) );
-	var virtual = path.join( ROOT, 'lib', 'lapack', 'base', 'ddot', 'lib', base );
+	var virtual = path.join( ROOT, 'lib', 'lapack', 'base', 'ddot', 'lib', 'index.js' );
 	return linter.verify( code, config, { 'filename': virtual } ).filter( function filter( m ) {
 		return m.ruleId === RULE_ID;
 	});

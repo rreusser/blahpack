@@ -55,7 +55,7 @@ lint/
     spec-messages/             ← prologue error messages are the canonical ones
     spec-jsdoc/                ← @param / @throws / @returns agree with the spec
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
-    module-exports/            ← index.js/main.js expose the default + ndarray surface
+    module-exports/            ← index.js exposes the default + ndarray surface
       README.md  rule.cjs  fixtures/{pass,fail}/*.js  test.cjs
     <name>/                    ← every other rule, same shape
 ```
@@ -80,7 +80,7 @@ the `blahpack/` namespace, so the rules also run as part of normal linting.
 The `spec-*` rules compare every signature-bearing file of a module (`base.js`,
 `ndarray.js`, `<routine>.js`) with what [`spec/<routine>.json`](../spec/README.md)
 plus CONVENTIONS.md produce — exact, derived, no heuristics. `module-exports`
-covers `index.js`/`main.js`; the rest enforce the workspace strategy and catch
+covers `index.js`; the rest enforce the workspace strategy and catch
 scaffolding/convention defects:
 
 | Rule | Files | Enforces |
@@ -92,7 +92,7 @@ scaffolding/convention defects:
 | [`wrapper-calls-ndarray`](rules/wrapper-calls-ndarray/) | `<routine>.js` | A wrapper whose routine takes a workspace calls `ndarray.js`, not `base.js`, so a caller's workspace is validated (D5d). Fix: `bin/codemod-wrapper-ndarray.mjs`. |
 | [`workspace-length-guard`](rules/workspace-length-guard/) | `ndarray.js` | Every workspace whose spec minimum is known (`minLength.js`) has a length guard that throws `RangeError`, after the zero-dimension quick returns (W3). Fix: `bin/codemod-workspace-guard.mjs`. |
 | [`spec-jsdoc`](rules/spec-jsdoc/) | `base.js`, `ndarray.js`, `<routine>.js` | `@param` / `@throws` / `@returns` agree with the spec (J2, C1, S11). Fix: `bin/codemod-spec/jsdoc.cjs`. |
-| [`module-exports`](rules/module-exports/) | `index.js`, `main.js` | The module exposes both entry points — the strided default and its `ndarray` variant. |
+| [`module-exports`](rules/module-exports/) | `index.js` | The module exposes both entry points — the layout-form default and its `ndarray` variant — with the default typed (there is no `main.js`; ticket 0124). |
 | [`no-internal-workspace-alloc`](rules/no-internal-workspace-alloc/) | `base.js`, `ndarray.js` | No problem-sized workspace allocation when the Fortran declares a caller-provided workspace; the caller owns it. |
 | [`no-lwork-param`](rules/no-lwork-param/) | all | No workspace-length parameter; a typed array carries its own `.length`. |
 | [`workspace-addressing-honored`](rules/workspace-addressing-honored/) | `base.js`, `ndarray.js` | CONVENTIONS D5a/D5b (workspace offset honored; stride rejected unless honored). |

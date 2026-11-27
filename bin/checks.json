@@ -42,6 +42,10 @@
 			"kind": "tool",
 			"why": "launches Claude Code in the Docker dev container"
 		},
+		"bin/codemod-fold-main.mjs": {
+			"kind": "tool",
+			"why": "codemod: folds lib/main.js into lib/index.js (ticket 0124); rerunnable on other branches, and conf:file-structure.no-forbidden-files names it as the fix"
+		},
 		"bin/codemod-implicit-any.mjs": {
 			"kind": "tool",
 			"why": "codemod: JSDoc types for what tsc's noImplicitAny reports (variables, helper parameters, helper result objects, ARPACK state typedefs); its result is checked by npm run typecheck"
@@ -509,17 +513,11 @@
 				"npm:conformance:fast"
 			]
 		},
-		"lib/main.js": {
-			"kind": "gate",
-			"by": [
-				"npm:test:lint",
-				"npm:conformance:fast"
-			]
-		},
 		"lib/index.js": {
 			"kind": "gate",
 			"by": [
 				"npm:test:unit",
+				"npm:test:lint",
 				"npm:conformance:fast"
 			]
 		},

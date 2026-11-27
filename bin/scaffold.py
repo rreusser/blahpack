@@ -10,8 +10,7 @@ Usage:
 
 Generates all boilerplate files that do NOT depend on the algorithm:
   - package.json
-  - lib/index.js
-  - lib/main.js
+  - lib/index.js (attaches .ndarray; there is no main.js)
   - lib/<routine>.js (BLAS-style wrapper — stub for LAPACK)
   - lib/ndarray.js (validation wrapper — stub body, correct signature)
   - lib/base.js (stub with correct signature)
@@ -528,8 +527,9 @@ export default {routine};
 """
 
 
-def gen_main_js(routine):
-    """Generate lib/main.js — attaches .ndarray to the routine."""
+def gen_index_js(routine, package, description):
+    """Generate lib/index.js — entry point: attaches .ndarray to the routine
+    (there is no main.js; ticket 0124)."""
     return f"""{LICENSE_HEADER}
 
 // MODULES //
@@ -547,15 +547,7 @@ setReadOnly( {routine}, 'ndarray', ndarray );
 // EXPORTS //
 
 export default /** @type {{typeof {routine} & {{ ndarray: typeof ndarray }}}} */ ( {routine} );
-"""
-
-
-def gen_index_js(routine, package, description):
-    """Generate lib/index.js — entry point."""
-    return f"""{LICENSE_HEADER}
-
-export {{ default }} from './main.js';
-export {{ default as ndarray }} from './ndarray.js';
+export {{ ndarray }};
 """
 
 
@@ -1484,7 +1476,6 @@ def main():
         'lib/base.js': gen_base_js(args.routine, sig, description),
         'lib/ndarray.js': gen_ndarray_js(args.routine, sig, args.package, description),
         f'lib/{args.routine}.js': gen_routine_js(args.routine, sig, args.package, description),
-        'lib/main.js': gen_main_js(args.routine),
         'lib/index.js': gen_index_js(args.routine, args.package, description),
         'test/test.js': gen_test_js(args.routine, args.package, sig),
         f'test/test.{args.routine}.js': gen_test_routine_js(args.routine, args.package, sig, description),

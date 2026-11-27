@@ -29,11 +29,15 @@ module.exports = {
 		return {
 			'Program:exit': function onExit() {
 				var found;
+				var first;
 				var mod;
 				if ( /\/lib\/index\.js$/.test( filename ) ) {
-					// Module JSDoc is optional; when present it is the routine's summary.
+					// Module JSDoc is optional; when present it is the routine's
+					// summary. It sits above the first statement, so a later
+					// inline type cast (`/** @type {…} */ ( fn )`) is not it.
+					first = ( sourceCode.ast.body.length ) ? sourceCode.ast.body[ 0 ].range[ 0 ] : Infinity;
 					mod = sourceCode.getAllComments().filter( function f( c ) {
-						return c.type === 'Block' && c.value.charAt( 0 ) === '*' && !/@license/.test( c.value );
+						return c.type === 'Block' && c.value.charAt( 0 ) === '*' && !/@license/.test( c.value ) && c.range[ 1 ] <= first;
 					})[ 0 ];
 					if ( mod ) {
 						check( mod, sourceCode.ast );

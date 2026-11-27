@@ -69,7 +69,6 @@ function check( mod ) {
 		[ path.join( libDir, 'base.js' ), 'base.js' ],
 		[ path.join( libDir, 'ndarray.js' ), 'ndarray.js' ],
 		[ path.join( libDir, routine + '.js' ), routine + '.js' ],
-		[ path.join( libDir, 'main.js' ), 'main.js' ],
 		[ path.join( libDir, 'index.js' ), 'index.js' ]
 	];
 	var docFiles = [

@@ -46,7 +46,7 @@ function check( mod ) {
 	}
 
 	// 3. No "not yet implemented" in wrapper files
-	var wrapperFiles = [ 'index.js', 'main.js', 'ndarray.js', mod.routine + '.js' ];
+	var wrapperFiles = [ 'index.js', 'ndarray.js', mod.routine + '.js' ];
 	var stubCount = 0;
 	var stubLocs = [];
 	var wf;

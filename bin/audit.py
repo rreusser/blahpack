@@ -27,7 +27,7 @@ COLUMNS = [
     ('base', 'base.js exists'),
     ('test', 'test/test.js exists'),
     ('strings', 'Single-char string params (not full-word)'),
-    ('main', 'main.js uses setReadOnly'),
+    ('main', 'index.js uses setReadOnly (no main.js; ticket 0124)'),
     ('ndarray', 'ndarray.js has validation (TypeError/RangeError)'),
     ('routine', 'routine.js implemented (no "not implemented")'),
     ('learnings', 'LEARNINGS.md exists and filled in'),
@@ -144,12 +144,13 @@ def audit_module(pkg, routine):
     str_result = has_string_params(base_js)
     results['strings'] = str_result  # None means N/A
 
-    # 4. main.js uses setReadOnly
-    main_js = os.path.join(lib_dir, 'main.js')
-    if os.path.isfile(main_js):
-        results['main'] = file_contains(main_js, [r'setReadOnly'])
+    # 4. index.js attaches .ndarray with setReadOnly (main.js was folded into
+    # index.js; ticket 0124)
+    index_js = os.path.join(lib_dir, 'index.js')
+    if os.path.isfile(index_js):
+        results['main'] = file_contains(index_js, [r'setReadOnly'])
     else:
-        results['main'] = None  # no main.js
+        results['main'] = None  # no index.js
 
     # 5. ndarray.js has validation
     ndarray_js = os.path.join(lib_dir, 'ndarray.js')

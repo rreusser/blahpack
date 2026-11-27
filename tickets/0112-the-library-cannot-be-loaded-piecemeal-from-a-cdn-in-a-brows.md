@@ -21,10 +21,21 @@ loaded it from a CDN or from Observable.
 
 What is left:
 
-1. Publish the package.
-2. Load `https://cdn.jsdelivr.net/npm/@rreusser/blahpack@<version>/dist/lapack/base/dgesv.js`
-   in a browser and in an Observable notebook.
-3. Record whether jsDelivr's `+esm` and esm.sh work on the source as well.
+1. Publish this package. Decided (2026-11-27): no throwaway probe package;
+   the first real publish is the test.
+2. Until then, the published layout is a best guess that covers both ways
+   jsDelivr might resolve an extensionless subpath. Notebook Kit rewrites
+   `npm:@rreusser/blahpack/lapack/zggev` to
+   `https://cdn.jsdelivr.net/npm/@rreusser/blahpack/lapack/zggev/+esm`
+   (`@observablehq/notebook-kit`, `dist/src/javascript/imports/npm.js`), and a
+   bare specifier is passed to the browser unchanged. The guess:
+   - give each `exports` subpath a `browser` condition that points at its
+     self-contained `dist/` file;
+   - keep `dist/<pkg>/<routine>.js` reachable directly, which a CDN serves as
+     a raw file with no conversion.
+3. Load the `npm:` import and the direct `dist/` URL in a browser and in an
+   Observable notebook, and record whether jsDelivr's `+esm` and esm.sh
+   followed the `exports` map.
 4. Decide whether `dist/` stays in the main package (it nearly triples the
    npm download) or moves to a separate one: `docs/ndarray-layer.md`, open
    question 5.

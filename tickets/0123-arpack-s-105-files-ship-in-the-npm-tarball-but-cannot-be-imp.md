@@ -13,8 +13,12 @@ opened: 2026-11-27
 `lapack` only, and Node refuses any subpath an exports map does not list, so
 no consumer can import them. No BLAS or LAPACK module imports them either. They
 are dead weight in every install, and `dist/` (built from the exports map) has
-no ARPACK either. Whether ARPACK should be published is undecided: tickets 0010
-and 0043 record that it is unvalidated and not conformance-checked.
+no ARPACK either.
+
+Decided (2026-11-27): export ARPACK like BLAS and LAPACK, at
+`@rreusser/blahpack/arpack/<routine>` once the layout is flattened (ticket
+0125). Tickets 0010 and 0043 record that it is not yet validated or
+conformance-checked.
 
 ## Evidence
 

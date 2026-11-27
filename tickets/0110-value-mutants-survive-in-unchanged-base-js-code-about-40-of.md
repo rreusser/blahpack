@@ -48,7 +48,7 @@ node bin/value-mutants.mjs dgeqlf          # lists each survivor with its site
   - d/z gsvj0, and by extension d/z gsvj1: at N = 0 they wrote SVA(0), outside the array.
   - dlarrd: it went on after DLAEBZ failed to converge, where the reference returns INFO = IINFO. An existing test asserted the wrong output.
   - d/z geevx: an invented N = 1 shortcut returned RCONDV = 1 instead of |A(1,1)|. Existing tests asserted the wrong output.
-- **Found and ticketed:** 0117 (DLARRD's reference writes IBLOCK(0)), 0118 (garbled dgeevx/dgeev fixtures), 0119 (dgehrd differs by about 1e-9 on a graded matrix), 0120 (fixtures that don't regenerate).
+- **Found and ticketed:** 0118 (DLARRD's reference writes IBLOCK(0)), 0119 (garbled dgeevx/dgeev fixtures), 0120 (dgehrd differs by about 1e-9 on a graded matrix), 0121 (fixtures that don't regenerate).
 - **What is left, by class:**
   - **Rounding-level differences** (the largest class). The JS ddot groups terms in blocks of 5 and dnrm2 has a four-accumulator fast path, while the reference adds left to right, so no bit-exact oracle exists for M ≥ 4.
   - Exact float-equality thresholds.

@@ -1,5 +1,5 @@
 ---
-id: 0117
+id: 0118
 title: DLARRD's index-range discard writes IBLOCK one before the array when no candidate is left, and the JS copies it
 status: open
 area: reference

@@ -19,6 +19,7 @@ notebooks/**/*-bundle.js
 test/.validation-ledger/
 .bench-smoke
 .examples-smoke
+.scripts-smoke
 .cache/
 
 # Generated API reference (npm run docs:build)

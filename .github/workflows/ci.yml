@@ -22,6 +22,8 @@ jobs:
         run: npm run test:unit
       - name: Corpus-check driver tests (bin/lib)
         run: npm run test:tools
+      - name: Notebook and example solver tests (AAA, Laplace, Stokes)
+        run: npm run test:notebooks
 
   # Lint: every project rule (lint/, one directory per rule) over every module,
   # including the spec ↔ code rules (signatures, validation prologue, messages,
@@ -261,6 +263,8 @@ jobs:
       - run: npm ci
       - name: Every module example runs (bin/examples-smoke.sh)
         run: bin/examples-smoke.sh
+      - name: Every bench and example script outside lib/ runs (bin/scripts-smoke.sh)
+        run: bin/scripts-smoke.sh
 
   # Browser build (ticket 0112): dist/ holds one self-contained ES module per
   # routine plus the vendored stdlib runtime, for CDNs and notebooks. The check

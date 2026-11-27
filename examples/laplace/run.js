@@ -7,7 +7,7 @@ import { laplace, pointInPolygon } from "./laplace.js";
 // ---- Build L-shaped boundary ----
 // Vertices (CCW): 0, 2, 2+i, 1+i, 1+2i, 2i
 const vertices = [[0,0], [2,0], [2,1], [1,1], [1,2], [0,2]];
-const stp = 0.01;
+const stp = parseFloat(process.env.STEP || '0.01');
 
 function linspace(a, b, step) {
   const arr = [];

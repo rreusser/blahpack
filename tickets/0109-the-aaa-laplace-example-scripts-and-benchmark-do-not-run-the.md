@@ -1,9 +1,10 @@
 ---
 id: 0109
 title: The AAA/Laplace example scripts and benchmark do not run: their imports point at a removed layout
-status: open
+status: resolved
 area: examples
 opened: 2026-11-27
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -22,3 +23,7 @@ opened: 2026-11-27
 ```bash
 for f in examples/aaa-pure.js examples/laplace/laplace.js examples/laplace/test.js bench/bench-laplace.js notebooks/aaa/generate-data.js; do node $f 2>&1 | grep -m1 Error; done
 ```
+
+## Resolution
+
+Fixed in 9806ff96b: examples/aaa-pure.js and examples/laplace/laplace.js are the single implementations and the notebook entry points re-export them, so there is no copy to drift. npm run test:notebooks (a CI step) loads them through both paths and runs examples/laplace/test.js. The profilers and benchmark run again on an ESM loader hook; they are not run in CI.

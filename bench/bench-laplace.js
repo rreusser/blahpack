@@ -1,24 +1,21 @@
 #!/usr/bin/env node
-'use strict';
 
 // Profile the Laplace solver end-to-end.
 //
-// Instruments all LAPACK/BLAS subroutines called from zgesvd (the hot
-// path in the AAA iteration), and reports the existing AAA-level timings.
+// Instruments every LAPACK/BLAS subroutine the solve calls, and reports the
+// existing AAA-level timings.
 //
 // Usage:
-//   node bin/bench-laplace.js
-//   node bin/bench-laplace.js --step 0.005
+//   node bench/bench-laplace.js
+//   node bench/bench-laplace.js --step 0.005
 
 import instrument from './instrument.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 
 // Install BEFORE loading anything that transitively requires LAPACK
 instrument.install();
 
 const { laplace, pointInPolygon } = await import('../examples/laplace/laplace.js');
-const aaaMod = await import('../aaa-pure.js');
+const aaaMod = await import('../examples/aaa-pure.js');
 const aaaTimings = aaaMod.timings;
 
 // CONFIGURATION //
@@ -108,7 +105,7 @@ bar('  PRZ (QZ)', aaa.prz);
 
 console.log('');
 console.log('-'.repeat(80));
-console.log('  LAPACK SUBROUTINE PROFILE (within the AAA SVD calls)');
+console.log('  LAPACK/BLAS SUBROUTINE PROFILE');
 console.log('-'.repeat(80));
 
 instrument.printReport(totalMs, { minPercent: 0.5 });

@@ -3,7 +3,7 @@
 **Status.** The browser build (`dist/`, below) is built and checked in CI; it
 is not yet on a CDN because the package is not published (ticket 0112). The
 ndarray-object layer is a proposal; nothing of it is built (ticket 0111).
-Ticket 0110 tracks the per-routine bundle floor. Measurements were taken on
+Ticket 0114 tracks the per-routine bundle floor. Measurements were taken on
 2026-11-27 with esbuild (minified, ESM, gzipped) against `@stdlib/*` 0.3.3.
 
 ## Why
@@ -182,13 +182,13 @@ routine and its dependencies:
 | zgeev | 53 KB | 30 KB |
 | root `index.js` | 680 KB | 658 KB |
 
-The floor for small routines is stdlib, not this code (ticket 0110). The
+The floor for small routines is stdlib, not this code (ticket 0114). The
 option asserts (`@stdlib/blas/base/assert/is-layout` and its siblings,
 imported by 787 modules) reach `@stdlib/array/dtype`, which imports every
 typed-array constructor. With those asserts external, zggbal drops from 25 KB
 to 8 KB and zgemm from 24 KB to 6.6 KB. The option strings could instead be
 checked against inline whitelists. That needs a decision against stdlib
-conformance, which is why ticket 0110 is open rather than fixed.
+conformance, which is why ticket 0114 is open rather than fixed.
 
 The package also has no `"sideEffects": false`. Each module's only side
 effect is attaching `.ndarray` to its own function, so the flag looks safe,
@@ -293,7 +293,7 @@ runtime) or return plain ndarray-like objects.
    to callers?
 3. Should a reused-workspace hook (`out.work`) exist, or is internal
    allocation the whole contract for this layer?
-4. Ticket 0110: keep stdlib's option asserts for conformance, or inline
+4. Ticket 0114: keep stdlib's option asserts for conformance, or inline
    whitelists for size?
 5. Ship `dist/` in the main package (built; nearly triples the npm download)
    or as a separate browser package?

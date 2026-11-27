@@ -45,7 +45,7 @@ What is left:
 - Shared dependencies are repeated between routine files. The measured cost
   and the alternatives are in `docs/ndarray-layer.md` ("Shared dependencies
   between routines").
-- Ticket 0110 sets the per-routine floor.
+- Ticket 0114 sets the per-routine floor.
 
 ## Reproduce
 

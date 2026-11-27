@@ -28,7 +28,7 @@ bin/                           # Pipeline scripts
   transform.py                 #   Composable code-mod pipeline
   fortran_body.py              #   Strip Fortran to executable body only
   gen_test.py                  #   Generate JS test scaffold from fixtures
-  lint.sh                      #   Lint gate: one ESLint run over lib/ (rules from lint/)
+  lint.sh                      #   Lint gate: one ESLint run over lib/ (sources + tests) and test/harness/
   lint-fix.sh                  #   Full fix pipeline (codemods + eslint + test verify)
   build-dist.mjs               #   Browser/CDN build into dist/ (vendors stdlib); run by prepack
   codemod-tests.js             #   Test file mechanical fixes
@@ -76,6 +76,8 @@ node bin/conformance.js --all          # Full conformance on all modules (includ
 npm run report                  # Generate progress.html with conformance checks
 bin/lint-fix.sh <module-path>   # Auto-fix (codemods + eslint + test verify)
 bin/lint.sh lib/<path>/base.js  # Lint a single file
+bin/lint.sh lib/<path>/test/    # Lint a module's tests (test rule set: parse, no-undef,
+                                #   no-unused-vars, no-nan-blind-comparison, ...)
 node bin/wrapper-replay.mjs --all     # Per-module corpus checks (also coverage.mjs,
                                       #   workspace-guard.mjs, break-mutants.mjs): results
                                       #   are cached in .cache/checks/ per module, keyed on

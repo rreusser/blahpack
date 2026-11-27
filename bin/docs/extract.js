@@ -8,6 +8,8 @@
 *   2. `spec/<routine>.json`: parameter roles, intents, shapes and argument
 *      checks, generated from the reference Fortran.
 *   3. `lib/base.js` imports: the call graph.
+*   4. The README's reference-documentation block, generated from the
+*      reference Fortran by `bin/fortran-docs.mjs --readme`.
 *
 * Nothing here is hand-written prose about a routine. The site is a pure function
 * of the code, so it can be deleted and rebuilt at any time.
@@ -23,6 +25,7 @@ import { classify, precision, stem } from './taxonomy.js';
 
 const ROOT = resolve( import.meta.dirname, '..', '..' );
 const H = createRequire( import.meta.url )( '../../lint/lib/doc-health.cjs' );
+const FORTRAN_DOCS = createRequire( import.meta.url )( '../lib/fortran-docs-block.cjs' );
 const PACKAGE_JSON = JSON.parse( readFileSync( join( ROOT, 'package.json' ), 'utf8' ) );
 const ARRAY_ROLES = new Set([ 'matrix', 'banded', 'packed', 'vector', 'workspace', 'index', 'result' ]);
 const DTYPE_ARRAY = {
@@ -386,6 +389,14 @@ export function extractRoutine( pkg, name ) {
 	const baseSrc = read( join( ROOT, dir, 'lib', 'base.js' ) ) || '';
 	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/base\/)?(\w+)\/lib\/(?:base|ndarray|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
 
+	// Reference BLAS/LAPACK documentation block of the README (bin/fortran-docs.mjs --readme):
+	const readme = read( join( ROOT, dir, 'README.md' ) ) || '';
+	const refMd = FORTRAN_DOCS.extract( readme );
+	const reference = refMd ? {
+		'source': FORTRAN_DOCS.source( readme ),
+		'markdown': refMd.replace( /^## Reference documentation\s*\n/, '' ).trim()
+	} : null;
+
 	const exportKey = './' + pkg + '/base/' + name;
 	return {
 		name,
@@ -398,6 +409,7 @@ export function extractRoutine( pkg, name ) {
 		'group': classify( pkg, name, spec ),
 		'stem': stem( name ),
 		'fortran': spec ? { 'signature': fortranSignature( spec ), 'kind': spec.kind } : null,
+		reference,
 		'returns': spec ? spec.returns : null,
 		'quickReturn': spec ? ( spec.quickReturn || [] ).map( ( q ) => q.js || q.fortran ) : [],
 		signatures,

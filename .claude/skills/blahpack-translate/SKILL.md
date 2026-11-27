@@ -126,6 +126,16 @@ python bin/gen_test.py <package> <routine> > lib/<package>/base/<routine>/test/t
 
 ```bash
 python bin/fortran_body.py data/<source-path>/<routine>.f
+node bin/fortran-docs.mjs <routine>          # the routine's reference docs (Purpose, Arguments, Further Details) as Markdown + math
+```
+
+`fortran_body.py` strips the documentation; `fortran-docs.mjs` gives it back in
+readable form (argument semantics, workspace sizes, INFO codes, the storage
+layout of the output). Read it before translating. Once the module exists, put
+the same text in its README (it renders on GitHub and on the docs site):
+
+```bash
+node bin/fortran-docs.mjs --readme lib/<package>/base/<routine>
 ```
 
 Translate the stripped body following the reference sections below:

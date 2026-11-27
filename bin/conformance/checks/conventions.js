@@ -84,13 +84,11 @@ function check( mod ) {
 	var ndarrayPath = path.join( mod.dir, 'lib', 'ndarray.js' );
 	var basePath = path.join( mod.dir, 'lib', 'base.js' );
 	var indexPath = path.join( mod.dir, 'lib', 'index.js' );
-	var mainPath = path.join( mod.dir, 'lib', 'main.js' );
 
 	var routineContent = util.readFile( routinePath );
 	var ndarrayContent = util.readFile( ndarrayPath );
 	var baseContent = util.readFile( basePath );
 	var indexContent = util.readFile( indexPath );
-	var mainContent = util.readFile( mainPath );
 
 	var baseParams = extractParams( baseContent );
 	var routineParams = extractParams( routineContent );
@@ -103,46 +101,42 @@ function check( mod ) {
 	// Native addon loading is not used in this project.
 	results.push( util.skip( ID + '.index-native-loading', 'Not applicable (no native addons in this project)' ) );
 
-	// ──────────────────────────────────────────
-	// main.js checks
-	// ──────────────────────────────────────────
-
-	if ( mainContent ) {
-		// main.js should require both routine.js and ndarray.js
-		var hasRoutineRequire = mainContent.indexOf( mod.routine + '.js' ) >= 0;
-		var hasNdarrayRequire = mainContent.indexOf( 'ndarray.js' ) >= 0;
-		if ( hasRoutineRequire && hasNdarrayRequire ) {
-			results.push( util.pass( ID + '.main-requires-both', 'main.js requires routine.js and ndarray.js' ) );
+	// index.js attaches the offset form (ticket 0124: there is no main.js).
+	if ( indexContent ) {
+		var hasRoutineImport = indexContent.indexOf( "'./" + mod.routine + ".js'" ) >= 0;
+		var hasNdarrayImport = indexContent.indexOf( "'./ndarray.js'" ) >= 0;
+		if ( hasRoutineImport && hasNdarrayImport ) {
+			results.push( util.pass( ID + '.index-imports-both', 'index.js imports routine.js and ndarray.js' ) );
 		} else {
 			var missing = [];
-			if ( !hasRoutineRequire ) {
+			if ( !hasRoutineImport ) {
 				missing.push( mod.routine + '.js' );
 			}
-			if ( !hasNdarrayRequire ) {
+			if ( !hasNdarrayImport ) {
 				missing.push( 'ndarray.js' );
 			}
 			results.push( util.fail(
-				ID + '.main-requires-both',
-				'main.js requires routine.js and ndarray.js',
-				missing.length, [ 'main.js' ],
-				'main.js missing require for: ' + missing.join( ', ' )
+				ID + '.index-imports-both',
+				'index.js imports routine.js and ndarray.js',
+				missing.length, [ 'index.js' ],
+				'index.js missing import of: ' + missing.join( ', ' )
 			));
 		}
 
-		// main.js should use setReadOnly to attach .ndarray
-		if ( /setReadOnly/.test( mainContent ) && /ndarray/.test( mainContent ) ) {
-			results.push( util.pass( ID + '.main-setreadonly', 'main.js uses setReadOnly for .ndarray' ) );
+		// index.js should use setReadOnly to attach .ndarray
+		if ( /setReadOnly\(\s*[\w$]+\s*,\s*'ndarray'/.test( indexContent ) ) {
+			results.push( util.pass( ID + '.index-setreadonly', 'index.js uses setReadOnly for .ndarray' ) );
 		} else {
-			results.push( util.warn(
-				ID + '.main-setreadonly',
-				'main.js uses setReadOnly for .ndarray',
-				1, [ 'main.js' ],
-				'main.js should use setReadOnly to attach .ndarray property'
+			results.push( util.fail(
+				ID + '.index-setreadonly',
+				'index.js uses setReadOnly for .ndarray',
+				1, [ 'index.js' ],
+				'index.js should use setReadOnly to attach the .ndarray property'
 			));
 		}
 	} else {
-		results.push( util.skip( ID + '.main-requires-both', 'No main.js' ) );
-		results.push( util.skip( ID + '.main-setreadonly', 'No main.js' ) );
+		results.push( util.skip( ID + '.index-imports-both', 'No index.js' ) );
+		results.push( util.skip( ID + '.index-setreadonly', 'No index.js' ) );
 	}
 
 	// ──────────────────────────────────────────

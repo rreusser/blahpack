@@ -2,20 +2,18 @@
 
 // ESLint rule: module-exports
 //
-// Checks the export surface of the two plumbing files that carry no parameter
-// list of their own but define how the module is consumed:
+// Checks the export surface of a module's lib/index.js, which carries no
+// parameter list of its own but defines how the module is consumed (CONVENTIONS
+// F3; there is no main.js, ticket 0124). index.js must:
 //
-//   main.js  — must expose the routine with its ndarray variant attached, and
-//              type the default export with it (ticket 0094)
-//              (`setReadOnly( routine, 'ndarray', ndarray )`) and export it as
-//              the default.
-//   index.js — must export a default AND make the `ndarray` variant reachable,
-//              either as a named `ndarray` export (the common form) or by
-//              re-exporting main.js's default (which already carries `.ndarray`).
+//   - attach the offset form to the layout form:
+//       setReadOnly( <routine>, 'ndarray', ndarray )
+//   - default-export the routine, typed with what it attaches, so tsc checks
+//     callers' `<routine>.ndarray( … )` (ticket 0094):
+//       export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> );
+//   - export the offset form by name: export { ndarray };
 //
-// This is the "signature" of the module surface: a module must always offer both
-// the strided default entry point and its ndarray counterpart. A module missing
-// either is a broken public API.
+// A module missing any of these is a broken public API.
 
 var path = require( 'path' );
 
@@ -34,76 +32,48 @@ var rule = {
 	'meta': {
 		'type': 'problem',
 		'docs': {
-			'description': 'enforce the export surface of main.js (ndarray attached) and index.js (default + ndarray)',
+			'description': 'enforce the export surface of index.js (typed default with .ndarray attached, and a named ndarray export)',
 			'recommended': true
 		},
 		'schema': [],
 		'messages': {
-			'mainNoDefault': 'main.js must export a default (the routine).',
-			'mainNoNdarray': 'main.js must attach the ndarray variant: setReadOnly( <routine>, \'ndarray\', ndarray ) or <routine>.ndarray = ndarray.',
-			'mainUntyped': 'main.js must type its default export with the ndarray it attaches, so tsc checks callers\' `<routine>.ndarray( … )`: export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> ); (fix: node bin/codemod-spec/main-type.cjs; ticket 0094)',
-			'indexNoDefault': 'index.js must export a default (the strided entry point).',
-			'indexNoNdarray': 'index.js must expose the ndarray variant — a named `ndarray` export, or re-export main.js\'s default (which carries `.ndarray`).'
+			'noDefault': 'index.js must export a default (the layout form).',
+			'noAttach': 'index.js must attach the offset form: setReadOnly( <routine>, \'ndarray\', ndarray ).',
+			'untyped': 'index.js must type its default export with the ndarray it attaches, so tsc checks callers\' `<routine>.ndarray( … )`: export default /** @type {typeof <routine> & { ndarray: typeof ndarray }} */ ( <routine> ); (ticket 0094)',
+			'noNamedNdarray': 'index.js must also export the offset form by name: export { ndarray };'
 		}
 	},
 	'create': function create( context ) {
 		var filename = context.filename || ( context.getFilename && context.getFilename() ) || '';
-		var basename = path.basename( filename );
-		if ( basename !== 'main.js' && basename !== 'index.js' ) {
+		if ( path.basename( filename ) !== 'index.js' ) {
 			return {};
 		}
 		// Only within a module tree (…/base/<routine>/lib/).
 		var parts = filename.split( path.sep );
-		if ( parts.lastIndexOf( 'base' ) === -1 ) {
+		if ( parts.lastIndexOf( 'base' ) === -1 || parts[ parts.length - 2 ] !== 'lib' ) {
 			return {};
 		}
-
 		var hasDefaultExport = false;
 		var hasNamedNdarray = false;
-		var defaultFromMain = false;
 		var ndarrayAttached = false;
-		var mainLocalNames = {}; // local identifiers imported (as default) from './main.js'
 		var defaultTyped = false;
 		var sourceCode = context.sourceCode || context.getSourceCode();
 
 		return {
-			'ImportDeclaration': function onImport( node ) {
-				if ( node.source && /(^|\/)main\.js$/.test( String( node.source.value ) ) ) {
-					node.specifiers.forEach( function forEach( spec ) {
-						if ( spec.type === 'ImportDefaultSpecifier' && spec.local ) {
-							mainLocalNames[ spec.local.name ] = true;
-						}
-					});
-				}
-			},
 			'ExportDefaultDeclaration': function onDefault( node ) {
 				hasDefaultExport = true;
-				// `export default /** @type {typeof f & { ndarray: typeof g }} */ ( f );`
 				if ( /^export default \/\*\* @type \{typeof ([\w$]+) & \{ ndarray: typeof [\w$]+ \}\} \*\/ \( \1 \);$/.test( sourceCode.getText( node ) ) ) {
 					defaultTyped = true;
 				}
-				// `export default main;` where main is the default import of ./main.js
-				if ( node.declaration && node.declaration.type === 'Identifier' && mainLocalNames[ node.declaration.name ] ) {
-					defaultFromMain = true;
-				}
 			},
 			'ExportNamedDeclaration': function onNamed( node ) {
-				var fromMain = node.source && /(^|\/)main\.js$/.test( String( node.source.value ) );
 				( node.specifiers || [] ).forEach( function forEach( spec ) {
 					var exported = spec.exported && ( spec.exported.name || spec.exported.value );
-					var local = spec.local && ( spec.local.name || spec.local.value );
 					if ( exported === 'default' ) {
 						hasDefaultExport = true;
-						if ( fromMain ) {
-							defaultFromMain = true;
-						}
 					}
 					if ( exported === 'ndarray' ) {
 						hasNamedNdarray = true;
-					}
-					// `export { default as X }` still counts as a default source
-					if ( local === 'default' && fromMain ) {
-						defaultFromMain = true;
 					}
 				});
 			},
@@ -112,30 +82,17 @@ var rule = {
 					ndarrayAttached = true;
 				}
 			},
-			'AssignmentExpression': function onAssign( node ) {
-				// <routine>.ndarray = ndarray
-				if ( node.left && node.left.type === 'MemberExpression' && node.left.property &&
-					( node.left.property.name === 'ndarray' || node.left.property.value === 'ndarray' ) ) {
-					ndarrayAttached = true;
-				}
-			},
 			'Program:exit': function onExit( programNode ) {
-				if ( basename === 'main.js' ) {
-					if ( !hasDefaultExport ) {
-						context.report({ 'node': programNode, 'messageId': 'mainNoDefault' });
-					}
-					if ( !ndarrayAttached ) {
-						context.report({ 'node': programNode, 'messageId': 'mainNoNdarray' });
-					} else if ( hasDefaultExport && !defaultTyped ) {
-						context.report({ 'node': programNode, 'messageId': 'mainUntyped' });
-					}
-				} else {
-					if ( !hasDefaultExport ) {
-						context.report({ 'node': programNode, 'messageId': 'indexNoDefault' });
-					}
-					if ( !hasNamedNdarray && !defaultFromMain ) {
-						context.report({ 'node': programNode, 'messageId': 'indexNoNdarray' });
-					}
+				if ( !hasDefaultExport ) {
+					context.report({ 'node': programNode, 'messageId': 'noDefault' });
+				}
+				if ( !ndarrayAttached ) {
+					context.report({ 'node': programNode, 'messageId': 'noAttach' });
+				} else if ( hasDefaultExport && !defaultTyped ) {
+					context.report({ 'node': programNode, 'messageId': 'untyped' });
+				}
+				if ( !hasNamedNdarray ) {
+					context.report({ 'node': programNode, 'messageId': 'noNamedNdarray' });
 				}
 			}
 		};

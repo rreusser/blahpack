@@ -3,8 +3,8 @@
 *
 * Sources, in order of authority:
 *
-*   1. JSDoc in the module source: `lib/index.js` (module summary, examples),
-*      the layout wrapper exported by `lib/main.js`, and `lib/ndarray.js`.
+*   1. JSDoc in the module source: `lib/index.js` (module summary, examples,
+*      and the layout wrapper it default-exports) and `lib/ndarray.js`.
 *   2. `spec/<routine>.json`: parameter roles, intents, shapes and argument
 *      checks, generated from the reference Fortran.
 *   3. `lib/base.js` imports: the call graph.
@@ -70,7 +70,9 @@ function functionDoc( src, name ) {
 function moduleDoc( src ) {
 	const blocks = src.match( /\/\*\*(?:(?!\*\/)[\s\S])*\*\//g ) || [];
 	for ( const b of blocks ) {
-		if ( !/@license/.test( b ) && !/^\/\*\*\s*\*\s*\/$/.test( b ) ) {
+		// Skip the license, empty blocks, and the inline type cast on the
+		// default export (`/** @type {…} */ ( fn )`), which is not module doc.
+		if ( !/@license/.test( b ) && !/^\/\*\*\s*\*\s*\/$/.test( b ) && !/^\/\*\*\s*@type\b/.test( b ) ) {
 			return b;
 		}
 	}
@@ -116,7 +118,7 @@ function importedFile( src, ident ) {
 }
 
 function exportedIdent( src ) {
-	// Also `export default /** @type {...} */ ( ident );` (main.js casts the attached `.ndarray`).
+	// `export default fn;` or the typed `export default /** @type {…} */ ( fn );`
 	const m = src.match( /export\s+default\s+(?:\/\*\*(?:(?!\*\/)[\s\S])*\*\/\s*)?\(?\s*([A-Za-z_$][\w$]*)\s*\)?\s*;/ );
 	return m ? m[ 1 ] : null;
 }
@@ -346,10 +348,9 @@ export function extractRoutine( pkg, name ) {
 	const mdoc = parseDoc( moduleDoc( indexSrc.replace( /^[\s\S]*?@license[\s\S]*?\*\//, '' ) ) );
 	const moduleExamples = ( mdoc.tags || [] ).filter( ( t ) => t.title === 'example' ).map( ( t ) => t.description );
 
-	// Layout wrapper: whatever `lib/main.js` default-exports.
-	const mainSrc = read( join( ROOT, dir, 'lib', 'main.js' ) ) || '';
-	const ident = exportedIdent( mainSrc );
-	const wrapperFile = ident ? importedFile( mainSrc, ident ) : null;
+	// Layout wrapper: whatever `lib/index.js` default-exports (ticket 0124).
+	const ident = exportedIdent( indexSrc );
+	const wrapperFile = ident ? importedFile( indexSrc, ident ) : null;
 	const signatures = [];
 	if ( wrapperFile && wrapperFile !== 'ndarray' ) {
 		const wsrc = read( join( ROOT, dir, 'lib', wrapperFile + '.js' ) ) || '';

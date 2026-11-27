@@ -1,9 +1,10 @@
 ---
 id: 0124
 title: Every module has a main.js that only attaches .ndarray: stdlib's native-addon indirection, unused here
-status: open
+status: resolved
 area: conventions
 opened: 2026-11-27
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -42,3 +43,7 @@ then.
 ```bash
 ls lib/*/base/*/lib/main.js | wc -l; grep -rlE "from '[^']*main\.js'" lib --include=*.js | grep -v '/lib/index.js$' | wc -l
 ```
+
+## Resolution
+
+Folded by bin/codemod-fold-main.mjs on branch slop/awesome-wright-lxi5gy: every lib/index.js now attaches .ndarray with setReadOnly, carries the typed default export, and exports ndarray by name; all 915 main.js files are deleted. CONVENTIONS F1/F3 drop main.js. What prevents a recurrence: conf:file-structure.no-forbidden-files fails on any lib/main.js (fix: the codemod), lint:module-exports requires the attachment, the typed default and the named export in index.js, conf:conventions.index-imports-both and index-setreadonly (now fail-level), and bin/scaffold.py no longer generates main.js. Found along the way and fixed here: bin/docs/extract.js never recognised the typed default export, so no docs page had a layout signature and the offset form was shown as the default call (regression test: bin/lib/docs-extract.test.mjs).

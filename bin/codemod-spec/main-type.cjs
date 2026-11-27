@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// Codemod: type each lib/main.js default export as the routine together with
+// Codemod: type each lib/index.js default export as the routine together with
 // the `ndarray` method `setReadOnly` attaches (ticket 0094). `tsc` cannot see a
 // property added by a call, so without the type every `routine.ndarray( … )`
 // in a caller is unchecked (or an error under `tsc -p tsconfig.callers.json`).
@@ -22,7 +22,7 @@ var only = argv.filter( function f( a ) {
 	return a.charAt( 0 ) !== '-';
 });
 
-// The typed export statement for main.js source `src`, or null when the file
+// The typed export statement for index.js source `src`, or null when the file
 // does not attach an ndarray method.
 function typedExport( src ) {
 	var m = /setReadOnly\(\s*([\w$]+)\s*,\s*'ndarray'\s*,\s*([\w$]+)\s*\);/.exec( src );
@@ -40,7 +40,7 @@ function files() {
 			return;
 		}
 		fs.readdirSync( dir ).forEach( function each( r ) {
-			var f = path.join( dir, r, 'lib', 'main.js' );
+			var f = path.join( dir, r, 'lib', 'index.js' );
 			if ( fs.existsSync( f ) && ( !only.length || only.indexOf( r ) >= 0 ) ) {
 				out.push( f );
 			}
@@ -72,10 +72,10 @@ if ( missing.length ) {
 }
 if ( CHECK ) {
 	if ( changed.length ) {
-		console.error( changed.length + ' main.js default exports untyped (fix: node bin/codemod-spec/main-type.cjs):\n  ' + changed.join( '\n  ' ) );
+		console.error( changed.length + ' index.js default exports untyped (fix: node bin/codemod-spec/main-type.cjs):\n  ' + changed.join( '\n  ' ) );
 		process.exit( 1 );
 	}
-	console.log( 'main.js: every default export carries its ndarray type' );
+	console.log( 'index.js: every default export carries its ndarray type' );
 } else {
 	console.log( ( DRY ? 'would write: ' : 'written: ' ) + changed.length );
 }

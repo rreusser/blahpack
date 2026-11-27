@@ -1,7 +1,7 @@
 // Rewrite every call site of the migrating routines to the S10 form.
 //
 // Call sites are found by resolving imports (base.js, ndarray.js, <r>.js,
-// main.js, index.js; `.ndarray` member calls on the latter two). For each
+// index.js; `.ndarray` member calls on the latter). For each
 // call, the argument list is remapped by name from the old to the new
 // parameter list; each output scalar gets a caller-side length-1 array, and
 // the places that read the output are rewritten:
@@ -64,7 +64,6 @@ function entryIndex( plans ) {
 		idx.set( path.join( lib, 'base.js' ), { P, kind: 'base' } );
 		idx.set( path.join( lib, 'ndarray.js' ), { P, kind: 'ndarray' } );
 		idx.set( path.join( lib, P.routine + '.js' ), { P, kind: 'strided' } );
-		idx.set( path.join( lib, 'main.js' ), { P, kind: 'strided', hasNdarray: true } );
 		idx.set( path.join( lib, 'index.js' ), { P, kind: 'strided', hasNdarray: true } );
 	}
 	return idx;
@@ -186,8 +185,8 @@ export class FileRewriter {
 			if ( !e ) {
 				continue;
 			}
-			// A module's own main.js / index.js re-export; never call.
-			if ( path.dirname( this.file ) === path.join( e.P.dir, 'lib' ) && /^(main|index)\.js$/.test( path.basename( this.file ) ) ) {
+			// A module's own index.js re-export; never call.
+			if ( path.dirname( this.file ) === path.join( e.P.dir, 'lib' ) && path.basename( this.file ) === 'index.js' ) {
 				continue;
 			}
 			for ( const s of node.specifiers ) {

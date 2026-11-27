@@ -11,4 +11,11 @@
 * const d = new Float64Array( [ 1.0, 2.0 ] );
 */
 
-export { default } from './main.js';
+import setReadOnly from '@stdlib/utils/define-nonenumerable-read-only-property/lib/index.js';
+import ddisna from './ddisna.js';
+import ndarray from './ndarray.js';
+
+setReadOnly( ddisna, 'ndarray', ndarray );
+
+export default /** @type {typeof ddisna & { ndarray: typeof ndarray }} */ ( ddisna );
+export { ndarray };

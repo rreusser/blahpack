@@ -46,6 +46,9 @@ function paramRow( p, prefix ) {
 	if ( p.format ) {
 		meta.push( '<span class="p-shape">' + esc( p.format ) + ' storage</span>' );
 	}
+	if ( p.optional ) {
+		extras.push( '<div class="p-constraint"><span class="p-label">optional</span>' + ( p.default !== null ? ' default <code>' + esc( p.default ) + '</code>' : '' ) + '</div>' );
+	}
 	if ( p.values ) {
 		extras.push( '<div class="p-values"><span class="p-label">One of</span> ' + p.values.map( ( v ) => '<code class="val">\'' + esc( v ) + '\'</code>' ).join( ' ' ) + '</div>' );
 	}
@@ -54,7 +57,7 @@ function paramRow( p, prefix ) {
 	}
 	return '<tr id="' + prefix + esc( p.name ) + '" class="' + ( sub ? 'p-sub' : 'p-main' ) + '">' +
 		'<td class="p-name"><a class="anchor" href="#' + prefix + esc( p.name ) + '"><code>' + esc( p.name ) + '</code></a>' + ( meta.length ? '<div class="p-meta">' + meta.join( '' ) + '</div>' : '' ) + '</td>' +
-		'<td class="p-type"><code>' + esc( p.type || '—' ) + '</code></td>' +
+		'<td class="p-type"><code>' + esc( displayType( p.type ) || '—' ) + '</code></td>' +
 		'<td class="p-intent">' + ( p.intent && !sub ? '<span class="intent intent-' + esc( p.intent ) + '">' + intentLabel( p.intent ) + '</span>' : '' ) + '</td>' +
 		'<td class="p-desc">' + inline( p.description ) + extras.join( '' ) + ( p.reference && !sub ? '<details class="p-ref"><summary>Reference</summary>' + markdownMath( p.reference ) + '</details>' : '' ) + '</td>' +
 		'</tr>';
@@ -189,8 +192,63 @@ export function routineHTML( r, ctx ) {
 	return html.replace( /\{\{repo\}\}/g, ctx.site.repo );
 }
 
+// Prose from JSDoc: `*` is multiplication (`alpha*A*x`, `A**T`), never emphasis, so it is
+// escaped outside code spans.
+function prose( s ) {
+	return String( s == null ? '' : s ).split( /(`[^`]*`)/ ).map( ( part, i ) => ( i % 2 ? part : part.replace( /\*/g, '\\*' ) ) ).join( '' );
+}
+
 function mdCell( s ) {
 	return String( s == null ? '' : s ).replace( /\s*\n\s*/g, ' ' ).replace( /\|/g, '\\|' );
+}
+
+// A JSDoc type for display: no optional marker (`=`), and a union without its
+// parentheses, with spaces around `|` so it wraps between alternatives.
+function displayType( type ) {
+	return type ? type.replace( /=$/, '' ).replace( /^\((.*\|.*)\)$/, '$1' ).replace( /\|/g, ' | ' ) : '';
+}
+
+// Keeps a short math-like expression on one line in a narrow table cell:
+// `max( 1, N )` → `max(1, N)`, and the spaces around operators become no-break spaces.
+function tight( expr ) {
+	return String( expr ).replace( /\(\s+/g, '(' ).replace( /\s+\)/g, ')' ).replace( / ([×≥≤=<>+*\-−]) /g, '\u00a0$1\u00a0' );
+}
+
+/**
+* The three cells of a parameter-table row (README and agent page): name;
+* type with the logical shape under it; description with the intent (when not
+* plain input), the accepted values (when the description does not already
+* name them) and the argument checks.
+*
+* @private
+* @param {Object} p - signature parameter
+* @returns {Array<string>} cells
+*/
+function paramCells( p ) {
+	const name = ( p.operand ? '↳\u00a0' : '' ) + '`' + p.name + '`';
+	let shape = '';
+	if ( p.shape ) {
+		// Matrices: `M × N`; 1-D arrays: the length (or its lower bound).
+		shape = p.shape.includes( '×' ) ? tight( p.shape ) : 'length' + ( /^≥/.test( p.shape ) ? ' ' : '\u00a0' ) + tight( p.shape );
+	}
+	// A union reads (and wraps) best without its parentheses, with spaces around `|`.
+	const t = displayType( p.type );
+	const type = ( t ? '`' + mdCell( t ) + '`' : '' ) + ( shape ? '<br><sub>' + mdCell( shape ).replace( /</g, '&lt;' ) + '</sub>' : '' );
+	// Sentence case, unless the description opens with code or a symbol.
+	const desc = mdCell( prose( p.description || '' ) ).replace( /^[a-z]/, ( c ) => c.toUpperCase() );
+	const lines = [];
+	const intent = { 'out': '**out**', 'inout': '**in/out**' }[ p.intent ];
+	lines.push( ( intent && !p.operand ? intent + ' · ' : '' ) + desc );
+	if ( p.optional ) {
+		lines.push( 'Optional' + ( p.default !== null ? ', default `' + mdCell( p.default ) + '`' : '' ) + '.' );
+	}
+	if ( p.values && !p.values.every( ( v ) => desc.includes( v ) ) ) {
+		lines.push( 'One of ' + p.values.map( ( v ) => '`\'' + v + '\'`' ).join( ', ' ) + '.' );
+	}
+	for ( const c of p.constraints ) {
+		lines.push( c.label.replace( /^./, ( x ) => x.toUpperCase() ) + ' `' + mdCell( tight( c.text ) ) + '`' + ( c.layout ? '' : '' ) );
+	}
+	return [ name, type, lines.filter( Boolean ).join( '<br>' ) ];
 }
 
 /**
@@ -222,11 +280,10 @@ function markdownParts( r, opts ) {
 		if ( s.kind === 'ndarray' && s.params.some( ( p ) => p.shape && p.shape.includes( '×' ) ) ) {
 			out.push( 'Matrix shapes are logical (rows × columns). The reference\'s leading dimension (`LDA`, …) is replaced by the two strides and the offset.', '' );
 		}
-		out.push( '| param | type | intent | shape | constraints | description |' );
-		out.push( '|---|---|---|---|---|---|' );
+		out.push( '| Parameter | Type | Description |' );
+		out.push( '|---|---|---|' );
 		for ( const p of s.params ) {
-			const cons = ( p.values ? [ 'one of ' + p.values.map( ( v ) => '`\'' + v + '\'`' ).join( ', ' ) ] : [] ).concat( p.constraints.map( ( c ) => c.label + ' `' + c.text + '`' ) );
-			out.push( '| ' + [ ( p.operand ? '↳ ' : '' ) + '`' + p.name + '`', p.type ? '`' + p.type + '`' : '', intentLabel( p.intent ), p.shape ? '`' + p.shape + '`' : '', cons.join( '; ' ), p.description ].map( mdCell ).join( ' | ' ) + ' |' );
+			out.push( '| ' + paramCells( p ).join( ' | ' ) + ' |' );
 		}
 		out.push( '' );
 		const refs = s.params.filter( ( p ) => p.reference && !p.operand );
@@ -243,11 +300,11 @@ function markdownParts( r, opts ) {
 			}
 			out.push( '', '</details>', '' );
 		}
-		out.push( '**Returns** `' + returnLabel( s ) + '`' + ( s.returns && s.returns.description ? ': ' + mdCell( s.returns.description ) : '' ), '' );
+		out.push( '**Returns** `' + returnLabel( s ) + '`' + ( s.returns && s.returns.description ? ': ' + mdCell( prose( s.returns.description ) ) : '' ), '' );
 		if ( s.throws.length ) {
 			out.push( '**Throws**', '' );
 			for ( const t of s.throws ) {
-				out.push( '- `' + t.type + '` ' + mdCell( t.description ) );
+				out.push( '- `' + t.type + '` ' + mdCell( prose( t.description ) ) );
 			}
 			out.push( '' );
 		}

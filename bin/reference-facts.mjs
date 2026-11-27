@@ -45,7 +45,7 @@ const FACTS = [
 
 function jsdocParams( src ) {
 	const out = new Map();
-	for ( const m of src.matchAll( /@param\s+\{[^}]*\}\s+\[?(\w+)\]?\s+-\s+(.*)/g ) ) {
+	for ( const m of src.matchAll( /@param\s+\{[^}]*\}\s+\[?(\w+)(?:=[^\]\s]*)?\]?\s+-\s+(.*)/g ) ) {
 		out.set( m[ 1 ].toLowerCase(), m[ 2 ] );
 	}
 	return out;

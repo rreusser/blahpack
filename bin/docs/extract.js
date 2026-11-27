@@ -170,8 +170,14 @@ function shapeOf( sp ) {
 		return null;
 	}
 	if ( sp.rows || sp.cols ) {
-		const wrap = ( e ) => ( /[?:]/.test( e || '' ) ? '(' + e + ')' : e );
-		return wrap( expr( sp.rows ) ) + ' × ' + wrap( expr( sp.cols ) );
+		// A compound extent gets parentheses (`(kl + ku + 1) × N`); an unknown one reads `?`.
+		const wrap = ( e ) => {
+			if ( e === null || e === undefined || e === 'null' ) {
+				return '?';
+			}
+			return ( /[?:]|\s[-+*/]\s/.test( e ) ? '(' + e + ')' : e );
+		};
+		return wrap( sp.rows ? expr( sp.rows ) : null ) + ' × ' + wrap( sp.cols ? expr( sp.cols ) : null );
 	}
 	if ( sp.minLength ) {
 		return '≥ ' + expr( sp.minLength );
@@ -242,6 +248,8 @@ function signature( ctx, kind, file, fname ) {
 			name,
 			type,
 			'description': tag ? ( tag.description || '' ) : '',
+			'optional': !!( tag && tag.type && tag.type.type === 'OptionalType' ),
+			'default': ( tag && tag.default !== undefined ) ? tag.default : null,
 			'role': sp ? sp.role : ( op ? op.aux : null ),
 			'intent': sp ? sp.intent : ( op ? 'in' : null ),
 			'dtype': sp ? sp.dtype : null,

@@ -60,6 +60,10 @@
 			"kind": "tool",
 			"why": "codemod (ticket 0077): a wrapper whose routine takes a workspace calls ndarray.js instead of base.js (CONVENTIONS D5d); its result is checked by lint:wrapper-calls-ndarray and bin/wrapper-replay.mjs (short-work)"
 		},
+		"bin/codemod-workspace-guard.mjs": {
+			"kind": "tool",
+			"why": "codemod (ticket 0107): inserts into ndarray.js the length guard of each workspace whose spec minLength is known (CONVENTIONS W3); its result is checked by lint:workspace-length-guard, bin/workspace-minimum.mjs and bin/wrapper-replay.mjs (short-work)"
+		},
 		"bin/codemod-vector-lengths.mjs": {
 			"kind": "tool",
 			"why": "one-shot codemod: rewrites wrapper vector-length expressions to the spec’s; its result is checked by bin/wrapper-replay.mjs"

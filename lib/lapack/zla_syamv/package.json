@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_syamv",
+  "name": "@rreusser/blahpack/lapack/zla_syamv",
   "version": "1.0.0",
   "description": "Computes a matrix-vector product using a complex symmetric matrix to calculate error bounds",
   "license": "MIT",

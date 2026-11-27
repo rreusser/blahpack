@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpprfs",
+  "name": "@rreusser/blahpack/lapack/dpprfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a real system A * X = B where A is symmetric positive definite in packed storage and provides error bounds.",
   "license": "MIT",

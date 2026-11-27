@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgttrf",
+  "name": "@rreusser/blahpack/lapack/zgttrf",
   "version": "1.0.0",
   "description": "Compute LU factorization of complex tridiagonal matrix",
   "license": "MIT",

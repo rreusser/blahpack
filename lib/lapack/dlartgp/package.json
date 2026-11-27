@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlartgp",
+  "name": "@rreusser/blahpack/lapack/dlartgp",
   "version": "1.0.0",
   "description": "Generates a plane rotation with non-negative diagonal",
   "license": "MIT",

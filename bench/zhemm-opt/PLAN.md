@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zhemm` — Hermitian matrix-matrix multiply (`C = alpha*A*B +
+`lib/blas/zhemm` — Hermitian matrix-matrix multiply (`C = alpha*A*B +
 beta*C` with A Hermitian on either side, one triangle stored). Complex analog
 of `dsymm`, which shipped 4.4–14.6x via row packing + 4x4 tiling
 (`bench/dsymm-opt/`) — but do not expect ratios anywhere near that here.

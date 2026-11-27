@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlahef_rook",
+  "name": "@rreusser/blahpack/lapack/zlahef_rook",
   "version": "1.0.0",
   "description": "Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman (\"rook\") diagonal pivoting method (blocked algorithm, calling Level 3 BLAS)",
   "license": "MIT",

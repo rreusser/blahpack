@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqr0",
+  "name": "@rreusser/blahpack/lapack/dlaqr0",
   "version": "1.0.0",
   "description": "Computes eigenvalues and Schur form using multishift QR with aggressive early deflation",
   "license": "MIT",

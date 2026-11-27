@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgebrd",
+  "name": "@rreusser/blahpack/lapack/dgebrd",
   "version": "1.0.0",
   "description": "Reduces a general real M-by-N matrix A to upper or lower bidiagonal form B by an orthogonal transformation: Qᵀ·A·P = B",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dstqrb",
+  "name": "@rreusser/blahpack/arpack/dstqrb",
   "version": "0.0.0",
   "description": "Computes all eigenvalues and the last components of the eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method.",
   "license": "Apache-2.0",

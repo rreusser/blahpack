@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlansy",
+  "name": "@rreusser/blahpack/lapack/dlansy",
   "version": "1.0.0",
   "description": "Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunmr3",
+  "name": "@rreusser/blahpack/lapack/zunmr3",
   "version": "1.0.0",
   "description": "multiplies a general matrix by the unitary matrix Q from an RZ factorization",
   "license": "MIT",

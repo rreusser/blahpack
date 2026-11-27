@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarrj",
+  "name": "@rreusser/blahpack/lapack/dlarrj",
   "version": "1.0.0",
   "description": "Refine eigenvalue approximations using bisection given initial intervals.",
   "license": "MIT",

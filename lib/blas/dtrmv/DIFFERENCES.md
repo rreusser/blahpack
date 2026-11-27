@@ -1,6 +1,6 @@
 # dtrmv: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dtrmv/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dtrmv/`) against the stdlib-js
 reference (`@stdlib/blas/base/dtrmv`).
 
 ---

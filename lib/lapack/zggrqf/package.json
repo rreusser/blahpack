@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggrqf",
+  "name": "@rreusser/blahpack/lapack/zggrqf",
   "version": "1.0.0",
   "description": "Computes a generalized RQ factorization of an M-by-N complex matrix A and a P-by-N complex matrix B.",
   "license": "MIT",

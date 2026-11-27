@@ -56,7 +56,7 @@
 */
 function dtrmm( side, uplo, transa, diag, M, N, alpha, A, strideA1, strideA2, offsetA, B, strideB1, strideB2, offsetB ) {
 	// 16 register accumulators declared first — V8 register allocation is
-	// sensitive to declaration order (see lib/blas/base/dgemm/lib/base.js).
+	// sensitive to declaration order (see lib/blas/dgemm/lib/base.js).
 	var c00; var c01; var c02; var c03; var c10; var c11; var c12; var c13; var c20; var c21; var c22; var c23; var c30; var c31; var c32; var c33;
 
 	// Cached 4x4 diagonal corner of B (read before the tile is overwritten):

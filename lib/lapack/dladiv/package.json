@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dladiv",
+  "name": "@rreusser/blahpack/lapack/dladiv",
   "version": "1.0.0",
   "description": "Perform safe complex division in real arithmetic",
   "license": "MIT",

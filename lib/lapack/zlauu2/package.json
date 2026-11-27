@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlauu2",
+  "name": "@rreusser/blahpack/lapack/zlauu2",
   "version": "1.0.0",
   "description": "Computes the product U·Uᴴ or Lᴴ·L, where U and L are upper or lower triangular matrices",
   "license": "MIT",

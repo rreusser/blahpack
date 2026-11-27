@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlag2s",
+  "name": "@rreusser/blahpack/lapack/dlag2s",
   "version": "1.0.0",
   "description": "Converts a double precision matrix to a single precision matrix",
   "license": "MIT",

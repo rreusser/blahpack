@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlascl",
+  "name": "@rreusser/blahpack/lapack/dlascl",
   "version": "1.0.0",
   "description": "Scale a matrix by CTO/CFROM with overflow protection",
   "license": "MIT",

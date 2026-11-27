@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlansb",
+  "name": "@rreusser/blahpack/lapack/zlansb",
   "version": "1.0.0",
   "description": "Returns the norm of a complex symmetric band matrix.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorgtsqr",
+  "name": "@rreusser/blahpack/lapack/dorgtsqr",
   "version": "1.0.0",
   "description": "generates a real M-by-N matrix Q with orthonormal columns from a Tall-Skinny QR factorization",
   "license": "MIT",

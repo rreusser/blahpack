@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgesv",
+  "name": "@rreusser/blahpack/lapack/zgesv",
   "version": "1.0.0",
   "description": "Compute the solution to a complex system of linear equations A * X = B",
   "license": "MIT",

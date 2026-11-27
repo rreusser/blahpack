@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlahqr",
+  "name": "@rreusser/blahpack/lapack/dlahqr",
   "version": "1.0.0",
   "description": "Computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm",
   "license": "MIT",

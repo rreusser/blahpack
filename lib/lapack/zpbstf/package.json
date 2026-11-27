@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbstf",
+  "name": "@rreusser/blahpack/lapack/zpbstf",
   "version": "1.0.0",
   "description": "Computes a split Cholesky factorization of a complex Hermitian positive definite band matrix.",
   "license": "MIT",

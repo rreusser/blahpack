@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zdrscl",
+  "name": "@rreusser/blahpack/lapack/zdrscl",
   "version": "1.0.0",
   "description": "Multiplies a vector by the reciprocal of a real scalar",
   "license": "MIT",

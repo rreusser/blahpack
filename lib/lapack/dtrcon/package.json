@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtrcon",
+  "name": "@rreusser/blahpack/lapack/dtrcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a triangular matrix A, in either the 1-norm or the infinity-norm",
   "license": "MIT",

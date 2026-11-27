@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/izmax1",
+  "name": "@rreusser/blahpack/lapack/izmax1",
   "version": "1.0.0",
   "description": "Find index of first element of maximum absolute value",
   "license": "MIT",

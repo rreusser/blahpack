@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsygvx",
+  "name": "@rreusser/blahpack/lapack/dsygvx",
   "version": "1.0.0",
   "description": "Computes selected eigenvalues, and optionally, eigenvectors of a real generalized symmetric-definite eigenproblem, of the form A·x=λ·B·x, A·Bx=λ·x, or B·A·x=λ·x",
   "license": "MIT",

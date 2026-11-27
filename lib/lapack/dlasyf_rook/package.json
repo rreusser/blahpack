@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasyf_rook",
+  "name": "@rreusser/blahpack/lapack/dlasyf_rook",
   "version": "1.0.0",
   "description": "Compute a partial factorization of a real symmetric matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method",
   "license": "MIT",

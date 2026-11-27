@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_gerpvgrw",
+  "name": "@rreusser/blahpack/lapack/zla_gerpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor norm(A)/norm(U) for a complex general matrix.",
   "license": "MIT",

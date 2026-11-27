@@ -244,7 +244,7 @@ export function transform( src, tagBase ) {
 export async function load( url, context, nextLoad ) {
 	if ( target && url === target ) {
 		const res = await nextLoad( url, context );
-		const tag = url.replace( /^.*\/lib\/[a-z]+\/base\//, '' ).replace( /\/lib\/.*$/, '' );
+		const tag = url.replace( /^.*\/lib\/[a-z]+\//, '' ).replace( /\/lib\/.*$/, '' );
 		return { 'format': 'module', 'source': transform( String( res.source ), tag ), 'shortCircuit': true };
 	}
 	if ( testDir && url.startsWith( testDir ) && /\/test[^/]*\.js$/.test( url ) ) {

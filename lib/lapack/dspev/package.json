@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspev",
+  "name": "@rreusser/blahpack/lapack/dspev",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric matrix in packed storage.",
   "license": "MIT",

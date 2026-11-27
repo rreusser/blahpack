@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtpqrt2",
+  "name": "@rreusser/blahpack/lapack/dtpqrt2",
   "version": "1.0.0",
   "description": "Computes a QR factorization of a real triangular-pentagonal matrix using the compact WY representation for Q.",
   "license": "MIT",

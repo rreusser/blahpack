@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpteqr",
+  "name": "@rreusser/blahpack/lapack/zpteqr",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a complex Hermitian positive definite tridiagonal matrix.",
   "license": "MIT",

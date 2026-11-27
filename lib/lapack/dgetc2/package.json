@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgetc2",
+  "name": "@rreusser/blahpack/lapack/dgetc2",
   "version": "1.0.0",
   "description": "LU factorization with complete pivoting of a general NxN matrix",
   "license": "MIT",

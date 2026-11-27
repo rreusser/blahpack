@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaset",
+  "name": "@rreusser/blahpack/lapack/dlaset",
   "version": "1.0.0",
   "description": "Initializes the off-diagonal elements and the diagonal elements of a matrix to given values",
   "license": "MIT",

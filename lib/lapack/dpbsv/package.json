@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbsv",
+  "name": "@rreusser/blahpack/lapack/dpbsv",
   "version": "1.0.0",
   "description": "Computes the solution to system of linear equations A·X = B",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasq2",
+  "name": "@rreusser/blahpack/lapack/dlasq2",
   "version": "1.0.0",
   "description": "Computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy",
   "license": "MIT",

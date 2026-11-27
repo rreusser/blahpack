@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlar2v",
+  "name": "@rreusser/blahpack/lapack/zlar2v",
   "version": "1.0.0",
   "description": "Apply a vector of complex plane rotations with real cosines from both sides to a sequence of 2-by-2 complex Hermitian matrices.",
   "license": "MIT",

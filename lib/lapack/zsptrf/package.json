@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsptrf",
+  "name": "@rreusser/blahpack/lapack/zsptrf",
   "version": "1.0.0",
   "description": "Computes the Bunch-Kaufman factorization of a complex symmetric matrix in packed storage.",
   "license": "MIT",

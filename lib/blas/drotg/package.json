@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/drotg",
+  "name": "@rreusser/blahpack/blas/drotg",
   "version": "1.0.0",
   "description": "Construct a Givens plane rotation",
   "license": "MIT",

@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dormql/lib/dormql.js
+// target: lib/lapack/dormql/lib/dormql.js
 // The wrapper of a routine with a workspace calls ndarray.js, which checks a caller's WORK against the minimum.
 /* eslint-disable max-len, max-params */
 

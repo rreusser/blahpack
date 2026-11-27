@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetri2",
+  "name": "@rreusser/blahpack/lapack/zhetri2",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex Hermitian indefinite matrix using a Bunch-Kaufman factorization",
   "license": "MIT",

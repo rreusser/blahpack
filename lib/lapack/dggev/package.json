@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggev",
+  "name": "@rreusser/blahpack/lapack/dggev",
   "version": "1.0.0",
   "description": "Computes generalized eigenvalues and eigenvectors for a pair of real nonsymmetric matrices",
   "license": "MIT",

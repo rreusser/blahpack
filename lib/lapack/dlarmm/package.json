@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarmm",
+  "name": "@rreusser/blahpack/lapack/dlarmm",
   "version": "1.0.0",
   "description": "Compute a safe BLAS-style constant for scaling matrix norms",
   "license": "MIT",

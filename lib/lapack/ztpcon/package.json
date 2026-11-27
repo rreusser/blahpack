@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztpcon",
+  "name": "@rreusser/blahpack/lapack/ztpcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal condition number of a complex triangular matrix in packed storage.",
   "license": "MIT",

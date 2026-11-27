@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgesvd/test/test.validate.js
+// target: lib/lapack/dgesvd/test/test.validate.js
 // expect: blindIf
 function compare( actual, expected, tol ) {
 	var errors = [];

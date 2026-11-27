@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlar2v",
+  "name": "@rreusser/blahpack/lapack/dlar2v",
   "version": "1.0.0",
   "description": "Apply a vector of real plane rotations from both sides to a sequence of 2-by-2 symmetric matrices.",
   "license": "MIT",

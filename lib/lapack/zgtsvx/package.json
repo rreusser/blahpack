@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgtsvx",
+  "name": "@rreusser/blahpack/lapack/zgtsvx",
   "version": "1.0.0",
   "description": "Solves a complex system A * X = B where A is tridiagonal, with condition estimation and error bounds.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlanhs",
+  "name": "@rreusser/blahpack/lapack/dlanhs",
   "version": "1.0.0",
   "description": "Returns the norm of a real upper Hessenberg matrix.",
   "license": "MIT",

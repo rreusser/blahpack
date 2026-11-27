@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zher2` — Hermitian rank-2 update
+`lib/blas/zher2` — Hermitian rank-2 update
 (`A += alpha*x*y^H + conj(alpha)*y*x^H`, one triangle stored). Complex analog
 of `dsyr2` (shipped 1.7–2.6x from `bench/dsyr2-opt/`).
 

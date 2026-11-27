@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpftrf",
+  "name": "@rreusser/blahpack/lapack/dpftrf",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a real symmetric positive definite matrix in Rectangular Full Packed format.",
   "license": "MIT",

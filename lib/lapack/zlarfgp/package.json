@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarfgp",
+  "name": "@rreusser/blahpack/lapack/zlarfgp",
   "version": "1.0.0",
   "description": "Generates a complex elementary reflector with non-negative beta",
   "license": "MIT",

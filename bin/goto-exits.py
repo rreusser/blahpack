@@ -167,7 +167,7 @@ def scan( path ):
 def translated():
 	have = {}
 	for pkg in ( 'blas', 'lapack', 'arpack' ):
-		for d in glob.glob( os.path.join( ROOT, 'lib', pkg, 'base', '*' ) ):
+		for d in glob.glob( os.path.join( ROOT, 'lib', pkg, '*' ) ):
 			have[ os.path.basename( d ) ] = os.path.relpath( d, ROOT )
 	return have
 

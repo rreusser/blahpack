@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsymv",
+  "name": "@rreusser/blahpack/lapack/zsymv",
   "version": "1.0.0",
   "description": "Computes a matrix-vector product for a complex symmetric matrix",
   "license": "MIT",

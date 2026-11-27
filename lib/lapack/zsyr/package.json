@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyr",
+  "name": "@rreusser/blahpack/lapack/zsyr",
   "version": "1.0.0",
   "description": "Performs the symmetric rank-1 update of a complex symmetric matrix",
   "license": "MIT",

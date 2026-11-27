@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/ddot",
+  "name": "@rreusser/blahpack/blas/ddot",
   "version": "1.0.0",
   "description": "Compute the dot product of two double-precision floating-point vectors",
   "license": "MIT",

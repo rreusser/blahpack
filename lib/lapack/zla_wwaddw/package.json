@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_wwaddw",
+  "name": "@rreusser/blahpack/lapack/zla_wwaddw",
   "version": "1.0.0",
   "description": "Add a complex vector into a doubled-single accumulation vector.",
   "license": "MIT",

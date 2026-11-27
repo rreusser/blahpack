@@ -1,6 +1,6 @@
 # dgemv: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dgemv/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dgemv/`) against the stdlib-js
 reference (`@stdlib/blas/base/dgemv`).
 
 ---

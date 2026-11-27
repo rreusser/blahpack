@@ -1,6 +1,6 @@
 # dsyr2: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dsyr2/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dsyr2/`) against the stdlib-js
 reference (`@stdlib/blas/base/dsyr2`).
 
 ---

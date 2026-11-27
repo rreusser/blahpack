@@ -9,6 +9,7 @@
 // reported too, without a fix: the sentence needs rewording, not a substitution.
 
 var path = require( 'path' );
+var moduleOf = require( '../../lib/module-path.cjs' ).moduleOf;
 
 var rule = {
 	'meta': {
@@ -24,11 +25,11 @@ var rule = {
 
 		// Only applies to d-prefix routines
 		var parts = filename.split( path.sep );
-		var baseIdx = parts.indexOf( 'base' );
-		if ( baseIdx === -1 || baseIdx + 1 >= parts.length ) {
+		var mod = moduleOf( filename );
+		if ( !mod ) {
 			return {};
 		}
-		var routine = parts[ baseIdx + 1 ];
+		var routine = mod.routine;
 		if ( routine.charAt( 0 ) !== 'd' ) {
 			return {};
 		}

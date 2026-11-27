@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaunhr_col_getrfnp2",
+  "name": "@rreusser/blahpack/lapack/zlaunhr_col_getrfnp2",
   "version": "1.0.0",
   "description": "modified LU factorization without pivoting of a complex general M-by-N matrix A (recursive)",
   "license": "MIT",

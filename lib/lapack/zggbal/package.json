@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggbal",
+  "name": "@rreusser/blahpack/lapack/zggbal",
   "version": "1.0.0",
   "description": "Balance a pair of complex general matrices for the generalized eigenvalue problem.",
   "license": "MIT",

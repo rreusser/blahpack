@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbtrs",
+  "name": "@rreusser/blahpack/lapack/dpbtrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations A·X = B with a symmetric positive definite band matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF",
   "license": "MIT",

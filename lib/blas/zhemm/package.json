@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zhemm",
+  "name": "@rreusser/blahpack/blas/zhemm",
   "version": "1.0.0",
   "description": "Performs one of the matrix-matrix operations C := α·A·B + β·C, or C := α·B·A + β·C",
   "license": "MIT",

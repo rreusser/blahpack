@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytrs_3",
+  "name": "@rreusser/blahpack/lapack/zsytrs_3",
   "version": "1.0.0",
   "description": "Solve A*X = B for symmetric (non-Hermitian) complex A using factorization computed by ZSYTRF_RK",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dstein",
+  "name": "@rreusser/blahpack/lapack/dstein",
   "version": "1.0.0",
   "description": "Computes the eigenvectors of a real symmetric tridiagonal matrix T corresponding to specified eigenvalues, using inverse iteration",
   "license": "MIT",

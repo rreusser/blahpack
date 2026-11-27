@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zspmv",
+  "name": "@rreusser/blahpack/lapack/zspmv",
   "version": "1.0.0",
   "description": "Perform the symmetric packed matrix-vector operation y := alpha*A*x + beta*y where A is a complex symmetric matrix stored in packed format",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtprfs",
+  "name": "@rreusser/blahpack/lapack/dtprfs",
   "version": "1.0.0",
   "description": "Provides error bounds for the solution to a system with a real triangular matrix in packed storage.",
   "license": "MIT",

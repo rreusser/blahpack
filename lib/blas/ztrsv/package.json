@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/ztrsv",
+  "name": "@rreusser/blahpack/blas/ztrsv",
   "version": "1.0.0",
   "description": "Solves one of the systems of equations A·x = b, or Aᵀ·x = b, or Aᴴ·x = b",
   "license": "MIT",

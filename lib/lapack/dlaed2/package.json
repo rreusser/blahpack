@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaed2",
+  "name": "@rreusser/blahpack/lapack/dlaed2",
   "version": "1.0.0",
   "description": "Merge eigenvalues and deflate secular equation in divide and conquer",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlabrd",
+  "name": "@rreusser/blahpack/lapack/zlabrd",
   "version": "1.0.0",
   "description": "Reduces the first nb rows and columns of a general matrix to a bidiagonal form",
   "license": "MIT",

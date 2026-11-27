@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgges",
+  "name": "@rreusser/blahpack/lapack/zgges",
   "version": "1.0.0",
   "description": "Computes generalized eigenvalues and Schur form for a pair of complex nonsymmetric matrices",
   "license": "MIT",

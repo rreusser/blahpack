@@ -9,7 +9,7 @@
 *
 * Usage:
 *   node bin/docs/readme.js --all                 # write every module README
-*   node bin/docs/readme.js lib/lapack/base/zggev # write one
+*   node bin/docs/readme.js lib/lapack/zggev # write one
 *   node bin/docs/readme.js --all --check         # CI: fail if any README differs
 *
 * @module bin/docs/readme

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpttrf",
+  "name": "@rreusser/blahpack/lapack/dpttrf",
   "version": "1.0.0",
   "description": "Computes the LDL^T factorization of a real symmetric positive definite tridiagonal matrix",
   "license": "MIT",

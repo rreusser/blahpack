@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlabad",
+  "name": "@rreusser/blahpack/lapack/dlabad",
   "version": "1.0.0",
   "description": "Take the square root of the overflow and underflow thresholds if the exponent range is very large.",
   "license": "MIT",

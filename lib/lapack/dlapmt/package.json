@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlapmt",
+  "name": "@rreusser/blahpack/lapack/dlapmt",
   "version": "1.0.0",
   "description": "Performs a forward or backward permutation of the columns of a matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gercond",
+  "name": "@rreusser/blahpack/lapack/dla_gercond",
   "version": "1.0.0",
   "description": "Estimates the Skeel condition number for a general matrix",
   "license": "MIT",

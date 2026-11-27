@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlahr2",
+  "name": "@rreusser/blahpack/lapack/dlahr2",
   "version": "1.0.0",
   "description": "Reduce NB columns of a general matrix in Hessenberg form",
   "license": "MIT",

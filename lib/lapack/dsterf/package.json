@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsterf",
+  "name": "@rreusser/blahpack/lapack/dsterf",
   "version": "1.0.0",
   "description": "Computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm",
   "license": "MIT",

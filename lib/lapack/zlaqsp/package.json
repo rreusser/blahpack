@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqsp",
+  "name": "@rreusser/blahpack/lapack/zlaqsp",
   "version": "1.0.0",
   "description": "Equilibrates a complex symmetric matrix in packed storage using scaling factors.",
   "license": "MIT",

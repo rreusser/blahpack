@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgeqrf/lib/dgeqrf.js
+// target: lib/lapack/dgeqrf/lib/dgeqrf.js
 // expect: nocall
 // Importing ndarray.js is not enough: the wrapper must call it (here it reaches the algorithm through another module).
 /* eslint-disable max-len, max-params, no-unused-vars */

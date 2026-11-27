@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasd2",
+  "name": "@rreusser/blahpack/lapack/dlasd2",
   "version": "1.0.0",
   "description": "Merge two sets of singular values in bidiagonal SVD divide and conquer",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeqrf",
+  "name": "@rreusser/blahpack/lapack/zgeqrf",
   "version": "1.0.0",
   "description": "Compute a QR factorization of a complex matrix (blocked algorithm).",
   "license": "MIT",

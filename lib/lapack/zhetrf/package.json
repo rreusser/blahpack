@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrf",
+  "name": "@rreusser/blahpack/lapack/zhetrf",
   "version": "1.0.0",
   "description": "Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method",
   "license": "MIT",

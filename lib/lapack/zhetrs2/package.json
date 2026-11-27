@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrs2",
+  "name": "@rreusser/blahpack/lapack/zhetrs2",
   "version": "1.0.0",
   "description": "Complex Hermitian indefinite solve using factorization from ZHETRF",
   "license": "MIT",

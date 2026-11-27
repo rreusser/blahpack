@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunbdb5",
+  "name": "@rreusser/blahpack/lapack/zunbdb5",
   "version": "1.0.0",
   "description": "Orthogonalizes the complex column vector X = [X1; X2] against the columns of Q = [Q1; Q2]",
   "license": "MIT",

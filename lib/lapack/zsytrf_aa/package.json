@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytrf_aa",
+  "name": "@rreusser/blahpack/lapack/zsytrf_aa",
   "version": "1.0.0",
   "description": "Computes the factorization of a complex symmetric matrix using Aasen's algorithm (blocked)",
   "license": "MIT",

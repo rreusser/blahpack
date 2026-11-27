@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zungbr",
+  "name": "@rreusser/blahpack/lapack/zungbr",
   "version": "1.0.0",
   "description": "Generates one of the complex unitary matrices Q or Pᴴ determined by ZGEBRD when reducing a complex matrix A to bidiagonal form: A = Q·B·Pᴴ",
   "license": "MIT",

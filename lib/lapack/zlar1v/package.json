@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlar1v",
+  "name": "@rreusser/blahpack/lapack/zlar1v",
   "version": "1.0.0",
   "description": "TODO: Add description for ZLAR1V.",
   "license": "MIT",

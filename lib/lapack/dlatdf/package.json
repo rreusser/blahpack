@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatdf",
+  "name": "@rreusser/blahpack/lapack/dlatdf",
   "version": "1.0.0",
   "description": "Uses the LU factorization of the n-by-n matrix computed by sgetc2 and computes a contribution to the reciprocal Dif-estimate",
   "license": "MIT",

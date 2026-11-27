@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarz",
+  "name": "@rreusser/blahpack/lapack/zlarz",
   "version": "1.0.0",
   "description": "Applies a complex elementary reflector defined by RZ factorization",
   "license": "MIT",

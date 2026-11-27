@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarnv",
+  "name": "@rreusser/blahpack/lapack/zlarnv",
   "version": "1.0.0",
   "description": "Returns a vector of complex random numbers from a uniform or normal distribution.",
   "license": "MIT",

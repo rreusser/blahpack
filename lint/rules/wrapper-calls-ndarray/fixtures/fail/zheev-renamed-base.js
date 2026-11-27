@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zheev/lib/zheev.js
+// target: lib/lapack/zheev/lib/zheev.js
 // expect: base
 // The default import of base.js is rejected under any local name, even alongside a named helper.
 /* eslint-disable max-len, max-params */

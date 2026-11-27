@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dormr2",
+  "name": "@rreusser/blahpack/lapack/dormr2",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by the orthogonal matrix from a RQ factorization determined by sgerqf (unblocked algorithm)",
   "license": "MIT",

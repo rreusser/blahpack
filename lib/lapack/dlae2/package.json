@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlae2",
+  "name": "@rreusser/blahpack/lapack/dlae2",
   "version": "1.0.0",
   "description": "Compute eigenvalues of a 2-by-2 symmetric matrix",
   "license": "MIT",

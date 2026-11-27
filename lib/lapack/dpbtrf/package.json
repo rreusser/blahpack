@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbtrf",
+  "name": "@rreusser/blahpack/lapack/dpbtrf",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a real symmetric positive definite band matrix A",
   "license": "MIT",

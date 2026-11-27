@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gbrfsx_extended",
+  "name": "@rreusser/blahpack/lapack/dla_gbrfsx_extended",
   "version": "1.0.0",
   "description": "Improves the computed solution using extra-precise iterative refinement for general banded matrices",
   "license": "MIT",

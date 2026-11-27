@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgbsv",
+  "name": "@rreusser/blahpack/lapack/zgbsv",
   "version": "1.0.0",
   "description": "Solves a complex banded system of linear equations A*X = B using LU factorization",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpttrs",
+  "name": "@rreusser/blahpack/lapack/dpttrs",
   "version": "1.0.0",
   "description": "Solves a real symmetric positive definite tridiagonal system using LDL^T factorization",
   "license": "MIT",

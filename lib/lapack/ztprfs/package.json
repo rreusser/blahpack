@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztprfs",
+  "name": "@rreusser/blahpack/lapack/ztprfs",
   "version": "1.0.0",
   "description": "Provides error bounds for the solution to a system with a complex triangular matrix in packed storage.",
   "license": "MIT",

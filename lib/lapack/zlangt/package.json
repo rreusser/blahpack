@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlangt",
+  "name": "@rreusser/blahpack/lapack/zlangt",
   "version": "1.0.0",
   "description": "Returns the norm of a complex tridiagonal matrix.",
   "license": "MIT",

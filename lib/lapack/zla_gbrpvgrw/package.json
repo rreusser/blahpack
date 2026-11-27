@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_gbrpvgrw",
+  "name": "@rreusser/blahpack/lapack/zla_gbrpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor for a complex general banded matrix.",
   "license": "MIT",

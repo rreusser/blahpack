@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqsb",
+  "name": "@rreusser/blahpack/lapack/dlaqsb",
   "version": "1.0.0",
   "description": "Equilibrates a real symmetric band matrix using scaling factors.",
   "license": "MIT",

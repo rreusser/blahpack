@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlasyf_aa",
+  "name": "@rreusser/blahpack/lapack/zlasyf_aa",
   "version": "1.0.0",
   "description": "Factorize a panel of a complex symmetric matrix using Aasen's algorithm.",
   "license": "MIT",

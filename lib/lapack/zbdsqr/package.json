@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zbdsqr",
+  "name": "@rreusser/blahpack/lapack/zbdsqr",
   "version": "1.0.0",
   "description": "Compute SVD of a real bidiagonal matrix",
   "license": "MIT",

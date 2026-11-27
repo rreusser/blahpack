@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpptrs",
+  "name": "@rreusser/blahpack/lapack/zpptrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations with a complex Hermitian positive definite matrix in packed storage using the Cholesky factorization.",
   "license": "MIT",

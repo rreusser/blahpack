@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpstf2",
+  "name": "@rreusser/blahpack/lapack/dpstf2",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization with complete pivoting of a real symmetric positive semi-definite matrix (unblocked algorithm).",
   "license": "MIT",

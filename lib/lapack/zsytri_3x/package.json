@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytri_3x",
+  "name": "@rreusser/blahpack/lapack/zsytri_3x",
   "version": "1.0.0",
   "description": "Compute the inverse of a complex symmetric indefinite matrix using the factorization computed by zsytrf_rk (worker routine called by zsytri_3)",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhptrf",
+  "name": "@rreusser/blahpack/lapack/zhptrf",
   "version": "1.0.0",
   "description": "Computes the Bunch-Kaufman factorization of a complex Hermitian matrix in packed storage.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatrs",
+  "name": "@rreusser/blahpack/lapack/zlatrs",
   "version": "1.0.0",
   "description": "Solves a complex triangular system with scaling to prevent overflow",
   "license": "MIT",

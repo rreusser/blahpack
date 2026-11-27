@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarzb",
+  "name": "@rreusser/blahpack/lapack/dlarzb",
   "version": "1.0.0",
   "description": "Applies a block reflector from RZ factorization to a general matrix",
   "license": "MIT",

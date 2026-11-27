@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gbrcond",
+  "name": "@rreusser/blahpack/lapack/dla_gbrcond",
   "version": "1.0.0",
   "description": "Estimates the Skeel condition number for a general banded matrix",
   "license": "MIT",

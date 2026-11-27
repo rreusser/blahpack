@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zspr",
+  "name": "@rreusser/blahpack/lapack/zspr",
   "version": "1.0.0",
   "description": "Perform the symmetric rank-1 update of a complex symmetric packed matrix",
   "license": "MIT",

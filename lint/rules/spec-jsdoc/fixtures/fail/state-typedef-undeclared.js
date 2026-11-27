@@ -1,4 +1,4 @@
-// target: lib/arpack/base/dsaupd/lib/base.js
+// target: lib/arpack/dsaupd/lib/base.js
 // expect: params
 /**
 * @license MIT
@@ -16,7 +16,7 @@
 // MODULES //
 
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import dlamch from './../../../../lapack/base/dlamch/lib/base.js';
+import dlamch from './../../../../lapack/dlamch/lib/base.js';
 import dsaup2 from './../../dsaup2/lib/base.js';
 
 

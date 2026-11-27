@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarfg",
+  "name": "@rreusser/blahpack/lapack/dlarfg",
   "version": "1.0.0",
   "description": "Generates an elementary reflector (Householder matrix)",
   "license": "MIT",

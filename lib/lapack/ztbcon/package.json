@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztbcon",
+  "name": "@rreusser/blahpack/lapack/ztbcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal condition number of a complex triangular band matrix.",
   "license": "MIT",

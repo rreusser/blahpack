@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgerq2",
+  "name": "@rreusser/blahpack/lapack/dgerq2",
   "version": "1.0.0",
   "description": "Computes the RQ factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",

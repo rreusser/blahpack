@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqr3",
+  "name": "@rreusser/blahpack/lapack/dlaqr3",
   "version": "1.0.0",
   "description": "Performs aggressive early deflation with blocked operations",
   "license": "MIT",

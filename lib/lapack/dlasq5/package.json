@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasq5",
+  "name": "@rreusser/blahpack/lapack/dlasq5",
   "version": "1.0.0",
   "description": "Compute one dqds transform with shift",
   "license": "MIT",

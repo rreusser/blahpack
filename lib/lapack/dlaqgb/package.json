@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqgb",
+  "name": "@rreusser/blahpack/lapack/dlaqgb",
   "version": "1.0.0",
   "description": "Equilibrates a real general band matrix using row and column scaling factors.",
   "license": "MIT",

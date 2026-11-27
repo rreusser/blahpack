@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpttrs",
+  "name": "@rreusser/blahpack/lapack/zpttrs",
   "version": "1.0.0",
   "description": "Solves a complex Hermitian positive definite tridiagonal system using LDL^H factorization",
   "license": "MIT",

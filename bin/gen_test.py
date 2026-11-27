@@ -72,7 +72,7 @@ def main():
     print()
     print("// FIXTURES //")
     print()
-    print("var fixtureDir = path.join( __dirname, '..', '..', '..', '..', '..', 'test', 'fixtures' );")
+    print("var fixtureDir = path.join( __dirname, '..', '..', '..', '..', 'test', 'fixtures' );")
     print(f"var lines = readFileSync( path.join( fixtureDir, '{routine}.jsonl' ), 'utf8' ).trim().split( '\\n' );")
     print("var fixture = lines.map( function parse( line ) { return JSON.parse( line ); } );")
     print()

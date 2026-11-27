@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaev2",
+  "name": "@rreusser/blahpack/lapack/zlaev2",
   "version": "1.0.0",
   "description": "Computes the eigenvalues and eigenvectors of a 2-by-2 Hermitian matrix.",
   "license": "MIT",

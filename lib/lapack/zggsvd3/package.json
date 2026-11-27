@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggsvd3",
+  "name": "@rreusser/blahpack/lapack/zggsvd3",
   "version": "1.0.0",
   "description": "Computes the generalized SVD of a pair of complex matrices",
   "license": "MIT",

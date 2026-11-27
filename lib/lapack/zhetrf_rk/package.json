@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrf_rk",
+  "name": "@rreusser/blahpack/lapack/zhetrf_rk",
   "version": "1.0.0",
   "description": "computes the factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method (RK storage format)",
   "license": "MIT",

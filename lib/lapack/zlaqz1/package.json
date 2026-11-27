@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqz1",
+  "name": "@rreusser/blahpack/lapack/zlaqz1",
   "version": "1.0.0",
   "description": "Chases a 1x1 shift bulge in a matrix pencil down a single position (complex QZ)",
   "license": "MIT",

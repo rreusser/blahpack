@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpgv",
+  "name": "@rreusser/blahpack/lapack/zhpgv",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a complex Hermitian-definite generalized eigenproblem in packed storage.",
   "license": "MIT",

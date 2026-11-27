@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtptrs",
+  "name": "@rreusser/blahpack/lapack/dtptrs",
   "version": "1.0.0",
   "description": "Solve a triangular system of equations with a triangular matrix stored in packed format.",
   "license": "MIT",

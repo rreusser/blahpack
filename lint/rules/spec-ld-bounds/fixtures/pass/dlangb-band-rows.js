@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlangb/lib/dlangb.js
+// target: lib/lapack/dlangb/lib/dlangb.js
 // Band storage: column-major LDAB is bounded by the spec rows (KL+KU+1), row-major by the columns (N).
 /* eslint-disable max-len, max-params */
 

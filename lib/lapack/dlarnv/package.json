@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarnv",
+  "name": "@rreusser/blahpack/lapack/dlarnv",
   "version": "1.0.0",
   "description": "Generates a vector of random numbers from a specified distribution",
   "license": "MIT",

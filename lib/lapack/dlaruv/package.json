@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaruv",
+  "name": "@rreusser/blahpack/lapack/dlaruv",
   "version": "1.0.0",
   "description": "Generates a vector of random numbers from a uniform distribution",
   "license": "MIT",

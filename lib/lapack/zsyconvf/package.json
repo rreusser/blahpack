@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyconvf",
+  "name": "@rreusser/blahpack/lapack/zsyconvf",
   "version": "1.0.0",
   "description": "Converts the factorization output format used in zsytrf for complex symmetric matrices",
   "license": "MIT",

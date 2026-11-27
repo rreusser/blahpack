@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaorhr_col_getrfnp",
+  "name": "@rreusser/blahpack/lapack/dlaorhr_col_getrfnp",
   "version": "1.0.0",
   "description": "Computes the modified LU factorization without pivoting of a general M-by-N matrix (blocked driver).",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatrz",
+  "name": "@rreusser/blahpack/lapack/zlatrz",
   "version": "1.0.0",
   "description": "Reduces a complex upper trapezoidal matrix to upper triangular form by means of unitary transformations.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dgemm",
+  "name": "@rreusser/blahpack/blas/dgemm",
   "version": "1.0.0",
   "description": "Performs one of the matrix-matrix operations C := α·op(A)·op(B) + β·C",
   "license": "MIT",

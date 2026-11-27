@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dopmtr",
+  "name": "@rreusser/blahpack/lapack/dopmtr",
   "version": "1.0.0",
   "description": "Overwrites a general matrix with a transformation from the orthogonal matrix Q returned by dsptrd.",
   "license": "MIT",

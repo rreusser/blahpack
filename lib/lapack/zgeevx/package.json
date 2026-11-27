@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeevx",
+  "name": "@rreusser/blahpack/lapack/zgeevx",
   "version": "1.0.0",
   "description": "Computes eigenvalues, eigenvectors, and reciprocal condition numbers for a complex nonsymmetric matrix",
   "license": "MIT",

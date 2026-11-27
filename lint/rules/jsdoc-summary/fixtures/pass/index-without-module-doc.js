@@ -1,4 +1,4 @@
-// target: lib/blas/base/dgemm/lib/index.js
+// target: lib/blas/dgemm/lib/index.js
 /**
 * @license MIT
 */

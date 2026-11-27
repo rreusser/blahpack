@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhecon_rook",
+  "name": "@rreusser/blahpack/lapack/zhecon_rook",
   "version": "1.0.0",
   "description": "Estimate reciprocal condition number of a complex Hermitian matrix using rook-pivoted factorization",
   "license": "MIT",

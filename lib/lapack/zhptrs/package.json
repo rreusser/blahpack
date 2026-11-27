@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhptrs",
+  "name": "@rreusser/blahpack/lapack/zhptrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations with a complex Hermitian matrix in packed storage using the factorization computed by zhptrf.",
   "license": "MIT",

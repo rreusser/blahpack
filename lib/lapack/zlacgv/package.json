@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlacgv",
+  "name": "@rreusser/blahpack/lapack/zlacgv",
   "version": "1.0.0",
   "description": "Conjugate a complex vector in-place",
   "license": "MIT",

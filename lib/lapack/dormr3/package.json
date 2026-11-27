@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dormr3",
+  "name": "@rreusser/blahpack/lapack/dormr3",
   "version": "1.0.0",
   "description": "multiplies a general matrix by the orthogonal matrix Q from an RZ factorization",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytri_rook",
+  "name": "@rreusser/blahpack/lapack/dsytri_rook",
   "version": "1.0.0",
   "description": "Compute inverse of real symmetric matrix using factorization from dsytrf_rook",
   "license": "MIT",

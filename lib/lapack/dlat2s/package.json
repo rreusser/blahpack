@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlat2s",
+  "name": "@rreusser/blahpack/lapack/dlat2s",
   "version": "1.0.0",
   "description": "Converts a double-precision triangular matrix to a single-precision triangular matrix",
   "license": "MIT",

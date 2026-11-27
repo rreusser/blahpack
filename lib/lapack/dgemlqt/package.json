@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgemlqt",
+  "name": "@rreusser/blahpack/lapack/dgemlqt",
   "version": "1.0.0",
   "description": "Overwrites a real M-by-N matrix C with op(Q)*C or C*op(Q), where Q is a real orthogonal matrix defined as the product of K elementary reflectors generated using the compact WY representation as returned by dgelqt.",
   "license": "MIT",

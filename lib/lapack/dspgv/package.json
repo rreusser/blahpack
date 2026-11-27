@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspgv",
+  "name": "@rreusser/blahpack/lapack/dspgv",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric-definite generalized eigenproblem in packed storage.",
   "license": "MIT",

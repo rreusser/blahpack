@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtfttp",
+  "name": "@rreusser/blahpack/lapack/dtfttp",
   "version": "1.0.0",
   "description": "Copy a triangular matrix from Rectangular Full Packed (RFP) format to standard packed format (TP).",
   "license": "MIT",

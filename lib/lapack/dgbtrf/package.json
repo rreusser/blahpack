@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgbtrf",
+  "name": "@rreusser/blahpack/lapack/dgbtrf",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges",
   "license": "MIT",

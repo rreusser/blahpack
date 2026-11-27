@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlassq",
+  "name": "@rreusser/blahpack/lapack/dlassq",
   "version": "1.0.0",
   "description": "Return an updated sum of squares represented in scaled form",
   "license": "MIT",

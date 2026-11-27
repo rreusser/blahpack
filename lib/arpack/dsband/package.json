@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsband",
+  "name": "@rreusser/blahpack/arpack/dsband",
   "version": "0.0.0",
   "description": "Compute a few eigenpairs of a banded symmetric eigenproblem via the Implicitly Restarted Lanczos method.",
   "license": "Apache-2.0",

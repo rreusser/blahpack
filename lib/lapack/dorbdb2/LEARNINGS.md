@@ -50,7 +50,7 @@
 - `dscal` is needed (in addition to dorbdb1's deps) because dorbdb2
   has an explicit `CALL DSCAL( P-I, NEGONE, X11(I+1,I), 1 )` to
   negate part of an X11 column. Don't inline it as a manual loop —
-  just require `lib/blas/base/dscal/lib/base.js`.
+  just require `lib/blas/dscal/lib/base.js`.
 - The `Q1` reflector is computed via `dlarfgp` *along a row* of
   X11 (stride `strideX112`), not along a column. dlarfgp's
   `(alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau)` API

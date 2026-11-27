@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrexc",
+  "name": "@rreusser/blahpack/lapack/ztrexc",
   "version": "1.0.0",
   "description": "Reorders the Schur factorization of a complex matrix A = Q·T·Qᴴ, so that the diagonal element of T with row index IFST is moved to row ILST",
   "license": "MIT",

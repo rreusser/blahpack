@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtftri",
+  "name": "@rreusser/blahpack/lapack/dtftri",
   "version": "1.0.0",
   "description": "Computes the inverse of a real triangular matrix in Rectangular Full Packed format.",
   "license": "MIT",

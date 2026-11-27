@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlansp",
+  "name": "@rreusser/blahpack/lapack/dlansp",
   "version": "1.0.0",
   "description": "Returns the value of the one-norm, Frobenius norm, infinity-norm, or the largest absolute value of a real symmetric matrix in packed storage.",
   "license": "MIT",

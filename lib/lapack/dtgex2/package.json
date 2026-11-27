@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtgex2",
+  "name": "@rreusser/blahpack/lapack/dtgex2",
   "version": "1.0.0",
   "description": "Swaps adjacent diagonal 1-by-1 or 2-by-2 blocks in an upper (quasi) triangular matrix pair.",
   "license": "MIT",

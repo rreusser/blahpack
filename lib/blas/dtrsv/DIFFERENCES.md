@@ -1,6 +1,6 @@
 # dtrsv: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dtrsv/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dtrsv/`) against the stdlib-js
 reference (`@stdlib/blas/base/dtrsv`).
 
 ---

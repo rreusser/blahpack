@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtrevc3",
+  "name": "@rreusser/blahpack/lapack/dtrevc3",
   "version": "1.0.0",
   "description": "Computes some or all of the right and/or left eigenvectors of a real upper quasi-triangular matrix T",
   "license": "MIT",

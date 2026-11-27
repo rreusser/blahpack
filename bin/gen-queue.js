@@ -20,7 +20,7 @@ var routines = db.routines;
 // Scan implemented modules
 var impl = new Set();
 [ 'blas', 'lapack' ].forEach( function forEach( pkg ) {
-	var base = path.join( ROOT, 'lib', pkg, 'base' );
+	var base = path.join( ROOT, 'lib', pkg );
 	if ( !fs.existsSync( base ) ) {
 		return;
 	}

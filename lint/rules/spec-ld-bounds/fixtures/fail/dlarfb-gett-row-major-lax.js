@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlarfb_gett/lib/dlarfb_gett.js
+// target: lib/lapack/dlarfb_gett/lib/dlarfb_gett.js
 // expect: bound
 // A single `LD < max( 1, … )` bound only: a compound test that is not a spec check is rejected.
 /* eslint-disable max-len, max-params */

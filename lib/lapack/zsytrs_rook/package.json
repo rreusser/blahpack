@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytrs_rook",
+  "name": "@rreusser/blahpack/lapack/zsytrs_rook",
   "version": "1.0.0",
   "description": "Solve A*X=B with complex symmetric A using factorization from zsytrf_rook",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspsvx",
+  "name": "@rreusser/blahpack/lapack/dspsvx",
   "version": "1.0.0",
   "description": "Solves a real system A * X = B where A is symmetric in packed storage, with condition estimation and error bounds.",
   "license": "MIT",

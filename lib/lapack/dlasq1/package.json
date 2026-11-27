@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasq1",
+  "name": "@rreusser/blahpack/lapack/dlasq1",
   "version": "1.0.0",
   "description": "Computes the singular values of a real square bidiagonal matrix",
   "license": "MIT",

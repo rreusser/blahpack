@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpptri",
+  "name": "@rreusser/blahpack/lapack/zpptri",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex Hermitian positive definite matrix in packed storage using the Cholesky factorization.",
   "license": "MIT",

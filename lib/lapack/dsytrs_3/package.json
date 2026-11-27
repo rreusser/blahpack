@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytrs_3",
+  "name": "@rreusser/blahpack/lapack/dsytrs_3",
   "version": "1.0.0",
   "description": "Solve A*X = B using factorization computed by DSYTRF_RK",
   "license": "MIT",

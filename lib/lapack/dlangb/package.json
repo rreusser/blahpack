@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlangb",
+  "name": "@rreusser/blahpack/lapack/dlangb",
   "version": "1.0.0",
   "description": "Returns the norm of a real general band matrix.",
   "license": "MIT",

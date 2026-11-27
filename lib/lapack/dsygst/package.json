@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsygst",
+  "name": "@rreusser/blahpack/lapack/dsygst",
   "version": "1.0.0",
   "description": "Reduces a symmetric definite generalized eigenproblem to standard form (blocked)",
   "license": "MIT",

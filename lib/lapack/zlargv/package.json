@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlargv",
+  "name": "@rreusser/blahpack/lapack/zlargv",
   "version": "1.0.0",
   "description": "Generates a vector of complex plane rotations with real cosines and complex sines.",
   "license": "MIT",

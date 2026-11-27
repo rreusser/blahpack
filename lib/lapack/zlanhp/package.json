@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlanhp",
+  "name": "@rreusser/blahpack/lapack/zlanhp",
   "version": "1.0.0",
   "description": "Returns the norm of a complex Hermitian matrix in packed storage.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggbak",
+  "name": "@rreusser/blahpack/lapack/dggbak",
   "version": "1.0.0",
   "description": "Forms the right or left eigenvectors of a real generalized eigenvalue problem by backward transformation on the computed eigenvectors of the balanced matrix.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytrs",
+  "name": "@rreusser/blahpack/lapack/zsytrs",
   "version": "1.0.0",
   "description": "Solve a complex symmetric indefinite system using factorization from zsytrf",
   "license": "MIT",

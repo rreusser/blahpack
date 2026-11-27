@@ -31,7 +31,7 @@
 - `zlasyf_rk` returns `{ kb, info }` (object); `zsytf2_rk` returns a
   plain `info` integer. Mixing these up is an easy bug — always match
   the kernel's actual return shape.
-- `zswap` is required via the base.js path (`./../../../../blas/base/zswap/lib/base.js`)
+- `zswap` is required via the base.js path (`../../../blas/zswap/lib/base.js`)
   to skip wrapper validation, same pattern as `dsytrf_rk` uses for `dswap`.
 
 ## Coverage gaps

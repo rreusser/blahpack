@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zpbsvx/lib/ndarray.js
+// target: lib/lapack/zpbsvx/lib/ndarray.js
 // expect: missing
 // RWORK( N ) has no length check: a short RWORK runs silently and the result is NaN (ticket 0107).
 /* eslint-disable max-len, max-params */

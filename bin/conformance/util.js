@@ -84,7 +84,7 @@ function discoverModules( pathOrAll ) {
 	var j;
 
 	for ( i = 0; i < pkgs.length; i++ ) {
-		pkgDir = path.join( ROOT, 'lib', pkgs[ i ], 'base' );
+		pkgDir = path.join( ROOT, 'lib', pkgs[ i ] );
 		if ( !fs.existsSync( pkgDir ) ) {
 			continue;
 		}

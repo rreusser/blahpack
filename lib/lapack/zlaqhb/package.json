@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqhb",
+  "name": "@rreusser/blahpack/lapack/zlaqhb",
   "version": "1.0.0",
   "description": "Equilibrates a complex Hermitian band matrix using scaling factors.",
   "license": "MIT",

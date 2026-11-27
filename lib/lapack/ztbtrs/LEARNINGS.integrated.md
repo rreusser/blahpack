@@ -7,7 +7,7 @@
 
 ## Dependency interface surprises
 
-- ztbsv lives in blas/base (not lapack/base), so the require path goes through `../../../../blas/base/ztbsv/lib/base.js`.
+- ztbsv lives in blas/base (not lapack/base), so the require path goes through `../../../blas/ztbsv/lib/base.js`.
 - ztbsv takes strides in complex element units (not float64), consistent with all complex BLAS routines.
 
 ## Automation opportunities

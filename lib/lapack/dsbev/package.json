@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsbev",
+  "name": "@rreusser/blahpack/lapack/dsbev",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric band matrix.",
   "license": "MIT",

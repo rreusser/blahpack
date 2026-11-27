@@ -25,4 +25,4 @@
 
 ## Gate config exceptions
 
-Added `lib/lapack/base/zlahef_rk` exception for `scaffolding.no-todo-readme`, `scaffolding.index-example`, and `tests.assertion-count`, with the same rationale as `dlasyf_rk`.
+Added `lib/lapack/zlahef_rk` exception for `scaffolding.no-todo-readme`, `scaffolding.index-example`, and `tests.assertion-count`, with the same rationale as `dlasyf_rk`.

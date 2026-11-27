@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dhgeqz",
+  "name": "@rreusser/blahpack/lapack/dhgeqz",
   "version": "1.0.0",
   "description": "Computes the eigenvalues of a real matrix pair (H,T) where H is upper Hessenberg and T is upper triangular, using the QZ method.",
   "license": "MIT",

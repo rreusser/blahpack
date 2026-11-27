@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlanv2",
+  "name": "@rreusser/blahpack/lapack/dlanv2",
   "version": "1.0.0",
   "description": "Computes the Schur factorization of a 2x2 nonsymmetric matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbtf2",
+  "name": "@rreusser/blahpack/lapack/dpbtf2",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a symmetric/Hermitian positive definite band matrix (unblocked algorithm)",
   "license": "MIT",

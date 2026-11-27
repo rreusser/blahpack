@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dptsvx",
+  "name": "@rreusser/blahpack/lapack/dptsvx",
   "version": "1.0.0",
   "description": "Solves a real system A * X = B where A is symmetric positive definite tridiagonal, with condition estimation and error bounds.",
   "license": "MIT",

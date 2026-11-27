@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunmqr",
+  "name": "@rreusser/blahpack/lapack/zunmqr",
   "version": "1.0.0",
   "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a QR factorization",
   "license": "MIT",

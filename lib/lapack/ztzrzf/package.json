@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztzrzf",
+  "name": "@rreusser/blahpack/lapack/ztzrzf",
   "version": "1.0.0",
   "description": "Reduces a complex M-by-N (M <= N) upper trapezoidal matrix to upper triangular form via unitary RZ factorization (blocked driver).",
   "license": "MIT",

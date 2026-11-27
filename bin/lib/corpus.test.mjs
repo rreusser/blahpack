@@ -24,11 +24,11 @@ test( 'selectRoutines: --all lists every module', () => {
 
 test( 'moduleInputs: the module, its spec, its dependencies and their JSON fixtures', () => {
 	const files = rel( moduleInputs( 'dgeqrf' ) );
-	assert.ok( files.has( 'lib/lapack/base/dgeqrf/lib/base.js' ) );
-	assert.ok( files.has( 'lib/lapack/base/dgeqrf/test/fixtures/3x3.json' ) );
+	assert.ok( files.has( 'lib/lapack/dgeqrf/lib/base.js' ) );
+	assert.ok( files.has( 'lib/lapack/dgeqrf/test/fixtures/3x3.json' ) );
 	assert.ok( files.has( 'spec/dgeqrf.json' ) );
 	// Transitive: dgeqrf -> dgeqr2 -> dlarfg.
-	assert.ok( files.has( 'lib/lapack/base/dlarfg/lib/base.js' ) );
+	assert.ok( files.has( 'lib/lapack/dlarfg/lib/base.js' ) );
 	assert.ok( [ ...files ].every( ( f ) => !f.includes( 'node_modules' ) && !f.startsWith( '..' ) ) );
 });
 

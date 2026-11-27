@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_syrcond",
+  "name": "@rreusser/blahpack/lapack/dla_syrcond",
   "version": "1.0.0",
   "description": "Estimates the Skeel condition number for a symmetric indefinite matrix",
   "license": "MIT",

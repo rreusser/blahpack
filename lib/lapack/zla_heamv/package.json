@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_heamv",
+  "name": "@rreusser/blahpack/lapack/zla_heamv",
   "version": "1.0.0",
   "description": "Computes a matrix-vector product using a Hermitian indefinite matrix to calculate error bounds",
   "license": "MIT",

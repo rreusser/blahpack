@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgels/lib/dgels.js
+// target: lib/lapack/dgels/lib/dgels.js
 // expect: nary
 import max from '@stdlib/math/base/special/fast/max/lib/index.js';
 

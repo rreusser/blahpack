@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zher",
+  "name": "@rreusser/blahpack/blas/zher",
   "version": "1.0.0",
   "description": "Performs the Hermitian rank 1 operation A := α·x·xᴴ + A",
   "license": "MIT",

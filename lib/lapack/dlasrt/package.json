@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasrt",
+  "name": "@rreusser/blahpack/lapack/dlasrt",
   "version": "1.0.0",
   "description": "Sorts numbers in increasing or decreasing order",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatbs",
+  "name": "@rreusser/blahpack/lapack/zlatbs",
   "version": "1.0.0",
   "description": "Complex triangular banded solve with scaling",
   "license": "MIT",

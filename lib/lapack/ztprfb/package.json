@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztprfb",
+  "name": "@rreusser/blahpack/lapack/ztprfb",
   "version": "1.0.0",
   "description": "Applies a complex triangular-pentagonal block reflector to a matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsortr",
+  "name": "@rreusser/blahpack/arpack/dsortr",
   "version": "0.0.0",
   "description": "Sorts eigenvalues (and optionally applies the permutation to a companion vector) for the symmetric Lanczos/Arnoldi iteration.",
   "license": "Apache-2.0",

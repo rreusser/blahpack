@@ -1,4 +1,4 @@
-// target: lib/blas/base/zrot/lib/base.js
+// target: lib/blas/zrot/lib/base.js
 // One local reassigned as a reinterpret view of two arrays: an access through
 // it may use either array's offset.
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';

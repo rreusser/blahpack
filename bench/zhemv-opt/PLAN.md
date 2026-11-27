@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zhemv` — Hermitian matrix-vector multiply
+`lib/blas/zhemv` — Hermitian matrix-vector multiply
 (`y = alpha*A*x + beta*y`, A Hermitian, one triangle stored). The complex
 analog of `dsymv`, which shipped 2.3–2.9x from 4-wide register blocking.
 

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_syrcond_c",
+  "name": "@rreusser/blahpack/lapack/zla_syrcond_c",
   "version": "1.0.0",
   "description": "Estimates the infinity norm condition number for a complex symmetric indefinite matrix with inverse-c scaling",
   "license": "MIT",

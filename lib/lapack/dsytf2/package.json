@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytf2",
+  "name": "@rreusser/blahpack/lapack/dsytf2",
   "version": "1.0.0",
   "description": "Computes the factorization of a real symmetric indefinite matrix, using the diagonal pivoting method (unblocked algorithm)",
   "license": "MIT",

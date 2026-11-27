@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggrqf",
+  "name": "@rreusser/blahpack/lapack/dggrqf",
   "version": "1.0.0",
   "description": "Computes a generalized RQ factorization of an M-by-N matrix A and a P-by-N matrix B: A = R·Q, B = Z·T·Q",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgsy2",
+  "name": "@rreusser/blahpack/lapack/ztgsy2",
   "version": "1.0.0",
   "description": "Solves the generalized Sylvester matrix equation for small subsystems.",
   "license": "MIT",

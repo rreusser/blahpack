@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgetf2",
+  "name": "@rreusser/blahpack/lapack/zgetf2",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a general M-by-N complex matrix using partial pivoting with row interchanges (unblocked algorithm).",
   "license": "MIT",

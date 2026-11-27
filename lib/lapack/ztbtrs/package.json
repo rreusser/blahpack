@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztbtrs",
+  "name": "@rreusser/blahpack/lapack/ztbtrs",
   "version": "1.0.0",
   "description": "Solves a triangular system of equations with a triangular band matrix.",
   "license": "MIT",

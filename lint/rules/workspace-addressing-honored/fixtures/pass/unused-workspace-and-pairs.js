@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zgbbrd/lib/base.js
+// target: lib/lapack/zgbbrd/lib/base.js
 function zgbbrd( N, AB, offsetAB, WORK, strideWork, offsetWork, RWORK, strideRWork, offsetRWork, ZWORK, strideZWork, offsetZWork ) {
 	const ra = new Float64Array( 2 );
 

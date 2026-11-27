@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlartv",
+  "name": "@rreusser/blahpack/lapack/dlartv",
   "version": "1.0.0",
   "description": "Apply a vector of real plane rotations to two vectors.",
   "license": "MIT",

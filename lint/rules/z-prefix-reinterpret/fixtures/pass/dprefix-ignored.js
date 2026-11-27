@@ -1,4 +1,4 @@
-// target: lib/blas/base/dscal/lib/base.js
+// target: lib/blas/dscal/lib/base.js
 function dscal( N, x, Xv ) {
 	return Xv[ 0 ];
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpftrs",
+  "name": "@rreusser/blahpack/lapack/dpftrs",
   "version": "1.0.0",
   "description": "Solves a real system A * X = B where A is symmetric positive definite in Rectangular Full Packed format.",
   "license": "MIT",

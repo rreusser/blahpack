@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgesvd",
+  "name": "@rreusser/blahpack/lapack/dgesvd",
   "version": "1.0.0",
   "description": "Compute the singular value decomposition of a real matrix",
   "license": "MIT",

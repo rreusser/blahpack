@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/ztrmm",
+  "name": "@rreusser/blahpack/blas/ztrmm",
   "version": "1.0.0",
   "description": "Performs one of the matrix-matrix operations B := α·op(A)·B, or B := α·B·op(A)",
   "license": "MIT",

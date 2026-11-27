@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytrf_rook",
+  "name": "@rreusser/blahpack/lapack/dsytrf_rook",
   "version": "1.0.0",
   "description": "Computes the factorization of a real symmetric matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method (blocked algorithm).",
   "license": "MIT",

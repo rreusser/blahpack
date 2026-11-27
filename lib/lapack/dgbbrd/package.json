@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgbbrd",
+  "name": "@rreusser/blahpack/lapack/dgbbrd",
   "version": "1.0.0",
   "description": "Reduces a real general band matrix to upper bidiagonal form",
   "license": "MIT",

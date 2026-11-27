@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaisnan",
+  "name": "@rreusser/blahpack/lapack/dlaisnan",
   "version": "1.0.0",
   "description": "Test for NaN by comparing two arguments for inequality",
   "license": "MIT",

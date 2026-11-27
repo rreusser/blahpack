@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlacrm",
+  "name": "@rreusser/blahpack/lapack/zlacrm",
   "version": "1.0.0",
   "description": "TODO: Add description for ZLACRM.",
   "license": "MIT",

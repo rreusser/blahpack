@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgsvj1",
+  "name": "@rreusser/blahpack/lapack/dgsvj1",
   "version": "1.0.0",
   "description": "Pre-processor for dgesvj applying Jacobi rotations to off-diagonal block pivots",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zptsvx",
+  "name": "@rreusser/blahpack/lapack/zptsvx",
   "version": "1.0.0",
   "description": "Solves a complex system A * X = B where A is Hermitian positive definite tridiagonal, with condition estimation and error bounds.",
   "license": "MIT",

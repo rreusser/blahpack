@@ -20,4 +20,4 @@
 
 ## Gate config exceptions
 
-Added `lib/lapack/base/dlasyf_rk` exception for `scaffolding.no-todo-readme`, `scaffolding.index-example`, and `tests.assertion-count` — the first two are scaffold placeholders left as-is to match `dlasyf`, and the third is a false positive since real tests live in `test.ndarray.js` and `test.dlasyf_rk.js` while `test.js` only holds the two scaffold export checks.
+Added `lib/lapack/dlasyf_rk` exception for `scaffolding.no-todo-readme`, `scaffolding.index-example`, and `tests.assertion-count` — the first two are scaffold placeholders left as-is to match `dlasyf`, and the third is a false positive since real tests live in `test.ndarray.js` and `test.dlasyf_rk.js` while `test.js` only holds the two scaffold export checks.

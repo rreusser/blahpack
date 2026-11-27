@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpotrf2",
+  "name": "@rreusser/blahpack/lapack/dpotrf2",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a real symmetric positive definite matrix A using the recursive algorithm",
   "license": "MIT",

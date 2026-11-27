@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ddisna",
+  "name": "@rreusser/blahpack/lapack/ddisna",
   "version": "1.0.0",
   "description": "Compute the reciprocal condition numbers for the eigenvectors of a real symmetric or complex Hermitian matrix",
   "license": "MIT",

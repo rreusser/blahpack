@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeqrfp",
+  "name": "@rreusser/blahpack/lapack/zgeqrfp",
   "version": "1.0.0",
   "description": "Computes a complex QR factorization with non-negative diagonal elements (blocked algorithm)",
   "license": "MIT",

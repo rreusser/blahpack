@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlahef",
+  "name": "@rreusser/blahpack/lapack/zlahef",
   "version": "1.0.0",
   "description": "Complex Hermitian indefinite panel factorization (blocked Bunch-Kaufman)",
   "license": "MIT",

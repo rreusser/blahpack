@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgetrs/lib/base.js
+// target: lib/lapack/dgetrs/lib/base.js
 /**
 * @license MIT
 *
@@ -14,7 +14,7 @@
 // MODULES //
 
 import dlaswp from '../../dlaswp/lib/base.js';
-import dtrsm from '../../../../blas/base/dtrsm/lib/base.js';
+import dtrsm from '../../../../blas/dtrsm/lib/base.js';
 
 
 // MAIN //

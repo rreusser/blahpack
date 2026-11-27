@@ -70,7 +70,7 @@ function printUsage() {
 	console.log( '  -h, --help         Show this help' );
 	console.log( '' );
 	console.log( 'Examples:' );
-	console.log( '  node bin/conformance.js lib/blas/base/ddot        # Single module' );
+	console.log( '  node bin/conformance.js lib/blas/ddot        # Single module' );
 	console.log( '  node bin/conformance.js --all                     # All modules' );
 	console.log( '  node bin/conformance.js --all --fast              # Fast file checks only' );
 	console.log( '  node bin/conformance.js --all --failing           # Show only failures' );

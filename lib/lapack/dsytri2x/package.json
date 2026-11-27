@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytri2x",
+  "name": "@rreusser/blahpack/lapack/dsytri2x",
   "version": "1.0.0",
   "description": "Compute the inverse of a real symmetric indefinite matrix (classic Bunch-Kaufman, blocked worker)",
   "license": "MIT",

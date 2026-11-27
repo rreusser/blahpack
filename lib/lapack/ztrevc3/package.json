@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrevc3",
+  "name": "@rreusser/blahpack/lapack/ztrevc3",
   "version": "1.0.0",
   "description": "Computes eigenvectors of a complex upper triangular matrix",
   "license": "MIT",

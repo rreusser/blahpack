@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlantb",
+  "name": "@rreusser/blahpack/lapack/zlantb",
   "version": "1.0.0",
   "description": "Returns the norm of a complex triangular band matrix.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpftrf",
+  "name": "@rreusser/blahpack/lapack/zpftrf",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a complex Hermitian positive definite matrix in Rectangular Full Packed format.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytri_3",
+  "name": "@rreusser/blahpack/lapack/dsytri_3",
   "version": "1.0.0",
   "description": "computes the inverse of a real symmetric indefinite matrix using the factorization from dsytrf_rk",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zrot",
+  "name": "@rreusser/blahpack/lapack/zrot",
   "version": "1.0.0",
   "description": "Applies a plane rotation with real cosine and complex sine to a pair of complex vectors",
   "license": "MIT",

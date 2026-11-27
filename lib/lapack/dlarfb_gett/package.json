@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarfb_gett",
+  "name": "@rreusser/blahpack/lapack/dlarfb_gett",
   "version": "1.0.0",
   "description": "Applies a real Householder block reflector to a triangular-pentagonal matrix",
   "license": "MIT",

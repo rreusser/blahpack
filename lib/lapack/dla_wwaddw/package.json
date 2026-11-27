@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_wwaddw",
+  "name": "@rreusser/blahpack/lapack/dla_wwaddw",
   "version": "1.0.0",
   "description": "Adds a vector in doubled-single precision representation",
   "license": "MIT",

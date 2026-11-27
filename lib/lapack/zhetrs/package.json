@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrs",
+  "name": "@rreusser/blahpack/lapack/zhetrs",
   "version": "1.0.0",
   "description": "Solve a system of linear equations A*X = B with a Hermitian indefinite matrix using Bunch-Kaufman factorization",
   "license": "MIT",

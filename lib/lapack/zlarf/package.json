@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarf",
+  "name": "@rreusser/blahpack/lapack/zlarf",
   "version": "1.0.0",
   "description": "Applies an elementary reflector to a general rectangular matrix",
   "license": "MIT",

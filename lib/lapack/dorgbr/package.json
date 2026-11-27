@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorgbr",
+  "name": "@rreusser/blahpack/lapack/dorgbr",
   "version": "1.0.0",
   "description": "Generates one of the real orthogonal matrices Q or Pᵀ determined by DGEBRD when reducing a real matrix A to bidiagonal form: A = Q·B·Pᵀ",
   "license": "MIT",

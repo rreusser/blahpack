@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqhe",
+  "name": "@rreusser/blahpack/lapack/zlaqhe",
   "version": "1.0.0",
   "description": "Equilibrate a Hermitian matrix using scaling factors",
   "license": "MIT",

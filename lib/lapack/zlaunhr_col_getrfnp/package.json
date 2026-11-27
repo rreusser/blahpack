@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaunhr_col_getrfnp",
+  "name": "@rreusser/blahpack/lapack/zlaunhr_col_getrfnp",
   "version": "1.0.0",
   "description": "TODO: Add description for ZLAUNHR_COL_GETRFNP.",
   "license": "MIT",

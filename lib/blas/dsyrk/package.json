@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dsyrk",
+  "name": "@rreusser/blahpack/blas/dsyrk",
   "version": "1.0.0",
   "description": "Performs one of the symmetric rank k operations C := α·A·Aᵀ + β·C, or C := α·Aᵀ·A + β·C",
   "license": "MIT",

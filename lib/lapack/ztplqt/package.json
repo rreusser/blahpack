@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztplqt",
+  "name": "@rreusser/blahpack/lapack/ztplqt",
   "version": "1.0.0",
   "description": "Computes a blocked LQ factorization of a complex triangular-pentagonal matrix using the compact WY representation for Q.",
   "license": "MIT",

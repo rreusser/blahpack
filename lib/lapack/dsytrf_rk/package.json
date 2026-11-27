@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytrf_rk",
+  "name": "@rreusser/blahpack/lapack/dsytrf_rk",
   "version": "1.0.0",
   "description": "Computes the factorization of a real symmetric indefinite matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method, with the diagonal D and the subdiagonal entries E stored separately (RK storage format)",
   "license": "MIT",

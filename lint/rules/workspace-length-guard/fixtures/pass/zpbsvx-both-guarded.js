@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zpbsvx/lib/ndarray.js
+// target: lib/lapack/zpbsvx/lib/ndarray.js
 // Every workspace with a spec minimum (WORK `2 * N`, RWORK `N`) has a guard.
 /* eslint-disable max-len, max-params */
 

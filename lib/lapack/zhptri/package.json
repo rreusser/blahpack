@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhptri",
+  "name": "@rreusser/blahpack/lapack/zhptri",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex Hermitian matrix in packed storage using the factorization computed by zhptrf.",
   "license": "MIT",

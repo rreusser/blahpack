@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasv2",
+  "name": "@rreusser/blahpack/lapack/dlasv2",
   "version": "1.0.0",
   "description": "Compute SVD of a 2-by-2 triangular matrix",
   "license": "MIT",

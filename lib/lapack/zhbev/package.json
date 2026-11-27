@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhbev",
+  "name": "@rreusser/blahpack/lapack/zhbev",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a complex Hermitian band matrix.",
   "license": "MIT",

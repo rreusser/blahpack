@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgtcon",
+  "name": "@rreusser/blahpack/lapack/dgtcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a real tridiagonal matrix A using the LU factorization as computed by DGTTRF",
   "license": "MIT",

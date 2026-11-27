@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlansb",
+  "name": "@rreusser/blahpack/lapack/dlansb",
   "version": "1.0.0",
   "description": "Returns the norm of a real symmetric band matrix.",
   "license": "MIT",

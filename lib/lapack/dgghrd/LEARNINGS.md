@@ -10,8 +10,8 @@
 - The `dlartg(f, g, out)` interface writes `out[0]=c, out[1]=s, out[2]=r`.
   This differs from the complex `zlartg` which takes separate Complex128Array
   arguments for each output. The real version is simpler.
-- Relative path from `lib/lapack/base/dgghrd/lib/base.js` to drot is
-  `../../../../blas/base/drot/lib/base.js` (4 levels up), not 3.
+- Relative path from `lib/lapack/dgghrd/lib/base.js` to drot is
+  `../../../blas/drot/lib/base.js` (4 levels up), not 3.
 
 ## Dependency interface surprises
 

@@ -4,8 +4,8 @@
 * Codemod for index.js files — applies mechanical stdlib convention fixes.
 *
 * Usage:
-*   node bin/codemod-index.js lib/blas/base/{name}/lib/index.js
-*   node bin/codemod-index.js --dry-run lib/blas/base/{name}/lib/index.js
+*   node bin/codemod-index.js lib/blas/{name}/lib/index.js
+*   node bin/codemod-index.js --dry-run lib/blas/{name}/lib/index.js
 *
 * Fixes applied:
 *   1. Add 'use strict' after license block if missing

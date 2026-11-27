@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaln2",
+  "name": "@rreusser/blahpack/lapack/dlaln2",
   "version": "1.0.0",
   "description": "Solves a 1-by-1 or 2-by-2 linear system of equations of the specified form",
   "license": "MIT",

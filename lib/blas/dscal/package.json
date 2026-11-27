@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dscal",
+  "name": "@rreusser/blahpack/blas/dscal",
   "version": "1.0.0",
   "description": "Multiply a double-precision floating-point vector by a constant",
   "license": "MIT",

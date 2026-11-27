@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlacrt",
+  "name": "@rreusser/blahpack/lapack/zlacrt",
   "version": "1.0.0",
   "description": "Performs a linear transformation of a pair of complex vectors",
   "license": "MIT",

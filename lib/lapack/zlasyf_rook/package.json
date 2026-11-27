@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlasyf_rook",
+  "name": "@rreusser/blahpack/lapack/zlasyf_rook",
   "version": "1.0.0",
   "description": "Computes a partial factorization of a complex symmetric matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method.",
   "license": "MIT",

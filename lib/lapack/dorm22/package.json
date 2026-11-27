@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorm22",
+  "name": "@rreusser/blahpack/lapack/dorm22",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by a banded orthogonal matrix",
   "license": "MIT",

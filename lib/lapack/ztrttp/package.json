@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrttp",
+  "name": "@rreusser/blahpack/lapack/ztrttp",
   "version": "1.0.0",
   "description": "Copy a complex triangular matrix from full format (TR) to standard packed format (TP)",
   "license": "MIT",

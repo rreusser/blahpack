@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/ztrsm",
+  "name": "@rreusser/blahpack/blas/ztrsm",
   "version": "1.0.0",
   "description": "Solves one of the matrix equations op(A)·X = α·B, or X·op(A) = α·B",
   "license": "MIT",

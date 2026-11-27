@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgebrd",
+  "name": "@rreusser/blahpack/lapack/zgebrd",
   "version": "1.0.0",
   "description": "Reduces a general complex M-by-N matrix A to upper or lower bidiagonal form B by a unitary transformation: Qᴴ·A·P = B",
   "license": "MIT",

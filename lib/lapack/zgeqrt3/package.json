@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeqrt3",
+  "name": "@rreusser/blahpack/lapack/zgeqrt3",
   "version": "1.0.0",
   "description": "recursively computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q",
   "license": "MIT",

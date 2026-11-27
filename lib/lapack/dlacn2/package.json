@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlacn2",
+  "name": "@rreusser/blahpack/lapack/dlacn2",
   "version": "1.0.0",
   "description": "Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products",
   "license": "MIT",

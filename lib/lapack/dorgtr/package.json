@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorgtr",
+  "name": "@rreusser/blahpack/lapack/dorgtr",
   "version": "1.0.0",
   "description": "Generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order N, as returned by DSYTRD: if UPLO = 'U', Q = H(n-1)",
   "license": "MIT",

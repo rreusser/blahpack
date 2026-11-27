@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlagtm",
+  "name": "@rreusser/blahpack/lapack/zlagtm",
   "version": "1.0.0",
   "description": "Perform a matrix-vector product of the form C := alpha*A*B + beta*C where A is a complex tridiagonal matrix.",
   "license": "MIT",

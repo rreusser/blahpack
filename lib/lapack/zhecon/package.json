@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhecon",
+  "name": "@rreusser/blahpack/lapack/zhecon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a complex Hermitian matrix A using the factorization A = U·D·Uᴴ or A = L·D·Lᴴ computed by ZHETRF",
   "license": "MIT",

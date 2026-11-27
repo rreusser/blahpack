@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zdotu",
+  "name": "@rreusser/blahpack/blas/zdotu",
   "version": "1.0.0",
   "description": "Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y",
   "license": "MIT",

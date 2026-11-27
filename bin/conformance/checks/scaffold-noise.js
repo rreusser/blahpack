@@ -220,7 +220,7 @@ function check( mod ) {
 			ID + '.benchmark-generated',
 			'Benchmarks are generated (no scaffold stub/placeholder)',
 			locs.length, locs,
-			'Run `node bin/gen-benchmark.mjs lib/<pkg>/base/<routine> --kind=strided|ndarray --write` after implementing base.js'
+			'Run `node bin/gen-benchmark.mjs lib/<pkg>/<routine> --kind=strided|ndarray --write` after implementing base.js'
 		));
 	}
 

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zptsv",
+  "name": "@rreusser/blahpack/lapack/zptsv",
   "version": "1.0.0",
   "description": "Computes the solution to system of linear equations A·X = B for positive definite tridiagonal matrices",
   "license": "MIT",

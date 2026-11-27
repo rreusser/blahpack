@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatsqr",
+  "name": "@rreusser/blahpack/lapack/zlatsqr",
   "version": "1.0.0",
   "description": "blocked Tall-Skinny QR (TSQR) factorization of a complex M-by-N matrix (M >= N)",
   "license": "MIT",

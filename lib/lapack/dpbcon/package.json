@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbcon",
+  "name": "@rreusser/blahpack/lapack/dpbcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number (in the 1-norm) of a real symmetric positive definite band matrix using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPBTRF",
   "license": "MIT",

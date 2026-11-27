@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytrf",
+  "name": "@rreusser/blahpack/lapack/zsytrf",
   "version": "1.0.0",
   "description": "Compute complex symmetric indefinite factorization with Bunch-Kaufman pivoting (blocked)",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgerqf",
+  "name": "@rreusser/blahpack/lapack/dgerqf",
   "version": "1.0.0",
   "description": "Computes an RQ factorization of a real M-by-N matrix A: A = R·Q",
   "license": "MIT",

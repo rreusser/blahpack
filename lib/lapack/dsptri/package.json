@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsptri",
+  "name": "@rreusser/blahpack/lapack/dsptri",
   "version": "1.0.0",
   "description": "Computes the inverse of a real symmetric matrix in packed storage using the factorization computed by dsptrf.",
   "license": "MIT",

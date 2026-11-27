@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zsyr2k",
+  "name": "@rreusser/blahpack/blas/zsyr2k",
   "version": "1.0.0",
   "description": "Perform one of the symmetric rank-2k operations C := alpha*A*B**T + alpha*B*A**T + beta*C or C := alpha*A**T*B + alpha*B**T*A + beta*C.",
   "license": "MIT",

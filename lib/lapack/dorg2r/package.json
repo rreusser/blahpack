@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorg2r",
+  "name": "@rreusser/blahpack/lapack/dorg2r",
   "version": "1.0.0",
   "description": "Generates all or part of the orthogonal matrix Q from a QR factorization determined by sgeqrf (unblocked algorithm)",
   "license": "MIT",

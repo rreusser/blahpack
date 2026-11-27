@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsptrf",
+  "name": "@rreusser/blahpack/lapack/dsptrf",
   "version": "1.0.0",
   "description": "Computes the Bunch-Kaufman factorization of a real symmetric matrix in packed storage.",
   "license": "MIT",

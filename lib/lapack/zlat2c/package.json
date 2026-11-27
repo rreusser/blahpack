@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlat2c",
+  "name": "@rreusser/blahpack/lapack/zlat2c",
   "version": "1.0.0",
   "description": "Converts a double-complex triangular matrix to a complex triangular matrix",
   "license": "MIT",

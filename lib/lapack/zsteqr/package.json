@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsteqr",
+  "name": "@rreusser/blahpack/lapack/zsteqr",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and, optionally, eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method",
   "license": "MIT",

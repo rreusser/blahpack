@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgges",
+  "name": "@rreusser/blahpack/lapack/dgges",
   "version": "1.0.0",
   "description": "Computes generalized eigenvalues and real Schur form for a pair of real nonsymmetric matrices",
   "license": "MIT",

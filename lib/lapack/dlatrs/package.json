@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatrs",
+  "name": "@rreusser/blahpack/lapack/dlatrs",
   "version": "1.0.0",
   "description": "Solve a triangular system with scaling to prevent overflow",
   "license": "MIT",

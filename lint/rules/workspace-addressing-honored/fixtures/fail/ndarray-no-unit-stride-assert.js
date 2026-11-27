@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgetri/lib/ndarray.js
+// target: lib/lapack/dgetri/lib/ndarray.js
 // expect: never asserts it is 1
 // dgetri's base.js forwards WORK to its callees with a literal unit stride,
 // so it does not honor strideWork; ndarray.js must reject a non-unit one.

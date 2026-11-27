@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhprfs",
+  "name": "@rreusser/blahpack/lapack/zhprfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a complex system A * X = B where A is Hermitian in packed storage and provides error bounds.",
   "license": "MIT",

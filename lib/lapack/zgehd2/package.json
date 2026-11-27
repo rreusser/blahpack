@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgehd2",
+  "name": "@rreusser/blahpack/lapack/zgehd2",
   "version": "1.0.0",
   "description": "Reduce a complex general matrix to upper Hessenberg form (unblocked)",
   "license": "MIT",

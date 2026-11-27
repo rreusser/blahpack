@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeqrf",
+  "name": "@rreusser/blahpack/lapack/dgeqrf",
   "version": "1.0.0",
   "description": "Compute QR factorization of a real matrix (blocked).",
   "license": "MIT",

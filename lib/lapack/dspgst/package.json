@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspgst",
+  "name": "@rreusser/blahpack/lapack/dspgst",
   "version": "1.0.0",
   "description": "Reduces a real symmetric-definite generalized eigenproblem to standard form using packed storage.",
   "license": "MIT",

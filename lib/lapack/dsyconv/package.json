@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsyconv",
+  "name": "@rreusser/blahpack/lapack/dsyconv",
   "version": "1.0.0",
   "description": "Convert A given by TRF into L and D and vice-versa",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_porfsx_extended",
+  "name": "@rreusser/blahpack/lapack/zla_porfsx_extended",
   "version": "1.0.0",
   "description": "Improves the computed solution using extra-precise iterative refinement for Hermitian positive-definite matrices",
   "license": "MIT",

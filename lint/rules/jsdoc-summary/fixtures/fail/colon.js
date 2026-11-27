@@ -1,4 +1,4 @@
-// target: lib/blas/base/dgemm/lib/dgemm.js
+// target: lib/blas/dgemm/lib/dgemm.js
 // expect: ends mid-statement
 /**
 * Performs one of the matrix-matrix operations:.

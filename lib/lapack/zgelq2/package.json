@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgelq2",
+  "name": "@rreusser/blahpack/lapack/zgelq2",
   "version": "1.0.0",
   "description": "Computes the LQ factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",

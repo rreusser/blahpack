@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetri2x",
+  "name": "@rreusser/blahpack/lapack/zhetri2x",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex Hermitian indefinite matrix A using the factorization A = U*D*U**H or A = L*D*L**H computed by zhetrf.",
   "license": "MIT",

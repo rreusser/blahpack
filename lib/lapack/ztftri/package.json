@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztftri",
+  "name": "@rreusser/blahpack/lapack/ztftri",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex triangular matrix in Rectangular Full Packed format.",
   "license": "MIT",

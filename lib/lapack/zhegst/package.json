@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhegst",
+  "name": "@rreusser/blahpack/lapack/zhegst",
   "version": "1.0.0",
   "description": "Reduces a Hermitian-definite generalized eigenproblem to standard form (blocked)",
   "license": "MIT",

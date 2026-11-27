@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlacon",
+  "name": "@rreusser/blahpack/lapack/zlacon",
   "version": "1.0.0",
   "description": "Estimates the 1-norm of a square complex matrix using reverse communication.",
   "license": "MIT",

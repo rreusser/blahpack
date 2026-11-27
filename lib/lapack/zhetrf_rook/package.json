@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrf_rook",
+  "name": "@rreusser/blahpack/lapack/zhetrf_rook",
   "version": "1.0.0",
   "description": "Computes the factorization of a complex Hermitian matrix using the bounded Bunch-Kaufman (rook) diagonal pivoting method (blocked algorithm).",
   "license": "MIT",

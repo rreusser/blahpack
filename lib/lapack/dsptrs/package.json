@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsptrs",
+  "name": "@rreusser/blahpack/lapack/dsptrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations with a real symmetric matrix in packed storage using the factorization computed by dsptrf.",
   "license": "MIT",

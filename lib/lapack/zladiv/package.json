@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zladiv",
+  "name": "@rreusser/blahpack/lapack/zladiv",
   "version": "1.0.0",
   "description": "Perform complex division using dladiv",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlagtm",
+  "name": "@rreusser/blahpack/lapack/dlagtm",
   "version": "1.0.0",
   "description": "Multiply a general tridiagonal matrix by a rectangular matrix",
   "license": "MIT",

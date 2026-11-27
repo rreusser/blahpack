@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dasum",
+  "name": "@rreusser/blahpack/blas/dasum",
   "version": "1.0.0",
   "description": "Compute the sum of absolute values of a vector",
   "license": "MIT",

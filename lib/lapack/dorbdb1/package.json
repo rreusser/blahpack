@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorbdb1",
+  "name": "@rreusser/blahpack/lapack/dorbdb1",
   "version": "1.0.0",
   "description": "simultaneously bidiagonalize the blocks of a tall and skinny matrix with orthonormal columns",
   "license": "MIT",

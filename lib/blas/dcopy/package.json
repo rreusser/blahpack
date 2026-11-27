@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dcopy",
+  "name": "@rreusser/blahpack/blas/dcopy",
   "version": "1.0.0",
   "description": "Copy a vector x to a vector y",
   "license": "MIT",

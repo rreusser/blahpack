@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gbrpvgrw",
+  "name": "@rreusser/blahpack/lapack/dla_gbrpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor norm(A)/norm(U) for a general banded matrix.",
   "license": "MIT",

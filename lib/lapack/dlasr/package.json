@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasr",
+  "name": "@rreusser/blahpack/lapack/dlasr",
   "version": "1.0.0",
   "description": "Apply a sequence of plane rotations to a general rectangular matrix",
   "license": "MIT",

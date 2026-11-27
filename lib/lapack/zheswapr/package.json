@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zheswapr",
+  "name": "@rreusser/blahpack/lapack/zheswapr",
   "version": "1.0.0",
   "description": "Applies an elementary permutation to a complex Hermitian matrix",
   "license": "MIT",

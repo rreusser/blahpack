@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhegs2",
+  "name": "@rreusser/blahpack/lapack/zhegs2",
   "version": "1.0.0",
   "description": "Reduces a Hermitian definite generalized eigenproblem to standard form, using the factorization results obtained from cpotrf (unblocked algorithm)",
   "license": "MIT",

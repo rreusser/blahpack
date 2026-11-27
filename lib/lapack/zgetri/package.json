@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgetri",
+  "name": "@rreusser/blahpack/lapack/zgetri",
   "version": "1.0.0",
   "description": "Computes the inverse of a matrix using the LU factorization from zgetrf (complex double-precision).",
   "license": "MIT",

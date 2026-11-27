@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarrb",
+  "name": "@rreusser/blahpack/lapack/dlarrb",
   "version": "1.0.0",
   "description": "Provides limited bisection to locate eigenvalues for more accuracy",
   "license": "MIT",

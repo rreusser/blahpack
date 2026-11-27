@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpev",
+  "name": "@rreusser/blahpack/lapack/zhpev",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a complex Hermitian matrix in packed storage.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dspr2",
+  "name": "@rreusser/blahpack/blas/dspr2",
   "version": "1.0.0",
   "description": "Perform symmetric rank-2 update of a packed matrix",
   "license": "MIT",

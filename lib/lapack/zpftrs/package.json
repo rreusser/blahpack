@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpftrs",
+  "name": "@rreusser/blahpack/lapack/zpftrs",
   "version": "1.0.0",
   "description": "Solves a complex system A * X = B where A is Hermitian positive definite in Rectangular Full Packed format.",
   "license": "MIT",

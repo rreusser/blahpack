@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgetrf2",
+  "name": "@rreusser/blahpack/lapack/dgetrf2",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlapmr",
+  "name": "@rreusser/blahpack/lapack/zlapmr",
   "version": "1.0.0",
   "description": "Rearrange the rows of a complex matrix as specified by a permutation vector.",
   "license": "MIT",

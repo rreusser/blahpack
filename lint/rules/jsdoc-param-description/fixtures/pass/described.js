@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgesv/lib/base.js
+// target: lib/lapack/dgesv/lib/base.js
 /**
 * Solves a linear system.
 *

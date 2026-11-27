@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlagtf",
+  "name": "@rreusser/blahpack/lapack/dlagtf",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a matrix T-λI",
   "license": "MIT",

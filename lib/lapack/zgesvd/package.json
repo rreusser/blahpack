@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgesvd",
+  "name": "@rreusser/blahpack/lapack/zgesvd",
   "version": "1.0.0",
   "description": "Computes the singular value decomposition (SVD) for general matrices",
   "license": "MIT",

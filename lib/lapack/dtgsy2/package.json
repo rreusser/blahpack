@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtgsy2",
+  "name": "@rreusser/blahpack/lapack/dtgsy2",
   "version": "1.0.0",
   "description": "Solves the generalized Sylvester equation (unblocked algorithm)",
   "license": "MIT",

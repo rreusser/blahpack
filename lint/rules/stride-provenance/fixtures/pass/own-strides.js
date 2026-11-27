@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsterf/lib/base.js
+// target: lib/lapack/dsterf/lib/base.js
 // A vector handed to a matrix routine as an N×1 view: both strides come from
 // strideD (the column stride is unused but still the array's own).
 import dlascl from '../../dlascl/lib/base.js';

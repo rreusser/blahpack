@@ -9,13 +9,13 @@ import assert from 'node:assert/strict';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Int32Array from '@stdlib/array/int32/lib/index.js';
-import zhetrf from '../../../../../lib/lapack/base/zhetrf/lib/ndarray.js';
+import zhetrf from '../../zhetrf/lib/ndarray.js';
 
 // FIXTURES //
 
-import upper_4x4 from '../../../../../lib/lapack/base/zhetrf/test/fixtures/upper_4x4.json' with { type: 'json' };
-import lower_4x4 from '../../../../../lib/lapack/base/zhetrf/test/fixtures/lower_4x4.json' with { type: 'json' };
-import lower_6x6 from '../../../../../lib/lapack/base/zhetrf/test/fixtures/lower_6x6.json' with { type: 'json' };
+import upper_4x4 from '../../zhetrf/test/fixtures/upper_4x4.json' with { type: 'json' };
+import lower_4x4 from '../../zhetrf/test/fixtures/lower_4x4.json' with { type: 'json' };
+import lower_6x6 from '../../zhetrf/test/fixtures/lower_6x6.json' with { type: 'json' };
 
 // FUNCTIONS //
 

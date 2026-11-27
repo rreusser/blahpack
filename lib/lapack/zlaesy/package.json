@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaesy",
+  "name": "@rreusser/blahpack/lapack/zlaesy",
   "version": "1.0.0",
   "description": "Compute the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix.",
   "license": "MIT",

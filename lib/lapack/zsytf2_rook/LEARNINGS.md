@@ -22,7 +22,7 @@
 
 ## Dependency interface surprises
 
-- `zsyr` is in `lib/lapack/base/zsyr/` (not `lib/blas/base/`) because
+- `zsyr` is in `lib/lapack/zsyr/` (not `lib/blas/`) because
   LAPACK provides it, not Reference BLAS.
 - `zscal`/`zsyr` accept `Complex128` objects for scalar args, so the
   callers allocate fresh `new Complex128(...)` at each call. Could be

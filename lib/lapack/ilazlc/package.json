@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ilazlc",
+  "name": "@rreusser/blahpack/lapack/ilazlc",
   "version": "1.0.0",
   "description": "Scan a complex matrix for its last non-zero column",
   "license": "MIT",

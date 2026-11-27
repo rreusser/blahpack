@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlasr",
+  "name": "@rreusser/blahpack/lapack/zlasr",
   "version": "1.0.0",
   "description": "Apply a sequence of plane rotations to a complex matrix",
   "license": "MIT",

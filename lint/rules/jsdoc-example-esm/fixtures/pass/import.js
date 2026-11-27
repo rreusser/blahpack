@@ -1,12 +1,12 @@
-// target: lib/lapack/base/ddisna/lib/index.js
+// target: lib/lapack/ddisna/lib/index.js
 /**
 * Computes reciprocal condition numbers.
 *
-* @module @rreusser/blahpack/lapack/base/ddisna
+* @module @rreusser/blahpack/lapack/ddisna
 *
 * @example
 * import Float64Array from '@stdlib/array/float64/lib/index.js';
-* import ddisna from '@rreusser/blahpack/lapack/base/ddisna';
+* import ddisna from '@rreusser/blahpack/lapack/ddisna';
 *
 * const d = new Float64Array( [ 1.0, 2.0 ] );
 */

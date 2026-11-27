@@ -76,8 +76,8 @@ banded symmetric pencil via ARPACK shift-invert instead of `dsbgvx`) is not a
 paradox once you see that the two algorithms are **two different reference
 routines**, and the choice between them lives *above* both:
 
-- `lib/lapack/base/dsbgvx` — faithful, verified against LAPACK.
-- `lib/arpack/base/dsaupd` / `dseupd` / `dsband` — faithful, verified against
+- `lib/lapack/dsbgvx` — faithful, verified against LAPACK.
+- `lib/arpack/dsaupd` / `dseupd` / `dsband` — faithful, verified against
   arpack-ng.
 
 The **application** (a notebook's solver routing, or a higher-level driver)
@@ -103,7 +103,7 @@ faithful or optimized:
 
 - `data/BLAS-3.12.0`, `data/lapack-3.12.0`, `data/arpack-ng-*` — vendored
   reference sources, one tree per package.
-- `lib/blas/base/*`, `lib/lapack/base/*`, `lib/arpack/base/*` — translations,
+- `lib/blas/*`, `lib/lapack/*`, `lib/arpack/*` — translations,
   mirroring the reference trees.
 
 Never scatter one package's routines into another's namespace. A call graph

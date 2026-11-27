@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/ztrsm` — triangular solve with multiple right-hand sides
+`lib/blas/ztrsm` — triangular solve with multiple right-hand sides
 (`op(A)*X = alpha*B` or `X*op(A) = alpha*B`, solved in place into B). Complex
 analog of `dtrsm` (shipped 3.1–9.9x, `bench/dtrsm-opt/`).
 

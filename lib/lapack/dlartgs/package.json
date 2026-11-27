@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlartgs",
+  "name": "@rreusser/blahpack/lapack/dlartgs",
   "version": "1.0.0",
   "description": "Generates a plane rotation for the bidiagonal SVD implicit QR iteration",
   "license": "MIT",

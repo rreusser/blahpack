@@ -23,7 +23,7 @@
 
 ## Dependency interface surprises
 
-- `zsymv` is provided by `lib/lapack/base/zsymv` (not BLAS) since BLAS
+- `zsymv` is provided by `lib/lapack/zsymv` (not BLAS) since BLAS
   has no symmetric-complex matvec. This matched the pattern used in
   zsytri.
 - `zsyr` is required transitively by `zsytf2_rook` for the Fortran

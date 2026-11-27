@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqr5",
+  "name": "@rreusser/blahpack/lapack/zlaqr5",
   "version": "1.0.0",
   "description": "Complex multi-shift QR sweep",
   "license": "MIT",

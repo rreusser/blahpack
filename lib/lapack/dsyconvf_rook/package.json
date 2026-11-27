@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsyconvf_rook",
+  "name": "@rreusser/blahpack/lapack/dsyconvf_rook",
   "version": "1.0.0",
   "description": "Converts the factorization output format used in dsytrf_rook",
   "license": "MIT",

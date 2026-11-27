@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaev2",
+  "name": "@rreusser/blahpack/lapack/dlaev2",
   "version": "1.0.0",
   "description": "Compute eigendecomposition of a 2-by-2 symmetric matrix",
   "license": "MIT",

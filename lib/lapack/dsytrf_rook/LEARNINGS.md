@@ -4,7 +4,7 @@
 
 - The blocked driver is structurally identical to dsytrf (standard
   Bunch-Kaufman) — same loop, same panel-vs-unblocked dispatch, same
-  IPIV offset adjustment. Modeling on `lib/lapack/base/dsytrf/lib/base.js`
+  IPIV offset adjustment. Modeling on `lib/lapack/dsytrf/lib/base.js`
   was straightforward; the only thing that differs is the choice of
   panel kernel (`dlasyf_rook` vs `dlasyf`) and unblocked kernel
   (`dsytf2_rook` vs `dsytf2`).

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlantr",
+  "name": "@rreusser/blahpack/lapack/dlantr",
   "version": "1.0.0",
   "description": "Computes the norm of a real triangular matrix",
   "license": "MIT",

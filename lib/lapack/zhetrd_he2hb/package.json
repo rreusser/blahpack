@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrd_he2hb",
+  "name": "@rreusser/blahpack/lapack/zhetrd_he2hb",
   "version": "1.0.0",
   "description": "Reduce a complex Hermitian matrix A to complex Hermitian band-diagonal form AB by a unitary similarity transformation: Q^H * A * Q = AB.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtbcon",
+  "name": "@rreusser/blahpack/lapack/dtbcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal condition number of a real triangular band matrix.",
   "license": "MIT",

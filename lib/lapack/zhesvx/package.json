@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhesvx",
+  "name": "@rreusser/blahpack/lapack/zhesvx",
   "version": "1.0.0",
   "description": "Computes the solution to system of linear equations A·X = B for Hermitian matrices",
   "license": "MIT",

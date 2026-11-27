@@ -30,11 +30,11 @@ function readJSON( p ) {
 	return JSON.parse( fs.readFileSync( p, 'utf8' ) );
 }
 
-// Routines with a module: lib/<pkg>/base/<routine>/lib/base.js.
+// Routines with a module: lib/<pkg>/<routine>/lib/base.js.
 function moduleRoutines() {
 	var out = {};
 	fs.readdirSync( path.join( ROOT, 'lib' ) ).forEach( function each( pkg ) {
-		var dir = path.join( ROOT, 'lib', pkg, 'base' );
+		var dir = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( dir ) ) {
 			return;
 		}

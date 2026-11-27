@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zungql",
+  "name": "@rreusser/blahpack/lapack/zungql",
   "version": "1.0.0",
   "description": "Generates an M-by-N complex matrix Q with orthonormal columns, which is defined as the last N columns of a product of K elementary reflectors of order M Q = H(k)",
   "license": "MIT",

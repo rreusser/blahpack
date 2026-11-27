@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dormql/lib/dormql.js
+// target: lib/lapack/dormql/lib/dormql.js
 // expect: base
 // Calling base.js skips ndarray.js's workspace minimum: a caller's short WORK runs unchecked and the result is NaN (ticket 0077).
 /* eslint-disable max-len, max-params */

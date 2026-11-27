@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dstebz",
+  "name": "@rreusser/blahpack/lapack/dstebz",
   "version": "1.0.0",
   "description": "Computes the eigenvalues of a symmetric tridiagonal matrix T",
   "license": "MIT",

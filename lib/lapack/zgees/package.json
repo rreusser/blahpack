@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgees",
+  "name": "@rreusser/blahpack/lapack/zgees",
   "version": "1.0.0",
   "description": "Computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for general matrices",
   "license": "MIT",

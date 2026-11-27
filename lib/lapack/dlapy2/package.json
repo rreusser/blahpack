@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlapy2",
+  "name": "@rreusser/blahpack/lapack/dlapy2",
   "version": "1.0.0",
   "description": "Returns sqrt(x2+y2)",
   "license": "MIT",

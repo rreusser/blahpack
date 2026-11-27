@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrcon",
+  "name": "@rreusser/blahpack/lapack/ztrcon",
   "version": "1.0.0",
   "description": "Estimate the reciprocal condition number of a complex triangular matrix",
   "license": "MIT",

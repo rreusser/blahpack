@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlamtsqr",
+  "name": "@rreusser/blahpack/lapack/dlamtsqr",
   "version": "1.0.0",
   "description": "applies an orthogonal matrix from a TSQR factorization to a real M-by-N matrix",
   "license": "MIT",

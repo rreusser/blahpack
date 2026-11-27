@@ -1,4 +1,4 @@
-// target: lib/blas/base/zscal/lib/base.js
+// target: lib/blas/zscal/lib/base.js
 // expect: without reinterpret()
 function zscal( N, Xv, offsetX ) {
 	return Xv[ offsetX * 2 ];

@@ -28,8 +28,8 @@ structure. Fixture equality and coverage % are NOT correctness.
 - [ ] Level recorded via `ledger.checked(...)`; `node bin/validation-level.js`
       shows `$ARGUMENTS` at **L3 or higher**.
 - [ ] Any bug found is logged in `test/harness/LEARNINGS.md` (before/with the fix; T8).
-- [ ] Test lives at `lib/<pkg>/base/$ARGUMENTS/test/test.validate.js` and passes:
-      `node --test lib/<pkg>/base/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20`
+- [ ] Test lives at `lib/<pkg>/$ARGUMENTS/test/test.validate.js` and passes:
+      `node --test lib/<pkg>/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20`
 
 **L3 is the definition of done (CONVENTIONS T7; not yet gated, ticket 0034).** Reach L4 when a trusted-routine or
 Fortran oracle is available (see step 6).
@@ -106,7 +106,7 @@ exposes; assert the output is **bit-for-bit** identical. This is the cheapest,
 highest-signal test for offset/stride/row-vs-col-major bugs.
 
 ```js
-// from lib/<pkg>/base/<routine>/test/ the repo root is five levels up:
+// from lib/<pkg>/<routine>/test/ the repo root is five levels up:
 import { layoutInvariant } from '../../../../../test/harness/invariance.js';
 layoutInvariant( schemes.<scheme>.layouts(), ( layout, idx ) => {
   const rng = new RNG( FIXED_SEED );            // identical values every variant
@@ -214,7 +214,7 @@ Kinds → levels: `residual|reconstruct|structural|orthonormal` = L2,
 `layout-invariance` = L3, `cross-validation|differential` = L4. Then:
 
 ```bash
-node --test lib/<pkg>/base/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20
+node --test lib/<pkg>/$ARGUMENTS/test/test.validate.js 2>&1 | tail -20
 node bin/validation-level.js            # confirm $ARGUMENTS is L3+
 ```
 

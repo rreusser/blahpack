@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dhseqr",
+  "name": "@rreusser/blahpack/lapack/dhseqr",
   "version": "1.0.0",
   "description": "Computes the eigenvalues of a Hessenberg matrix H and, optionally, the matrices T and Z from the Schur decomposition H = Z T Zᵀ",
   "license": "MIT",

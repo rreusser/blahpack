@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgbtrf",
+  "name": "@rreusser/blahpack/lapack/zgbtrf",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a complex m-by-n band matrix A using partial pivoting with row interchanges",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlantb",
+  "name": "@rreusser/blahpack/lapack/dlantb",
   "version": "1.0.0",
   "description": "Returns the norm of a real triangular band matrix.",
   "license": "MIT",

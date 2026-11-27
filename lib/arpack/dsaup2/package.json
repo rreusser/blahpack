@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsaup2",
+  "name": "@rreusser/blahpack/arpack/dsaup2",
   "version": "0.0.0",
   "description": "Intermediate driver for the Implicitly Restarted Lanczos iteration (dsaupd internal; reverse communication).",
   "license": "Apache-2.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqr3",
+  "name": "@rreusser/blahpack/lapack/zlaqr3",
   "version": "1.0.0",
   "description": "Complex aggressive early deflation (recursive)",
   "license": "MIT",

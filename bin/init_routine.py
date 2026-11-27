@@ -117,7 +117,7 @@ def main():
         print(f'Error: source not found for {routine}', file=sys.stderr)
         sys.exit(1)
 
-    module_dir = os.path.join(ROOT, 'lib', package, 'base', routine)
+    module_dir = os.path.join(ROOT, 'lib', package, routine)
     base_js = os.path.join(module_dir, 'lib', 'base.js')
 
     print(f'\n=== Initializing {routine} ({package}) ===\n', file=sys.stderr)

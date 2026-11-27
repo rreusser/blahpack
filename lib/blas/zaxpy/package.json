@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zaxpy",
+  "name": "@rreusser/blahpack/blas/zaxpy",
   "version": "1.0.0",
   "description": "Constant times a vector plus a vector",
   "license": "MIT",

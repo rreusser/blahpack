@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztfttr",
+  "name": "@rreusser/blahpack/lapack/ztfttr",
   "version": "1.0.0",
   "description": "Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard full format (TR)",
   "license": "MIT",

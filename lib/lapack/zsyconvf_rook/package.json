@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyconvf_rook",
+  "name": "@rreusser/blahpack/lapack/zsyconvf_rook",
   "version": "1.0.0",
   "description": "Converts the factorization output format used in zsytrf_rook for complex symmetric matrices",
   "license": "MIT",

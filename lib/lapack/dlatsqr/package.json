@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatsqr",
+  "name": "@rreusser/blahpack/lapack/dlatsqr",
   "version": "1.0.0",
   "description": "blocked Tall-Skinny QR (TSQR) factorization of a real M-by-N matrix (M >= N)",
   "license": "MIT",

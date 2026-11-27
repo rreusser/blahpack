@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztfsm",
+  "name": "@rreusser/blahpack/lapack/ztfsm",
   "version": "1.0.0",
   "description": "Solves a matrix equation with a complex triangular matrix in Rectangular Full Packed format.",
   "license": "MIT",

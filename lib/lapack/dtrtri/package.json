@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtrtri",
+  "name": "@rreusser/blahpack/lapack/dtrtri",
   "version": "1.0.0",
   "description": "Computes the inverse of a real upper or lower triangular matrix A",
   "license": "MIT",

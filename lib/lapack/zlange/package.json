@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlange",
+  "name": "@rreusser/blahpack/lapack/zlange",
   "version": "1.0.0",
   "description": "Compute the value of a matrix norm",
   "license": "MIT",

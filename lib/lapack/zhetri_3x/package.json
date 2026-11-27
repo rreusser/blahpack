@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetri_3x",
+  "name": "@rreusser/blahpack/lapack/zhetri_3x",
   "version": "1.0.0",
   "description": "Compute the inverse of a complex Hermitian indefinite matrix using the factorization computed by zhetrf_rk (worker routine called by zhetri_3)",
   "license": "MIT",

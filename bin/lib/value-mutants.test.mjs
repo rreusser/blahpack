@@ -24,14 +24,14 @@ import { ROOT } from './corpus.mjs';
 import { enumerate, runMutants } from '../value-mutants.mjs';
 
 const FIX = path.join( ROOT, 'test', 'harness', 'fixtures', 'value-mutants', 'zhetrf-pre58' );
-const ZLAHEF = path.join( ROOT, 'lib', 'lapack', 'base', 'zlahef', 'lib', 'base.js' );
-const TESTS = path.join( ROOT, 'lib', 'lapack', 'base', 'zhetrf', 'test' );
+const ZLAHEF = path.join( ROOT, 'lib', 'lapack', 'zlahef', 'lib', 'base.js' );
+const TESTS = path.join( ROOT, 'lib', 'lapack', 'zhetrf', 'test' );
 const CURRENT = [ 'test.js', 'test.ndarray.js', 'test.validate.js', 'test.zhetrf.js' ].map( ( f ) => path.join( TESTS, f ) );
 const OLD = [ path.join( TESTS, 'test.js' ), path.join( FIX, 'test.ndarray.js' ), path.join( TESTS, 'test.validate.js' ), path.join( TESTS, 'test.zhetrf.js' ) ];
 const SITE = /jmax = imax \+ 1 \+ izamax\( k - imax/;
 
 // A file path inside a (nonexistent) module, so imports resolve to real callees.
-const FAKE = path.join( ROOT, 'lib', 'blas', 'base', 'dfake', 'lib', 'base.js' );
+const FAKE = path.join( ROOT, 'lib', 'blas', 'dfake', 'lib', 'base.js' );
 const SNIPPET = [
 	'import dscal from \'../../dscal/lib/base.js\';',
 	'function dfake( N, x, strideX, offsetX ) {',
@@ -77,7 +77,7 @@ test( 'enumerate: each operator, at the sites it targets', () => {
 
 test( 'enumerate: a complex module\'s imaginary-part subscript `v[ i + 1 ]` is not mutated; other `+ 1` terms are', () => {
 	const src = 'function zfake( N, v, o ) {\n\tv[ o + 1 ] = v[ ( o + 1 ) * 2 ];\n}\nexport default zfake;\n';
-	const ms = enumerate( src, path.join( ROOT, 'lib', 'blas', 'base', 'zfake', 'lib', 'base.js' ) );
+	const ms = enumerate( src, path.join( ROOT, 'lib', 'blas', 'zfake', 'lib', 'base.js' ) );
 	assert.deepEqual( ms.map( ( m ) => m.before ), [ 'o + 1' ] );
 	assert.match( ms[ 0 ].after, /^o$/ );
 	assert.equal( ms[ 0 ].src.indexOf( 'v[ o ] =' ), -1 );
@@ -125,11 +125,11 @@ test( 'self-test (ticket 0108): on the old zlahef the tool flags the buggy line;
 });
 
 test( 'runMutants: a mutant that hangs is killed by the timeout and reported as such', async () => {
-	const file = path.join( ROOT, 'lib', 'blas', 'base', 'ddot', 'lib', 'base.js' );
+	const file = path.join( ROOT, 'lib', 'blas', 'ddot', 'lib', 'base.js' );
 	const src = fs.readFileSync( file, 'utf8' );
 	const hang = { 'key': 'k', 'line': 1, 'op': 'test', 'before': '', 'after': '', 'context': '', 'src': src.replace( 'dtemp = 0.0;', 'dtemp = 0.0; for ( ;; ) {}' ) };
 	assert.notEqual( hang.src, src );
-	const tests = [ path.join( ROOT, 'lib', 'blas', 'base', 'ddot', 'test', 'test.ndarray.js' ) ];
+	const tests = [ path.join( ROOT, 'lib', 'blas', 'ddot', 'test', 'test.ndarray.js' ) ];
 	const t0 = Date.now();
 	const r = await runMutants( { 'file': file, 'tests': tests, 'mutants': [ hang ], 'concurrency': 1, 'timeoutMs': 2000 } );
 	assert.equal( r.results[ 0 ].outcome, 'timeout' );

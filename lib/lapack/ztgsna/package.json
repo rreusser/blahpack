@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgsna",
+  "name": "@rreusser/blahpack/lapack/ztgsna",
   "version": "1.0.0",
   "description": "Estimates reciprocal condition numbers for eigenvalues and eigenvectors of a complex generalized Schur form",
   "license": "MIT",

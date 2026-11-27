@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsterf/lib/base.js
+// target: lib/lapack/dsterf/lib/base.js
 // expect: literalStride
 // dsterf, before the fix: an N×1 view of `d` with row stride 1.
 import dlascl from '../../dlascl/lib/base.js';

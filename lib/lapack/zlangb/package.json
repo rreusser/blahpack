@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlangb",
+  "name": "@rreusser/blahpack/lapack/zlangb",
   "version": "1.0.0",
   "description": "Returns the norm of a complex general band matrix.",
   "license": "MIT",

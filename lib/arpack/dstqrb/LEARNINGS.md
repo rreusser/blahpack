@@ -3,7 +3,7 @@
 ## Translation pitfalls
 
 -   **dstqrb is LAPACK's `dsteqr` with `icompz = 2` hardwired and Z reduced to
-    the last row.** The existing `lib/lapack/base/dsteqr` is the structural
+    the last row.** The existing `lib/lapack/dsteqr` is the structural
     template; only the Z handling changes: Z is a length-N vector initialized
     to `[0,...,0,1]`, the 2x2 blocks rotate `z[l],z[l+1]` (QL) / `z[l-1],z[l]`
     (QR) inline instead of via `dlasr`, the bulge-chase `dlasr` calls act on a

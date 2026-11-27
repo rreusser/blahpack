@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgemqrt",
+  "name": "@rreusser/blahpack/lapack/dgemqrt",
   "version": "1.0.0",
   "description": "Overwrites a real M-by-N matrix C with op(Q)*C or C*op(Q) using a compact WY representation.",
   "license": "MIT",

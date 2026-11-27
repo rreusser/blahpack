@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlascl2",
+  "name": "@rreusser/blahpack/lapack/dlascl2",
   "version": "1.0.0",
   "description": "Perform diagonal scaling on a matrix.",
   "license": "MIT",

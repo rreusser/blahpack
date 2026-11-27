@@ -7,7 +7,7 @@
 * Output:
 *   dist/_stdlib.js                     every stdlib module the library imports,
 *                                       converted from CommonJS and bundled once
-*   dist/<pkg>/base/<routine>.js        one file per `./<pkg>/base/<routine>`
+*   dist/<pkg>/<routine>.js        one file per `./<pkg>/<routine>`
 *                                       export in package.json: the routine and
 *                                       its in-library dependencies, minified;
 *                                       stdlib imports point at ../../_stdlib.js
@@ -37,13 +37,13 @@ const BANNER = `/*! ${pkg.name} ${pkg.version} | ${pkg.license} | ${pkg.homepage
 // exports map can never disagree.
 const entries = {};
 for ( const [ sub, file ] of Object.entries( pkg.exports ) ) {
-	const m = /^\.\/(\w+\/base\/\w+)$/.exec( sub );
+	const m = /^\.\/(\w+\/\w+)$/.exec( sub );
 	if ( m ) {
 		entries[ m[ 1 ] ] = path.join( ROOT, file );
 	}
 }
 if ( Object.keys( entries ).length === 0 ) {
-	throw new Error( 'no `./<pkg>/base/<routine>` entries in package.json exports' );
+	throw new Error( 'no `./<pkg>/<routine>` entries in package.json exports' );
 }
 
 // Pass 1: the exact set of stdlib specifiers the routines import, read from
@@ -71,7 +71,7 @@ const runtime = await build( {
 } );
 
 // Pass 3: one file per routine; each stdlib import becomes an import of the
-// runtime. Entries all sit at dist/<pkg>/base/, so the relative path is fixed.
+// runtime. Entries all sit at dist/<pkg>/, so the relative path is fixed.
 const toRuntime = {
 	name: 'stdlib-to-runtime',
 	setup( b ) {

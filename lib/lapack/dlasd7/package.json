@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasd7",
+  "name": "@rreusser/blahpack/lapack/dlasd7",
   "version": "1.0.0",
   "description": "Merge two sets of singular values together into a single sorted set and deflate.",
   "license": "MIT",

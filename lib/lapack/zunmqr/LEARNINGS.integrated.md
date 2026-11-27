@@ -15,7 +15,7 @@
 
 ## Dependency interface surprises
 
-- zlarft and zlarfb expect strides in complex elements, consistent with zunm2r and the rest of our codebase. The existing local helper in `lib/lapack/base/zggev/lib/zunmqr.js` uses doubles for strides and divides by 2 when calling these routines, but our standalone version passes complex-element strides directly.
+- zlarft and zlarfb expect strides in complex elements, consistent with zunm2r and the rest of our codebase. The existing local helper in `lib/lapack/zggev/lib/zunmqr.js` uses doubles for strides and divides by 2 when calling these routines, but our standalone version passes complex-element strides directly.
 - The T matrix for zlarft needs stride1=1 and stride2=ldt (where ldt = nb + 1), with offset 0. This layout matches Fortran's column-major storage.
 
 ## Automation opportunities

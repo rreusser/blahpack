@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtpmqrt",
+  "name": "@rreusser/blahpack/lapack/dtpmqrt",
   "version": "1.0.0",
   "description": "Apply Q from a triangular-pentagonal QR factorization (output of dtpqrt) to a stacked matrix C composed of A and B blocks",
   "license": "MIT",

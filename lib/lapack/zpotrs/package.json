@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpotrs",
+  "name": "@rreusser/blahpack/lapack/zpotrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations A·X = B with a Hermitian positive definite matrix A using the Cholesky factorization A = Uᴴ·U or A = L·Lᴴ computed by ZPOTRF",
   "license": "MIT",

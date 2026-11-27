@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggbak",
+  "name": "@rreusser/blahpack/lapack/zggbak",
   "version": "1.0.0",
   "description": "Back-transform eigenvectors of a balanced pair of matrices.",
   "license": "MIT",

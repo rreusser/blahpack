@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpocon",
+  "name": "@rreusser/blahpack/lapack/zpocon",
   "version": "1.0.0",
   "description": "Estimate the reciprocal condition number of a complex positive definite matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlantr",
+  "name": "@rreusser/blahpack/lapack/zlantr",
   "version": "1.0.0",
   "description": "Computes the norm of a complex triangular matrix",
   "license": "MIT",

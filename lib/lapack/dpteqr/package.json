@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpteqr",
+  "name": "@rreusser/blahpack/lapack/dpteqr",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric positive definite tridiagonal matrix.",
   "license": "MIT",

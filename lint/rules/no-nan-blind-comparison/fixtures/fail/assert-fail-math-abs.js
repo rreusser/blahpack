@@ -1,4 +1,4 @@
-// target: lib/blas/base/zsyr/test/test.ndarray.js
+// target: lib/blas/zsyr/test/test.ndarray.js
 // expect: blindIf
 import assert from 'node:assert/strict';
 

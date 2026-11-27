@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetd2",
+  "name": "@rreusser/blahpack/lapack/zhetd2",
   "version": "1.0.0",
   "description": "Reduces a Hermitian matrix to real symmetric tridiagonal form by an unitary similarity transformation (unblocked algorithm)",
   "license": "MIT",

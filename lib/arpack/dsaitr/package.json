@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsaitr",
+  "name": "@rreusser/blahpack/arpack/dsaitr",
   "version": "0.0.0",
   "description": "Extends a symmetric Lanczos factorization by np steps via reverse communication (the Arnoldi/Lanczos iteration inner step).",
   "license": "Apache-2.0",

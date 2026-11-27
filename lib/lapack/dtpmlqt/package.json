@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtpmlqt",
+  "name": "@rreusser/blahpack/lapack/dtpmlqt",
   "version": "1.0.0",
   "description": "applies a real orthogonal matrix Q (or Q^T) from a triangular-pentagonal compact-WY block reflector (output of dtplqt) to a real M-by-N matrix C composed of stacked blocks A and B",
   "license": "MIT",

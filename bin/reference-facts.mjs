@@ -54,7 +54,7 @@ function jsdocParams( src ) {
 function modules() {
 	const out = new Map();
 	for ( const pkg of readdirSync( join( ROOT, 'lib' ) ) ) {
-		const base = join( ROOT, 'lib', pkg, 'base' );
+		const base = join( ROOT, 'lib', pkg );
 		if ( !existsSync( base ) ) {
 			continue;
 		}

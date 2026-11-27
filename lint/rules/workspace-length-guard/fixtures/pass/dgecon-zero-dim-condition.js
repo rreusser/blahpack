@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgecon/lib/ndarray.js
+// target: lib/lapack/dgecon/lib/ndarray.js
 // A guard inside a zero-dimension condition counts: at N = 0 the JS may accept less (W3).
 /* eslint-disable max-len, max-params */
 

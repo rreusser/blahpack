@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarrc",
+  "name": "@rreusser/blahpack/lapack/dlarrc",
   "version": "1.0.0",
   "description": "Count eigenvalues of a symmetric tridiagonal matrix in an interval",
   "license": "MIT",

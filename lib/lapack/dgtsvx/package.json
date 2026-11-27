@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgtsvx",
+  "name": "@rreusser/blahpack/lapack/dgtsvx",
   "version": "1.0.0",
   "description": "Computes the solution to system of linear equations A·X = B for general tridiagonal matrices",
   "license": "MIT",

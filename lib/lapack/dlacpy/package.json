@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlacpy",
+  "name": "@rreusser/blahpack/lapack/dlacpy",
   "version": "1.0.0",
   "description": "Copy all or part of a matrix A to another matrix B.",
   "license": "MIT",

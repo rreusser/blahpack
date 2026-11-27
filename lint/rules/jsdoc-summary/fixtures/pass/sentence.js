@@ -1,4 +1,4 @@
-// target: lib/blas/base/dgemm/lib/dgemm.js
+// target: lib/blas/dgemm/lib/dgemm.js
 /**
 * Performs the matrix-matrix operation `C = α op(A) op(B) + β C`.
 *

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlansp",
+  "name": "@rreusser/blahpack/lapack/zlansp",
   "version": "1.0.0",
   "description": "Returns the norm of a complex symmetric matrix in packed storage.",
   "license": "MIT",

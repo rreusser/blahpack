@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhbtrd",
+  "name": "@rreusser/blahpack/lapack/zhbtrd",
   "version": "1.0.0",
   "description": "Reduces a complex Hermitian band matrix to real tridiagonal form by unitary similarity transformation.",
   "license": "MIT",

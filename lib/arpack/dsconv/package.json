@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsconv",
+  "name": "@rreusser/blahpack/arpack/dsconv",
   "version": "0.0.0",
   "description": "Convergence test for the symmetric Lanczos/Arnoldi eigenvalue iteration.",
   "license": "Apache-2.0",

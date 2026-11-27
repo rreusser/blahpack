@@ -14,7 +14,7 @@ var ROOT = path.join( __dirname, '..', '..' );
 function modules( only ) {
 	var out = [];
 	fs.readdirSync( path.join( ROOT, 'lib' ) ).forEach( function each( pkg ) {
-		var bdir = path.join( ROOT, 'lib', pkg, 'base' );
+		var bdir = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( bdir ) ) {
 			return;
 		}

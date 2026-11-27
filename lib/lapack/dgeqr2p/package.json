@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeqr2p",
+  "name": "@rreusser/blahpack/lapack/dgeqr2p",
   "version": "1.0.0",
   "description": "Computes a QR factorization with non-negative diagonal elements (unblocked algorithm)",
   "license": "MIT",

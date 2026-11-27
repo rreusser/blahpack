@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgebal",
+  "name": "@rreusser/blahpack/lapack/dgebal",
   "version": "1.0.0",
   "description": "Balances a general real matrix for eigenvalue computation",
   "license": "MIT",

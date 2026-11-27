@@ -41,6 +41,8 @@ jobs:
       - run: npm ci
       - name: Lint rule fixture tests
         run: npm run test:lint-rules
+      - name: "No module path keeps the retired base level (ticket 0125; fix: node bin/codemod-flatten.mjs --all)"
+        run: node bin/codemod-flatten.mjs --check
       - name: No escape hatches (no continue-on-error, baselines, skips, disabled rules)
         run: npm run lint:escape-hatches
       - name: Run ESLint
@@ -236,7 +238,7 @@ jobs:
       - name: Validate problem tickets and ticket coverage
         run: npm run tickets:check
 
-  # Benchmarks: every module benchmark (lib/*/base/*/benchmark/*.js) starts and
+  # Benchmarks: every module benchmark (lib/*/*/benchmark/*.js) starts and
   # runs. Each file gets `timeout 3`; a throw, a `not ok` (e.g. the NaN check),
   # or a nonzero exit other than the timeout fails. Hard gate (ticket 0027).
   benchmarks:

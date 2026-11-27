@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggqrf",
+  "name": "@rreusser/blahpack/lapack/dggqrf",
   "version": "1.0.0",
   "description": "Computes a generalized QR factorization of an N-by-M matrix A and an N-by-P matrix B: A = Q·R, B = Q·T·Z",
   "license": "MIT",

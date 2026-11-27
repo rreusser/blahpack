@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlagv2",
+  "name": "@rreusser/blahpack/lapack/dlagv2",
   "version": "1.0.0",
   "description": "Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (A,B) where B is upper triangular.",
   "license": "MIT",

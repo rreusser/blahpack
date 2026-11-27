@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqps",
+  "name": "@rreusser/blahpack/lapack/zlaqps",
   "version": "1.0.0",
   "description": "Computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3",
   "license": "MIT",

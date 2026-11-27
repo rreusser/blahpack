@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorbdb6",
+  "name": "@rreusser/blahpack/lapack/dorbdb6",
   "version": "1.0.0",
   "description": "orthogonalize a column vector with respect to the columns of a matrix with orthonormal columns",
   "license": "MIT",

@@ -119,7 +119,7 @@ Generate the fixture and the JS test scaffold:
 
 ```bash
 ./test/run_fortran.sh <package> <routine>
-python bin/gen_test.py <package> <routine> > lib/<package>/base/<routine>/test/test.ndarray.js
+python bin/gen_test.py <package> <routine> > lib/<package>/<routine>/test/test.ndarray.js
 ```
 
 ### Step 3: Translate base.js (judgment)
@@ -144,7 +144,7 @@ JSDoc under a `## Notes` heading. Once the module is done:
 
 ```bash
 node bin/fortran-docs.mjs --extract-params      # refresh data/fortran-*-docs.json (new routine)
-node bin/docs/readme.js lib/<package>/base/<routine>
+node bin/docs/readme.js lib/<package>/<routine>
 ```
 
 Translate the stripped body following the reference sections below:
@@ -162,8 +162,8 @@ scaffolded `test.js` and `test.<routine>.js` cover exports and the wrapper.
 Requirements: T1–T4. Test-design advice is in [Test design](#test-design).
 
 ```bash
-node --test lib/<package>/base/<routine>/test/test*.js 2>&1 | tail -20
-node --test --experimental-test-coverage lib/<package>/base/<routine>/test/test*.js 2>&1 | tail -30
+node --test lib/<package>/<routine>/test/test*.js 2>&1 | tail -20
+node --test --experimental-test-coverage lib/<package>/<routine>/test/test*.js 2>&1 | tail -30
 ```
 
 **Coverage does not verify early loop exits.** A `break` translating a Fortran
@@ -193,9 +193,9 @@ reason about, so changing that code means re-checking the proof.
 ### Step 5: Lint and conformance loop (until clean)
 
 ```bash
-bin/lint-fix.sh lib/<package>/base/<routine> 2>&1 | tail -20   # codemods + eslint --fix + test verify
-bin/lint.sh lib/<package>/base/<routine> 2>&1 | tail -20
-node bin/conformance.js lib/<package>/base/<routine>
+bin/lint-fix.sh lib/<package>/<routine> 2>&1 | tail -20   # codemods + eslint --fix + test verify
+bin/lint.sh lib/<package>/<routine> 2>&1 | tail -20
+node bin/conformance.js lib/<package>/<routine>
 bin/spec xcheck <routine>
 ```
 
@@ -206,7 +206,7 @@ gets fixed. To check dependents for regressions, run
 
 ### Step 6: LEARNINGS.md (mandatory)
 
-Fill in `lib/<package>/base/<routine>/LEARNINGS.md`: no `TODO: Fill in`
+Fill in `lib/<package>/<routine>/LEARNINGS.md`: no `TODO: Fill in`
 placeholder may remain; at least one concrete bullet (or `N/A`) per section.
 It captures what would make the NEXT translation faster:
 
@@ -227,8 +227,8 @@ scaffold stubs (conformance check `scaffold-noise.benchmark-generated` fails
 until it has run):
 
 ```bash
-node bin/gen-benchmark.mjs lib/<package>/base/<routine> --write
-ls lib/<package>/base/<routine>/benchmark/*.js > /tmp/bench-list.txt && bin/bench-smoke.sh /tmp/bench-list.txt
+node bin/gen-benchmark.mjs lib/<package>/<routine> --write
+ls lib/<package>/<routine>/benchmark/*.js > /tmp/bench-list.txt && bin/bench-smoke.sh /tmp/bench-list.txt
 ```
 
 Arrays that repeated in-place calls would grow to Inf/NaN are restored before

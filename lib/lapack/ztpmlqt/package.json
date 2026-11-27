@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztpmlqt",
+  "name": "@rreusser/blahpack/lapack/ztpmlqt",
   "version": "1.0.0",
   "description": "Apply complex unitary Q from triangular-pentagonal compact-WY (ztplqt) to a stacked matrix C = [A; B] or [A B].",
   "license": "MIT",

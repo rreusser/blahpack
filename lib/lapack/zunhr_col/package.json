@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunhr_col",
+  "name": "@rreusser/blahpack/lapack/zunhr_col",
   "version": "1.0.0",
   "description": "TODO: Add description for ZUNHR_COL.",
   "license": "MIT",

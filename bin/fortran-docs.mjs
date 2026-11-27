@@ -952,13 +952,13 @@ function renderDoc( routine, doc, rel, embed ) {
 
 
 /**
-* Module directories (`lib/<pkg>/base/<routine>`).
+* Module directories (`lib/<pkg>/<routine>`).
 */
 function modules() {
 	const out = [];
 	const libDir = join( ROOT, 'lib' );
 	for ( const pkg of readdirSync( libDir ) ) {
-		const base = join( libDir, pkg, 'base' );
+		const base = join( libDir, pkg );
 		if ( !existsSync( base ) ) {
 			continue;
 		}

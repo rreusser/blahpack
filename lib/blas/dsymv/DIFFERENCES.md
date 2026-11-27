@@ -1,6 +1,6 @@
 # dsymv: Differences from Reference
 
-Deviations of our translation (`lib/blas/base/dsymv/`) from a direct
+Deviations of our translation (`lib/blas/dsymv/`) from a direct
 rendering of the BLAS 3.12.0 reference (`dsymv.f`).
 
 ---

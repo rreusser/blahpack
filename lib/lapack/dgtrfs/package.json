@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgtrfs",
+  "name": "@rreusser/blahpack/lapack/dgtrfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a system of linear equations when the coefficient matrix is tridiagonal, and provides error bounds and backward error estimates for the solution",
   "license": "MIT",

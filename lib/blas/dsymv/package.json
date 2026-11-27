@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dsymv",
+  "name": "@rreusser/blahpack/blas/dsymv",
   "version": "1.0.0",
   "description": "Performs the matrix-vector operation y := α·A·x + β·y",
   "license": "MIT",

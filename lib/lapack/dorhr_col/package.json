@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorhr_col",
+  "name": "@rreusser/blahpack/lapack/dorhr_col",
   "version": "1.0.0",
   "description": "TODO: Add description for DORHR_COL.",
   "license": "MIT",

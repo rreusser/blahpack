@@ -31,7 +31,7 @@
   arguments (modified in place via `[0]`), and `pq` is an Int32Array.
 
 - **BLAS vs LAPACK require paths**: dgemm, drot, dscal are in
-  `../../../../blas/base/` not `../../`.
+  `../../../blas/` not `../`.
 
 ## Fortran test compilation
 

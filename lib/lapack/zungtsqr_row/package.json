@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zungtsqr_row",
+  "name": "@rreusser/blahpack/lapack/zungtsqr_row",
   "version": "1.0.0",
   "description": "Generates an M-by-N complex matrix Q with orthonormal columns from the output of ZLATSQR using a row-block (GETT) sweep",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgebal",
+  "name": "@rreusser/blahpack/lapack/zgebal",
   "version": "1.0.0",
   "description": "Balances a general complex matrix for eigenvalue computation",
   "license": "MIT",

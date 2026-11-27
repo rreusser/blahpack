@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zungr2",
+  "name": "@rreusser/blahpack/lapack/zungr2",
   "version": "1.0.0",
   "description": "Generates all or part of the unitary matrix Q from an RQ factorization determined by zgerqf (unblocked algorithm).",
   "license": "MIT",

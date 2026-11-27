@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhbgv",
+  "name": "@rreusser/blahpack/lapack/zhbgv",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a complex Hermitian-definite banded generalized eigenproblem.",
   "license": "MIT",

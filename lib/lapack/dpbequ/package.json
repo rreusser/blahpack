@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbequ",
+  "name": "@rreusser/blahpack/lapack/dpbequ",
   "version": "1.0.0",
   "description": "Compute row and column scalings to equilibrate a symmetric positive definite band matrix.",
   "license": "MIT",

@@ -74,7 +74,7 @@ function jsdocLines( lines ) {
 let moved = 0;
 let skipped = 0;
 for ( const pkg of readdirSync( join( ROOT, 'lib' ) ) ) {
-	const base = join( ROOT, 'lib', pkg, 'base' );
+	const base = join( ROOT, 'lib', pkg );
 	if ( !existsSync( base ) ) {
 		continue;
 	}

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbcon",
+  "name": "@rreusser/blahpack/lapack/zpbcon",
   "version": "1.0.0",
   "description": "Estimate reciprocal condition number of complex positive definite band matrix",
   "license": "MIT",

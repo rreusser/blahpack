@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/daxpy",
+  "name": "@rreusser/blahpack/blas/daxpy",
   "version": "1.0.0",
   "description": "Multiply a vector x by a constant and add the result to y.",
   "license": "MIT",

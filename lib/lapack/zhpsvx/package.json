@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpsvx",
+  "name": "@rreusser/blahpack/lapack/zhpsvx",
   "version": "1.0.0",
   "description": "Solves a complex system A * X = B where A is Hermitian in packed storage, with condition estimation and error bounds.",
   "license": "MIT",

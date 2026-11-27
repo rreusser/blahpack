@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlaswp/lib/base.js
+// target: lib/lapack/dlaswp/lib/base.js
 // A line comment between the JSDoc and the function does not hide the JSDoc.
 /**
 * Performs a series of row interchanges.

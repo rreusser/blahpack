@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyswapr",
+  "name": "@rreusser/blahpack/lapack/zsyswapr",
   "version": "1.0.0",
   "description": "Applies an elementary permutation to a complex symmetric matrix",
   "license": "MIT",

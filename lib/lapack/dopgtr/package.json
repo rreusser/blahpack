@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dopgtr",
+  "name": "@rreusser/blahpack/lapack/dopgtr",
   "version": "1.0.0",
   "description": "Generates a real orthogonal matrix Q from the elementary reflectors returned by dsptrd.",
   "license": "MIT",

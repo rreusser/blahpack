@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlanhb",
+  "name": "@rreusser/blahpack/lapack/zlanhb",
   "version": "1.0.0",
   "description": "Returns the norm of a complex Hermitian band matrix.",
   "license": "MIT",

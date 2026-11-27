@@ -1,4 +1,4 @@
-// target: lib/blas/base/ddot/lib/ddot.js
+// target: lib/blas/ddot/lib/ddot.js
 // A routine with no workspace may call base.js directly.
 /* eslint-disable max-len, max-params */
 

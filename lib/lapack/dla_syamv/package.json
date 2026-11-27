@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_syamv",
+  "name": "@rreusser/blahpack/lapack/dla_syamv",
   "version": "1.0.0",
   "description": "Computes a matrix-vector product using a symmetric indefinite matrix to calculate error bounds",
   "license": "MIT",

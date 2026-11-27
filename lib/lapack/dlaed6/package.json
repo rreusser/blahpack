@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaed6",
+  "name": "@rreusser/blahpack/lapack/dlaed6",
   "version": "1.0.0",
   "description": "Compute one Newton step in the solution of the secular equation.",
   "license": "MIT",

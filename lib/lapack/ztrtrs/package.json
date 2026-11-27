@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrtrs",
+  "name": "@rreusser/blahpack/lapack/ztrtrs",
   "version": "1.0.0",
   "description": "Solves a triangular system of the form A·X = B, Aᵀ·X = B, or Aᴴ·X = B",
   "license": "MIT",

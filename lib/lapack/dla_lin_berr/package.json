@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_lin_berr",
+  "name": "@rreusser/blahpack/lapack/dla_lin_berr",
   "version": "1.0.0",
   "description": "Computes a component-wise relative backward error",
   "license": "MIT",

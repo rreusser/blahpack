@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunghr",
+  "name": "@rreusser/blahpack/lapack/zunghr",
   "version": "1.0.0",
   "description": "Generates a complex unitary matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by ZGEHRD: Q = H(ilo) H(ilo+1)",
   "license": "MIT",

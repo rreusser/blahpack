@@ -5,8 +5,8 @@ const ROOT=path.resolve(import.meta.dirname,'../../../lib');
 const res={}; const inc=(k,n=1)=>res[k]=(res[k]||0)+n; const ex={}; const addEx=(k,v)=>{(ex[k]=ex[k]||[]);ex[k].push(v)};
 const ids=(node)=>{const s=new Set(); walk.full(node,n=>{if(n.type==='Identifier')s.add(n.name)}); return s;};
 const mods=new Set();
-for (const pkg of ['blas','lapack']) for (const r of fs.readdirSync(path.join(ROOT,pkg,'base'))) {
-  const p=path.join(ROOT,pkg,'base',r,'lib','base.js'); if(!fs.existsSync(p)) continue;
+for (const pkg of ['blas','lapack']) for (const r of fs.readdirSync(path.join(ROOT,pkg))) {
+  const p=path.join(ROOT,pkg,r,'lib','base.js'); if(!fs.existsSync(p)) continue;
   const ast=acorn.parse(fs.readFileSync(p,'utf8'),{ecmaVersion:'latest',sourceType:'module',locations:true});
   const fn=ast.body.find(n=>n.type==='FunctionDeclaration'&&n.id.name===r)||ast.body.filter(n=>n.type==='FunctionDeclaration').pop();
   if(!fn) continue;

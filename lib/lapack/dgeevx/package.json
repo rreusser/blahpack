@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeevx",
+  "name": "@rreusser/blahpack/lapack/dgeevx",
   "version": "1.0.0",
   "description": "Computes eigenvalues, eigenvectors, and reciprocal condition numbers for a real nonsymmetric matrix",
   "license": "MIT",

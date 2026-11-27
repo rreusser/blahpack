@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlag2",
+  "name": "@rreusser/blahpack/lapack/dlag2",
   "version": "1.0.0",
   "description": "Compute the eigenvalues of a 2-by-2 generalized eigenvalue problem.",
   "license": "MIT",

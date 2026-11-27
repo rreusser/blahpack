@@ -42,6 +42,9 @@
 			"kind": "tool",
 			"why": "launches Claude Code in the Docker dev container"
 		},
+		"bin/codemod-flatten.mjs": {
+			"kind": "gate"
+		},
 		"bin/codemod-fold-main.mjs": {
 			"kind": "tool",
 			"why": "codemod: folds lib/main.js into lib/index.js (ticket 0124); rerunnable on other branches, and conf:file-structure.no-forbidden-files names it as the fix"

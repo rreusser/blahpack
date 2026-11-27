@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlahqr",
+  "name": "@rreusser/blahpack/lapack/zlahqr",
   "version": "1.0.0",
   "description": "Compute eigenvalues and Schur form of upper Hessenberg matrix",
   "license": "MIT",

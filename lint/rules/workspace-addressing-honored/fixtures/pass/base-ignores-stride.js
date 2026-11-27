@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dtrevc/lib/base.js
+// target: lib/lapack/dtrevc/lib/base.js
 function dtrevc( N, WORK, strideWork, offsetWork ) {
 	let j;
 	for ( j = 0; j < N; j++ ) {

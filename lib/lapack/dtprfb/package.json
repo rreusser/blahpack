@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtprfb",
+  "name": "@rreusser/blahpack/lapack/dtprfb",
   "version": "1.0.0",
   "description": "Applies a real triangular-pentagonal block reflector to a matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsycon_3",
+  "name": "@rreusser/blahpack/lapack/dsycon_3",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the 1-norm condition number of a real symmetric matrix using the factorization computed by dsytrf_rk",
   "license": "MIT",

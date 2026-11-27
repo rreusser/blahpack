@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeequ",
+  "name": "@rreusser/blahpack/lapack/zgeequ",
   "version": "1.0.0",
   "description": "Compute row and column scalings for a complex general matrix",
   "license": "MIT",

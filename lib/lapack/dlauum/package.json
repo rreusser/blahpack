@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlauum",
+  "name": "@rreusser/blahpack/lapack/dlauum",
   "version": "1.0.0",
   "description": "Compute the product of an upper or lower triangular matrix with its transpose (blocked)",
   "license": "MIT",

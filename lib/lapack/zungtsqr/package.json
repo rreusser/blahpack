@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zungtsqr",
+  "name": "@rreusser/blahpack/lapack/zungtsqr",
   "version": "1.0.0",
   "description": "Generates an M-by-N complex matrix Q with orthonormal columns from a Tall-Skinny QR factorization (output of zlatsqr).",
   "license": "MIT",

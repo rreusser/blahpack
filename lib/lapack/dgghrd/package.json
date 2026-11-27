@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgghrd",
+  "name": "@rreusser/blahpack/lapack/dgghrd",
   "version": "1.0.0",
   "description": "Reduces a pair of real matrices (A,B) to generalized upper Hessenberg form using orthogonal transformations.",
   "license": "MIT",

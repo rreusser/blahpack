@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dtpsv",
+  "name": "@rreusser/blahpack/blas/dtpsv",
   "version": "1.0.0",
   "description": "Solve a triangular packed system of equations",
   "license": "MIT",

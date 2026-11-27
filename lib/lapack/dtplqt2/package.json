@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtplqt2",
+  "name": "@rreusser/blahpack/lapack/dtplqt2",
   "version": "1.0.0",
   "description": "Computes LQ factorization of a triangular-pentagonal matrix using compact WY representation (unblocked)",
   "license": "MIT",

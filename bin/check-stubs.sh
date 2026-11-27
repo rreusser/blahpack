@@ -10,9 +10,9 @@
 set -uo pipefail
 
 stubs=()
-for dir in lib/blas/base/*/lib lib/lapack/base/*/lib; do
+for dir in lib/blas/*/lib lib/lapack/*/lib; do
   [ -d "$dir" ] || continue
-  routine=$(echo "$dir" | sed 's|.*/base/||' | sed 's|/lib||')
+  routine=$(basename "$(dirname "$dir")")
 
   for f in "$dir"/*.js; do
     [ -f "$f" ] || continue

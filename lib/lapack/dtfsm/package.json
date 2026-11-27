@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtfsm",
+  "name": "@rreusser/blahpack/lapack/dtfsm",
   "version": "1.0.0",
   "description": "Solves a matrix equation with a triangular matrix in Rectangular Full Packed format.",
   "license": "MIT",

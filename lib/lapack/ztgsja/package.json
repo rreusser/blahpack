@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgsja",
+  "name": "@rreusser/blahpack/lapack/ztgsja",
   "version": "1.0.0",
   "description": "Computes the generalized singular value decomposition (GSVD) of two complex upper triangular (or trapezoidal) matrices A and B",
   "license": "MIT",

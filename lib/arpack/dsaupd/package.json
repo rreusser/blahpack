@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsaupd",
+  "name": "@rreusser/blahpack/arpack/dsaupd",
   "version": "0.0.0",
   "description": "Reverse communication interface for the Implicitly Restarted Lanczos iteration",
   "license": "Apache-2.0",

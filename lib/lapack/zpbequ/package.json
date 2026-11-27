@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbequ",
+  "name": "@rreusser/blahpack/lapack/zpbequ",
   "version": "1.0.0",
   "description": "Compute row and column scalings to equilibrate a complex Hermitian positive definite band matrix.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggsvp3",
+  "name": "@rreusser/blahpack/lapack/zggsvp3",
   "version": "1.0.0",
   "description": "Computes unitary matrices for generalized SVD pre-processing of a complex matrix pair",
   "license": "MIT",

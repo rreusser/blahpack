@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsytri2/lib/base.js
+// target: lib/lapack/dsytri2/lib/base.js
 // DSYTRI2 rejects an LWORK below its minimum; it never adapts to it.
 const NBMAX = 32;
 function dsytri2( uplo, N, A, strideA1, strideA2, offsetA, IPIV, strideIPIV, offsetIPIV, WORK, strideWork, offsetWork ) {

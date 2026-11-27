@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunbdb2",
+  "name": "@rreusser/blahpack/lapack/zunbdb2",
   "version": "1.0.0",
   "description": "Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix [X11; X21] with orthonormal columns (P <= min(M-P, Q, M-Q))",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/iladlr",
+  "name": "@rreusser/blahpack/lapack/iladlr",
   "version": "1.0.0",
   "description": "Find the last non-zero row of a real matrix.",
   "license": "MIT",

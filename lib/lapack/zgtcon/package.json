@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgtcon",
+  "name": "@rreusser/blahpack/lapack/zgtcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a complex tridiagonal matrix A using the LU factorization as computed by ZGTTRF",
   "license": "MIT",

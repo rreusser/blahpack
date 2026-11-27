@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyconv",
+  "name": "@rreusser/blahpack/lapack/zsyconv",
   "version": "1.0.0",
   "description": "Converts A given by ZHETRF into L and D or vice-versa",
   "license": "MIT",

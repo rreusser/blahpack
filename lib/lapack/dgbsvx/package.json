@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgbsvx",
+  "name": "@rreusser/blahpack/lapack/dgbsvx",
   "version": "1.0.0",
   "description": "Solves a real system A * X = B where A is general band, with equilibration, condition estimation, and error bounds.",
   "license": "MIT",

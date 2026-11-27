@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarfb",
+  "name": "@rreusser/blahpack/lapack/dlarfb",
   "version": "1.0.0",
   "description": "Applies a block reflector or its transpose to a general rectangular matrix",
   "license": "MIT",

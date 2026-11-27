@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaic1",
+  "name": "@rreusser/blahpack/lapack/zlaic1",
   "version": "1.0.0",
   "description": "Applies one step of incremental condition estimation for complex matrices",
   "license": "MIT",

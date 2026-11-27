@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsycon_rook",
+  "name": "@rreusser/blahpack/lapack/dsycon_rook",
   "version": "1.0.0",
   "description": "Estimate reciprocal condition number of a real symmetric matrix using rook-pivoted factorization",
   "license": "MIT",

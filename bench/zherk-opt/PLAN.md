@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zherk` — Hermitian rank-k update (`C = alpha*A*A^H + beta*C`,
+`lib/blas/zherk` — Hermitian rank-k update (`C = alpha*A*A^H + beta*C`,
 alpha and beta REAL, one triangle of C updated). Complex analog of `dsyrk`
 (shipped 2.6–17.7x from 4x4 tiling, `bench/dsyrk-opt/`).
 

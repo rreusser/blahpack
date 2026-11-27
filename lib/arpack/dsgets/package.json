@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsgets",
+  "name": "@rreusser/blahpack/arpack/dsgets",
   "version": "0.0.0",
   "description": "Selects the shifts for the implicitly restarted symmetric Lanczos/Arnoldi iteration and sorts the current Ritz values.",
   "license": "Apache-2.0",

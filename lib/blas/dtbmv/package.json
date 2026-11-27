@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dtbmv",
+  "name": "@rreusser/blahpack/blas/dtbmv",
   "version": "1.0.0",
   "description": "Perform matrix-vector operation with a triangular band matrix",
   "license": "MIT",

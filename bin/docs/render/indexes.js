@@ -84,7 +84,7 @@ export function homeHTML( grouped, site ) {
 	const total = counts.reduce( ( n, c ) => n + c[ 1 ], 0 );
 	let body = '<section class="hero"><h1>' + esc( site.shortName ) + '</h1><p class="hero-tag">' + esc( site.description ) + '</p>';
 	body += '<div class="hero-stats">' + counts.map( ( [ pkg, n ] ) => '<a class="stat" href="reference/' + pkg + '/index.html"><span class="stat-n">' + n + '</span><span class="stat-l">' + PACKAGES[ pkg ].title + ' routines</span></a>' ).join( '' ) + '</div>';
-	body += codeBlock( 'import dgesv from \'' + site.name + '/lapack/base/dgesv\';\n\n// Solve A X = B (column-major, 2×2, one right-hand side):\nconst A = new Float64Array( [ 1.0, 3.0, 2.0, 4.0 ] );\nconst B = new Float64Array( [ 5.0, 11.0 ] );\nconst IPIV = new Int32Array( 2 );\n\nconst info = dgesv( \'column-major\', 2, 1, A, 2, IPIV, 1, B, 2 );\n// info => 0, B => [ 1.0, 2.0 ]' );
+	body += codeBlock( 'import dgesv from \'' + site.name + '/lapack/dgesv\';\n\n// Solve A X = B (column-major, 2×2, one right-hand side):\nconst A = new Float64Array( [ 1.0, 3.0, 2.0, 4.0 ] );\nconst B = new Float64Array( [ 5.0, 11.0 ] );\nconst IPIV = new Int32Array( 2 );\n\nconst info = dgesv( \'column-major\', 2, 1, A, 2, IPIV, 1, B, 2 );\n// info => 0, B => [ 1.0, 2.0 ]' );
 	body += '</section>';
 
 	body += '<section class="cards">' + counts.map( ( [ pkg, n, groups ] ) => '<a class="card" href="reference/' + pkg + '/index.html"><h2>' + PACKAGES[ pkg ].title + '</h2><p>' + esc( PACKAGES[ pkg ].long ) + '</p><p class="card-meta">' + n + ' routines · ' + groups.length + ' groups</p></a>' ).join( '' ) + '</section>';

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zhpmv",
+  "name": "@rreusser/blahpack/blas/zhpmv",
   "version": "1.0.0",
   "description": "Perform the Hermitian packed matrix-vector operation y := alpha*A*x + beta*y.",
   "license": "MIT",

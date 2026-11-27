@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dporfs",
+  "name": "@rreusser/blahpack/lapack/dporfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a system of linear equations when the coefficient matrix is symmetric positive definite, and provides error bounds and backward error estimates for the solution",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlartv",
+  "name": "@rreusser/blahpack/lapack/zlartv",
   "version": "1.0.0",
   "description": "Apply a vector of complex plane rotations with real cosines to two complex vectors.",
   "license": "MIT",

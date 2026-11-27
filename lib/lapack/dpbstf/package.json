@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpbstf",
+  "name": "@rreusser/blahpack/lapack/dpbstf",
   "version": "1.0.0",
   "description": "Computes a split Cholesky factorization of a real symmetric positive definite band matrix.",
   "license": "MIT",

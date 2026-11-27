@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dcabs1",
+  "name": "@rreusser/blahpack/blas/dcabs1",
   "version": "1.0.0",
   "description": "Compute the sum of the absolute values of the real and imaginary parts of a double-precision complex number.",
   "license": "MIT",

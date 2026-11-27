@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgetsqrhrt",
+  "name": "@rreusser/blahpack/lapack/zgetsqrhrt",
   "version": "1.0.0",
   "description": "Computes a column-blocked QR factorization of a complex M-by-N matrix using TSQR followed by Householder reconstruction.",
   "license": "MIT",

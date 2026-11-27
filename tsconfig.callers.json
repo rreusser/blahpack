@@ -28,8 +28,8 @@
 	"include": [
 		"types/jsdoc-aliases.d.ts",
 		"types/callers/globals.d.ts",
-		"lib/*/base/*/lib/*.js",
-		"lib/*/base/*/benchmark/*.js",
-		"lib/*/base/*/examples/*.js"
+		"lib/*/*/lib/*.js",
+		"lib/*/*/benchmark/*.js",
+		"lib/*/*/examples/*.js"
 	]
 }

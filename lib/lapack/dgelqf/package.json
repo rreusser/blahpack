@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgelqf",
+  "name": "@rreusser/blahpack/lapack/dgelqf",
   "version": "1.0.0",
   "description": "Compute the LQ factorization of a real matrix (blocked)",
   "license": "MIT",

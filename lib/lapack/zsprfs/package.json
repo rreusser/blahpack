@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsprfs",
+  "name": "@rreusser/blahpack/lapack/zsprfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a complex system A * X = B where A is symmetric in packed storage and provides error bounds.",
   "license": "MIT",

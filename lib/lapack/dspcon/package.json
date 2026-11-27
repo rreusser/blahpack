@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspcon",
+  "name": "@rreusser/blahpack/lapack/dspcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a real symmetric matrix in packed storage.",
   "license": "MIT",

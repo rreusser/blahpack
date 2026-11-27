@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/lapack/base/iparmq",
+  "name": "@rreusser/blahpack/lapack/iparmq",
   "version": "0.0.0",
   "description": "Returns the tuning parameters of the multishift QR algorithm.",
   "license": "Apache-2.0",

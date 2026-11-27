@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlamswlq",
+  "name": "@rreusser/blahpack/lapack/dlamswlq",
   "version": "1.0.0",
   "description": "Apply Q from a Short-Wide LQ (SWLQ) factorization to a matrix",
   "license": "MIT",

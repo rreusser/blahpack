@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpcon",
+  "name": "@rreusser/blahpack/lapack/zhpcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the condition number of a complex Hermitian matrix in packed storage.",
   "license": "MIT",

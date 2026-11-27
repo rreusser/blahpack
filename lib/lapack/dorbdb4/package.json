@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorbdb4",
+  "name": "@rreusser/blahpack/lapack/dorbdb4",
   "version": "1.0.0",
   "description": "Simultaneously bidiagonalize the blocks of a tall and skinny matrix [X11; X21] with orthonormal columns (CSD-prep variant 4 — widest M1/M2).",
   "license": "MIT",

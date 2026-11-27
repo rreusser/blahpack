@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlangt",
+  "name": "@rreusser/blahpack/lapack/dlangt",
   "version": "1.0.0",
   "description": "Compute the norm of a general tridiagonal matrix",
   "license": "MIT",

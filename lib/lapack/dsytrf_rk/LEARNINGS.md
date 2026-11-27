@@ -17,7 +17,7 @@
   identity `~x + c = ~(x - c)`). dsytrf has the same correction; we
   copied the pattern verbatim.
 - **Post-panel row swaps in the upper case must not be skipped.** The
-  existing `dsytrf` implementation at `lib/lapack/base/dsytrf/` happens
+  existing `dsytrf` implementation at `lib/lapack/dsytrf/` happens
   to omit the upper-case post-panel `dswap` loop entirely (it relies on
   callers like dsytrs to do the deferred swaps). For `_rk` we MUST do
   the swap pass-through because callers (e.g., `dsytrs_3`) consume the
@@ -44,7 +44,7 @@
   The post-panel adjustment in dsytrf_rk therefore operates on those
   encoded values directly, never on Fortran-style negatives.
 - `dswap` is called via base.js path
-  (`../../../../blas/base/dswap/lib/base.js`) rather than the public
+  (`../../../blas/dswap/lib/base.js`) rather than the public
   package — same pattern as dsytrf.
 
 ## Coverage gaps

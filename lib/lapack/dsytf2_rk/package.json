@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytf2_rk",
+  "name": "@rreusser/blahpack/lapack/dsytf2_rk",
   "version": "1.0.0",
   "description": "Factorizes a symmetric matrix A using the bounded Bunch-Kaufman (rook) diagonal pivoting method (_rk format).",
   "license": "MIT",

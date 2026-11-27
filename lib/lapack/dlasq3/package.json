@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasq3",
+  "name": "@rreusser/blahpack/lapack/dlasq3",
   "version": "1.0.0",
   "description": "Checks for deflation, computes a shift and calls dqds",
   "license": "MIT",

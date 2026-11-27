@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgsvj0",
+  "name": "@rreusser/blahpack/lapack/zgsvj0",
   "version": "1.0.0",
   "description": "Pre-processor for zgesvj performing Jacobi rotations",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsptrs",
+  "name": "@rreusser/blahpack/lapack/zsptrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations with a complex symmetric matrix in packed storage using the factorization computed by zsptrf.",
   "license": "MIT",

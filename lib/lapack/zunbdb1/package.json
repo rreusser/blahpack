@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunbdb1",
+  "name": "@rreusser/blahpack/lapack/zunbdb1",
   "version": "1.0.0",
   "description": "Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix with orthonormal columns (CSD column-block-1 variant)",
   "license": "MIT",

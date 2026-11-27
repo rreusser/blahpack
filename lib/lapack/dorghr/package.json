@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorghr",
+  "name": "@rreusser/blahpack/lapack/dorghr",
   "version": "1.0.0",
   "description": "Generates a real orthogonal matrix Q which is defined as the product of IHI-ILO elementary reflectors of order N, as returned by DGEHRD: Q = H(ilo) H(ilo+1)",
   "license": "MIT",

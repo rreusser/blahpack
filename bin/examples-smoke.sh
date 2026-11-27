@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run every module example (lib/*/base/*/examples/*.js) under `timeout 10`,
+# Run every module example (lib/*/*/examples/*.js) under `timeout 10`,
 # 8 in parallel (ticket 0041). A file fails if it exits nonzero for any reason,
 # a timeout included: an example is a short program a user copies, and it must
 # finish.
@@ -12,7 +12,7 @@
 cd "$(dirname "$0")/.." || exit 2
 OUT=${OUT:-.examples-smoke}
 rm -rf "$OUT"; mkdir -p "$OUT/logs"
-if [ -n "$1" ]; then cat "$1"; else ls lib/*/base/*/examples/*.js; fi > "$OUT/files.txt"
+if [ -n "$1" ]; then cat "$1"; else ls lib/*/*/examples/*.js; fi > "$OUT/files.txt"
 run() {
 	f=$1; key=$(echo "$f" | tr '/' '_')
 	if ! timeout "${SMOKE_TIMEOUT:-10}" node "$f" > "$OUT/logs/$key" 2>&1; then echo "$f"; fi

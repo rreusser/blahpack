@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgbcon",
+  "name": "@rreusser/blahpack/lapack/zgbcon",
   "version": "1.0.0",
   "description": "Estimate reciprocal condition number of complex general band matrix",
   "license": "MIT",

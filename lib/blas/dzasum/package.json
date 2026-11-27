@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dzasum",
+  "name": "@rreusser/blahpack/blas/dzasum",
   "version": "1.0.0",
   "description": "Compute the sum of absolute values of a complex vector",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlasyf",
+  "name": "@rreusser/blahpack/lapack/zlasyf",
   "version": "1.0.0",
   "description": "Compute a partial factorization of a complex symmetric matrix using Bunch-Kaufman pivoting",
   "license": "MIT",

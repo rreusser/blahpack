@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gerpvgrw",
+  "name": "@rreusser/blahpack/lapack/dla_gerpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor norm(A)/norm(U).",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsyev",
+  "name": "@rreusser/blahpack/lapack/dsyev",
   "version": "1.0.0",
   "description": "Computes the eigenvalues and, optionally, the left and/or right eigenvectors for symmetric matrices",
   "license": "MIT",

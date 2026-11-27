@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeqlf",
+  "name": "@rreusser/blahpack/lapack/dgeqlf",
   "version": "1.0.0",
   "description": "Computes a QL factorization of a real general matrix",
   "license": "MIT",

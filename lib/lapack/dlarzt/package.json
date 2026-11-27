@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarzt",
+  "name": "@rreusser/blahpack/lapack/dlarzt",
   "version": "1.0.0",
   "description": "Forms the triangular factor T of a block reflector",
   "license": "MIT",

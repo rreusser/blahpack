@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarft",
+  "name": "@rreusser/blahpack/lapack/dlarft",
   "version": "1.0.0",
   "description": "Forms the triangular factor T of a block reflector H = I - vtvH",
   "license": "MIT",

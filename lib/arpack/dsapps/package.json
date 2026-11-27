@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dsapps",
+  "name": "@rreusser/blahpack/arpack/dsapps",
   "version": "0.0.0",
   "description": "Applies NP implicit shifts to the symmetric Arnoldi/Lanczos factorization via bulge chasing",
   "license": "Apache-2.0",

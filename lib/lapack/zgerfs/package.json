@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgerfs",
+  "name": "@rreusser/blahpack/lapack/zgerfs",
   "version": "1.0.0",
   "description": "Improve solution to complex linear system with iterative refinement",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgelss",
+  "name": "@rreusser/blahpack/lapack/dgelss",
   "version": "1.0.0",
   "description": "Solves overdetermined or underdetermined systems for general matrices",
   "license": "MIT",

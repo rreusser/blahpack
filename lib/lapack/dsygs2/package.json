@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsygs2",
+  "name": "@rreusser/blahpack/lapack/dsygs2",
   "version": "1.0.0",
   "description": "Reduces a symmetric definite generalized eigenproblem to standard form, using the factorization results obtained from spotrf (unblocked algorithm)",
   "license": "MIT",

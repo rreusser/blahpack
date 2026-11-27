@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dseupd",
+  "name": "@rreusser/blahpack/arpack/dseupd",
   "version": "0.0.0",
   "description": "Return the converged Ritz values and (optionally) Ritz vectors for a symmetric eigenproblem from an ARPACK Lanczos factorization.",
   "license": "Apache-2.0",

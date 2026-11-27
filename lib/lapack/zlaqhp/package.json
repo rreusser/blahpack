@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqhp",
+  "name": "@rreusser/blahpack/lapack/zlaqhp",
   "version": "1.0.0",
   "description": "Equilibrates a complex Hermitian matrix in packed storage using scaling factors.",
   "license": "MIT",

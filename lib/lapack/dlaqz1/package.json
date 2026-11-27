@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqz1",
+  "name": "@rreusser/blahpack/lapack/dlaqz1",
   "version": "1.0.0",
   "description": "Sets v to a scalar multiple of the first column of a product (real QZ shift)",
   "license": "MIT",

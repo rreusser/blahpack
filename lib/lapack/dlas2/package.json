@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlas2",
+  "name": "@rreusser/blahpack/lapack/dlas2",
   "version": "1.0.0",
   "description": "Computes singular values of a 2-by-2 triangular matrix",
   "license": "MIT",

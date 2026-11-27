@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtbtrs",
+  "name": "@rreusser/blahpack/lapack/dtbtrs",
   "version": "1.0.0",
   "description": "Solve a triangular banded system of equations.",
   "license": "MIT",

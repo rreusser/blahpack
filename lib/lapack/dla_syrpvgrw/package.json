@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_syrpvgrw",
+  "name": "@rreusser/blahpack/lapack/dla_syrpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor norm(A)/norm(U) for a symmetric indefinite matrix",
   "license": "MIT",

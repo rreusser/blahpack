@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhsein",
+  "name": "@rreusser/blahpack/lapack/zhsein",
   "version": "1.0.0",
   "description": "Uses inverse iteration to find right and/or left eigenvectors of a complex upper Hessenberg matrix",
   "license": "MIT",

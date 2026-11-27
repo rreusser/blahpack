@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlantp",
+  "name": "@rreusser/blahpack/lapack/zlantp",
   "version": "1.0.0",
   "description": "Returns the norm of a complex triangular matrix in packed storage.",
   "license": "MIT",

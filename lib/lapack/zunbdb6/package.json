@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunbdb6",
+  "name": "@rreusser/blahpack/lapack/zunbdb6",
   "version": "1.0.0",
   "description": "orthogonalizes a complex column vector against the columns of a complex orthonormal basis matrix",
   "license": "MIT",

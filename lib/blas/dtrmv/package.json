@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dtrmv",
+  "name": "@rreusser/blahpack/blas/dtrmv",
   "version": "1.0.0",
   "description": "Performs one of the matrix-vector operations x := A·x, or x := Aᵀ·x",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtfttr",
+  "name": "@rreusser/blahpack/lapack/dtfttr",
   "version": "1.0.0",
   "description": "Copy a triangular matrix from Rectangular Full Packed format to standard full format",
   "license": "MIT",

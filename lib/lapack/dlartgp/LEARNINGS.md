@@ -20,7 +20,7 @@
 - `dlartgp` uses the *older* iterative rescaling style from the
   original `dlartg` (SAFMN2/SAFMX2 computed from `DLAMCH('S')`,
   `DLAMCH('E')`, `DLAMCH('B')`) rather than the newer RTMIN/RTMAX
-  single-shot rescaling used by `lib/lapack/base/dlartg/lib/base.js`.
+  single-shot rescaling used by `lib/lapack/dlartg/lib/base.js`.
   Keep the iterative `do-while` loops with the count bookkeeping to
   match reference behaviour bit-for-bit; do not naively reuse the
   `dlartg` JS implementation.

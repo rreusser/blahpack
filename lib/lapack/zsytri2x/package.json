@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytri2x",
+  "name": "@rreusser/blahpack/lapack/zsytri2x",
   "version": "1.0.0",
   "description": "Compute the inverse of a complex symmetric indefinite matrix (classic Bunch-Kaufman, blocked worker)",
   "license": "MIT",

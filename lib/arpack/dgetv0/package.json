@@ -1,5 +1,5 @@
 {
-  "name": "@stdlib/arpack/base/dgetv0",
+  "name": "@rreusser/blahpack/arpack/dgetv0",
   "version": "0.0.0",
   "description": "Generates a random initial residual vector for the symmetric Lanczos/Arnoldi iteration, orthogonal to the current basis (reverse communication).",
   "license": "Apache-2.0",

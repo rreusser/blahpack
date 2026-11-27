@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgebak",
+  "name": "@rreusser/blahpack/lapack/dgebak",
   "version": "1.0.0",
   "description": "Back-transforms eigenvectors after balancing by dgebal",
   "license": "MIT",

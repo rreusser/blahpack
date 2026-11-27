@@ -48,4 +48,4 @@
   benchmark OOM trap, but the duplicate-`var` shape would still fail ESLint.
 - The scaffolded `examples/index.js` used `require( '@stdlib/lapack/base/dlag2s' )`
   which fails the `stdlib/require-file-extensions` rule. Match the `dlat2s`
-  pattern: `require( './../lib' )`.
+  pattern: `require( '../base/lib' )`.

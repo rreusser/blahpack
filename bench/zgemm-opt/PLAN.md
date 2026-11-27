@@ -8,7 +8,7 @@ analysis here is shared by zhemm/zherk/zher2k/ztrmm/ztrsm.
 
 ## Routine
 
-`lib/blas/base/zgemm` — complex general matrix multiply. High-leverage:
+`lib/blas/zgemm` — complex general matrix multiply. High-leverage:
 underlies dozens of complex LAPACK drivers (zpotrf, zgetrf, zhetrd, the
 zlaqr*/Schur path). But the measured headroom is modest and the technical
 constraints are real — treat this as a speculative study, not a straight

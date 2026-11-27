@@ -1,7 +1,7 @@
 /**
  * Generate the root barrel (index.js) and patch package.json exports map.
  *
- * For each module under lib/{blas,lapack}/base/<routine>/:
+ * For each module under lib/{blas,lapack}/<routine>/:
  *   - Emits `export { default as <routine> }` in the barrel
  *   - If the module index has a named `ndarray` export, also emits
  *     `export { ndarray as <routine>Ndarray }` in the barrel
@@ -21,7 +21,7 @@ const DRY = process.argv.includes( '--dry' );
 // --- Discover modules -------------------------------------------------------
 
 function discoverModules( pkg ) {
-	const base = join( ROOT, 'lib', pkg, 'base' );
+	const base = join( ROOT, 'lib', pkg );
 	if ( !existsSync( base ) ) return [];
 	return readdirSync( base, { withFileTypes: true } )
 		.filter( ( e ) => e.isDirectory() )
@@ -29,8 +29,8 @@ function discoverModules( pkg ) {
 			pkg,
 			name: e.name,
 			indexPath: join( base, e.name, 'lib', 'index.js' ),
-			subpath: `./${pkg}/base/${e.name}`,
-			relIndex: `./lib/${pkg}/base/${e.name}/lib/index.js`
+			subpath: `./${pkg}/${e.name}`,
+			relIndex: `./lib/${pkg}/${e.name}/lib/index.js`
 		}) )
 		.filter( ( m ) => existsSync( m.indexPath ) )
 		.sort( ( a, b ) => a.name < b.name ? -1 : 1 );

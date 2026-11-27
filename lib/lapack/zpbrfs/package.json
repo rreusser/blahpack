@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbrfs",
+  "name": "@rreusser/blahpack/lapack/zpbrfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a complex system A * X = B where A is Hermitian positive definite band and provides error bounds.",
   "license": "MIT",

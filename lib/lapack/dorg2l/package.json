@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorg2l",
+  "name": "@rreusser/blahpack/lapack/dorg2l",
   "version": "1.0.0",
   "description": "Generates all or part of the orthogonal matrix Q from a QL factorization determined by sgeqlf (unblocked algorithm)",
   "license": "MIT",

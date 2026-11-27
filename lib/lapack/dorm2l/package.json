@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dorm2l",
+  "name": "@rreusser/blahpack/lapack/dorm2l",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by the orthogonal matrix from a QL factorization determined by sgeqlf (unblocked algorithm)",
   "license": "MIT",

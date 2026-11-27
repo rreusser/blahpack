@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasy2",
+  "name": "@rreusser/blahpack/lapack/dlasy2",
   "version": "1.0.0",
   "description": "Solves the Sylvester matrix equation",
   "license": "MIT",

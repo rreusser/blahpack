@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhbgst",
+  "name": "@rreusser/blahpack/lapack/zhbgst",
   "version": "1.0.0",
   "description": "Reduces a complex Hermitian-definite banded generalized eigenproblem to standard form.",
   "license": "MIT",

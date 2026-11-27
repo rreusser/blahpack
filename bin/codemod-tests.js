@@ -3,8 +3,8 @@
 // Codemod for test files — applies mechanical stdlib convention fixes.
 //
 // Usage:
-//   node bin/codemod-tests.js lib/blas/base/dcopy/test/test.js
-//   node bin/codemod-tests.js --dry-run lib/blas/base/{name}/test/test.js
+//   node bin/codemod-tests.js lib/blas/dcopy/test/test.js
+//   node bin/codemod-tests.js --dry-run lib/blas/{name}/test/test.js
 //
 // Fixes applied:
 //   1. Remove stdlib/require-globals from eslint-disable (we require globals)

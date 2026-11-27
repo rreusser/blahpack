@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zher` — Hermitian rank-1 update (`A += alpha*x*x^H`, alpha
+`lib/blas/zher` — Hermitian rank-1 update (`A += alpha*x*x^H`, alpha
 real, one triangle stored). Complex analog of `dsyr` (shipped 1.7–2.6x,
 bit-identical, from `bench/dsyr-opt/`).
 

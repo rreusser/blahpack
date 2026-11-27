@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytrs_rook",
+  "name": "@rreusser/blahpack/lapack/dsytrs_rook",
   "version": "1.0.0",
   "description": "Solve A*X=B using factorization from dsytrf_rook (rook pivoting Bunch-Kaufman)",
   "license": "MIT",

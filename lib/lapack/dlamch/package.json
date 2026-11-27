@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlamch",
+  "name": "@rreusser/blahpack/lapack/dlamch",
   "version": "1.0.0",
   "description": "Determine double-precision machine parameters",
   "license": "MIT",

@@ -1,4 +1,4 @@
-// target: lib/blas/base/ddot/lib/base.js
+// target: lib/blas/ddot/lib/base.js
 // expect: placeholder
 /**
 * Computes a dot product.

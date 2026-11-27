@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztbrfs",
+  "name": "@rreusser/blahpack/lapack/ztbrfs",
   "version": "1.0.0",
   "description": "Provides error bounds for the solution to a system with a complex triangular band matrix.",
   "license": "MIT",

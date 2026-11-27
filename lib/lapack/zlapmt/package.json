@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlapmt",
+  "name": "@rreusser/blahpack/lapack/zlapmt",
   "version": "1.0.0",
   "description": "Rearrange columns of a complex matrix as specified by a permutation vector",
   "license": "MIT",

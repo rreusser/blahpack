@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqtr",
+  "name": "@rreusser/blahpack/lapack/dlaqtr",
   "version": "1.0.0",
   "description": "Solves a real quasi-triangular system of equations, or a complex quasi-triangular system of special form, in real arithmetic",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgebd2",
+  "name": "@rreusser/blahpack/lapack/zgebd2",
   "version": "1.0.0",
   "description": "Reduces a general matrix to bidiagonal form using an unblocked algorithm",
   "license": "MIT",

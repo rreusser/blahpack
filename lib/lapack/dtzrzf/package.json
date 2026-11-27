@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtzrzf",
+  "name": "@rreusser/blahpack/lapack/dtzrzf",
   "version": "1.0.0",
   "description": "Reduces a real upper trapezoidal matrix to upper triangular form via RZ factorization (blocked driver).",
   "license": "MIT",

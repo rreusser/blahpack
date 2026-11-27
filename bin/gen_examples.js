@@ -151,7 +151,7 @@ function generateExample( routine, mod ) {
 
 	var arrays = detectArrays( ndarrayParams );
 	var allArrays = Array.from( arrays.arrays2D ).concat( Array.from( arrays.arrays1D ) );
-	var pkgName = '@stdlib/' + mod.pkg + '/base/' + routine;
+	var pkgName = '@rreusser/blahpack/' + mod.pkg + '/' + routine;
 
 	var lines = [];
 	lines.push( LICENSE );

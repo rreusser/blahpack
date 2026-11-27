@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunm22",
+  "name": "@rreusser/blahpack/lapack/zunm22",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by a unitary matrix",
   "license": "MIT",

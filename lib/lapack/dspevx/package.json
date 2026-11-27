@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dspevx",
+  "name": "@rreusser/blahpack/lapack/dspevx",
   "version": "1.0.0",
   "description": "Computes the eigenvalues and, optionally, the left and/or right eigenvectors",
   "license": "MIT",

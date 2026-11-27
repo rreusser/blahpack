@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsbgv",
+  "name": "@rreusser/blahpack/lapack/dsbgv",
   "version": "1.0.0",
   "description": "Computes all eigenvalues and optionally eigenvectors of a real symmetric-definite banded generalized eigenproblem.",
   "license": "MIT",

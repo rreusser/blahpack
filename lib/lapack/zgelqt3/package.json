@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgelqt3",
+  "name": "@rreusser/blahpack/lapack/zgelqt3",
   "version": "1.0.0",
   "description": "Recursively compute an LQ factorization of a complex M-by-N matrix using the compact WY representation of Q.",
   "license": "MIT",

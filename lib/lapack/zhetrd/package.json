@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrd",
+  "name": "@rreusser/blahpack/lapack/zhetrd",
   "version": "1.0.0",
   "description": "Reduces a complex Hermitian matrix A to real symmetric tridiagonal form T by a unitary similarity transformation: Qᴴ·A·Q = T",
   "license": "MIT",

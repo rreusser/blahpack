@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlag2c",
+  "name": "@rreusser/blahpack/lapack/zlag2c",
   "version": "1.0.0",
   "description": "Converts a complex double precision matrix to a complex single precision matrix",
   "license": "MIT",

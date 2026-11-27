@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zdscal",
+  "name": "@rreusser/blahpack/blas/zdscal",
   "version": "1.0.0",
   "description": "Scale a complex double-precision vector by a double-precision constant.",
   "license": "MIT",

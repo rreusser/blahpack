@@ -13,7 +13,7 @@
 set -euo pipefail
 
 stubs=()
-for f in $(git ls-files 'lib/*/base/*/test/test.js'); do
+for f in $(git ls-files 'lib/*/*/test/test.js'); do
   dir="${f%/test/test.js}"
   base="$dir/lib/base.js"
   git ls-files --error-unmatch "$base" &>/dev/null || continue

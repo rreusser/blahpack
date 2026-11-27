@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqr1",
+  "name": "@rreusser/blahpack/lapack/zlaqr1",
   "version": "1.0.0",
   "description": "Set initial vector for Francis QR step",
   "license": "MIT",

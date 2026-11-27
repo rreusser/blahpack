@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlanhs",
+  "name": "@rreusser/blahpack/lapack/zlanhs",
   "version": "1.0.0",
   "description": "Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element of an upper Hessenberg matrix",
   "license": "MIT",

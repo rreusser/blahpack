@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatrd",
+  "name": "@rreusser/blahpack/lapack/zlatrd",
   "version": "1.0.0",
   "description": "Reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation",
   "license": "MIT",

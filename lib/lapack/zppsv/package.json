@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zppsv",
+  "name": "@rreusser/blahpack/lapack/zppsv",
   "version": "1.0.0",
   "description": "Computes the solution to a complex system A * X = B where A is Hermitian positive definite in packed storage.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsyswapr",
+  "name": "@rreusser/blahpack/lapack/dsyswapr",
   "version": "1.0.0",
   "description": "Applies an elementary permutation to a symmetric matrix",
   "license": "MIT",

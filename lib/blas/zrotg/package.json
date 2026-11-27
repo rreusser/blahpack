@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zrotg",
+  "name": "@rreusser/blahpack/blas/zrotg",
   "version": "1.0.0",
   "description": "Construct a Givens plane rotation with real cosine and complex sine.",
   "license": "MIT",

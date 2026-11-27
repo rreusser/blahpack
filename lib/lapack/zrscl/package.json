@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zrscl",
+  "name": "@rreusser/blahpack/lapack/zrscl",
   "version": "1.0.0",
   "description": "Multiplies a complex vector by the reciprocal of a complex scalar.",
   "license": "MIT",

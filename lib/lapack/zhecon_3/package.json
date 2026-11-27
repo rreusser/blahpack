@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhecon_3",
+  "name": "@rreusser/blahpack/lapack/zhecon_3",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the 1-norm condition number of a complex Hermitian matrix using the factorization computed by zhetrf_rk",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhptrd",
+  "name": "@rreusser/blahpack/lapack/zhptrd",
   "version": "1.0.0",
   "description": "Reduces a complex Hermitian matrix stored in packed form to real symmetric tridiagonal form.",
   "license": "MIT",

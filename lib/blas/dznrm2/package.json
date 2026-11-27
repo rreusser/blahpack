@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dznrm2",
+  "name": "@rreusser/blahpack/blas/dznrm2",
   "version": "1.0.0",
   "description": "Compute the Euclidean norm of a complex double-precision floating-point vector",
   "license": "MIT",

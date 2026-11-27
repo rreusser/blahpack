@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztpttr",
+  "name": "@rreusser/blahpack/lapack/ztpttr",
   "version": "1.0.0",
   "description": "Copies a complex triangular matrix from packed storage to full storage",
   "license": "MIT",

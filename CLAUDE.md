@@ -42,8 +42,8 @@ data/                          # Reference Fortran source + parsed-Fortran cache
   BLAS-3.12.0/
   lapack-3.12.0/
 lib/                           # Output: stdlib-js conformant modules
-  blas/base/<routine>/         #   e.g. lib/blas/base/ddot/
-  lapack/base/<routine>/       #   e.g. lib/lapack/base/dpotf2/
+  blas/<routine>/         #   e.g. lib/blas/ddot/
+  lapack/<routine>/       #   e.g. lib/lapack/dpotf2/
 test/                          # Fortran tests and fixtures
   fortran/                     #   Test programs (test_<routine>.f90)
   fortran/deps_<routine>.txt   #   LAPACK link dependencies
@@ -99,7 +99,7 @@ npm run check:dist                    # dist/ is self-contained, loads in Chromi
 
 **ALWAYS pipe test/lint/coverage through `tail` or `grep`:**
 ```bash
-node --test lib/<pkg>/base/<routine>/test/test*.js 2>&1 | tail -20
+node --test lib/<pkg>/<routine>/test/test*.js 2>&1 | tail -20
 bin/test-failures.sh              # Full suite — shows ONLY summary + failures
 ```
 
@@ -237,7 +237,7 @@ most valuable output. This overrides any inclination to "just fix it."
 - **`deps.py` misses transitive Fortran-only dependencies.** Routines
   that call `ILAENV` transitively need `ilaenv`, `ieeeck`, `iparmq` in
   their Fortran deps file for test compilation. In JS they are ordinary
-  modules too (`lib/lapack/base/ilaenv`, CONVENTIONS X3), but `deps.py` does
+  modules too (`lib/lapack/ilaenv`, CONVENTIONS X3), but `deps.py` does
   not list them for the Fortran side, so `deps_<routine>.txt` must include
   them for `test/run_fortran.sh` to link.
   Check the deps files of similar routines when compilation fails with

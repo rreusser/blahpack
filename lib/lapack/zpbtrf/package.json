@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbtrf",
+  "name": "@rreusser/blahpack/lapack/zpbtrf",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a complex Hermitian positive definite band matrix A",
   "license": "MIT",

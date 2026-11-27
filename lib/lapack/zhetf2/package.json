@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetf2",
+  "name": "@rreusser/blahpack/lapack/zhetf2",
   "version": "1.0.0",
   "description": "Computes the factorization of a complex Hermitian matrix, using the diagonal pivoting method (unblocked algorithm, calling Level 2 BLAS)",
   "license": "MIT",

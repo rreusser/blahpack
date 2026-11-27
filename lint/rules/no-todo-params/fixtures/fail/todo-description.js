@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgetrf/lib/base.js
+// target: lib/lapack/dgetrf/lib/base.js
 // expect: @param contains TODO remnant
 /**
 * Factors a matrix.

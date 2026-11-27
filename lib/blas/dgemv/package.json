@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dgemv",
+  "name": "@rreusser/blahpack/blas/dgemv",
   "version": "1.0.0",
   "description": "Performs one of the matrix-vector operations y := α·A·x + β·y, or y := α·Aᵀ·x + β·y",
   "license": "MIT",

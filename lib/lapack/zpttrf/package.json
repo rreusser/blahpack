@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpttrf",
+  "name": "@rreusser/blahpack/lapack/zpttrf",
   "version": "1.0.0",
   "description": "Computes the LDL^H factorization of a complex Hermitian positive definite tridiagonal matrix",
   "license": "MIT",

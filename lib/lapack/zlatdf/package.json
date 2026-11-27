@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlatdf",
+  "name": "@rreusser/blahpack/lapack/zlatdf",
   "version": "1.0.0",
   "description": "Computes a contribution to the reciprocal Dif-estimate using the LU factorization computed by zgetc2.",
   "license": "MIT",

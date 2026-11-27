@@ -3,7 +3,7 @@
 // roofline reference (dsyrk does ~half the flops of the same-size dgemm).
 import v0 from './variants/v0-reference.js';
 import v1 from './variants/v1-tiled.js';
-import dgemm from '../../lib/blas/base/dgemm/lib/base.js';
+import dgemm from '../../lib/blas/dgemm/lib/base.js';
 
 function rand( n ) {
 	const a = new Float64Array( n );

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsfrk",
+  "name": "@rreusser/blahpack/lapack/dsfrk",
   "version": "1.0.0",
   "description": "Performs a symmetric rank-k operation for a matrix in Rectangular Full Packed format.",
   "license": "MIT",

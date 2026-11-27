@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlansf",
+  "name": "@rreusser/blahpack/lapack/zlansf",
   "version": "1.0.0",
   "description": "Returns the one-norm, Frobenius norm, infinity-norm, or largest absolute value of a complex Hermitian matrix in RFP format",
   "license": "MIT",

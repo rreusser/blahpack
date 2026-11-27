@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsptri",
+  "name": "@rreusser/blahpack/lapack/zsptri",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex symmetric matrix in packed storage using the factorization computed by zsptrf.",
   "license": "MIT",

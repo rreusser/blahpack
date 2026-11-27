@@ -21,7 +21,7 @@ GEOMETRY.md         # the geometry sweep result (the deliverable)
 Variant files use the exact `base.js` signature (`transa, transb, M, N, K,
 alpha, A, sa1, sa2, oa, B, sb1, sb2, ob, beta, C, sc1, sc2, oc`; alpha/beta are
 `Complex128`, matrices are `Complex128Array`), so the winner copies straight
-into `lib/blas/base/zgemm/lib/base.js`.
+into `lib/blas/zgemm/lib/base.js`.
 
 ## Reproducing
 
@@ -31,7 +31,7 @@ cd bench/zgemm-opt
 node gen-tile.cjs                 # (re)generate the tile variants
 node check.mjs                    # correctness: all variants vs v0 (rtol tier)
 node check.mjs ./variants/pack-2x2.js          # a single variant
-node check.mjs ../../lib/blas/base/zgemm/lib/base.js   # gate the SHIPPED kernel
+node check.mjs ../../lib/blas/zgemm/lib/base.js   # gate the SHIPPED kernel
 node bench.mjs                    # geometry sweep (default representative set)
 node bench.mjs gen-2x2.js gen-4x2.js gen-2x4.js pack-2x2.js
 ```

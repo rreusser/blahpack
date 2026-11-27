@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatrz",
+  "name": "@rreusser/blahpack/lapack/dlatrz",
   "version": "1.0.0",
   "description": "Factors an upper trapezoidal matrix by means of orthogonal transformations.",
   "license": "MIT",

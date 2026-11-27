@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgees/lib/dgees.js
+// target: lib/lapack/dgees/lib/dgees.js
 // A named helper from base.js (sizing the `null` allocation) may still be imported; only the default (the algorithm) may not.
 /* eslint-disable max-len, max-params */
 

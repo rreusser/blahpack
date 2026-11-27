@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_gbamv",
+  "name": "@rreusser/blahpack/lapack/zla_gbamv",
   "version": "1.0.0",
   "description": "Performs a matrix-vector operation to calculate error bounds on complex banded matrices",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgghrd",
+  "name": "@rreusser/blahpack/lapack/zgghrd",
   "version": "1.0.0",
   "description": "Reduces a pair of complex matrices (A,B) to generalized upper Hessenberg form using unitary transformations",
   "license": "MIT",

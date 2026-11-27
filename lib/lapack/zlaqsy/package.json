@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqsy",
+  "name": "@rreusser/blahpack/lapack/zlaqsy",
   "version": "1.0.0",
   "description": "Scales a symmetric/Hermitian matrix using scaling factors computed by zpoequ.",
   "license": "MIT",

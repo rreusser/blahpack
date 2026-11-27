@@ -11,7 +11,7 @@
 * `*latbs` growth-bound bug (tickets/0045) was fully covered and passed every
 * test for months, because no input made the two choices disagree.
 *
-* For each loop in `lib/<pkg>/base/<routine>/lib/*.js` that is left by an
+* For each loop in `lib/<pkg>/<routine>/lib/*.js` that is left by an
 * unlabeled `break`, let S be the statement that runs next after the loop: its
 * next sibling, or, if the loop ends an `if` branch or block, the statement after
 * that (climbing out, but never past an enclosing loop or function). This builds:

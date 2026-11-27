@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztptrs",
+  "name": "@rreusser/blahpack/lapack/ztptrs",
   "version": "1.0.0",
   "description": "Solves a triangular system of equations with a triangular matrix in packed storage.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaeda",
+  "name": "@rreusser/blahpack/lapack/dlaeda",
   "version": "1.0.0",
   "description": "Computes the Z vector determining the rank-one modification of the diagonal matrix used by DSTEDC.",
   "license": "MIT",

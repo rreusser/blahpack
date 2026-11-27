@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunm2l",
+  "name": "@rreusser/blahpack/lapack/zunm2l",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm)",
   "license": "MIT",

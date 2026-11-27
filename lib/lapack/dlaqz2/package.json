@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqz2",
+  "name": "@rreusser/blahpack/lapack/dlaqz2",
   "version": "1.0.0",
   "description": "chases a 2x2 shift bulge in a matrix pencil down a single position",
   "license": "MIT",

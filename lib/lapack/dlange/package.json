@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlange",
+  "name": "@rreusser/blahpack/lapack/dlange",
   "version": "1.0.0",
   "description": "Compute the value of the one norm, Frobenius norm, infinity norm, or largest absolute value of a matrix",
   "license": "MIT",

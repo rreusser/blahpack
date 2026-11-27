@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zgelss/lib/base.js
+// target: lib/lapack/zgelss/lib/base.js
 function zgelss( N, A, strideA1, strideA2, offsetA, WORK, strideWork, offsetWork ) {
 	const itau = 0;
 	WORK = WORK.subarray( offsetWork );

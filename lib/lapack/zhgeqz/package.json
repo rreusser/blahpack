@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhgeqz",
+  "name": "@rreusser/blahpack/lapack/zhgeqz",
   "version": "1.0.0",
   "description": "Computes the eigenvalues of a complex matrix pair (H,T)",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasyf_aa",
+  "name": "@rreusser/blahpack/lapack/dlasyf_aa",
   "version": "1.0.0",
   "description": "factorize a panel of a real symmetric matrix using Aasen's algorithm",
   "license": "MIT",

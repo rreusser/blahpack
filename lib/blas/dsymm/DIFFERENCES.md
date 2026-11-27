@@ -1,6 +1,6 @@
 # dsymm: Differences from the Reference
 
-Deviations of our translation (`lib/blas/base/dsymm/`) from the BLAS 3.12.0
+Deviations of our translation (`lib/blas/dsymm/`) from the BLAS 3.12.0
 reference implementation (`dsymm.f`).
 
 ---
@@ -17,7 +17,7 @@ small contiguous scratch buffer, materializing the mirrored entries once, and
 then runs a dgemm-style 4x4 register-tiled K-loop against the packed rows.
 Packing is O(4K) amortized over the columns of `C`, so it is negligible. Edge
 columns use a 4x1 kernel and the row remainder falls back to scalar code. The
-K loop is cache-blocked at `KC = 256` (matching `lib/blas/base/dgemm`), with
+K loop is cache-blocked at `KC = 256` (matching `lib/blas/dgemm`), with
 `beta` applied only on the first K-panel. Effective strides make the kernel
 layout-agnostic and cover both `side` and both `uplo` values.
 

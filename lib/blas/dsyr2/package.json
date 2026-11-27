@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dsyr2",
+  "name": "@rreusser/blahpack/blas/dsyr2",
   "version": "1.0.0",
   "description": "Performs the symmetric rank 2 operation A := α·x·yᵀ + α·y·xᵀ + A",
   "license": "MIT",

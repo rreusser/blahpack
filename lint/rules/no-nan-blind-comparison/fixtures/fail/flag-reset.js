@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgges/test/test.js
+// target: lib/lapack/dgges/test/test.js
 // expect: blindIf
 // A pass flag cleared on a big error stays true for NaN.
 import assert from 'node:assert/strict';

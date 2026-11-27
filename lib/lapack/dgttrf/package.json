@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgttrf",
+  "name": "@rreusser/blahpack/lapack/dgttrf",
   "version": "1.0.0",
   "description": "Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges",
   "license": "MIT",

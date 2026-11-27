@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlags2",
+  "name": "@rreusser/blahpack/lapack/zlags2",
   "version": "1.0.0",
   "description": "Computes 2-by-2 unitary matrices U, V, and Q for the generalized upper (lower) triangular form.",
   "license": "MIT",

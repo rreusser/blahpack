@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeqlf",
+  "name": "@rreusser/blahpack/lapack/zgeqlf",
   "version": "1.0.0",
   "description": "Computes a QL factorization of a complex general matrix",
   "license": "MIT",

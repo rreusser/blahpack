@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlartg",
+  "name": "@rreusser/blahpack/lapack/dlartg",
   "version": "1.0.0",
   "description": "Generates a plane rotation with real cosine and real sine",
   "license": "MIT",

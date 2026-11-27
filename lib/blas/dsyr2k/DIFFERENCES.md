@@ -1,6 +1,6 @@
 # dsyr2k: Differences from the Reference
 
-Deviations of our translation (`lib/blas/base/dsyr2k/`) from the BLAS 3.12.0
+Deviations of our translation (`lib/blas/dsyr2k/`) from the BLAS 3.12.0
 reference implementation (`dsyr2k.f`).
 
 ---

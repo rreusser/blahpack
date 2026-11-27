@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsbtrd",
+  "name": "@rreusser/blahpack/lapack/dsbtrd",
   "version": "1.0.0",
   "description": "Reduces a real symmetric band matrix to tridiagonal form by orthogonal similarity transformation.",
   "license": "MIT",

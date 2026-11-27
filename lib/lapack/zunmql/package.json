@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunmql",
+  "name": "@rreusser/blahpack/lapack/zunmql",
   "version": "1.0.0",
   "description": "Applies a complex unitary matrix Q from a QL factorization to a matrix (blocked)",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlantp",
+  "name": "@rreusser/blahpack/lapack/dlantp",
   "version": "1.0.0",
   "description": "Returns the norm of a real triangular matrix in packed storage.",
   "license": "MIT",

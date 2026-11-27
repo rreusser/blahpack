@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarra",
+  "name": "@rreusser/blahpack/lapack/dlarra",
   "version": "1.0.0",
   "description": "Compute the splitting points with threshold based on the representation",
   "license": "MIT",

@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/ztrmm` — triangular matrix-matrix multiply (`B = alpha*op(A)*B`
+`lib/blas/ztrmm` — triangular matrix-matrix multiply (`B = alpha*op(A)*B`
 or `B = alpha*B*op(A)`, A triangular, op in {N, T, C}). Complex analog of
 `dtrmm` (shipped 4.7–13.5x from 4x4 register tiling, `bench/dtrmm-opt/`).
 

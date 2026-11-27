@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dspmv",
+  "name": "@rreusser/blahpack/blas/dspmv",
   "version": "1.0.0",
   "description": "Perform matrix-vector operation with a symmetric packed matrix",
   "license": "MIT",

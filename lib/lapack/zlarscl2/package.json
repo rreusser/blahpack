@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarscl2",
+  "name": "@rreusser/blahpack/lapack/zlarscl2",
   "version": "1.0.0",
   "description": "Perform reciprocal diagonal scaling on a complex matrix.",
   "license": "MIT",

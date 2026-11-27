@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytrf",
+  "name": "@rreusser/blahpack/lapack/dsytrf",
   "version": "1.0.0",
   "description": "Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method",
   "license": "MIT",

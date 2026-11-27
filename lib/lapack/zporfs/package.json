@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zporfs",
+  "name": "@rreusser/blahpack/lapack/zporfs",
   "version": "1.0.0",
   "description": "Iterative refinement for Hermitian positive definite system",
   "license": "MIT",

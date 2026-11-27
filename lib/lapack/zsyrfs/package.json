@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsyrfs",
+  "name": "@rreusser/blahpack/lapack/zsyrfs",
   "version": "1.0.0",
   "description": "Complex symmetric iterative refinement",
   "license": "MIT",

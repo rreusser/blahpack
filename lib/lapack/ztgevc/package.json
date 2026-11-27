@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgevc",
+  "name": "@rreusser/blahpack/lapack/ztgevc",
   "version": "1.0.0",
   "description": "Compute eigenvectors of a pair of complex upper triangular matrices",
   "license": "MIT",

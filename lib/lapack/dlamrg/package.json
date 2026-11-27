@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlamrg",
+  "name": "@rreusser/blahpack/lapack/dlamrg",
   "version": "1.0.0",
   "description": "LAPACK dlamrg routine",
   "license": "MIT",

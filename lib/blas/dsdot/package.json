@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dsdot",
+  "name": "@rreusser/blahpack/blas/dsdot",
   "version": "1.0.0",
   "description": "Compute the dot product of two vectors with extended precision accumulation",
   "license": "MIT",

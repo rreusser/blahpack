@@ -1,6 +1,6 @@
 # dgemm: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dgemm/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dgemm/`) against the stdlib-js
 reference (`@stdlib/blas/base/dgemm`).
 
 ---
@@ -98,7 +98,7 @@ same module (only `isMatrixTranspose` is used).
 **Stdlib** uses the `tryRequire` / `isError` pattern to attempt loading
 `./native.js` for native BLAS binding fallback:
 ```js
-var tmp = tryRequire( join( __dirname, './native.js' ) );
+var tmp = tryRequire( join( __dirname, 'native.js' ) );
 if ( isError( tmp ) ) { dgemm = main; } else { dgemm = tmp; }
 ```
 

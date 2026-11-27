@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsytri2",
+  "name": "@rreusser/blahpack/lapack/zsytri2",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex symmetric indefinite matrix using zsytrf factorization (dispatches between zsytri and zsytri2x)",
   "license": "MIT",

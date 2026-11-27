@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaorhr_col_getrfnp2",
+  "name": "@rreusser/blahpack/lapack/dlaorhr_col_getrfnp2",
   "version": "1.0.0",
   "description": "Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel).",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgetrf",
+  "name": "@rreusser/blahpack/lapack/dgetrf",
   "version": "1.0.0",
   "description": "Blocked LU factorization of a general M-by-N matrix using partial pivoting.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlassq",
+  "name": "@rreusser/blahpack/lapack/zlassq",
   "version": "1.0.0",
   "description": "Update a sum of squares represented in scaled form",
   "license": "MIT",

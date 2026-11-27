@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatps",
+  "name": "@rreusser/blahpack/lapack/dlatps",
   "version": "1.0.0",
   "description": "Solves a triangular system with scaling to prevent overflow, where the matrix is in packed storage.",
   "license": "MIT",

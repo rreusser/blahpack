@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zcopy",
+  "name": "@rreusser/blahpack/blas/zcopy",
   "version": "1.0.0",
   "description": "Copy a complex double-precision vector",
   "license": "MIT",

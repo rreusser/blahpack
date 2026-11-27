@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgsyl",
+  "name": "@rreusser/blahpack/lapack/ztgsyl",
   "version": "1.0.0",
   "description": "Solves the generalized Sylvester equation using a level-3 blocked algorithm.",
   "license": "MIT",

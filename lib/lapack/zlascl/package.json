@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlascl",
+  "name": "@rreusser/blahpack/lapack/zlascl",
   "version": "1.0.0",
   "description": "Multiplies a general rectangular matrix by a real scalar defined as cto/cfrom",
   "license": "MIT",

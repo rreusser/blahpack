@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zgerc",
+  "name": "@rreusser/blahpack/blas/zgerc",
   "version": "1.0.0",
   "description": "Performs the rank 1 operation A := α·x·yᴴ + A",
   "license": "MIT",

@@ -23,7 +23,7 @@
 
 - `dlamch` expects long-form string arguments `'precision'`,
   `'safe-minimum'`, `'epsilon'` — check the dispatch table in
-  `lib/lapack/base/dlamch/lib/base.js` before using.
+  `lib/lapack/dlamch/lib/base.js` before using.
 - `dnrm2` / `dscal` are 0-based `(N, ..., x, strideX, offsetX)` — same as
   other BLAS leaves.
 

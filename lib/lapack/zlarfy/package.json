@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarfy",
+  "name": "@rreusser/blahpack/lapack/zlarfy",
   "version": "1.0.0",
   "description": "Applies an elementary reflector to a Hermitian matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgbtrs",
+  "name": "@rreusser/blahpack/lapack/zgbtrs",
   "version": "1.0.0",
   "description": "Solve a complex banded system using LU factorization",
   "license": "MIT",

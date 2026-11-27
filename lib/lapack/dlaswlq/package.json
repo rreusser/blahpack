@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaswlq",
+  "name": "@rreusser/blahpack/lapack/dlaswlq",
   "version": "1.0.0",
   "description": "Compute a blocked Tall-Skinny LQ (TSLQ) factorization of a real M-by-N matrix.",
   "license": "MIT",

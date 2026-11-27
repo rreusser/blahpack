@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zggev",
+  "name": "@rreusser/blahpack/lapack/zggev",
   "version": "1.0.0",
   "description": "Compute the generalized eigenvalues and optionally the eigenvectors of a complex matrix pair (A, B).",
   "license": "MIT",

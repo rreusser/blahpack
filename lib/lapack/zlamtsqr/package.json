@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlamtsqr",
+  "name": "@rreusser/blahpack/lapack/zlamtsqr",
   "version": "1.0.0",
   "description": "applies a complex unitary matrix Q (or its conjugate-transpose Q^H) from a TSQR factorization to a complex M-by-N matrix C",
   "license": "MIT",

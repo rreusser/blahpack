@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dsytf2_rook",
+  "name": "@rreusser/blahpack/lapack/dsytf2_rook",
   "version": "1.0.0",
   "description": "Bounded Bunch-Kaufman (rook) factorization of a symmetric indefinite matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zdotc",
+  "name": "@rreusser/blahpack/blas/zdotc",
   "version": "1.0.0",
   "description": "Forms the dot product of two complex vectors ZDOTC = Xᴴ·Y",
   "license": "MIT",

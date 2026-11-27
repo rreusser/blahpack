@@ -9,7 +9,7 @@
 // Fixtures live in <rule>/fixtures/{pass,fail}/*.js. Each fixture declares, in a
 // line comment near the top:
 //
-//   // target: lib/lapack/base/dgetrf/lib/base.js
+//   // target: lib/lapack/dgetrf/lib/base.js
 //       The repo-relative path the rule should believe it is linting. Rules
 //       select files and derive the routine name from this path. Required.
 //

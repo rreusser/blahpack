@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggevx",
+  "name": "@rreusser/blahpack/lapack/dggevx",
   "version": "1.0.0",
   "description": "Computes generalized eigenvalues, eigenvectors, and reciprocal condition numbers for a pair of real matrices",
   "license": "MIT",

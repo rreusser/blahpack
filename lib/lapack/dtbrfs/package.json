@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtbrfs",
+  "name": "@rreusser/blahpack/lapack/dtbrfs",
   "version": "1.0.0",
   "description": "Provides error bounds for the solution to a system with a real triangular band matrix.",
   "license": "MIT",

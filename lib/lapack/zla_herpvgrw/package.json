@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_herpvgrw",
+  "name": "@rreusser/blahpack/lapack/zla_herpvgrw",
   "version": "1.0.0",
   "description": "Compute the reciprocal pivot growth factor for a complex Hermitian indefinite matrix.",
   "license": "MIT",

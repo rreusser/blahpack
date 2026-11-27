@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaneg",
+  "name": "@rreusser/blahpack/lapack/dlaneg",
   "version": "1.0.0",
   "description": "Computes the Sturm count",
   "license": "MIT",

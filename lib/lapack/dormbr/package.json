@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dormbr",
+  "name": "@rreusser/blahpack/lapack/dormbr",
   "version": "1.0.0",
   "description": "Multiplies a general matrix by the orthogonal matrix Q or P from a bidiagonal reduction",
   "license": "MIT",

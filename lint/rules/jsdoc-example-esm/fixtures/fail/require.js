@@ -1,4 +1,4 @@
-// target: lib/lapack/base/ddisna/lib/index.js
+// target: lib/lapack/ddisna/lib/index.js
 // expect: commonjs
 /**
 * Computes reciprocal condition numbers.

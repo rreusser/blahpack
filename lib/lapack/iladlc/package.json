@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/iladlc",
+  "name": "@rreusser/blahpack/lapack/iladlc",
   "version": "1.0.0",
   "description": "Find the last non-zero column of a real matrix.",
   "license": "MIT",

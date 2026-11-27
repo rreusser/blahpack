@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpsv",
+  "name": "@rreusser/blahpack/lapack/zhpsv",
   "version": "1.0.0",
   "description": "Computes the solution to a complex system of linear equations A * X = B where A is Hermitian in packed storage.",
   "license": "MIT",

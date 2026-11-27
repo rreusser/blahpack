@@ -1,6 +1,6 @@
 # dspr: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dspr/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dspr/`) against the stdlib-js
 reference (`@stdlib/blas/base/dspr`).
 
 ---

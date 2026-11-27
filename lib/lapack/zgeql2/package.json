@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgeql2",
+  "name": "@rreusser/blahpack/lapack/zgeql2",
   "version": "1.0.0",
   "description": "Compute a QL factorization of a complex M-by-N matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarrf",
+  "name": "@rreusser/blahpack/lapack/dlarrf",
   "version": "1.0.0",
   "description": "Finds a new relatively robust representation for eigenvalues",
   "license": "MIT",

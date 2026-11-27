@@ -338,7 +338,7 @@ function main() {
 	var report = [];
 	var n = 0;
 	[ 'blas', 'lapack', 'arpack' ].forEach( function each( pkg ) {
-		var base = path.join( ROOT, 'lib', pkg, 'base' );
+		var base = path.join( ROOT, 'lib', pkg );
 		fs.readdirSync( base ).forEach( function f( routine ) {
 			var dir = path.join( base, routine, 'lib' );
 			var specFile = path.join( ROOT, 'spec', routine + '.json' );

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgesc2",
+  "name": "@rreusser/blahpack/lapack/zgesc2",
   "version": "1.0.0",
   "description": "Solves a system of linear equations using the LU factorization with complete pivoting computed by sgetc2",
   "license": "MIT",

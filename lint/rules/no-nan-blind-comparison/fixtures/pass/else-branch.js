@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlarft/test/test.ndarray.js
+// target: lib/lapack/dlarft/test/test.ndarray.js
 // The failure is in the `else`: NaN takes it.
 function check( err, tol ) {
 	if ( err <= tol ) {

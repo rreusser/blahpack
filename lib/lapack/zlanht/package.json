@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlanht",
+  "name": "@rreusser/blahpack/lapack/zlanht",
   "version": "1.0.0",
   "description": "Returns the norm of a complex Hermitian tridiagonal matrix.",
   "license": "MIT",

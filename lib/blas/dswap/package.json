@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dswap",
+  "name": "@rreusser/blahpack/blas/dswap",
   "version": "1.0.0",
   "description": "Interchange two vectors",
   "license": "MIT",

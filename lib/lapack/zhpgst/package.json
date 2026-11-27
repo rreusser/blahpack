@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhpgst",
+  "name": "@rreusser/blahpack/lapack/zhpgst",
   "version": "1.0.0",
   "description": "Reduces a complex Hermitian-definite generalized eigenproblem to standard form using packed storage.",
   "license": "MIT",

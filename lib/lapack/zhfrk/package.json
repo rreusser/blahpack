@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhfrk",
+  "name": "@rreusser/blahpack/lapack/zhfrk",
   "version": "1.0.0",
   "description": "Performs a Hermitian rank-k operation for a matrix in Rectangular Full Packed format.",
   "license": "MIT",

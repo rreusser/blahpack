@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasq4",
+  "name": "@rreusser/blahpack/lapack/dlasq4",
   "version": "1.0.0",
   "description": "Computes an approximation to the smallest eigenvalue using values of d from the previous transform",
   "license": "MIT",

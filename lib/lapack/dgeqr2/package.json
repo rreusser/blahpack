@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeqr2",
+  "name": "@rreusser/blahpack/lapack/dgeqr2",
   "version": "1.0.0",
   "description": "Computes the QR factorization of a general rectangular matrix using an unblocked algorithm",
   "license": "MIT",

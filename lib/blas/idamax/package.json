@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/idamax",
+  "name": "@rreusser/blahpack/blas/idamax",
   "version": "1.0.0",
   "description": "Find the index of element with maximum absolute value",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeequ",
+  "name": "@rreusser/blahpack/lapack/dgeequ",
   "version": "1.0.0",
   "description": "Computes row and column scalings intended to equilibrate an M-by-N matrix A and reduce its condition number",
   "license": "MIT",

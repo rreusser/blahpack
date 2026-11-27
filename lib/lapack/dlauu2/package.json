@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlauu2",
+  "name": "@rreusser/blahpack/lapack/dlauu2",
   "version": "1.0.0",
   "description": "Computes the product U·Uᵀ or Lᵀ·L, where U and L are upper or lower triangular matrices",
   "license": "MIT",

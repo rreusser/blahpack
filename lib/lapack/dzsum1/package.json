@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dzsum1",
+  "name": "@rreusser/blahpack/lapack/dzsum1",
   "version": "1.0.0",
   "description": "Forms the 1-norm of the complex vector using the true absolute value",
   "license": "MIT",

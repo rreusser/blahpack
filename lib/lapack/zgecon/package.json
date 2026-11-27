@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgecon",
+  "name": "@rreusser/blahpack/lapack/zgecon",
   "version": "1.0.0",
   "description": "Estimate the reciprocal condition number of a complex general matrix",
   "license": "MIT",

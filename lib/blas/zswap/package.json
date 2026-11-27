@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zswap",
+  "name": "@rreusser/blahpack/blas/zswap",
   "version": "1.0.0",
   "description": "Interchange two complex double-precision vectors.",
   "license": "MIT",

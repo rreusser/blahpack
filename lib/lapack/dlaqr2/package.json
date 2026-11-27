@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqr2",
+  "name": "@rreusser/blahpack/lapack/dlaqr2",
   "version": "1.0.0",
   "description": "Performs aggressive early deflation on an upper Hessenberg matrix",
   "license": "MIT",

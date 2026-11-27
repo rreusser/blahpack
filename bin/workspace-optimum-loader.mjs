@@ -48,7 +48,7 @@ function stopOwnEntry( src ) {
 export async function load( url, context, nextLoad ) {
 	if ( target && url === target ) {
 		const res = await nextLoad( url, context );
-		const tag = url.replace( /^.*\/lib\/[a-z]+\/base\//, '' ).replace( /\/lib\/.*$/, '' );
+		const tag = url.replace( /^.*\/lib\/[a-z]+\//, '' ).replace( /\/lib\/.*$/, '' );
 		const src = String( res.source );
 		return { 'format': 'module', 'source': stopOwnEntry( guard ? transform( src, tag ) : src ), 'shortCircuit': true };
 	}

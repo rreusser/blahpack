@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlapll",
+  "name": "@rreusser/blahpack/lapack/zlapll",
   "version": "1.0.0",
   "description": "Measures the linear dependence of two vectors.",
   "license": "MIT",

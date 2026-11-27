@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dgeqrt2",
+  "name": "@rreusser/blahpack/lapack/dgeqrt2",
   "version": "1.0.0",
   "description": "computes a QR factorization of a real M-by-N matrix using the compact WY representation of Q",
   "license": "MIT",

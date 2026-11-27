@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_gbrcond_c",
+  "name": "@rreusser/blahpack/lapack/zla_gbrcond_c",
   "version": "1.0.0",
   "description": "Estimates the infinity norm condition number for a complex general banded matrix with inverse-c scaling",
   "license": "MIT",

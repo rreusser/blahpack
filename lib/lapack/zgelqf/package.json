@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgelqf",
+  "name": "@rreusser/blahpack/lapack/zgelqf",
   "version": "1.0.0",
   "description": "Compute LQ factorization of a complex matrix (blocked)",
   "license": "MIT",

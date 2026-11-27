@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dormqr",
+  "name": "@rreusser/blahpack/lapack/dormqr",
   "version": "1.0.0",
   "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a QR factorization",
   "license": "MIT",

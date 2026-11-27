@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgbequ",
+  "name": "@rreusser/blahpack/lapack/zgbequ",
   "version": "1.0.0",
   "description": "Computes row and column scalings to equilibrate a complex general band matrix.",
   "license": "MIT",

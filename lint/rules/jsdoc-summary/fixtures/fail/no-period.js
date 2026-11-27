@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgesv/lib/ndarray.js
+// target: lib/lapack/dgesv/lib/ndarray.js
 // expect: ending in a period
 /**
 * Solves a linear system

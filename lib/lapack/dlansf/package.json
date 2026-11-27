@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlansf",
+  "name": "@rreusser/blahpack/lapack/dlansf",
   "version": "1.0.0",
   "description": "Returns the norm of a real symmetric matrix in Rectangular Full Packed format.",
   "license": "MIT",

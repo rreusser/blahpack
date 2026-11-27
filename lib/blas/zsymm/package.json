@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zsymm",
+  "name": "@rreusser/blahpack/blas/zsymm",
   "version": "1.0.0",
   "description": "Perform one of the symmetric matrix-matrix operations C := alpha*A*B + beta*C or C := alpha*B*A + beta*C.",
   "license": "MIT",

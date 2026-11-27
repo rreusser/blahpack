@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggsvd3",
+  "name": "@rreusser/blahpack/lapack/dggsvd3",
   "version": "1.0.0",
   "description": "Computes the singular value decomposition (SVD)",
   "license": "MIT",

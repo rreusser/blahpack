@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zherfs",
+  "name": "@rreusser/blahpack/lapack/zherfs",
   "version": "1.0.0",
   "description": "Complex Hermitian iterative refinement",
   "license": "MIT",

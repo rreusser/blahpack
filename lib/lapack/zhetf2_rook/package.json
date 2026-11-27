@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetf2_rook",
+  "name": "@rreusser/blahpack/lapack/zhetf2_rook",
   "version": "1.0.0",
   "description": "Bounded Bunch-Kaufman (rook) factorization of a complex Hermitian indefinite matrix",
   "license": "MIT",

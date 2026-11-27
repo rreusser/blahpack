@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zsycon_3",
+  "name": "@rreusser/blahpack/lapack/zsycon_3",
   "version": "1.0.0",
   "description": "Estimates the reciprocal of the 1-norm condition number of a complex symmetric matrix using the factorization computed by zsytrf_rk",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dpotrs",
+  "name": "@rreusser/blahpack/lapack/dpotrs",
   "version": "1.0.0",
   "description": "Solves a system of linear equations A·X = B with a symmetric positive definite matrix A using the Cholesky factorization A = Uᵀ·U or A = L·Lᵀ computed by DPOTRF",
   "license": "MIT",

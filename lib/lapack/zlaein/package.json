@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaein",
+  "name": "@rreusser/blahpack/lapack/zlaein",
   "version": "1.0.0",
   "description": "Uses inverse iteration to find an eigenvector of a complex upper Hessenberg matrix",
   "license": "MIT",

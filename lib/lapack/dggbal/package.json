@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dggbal",
+  "name": "@rreusser/blahpack/lapack/dggbal",
   "version": "1.0.0",
   "description": "Balances a pair of general real matrices (A,B) for the generalized eigenvalue problem.",
   "license": "MIT",

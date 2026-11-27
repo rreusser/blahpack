@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlartg",
+  "name": "@rreusser/blahpack/lapack/zlartg",
   "version": "1.0.0",
   "description": "Generate a complex Givens plane rotation",
   "license": "MIT",

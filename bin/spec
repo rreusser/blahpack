@@ -20,7 +20,7 @@ function moduleDir( routine ) {
 	var i;
 	var d;
 	for ( i = 0; i < pkgs.length; i++ ) {
-		d = path.join( ROOT, 'lib', pkgs[ i ], 'base', routine );
+		d = path.join( ROOT, 'lib', pkgs[ i ], routine );
 		if ( fs.existsSync( path.join( d, 'lib', 'base.js' ) ) ) {
 			return { 'pkg': pkgs[ i ], 'dir': path.join( d, 'lib' ) };
 		}

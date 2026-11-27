@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqp2",
+  "name": "@rreusser/blahpack/lapack/zlaqp2",
   "version": "1.0.0",
   "description": "Computes a QR factorization with column pivoting of the matrix block",
   "license": "MIT",

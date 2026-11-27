@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dnrm2",
+  "name": "@rreusser/blahpack/blas/dnrm2",
   "version": "1.0.0",
   "description": "Compute the Euclidean norm of a real vector.",
   "license": "MIT",

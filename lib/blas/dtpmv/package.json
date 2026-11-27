@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dtpmv",
+  "name": "@rreusser/blahpack/blas/dtpmv",
   "version": "1.0.0",
   "description": "Perform matrix-vector operation with a triangular packed matrix",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlatbs",
+  "name": "@rreusser/blahpack/lapack/dlatbs",
   "version": "1.0.0",
   "description": "Solves a triangular banded system with scaling for overflow",
   "license": "MIT",

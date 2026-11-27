@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgemlqt",
+  "name": "@rreusser/blahpack/lapack/zgemlqt",
   "version": "1.0.0",
   "description": "Overwrite a complex M-by-N matrix C with op(Q)*C or C*op(Q), where Q is a complex unitary matrix defined by the compact-WY representation produced by zgelqt.",
   "license": "MIT",

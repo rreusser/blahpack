@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztgex2",
+  "name": "@rreusser/blahpack/lapack/ztgex2",
   "version": "1.0.0",
   "description": "Swaps adjacent diagonal 1-by-1 blocks in an upper triangular matrix pair.",
   "license": "MIT",

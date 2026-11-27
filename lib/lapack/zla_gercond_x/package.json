@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zla_gercond_x",
+  "name": "@rreusser/blahpack/lapack/zla_gercond_x",
   "version": "1.0.0",
   "description": "Estimates the infinity norm condition number for a general complex matrix with x scaling",
   "license": "MIT",

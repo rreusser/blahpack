@@ -25,7 +25,7 @@
 ## Dependency interface surprises
 
 - Used the `ndarray`-style signature of `dswap(N, X, sX, oX, Y, sY, oY)`
-  from `lib/blas/base/dswap/lib/base.js`. The base export is the ndarray
+  from `lib/blas/dswap/lib/base.js`. The base export is the ndarray
   form, so the strides and offsets translate directly from Fortran
   `A(r, c)` addresses as `offsetA + r*strideA1 + c*strideA2`.
 - `dswap` gracefully accepts `N <= 0`, which lets us pass `n2 = i2-i1-1`

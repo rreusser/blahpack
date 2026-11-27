@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zunmtr",
+  "name": "@rreusser/blahpack/lapack/zunmtr",
   "version": "1.0.0",
   "description": "Multiplies a general complex matrix by the unitary matrix Q (or its conjugate transpose) from a Hermitian tridiagonal reduction",
   "license": "MIT",

@@ -19,13 +19,13 @@
 
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
-import izamax from '../../../../blas/base/izamax/lib/base.js';
-import zcopy from '../../../../blas/base/zcopy/lib/base.js';
-import zdscal from '../../../../blas/base/zdscal/lib/base.js';
-import zgemm from '../../../../blas/base/zgemm/lib/base.js';
-import zgemv from '../../../../blas/base/zgemv/lib/base.js';
+import izamax from '../../../blas/izamax/lib/base.js';
+import zcopy from '../../../blas/zcopy/lib/base.js';
+import zdscal from '../../../blas/zdscal/lib/base.js';
+import zgemm from '../../../blas/zgemm/lib/base.js';
+import zgemv from '../../../blas/zgemv/lib/base.js';
 import zlacgv from '../../zlacgv/lib/base.js';
-import zswap from '../../../../blas/base/zswap/lib/base.js';
+import zswap from '../../../blas/zswap/lib/base.js';
 
 
 // VARIABLES //

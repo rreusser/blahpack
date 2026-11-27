@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dormtr",
+  "name": "@rreusser/blahpack/lapack/dormtr",
   "version": "1.0.0",
   "description": "Multiplies a general real matrix by the orthogonal matrix Q (or its transpose) from a symmetric tridiagonal reduction",
   "license": "MIT",

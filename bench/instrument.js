@@ -1,14 +1,14 @@
 // Generic LAPACK/BLAS subroutine profiler.
 //
 // Registers a module loader hook (instrument-loader.mjs) that wraps the default
-// export of every lib/{blas,lapack}/base/<routine>/lib/base.js with timing
+// export of every lib/{blas,lapack}/<routine>/lib/base.js with timing
 // instrumentation. Tracks inclusive time (wall clock), exclusive time (minus
 // children), call counts, and caller→callee edges.
 //
 // Usage:
 //   import instrument from './instrument.js';
 //   instrument.install();            // BEFORE loading target routines
-//   const { default: zggev } = await import( '../lib/lapack/base/zggev/lib/base.js' );
+//   const { default: zggev } = await import( '../lib/lapack/zggev/lib/base.js' );
 //   // ... run workload ...
 //   instrument.printReport( totalMs );
 //   instrument.printCallTree( 'zggev' );

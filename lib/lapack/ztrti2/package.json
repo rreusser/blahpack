@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/ztrti2",
+  "name": "@rreusser/blahpack/lapack/ztrti2",
   "version": "1.0.0",
   "description": "Computes the inverse of a triangular matrix (unblocked algorithm)",
   "license": "MIT",

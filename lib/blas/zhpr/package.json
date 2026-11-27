@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/zhpr",
+  "name": "@rreusser/blahpack/blas/zhpr",
   "version": "1.0.0",
   "description": "Perform the Hermitian packed rank-1 update A := alpha*x*x**H + A.",
   "license": "MIT",

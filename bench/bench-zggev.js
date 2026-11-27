@@ -18,7 +18,7 @@ import instrument from './instrument.js';
 // Install BEFORE loading any LAPACK modules
 instrument.install();
 
-const { default: zggev } = await import( '../lib/lapack/base/zggev/lib/ndarray.js' );
+const { default: zggev } = await import( '../lib/lapack/zggev/lib/ndarray.js' );
 
 // Flags, by the single-letter names this script reports.
 var JOB = { 'N': 'no-vectors', 'V': 'compute-vectors' };

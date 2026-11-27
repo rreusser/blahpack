@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/izamax",
+  "name": "@rreusser/blahpack/blas/izamax",
   "version": "1.0.0",
   "description": "Finds the index of the first element having maximum |Re(.)| + |Im(.)|",
   "license": "MIT",

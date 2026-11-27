@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlapll",
+  "name": "@rreusser/blahpack/lapack/dlapll",
   "version": "1.0.0",
   "description": "Measures linear dependence of two vectors via QR factorization and SVD",
   "license": "MIT",

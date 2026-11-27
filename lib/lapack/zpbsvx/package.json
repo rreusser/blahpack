@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpbsvx",
+  "name": "@rreusser/blahpack/lapack/zpbsvx",
   "version": "1.0.0",
   "description": "Solves a complex system A * X = B where A is Hermitian positive definite band, with equilibration, condition estimation, and error bounds.",
   "license": "MIT",

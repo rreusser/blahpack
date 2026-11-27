@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dgbmv",
+  "name": "@rreusser/blahpack/blas/dgbmv",
   "version": "1.0.0",
   "description": "Perform matrix-vector operation with a general band matrix",
   "license": "MIT",

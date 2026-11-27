@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqge",
+  "name": "@rreusser/blahpack/lapack/dlaqge",
   "version": "1.0.0",
   "description": "Scales a general rectangular matrix, using row and column scaling factors computed by sgeequ",
   "license": "MIT",

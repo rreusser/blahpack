@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlasd5",
+  "name": "@rreusser/blahpack/lapack/dlasd5",
   "version": "1.0.0",
   "description": "Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.",
   "license": "MIT",

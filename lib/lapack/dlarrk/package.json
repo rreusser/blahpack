@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlarrk",
+  "name": "@rreusser/blahpack/lapack/dlarrk",
   "version": "1.0.0",
   "description": "Computes one eigenvalue of a symmetric tridiagonal matrix to suitable accuracy",
   "license": "MIT",

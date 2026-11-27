@@ -886,7 +886,7 @@ function validate( fn, names, args, checks, fns, done, optionValues ) {
 * a process where test/harness/replay-offsets.mjs instruments the wrapper
 * (see runReplay), or the length audit is skipped.
 *
-* @param {string} dir - module directory (lib/<pkg>/base/<routine>)
+* @param {string} dir - module directory (lib/<pkg>/<routine>)
 * @returns {Promise<Object>} report
 */
 async function replayModule( dir, options ) {

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpptrf",
+  "name": "@rreusser/blahpack/lapack/zpptrf",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a complex Hermitian positive definite matrix in packed storage.",
   "license": "MIT",

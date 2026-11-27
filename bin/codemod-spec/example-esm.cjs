@@ -8,9 +8,9 @@
 //     → import Float64Array from '@stdlib/array/float64/lib/index.js';
 //   var dgesv = require( '@stdlib/lapack/base/dgesv' );        (a routine of ours)
 //   var dgesv = require( './../lib' );
-//     → import dgesv from '@rreusser/blahpack/lapack/base/dgesv';
+//     → import dgesv from '@rreusser/blahpack/lapack/dgesv';
 //   var f = require( '@stdlib/lapack/base/dtpmqrt' ).ndarray;
-//     → import { ndarray as f } from '@rreusser/blahpack/lapack/base/dtpmqrt';
+//     → import { ndarray as f } from '@rreusser/blahpack/lapack/dtpmqrt';
 //
 // Our routines resolve by name to the package that actually holds them. A
 // require it cannot map is left alone and reported, so the lint gate still
@@ -27,14 +27,14 @@ var PKGS = [ 'blas', 'lapack', 'arpack' ];
 
 var where = {};
 PKGS.forEach( function each( pkg ) {
-	var dir = path.join( ROOT, 'lib', pkg, 'base' );
+	var dir = path.join( ROOT, 'lib', pkg );
 	fs.readdirSync( dir ).forEach( function f( name ) {
 		where[ name ] = pkg;
 	});
 });
 
 function publicPath( name ) {
-	return PKG.name + '/' + where[ name ] + '/base/' + name;
+	return PKG.name + '/' + where[ name ] + '/' + name;
 }
 
 // Returns the import specifier for a require target, or null.
@@ -44,7 +44,7 @@ function target( spec, routine ) {
 		return publicPath( routine );
 	}
 	// stdlib spells multi-part names with hyphens (dla-wwaddw); our directories use underscores.
-	m = /^@(?:stdlib|rreusser\/blahpack)\/(?:blas|lapack|arpack)\/base\/([a-z0-9_-]+)$/.exec( spec );
+	m = /^@(?:stdlib|rreusser\/blahpack)\/(?:blas|lapack|arpack)\/([a-z0-9_-]+)$/.exec( spec );
 	if ( m && where[ m[ 1 ].replace( /-/g, '_' ) ] ) {
 		return publicPath( m[ 1 ].replace( /-/g, '_' ) );
 	}
@@ -64,7 +64,7 @@ function rewriteFile( file, routine, unresolved ) {
 		var m;
 		var spec;
 		// A stale stdlib @module name becomes the real package path.
-		m = /^(\s*\*\s*@module\s+)@stdlib\/(?:blas|lapack|arpack)\/base\/([a-z0-9_]+)\s*$/.exec( line );
+		m = /^(\s*\*\s*@module\s+)@stdlib\/(?:blas|lapack|arpack)\/([a-z0-9_]+)\s*$/.exec( line );
 		if ( m && where[ m[ 2 ] ] ) {
 			changed = true;
 			return m[ 1 ] + publicPath( m[ 2 ] );
@@ -107,7 +107,7 @@ function main() {
 		if ( only.length && only.indexOf( routine ) < 0 ) {
 			return;
 		}
-		dir = path.join( ROOT, 'lib', where[ routine ], 'base', routine, 'lib' );
+		dir = path.join( ROOT, 'lib', where[ routine ], routine, 'lib' );
 		fs.readdirSync( dir ).filter( function f( x ) {
 			return x.endsWith( '.js' );
 		}).forEach( function f( x ) {

@@ -31,5 +31,5 @@
 
 ## Dependency interface surprises
 
-- `zsyr` lives under `lib/lapack/base/zsyr`, not under `lib/blas/base/`.
+- `zsyr` lives under `lib/lapack/zsyr`, not under `lib/blas/`.
 - `izamax` returns a 0-based index in JS.

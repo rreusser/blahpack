@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zpotrf2",
+  "name": "@rreusser/blahpack/lapack/zpotrf2",
   "version": "1.0.0",
   "description": "Computes the Cholesky factorization of a Hermitian positive definite matrix (recursive, complex double-precision).",
   "license": "MIT",

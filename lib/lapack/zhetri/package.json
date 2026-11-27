@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetri",
+  "name": "@rreusser/blahpack/lapack/zhetri",
   "version": "1.0.0",
   "description": "Computes the inverse of a complex Hermitian matrix using the factorization computed by zhetrf.",
   "license": "MIT",

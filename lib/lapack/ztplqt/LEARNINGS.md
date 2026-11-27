@@ -5,7 +5,7 @@
 - The Fortran driver `ZTPLQT` is structurally identical to its real
   counterpart `DTPLQT` (same loop, same panel partition arithmetic,
   same `LB` formula). The translation was effectively a clone of
-  `lib/lapack/base/dtplqt/lib/base.js` with `dtplqt2`/`dtprfb` swapped
+  `lib/lapack/dtplqt/lib/base.js` with `dtplqt2`/`dtprfb` swapped
   for `ztplqt2`/`ztprfb` and the `Float64Array` parameter doc strings
   changed to `Complex128Array`.
 - The `LB` derivation `lb = nb - N + l - i` (rather than `lb = nb - N

@@ -101,10 +101,10 @@ function main() {
 	var only = process.argv.slice( 2 );
 	var n = 0;
 	[ 'blas', 'lapack', 'arpack' ].forEach( function each( pkg ) {
-		var base = path.join( ROOT, 'lib', pkg, 'base' );
+		var base = path.join( ROOT, 'lib', pkg );
 		fs.readdirSync( base ).forEach( function f( routine ) {
 			var dir = path.join( base, routine, 'lib' );
-			var pub = PKG.name + '/' + pkg + '/base/' + routine;
+			var pub = PKG.name + '/' + pkg + '/' + routine;
 			if ( only.length && only.indexOf( routine ) < 0 ) {
 				return;
 			}

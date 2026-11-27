@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtrsna",
+  "name": "@rreusser/blahpack/lapack/dtrsna",
   "version": "1.0.0",
   "description": "Estimates reciprocal condition numbers of eigenvalues and/or eigenvectors of a real upper quasi-triangular matrix",
   "license": "MIT",

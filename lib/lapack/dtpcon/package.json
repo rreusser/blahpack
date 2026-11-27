@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dtpcon",
+  "name": "@rreusser/blahpack/lapack/dtpcon",
   "version": "1.0.0",
   "description": "Estimates the reciprocal condition number of a real triangular matrix in packed storage.",
   "license": "MIT",

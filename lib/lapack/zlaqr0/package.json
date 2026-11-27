@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlaqr0",
+  "name": "@rreusser/blahpack/lapack/zlaqr0",
   "version": "1.0.0",
   "description": "Complex multishift QR top-level driver",
   "license": "MIT",

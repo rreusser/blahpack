@@ -1,6 +1,6 @@
 # dspmv: Differences from stdlib-js Reference
 
-Comparison of our translation (`lib/blas/base/dspmv/`) against the stdlib-js
+Comparison of our translation (`lib/blas/dspmv/`) against the stdlib-js
 reference (`@stdlib/blas/base/dspmv`).
 
 ---

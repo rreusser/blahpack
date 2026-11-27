@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/disnan",
+  "name": "@rreusser/blahpack/lapack/disnan",
   "version": "1.0.0",
   "description": "Test if input is NaN",
   "license": "MIT",

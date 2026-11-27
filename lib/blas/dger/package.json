@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/blas/base/dger",
+  "name": "@rreusser/blahpack/blas/dger",
   "version": "1.0.0",
   "description": "Perform the rank-1 update A := alpha*x*y**T + A.",
   "license": "MIT",

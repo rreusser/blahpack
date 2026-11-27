@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zgtrfs",
+  "name": "@rreusser/blahpack/lapack/zgtrfs",
   "version": "1.0.0",
   "description": "Improves the computed solution to a complex system A * X = B where A is tridiagonal and provides error bounds.",
   "license": "MIT",

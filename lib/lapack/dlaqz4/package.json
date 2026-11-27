@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dlaqz4",
+  "name": "@rreusser/blahpack/lapack/dlaqz4",
   "version": "1.0.0",
   "description": "Executes a single multishift QZ sweep on a matrix pencil.",
   "license": "MIT",

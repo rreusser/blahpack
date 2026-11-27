@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlangb/lib/dlangb.js
+// target: lib/lapack/dlangb/lib/dlangb.js
 // expect: bound
 // LDAB >= max(1,N) rejects band storage of KL+KU+1 < N rows, which the reference accepts.
 /* eslint-disable max-len, max-params */

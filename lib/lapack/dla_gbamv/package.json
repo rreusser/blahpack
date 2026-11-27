@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/dla_gbamv",
+  "name": "@rreusser/blahpack/lapack/dla_gbamv",
   "version": "1.0.0",
   "description": "Performs a matrix-vector operation to calculate error bounds on banded matrices",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zlarcm",
+  "name": "@rreusser/blahpack/lapack/zlarcm",
   "version": "1.0.0",
   "description": "real-by-complex matrix multiply C = A*B",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "@rreusser/blahpack/lapack/base/zhetrs_3",
+  "name": "@rreusser/blahpack/lapack/zhetrs_3",
   "version": "1.0.0",
   "description": "Solve A*X = B for Hermitian A using factorization computed by ZHETRF_RK",
   "license": "MIT",

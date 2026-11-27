@@ -902,3 +902,16 @@ export { default as zunmrq, ndarray as zunmrqNdarray } from './lib/lapack/base/z
 export { default as zunmtr, ndarray as zunmtrNdarray } from './lib/lapack/base/zunmtr/lib/index.js';
 export { default as zupgtr, ndarray as zupgtrNdarray } from './lib/lapack/base/zupgtr/lib/index.js';
 export { default as zupmtr, ndarray as zupmtrNdarray } from './lib/lapack/base/zupmtr/lib/index.js';
+export { default as dgetv0, ndarray as dgetv0Ndarray } from './lib/arpack/base/dgetv0/lib/index.js';
+export { default as dsaitr, ndarray as dsaitrNdarray } from './lib/arpack/base/dsaitr/lib/index.js';
+export { default as dsapps, ndarray as dsappsNdarray } from './lib/arpack/base/dsapps/lib/index.js';
+export { default as dsaup2, ndarray as dsaup2Ndarray } from './lib/arpack/base/dsaup2/lib/index.js';
+export { default as dsaupd, ndarray as dsaupdNdarray } from './lib/arpack/base/dsaupd/lib/index.js';
+export { default as dsband, ndarray as dsbandNdarray } from './lib/arpack/base/dsband/lib/index.js';
+export { default as dsconv, ndarray as dsconvNdarray } from './lib/arpack/base/dsconv/lib/index.js';
+export { default as dseigt, ndarray as dseigtNdarray } from './lib/arpack/base/dseigt/lib/index.js';
+export { default as dsesrt, ndarray as dsesrtNdarray } from './lib/arpack/base/dsesrt/lib/index.js';
+export { default as dseupd, ndarray as dseupdNdarray } from './lib/arpack/base/dseupd/lib/index.js';
+export { default as dsgets, ndarray as dsgetsNdarray } from './lib/arpack/base/dsgets/lib/index.js';
+export { default as dsortr, ndarray as dsortrNdarray } from './lib/arpack/base/dsortr/lib/index.js';
+export { default as dstqrb, ndarray as dstqrbNdarray } from './lib/arpack/base/dstqrb/lib/index.js';

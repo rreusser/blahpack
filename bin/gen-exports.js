@@ -38,7 +38,8 @@ function discoverModules( pkg ) {
 
 const modules = [
 	...discoverModules( 'blas' ),
-	...discoverModules( 'lapack' )
+	...discoverModules( 'lapack' ),
+	...discoverModules( 'arpack' )
 ];
 
 console.log( `Found ${modules.length} modules` );

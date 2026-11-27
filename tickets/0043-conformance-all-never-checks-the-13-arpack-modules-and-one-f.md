@@ -1,9 +1,10 @@
 ---
 id: 0043
 title: "`conformance --all` never checks the 13 ARPACK modules, and one fails"
-status: open
+status: resolved
 area: conformance
 opened: 2026-11-20
+resolved: 2026-11-27
 ---
 
 ## Problem
@@ -21,3 +22,7 @@ opened: 2026-11-20
 ```bash
 for m in lib/arpack/base/*; do node bin/conformance.js $m >/dev/null 2>&1 || echo "FAIL $m"; done
 ```
+
+## Resolution
+
+On branch slop/awesome-wright-lxi5gy, bin/conformance/util.js lists arpack with blas and lapack, so node bin/conformance.js --all checks all 915 modules (was 902) and the CI conformance gate covers the 13 ARPACK modules. All 13 pass (0 failures; dstqrb's missing null-allocation branch cited above had already been fixed). Done alongside exporting ARPACK (ticket 0123).

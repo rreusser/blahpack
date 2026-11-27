@@ -76,7 +76,7 @@ function getPkg( moduleDir ) {
 
 function discoverModules( pathOrAll ) {
 	var modules = [];
-	var pkgs = [ 'blas', 'lapack' ];
+	var pkgs = [ 'blas', 'lapack', 'arpack' ];
 	var pkgDir;
 	var entries;
 	var modDir;

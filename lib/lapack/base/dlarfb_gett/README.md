@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarfb_gett( order, ident, M, N, K, T, LDT, A, LDA, B, LDB, WORK, LDWORK ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ident` | `("identity"\|"not-identity")` | in |  |  | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `T` | `Float64Array` | in | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `A` | `Float64Array` | in/out | `K × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `WORK` | `(Float64Array\|null)` | out | `K × max( K, N - K )` |  | output matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ident` | `"identity" \| "not-identity"` | Specifies the operation type |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `A` | `Float64Array`<br><sub>K × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `WORK` | `Float64Array \| null`<br><sub>K × (max(K, N - K))</sub> | **out** · Output matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -110,28 +110,28 @@ dlarfb_gett.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ident` | `("identity"\|"not-identity")` | in |  |  | specifies whether `V1` is the identity (`'identity'`) or a unit lower-triangular matrix stored in `A` (`'not-identity'`) |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of `B` |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of `A` and `B` |
-| `K` | `NonNegativeInteger` | in |  |  | number of rows of `A` and order of `T` |
-| `T` | `Float64Array` | in | `K × K` |  | upper triangular `K`-by-`K` matrix defining the block reflector |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `A` | `Float64Array` | in/out | `K × N` |  | `K`-by-`N` upper trapezoidal matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | `M`-by-`N` matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `WORK` | `Float64Array` | out | `K × max( K, N - K )` |  | workspace matrix of size at least `K`-by-`N` |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ident` | `"identity" \| "not-identity"` | Specifies whether `V1` is the identity (`'identity'`) or a unit lower-triangular matrix stored in `A` (`'not-identity'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `B` |
+| `N` | `NonNegativeInteger` | Number of columns of `A` and `B` |
+| `K` | `NonNegativeInteger` | Number of rows of `A` and order of `T` |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Upper triangular `K`-by-`K` matrix defining the block reflector |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `A` | `Float64Array`<br><sub>K × N</sub> | **in/out** · `K`-by-`N` upper trapezoidal matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · `M`-by-`N` matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `WORK` | `Float64Array`<br><sub>K × (max(K, N - K))</sub> | **out** · Workspace matrix of size at least `K`-by-`N` |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

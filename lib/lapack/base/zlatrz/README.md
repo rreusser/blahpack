@@ -28,17 +28,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlatrz( order, M, N, l, A, LDA, TAU, strideTAU, work ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `l` | `NonNegativeInteger` | in |  |  | number of columns containing the meaningful part of the Householder vectors |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` (in complex elements) |
-| `TAU` | `Complex128Array` | out | `M` |  | output array of scalar factors of the elementary reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` (in complex elements) |
-| `work` | `(Complex128Array\|null)` | out | `≥ M` |  | workspace array (length at least `M`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `l` | `NonNegativeInteger` | Number of columns containing the meaningful part of the Householder vectors |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` (in complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length M</sub> | **out** · Output array of scalar factors of the elementary reflectors |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` (in complex elements) |
+| `work` | `Complex128Array \| null`<br><sub>length ≥ M</sub> | **out** · Workspace array (length at least `M`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,21 +77,21 @@ Factors the M-by-(M+l) complex upper trapezoidal matrix `[ A1 A2 ] = [ A(0:M-1,0
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `l` | `NonNegativeInteger` | in |  |  | number of columns containing the meaningful part of the Householder vectors |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `TAU` | `Complex128Array` | out | `M` |  | output array of scalar factors of the elementary reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` (in complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` (in complex elements) |
-| `work` | `Complex128Array` | out | `≥ M` |  | workspace array (length at least `M`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `work` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `l` | `NonNegativeInteger` | Number of columns containing the meaningful part of the Householder vectors |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length M</sub> | **out** · Output array of scalar factors of the elementary reflectors |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` (in complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` (in complex elements) |
+| `work` | `Complex128Array`<br><sub>length ≥ M</sub> | **out** · Workspace array (length at least `M`) |
+| ↳ `strideWork` | `integer` | Stride length for `work` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `work` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

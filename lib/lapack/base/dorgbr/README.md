@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dorgbr( order, vect, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix Q or P^T |
-| `N` | `NonNegativeInteger` | in |  | rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min( M, K )))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min( N, K )))` | number of columns of the matrix Q or P^T |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Float64Array` | in | `( vect === 'apply-P' ) ? min( N, K ) : min( M, K )` |  | scalar factors of reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, min( M, N ) )` |  | workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^T |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix Q or P^T<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix Q or P^T<br>Rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min(M, K)))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min(N, K)))` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix<br>Requires `K ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `TAU` | `Float64Array`<br><sub>length (vect === 'apply-P') ? min(N, K) : min(M, K)</sub> | Scalar factors of reflectors |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, min(M, N))</sub> | **out** · Workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,22 +79,22 @@ Generates one of the real orthogonal matrices Q or P^T determined by DGEBRD when
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix Q or P^T |
-| `N` | `NonNegativeInteger` | in |  | rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min( M, K )))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min( N, K )))` | number of columns of the matrix Q or P^T |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix |
-| `A` | `Float64Array` | in/out | `M × N` |  | matrix containing reflectors from DGEBRD |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `TAU` | `Float64Array` | in | `( vect === 'apply-P' ) ? min( N, K ) : min( M, K )` |  | scalar factors of reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `WORK` | `Float64Array` | out | `≥ max( 1, min( M, N ) )` |  | workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`, the dorgqr/dorglq block size), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (must be 1) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^T |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix Q or P^T<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix Q or P^T<br>Rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min(M, K)))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min(N, K)))` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix<br>Requires `K ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Matrix containing reflectors from DGEBRD |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `TAU` | `Float64Array`<br><sub>length (vect === 'apply-P') ? min(N, K) : min(M, K)</sub> | Scalar factors of reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, min(M, N))</sub> | **out** · Workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`, the dorgqr/dorglq block size), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (must be 1) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

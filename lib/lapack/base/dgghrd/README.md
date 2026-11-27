@@ -28,22 +28,22 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgghrd( order, compq, compz, N, ilo, ihi, A, LDA, B, LDB, Q, LDQ, Z, LDZ ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A and B |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | ilo (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | ihi (1-based) |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output matrix A |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input/output matrix B |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input/output matrix Q |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input/output matrix Z |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrices A and B<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | Ihi (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix A |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix B |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Q |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Z |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,29 +98,29 @@ dgghrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A and B |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | ilo (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | ihi (1-based) |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input/output matrix B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input/output matrix Q |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input/output matrix Z |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrices A and B<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | Ihi (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix A |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Q |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Z |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlacgv( N, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -44,12 +44,12 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zlacgv.ndarray( N, x, strideX, offsetX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Complex input vector |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

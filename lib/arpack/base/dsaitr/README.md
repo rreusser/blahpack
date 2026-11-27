@@ -33,26 +33,26 @@ dsaitr(
 ) → INFO: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `k` | `NonNegativeInteger` | in |  |  | current order of the factorization |
-| `np` | `NonNegativeInteger` | in |  |  | number of additional steps |
-| `mode` | `integer` | in |  |  | problem mode (`2` is the `B*OP = A` shortcut) |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `rnorm` | `Float64Array` | in/out |  |  | B-norm of the residual (length-1; in/out) |
-| `V` | `Float64Array` | in/out | `null × K + np` |  | Lanczos basis (N-by-(k+np), column-major) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `H` | `Float64Array` | in/out | `null × 2` |  | tridiagonal matrix in 2-column column-major layout |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `ipntr` | `Int32Array` | out | `3` |  | operator pointers into `workd` (0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| `workd` | `(Float64Array\|null)` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `k` | `NonNegativeInteger` | Current order of the factorization |
+| `np` | `NonNegativeInteger` | Number of additional steps |
+| `mode` | `integer` | Problem mode (`2` is the `B*OP = A` shortcut) |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `rnorm` | `Float64Array` | **in/out** · B-norm of the residual (length-1; in/out) |
+| `V` | `Float64Array`<br><sub>? × (K + np)</sub> | **in/out** · Lanczos basis (N-by-(k+np), column-major) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Tridiagonal matrix in 2-column column-major layout |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Operator pointers into `workd` (0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
 
 **Returns** `INFO: integer`: 0 on success, or the converged subspace size on restart failure
 
@@ -85,33 +85,33 @@ dsaitr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `k` | `NonNegativeInteger` | in |  |  | current order of the factorization |
-| `np` | `NonNegativeInteger` | in |  |  | number of additional steps |
-| `mode` | `integer` | in |  |  | problem mode (`2` is the `B*OP = A` shortcut) |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `rnorm` | `Float64Array` | in/out |  |  | B-norm of the residual (length-1; in/out) |
-| `V` | `Float64Array` | in/out | `null × K + np` |  | Lanczos basis (N-by-(k+np)) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `H` | `Float64Array` | in/out | `null × 2` |  | tridiagonal matrix in 2-column layout |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first (row) dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second (column) dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `ipntr` | `Int32Array` | out | `3` |  | operator pointers into `workd` (0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| ↳ `offsetIpntr` | `NonNegativeInteger` | in |  |  | starting index for `ipntr` |
-| `workd` | `Float64Array` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
+| Parameter | Type | Description |
+|---|---|---|
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `k` | `NonNegativeInteger` | Current order of the factorization |
+| `np` | `NonNegativeInteger` | Number of additional steps |
+| `mode` | `integer` | Problem mode (`2` is the `B*OP = A` shortcut) |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `rnorm` | `Float64Array` | **in/out** · B-norm of the residual (length-1; in/out) |
+| `V` | `Float64Array`<br><sub>? × (K + np)</sub> | **in/out** · Lanczos basis (N-by-(k+np)) |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Tridiagonal matrix in 2-column layout |
+| ↳ `strideH1` | `integer` | Stride of the first (row) dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second (column) dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Operator pointers into `workd` (0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| ↳ `offsetIpntr` | `NonNegativeInteger` | Starting index for `ipntr` |
+| `workd` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
 
 **Returns** `INFO: integer`: 0 on success, or the converged subspace size on restart failure
 

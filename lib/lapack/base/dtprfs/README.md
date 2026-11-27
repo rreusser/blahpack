@@ -31,25 +31,25 @@ dtprfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system of equations |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix A |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right-hand side matrix B |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | in | `N × nrhs` |  | solution matrix X |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward errors |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | integer workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `trans` | `TransposeOperation` | Specifies the form of the system of equations<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular<br>One of `'non-unit'`, `'unit'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix A |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right-hand side matrix B |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | Solution matrix X |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds |
+| ↳ `strideFERR` | `integer` | Stride for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward errors |
+| ↳ `strideBERR` | `integer` | Stride for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Integer workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,36 +115,36 @@ Provides error bounds for the solution to a system with a real triangular matrix
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrices B and X. |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `X` | `Float64Array` | in | `N × nrhs` |  | input matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | input array |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | input array |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for `BERR` |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | output array |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `trans` | `TransposeOperation` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies the operation type<br>One of `'non-unit'`, `'unit'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices B and X.<br>Requires `nrhs ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | Input matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Input array |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Input array |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for `BERR` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

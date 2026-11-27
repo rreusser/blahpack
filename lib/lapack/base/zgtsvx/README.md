@@ -50,40 +50,40 @@ zgtsvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'not-factored' or 'factored' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Complex128Array` | in | `N - 1` |  | sub-diagonal of A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL (in complex elements) |
-| `d` | `Complex128Array` | in | `N` |  | diagonal of A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d (in complex elements) |
-| `DU` | `Complex128Array` | in | `N - 1` |  | super-diagonal of A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU (in complex elements) |
-| `DLF` | `Complex128Array` | in/out | `N - 1` |  | factored sub-diagonal (length N-1) |
-| ↳ `strideDLF` | `integer` | in |  |  | stride for DLF (in complex elements) |
-| `DF` | `Complex128Array` | in/out | `N` |  | factored diagonal (length N) |
-| ↳ `strideDF` | `integer` | in |  |  | stride for DF (in complex elements) |
-| `DUF` | `Complex128Array` | in/out | `N - 1` |  | factored super-diagonal (length N-1) |
-| ↳ `strideDUF` | `integer` | in |  |  | stride for DUF (in complex elements) |
-| `DU2` | `Complex128Array` | in/out | `N - 2` |  | second superdiagonal fill-in (length N-2) |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for DU2 (in complex elements) |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (length N) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of B (in complex elements) |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | solution matrix (output) |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of X (in complex elements) |
-| `rcond` | `Float64Array` | out |  |  | single-element array for reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds (output) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds (output) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "factored"` | 'not-factored' or 'factored' |
+| `trans` | `TransposeOperation` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | Sub-diagonal of A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL (in complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | Diagonal of A (length N) |
+| ↳ `strideD` | `integer` | Stride for d (in complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | Super-diagonal of A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU (in complex elements) |
+| `DLF` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Factored sub-diagonal (length N-1) |
+| ↳ `strideDLF` | `integer` | Stride for DLF (in complex elements) |
+| `DF` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Factored diagonal (length N) |
+| ↳ `strideDF` | `integer` | Stride for DF (in complex elements) |
+| `DUF` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Factored super-diagonal (length N-1) |
+| ↳ `strideDUF` | `integer` | Stride for DUF (in complex elements) |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | **in/out** · Second superdiagonal fill-in (length N-2) |
+| ↳ `strideDU2` | `integer` | Stride for DU2 (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (length N) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (in complex elements)<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (output) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of X (in complex elements)<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · Single-element array for reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds (output) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds (output) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -167,57 +167,57 @@ zgtsvx.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'not-factored' or 'factored' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Complex128Array` | in | `N - 1` |  | sub-diagonal of A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL (in complex elements) |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for DL (in complex elements) |
-| `d` | `Complex128Array` | in | `N` |  | diagonal of A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d (in complex elements) |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d (in complex elements) |
-| `DU` | `Complex128Array` | in | `N - 1` |  | super-diagonal of A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU (in complex elements) |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for DU (in complex elements) |
-| `DLF` | `Complex128Array` | in/out | `N - 1` |  | factored sub-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDLF` | `integer` | in |  |  | stride for DLF (in complex elements) |
-| ↳ `offsetDLF` | `NonNegativeInteger` | in |  |  | starting index for DLF (in complex elements) |
-| `DF` | `Complex128Array` | in/out | `N` |  | factored diagonal (length N), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDF` | `integer` | in |  |  | stride for DF (in complex elements) |
-| ↳ `offsetDF` | `NonNegativeInteger` | in |  |  | starting index for DF (in complex elements) |
-| `DUF` | `Complex128Array` | in/out | `N - 1` |  | factored super-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDUF` | `integer` | in |  |  | stride for DUF (in complex elements) |
-| ↳ `offsetDUF` | `NonNegativeInteger` | in |  |  | starting index for DUF (in complex elements) |
-| `DU2` | `Complex128Array` | in/out | `N - 2` |  | second superdiagonal fill-in (length N-2), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for DU2 (in complex elements) |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for DU2 (in complex elements) |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right hand side matrix (N x NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | solution matrix (N x NRHS), output |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X (in complex elements) |
-| `rcond` | `Float64Array` | out |  |  | output: rcond[0] is the reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output: forward error bound for each RHS (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output: backward error for each RHS (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for BERR |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace of length at least 2*N complex elements |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace of length at least N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "factored"` | 'not-factored' or 'factored' |
+| `trans` | `TransposeOperation` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | Sub-diagonal of A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL (in complex elements) |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for DL (in complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | Diagonal of A (length N) |
+| ↳ `strideD` | `integer` | Stride for d (in complex elements) |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d (in complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | Super-diagonal of A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU (in complex elements) |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for DU (in complex elements) |
+| `DLF` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Factored sub-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDLF` | `integer` | Stride for DLF (in complex elements) |
+| ↳ `offsetDLF` | `NonNegativeInteger` | Starting index for DLF (in complex elements) |
+| `DF` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Factored diagonal (length N), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDF` | `integer` | Stride for DF (in complex elements) |
+| ↳ `offsetDF` | `NonNegativeInteger` | Starting index for DF (in complex elements) |
+| `DUF` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Factored super-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDUF` | `integer` | Stride for DUF (in complex elements) |
+| ↳ `offsetDUF` | `NonNegativeInteger` | Starting index for DUF (in complex elements) |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | **in/out** · Second superdiagonal fill-in (length N-2), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDU2` | `integer` | Stride for DU2 (in complex elements) |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for DU2 (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right hand side matrix (N x NRHS) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (N x NRHS), output |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X (in complex elements) |
+| `rcond` | `Float64Array` | **out** · Output: rcond[0] is the reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: forward error bound for each RHS (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: backward error for each RHS (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length at least 2\*N complex elements |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace of length at least N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

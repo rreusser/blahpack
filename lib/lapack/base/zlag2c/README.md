@@ -22,15 +22,15 @@ zlag2c( order, M, N, A, LDA, SA, LDSA ) → integer
 
 Converts a complex double precision matrix `A` to a complex single precision matrix `SA`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Complex128Array` | in | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `SA` | `Complex64Array` | out | `M × N` |  | output matrix |
-| ↳ `LDSA` | `PositiveInteger` | in |  |  | leading dimension of `SA` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `SA` | `Complex64Array`<br><sub>M × N</sub> | **out** · Output matrix |
+| ↳ `LDSA` | `PositiveInteger` | Leading dimension of `SA` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,18 +68,18 @@ Converts a complex double precision matrix `A` to a complex single precision mat
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Complex128Array` | in | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `SA` | `Complex64Array` | out | `M × N` |  | output matrix (single precision simulated via Math.fround) |
-| ↳ `strideSA1` | `integer` | in |  |  | stride of the first dimension of `SA` (in complex elements) |
-| ↳ `strideSA2` | `integer` | in |  |  | stride of the second dimension of `SA` (in complex elements) |
-| ↳ `offsetSA` | `NonNegativeInteger` | in |  |  | starting index for `SA` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `SA` | `Complex64Array`<br><sub>M × N</sub> | **out** · Output matrix (single precision simulated via Math.fround) |
+| ↳ `strideSA1` | `integer` | Stride of the first dimension of `SA` (in complex elements) |
+| ↳ `strideSA2` | `integer` | Stride of the second dimension of `SA` (in complex elements) |
+| ↳ `offsetSA` | `NonNegativeInteger` | Starting index for `SA` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

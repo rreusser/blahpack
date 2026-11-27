@@ -31,24 +31,24 @@ zla_gbrcond_c(
 ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'conjugate-transpose'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > N - 1` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | number of superdiagonals |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | original banded matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `AFB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | LU factored banded matrix from `zgbtrf` |
-| ↳ `LDAFB` | `PositiveInteger` | in |  | column-major requires `LDAFB ≥ 2 * kl + ku + 1`; row-major requires `LDAFB ≥ max( 1, N )` | leading dimension of `AFB` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zgbtrf` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `c` | `Float64Array` | in | `N` |  | real scaling vector of length `N` |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `capply` | `boolean` | in |  |  | if `true`, scale by `inv(diag(C))` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | complex workspace of length at least `2*N` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace of length at least `N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'conjugate-transpose'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Rejects `kl < 0 \|\| kl > N - 1` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Original banded matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `AFB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factored banded matrix from `zgbtrf` |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of `AFB`<br>Column-major requires `LDAFB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAFB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zgbtrf` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `c` | `Float64Array`<br><sub>length N</sub> | Real scaling vector of length `N` |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `capply` | `boolean` | If `true`, scale by `inv(diag(C))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace of length at least `2*N` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace of length at least `N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -105,33 +105,33 @@ zla_gbrcond_c.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'conjugate-transpose'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > N - 1` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | number of superdiagonals |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | original banded matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (in complex elements) |
-| `AFB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | LU factored banded matrix from `zgbtrf` |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of the first dimension of `AFB` (in complex elements) |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of the second dimension of `AFB` (in complex elements) |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | starting index for `AFB` (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zgbtrf` (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `c` | `Float64Array` | in | `N` |  | real scaling vector of length `N` |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `capply` | `boolean` | in |  |  | if `true`, scale by `inv(diag(C))` |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | complex workspace of length at least `2*N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace of length at least `N` |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'conjugate-transpose'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Rejects `kl < 0 \|\| kl > N - 1` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Original banded matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (in complex elements) |
+| `AFB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factored banded matrix from `zgbtrf` |
+| ↳ `strideAFB1` | `integer` | Stride of the first dimension of `AFB` (in complex elements) |
+| ↳ `strideAFB2` | `integer` | Stride of the second dimension of `AFB` (in complex elements) |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Starting index for `AFB` (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zgbtrf` (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `c` | `Float64Array`<br><sub>length N</sub> | Real scaling vector of length `N` |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `capply` | `boolean` | If `true`, scale by `inv(diag(C))` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace of length at least `2*N` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace of length at least `N` |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,15 +29,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsptri( order, uplo, N, AP, IPIV, strideIPIV, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of `A` is packed ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix containing the factorization from dsptrf, length N*(N+1)/2 |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot index array from dsptrf, length N |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace of length at least `N` (allocated internally when `null`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is packed ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix containing the factorization from dsptrf, length N\*(N+1)/2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot index array from dsptrf, length N |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace of length at least `N` (allocated internally when `null`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,19 +82,19 @@ dsptri.ndarray(
 
 Computes the inverse of a real symmetric matrix in packed storage using the factorization computed by dsptrf.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `IPIV` | `Int32Array` | in | `N` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

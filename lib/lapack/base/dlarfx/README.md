@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarfx( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'`: form H * C `'right'`: form C * H. |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix C. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix C. |
-| `v` | `Float64Array` | in | `( side === 'left' ) ? M : N` |  | or (N) if `side === 'right'` The vector v in the representation of H. |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| `tau` | `number` | in |  |  | the value tau in the representation of H. |
-| `C` | `Float64Array` | in/out | `null × N` |  | on entry, the m by n matrix C. On exit, C is overwritten by the matrix H * C if `side === 'left'`, or C * H if `side === 'right'`. |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'`: form H \* C `'right'`: form C \* H. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix C. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix C. |
+| `v` | `Float64Array`<br><sub>length (side === 'left') ? M : N</sub> | Or (N) if `side === 'right'` The vector v in the representation of H. |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| `tau` | `number` | The value tau in the representation of H. |
+| `C` | `Float64Array`<br><sub>? × N</sub> | **in/out** · On entry, the m by n matrix C. On exit, C is overwritten by the matrix H \* C if `side === 'left'`, or C \* H if `side === 'right'`. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -86,22 +86,22 @@ This version uses inline code if H has order <= 10.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Float64Array` | in | `( side === 'left' ) ? M : N` |  | the vector v in the reflector |
-| ↳ `strideV` | `integer` | in |  |  | stride for v |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for v |
-| `tau` | `number` | in |  |  | the scalar tau |
-| `C` | `Float64Array` | in/out | `null × N` |  | the M-by-N matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Float64Array` | out | `≥ N` |  | caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Float64Array`<br><sub>length (side === 'left') ? M : N</sub> | The vector v in the reflector |
+| ↳ `strideV` | `integer` | Stride for v |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for v |
+| `tau` | `number` | The scalar tau |
+| `C` | `Float64Array`<br><sub>? × N</sub> | **in/out** · The M-by-N matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'` |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

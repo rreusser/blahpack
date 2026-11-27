@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ddot( N, x, strideX, y, strideY ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | in | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length N</sub> | Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -49,15 +49,15 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 ddot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | First input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | Second input array |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

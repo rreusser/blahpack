@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dptcon( N, d, strideD, e, strideE, anorm, rcond, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the diagonal matrix D from the factorization of A, as computed by DPTTRF. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in | `N - 1` |  | the (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization of A, as computed by DPTTRF. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A. |
-| `rcond` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is the 1-norm of inv(A) computed in this routine. |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the diagonal matrix D from the factorization of A, as computed by DPTTRF. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization of A, as computed by DPTTRF. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `anorm` | `number` | The 1-norm of the original matrix A.<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM \* AINVNM), where AINVNM is the 1-norm of inv(A) computed in this routine. |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -71,20 +71,20 @@ A = L_D_L^T computed by dpttrf.
 The norm of inv(A) is computed by a direct method, and the reciprocal of
 the condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of D from dpttrf (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in | `N - 1` |  | subdiagonal elements of L from dpttrf (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ N` |  | workspace array of length at least N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of D from dpttrf (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Subdiagonal elements of L from dpttrf (length N-1) |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

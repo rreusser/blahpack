@@ -34,28 +34,28 @@ zspsvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'not-factored' or 'factored' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix, length N*(N+1)/2 |
-| `AFP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix (output if FACT='not-factored') |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices, length N |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of B (in complex elements) |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | solution matrix (output) |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of X (in complex elements) |
-| `rcond` | `Float64Array` | out |  |  | single-element array for reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds (output) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds (output) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "factored"` | 'not-factored' or 'factored' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed symmetric matrix, length N\*(N+1)/2 |
+| `AFP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Factored packed matrix (output if FACT='not-factored') |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices, length N |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (in complex elements)<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (output) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of X (in complex elements)<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · Single-element array for reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds (output) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds (output) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -124,42 +124,42 @@ Solves a complex symmetric indefinite system of linear equations A_X = B where A
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'factored' if AFP and IPIV contain the factorization, 'not-factored' to compute it |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' if upper triangle of A stored, 'lower' if lower triangle |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | symmetric matrix A in packed storage (length N*(N+1)/2) |
-| ↳ `strideAP` | `integer` | in |  |  | stride for AP (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for AP (in complex elements) |
-| `AFP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | factored form of A in packed storage (output if FACT='not-factored', input if FACT='factored') |
-| ↳ `strideAFP` | `integer` | in |  |  | stride for AFP (in complex elements) |
-| ↳ `offsetAFP` | `NonNegativeInteger` | in |  |  | starting index for AFP (in complex elements) |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (output if FACT='not-factored', input if FACT='factored') |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix (column-major, N-by-NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | solution matrix (column-major, N-by-NRHS, output) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X (in complex elements) |
-| `rcond` | `Float64Array` | out |  |  | single-element array for reciprocal condition number (output) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds array (length NRHS, output) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds array (length NRHS, output) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for BERR |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array (length at least 2*N complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace array (length at least N) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "factored"` | 'factored' if AFP and IPIV contain the factorization, 'not-factored' to compute it |
+| `uplo` | `MatrixTriangle` | 'upper' if upper triangle of A stored, 'lower' if lower triangle |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Symmetric matrix A in packed storage (length N\*(N+1)/2) |
+| ↳ `strideAP` | `integer` | Stride for AP (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for AP (in complex elements) |
+| `AFP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Factored form of A in packed storage (output if FACT='not-factored', input if FACT='factored') |
+| ↳ `strideAFP` | `integer` | Stride for AFP (in complex elements) |
+| ↳ `offsetAFP` | `NonNegativeInteger` | Starting index for AFP (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (output if FACT='not-factored', input if FACT='factored') |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix (column-major, N-by-NRHS) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (column-major, N-by-NRHS, output) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X (in complex elements) |
+| `rcond` | `Float64Array` | **out** · Single-element array for reciprocal condition number (output) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds array (length NRHS, output) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds array (length NRHS, output) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array (length at least 2\*N complex elements) |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace array (length at least N) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

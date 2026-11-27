@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dnrm2( N, x, strideX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in |  |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array` | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -43,12 +43,12 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dnrm2.ndarray( N, x, strideX, offsetX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in |  |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array` | Input array |
+| ↳ `strideX` | `integer` | Stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

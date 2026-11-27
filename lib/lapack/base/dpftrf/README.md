@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dpftrf( transr, uplo, N, A, strideA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input/output array in RFP format |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input/output array in RFP format |
+| ↳ `strideA` | `integer` | Stride length for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -63,14 +63,14 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dpftrf.ndarray( transr, uplo, N, A, strideA, offsetA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input/output array in RFP format |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input/output array in RFP format |
+| ↳ `strideA` | `integer` | Stride length for `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

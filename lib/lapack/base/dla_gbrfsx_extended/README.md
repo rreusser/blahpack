@@ -45,48 +45,48 @@ dla_gbrfsx_extended(
 
 Improves the computed solution `Y` to a banded system of linear equations using extra-precise iterative refinement and computes backward/forward error bounds.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `prec_type` | `integer` | in |  |  | extended-precision type code (ignored — XBLAS fallback) |
-| `trans_type` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'transpose'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `kl` | `NonNegativeInteger` | in |  |  | number of sub-diagonals |
-| `ku` | `integer` | in |  |  | number of super-diagonals |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right-hand sides |
-| `AB` | `Float64Array` | in | `null × N` |  | original banded matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `AFB` | `Float64Array` | in | `N × N` |  | `LU`-factored banded matrix |
-| ↳ `LDAFB` | `PositiveInteger` | in |  |  | leading dimension of `AFB` |
-| `IPIV` | `Int32Array` | in | `N` |  | 0-based pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| `colequ` | `boolean` | in |  |  | whether column equilibration was applied |
-| `c` | `Float64Array` | in | `N` |  | column scaling vector |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `Y` | `Float64Array` | in/out | `N × nrhs` |  | initial solution |
-| ↳ `LDY` | `PositiveInteger` | in |  |  | leading dimension of `Y` |
-| `BERR_OUT` | `Float64Array` | out | `nrhs` |  | output backward error per RHS |
-| ↳ `strideBERR_OUT` | `integer` | in |  |  | stride for `BERR_OUT` |
-| `n_norms` | `integer` | in |  |  | number of error bounds to compute |
-| `ERR_BNDS_NORM` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | normwise error bounds matrix |
-| ↳ `LDERR_BNDS_NORM` | `PositiveInteger` | in |  |  | leading dimension of `ERR_BNDS_NORM` |
-| `ERR_BNDS_COMP` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | componentwise error bounds matrix |
-| ↳ `LDERR_BNDS_COMP` | `PositiveInteger` | in |  |  | leading dimension of `ERR_BNDS_COMP` |
-| `RES` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideRES` | `integer` | in |  |  | stride for `RES` |
-| `AYB` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideAYB` | `integer` | in |  |  | stride for `AYB` |
-| `DY` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideDY` | `integer` | in |  |  | stride for `DY` |
-| `Y_TAIL` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideY_TAIL` | `integer` | in |  |  | stride for `Y_TAIL` |
-| `rcond` | `number` | in |  |  | reciprocal condition estimate |
-| `ithresh` | `integer` | in |  |  | maximum number of refinement iterations |
-| `rthresh` | `number` | in |  |  | ratio threshold for stagnation detection |
-| `dz_ub` | `number` | in |  |  | componentwise update ratio upper bound |
-| `ignore_cwise` | `boolean` | in |  |  | whether to ignore componentwise convergence |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `prec_type` | `integer` | Extended-precision type code (ignored — XBLAS fallback) |
+| `trans_type` | `TransposeOperation` | `'no-transpose'` or `'transpose'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals |
+| `ku` | `integer` | Number of super-diagonals |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides |
+| `AB` | `Float64Array`<br><sub>? × N</sub> | Original banded matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `AFB` | `Float64Array`<br><sub>N × N</sub> | `LU`-factored banded matrix |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of `AFB` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | 0-based pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| `colequ` | `boolean` | Whether column equilibration was applied |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scaling vector |
+| ↳ `strideC` | `integer` | Stride for `c` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `Y` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Initial solution |
+| ↳ `LDY` | `PositiveInteger` | Leading dimension of `Y` |
+| `BERR_OUT` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error per RHS |
+| ↳ `strideBERR_OUT` | `integer` | Stride for `BERR_OUT` |
+| `n_norms` | `integer` | Number of error bounds to compute |
+| `ERR_BNDS_NORM` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Normwise error bounds matrix |
+| ↳ `LDERR_BNDS_NORM` | `PositiveInteger` | Leading dimension of `ERR_BNDS_NORM` |
+| `ERR_BNDS_COMP` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Componentwise error bounds matrix |
+| ↳ `LDERR_BNDS_COMP` | `PositiveInteger` | Leading dimension of `ERR_BNDS_COMP` |
+| `RES` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideRES` | `integer` | Stride for `RES` |
+| `AYB` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideAYB` | `integer` | Stride for `AYB` |
+| `DY` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideDY` | `integer` | Stride for `DY` |
+| `Y_TAIL` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideY_TAIL` | `integer` | Stride for `Y_TAIL` |
+| `rcond` | `number` | Reciprocal condition estimate |
+| `ithresh` | `integer` | Maximum number of refinement iterations |
+| `rthresh` | `number` | Ratio threshold for stagnation detection |
+| `dz_ub` | `number` | Componentwise update ratio upper bound |
+| `ignore_cwise` | `boolean` | Whether to ignore componentwise convergence |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -249,66 +249,66 @@ Improves the computed solution `Y` to a banded system of linear equations using 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `prec_type` | `integer` | in |  |  | extended-precision type code (ignored — XBLAS fallback) |
-| `trans_type` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'transpose'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `kl` | `NonNegativeInteger` | in |  |  | number of sub-diagonals |
-| `ku` | `integer` | in |  |  | number of super-diagonals |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right-hand sides |
-| `AB` | `Float64Array` | in | `null × N` |  | original banded matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `AFB` | `Float64Array` | in | `N × N` |  | `LU`-factored banded matrix |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of the first dimension of `AFB` |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of the second dimension of `AFB` |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | starting index for `AFB` |
-| `IPIV` | `Int32Array` | in | `N` |  | 0-based pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `colequ` | `boolean` | in |  |  | whether column equilibration was applied |
-| `c` | `Float64Array` | in | `N` |  | column scaling vector |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Y` | `Float64Array` | in/out | `N × nrhs` |  | initial solution (updated on exit) |
-| ↳ `strideY1` | `integer` | in |  |  | stride of the first dimension of `Y` |
-| ↳ `strideY2` | `integer` | in |  |  | stride of the second dimension of `Y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `Y` |
-| `BERR_OUT` | `Float64Array` | out | `nrhs` |  | output backward error per RHS |
-| ↳ `strideBERR_OUT` | `integer` | in |  |  | stride for `BERR_OUT` |
-| ↳ `offsetBERR_OUT` | `NonNegativeInteger` | in |  |  | starting index for `BERR_OUT` |
-| `n_norms` | `integer` | in |  |  | number of error bounds to compute |
-| `ERR_BNDS_NORM` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | normwise error bounds matrix |
-| ↳ `strideERR_BNDS_NORM1` | `integer` | in |  |  | stride of the first dimension of `ERR_BNDS_NORM` |
-| ↳ `strideERR_BNDS_NORM2` | `integer` | in |  |  | stride of the second dimension of `ERR_BNDS_NORM` |
-| ↳ `offsetERR_BNDS_NORM` | `NonNegativeInteger` | in |  |  | starting index for `ERR_BNDS_NORM` |
-| `ERR_BNDS_COMP` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | componentwise error bounds matrix |
-| ↳ `strideERR_BNDS_COMP1` | `integer` | in |  |  | stride of the first dimension of `ERR_BNDS_COMP` |
-| ↳ `strideERR_BNDS_COMP2` | `integer` | in |  |  | stride of the second dimension of `ERR_BNDS_COMP` |
-| ↳ `offsetERR_BNDS_COMP` | `NonNegativeInteger` | in |  |  | starting index for `ERR_BNDS_COMP` |
-| `RES` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideRES` | `integer` | in |  |  | stride for `RES` |
-| ↳ `offsetRES` | `NonNegativeInteger` | in |  |  | starting index for `RES` |
-| `AYB` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideAYB` | `integer` | in |  |  | stride for `AYB` |
-| ↳ `offsetAYB` | `NonNegativeInteger` | in |  |  | starting index for `AYB` |
-| `DY` | `Float64Array` | in | `N` |  | workspace of length `N` (update direction) |
-| ↳ `strideDY` | `integer` | in |  |  | stride for `DY` |
-| ↳ `offsetDY` | `NonNegativeInteger` | in |  |  | starting index for `DY` |
-| `Y_TAIL` | `Float64Array` | in | `N` |  | workspace of length `N` |
-| ↳ `strideY_TAIL` | `integer` | in |  |  | stride for `Y_TAIL` |
-| ↳ `offsetY_TAIL` | `NonNegativeInteger` | in |  |  | starting index for `Y_TAIL` |
-| `rcond` | `number` | in |  |  | reciprocal condition estimate |
-| `ithresh` | `integer` | in |  |  | maximum number of refinement iterations |
-| `rthresh` | `number` | in |  |  | ratio threshold for stagnation detection |
-| `dz_ub` | `number` | in |  |  | componentwise update ratio upper bound |
-| `ignore_cwise` | `boolean` | in |  |  | whether to ignore componentwise convergence |
+| Parameter | Type | Description |
+|---|---|---|
+| `prec_type` | `integer` | Extended-precision type code (ignored — XBLAS fallback) |
+| `trans_type` | `TransposeOperation` | `'no-transpose'` or `'transpose'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals |
+| `ku` | `integer` | Number of super-diagonals |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides |
+| `AB` | `Float64Array`<br><sub>? × N</sub> | Original banded matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `AFB` | `Float64Array`<br><sub>N × N</sub> | `LU`-factored banded matrix |
+| ↳ `strideAFB1` | `integer` | Stride of the first dimension of `AFB` |
+| ↳ `strideAFB2` | `integer` | Stride of the second dimension of `AFB` |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Starting index for `AFB` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | 0-based pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `colequ` | `boolean` | Whether column equilibration was applied |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scaling vector |
+| ↳ `strideC` | `integer` | Stride for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Y` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Initial solution (updated on exit) |
+| ↳ `strideY1` | `integer` | Stride of the first dimension of `Y` |
+| ↳ `strideY2` | `integer` | Stride of the second dimension of `Y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `Y` |
+| `BERR_OUT` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error per RHS |
+| ↳ `strideBERR_OUT` | `integer` | Stride for `BERR_OUT` |
+| ↳ `offsetBERR_OUT` | `NonNegativeInteger` | Starting index for `BERR_OUT` |
+| `n_norms` | `integer` | Number of error bounds to compute |
+| `ERR_BNDS_NORM` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Normwise error bounds matrix |
+| ↳ `strideERR_BNDS_NORM1` | `integer` | Stride of the first dimension of `ERR_BNDS_NORM` |
+| ↳ `strideERR_BNDS_NORM2` | `integer` | Stride of the second dimension of `ERR_BNDS_NORM` |
+| ↳ `offsetERR_BNDS_NORM` | `NonNegativeInteger` | Starting index for `ERR_BNDS_NORM` |
+| `ERR_BNDS_COMP` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Componentwise error bounds matrix |
+| ↳ `strideERR_BNDS_COMP1` | `integer` | Stride of the first dimension of `ERR_BNDS_COMP` |
+| ↳ `strideERR_BNDS_COMP2` | `integer` | Stride of the second dimension of `ERR_BNDS_COMP` |
+| ↳ `offsetERR_BNDS_COMP` | `NonNegativeInteger` | Starting index for `ERR_BNDS_COMP` |
+| `RES` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideRES` | `integer` | Stride for `RES` |
+| ↳ `offsetRES` | `NonNegativeInteger` | Starting index for `RES` |
+| `AYB` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideAYB` | `integer` | Stride for `AYB` |
+| ↳ `offsetAYB` | `NonNegativeInteger` | Starting index for `AYB` |
+| `DY` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` (update direction) |
+| ↳ `strideDY` | `integer` | Stride for `DY` |
+| ↳ `offsetDY` | `NonNegativeInteger` | Starting index for `DY` |
+| `Y_TAIL` | `Float64Array`<br><sub>length N</sub> | Workspace of length `N` |
+| ↳ `strideY_TAIL` | `integer` | Stride for `Y_TAIL` |
+| ↳ `offsetY_TAIL` | `NonNegativeInteger` | Starting index for `Y_TAIL` |
+| `rcond` | `number` | Reciprocal condition estimate |
+| `ithresh` | `integer` | Maximum number of refinement iterations |
+| `rthresh` | `number` | Ratio threshold for stagnation detection |
+| `dz_ub` | `number` | Componentwise update ratio upper bound |
+| `ignore_cwise` | `boolean` | Whether to ignore componentwise convergence |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

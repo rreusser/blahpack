@@ -29,21 +29,21 @@ dlagtf(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix T. |
-| `a` | `Float64Array` | in/out | `N` |  | on entry, A must contain the diagonal elements of T. On exit, A is overwritten by the n diagonal elements of the upper triangular matrix U of the factorization of T. |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `a` |
-| `lambda` | `number` | in |  |  | on entry, the scalar lambda. |
-| `b` | `Float64Array` | in/out | `N - 1` |  | on entry, B must contain the (n-1) super-diagonal elements of T. On exit, B is overwritten by the (n-1) super-diagonal elements of the matrix U of the factorization of T. |
-| ↳ `strideB` | `integer` | in |  |  | stride length for `b` |
-| `c` | `Float64Array` | in/out | `N - 1` |  | on entry, C must contain the (n-1) sub-diagonal elements of T. On exit, C is overwritten by the (n-1) sub-diagonal elements of the matrix L of the factorization of T. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `tol` | `number` | in |  |  | on entry, a relative tolerance used to indicate whether or not the matrix (T - lambda*I) is nearly singular. |
-| `d` | `Float64Array` | out | `N - 2` |  | on exit, D is overwritten by the (n-2) second super-diagonal elements of the matrix U of the factorization of T. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `IN` | `Int32Array` | out | `N` |  | on exit, IN contains details of the permutation matrix P (0-based). |
-| ↳ `strideIN` | `integer` | in |  |  | stride length for `IN` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The order of the matrix T.<br>Requires `N ≥ 0` |
+| `a` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, A must contain the diagonal elements of T. On exit, A is overwritten by the n diagonal elements of the upper triangular matrix U of the factorization of T. |
+| ↳ `strideA` | `integer` | Stride length for `a` |
+| `lambda` | `number` | On entry, the scalar lambda. |
+| `b` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, B must contain the (n-1) super-diagonal elements of T. On exit, B is overwritten by the (n-1) super-diagonal elements of the matrix U of the factorization of T. |
+| ↳ `strideB` | `integer` | Stride length for `b` |
+| `c` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, C must contain the (n-1) sub-diagonal elements of T. On exit, C is overwritten by the (n-1) sub-diagonal elements of the matrix L of the factorization of T. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `tol` | `number` | On entry, a relative tolerance used to indicate whether or not the matrix (T - lambda\*I) is nearly singular. |
+| `d` | `Float64Array`<br><sub>length N - 2</sub> | **out** · On exit, D is overwritten by the (n-2) second super-diagonal elements of the matrix U of the factorization of T. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `IN` | `Int32Array`<br><sub>length N</sub> | **out** · On exit, IN contains details of the permutation matrix P (0-based). |
+| ↳ `strideIN` | `integer` | Stride length for `IN` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -101,26 +101,26 @@ P is a permutation matrix, L is a unit lower tridiagonal matrix with at most
 one non-zero sub-diagonal element per column, and U is an upper triangular
 matrix with at most two non-zero super-diagonal elements per column.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `a` | `Float64Array` | in/out | `N` |  | diagonal elements (overwritten with U diagonal), length N |
-| ↳ `strideA` | `integer` | in |  |  | stride for a |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset for a |
-| `lambda` | `number` | in |  |  | scalar lambda |
-| `b` | `Float64Array` | in/out | `N - 1` |  | super-diagonal elements (overwritten with U super-diagonal), length N-1 |
-| ↳ `strideB` | `integer` | in |  |  | stride for b |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset for b |
-| `c` | `Float64Array` | in/out | `N - 1` |  | sub-diagonal elements (overwritten with L sub-diagonal), length N-1 |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | offset for c |
-| `tol` | `number` | in |  |  | relative tolerance for near-singularity detection |
-| `d` | `Float64Array` | out | `N - 2` |  | second super-diagonal of U, length N-2 |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `IN` | `Int32Array` | out | `N` |  | pivot/info array, length N |
-| ↳ `strideIN` | `integer` | in |  |  | stride for IN |
-| ↳ `offsetIN` | `NonNegativeInteger` | in |  |  | offset for IN |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `a` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (overwritten with U diagonal), length N |
+| ↳ `strideA` | `integer` | Stride for a |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset for a |
+| `lambda` | `number` | Scalar lambda |
+| `b` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (overwritten with U super-diagonal), length N-1 |
+| ↳ `strideB` | `integer` | Stride for b |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset for b |
+| `c` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (overwritten with L sub-diagonal), length N-1 |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Offset for c |
+| `tol` | `number` | Relative tolerance for near-singularity detection |
+| `d` | `Float64Array`<br><sub>length N - 2</sub> | **out** · Second super-diagonal of U, length N-2 |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `IN` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot/info array, length N |
+| ↳ `strideIN` | `integer` | Stride for IN |
+| ↳ `offsetIN` | `NonNegativeInteger` | Offset for IN |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

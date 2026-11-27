@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlacp2( order, uplo, M, N, A, LDA, B, LDB ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | specifies whether to copy the upper triangle, lower triangle, or all of `A` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Float64Array` | in | `M × N` |  | input real matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Complex128Array` | out | `M × N` |  | output complex matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `uplo` | `"upper" \| "lower" \| "all"` | Specifies whether to copy the upper triangle, lower triangle, or all of `A` |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input real matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **out** · Output complex matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,19 +67,19 @@ zlacp2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | specifies whether to copy the upper triangle, lower triangle, or all of `A` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Float64Array` | in | `M × N` |  | input real matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | out | `M × N` |  | output complex matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `"upper" \| "lower" \| "all"` | Specifies whether to copy the upper triangle, lower triangle, or all of `A` |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input real matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **out** · Output complex matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

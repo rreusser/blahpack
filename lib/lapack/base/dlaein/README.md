@@ -31,26 +31,26 @@ dlaein(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `rightv` | `boolean` | in |  |  | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
-| `noinit` | `boolean` | in |  |  | = `true` : no initial vector supplied in (VR,VI). = `false`: initial vector supplied in (VR,VI). |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `H` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `wr` | `number` | in |  |  | the real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
-| `wi` | `number` | in |  |  | the real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
-| `VR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVR` | `integer` | in |  |  | stride length for `VR` |
-| `VI` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVI` | `integer` | in |  |  | stride length for `VI` |
-| `B` | `Float64Array` | out | `N + 1 × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | output array |
-| `eps3` | `number` | in |  |  | a small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
-| `smlnum` | `number` | in |  |  | a machine-dependent value close to the underflow threshold. |
-| `bignum` | `number` | in |  |  | a machine-dependent value close to the overflow threshold. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `rightv` | `boolean` | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
+| `noinit` | `boolean` | = `true` : no initial vector supplied in (VR,VI). = `false`: initial vector supplied in (VR,VI). |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `H` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `wr` | `number` | The real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
+| `wi` | `number` | The real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
+| `VR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVR` | `integer` | Stride length for `VR` |
+| `VI` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVI` | `integer` | Stride length for `VI` |
+| `B` | `Float64Array`<br><sub>(N + 1) × N</sub> | **out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
+| `eps3` | `number` | A small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
+| `smlnum` | `number` | A machine-dependent value close to the underflow threshold. |
+| `bignum` | `number` | A machine-dependent value close to the overflow threshold. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -96,33 +96,33 @@ dlaein.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `rightv` | `boolean` | in |  |  | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
-| `noinit` | `boolean` | in |  |  | = `true` : no initial vector supplied in (VR,VI). = `false`: initial vector supplied in (VR,VI). |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `H` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `wr` | `number` | in |  |  | the real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
-| `wi` | `number` | in |  |  | the real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
-| `VR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVR` | `integer` | in |  |  | stride length for `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `VI` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVI` | `integer` | in |  |  | stride length for `VI` |
-| ↳ `offsetVI` | `NonNegativeInteger` | in |  |  | starting index for `VI` |
-| `B` | `Float64Array` | out | `N + 1 × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `eps3` | `number` | in |  |  | a small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
-| `smlnum` | `number` | in |  |  | a machine-dependent value close to the underflow threshold. |
-| `bignum` | `number` | in |  |  | a machine-dependent value close to the overflow threshold. |
+| Parameter | Type | Description |
+|---|---|---|
+| `rightv` | `boolean` | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
+| `noinit` | `boolean` | = `true` : no initial vector supplied in (VR,VI). = `false`: initial vector supplied in (VR,VI). |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `H` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `wr` | `number` | The real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
+| `wi` | `number` | The real and imaginary parts of the eigenvalue of H whose corresponding right or left eigenvector is to be computed. |
+| `VR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVR` | `integer` | Stride length for `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `VI` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVI` | `integer` | Stride length for `VI` |
+| ↳ `offsetVI` | `NonNegativeInteger` | Starting index for `VI` |
+| `B` | `Float64Array`<br><sub>(N + 1) × N</sub> | **out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `eps3` | `number` | A small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
+| `smlnum` | `number` | A machine-dependent value close to the underflow threshold. |
+| `bignum` | `number` | A machine-dependent value close to the overflow threshold. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgetc2( order, N, A, LDA, IPIV, strideIPIV, JPIV, strideJPIV ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `A` | `Float64Array` | in/out | `N × N` |  | on entry, the n-by-n matrix A to be factored. On exit, the factors L and U from the factorization A = P*L*U*Q; the unit diagonal elements of L are not stored. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | the pivot indices; for 1 <= i <= N, row i of the matrix has been interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `JPIV` | `Int32Array` | out | `N` |  | the pivot indices; for 1 <= j <= N, column j of the matrix has been interchanged with column JPIV(j) (0-based). |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride length for `JPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the n-by-n matrix A to be factored. On exit, the factors L and U from the factorization A = P\*L\*U\*Q; the unit diagonal elements of L are not stored. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · The pivot indices; for 1 <= i <= N, row i of the matrix has been interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | **out** · The pivot indices; for 1 <= j <= N, column j of the matrix has been interchanged with column JPIV(j) (0-based). |
+| ↳ `strideJPIV` | `integer` | Stride length for `JPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,19 +70,19 @@ IPIV and JPIV are 0-based in this implementation.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Float64Array` | in/out | `N × N` |  | N-by-N matrix (overwritten with L and U) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `IPIV` | `Int32Array` | out | `N` |  | row pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `JPIV` | `Int32Array` | out | `N` |  | column pivot indices (length N), 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
-| ↳ `offsetJPIV` | `NonNegativeInteger` | in |  |  | starting index for JPIV |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N matrix (overwritten with L and U) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Row pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Column pivot indices (length N), 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
+| ↳ `offsetJPIV` | `NonNegativeInteger` | Starting index for JPIV |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

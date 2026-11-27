@@ -31,28 +31,28 @@ dgbbrd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("no-vectors"\|"q-only"\|"p-only"\|"both")` | in |  | one of `'both'`, `'no-vectors'`, `'p-only'`, `'q-only'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | the number of columns of the matrix C. |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | the number of subdiagonals of the matrix A. |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | the number of superdiagonals of the matrix A. |
-| `AB` | `Float64Array` | in/out | `kl + ku + 1 × N` |  | input matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `d` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `Q` | `Float64Array` | out | `M × M` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| ((vect === 'q-only' \|\| vect === 'both') && ldq < max( 1, M ))` | leading dimension of `Q` |
-| `PT` | `Float64Array` | out | `N × N` |  | input matrix |
-| ↳ `LDPT` | `PositiveInteger` | in |  | rejects `ldpt < 1 \|\| ((vect === 'p-only' \|\| vect === 'both') && ldpt < max( 1, N ))` | leading dimension of `PT` |
-| `C` | `Float64Array` | in/out | `M × ncc` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | rejects `ldc < 1 \|\| (ncc > 0 && ldc < max( 1, M ))` | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * max( M, N )` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"no-vectors" \| "q-only" \| "p-only" \| "both"` | Specifies the operation type<br>One of `'both'`, `'no-vectors'`, `'p-only'`, `'q-only'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ncc` | `NonNegativeInteger` | The number of columns of the matrix C.<br>Requires `ncc ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of subdiagonals of the matrix A.<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | The number of superdiagonals of the matrix A.<br>Requires `ku ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · Input matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `Q` | `Float64Array`<br><sub>M × M</sub> | **out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| ((vect === 'q-only' \|\| vect === 'both') && ldq < max(1, M))` |
+| `PT` | `Float64Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `LDPT` | `PositiveInteger` | Leading dimension of `PT`<br>Rejects `ldpt < 1 \|\| ((vect === 'p-only' \|\| vect === 'both') && ldpt < max(1, N))` |
+| `C` | `Float64Array`<br><sub>M × ncc</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Rejects `ldc < 1 \|\| (ncc > 0 && ldc < max(1, M))` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * max(M, N)</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,39 +115,39 @@ dgbbrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("no-vectors"\|"q-only"\|"p-only"\|"both")` | in |  | one of `'both'`, `'no-vectors'`, `'p-only'`, `'q-only'` | one of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | number of columns of C |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Float64Array` | in/out | `kl + ku + 1 × N` |  | band storage of A |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `d` | `Float64Array` | out | `min( M, N )` |  | output: diagonal of B |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | output: superdiagonal of B |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `Q` | `Float64Array` | out | `M × M` |  | output: orthogonal matrix Q (if requested) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `PT` | `Float64Array` | out | `N × N` |  | output: orthogonal matrix P**T (if requested) |
-| ↳ `stridePT1` | `integer` | in |  |  | stride of the first dimension of `PT` |
-| ↳ `stridePT2` | `integer` | in |  |  | stride of the second dimension of `PT` |
-| ↳ `offsetPT` | `NonNegativeInteger` | in |  |  | starting index for `PT` |
-| `C` | `Float64Array` | in/out | `M × ncc` |  | input/output: m-by-ncc matrix overwritten by Q**T*C |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `≥ 2 * max( M, N )` |  | workspace of length 2*max(M,N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"no-vectors" \| "q-only" \| "p-only" \| "both"` | One of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ncc` | `NonNegativeInteger` | Number of columns of C<br>Requires `ncc ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · Band storage of A |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output: diagonal of B |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Output: superdiagonal of B |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `Q` | `Float64Array`<br><sub>M × M</sub> | **out** · Output: orthogonal matrix Q (if requested) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `PT` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: orthogonal matrix P\*\*T (if requested) |
+| ↳ `stridePT1` | `integer` | Stride of the first dimension of `PT` |
+| ↳ `stridePT2` | `integer` | Stride of the second dimension of `PT` |
+| ↳ `offsetPT` | `NonNegativeInteger` | Starting index for `PT` |
+| `C` | `Float64Array`<br><sub>M × ncc</sub> | **in/out** · Input/output: m-by-ncc matrix overwritten by Q\*\*T\*C |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * max(M, N)</sub> | **out** · Workspace of length 2\*max(M,N) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

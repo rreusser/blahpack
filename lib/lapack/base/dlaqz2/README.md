@@ -31,27 +31,27 @@ dlaqz2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `ilq` | `boolean` | in |  |  | determines whether or not to update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | determines whether or not to update the matrix `Z` |
-| `k` | `integer` | in |  |  | (0-based) position of the bulge |
-| `istartm` | `integer` | in |  |  | (0-based) starting column/row of the active window |
-| `istopm` | `integer` | in |  |  | (0-based) last column of the active window |
-| `ihi` | `integer` | in |  |  | (0-based) index of the last row of the active Hessenberg region |
-| `A` | `Float64Array` | in/out | `null × N` |  | matrix `A` |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `null × N` |  | matrix `B` |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `nq` | `NonNegativeInteger` | in |  |  | order of the matrix `Q` |
-| `qstart` | `integer` | in |  |  | (0-based) start column index of `Q` |
-| `Q` | `Float64Array` | in/out | `null × nq` |  | matrix `Q` |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `nz` | `NonNegativeInteger` | in |  |  | order of the matrix `Z` |
-| `zstart` | `integer` | in |  |  | (0-based) start column index of `Z` |
-| `Z` | `Float64Array` | in/out | `null × nz` |  | matrix `Z` |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `ilq` | `boolean` | Determines whether or not to update the matrix `Q` |
+| `ilz` | `boolean` | Determines whether or not to update the matrix `Z` |
+| `k` | `integer` | (0-based) position of the bulge |
+| `istartm` | `integer` | (0-based) starting column/row of the active window |
+| `istopm` | `integer` | (0-based) last column of the active window |
+| `ihi` | `integer` | (0-based) index of the last row of the active Hessenberg region |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `A` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `B` |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `nq` | `NonNegativeInteger` | Order of the matrix `Q` |
+| `qstart` | `integer` | (0-based) start column index of `Q` |
+| `Q` | `Float64Array`<br><sub>? × nq</sub> | **in/out** · Matrix `Q` |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `nz` | `NonNegativeInteger` | Order of the matrix `Z` |
+| `zstart` | `integer` | (0-based) start column index of `Z` |
+| `Z` | `Float64Array`<br><sub>? × nz</sub> | **in/out** · Matrix `Z` |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -99,34 +99,34 @@ dlaqz2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ilq` | `boolean` | in |  |  | determines whether or not to update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | determines whether or not to update the matrix `Z` |
-| `k` | `integer` | in |  |  | (0-based) position of the bulge |
-| `istartm` | `integer` | in |  |  | (0-based) starting column/row of the active window in `(A,B)` |
-| `istopm` | `integer` | in |  |  | (0-based) last column of the active window in `(A,B)` |
-| `ihi` | `integer` | in |  |  | (0-based) index of the last row of the active Hessenberg region |
-| `A` | `Float64Array` | in/out | `null × N` |  | matrix `A` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `null × N` |  | matrix `B` |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `nq` | `NonNegativeInteger` | in |  |  | order of the matrix `Q` |
-| `qstart` | `integer` | in |  |  | (0-based) start column index of the matrix `Q` |
-| `Q` | `Float64Array` | in/out | `null × nq` |  | matrix `Q` |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `nz` | `NonNegativeInteger` | in |  |  | order of the matrix `Z` |
-| `zstart` | `integer` | in |  |  | (0-based) start column index of the matrix `Z` |
-| `Z` | `Float64Array` | in/out | `null × nz` |  | matrix `Z` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ilq` | `boolean` | Determines whether or not to update the matrix `Q` |
+| `ilz` | `boolean` | Determines whether or not to update the matrix `Z` |
+| `k` | `integer` | (0-based) position of the bulge |
+| `istartm` | `integer` | (0-based) starting column/row of the active window in `(A,B)` |
+| `istopm` | `integer` | (0-based) last column of the active window in `(A,B)` |
+| `ihi` | `integer` | (0-based) index of the last row of the active Hessenberg region |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `A` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `B` |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `nq` | `NonNegativeInteger` | Order of the matrix `Q` |
+| `qstart` | `integer` | (0-based) start column index of the matrix `Q` |
+| `Q` | `Float64Array`<br><sub>? × nq</sub> | **in/out** · Matrix `Q` |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `nz` | `NonNegativeInteger` | Order of the matrix `Z` |
+| `zstart` | `integer` | (0-based) start column index of the matrix `Z` |
+| `Z` | `Float64Array`<br><sub>? × nz</sub> | **in/out** · Matrix `Z` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

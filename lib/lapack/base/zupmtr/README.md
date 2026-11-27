@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zupmtr( order, side, uplo, trans, M, N, AP, TAU, strideTAU, C, LDC, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | 'left' or 'right' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | 'no-transpose' or 'conjugate-transpose' |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `AP` | `Complex128Array` | in | `( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )` |  | packed reflector storage from zhptrd |
-| `TAU` | `Complex128Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | scalar factors from zhptrd |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output M-by-N matrix (column-major) |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | 'left' or 'right' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | 'no-transpose' or 'conjugate-transpose' |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length (side === 'left') ? trunc(M * (M + 1) / 2) : trunc(N * (N + 1) / 2)</sub> | Packed reflector storage from zhptrd |
+| `TAU` | `Complex128Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Scalar factors from zhptrd |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output M-by-N matrix (column-major) |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,26 +91,26 @@ Overwrites a general complex matrix with a transformation from the unitary matri
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Complex128Array` | in | `( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )` |  | input array (in complex elements) |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `TAU` | `Complex128Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | input array (in complex elements) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` (in complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix (in complex elements) |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | output array (in complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies the operation type<br>One of `'left'`, `'right'`. |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length (side === 'left') ? trunc(M * (M + 1) / 2) : trunc(N * (N + 1) / 2)</sub> | Input array (in complex elements) |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Input array (in complex elements) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` (in complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix (in complex elements) |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Output array (in complex elements) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

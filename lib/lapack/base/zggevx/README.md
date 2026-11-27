@@ -55,42 +55,42 @@ Computes, for a pair of N-by-N complex matrices (A, B), the generalized.
 eigenvalues and, optionally, the left and/or right generalized eigenvectors,
 with optional balancing (LAPACK-style interface).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'none'`, `'right-vectors'` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix A (N x N) |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix B (N x N) |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output eigenvalue numerators |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA (complex elements) |
-| `BETA` | `Complex128Array` | out | `N` |  | output eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA (complex elements) |
-| `VL` | `Complex128Array` | out | `N × N` |  | left eigenvector matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` | leading dimension of VL |
-| `VR` | `Complex128Array` | out | `N × N` |  | right eigenvector matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` | leading dimension of VR |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are integer values such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | output left scaling/permutation |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| `RSCALE` | `Float64Array` | out | `N` |  | output right scaling/permutation |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| `abnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix A |
-| `bbnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix B |
-| `RCONDE` | `Float64Array` | out | `N` |  | output eigenvalue condition numbers |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride for RCONDE |
-| `RCONDV` | `Float64Array` | out | `N` |  | output right eigenvector condition numbers |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride for RCONDV |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | complex workspace of length at least `max(1,2*N)`, `max(1,4*N)` if `sense` is 'eigenvalues', `max(1,2*N*N+2*N)` if 'right-vectors' or 'both'; for optimal performance at least `max( minimum, N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size |
-| `RWORK` | `(Float64Array\|null)` | out |  |  | real workspace; length >= 6*N if `balanc` is 'scale' or 'both', else >= 2*N; if `null`, allocated internally |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N + 2` |  | integer workspace; length >= `N+2` (the reference's declared extent; referenced only if `sense` is 'right-vectors' or 'both'); if `null`, allocated internally |
-| `BWORK` | `(Uint8Array\|null)` | out | `≥ N` |  | boolean workspace; length >= N (the reference's declared extent; referenced only if `sense` is not 'none'); if `null`, allocated internally |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue numerators |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA (complex elements) |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride for BETA (complex elements) |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Left eigenvector matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of VL<br>Rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Right eigenvector matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of VR<br>Rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are integer values such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output left scaling/permutation |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output right scaling/permutation |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| `abnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix A |
+| `bbnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix B |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalue condition numbers |
+| ↳ `strideRCONDE` | `integer` | Stride for RCONDE |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Output right eigenvector condition numbers |
+| ↳ `strideRCONDV` | `integer` | Stride for RCONDV |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of length at least `max(1,2*N)`, `max(1,4*N)` if `sense` is 'eigenvalues', `max(1,2*N*N+2*N)` if 'right-vectors' or 'both'; for optimal performance at least `max( minimum, N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size |
+| `RWORK` | `Float64Array \| null` | **out** · Real workspace; length >= 6\*N if `balanc` is 'scale' or 'both', else >= 2\*N; if `null`, allocated internally |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N + 2</sub> | **out** · Integer workspace; length >= `N+2` (the reference's declared extent; referenced only if `sense` is 'right-vectors' or 'both'); if `null`, allocated internally |
+| `BWORK` | `Uint8Array \| null`<br><sub>length ≥ N</sub> | **out** · Boolean workspace; length >= N (the reference's declared extent; referenced only if `sense` is not 'none'); if `null`, allocated internally |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -217,63 +217,63 @@ with optional balancing. Strides and offsets follow `ndarray` conventions.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'none'`, `'right-vectors'` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | first complex matrix (modified in-place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | second complex matrix (modified in-place) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output eigenvalue numerators |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA (complex elements) |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA (complex elements) |
-| `BETA` | `Complex128Array` | out | `N` |  | output eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA (complex elements) |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA (complex elements) |
-| `VL` | `Complex128Array` | out | `N × N` |  | left eigenvector matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | first dim stride of VL (complex elements) |
-| ↳ `strideVL2` | `integer` | in |  |  | second dim stride of VL (complex elements) |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL (complex elements) |
-| `VR` | `Complex128Array` | out | `N × N` |  | right eigenvector matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | first dim stride of VR (complex elements) |
-| ↳ `strideVR2` | `integer` | in |  |  | second dim stride of VR (complex elements) |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR (complex elements) |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are integer values such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | output: details of left permutations/scaling |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| ↳ `offsetLSCALE` | `NonNegativeInteger` | in |  |  | offset for LSCALE |
-| `RSCALE` | `Float64Array` | out | `N` |  | output: details of right permutations/scaling |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| ↳ `offsetRSCALE` | `NonNegativeInteger` | in |  |  | offset for RSCALE |
-| `abnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix A |
-| `bbnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix B |
-| `RCONDE` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for eigenvalues |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride for RCONDE |
-| ↳ `offsetRCONDE` | `NonNegativeInteger` | in |  |  | offset for RCONDE |
-| `RCONDV` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for right eigenvectors |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride for RCONDV |
-| ↳ `offsetRCONDV` | `NonNegativeInteger` | in |  |  | offset for RCONDV |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | complex workspace of length at least `max(1,2*N)`, `max(1,4*N)` if `sense` is 'eigenvalues', `max(1,2*N*N+2*N)` if 'right-vectors' or 'both'; for optimal performance at least `max( minimum, N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out |  |  | real workspace; length >= 6*N if `balanc` is 'scale' or 'both', else >= 2*N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | offset for RWORK |
-| `IWORK` | `Int32Array` | out | `≥ N + 2` |  | integer workspace; length >= `N+2` (the reference's declared extent; referenced only if `sense` is 'right-vectors' or 'both') |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
-| `BWORK` | `Uint8Array` | out | `≥ N` |  | boolean workspace; length >= N (the reference's declared extent; referenced only if `sense` is not 'none') |
-| ↳ `strideBWork` | `integer` | in |  |  | stride for BWORK |
-| ↳ `offsetBWork` | `NonNegativeInteger` | in |  |  | offset for BWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · First complex matrix (modified in-place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Second complex matrix (modified in-place) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue numerators |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA (complex elements) |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA (complex elements) |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride for BETA (complex elements) |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA (complex elements) |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Left eigenvector matrix |
+| ↳ `strideVL1` | `integer` | First dim stride of VL (complex elements) |
+| ↳ `strideVL2` | `integer` | Second dim stride of VL (complex elements) |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL (complex elements) |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Right eigenvector matrix |
+| ↳ `strideVR1` | `integer` | First dim stride of VR (complex elements) |
+| ↳ `strideVR2` | `integer` | Second dim stride of VR (complex elements) |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR (complex elements) |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are integer values such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: details of left permutations/scaling |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| ↳ `offsetLSCALE` | `NonNegativeInteger` | Offset for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: details of right permutations/scaling |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| ↳ `offsetRSCALE` | `NonNegativeInteger` | Offset for RSCALE |
+| `abnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix A |
+| `bbnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix B |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for eigenvalues |
+| ↳ `strideRCONDE` | `integer` | Stride for RCONDE |
+| ↳ `offsetRCONDE` | `NonNegativeInteger` | Offset for RCONDE |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for right eigenvectors |
+| ↳ `strideRCONDV` | `integer` | Stride for RCONDV |
+| ↳ `offsetRCONDV` | `NonNegativeInteger` | Offset for RCONDV |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of length at least `max(1,2*N)`, `max(1,4*N)` if `sense` is 'eigenvalues', `max(1,2*N*N+2*N)` if 'right-vectors' or 'both'; for optimal performance at least `max( minimum, N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK (complex elements) |
+| `RWORK` | `Float64Array` | **out** · Real workspace; length >= 6\*N if `balanc` is 'scale' or 'both', else >= 2\*N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Offset for RWORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N + 2</sub> | **out** · Integer workspace; length >= `N+2` (the reference's declared extent; referenced only if `sense` is 'right-vectors' or 'both') |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
+| `BWORK` | `Uint8Array`<br><sub>length ≥ N</sub> | **out** · Boolean workspace; length >= N (the reference's declared extent; referenced only if `sense` is not 'none') |
+| ↳ `strideBWork` | `integer` | Stride for BWORK |
+| ↳ `offsetBWork` | `NonNegativeInteger` | Offset for BWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

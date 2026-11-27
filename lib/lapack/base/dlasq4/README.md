@@ -28,23 +28,23 @@ dlasq4(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `NonNegativeInteger` | in |  |  | last index (1-based) |
-| `z` | `Float64Array` | in | `4 * n0` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
-| `pp` | `integer` | in |  |  | ping-pong flag (0 or 1) |
-| `n0in` | `integer` | in |  |  | value of n0 at start of eigtest |
-| `dmin` | `number` | in |  |  | minimum value of d |
-| `dmin1` | `number` | in |  |  | minimum value of d, excluding d(n0) |
-| `dmin2` | `number` | in |  |  | minimum value of d, excluding d(n0) and d(n0-1) |
-| `dn` | `number` | in |  |  | d(n0) |
-| `dn1` | `number` | in |  |  | d(n0-1) |
-| `dn2` | `number` | in |  |  | d(n0-2) |
-| `tau` | `Float64Array` | out |  |  | input/output (length-1 array): (input, unused — kept for API compat) |
-| `ttype` | `Int32Array` | out |  |  | input/output (length-1 array): shift type from previous call |
-| `g` | `Float64Array` | in/out |  |  | input/output (length-1 array): damping parameter preserved between calls |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `NonNegativeInteger` | Last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4 * n0</sub> | Input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
+| `pp` | `integer` | Ping-pong flag (0 or 1) |
+| `n0in` | `integer` | Value of n0 at start of eigtest |
+| `dmin` | `number` | Minimum value of d |
+| `dmin1` | `number` | Minimum value of d, excluding d(n0) |
+| `dmin2` | `number` | Minimum value of d, excluding d(n0) and d(n0-1) |
+| `dn` | `number` | D(n0) |
+| `dn1` | `number` | D(n0-1) |
+| `dn2` | `number` | D(n0-2) |
+| `tau` | `Float64Array` | **out** · Input/output (length-1 array): (input, unused — kept for API compat) |
+| `ttype` | `Int32Array` | **out** · Input/output (length-1 array): shift type from previous call |
+| `g` | `Float64Array` | **in/out** · Input/output (length-1 array): damping parameter preserved between calls |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -84,24 +84,24 @@ dlasq4.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `NonNegativeInteger` | in |  |  | last index (1-based) |
-| `z` | `Float64Array` | in | `4 * n0` |  | qd array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `pp` | `integer` | in |  |  | ping-pong flag (0 or 1) |
-| `n0in` | `integer` | in |  |  | value of n0 at start of eigtest |
-| `dmin` | `number` | in |  |  | minimum value of d |
-| `dmin1` | `number` | in |  |  | minimum value of d, excluding d(n0) |
-| `dmin2` | `number` | in |  |  | minimum value of d, excluding d(n0) and d(n0-1) |
-| `dn` | `number` | in |  |  | d(n0) |
-| `dn1` | `number` | in |  |  | d(n0-1) |
-| `dn2` | `number` | in |  |  | d(n0-2) |
-| `tau` | `Float64Array` | out |  |  | input/output (length-1 array): (input, unused — kept for API compat) |
-| `ttype` | `Int32Array` | out |  |  | input/output (length-1 array): shift type from previous call |
-| `g` | `Float64Array` | in/out |  |  | input/output (length-1 array): damping parameter preserved between calls |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `NonNegativeInteger` | Last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4 * n0</sub> | Qd array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `pp` | `integer` | Ping-pong flag (0 or 1) |
+| `n0in` | `integer` | Value of n0 at start of eigtest |
+| `dmin` | `number` | Minimum value of d |
+| `dmin1` | `number` | Minimum value of d, excluding d(n0) |
+| `dmin2` | `number` | Minimum value of d, excluding d(n0) and d(n0-1) |
+| `dn` | `number` | D(n0) |
+| `dn1` | `number` | D(n0-1) |
+| `dn2` | `number` | D(n0-2) |
+| `tau` | `Float64Array` | **out** · Input/output (length-1 array): (input, unused — kept for API compat) |
+| `ttype` | `Int32Array` | **out** · Input/output (length-1 array): shift type from previous call |
+| `g` | `Float64Array` | **in/out** · Input/output (length-1 array): damping parameter preserved between calls |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

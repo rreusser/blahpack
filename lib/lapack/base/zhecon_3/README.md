@@ -30,20 +30,20 @@ zhecon_3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Complex128Array` | in | `N × N` |  | factored matrix from `zhetrf_rk` |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `e` | `Complex128Array` | in | `N` |  | super- or sub-diagonal entries of the block diagonal matrix `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zhetrf_rk` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix `A` |
-| `rcond` | `Float64Array` | out |  |  | output: `rcond[0]` is the reciprocal condition number |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace array of length at least `2*N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from `zhetrf_rk` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `e` | `Complex128Array`<br><sub>length N</sub> | Super- or sub-diagonal entries of the block diagonal matrix `D` |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zhetrf_rk` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix `A`<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output: `rcond[0]` is the reciprocal condition number |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least `2*N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -95,25 +95,25 @@ zhecon_3.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Complex128Array` | in | `N × N` |  | factored matrix from `zhetrf_rk` (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `e` | `Complex128Array` | in | `N` |  | super- or sub-diagonal entries of the block diagonal matrix `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` (in complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zhetrf_rk` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix `A` |
-| `rcond` | `Float64Array` | out |  |  | output: `rcond[0]` is the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length at least `2*N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from `zhetrf_rk` (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `e` | `Complex128Array`<br><sub>length N</sub> | Super- or sub-diagonal entries of the block diagonal matrix `D` |
+| ↳ `strideE` | `integer` | Stride length for `e` (in complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zhetrf_rk` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix `A`<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output: `rcond[0]` is the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least `2*N` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

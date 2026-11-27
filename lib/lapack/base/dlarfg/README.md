@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarfg( N, alpha, x, strideX, tau ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Float64Array` | in/out |  |  | scalar, overwritten with beta on exit |
-| `x` | `Float64Array` | in/out | `1 + (N - 2) * abs( incx )` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `tau` | `Float64Array` | out |  |  | output scalar |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Float64Array` | **in/out** · Scalar, overwritten with beta on exit |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `tau` | `Float64Array` | **out** · Output scalar |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -48,16 +48,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlarfg.ndarray( N, alpha, offsetAlpha, x, strideX, offsetX, tau, offsetTau ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Float64Array` | in/out |  |  | scalar, overwritten with beta on exit |
-| ↳ `offsetAlpha` | `NonNegativeInteger` | in |  |  | index into alpha array |
-| `x` | `Float64Array` | in/out | `1 + (N - 2) * abs( incx )` |  | vector, overwritten with v on exit |
-| ↳ `strideX` | `integer` | in |  |  | stride for x |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x |
-| `tau` | `Float64Array` | out |  |  | output scalar |
-| ↳ `offsetTau` | `NonNegativeInteger` | in |  |  | index into tau array |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Float64Array` | **in/out** · Scalar, overwritten with beta on exit |
+| ↳ `offsetAlpha` | `NonNegativeInteger` | Index into alpha array |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Vector, overwritten with v on exit |
+| ↳ `strideX` | `integer` | Stride for x |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x |
+| `tau` | `Float64Array` | **out** · Output scalar |
+| ↳ `offsetTau` | `NonNegativeInteger` | Index into tau array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

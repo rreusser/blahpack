@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlapmr( order, forwrd, M, N, X, LDX, k, strideK ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `forwrd` | `boolean` | in |  |  | if true, apply forward permutation; if false, backward |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of X |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of X |
-| `X` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (M x N) |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `k` | `Int32Array` | in/out | `M` |  | permutation vector (length M) |
-| ↳ `strideK` | `integer` | in |  |  | stride length for `k` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `forwrd` | `boolean` | If true, apply forward permutation; if false, backward |
+| `M` | `NonNegativeInteger` | Number of rows of X |
+| `N` | `NonNegativeInteger` | Number of columns of X |
+| `X` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M x N) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `k` | `Int32Array`<br><sub>length M</sub> | **in/out** · Permutation vector (length M) |
+| ↳ `strideK` | `integer` | Stride length for `k` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,18 +76,18 @@ If `forwrd` is false, backward permutation: `X(i,*) is moved to X(K[i],*)`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `forwrd` | `boolean` | in |  |  | if true, apply forward permutation; if false, backward |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of X |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of X |
-| `X` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (M x N) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` (in complex elements) |
-| `k` | `Int32Array` | in/out | `M` |  | permutation vector (length M), 0-based indices |
-| ↳ `strideK` | `integer` | in |  |  | stride length for `k` |
-| ↳ `offsetK` | `NonNegativeInteger` | in |  |  | starting index for `k` |
+| Parameter | Type | Description |
+|---|---|---|
+| `forwrd` | `boolean` | If true, apply forward permutation; if false, backward |
+| `M` | `NonNegativeInteger` | Number of rows of X |
+| `N` | `NonNegativeInteger` | Number of columns of X |
+| `X` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M x N) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` (in complex elements) |
+| `k` | `Int32Array`<br><sub>length M</sub> | **in/out** · Permutation vector (length M), 0-based indices |
+| ↳ `strideK` | `integer` | Stride length for `k` |
+| ↳ `offsetK` | `NonNegativeInteger` | Starting index for `k` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

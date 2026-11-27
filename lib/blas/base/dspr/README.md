@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dspr( order, uplo, N, alpha, x, strideX, AP ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the matrix A is supplied in the packed array AP as follows: `uplo === 'upper'` The upper triangular part of A is supplied in AP. `uplo === 'lower'` The lower triangular part of A is supplied in AP. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `alpha` | `number` | in |  |  | the scalar alpha. |
-| `x` | `Float64Array` | in | `N` |  | before entry, the incremented array X must contain the n element vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | before entry with `uplo === 'upper'`, the array AP must contain the upper triangular part of the symmetric matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. On exit, the array AP is overwritten by the upper triangular part of the updated matrix. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the matrix A is supplied in the packed array AP as follows: `uplo === 'upper'` The upper triangular part of A is supplied in AP. `uplo === 'lower'` The lower triangular part of A is supplied in AP. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `alpha` | `number` | The scalar alpha. |
+| `x` | `Float64Array`<br><sub>length N</sub> | Before entry, the incremented array X must contain the n element vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Before entry with `uplo === 'upper'`, the array AP must contain the upper triangular part of the symmetric matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. On exit, the array AP is overwritten by the upper triangular part of the updated matrix. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -72,17 +72,17 @@ Performs the symmetric rank-1 update `A := alpha*x*x^T + A`.
 `alpha` is a scalar, `x` is an `N`-element vector, and `A` is an `N` by `N`
 symmetric matrix supplied in packed form.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `x` | `Float64Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

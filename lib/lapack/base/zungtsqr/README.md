@@ -22,18 +22,18 @@ zungtsqr( order, M, N, mb, nb, A, LDA, T, LDT, WORK ) → integer
 
 Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-Skinny QR factorization (output of `zlatsqr`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` (`M >= 0`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of `A` (`0 <= N <= M`) |
-| `mb` | `integer` | in |  | rejects `mb <= N` | row block size used by `zlatsqr` (`mb > N`) |
-| `nb` | `integer` | in |  | rejects `nb < 1` | column block size used by `zlatsqr` (`nb >= 1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (`M`-by-`N`) |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Complex128Array` | in | `min( nb, N ) × N*NIRB` |  | block triangular factors from `zlatsqr` |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, min( nb, N ) )` | leading dimension of `T` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MAX(1,LWORKOPT)` |  | workspace of length at least `max(2, M*N + N*min(nb,N))` complex elements (the reference's minimum, which is also its optimum `LWORKOPT`; its LWORK documentation states `(M+NB)*N`, but its code checks `M*N + N*min(NB,N)`); if `null`, a workspace of that length is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `A` (`M >= 0`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A` (`0 <= N <= M`)<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size used by `zlatsqr` (`mb > N`)<br>Rejects `mb <= N` |
+| `nb` | `integer` | Column block size used by `zlatsqr` (`nb >= 1`)<br>Rejects `nb < 1` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (`M`-by-`N`) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Complex128Array`<br><sub>min(nb, N) × N*NIRB</sub> | Block triangular factors from `zlatsqr` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, min(nb, N))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Workspace of length at least `max(2, M*N + N*min(nb,N))` complex elements (the reference's minimum, which is also its optimum `LWORKOPT`; its LWORK documentation states `(M+NB)*N`, but its code checks `M*N + N*min(NB,N)`); if `null`, a workspace of that length is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,23 +102,23 @@ Generates an `M`-by-`N` complex matrix `Q` with orthonormal columns from a Tall-
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` (`M >= 0`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of `A` (`0 <= N <= M`) |
-| `mb` | `integer` | in |  | rejects `mb <= N` | row block size used by `zlatsqr` (`mb > N`) |
-| `nb` | `integer` | in |  | rejects `nb < 1` | column block size used by `zlatsqr` (`nb >= 1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (`M`-by-`N`) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `T` | `Complex128Array` | in | `min( nb, N ) × N*NIRB` |  | block triangular factors from `zlatsqr` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` (in complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` (in complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ MAX(1,LWORKOPT)` |  | workspace (length `>= (M + nb)*N` complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `A` (`M >= 0`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A` (`0 <= N <= M`)<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size used by `zlatsqr` (`mb > N`)<br>Rejects `mb <= N` |
+| `nb` | `integer` | Column block size used by `zlatsqr` (`nb >= 1`)<br>Rejects `nb < 1` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (`M`-by-`N`) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `T` | `Complex128Array`<br><sub>min(nb, N) × N*NIRB</sub> | Block triangular factors from `zlatsqr` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` (in complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` (in complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Workspace (length `>= (M + nb)*N` complex elements) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

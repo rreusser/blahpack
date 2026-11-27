@@ -29,22 +29,22 @@ zlahqr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | whether the full Schur form T is required |
-| `wantz` | `boolean` | in |  |  | whether the Schur vectors Z are required |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ilo` | `integer` | in |  |  | lower index of the active submatrix (1-based) |
-| `ihi` | `integer` | in |  |  | upper index of the active submatrix (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix; overwritten |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `W` | `Complex128Array` | out | `N` |  | output eigenvalues (length `N`) |
-| ↳ `strideW` | `integer` | in |  |  | `W` stride length |
-| `iloz` | `integer` | in |  |  | lower row index for accumulating Z (1-based) |
-| `ihiz` | `integer` | in |  |  | upper row index for accumulating Z (1-based) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | Schur vectors; updated when `wantz` is true |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | Whether the full Schur form T is required |
+| `wantz` | `boolean` | Whether the Schur vectors Z are required |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ilo` | `integer` | Lower index of the active submatrix (1-based) |
+| `ihi` | `integer` | Upper index of the active submatrix (1-based) |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix; overwritten |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `W` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalues (length `N`) |
+| ↳ `strideW` | `integer` | `W` stride length |
+| `iloz` | `integer` | Lower row index for accumulating Z (1-based) |
+| `ihiz` | `integer` | Upper row index for accumulating Z (1-based) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Schur vectors; updated when `wantz` is true |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,26 +89,26 @@ All indices (ilo, ihi, iloz, ihiz) are 1-based (Fortran convention).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | if true, compute full Schur form T |
-| `wantz` | `boolean` | in |  |  | if true, compute Schur vectors Z |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ilo` | `integer` | in |  |  | first row/col of the active block (1-based) |
-| `ihi` | `integer` | in |  |  | last row/col of the active block (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix, modified in place |
-| ↳ `strideH1` | `integer` | in |  |  | stride of first dimension of H (complex elements) |
-| ↳ `strideH2` | `integer` | in |  |  | stride of second dimension of H (complex elements) |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for H (complex elements) |
-| `W` | `Complex128Array` | out | `N` |  | output eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride for W (complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for W (complex elements) |
-| `iloz` | `integer` | in |  |  | first row of Z to update (1-based) |
-| `ihiz` | `integer` | in |  |  | last row of Z to update (1-based) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | Schur vectors, modified if wantz is true |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dimension of Z (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dimension of Z (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | If true, compute full Schur form T |
+| `wantz` | `boolean` | If true, compute Schur vectors Z |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ilo` | `integer` | First row/col of the active block (1-based) |
+| `ihi` | `integer` | Last row/col of the active block (1-based) |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix, modified in place |
+| ↳ `strideH1` | `integer` | Stride of first dimension of H (complex elements) |
+| ↳ `strideH2` | `integer` | Stride of second dimension of H (complex elements) |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for H (complex elements) |
+| `W` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalues |
+| ↳ `strideW` | `integer` | Stride for W (complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for W (complex elements) |
+| `iloz` | `integer` | First row of Z to update (1-based) |
+| `ihiz` | `integer` | Last row of Z to update (1-based) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Schur vectors, modified if wantz is true |
+| ↳ `strideZ1` | `integer` | Stride of first dimension of Z (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of second dimension of Z (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

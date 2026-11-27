@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaic1( job, J, x, strideX, sest, w, strideW, gamma, sestpr, s, c ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("largest-singular-value"\|"smallest-singular-value")` | in |  |  | specifies whether to estimate the largest or smallest singular value (`'largest-singular-value'` or `'smallest-singular-value'`) |
-| `J` | `NonNegativeInteger` | in |  |  | length of `x` and `w` |
-| `x` | `Float64Array` | in | `J` |  | input vector of length `J` |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `sest` | `number` | in |  |  | estimated singular value of the `j`-by-`j` matrix |
-| `w` | `Float64Array` | in | `J` |  | input vector of length `J` |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `gamma` | `number` | in |  |  | diagonal element |
-| `sestpr` | `Float64Array` | out |  |  | output (length-1 array): estimated singular value of (j+1) by (j+1) matrix Lhat |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): sine needed in forming xhat |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): cosine needed in forming xhat |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"largest-singular-value" \| "smallest-singular-value"` | Specifies whether to estimate the largest or smallest singular value (`'largest-singular-value'` or `'smallest-singular-value'`) |
+| `J` | `NonNegativeInteger` | Length of `x` and `w` |
+| `x` | `Float64Array`<br><sub>length J</sub> | Input vector of length `J` |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `sest` | `number` | Estimated singular value of the `j`-by-`j` matrix |
+| `w` | `Float64Array`<br><sub>length J</sub> | Input vector of length `J` |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `gamma` | `number` | Diagonal element |
+| `sestpr` | `Float64Array` | **out** · Output (length-1 array): estimated singular value of (j+1) by (j+1) matrix Lhat |
+| `s` | `Float64Array` | **out** · Output (length-1 array): sine needed in forming xhat |
+| `c` | `Float64Array` | **out** · Output (length-1 array): cosine needed in forming xhat |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,21 +76,21 @@ dlaic1.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("largest-singular-value"\|"smallest-singular-value")` | in |  |  | specifies whether to estimate the largest or smallest singular value (`'largest-singular-value'` or `'smallest-singular-value'`) |
-| `J` | `NonNegativeInteger` | in |  |  | length of `x` and `w` |
-| `x` | `Float64Array` | in | `J` |  | input vector of length `J` |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `sest` | `number` | in |  |  | estimated singular value of the `j`-by-`j` matrix |
-| `w` | `Float64Array` | in | `J` |  | input vector of length `J` |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `gamma` | `number` | in |  |  | diagonal element |
-| `sestpr` | `Float64Array` | out |  |  | output (length-1 array): estimated singular value of (j+1) by (j+1) matrix Lhat |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): sine needed in forming xhat |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): cosine needed in forming xhat |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"largest-singular-value" \| "smallest-singular-value"` | Specifies whether to estimate the largest or smallest singular value (`'largest-singular-value'` or `'smallest-singular-value'`) |
+| `J` | `NonNegativeInteger` | Length of `x` and `w` |
+| `x` | `Float64Array`<br><sub>length J</sub> | Input vector of length `J` |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `sest` | `number` | Estimated singular value of the `j`-by-`j` matrix |
+| `w` | `Float64Array`<br><sub>length J</sub> | Input vector of length `J` |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `gamma` | `number` | Diagonal element |
+| `sestpr` | `Float64Array` | **out** · Output (length-1 array): estimated singular value of (j+1) by (j+1) matrix Lhat |
+| `s` | `Float64Array` | **out** · Output (length-1 array): sine needed in forming xhat |
+| `c` | `Float64Array` | **out** · Output (length-1 array): cosine needed in forming xhat |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

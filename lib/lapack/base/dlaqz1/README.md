@@ -28,20 +28,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaqz1( order, A, LDA, B, LDB, sr1, sr2, si, beta1, beta2, v, strideV ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `A` | `Float64Array` | in | `null × N` |  | the 3-by-3 matrix `A` |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` (must be `>= 3`) |
-| `B` | `Float64Array` | in | `null × N` |  | the 3-by-3 matrix `B` |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` (must be `>= 3`) |
-| `sr1` | `number` | in |  |  | real part of the first shift |
-| `sr2` | `number` | in |  |  | real part of the second shift |
-| `si` | `number` | in |  |  | imaginary part of the shift |
-| `beta1` | `number` | in |  |  | first beta scalar |
-| `beta2` | `number` | in |  |  | second beta scalar |
-| `v` | `Float64Array` | out | `N` |  | output array of length `>= 3` |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `A` | `Float64Array`<br><sub>? × N</sub> | The 3-by-3 matrix `A` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` (must be `>= 3`) |
+| `B` | `Float64Array`<br><sub>? × N</sub> | The 3-by-3 matrix `B` |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` (must be `>= 3`) |
+| `sr1` | `number` | Real part of the first shift |
+| `sr2` | `number` | Real part of the second shift |
+| `si` | `number` | Imaginary part of the shift |
+| `beta1` | `number` | First beta scalar |
+| `beta2` | `number` | Second beta scalar |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · Output array of length `>= 3` |
+| ↳ `strideV` | `integer` | Stride length for `v` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,24 +73,24 @@ dlaqz1.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `A` | `Float64Array` | in | `null × N` |  | the 3-by-3 matrix `A` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in | `null × N` |  | the 3-by-3 matrix `B` |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `sr1` | `number` | in |  |  | real part of the first shift |
-| `sr2` | `number` | in |  |  | real part of the second shift |
-| `si` | `number` | in |  |  | imaginary part of the shift |
-| `beta1` | `number` | in |  |  | first beta scalar |
-| `beta2` | `number` | in |  |  | second beta scalar |
-| `v` | `Float64Array` | out | `N` |  | output array of length `>= 3` |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
+| Parameter | Type | Description |
+|---|---|---|
+| `A` | `Float64Array`<br><sub>? × N</sub> | The 3-by-3 matrix `A` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>? × N</sub> | The 3-by-3 matrix `B` |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `sr1` | `number` | Real part of the first shift |
+| `sr2` | `number` | Real part of the second shift |
+| `si` | `number` | Imaginary part of the shift |
+| `beta1` | `number` | First beta scalar |
+| `beta2` | `number` | Second beta scalar |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · Output array of length `>= 3` |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,23 +29,23 @@ dlaqp2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix A. |
-| `offset` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix A that must be pivoted but no factorized. |
-| `A` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N matrix A. On exit, the upper triangle of block A(OFFSET+1:M,1:N) is the triangular factor obtained; the elements in block A(OFFSET+1:M,1:N) below the diagonal, together with the array TAU, represent the orthogonal matrix Q as a product of elementary reflectors. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `JPVT` | `Int32Array` | in/out | `N` |  | on entry, if JPVT(i) .ne. 0, the i-th column of A is permuted to the front of A*P (a leading column); if JPVT(i) = 0, the i-th column of A is a free column. On exit, if JPVT(i) = k, then the i-th column of A*P was the k-th column of A (0-based). |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride length for `JPVT` |
-| `TAU` | `Float64Array` | out | `min( M, N )` |  | the scalar factors of the elementary reflectors. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `VN1` | `Float64Array` | in/out | `N` |  | the vector with the partial column norms. |
-| ↳ `strideVN1` | `integer` | in |  |  | stride length for `VN1` |
-| `VN2` | `Float64Array` | in/out | `N` |  | the vector with the exact column norms. |
-| ↳ `strideVN2` | `integer` | in |  |  | stride length for `VN2` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A. |
+| `offset` | `NonNegativeInteger` | The number of rows of the matrix A that must be pivoted but no factorized. |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix A. On exit, the upper triangle of block A(OFFSET+1:M,1:N) is the triangular factor obtained; the elements in block A(OFFSET+1:M,1:N) below the diagonal, together with the array TAU, represent the orthogonal matrix Q as a product of elementary reflectors. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · On entry, if JPVT(i) .ne. 0, the i-th column of A is permuted to the front of A\*P (a leading column); if JPVT(i) = 0, the i-th column of A is a free column. On exit, if JPVT(i) = k, then the i-th column of A\*P was the k-th column of A (0-based). |
+| ↳ `strideJPVT` | `integer` | Stride length for `JPVT` |
+| `TAU` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · The scalar factors of the elementary reflectors. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · The vector with the partial column norms. |
+| ↳ `strideVN1` | `integer` | Stride length for `VN1` |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · The vector with the exact column norms. |
+| ↳ `strideVN2` | `integer` | Stride length for `VN2` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -90,30 +90,30 @@ The block A(0:offset-1, 0:N-1) is accordingly pivoted, but not factorized.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | total number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `offset` | `NonNegativeInteger` | in |  |  | number of rows already factored (0-based) |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix (M-by-N) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation array (length >= N), 0-based |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Float64Array` | out | `min( M, N )` |  | output reflector scalars (length >= min(M-offset, N)) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `VN1` | `Float64Array` | in/out | `N` |  | partial column norms (length >= N) |
-| ↳ `strideVN1` | `integer` | in |  |  | stride for VN1 |
-| ↳ `offsetVN1` | `NonNegativeInteger` | in |  |  | starting index for VN1 |
-| `VN2` | `Float64Array` | in/out | `N` |  | original column norms (length >= N) |
-| ↳ `strideVN2` | `integer` | in |  |  | stride for VN2 |
-| ↳ `offsetVN2` | `NonNegativeInteger` | in |  |  | starting index for VN2 |
-| `WORK` | `Float64Array` | out | `≥ N` |  | workspace (length >= N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `offset` | `NonNegativeInteger` | Number of rows already factored (0-based) |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M-by-N) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation array (length >= N), 0-based |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output reflector scalars (length >= min(M-offset, N)) |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Partial column norms (length >= N) |
+| ↳ `strideVN1` | `integer` | Stride for VN1 |
+| ↳ `offsetVN1` | `NonNegativeInteger` | Starting index for VN1 |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Original column norms (length >= N) |
+| ↳ `strideVN2` | `integer` | Stride for VN2 |
+| ↳ `offsetVN2` | `NonNegativeInteger` | Starting index for VN2 |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace (length >= N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

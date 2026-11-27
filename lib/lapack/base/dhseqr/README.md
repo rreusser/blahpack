@@ -30,23 +30,23 @@ dhseqr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'`: compute eigenvalues only; `'schur'`: compute eigenvalues and the Schur form T. |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`: no Schur vectors are computed; `'initialize'`: Z is initialized to the unit matrix and the matrix Z of Schur vectors of H is returned; `'update'`: Z must contain an orthogonal matrix Q on entry, and the product Q*Z is returned. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix H. |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `H` | `Float64Array` | in/out | `N × N` |  | on entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and `job === 'schur'`, then H contains the upper quasi-triangular matrix T from the Schur decomposition (the Schur form); 2-by-2 diagonal blocks (corresponding to complex conjugate pairs of eigenvalues) are returned in standard form, with H(i,i) = H(i+1,i+1) and H(i+1,i)*H(i,i+1) < 0. |
-| ↳ `LDH` | `PositiveInteger` | in |  | requires `LDH ≥ max( 1, N )` | leading dimension of `H` |
-| `WR` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the computed eigenvalues. |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the computed eigenvalues. |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | if `compz === 'none'`, Z is not referenced. |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < max( 1, N ))` | leading dimension of `Z` |
-| `work` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | workspace of at least `max(1,N)` elements (the reference's minimum), or `null` to allocate the reference's optimum (`max( max(1,N), LWKOPT of DLAQR0 )`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'`: compute eigenvalues only; `'schur'`: compute eigenvalues and the Schur form T. |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`: no Schur vectors are computed; `'initialize'`: Z is initialized to the unit matrix and the matrix Z of Schur vectors of H is returned; `'update'`: Z must contain an orthogonal matrix Q on entry, and the product Q\*Z is returned. |
+| `N` | `NonNegativeInteger` | The order of the matrix H.<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and `job === 'schur'`, then H contains the upper quasi-triangular matrix T from the Schur decomposition (the Schur form); 2-by-2 diagonal blocks (corresponding to complex conjugate pairs of eigenvalues) are returned in standard form, with H(i,i) = H(i+1,i+1) and H(i+1,i)\*H(i,i+1) < 0. |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H`<br>Requires `LDH ≥ max(1, N)` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues. |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues. |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · If `compz === 'none'`, Z is not referenced. |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < max(1, N))` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of at least `max(1,N)` elements (the reference's minimum), or `null` to allocate the reference's optimum (`max( max(1,N), LWKOPT of DLAQR0 )`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -132,30 +132,30 @@ INFO > 0: dhseqr failed to compute all eigenvalues. Elements
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'` or `'schur'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix H |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | first row/col of the active block (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | last row/col of the active block (1-based) |
-| `H` | `Float64Array` | in/out | `N × N` |  | upper Hessenberg matrix (N-by-N) |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `WR` | `Float64Array` | out | `N` |  | output array for real parts of eigenvalues |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | output array for imaginary parts of eigenvalues |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for `WI` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | Schur vectors matrix (N-by-N) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `work` | `Float64Array` | out | `≥ max( 1, N )` |  | workspace array of at least `max(1,N)` elements from `offsetWork` (the reference's minimum); the reference's optimum is `max( max(1,N), LWKOPT of DLAQR0 )` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `work` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'` or `'schur'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrix H<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | First row/col of the active block (1-based)<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Last row/col of the active block (1-based)<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix (N-by-N) |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for real parts of eigenvalues |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for imaginary parts of eigenvalues |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for `WI` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Schur vectors matrix (N-by-N) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `work` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array of at least `max(1,N)` elements from `offsetWork` (the reference's minimum); the reference's optimum is `max( max(1,N), LWKOPT of DLAQR0 )` |
+| ↳ `strideWork` | `integer` | Stride length for `work` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `work` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

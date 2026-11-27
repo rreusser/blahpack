@@ -29,19 +29,19 @@ dseigt(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `rnorm` | `number` | in |  |  | residual norm of the Lanczos/Arnoldi factorization |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `H` |
-| `H` | `Float64Array` | in | `null × 2` |  | symmetric tridiagonal matrix in 2-column column-major layout (subdiagonal in column 0, diagonal in column 1) |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `eig` | `Float64Array` | out | `N` |  | output array for the eigenvalues (length N) |
-| ↳ `strideEig` | `integer` | in |  |  | stride length for `eig` |
-| `bounds` | `Float64Array` | out | `N` |  | output array for the Ritz estimates (length N) |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| `workl` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
-| `ierr` | `Int32Array` | out |  |  | output (length-1 array): `ierr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `rnorm` | `number` | Residual norm of the Lanczos/Arnoldi factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `H` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | Symmetric tridiagonal matrix in 2-column column-major layout (subdiagonal in column 0, diagonal in column 1) |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `eig` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for the eigenvalues (length N) |
+| ↳ `strideEig` | `integer` | Stride length for `eig` |
+| `bounds` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for the Ritz estimates (length N) |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| `workl` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
+| `ierr` | `Int32Array` | **out** · Output (length-1 array): `ierr` |
 
 **Returns** `Float64Array`: `bounds`
 
@@ -69,24 +69,24 @@ dseigt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `rnorm` | `number` | in |  |  | residual norm of the Lanczos/Arnoldi factorization |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `H` |
-| `H` | `Float64Array` | in | `null × 2` |  | symmetric tridiagonal matrix in 2-column layout (subdiagonal in column 0, diagonal in column 1) |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first (row) dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second (column) dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `eig` | `Float64Array` | out | `N` |  | output array for the eigenvalues (length N) |
-| ↳ `strideEig` | `integer` | in |  |  | stride length for `eig` |
-| ↳ `offsetEig` | `NonNegativeInteger` | in |  |  | starting index for `eig` |
-| `bounds` | `Float64Array` | out | `N` |  | output array for the Ritz estimates (length N) |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| ↳ `offsetBounds` | `NonNegativeInteger` | in |  |  | starting index for `bounds` |
-| `workl` | `Float64Array` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
-| ↳ `strideWorkl` | `integer` | in |  |  | stride length for `workl` |
-| ↳ `offsetWorkl` | `NonNegativeInteger` | in |  |  | starting index for `workl` |
-| `ierr` | `Int32Array` | out |  |  | output (length-1 array): `ierr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `rnorm` | `number` | Residual norm of the Lanczos/Arnoldi factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `H` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | Symmetric tridiagonal matrix in 2-column layout (subdiagonal in column 0, diagonal in column 1) |
+| ↳ `strideH1` | `integer` | Stride of the first (row) dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second (column) dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `eig` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for the eigenvalues (length N) |
+| ↳ `strideEig` | `integer` | Stride length for `eig` |
+| ↳ `offsetEig` | `NonNegativeInteger` | Starting index for `eig` |
+| `bounds` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for the Ritz estimates (length N) |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| ↳ `offsetBounds` | `NonNegativeInteger` | Starting index for `bounds` |
+| `workl` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
+| ↳ `strideWorkl` | `integer` | Stride length for `workl` |
+| ↳ `offsetWorkl` | `NonNegativeInteger` | Starting index for `workl` |
+| `ierr` | `Int32Array` | **out** · Output (length-1 array): `ierr` |
 
 **Returns** `Float64Array`: `bounds`
 

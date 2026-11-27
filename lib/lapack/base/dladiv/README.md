@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dladiv( a, b, c, d, p, q ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `number` | in |  |  | real part of numerator |
-| `b` | `number` | in |  |  | imaginary part of numerator |
-| `c` | `number` | in |  |  | real part of denominator |
-| `d` | `number` | in |  |  | imaginary part of denominator |
-| `p` | `Float64Array` | out |  |  | output (length-1 array): `p` |
-| `q` | `Float64Array` | out |  |  | output (length-1 array): the scalars p and q in the above expression |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `number` | Real part of numerator |
+| `b` | `number` | Imaginary part of numerator |
+| `c` | `number` | Real part of denominator |
+| `d` | `number` | Imaginary part of denominator |
+| `p` | `Float64Array` | **out** · Output (length-1 array): `p` |
+| `q` | `Float64Array` | **out** · Output (length-1 array): the scalars p and q in the above expression |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -49,14 +49,14 @@ dladiv.ndarray( a, b, c, d, p, q ) → void
 
 Performs complex division in real arithmetic, avoiding unnecessary overflow, using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `number` | in |  |  | real part of numerator |
-| `b` | `number` | in |  |  | imaginary part of numerator |
-| `c` | `number` | in |  |  | real part of denominator |
-| `d` | `number` | in |  |  | imaginary part of denominator |
-| `p` | `Float64Array` | out |  |  | output (length-1 array): `p` |
-| `q` | `Float64Array` | out |  |  | output (length-1 array): the scalars p and q in the above expression |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `number` | Real part of numerator |
+| `b` | `number` | Imaginary part of numerator |
+| `c` | `number` | Real part of denominator |
+| `d` | `number` | Imaginary part of denominator |
+| `p` | `Float64Array` | **out** · Output (length-1 array): `p` |
+| `q` | `Float64Array` | **out** · Output (length-1 array): the scalars p and q in the above expression |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

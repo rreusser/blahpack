@@ -37,29 +37,29 @@ dsaupd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `nev` | `integer` | in |  |  | number of eigenvalues to compute |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `ncv` | `NonNegativeInteger` | in |  |  | number of Lanczos vectors (columns of `V`) |
-| `V` | `Float64Array` | out | `null × ncv` |  | Lanczos basis (N-by-ncv, column-major; out) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `iparam` | `Int32Array` | in/out | `11` |  | input/output parameters (length 11; in/out) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| `ipntr` | `Int32Array` | out | `11` |  | workspace pointers (length 11; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| `workd` | `(Float64Array\|null)` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
-| `workl` | `(Float64Array\|null)` | in/out |  |  | private workspace (length >= ncv^2 + 8*ncv) |
-| `lworkl` | `NonNegativeInteger` | in |  |  | length of `workl` |
-| `infoIn` | `integer` | in/out |  |  | nonzero on the first call to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `nev` | `integer` | Number of eigenvalues to compute |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `ncv` | `NonNegativeInteger` | Number of Lanczos vectors (columns of `V`) |
+| `V` | `Float64Array`<br><sub>? × ncv</sub> | **out** · Lanczos basis (N-by-ncv, column-major; out) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `iparam` | `Int32Array`<br><sub>length 11</sub> | **in/out** · Input/output parameters (length 11; in/out) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| `ipntr` | `Int32Array`<br><sub>length 11</sub> | **out** · Workspace pointers (length 11; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| `workl` | `Float64Array \| null` | **in/out** · Private workspace (length >= ncv^2 + 8\*ncv) |
+| `lworkl` | `NonNegativeInteger` | Length of `workl` |
+| `infoIn` | `integer` | **in/out** · Nonzero on the first call to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 
@@ -98,37 +98,37 @@ dsaupd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `nev` | `integer` | in |  |  | number of eigenvalues to compute |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `ncv` | `NonNegativeInteger` | in |  |  | number of Lanczos vectors (columns of `V`) |
-| `V` | `Float64Array` | out | `null × ncv` |  | Lanczos basis (N-by-ncv, column-major; out) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `iparam` | `Int32Array` | in/out | `11` |  | input/output parameters (length 11; in/out) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| ↳ `offsetIparam` | `NonNegativeInteger` | in |  |  | starting index for `iparam` |
-| `ipntr` | `Int32Array` | out | `11` |  | workspace pointers (length 11; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| ↳ `offsetIpntr` | `NonNegativeInteger` | in |  |  | starting index for `ipntr` |
-| `workd` | `Float64Array` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
-| `workl` | `Float64Array` | in/out |  |  | private workspace (length >= ncv^2 + 8*ncv) |
-| ↳ `strideWorkl` | `integer` | in |  |  | stride length for `workl` |
-| ↳ `offsetWorkl` | `NonNegativeInteger` | in |  |  | starting index for `workl` |
-| `lworkl` | `NonNegativeInteger` | in |  |  | length of `workl` |
-| `infoIn` | `integer` | in/out |  |  | nonzero on the first call to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `nev` | `integer` | Number of eigenvalues to compute |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `ncv` | `NonNegativeInteger` | Number of Lanczos vectors (columns of `V`) |
+| `V` | `Float64Array`<br><sub>? × ncv</sub> | **out** · Lanczos basis (N-by-ncv, column-major; out) |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `iparam` | `Int32Array`<br><sub>length 11</sub> | **in/out** · Input/output parameters (length 11; in/out) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| ↳ `offsetIparam` | `NonNegativeInteger` | Starting index for `iparam` |
+| `ipntr` | `Int32Array`<br><sub>length 11</sub> | **out** · Workspace pointers (length 11; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| ↳ `offsetIpntr` | `NonNegativeInteger` | Starting index for `ipntr` |
+| `workd` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
+| `workl` | `Float64Array` | **in/out** · Private workspace (length >= ncv^2 + 8\*ncv) |
+| ↳ `strideWorkl` | `integer` | Stride length for `workl` |
+| ↳ `offsetWorkl` | `NonNegativeInteger` | Starting index for `workl` |
+| `lworkl` | `NonNegativeInteger` | Length of `workl` |
+| `infoIn` | `integer` | **in/out** · Nonzero on the first call to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 

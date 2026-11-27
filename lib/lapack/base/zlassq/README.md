@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlassq( N, x, strideX, scale, sumsq ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `integer` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in |  |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `scale` | `Float64Array` | in/out |  |  | input/output (length-1 array): input scale |
-| `sumsq` | `Float64Array` | in/out |  |  | input/output (length-1 array): input sum of squares |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `integer` | Number of complex elements |
+| `x` | `Complex128Array` | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `scale` | `Float64Array` | **in/out** · Input/output (length-1 array): input scale |
+| `sumsq` | `Float64Array` | **in/out** · Input/output (length-1 array): input sum of squares |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -52,14 +52,14 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zlassq.ndarray( N, x, strideX, offsetX, scale, sumsq ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `integer` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in |  |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride in complex elements |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index (in complex elements) |
-| `scale` | `Float64Array` | in/out |  |  | input/output (length-1 array): input scale |
-| `sumsq` | `Float64Array` | in/out |  |  | input/output (length-1 array): input sum of squares |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `integer` | Number of complex elements |
+| `x` | `Complex128Array` | Complex input vector |
+| ↳ `strideX` | `integer` | Stride in complex elements |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index (in complex elements) |
+| `scale` | `Float64Array` | **in/out** · Input/output (length-1 array): input scale |
+| `sumsq` | `Float64Array` | **in/out** · Input/output (length-1 array): input sum of squares |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

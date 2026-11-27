@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlapmt( order, forwrd, M, N, X, LDX, k, strideK ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `forwrd` | `boolean` | in |  |  | = `true`, forward permutation = `false`, backward permutation. |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix X. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix X. |
-| `X` | `Float64Array` | in/out | `M × N` |  | on entry, the M by N matrix X. On exit, X contains the permuted matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `k` | `Int32Array` | in/out | `N` |  | on entry, K contains the permutation vector (0-based). |
-| ↳ `strideK` | `integer` | in |  |  | stride length for `k` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `forwrd` | `boolean` | = `true`, forward permutation = `false`, backward permutation. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix X. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix X. |
+| `X` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M by N matrix X. On exit, X contains the permuted matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `k` | `Int32Array`<br><sub>length N</sub> | **in/out** · On entry, K contains the permutation vector (0-based). |
+| ↳ `strideK` | `integer` | Stride length for `k` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -78,18 +78,18 @@ If FORWRD is false, backward permutation:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `forwrd` | `boolean` | in |  |  | if true, apply forward permutation; if false, backward |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of X |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of X |
-| `X` | `Float64Array` | in/out | `M × N` |  | input/output matrix (M x N) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `k` | `Int32Array` | in/out | `N` |  | permutation vector (length N), 0-based indices |
-| ↳ `strideK` | `integer` | in |  |  | stride length for `k` |
-| ↳ `offsetK` | `NonNegativeInteger` | in |  |  | starting index for `k` |
+| Parameter | Type | Description |
+|---|---|---|
+| `forwrd` | `boolean` | If true, apply forward permutation; if false, backward |
+| `M` | `NonNegativeInteger` | Number of rows of X |
+| `N` | `NonNegativeInteger` | Number of columns of X |
+| `X` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M x N) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `k` | `Int32Array`<br><sub>length N</sub> | **in/out** · Permutation vector (length N), 0-based indices |
+| ↳ `strideK` | `integer` | Stride length for `k` |
+| ↳ `offsetK` | `NonNegativeInteger` | Starting index for `k` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

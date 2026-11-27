@@ -22,15 +22,15 @@ dlaorhr_col_getrfnp2( order, M, N, A, LDA, d, strideD ) → integer
 
 Computes the modified LU factorization without pivoting of a general M-by-N matrix (recursive kernel).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Float64Array` | out |  |  | output array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `d` | `Float64Array` | **out** · Output array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,17 +68,17 @@ Computes the modified LU factorization without pivoting of a real general M-by-N
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `D` | `Float64Array` | out |  |  | output diagonal sign vector, length min(M,N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `D` | `Float64Array` | **out** · Output diagonal sign vector, length min(M,N) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

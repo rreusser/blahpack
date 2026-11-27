@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zladiv( x, y, out ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `Complex128Array` | in |  |  | numerator complex number |
-| `y` | `Complex128Array` | in |  |  | denominator complex number |
-| `out` | `Complex128Array` | out |  |  | output complex number |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `Complex128Array` | Numerator complex number |
+| `y` | `Complex128Array` | Denominator complex number |
+| `out` | `Complex128Array` | **out** · Output complex number |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -43,14 +43,14 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zladiv.ndarray( x, offsetX, y, offsetY, out, offsetOut ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `Complex128Array` | in |  |  | numerator complex number |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset (in complex elements) into x |
-| `y` | `Complex128Array` | in |  |  | denominator complex number |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | offset (in complex elements) into y |
-| `out` | `Complex128Array` | out |  |  | output complex number |
-| ↳ `offsetOut` | `NonNegativeInteger` | in |  |  | offset (in complex elements) into out |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `Complex128Array` | Numerator complex number |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset (in complex elements) into x |
+| `y` | `Complex128Array` | Denominator complex number |
+| ↳ `offsetY` | `NonNegativeInteger` | Offset (in complex elements) into y |
+| `out` | `Complex128Array` | **out** · Output complex number |
+| ↳ `offsetOut` | `NonNegativeInteger` | Offset (in complex elements) into out |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

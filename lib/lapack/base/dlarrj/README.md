@@ -30,25 +30,25 @@ dlarrj(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the tridiagonal matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of T, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `E2` | `Float64Array` | in | `N - 1` |  | squares of the subdiagonal elements of T, length N-1 |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| `ifirst` | `integer` | in |  |  | index of the first eigenvalue to be computed (1-based) |
-| `ilast` | `integer` | in |  |  | index of the last eigenvalue to be computed (1-based) |
-| `rtol` | `number` | in |  |  | tolerance for convergence of bisection intervals |
-| `offset` | `integer` | in |  |  | offset for the arrays w and WERR |
-| `w` | `Float64Array` | in/out | `N` |  | eigenvalue approximations (in/out), length N |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `WERR` | `Float64Array` | in/out | `N` |  | error estimates for eigenvalues (in/out), length N |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `WERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace array, length 2*N |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 2 * N` |  | integer workspace array, length 2*N |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence for T |
-| `spdiam` | `number` | in |  |  | spectral diameter of T |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of T, length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Squares of the subdiagonal elements of T, length N-1 |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| `ifirst` | `integer` | Index of the first eigenvalue to be computed (1-based) |
+| `ilast` | `integer` | Index of the last eigenvalue to be computed (1-based) |
+| `rtol` | `number` | Tolerance for convergence of bisection intervals |
+| `offset` | `integer` | Offset for the arrays w and WERR |
+| `w` | `Float64Array`<br><sub>length N</sub> | **in/out** · Eigenvalue approximations (in/out), length N |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Error estimates for eigenvalues (in/out), length N |
+| ↳ `strideWERR` | `integer` | Stride length for `WERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array, length 2\*N |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Integer workspace array, length 2\*N |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence for T |
+| `spdiam` | `number` | Spectral diameter of T |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,33 +91,33 @@ dlarrj.ndarray(
 
 Refine eigenvalue approximations using bisection given initial intervals.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `E2` | `Float64Array` | in | `N - 1` |  | input array |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| ↳ `offsetE2` | `NonNegativeInteger` | in |  |  | starting index for `E2` |
-| `ifirst` | `integer` | in |  |  | the index of the first eigenvalue to be computed. |
-| `ilast` | `integer` | in |  |  | the index of the last eigenvalue to be computed. |
-| `rtol` | `number` | in |  |  | tolerance for the convergence of the bisection intervals. |
-| `offset` | `integer` | in |  |  | offset for the arrays W and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
-| `w` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `WERR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `WERR` |
-| ↳ `offsetWERR` | `NonNegativeInteger` | in |  |  | starting index for `WERR` |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ 2 * N` |  | output array |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
-| `pivmin` | `number` | in |  |  | the minimum pivot in the Sturm sequence for T. |
-| `spdiam` | `number` | in |  |  | the spectral diameter of T. |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| ↳ `offsetE2` | `NonNegativeInteger` | Starting index for `E2` |
+| `ifirst` | `integer` | The index of the first eigenvalue to be computed. |
+| `ilast` | `integer` | The index of the last eigenvalue to be computed. |
+| `rtol` | `number` | Tolerance for the convergence of the bisection intervals. |
+| `offset` | `integer` | Offset for the arrays W and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
+| `w` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWERR` | `integer` | Stride length for `WERR` |
+| ↳ `offsetWERR` | `NonNegativeInteger` | Starting index for `WERR` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 2 * N</sub> | **out** · Output array |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
+| `pivmin` | `number` | The minimum pivot in the Sturm sequence for T. |
+| `spdiam` | `number` | The spectral diameter of T. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

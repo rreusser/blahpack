@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlasyf_aa( order, uplo, j1, M, nb, A, LDA, IPIV, strideIPIV, H, LDH, WORK ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
-| `j1` | `integer` | in |  |  | location (1 or 2) of the first row/column of the panel within the enclosing submatrix |
-| `M` | `NonNegativeInteger` | in |  |  | submatrix dimension |
-| `nb` | `NonNegativeInteger` | in |  |  | panel width |
-| `A` | `Complex128Array` | in/out | `M × M` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `M` |  | output pivot vector |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `H` | `Complex128Array` | in/out | `M × nb` |  | workspace matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ M` |  | scratch workspace, length at least `M` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
+| `j1` | `integer` | Location (1 or 2) of the first row/column of the panel within the enclosing submatrix |
+| `M` | `NonNegativeInteger` | Submatrix dimension |
+| `nb` | `NonNegativeInteger` | Panel width |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `IPIV` | `Int32Array`<br><sub>length M</sub> | **out** · Output pivot vector |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `H` | `Complex128Array`<br><sub>M × nb</sub> | **in/out** · Workspace matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ M</sub> | **out** · Scratch workspace, length at least `M` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,26 +83,26 @@ zlasyf_aa.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
-| `j1` | `integer` | in |  |  | location (1 or 2) of the first row/column of the panel within the enclosing submatrix |
-| `M` | `NonNegativeInteger` | in |  |  | submatrix dimension |
-| `nb` | `NonNegativeInteger` | in |  |  | panel width |
-| `A` | `Complex128Array` | in/out | `M × M` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `IPIV` | `Int32Array` | out | `M` |  | output pivot vector |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `H` | `Complex128Array` | in/out | `M × nb` |  | workspace matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` (in complex elements) |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` (in complex elements) |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ M` |  | scratch workspace, length at least `M` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
+| `j1` | `integer` | Location (1 or 2) of the first row/column of the panel within the enclosing submatrix |
+| `M` | `NonNegativeInteger` | Submatrix dimension |
+| `nb` | `NonNegativeInteger` | Panel width |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length M</sub> | **out** · Output pivot vector |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `H` | `Complex128Array`<br><sub>M × nb</sub> | **in/out** · Workspace matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` (in complex elements) |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` (in complex elements) |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ M</sub> | **out** · Scratch workspace, length at least `M` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

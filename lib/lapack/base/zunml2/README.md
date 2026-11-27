@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zunml2( order, side, trans, M, N, K, A, LDA, TAU, strideTAU, C, LDC, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from left, `'right'` from right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > (side === 'left' ? M : N)` | number of elementary reflectors |
-| `A` | `Complex128Array` | in | `K × (side === 'left' ? M : N)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, K )`; row-major requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `K` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` to apply Q from left, `'right'` from right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Rejects `K < 0 \|\| K > (side === 'left' ? M : N)` |
+| `A` | `Complex128Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, K)`<br>Row-major requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,27 +89,27 @@ zunml2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from left, `'right'` from right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > (side === 'left' ? M : N)` | number of elementary reflectors |
-| `A` | `Complex128Array` | in | `K × (side === 'left' ? M : N)` |  | reflector vectors from ZGELQ2 (stored rowwise) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `TAU` | `Complex128Array` | in | `K` |  | scalar factors of reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from left, `'right'` from right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Rejects `K < 0 \|\| K > (side === 'left' ? M : N)` |
+| `A` | `Complex128Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Reflector vectors from ZGELQ2 (stored rowwise) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Scalar factors of reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

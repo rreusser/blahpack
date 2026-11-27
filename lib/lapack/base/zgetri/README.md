@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgetri( order, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | in | `N` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N )` |  | workspace (length >= max(1,N); N*NB, with NB from `ilaenv`, enables the blocked path); if `null`, a workspace of optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace (length >= max(1,N); N\*NB, with NB from `ilaenv`, enables the blocked path); if `null`, a workspace of optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -63,19 +63,19 @@ zgetri.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix; on entry, the L and U factors from zgetrf; on exit, the inverse |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zgetrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N )` |  | workspace array of length at least max(1, N) complex elements; N*NB enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix; on entry, the L and U factors from zgetrf; on exit, the inverse |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zgetrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array of length at least max(1, N) complex elements; N\*NB enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

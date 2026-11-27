@@ -31,22 +31,22 @@ zggbal(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | specifies the operations to be performed on A and B: `'none'`: none: simply set ILO = 1, IHI = N, LSCALE(I) = 1.0 and RSCALE(I) = 1.0 for i=1,...,N; `'permute'`: permute only; `'scale'`: scale only; `'both'`: both permute and scale. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrices A and B. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideLSCALE` | `integer` | in |  |  | `LSCALE` stride length |
-| `RSCALE` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideRSCALE` | `integer` | in |  |  | `RSCALE` stride length |
-| `WORK` | `(Float64Array\|null)` | out |  |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | Specifies the operations to be performed on A and B: `'none'`: none: simply set ILO = 1, IHI = N, LSCALE(I) = 1.0 and RSCALE(I) = 1.0 for i=1,...,N; `'permute'`: permute only; `'scale'`: scale only; `'both'`: both permute and scale. |
+| `N` | `NonNegativeInteger` | The order of the matrices A and B.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideLSCALE` | `integer` | `LSCALE` stride length |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideRSCALE` | `integer` | `RSCALE` stride length |
+| `WORK` | `Float64Array \| null` | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,29 +113,29 @@ zggbal.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | first complex matrix (modified in-place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | second complex matrix (modified in-place) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | left scaling/permutation factors (length N) |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| ↳ `offsetLSCALE` | `NonNegativeInteger` | in |  |  | starting index for LSCALE |
-| `RSCALE` | `Float64Array` | out | `N` |  | right scaling/permutation factors (length N) |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| ↳ `offsetRSCALE` | `NonNegativeInteger` | in |  |  | starting index for RSCALE |
-| `WORK` | `Float64Array` | out |  |  | workspace array (length >= 6*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · First complex matrix (modified in-place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Second complex matrix (modified in-place) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Left scaling/permutation factors (length N) |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| ↳ `offsetLSCALE` | `NonNegativeInteger` | Starting index for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Right scaling/permutation factors (length N) |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| ↳ `offsetRSCALE` | `NonNegativeInteger` | Starting index for RSCALE |
+| `WORK` | `Float64Array` | **out** · Workspace array (length >= 6\*N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

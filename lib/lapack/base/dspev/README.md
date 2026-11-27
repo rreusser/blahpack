@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dspev( order, jobz, uplo, N, AP, w, strideW, Z, LDZ, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` (eigenvalues only) or `'compute-vectors'` (eigenvalues + eigenvectors) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix (length N*(N+1)/2) |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Float64Array` | out | `N × N` |  | output eigenvector matrix (N x N) |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of Z |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` (eigenvalues only) or `'compute-vectors'` (eigenvalues + eigenvectors) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix (length N\*(N+1)/2) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · Output eigenvector matrix (N x N) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of Z<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,24 +80,24 @@ dspev.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` (eigenvalues only) or `'compute-vectors'` (eigenvalues + eigenvectors) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix; on exit, overwritten by dsptrd |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N), in ascending order |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Z` | `Float64Array` | out | `N × N` |  | output eigenvector matrix (N x N); referenced only if jobz = `'compute-vectors'` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` (eigenvalues only) or `'compute-vectors'` (eigenvalues + eigenvectors) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix; on exit, overwritten by dsptrd |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N), in ascending order |
+| ↳ `strideW` | `integer` | Stride for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · Output eigenvector matrix (N x N); referenced only if jobz = `'compute-vectors'` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

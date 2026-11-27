@@ -28,20 +28,20 @@ zlatps(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation applied to A |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit or non-unit triangular |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | specifies whether CNORM is pre-computed |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix |
-| `x` | `Complex128Array` | in/out | `N` |  | right-hand side vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `scale` | `Float64Array` | out |  |  | output scale factor |
-| `CNORM` | `Float64Array` | in/out | `N` |  | column norm array |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `trans` | `TransposeOperation` | Specifies the operation applied to A<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit or non-unit triangular |
+| `normin` | `"no" \| "yes"` | Specifies whether CNORM is pre-computed<br>One of `'no'`, `'yes'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Right-hand side vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `scale` | `Float64Array` | **out** · Output scale factor |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · Column norm array |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,23 +106,23 @@ zlatps.ndarray(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies the operation type |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `x` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | output array |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `trans` | `TransposeOperation` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies the operation type<br>One of `'non-unit'`, `'unit'`. |
+| `normin` | `"no" \| "yes"` | Specifies the operation type<br>One of `'no'`, `'yes'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · Output array |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

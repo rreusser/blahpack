@@ -29,22 +29,22 @@ zunmhr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'`: apply Q or Q**H from the Left; `'right'`: apply Q or Q**H from the Right. |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'`: apply Q (No transpose) `'conjugate-transpose'`: apply Q**H (Conjugate transpose) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrix C. |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, side === 'left' ? M : N )` | iLO and IHI must have the same values as in the previous call of ZGEHRD. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, side === 'left' ? M : N ) \|\| ihi > (side === 'left' ? M : N)` | iLO and IHI must have the same values as in the previous call of ZGEHRD. |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | the vectors which define the elementary reflectors, as returned by ZGEHRD. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | tAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZGEHRD. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | on entry, the M-by-N matrix C. On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'`: apply Q or Q\*\*H from the Left; `'right'`: apply Q or Q\*\*H from the Right. |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'`: apply Q (No transpose) `'conjugate-transpose'`: apply Q\*\*H (Conjugate transpose) |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix C.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix C.<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | ILO and IHI must have the same values as in the previous call of ZGEHRD.<br>Rejects `ilo < 1 \|\| ilo > max(1, side === 'left' ? M : N)` |
+| `ihi` | `integer` | ILO and IHI must have the same values as in the previous call of ZGEHRD.<br>Rejects `ihi < min(ilo, side === 'left' ? M : N) \|\| ihi > (side === 'left' ? M : N)` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | The vectors which define the elementary reflectors, as returned by ZGEHRD. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `TAU` | `Complex128Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | TAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZGEHRD. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix C. On exit, C is overwritten by Q\*C or Q\*\*H\*C or C\*Q\*\*H or C\*Q. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,28 +113,28 @@ IHI-ILO elementary reflectors, as returned by zgehrd:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | 'left' to apply Q from left, 'right' from right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | 'no-transpose' for Q, 'conjugate-transpose' for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, side === 'left' ? M : N )` | 1-based lower index from zgehrd (1 <= ILO <= IHI) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, side === 'left' ? M : N ) \|\| ihi > (side === 'left' ? M : N)` | 1-based upper index from zgehrd |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | matrix containing reflectors from zgehrd |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `TAU` | `Complex128Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | scalar factors of the elementary reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output M-by-N matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Complex128Array` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr optimum) enable the full blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | 'left' to apply Q from left, 'right' from right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | 'no-transpose' for Q, 'conjugate-transpose' for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | 1-based lower index from zgehrd (1 <= ILO <= IHI)<br>Rejects `ilo < 1 \|\| ilo > max(1, side === 'left' ? M : N)` |
+| `ihi` | `integer` | 1-based upper index from zgehrd<br>Rejects `ihi < min(ilo, side === 'left' ? M : N) \|\| ihi > (side === 'left' ? M : N)` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Matrix containing reflectors from zgehrd |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `TAU` | `Complex128Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Scalar factors of the elementary reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output M-by-N matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Complex128Array`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr optimum) enable the full blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

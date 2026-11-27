@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhesv( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of linear equations, i.e., the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, the Hermitian matrix A. On exit, if INFO = 0, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U*D*U**H or A = L*D*L**H as computed by ZHETRF. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | details of the interchanges and the block structure of D, as determined by ZHETRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 1` |  | caller-provided workspace of at least `1` element; for optimum performance `N*NB` (`NB = 64`, the zhetrf block size from `ilaenv`), and at least `N` to solve with zhetrs2; or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The number of linear equations, i.e., the order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the Hermitian matrix A. On exit, if INFO = 0, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U\*D\*U\*\*H or A = L\*D\*L\*\*H as computed by ZHETRF. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Details of the interchanges and the block structure of D, as determined by ZHETRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 1</sub> | **out** · Caller-provided workspace of at least `1` element; for optimum performance `N*NB` (`NB = 64`, the zhetrf block size from `ilaenv`), and at least `N` to solve with zhetrs2; or `null` to allocate the optimal size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,25 +93,25 @@ and 2-by-2 diagonal blocks.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix A (N x N) |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride of IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset into IPIV |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | input/output right hand side / solution |
-| ↳ `strideB1` | `integer` | in |  |  | first stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset into B |
-| `WORK` | `Complex128Array` | out | `≥ 1` |  | workspace |
-| ↳ `strideWork` | `integer` | in |  |  | stride of WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset into WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix A (N x N) |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride of IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset into IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right hand side / solution |
+| ↳ `strideB1` | `integer` | First stride of B |
+| ↳ `strideB2` | `integer` | Second stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset into B |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 1</sub> | **out** · Workspace |
+| ↳ `strideWork` | `integer` | Stride of WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset into WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

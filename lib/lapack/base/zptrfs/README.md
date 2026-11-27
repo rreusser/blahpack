@@ -34,30 +34,30 @@ zptrfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the superdiagonal or the subdiagonal of the tridiagonal matrix A is stored and the form of the factorization: `'upper'`: E is the superdiagonal of A, and A = U**H*D*U; `'lower'`: E is the subdiagonal of A, and A = L*D*L**H. (The two forms are equivalent if A is real.) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `d` | `Float64Array` | in | `N` |  | the n real diagonal elements of the tridiagonal matrix A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Complex128Array` | in | `N - 1` |  | the (n-1) off-diagonal elements of the tridiagonal matrix A (see UPLO). |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `DF` | `Float64Array` | in | `N` |  | the n diagonal elements of the diagonal matrix D from the factorization computed by ZPTTRF. |
-| ↳ `strideDF` | `integer` | in |  |  | stride length for `DF` |
-| `EF` | `Complex128Array` | in | `N - 1` |  | the (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization computed by ZPTTRF (see UPLO). |
-| ↳ `strideEF` | `integer` | in |  |  | stride length for `EF` |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | the right hand side matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the solution matrix X, as computed by ZPTTRS. On exit, the improved solution matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the superdiagonal or the subdiagonal of the tridiagonal matrix A is stored and the form of the factorization: `'upper'`: E is the superdiagonal of A, and A = U\*\*H\*D\*U; `'lower'`: E is the subdiagonal of A, and A = L\*D\*L\*\*H. (The two forms are equivalent if A is real.) |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n real diagonal elements of the tridiagonal matrix A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | The (n-1) off-diagonal elements of the tridiagonal matrix A (see UPLO). |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `DF` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the diagonal matrix D from the factorization computed by ZPTTRF. |
+| ↳ `strideDF` | `integer` | Stride length for `DF` |
+| `EF` | `Complex128Array`<br><sub>length N - 1</sub> | The (n-1) off-diagonal elements of the unit bidiagonal factor U or L from the factorization computed by ZPTTRF (see UPLO). |
+| ↳ `strideEF` | `integer` | Stride length for `EF` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | The right hand side matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the solution matrix X, as computed by ZPTTRS. On exit, the improved solution matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -127,43 +127,43 @@ error estimates for the solution.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`: which triangle of A is stored in E |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `d` | `Float64Array` | in | `N` |  | original diagonal elements of A (real), length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Complex128Array` | in | `N - 1` |  | original off-diagonal elements of A (complex), length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for `e` (in complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` (in complex elements) |
-| `DF` | `Float64Array` | in | `N` |  | factored diagonal from zpttrf (real), length N |
-| ↳ `strideDF` | `integer` | in |  |  | stride for `DF` |
-| ↳ `offsetDF` | `NonNegativeInteger` | in |  |  | starting index for `DF` |
-| `EF` | `Complex128Array` | in | `N - 1` |  | factored off-diagonal from zpttrf (complex), length N-1 |
-| ↳ `strideEF` | `integer` | in |  |  | stride for `EF` (in complex elements) |
-| ↳ `offsetEF` | `NonNegativeInteger` | in |  |  | starting index for `EF` (in complex elements) |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right hand side matrix (N x NRHS), complex |
-| ↳ `strideB1` | `integer` | in |  |  | row stride of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | column stride of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (N x NRHS), refined in-place, complex |
-| ↳ `strideX1` | `integer` | in |  |  | row stride of `X` (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | column stride of `X` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` (in complex elements) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bound for each RHS (real), length NRHS |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for `FERR` |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error for each RHS (real), length NRHS |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for `BERR` |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for `BERR` |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | complex workspace, length N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace, length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`: which triangle of A is stored in E |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Original diagonal elements of A (real), length N |
+| ↳ `strideD` | `integer` | Stride for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | Original off-diagonal elements of A (complex), length N-1 |
+| ↳ `strideE` | `integer` | Stride for `e` (in complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` (in complex elements) |
+| `DF` | `Float64Array`<br><sub>length N</sub> | Factored diagonal from zpttrf (real), length N |
+| ↳ `strideDF` | `integer` | Stride for `DF` |
+| ↳ `offsetDF` | `NonNegativeInteger` | Starting index for `DF` |
+| `EF` | `Complex128Array`<br><sub>length N - 1</sub> | Factored off-diagonal from zpttrf (complex), length N-1 |
+| ↳ `strideEF` | `integer` | Stride for `EF` (in complex elements) |
+| ↳ `offsetEF` | `NonNegativeInteger` | Starting index for `EF` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right hand side matrix (N x NRHS), complex |
+| ↳ `strideB1` | `integer` | Row stride of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Column stride of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (N x NRHS), refined in-place, complex |
+| ↳ `strideX1` | `integer` | Row stride of `X` (in complex elements) |
+| ↳ `strideX2` | `integer` | Column stride of `X` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` (in complex elements) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bound for each RHS (real), length NRHS |
+| ↳ `strideFERR` | `integer` | Stride for `FERR` |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error for each RHS (real), length NRHS |
+| ↳ `strideBERR` | `integer` | Stride for `BERR` |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for `BERR` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Complex workspace, length N |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace, length N |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

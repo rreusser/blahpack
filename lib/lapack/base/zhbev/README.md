@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhbev( order, jobz, uplo, N, kd, AB, LDAB, w, strideW, Z, LDZ, WORK, RWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super- (or sub-) diagonals |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | `w` stride length |
-| `Z` | `Complex128Array` | out | `N × N` |  | output matrix for eigenvectors |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | complex workspace array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super- (or sub-) diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues |
+| ↳ `strideW` | `integer` | `w` stride length |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix for eigenvectors |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Complex workspace array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -90,29 +90,29 @@ Computes all eigenvalues and optionally eigenvectors of a complex Hermitian band
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super- (or sub-) diagonals |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (in complex elements) |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Z` | `Complex128Array` | out | `N × N` |  | output matrix for eigenvectors |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (in complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (in complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | complex workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super- (or sub-) diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (in complex elements) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix for eigenvectors |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (in complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (in complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Complex workspace array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace array |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

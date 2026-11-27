@@ -50,43 +50,43 @@ Computes converged approximations to eigenvalues of `A*z = lambda*B*z` for bande
 -   `AB`, `MB`, and `RFAC` are `(2*kl+ku+1)`-by-`N` band-storage matrices.
 -   When `workd`, `workl`, or `iwork` is `null`, this wrapper allocates a workspace of the minimum size (`3*N`, `ncv^2 + 8*ncv`, and `N` elements, respectively) as a convenience. Prefer passing caller-owned buffers for repeated use.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `rvec` | `boolean` | in |  |  | whether to compute Ritz vectors |
-| `howmny` | `("all"\|"select")` | in |  |  | `'all'` or `'select'` (only `'all'` is implemented) |
-| `select` | `Uint8Array` | in/out |  |  | selection array (length ncv) |
-| ↳ `strideSelect` | `integer` | in |  |  | stride length for `select` |
-| `d` | `Float64Array` | out |  |  | Ritz values (length nev; out) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `Z` | `Float64Array` | out | `LD × null` |  | Ritz vectors (N-by-nev; out) |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `sigma` | `number` | in |  |  | the shift (modes 3, 4, 5) |
-| `N` | `integer` | in |  |  | order of the problem |
-| `AB` | `Float64Array` | in | `LD × null` |  | matrix A in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `MB` | `Float64Array` | in | `LD × null` |  | matrix M in band storage |
-| ↳ `LDMB` | `PositiveInteger` | in |  |  | leading dimension of `MB` |
-| `RFAC` | `Float64Array` | in/out | `LD × null` |  | band LU workspace/output |
-| ↳ `LDRFAC` | `PositiveInteger` | in |  |  | leading dimension of `RFAC` |
-| `kl` | `integer` | in |  |  | number of subdiagonals |
-| `ku` | `integer` | in |  |  | number of superdiagonals |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `nev` | `integer` | in |  |  | number of eigenvalues to compute |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out |  |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `ncv` | `integer` | in |  |  | number of Lanczos vectors |
-| `V` | `Float64Array` | out | `LD × null` |  | Lanczos basis (N-by-ncv; out) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `iparam` | `Int32Array` | in/out |  |  | input/output parameters (length 11; in/out) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| `workd` | `(Float64Array\|null)` | in/out |  |  | reverse-communication workspace (length >= 3*N) |
-| `workl` | `(Float64Array\|null)` | in/out |  |  | private workspace (length >= ncv^2 + 8*ncv) |
-| `lworkl` | `integer` | in |  |  | length of `workl` |
-| `iwork` | `(Int32Array\|null)` | in/out | `≥ N` |  | integer pivot workspace (length >= N) |
-| `infoIn` | `integer` | in/out |  |  | nonzero on entry to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `rvec` | `boolean` | Whether to compute Ritz vectors |
+| `howmny` | `"all" \| "select"` | `'all'` or `'select'` (only `'all'` is implemented) |
+| `select` | `Uint8Array` | **in/out** · Selection array (length ncv) |
+| ↳ `strideSelect` | `integer` | Stride length for `select` |
+| `d` | `Float64Array` | **out** · Ritz values (length nev; out) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `Z` | `Float64Array`<br><sub>LD × ?</sub> | **out** · Ritz vectors (N-by-nev; out) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `sigma` | `number` | The shift (modes 3, 4, 5) |
+| `N` | `integer` | Order of the problem |
+| `AB` | `Float64Array`<br><sub>LD × ?</sub> | Matrix A in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `MB` | `Float64Array`<br><sub>LD × ?</sub> | Matrix M in band storage |
+| ↳ `LDMB` | `PositiveInteger` | Leading dimension of `MB` |
+| `RFAC` | `Float64Array`<br><sub>LD × ?</sub> | **in/out** · Band LU workspace/output |
+| ↳ `LDRFAC` | `PositiveInteger` | Leading dimension of `RFAC` |
+| `kl` | `integer` | Number of subdiagonals |
+| `ku` | `integer` | Number of superdiagonals |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `nev` | `integer` | Number of eigenvalues to compute |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array` | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `ncv` | `integer` | Number of Lanczos vectors |
+| `V` | `Float64Array`<br><sub>LD × ?</sub> | **out** · Lanczos basis (N-by-ncv; out) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `iparam` | `Int32Array` | **in/out** · Input/output parameters (length 11; in/out) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| `workd` | `Float64Array \| null` | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| `workl` | `Float64Array \| null` | **in/out** · Private workspace (length >= ncv^2 + 8\*ncv) |
+| `lworkl` | `integer` | Length of `workl` |
+| `iwork` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **in/out** · Integer pivot workspace (length >= N) |
+| `infoIn` | `integer` | **in/out** · Nonzero on entry to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 
@@ -134,62 +134,62 @@ dsband.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `rvec` | `boolean` | in |  |  | whether to compute Ritz vectors |
-| `howmny` | `("all"\|"select")` | in |  |  | `'all'` or `'select'` (only `'all'` is implemented) |
-| `select` | `Uint8Array` | in/out |  |  | selection array (length ncv) |
-| ↳ `strideSelect` | `integer` | in |  |  | stride length for `select` |
-| ↳ `offsetSelect` | `NonNegativeInteger` | in |  |  | starting index for `select` |
-| `d` | `Float64Array` | out |  |  | Ritz values (length nev; out) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `Z` | `Float64Array` | out | `LD × null` |  | Ritz vectors (N-by-nev, column-major; out) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first (row) dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second (column) dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `sigma` | `number` | in |  |  | the shift (modes 3, 4, 5) |
-| `N` | `integer` | in |  |  | order of the problem |
-| `AB` | `Float64Array` | in | `LD × null` |  | matrix A in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first (row) dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second (column) dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `MB` | `Float64Array` | in | `LD × null` |  | matrix M in band storage |
-| ↳ `strideMB1` | `integer` | in |  |  | stride of the first (row) dimension of `MB` |
-| ↳ `strideMB2` | `integer` | in |  |  | stride of the second (column) dimension of `MB` |
-| ↳ `offsetMB` | `NonNegativeInteger` | in |  |  | starting index for `MB` |
-| `RFAC` | `Float64Array` | in/out | `LD × null` |  | band LU workspace/output |
-| ↳ `strideRFAC1` | `integer` | in |  |  | stride of the first (row) dimension of `RFAC` |
-| ↳ `strideRFAC2` | `integer` | in |  |  | stride of the second (column) dimension of `RFAC` |
-| ↳ `offsetRFAC` | `NonNegativeInteger` | in |  |  | starting index for `RFAC` |
-| `kl` | `integer` | in |  |  | number of subdiagonals |
-| `ku` | `integer` | in |  |  | number of superdiagonals |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `nev` | `integer` | in |  |  | number of eigenvalues to compute |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out |  |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `ncv` | `integer` | in |  |  | number of Lanczos vectors |
-| `V` | `Float64Array` | out | `LD × null` |  | Lanczos basis (N-by-ncv, column-major; out) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `iparam` | `Int32Array` | in/out |  |  | input/output parameters (length 11; in/out) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| ↳ `offsetIparam` | `NonNegativeInteger` | in |  |  | starting index for `iparam` |
-| `workd` | `Float64Array` | in/out |  |  | reverse-communication workspace (length >= 3*N) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
-| `workl` | `Float64Array` | in/out |  |  | private workspace (length >= ncv^2 + 8*ncv) |
-| ↳ `strideWorkl` | `integer` | in |  |  | stride length for `workl` |
-| ↳ `offsetWorkl` | `NonNegativeInteger` | in |  |  | starting index for `workl` |
-| `lworkl` | `integer` | in |  |  | length of `workl` |
-| `iwork` | `Int32Array` | in/out | `≥ N` |  | integer pivot workspace (length >= N) |
-| ↳ `strideIwork` | `integer` | in |  |  | stride length for `iwork` |
-| ↳ `offsetIwork` | `NonNegativeInteger` | in |  |  | starting index for `iwork` |
-| `infoIn` | `integer` | in/out |  |  | nonzero on entry to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `rvec` | `boolean` | Whether to compute Ritz vectors |
+| `howmny` | `"all" \| "select"` | `'all'` or `'select'` (only `'all'` is implemented) |
+| `select` | `Uint8Array` | **in/out** · Selection array (length ncv) |
+| ↳ `strideSelect` | `integer` | Stride length for `select` |
+| ↳ `offsetSelect` | `NonNegativeInteger` | Starting index for `select` |
+| `d` | `Float64Array` | **out** · Ritz values (length nev; out) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `Z` | `Float64Array`<br><sub>LD × ?</sub> | **out** · Ritz vectors (N-by-nev, column-major; out) |
+| ↳ `strideZ1` | `integer` | Stride of the first (row) dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second (column) dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `sigma` | `number` | The shift (modes 3, 4, 5) |
+| `N` | `integer` | Order of the problem |
+| `AB` | `Float64Array`<br><sub>LD × ?</sub> | Matrix A in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first (row) dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second (column) dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `MB` | `Float64Array`<br><sub>LD × ?</sub> | Matrix M in band storage |
+| ↳ `strideMB1` | `integer` | Stride of the first (row) dimension of `MB` |
+| ↳ `strideMB2` | `integer` | Stride of the second (column) dimension of `MB` |
+| ↳ `offsetMB` | `NonNegativeInteger` | Starting index for `MB` |
+| `RFAC` | `Float64Array`<br><sub>LD × ?</sub> | **in/out** · Band LU workspace/output |
+| ↳ `strideRFAC1` | `integer` | Stride of the first (row) dimension of `RFAC` |
+| ↳ `strideRFAC2` | `integer` | Stride of the second (column) dimension of `RFAC` |
+| ↳ `offsetRFAC` | `NonNegativeInteger` | Starting index for `RFAC` |
+| `kl` | `integer` | Number of subdiagonals |
+| `ku` | `integer` | Number of superdiagonals |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `nev` | `integer` | Number of eigenvalues to compute |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array` | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `ncv` | `integer` | Number of Lanczos vectors |
+| `V` | `Float64Array`<br><sub>LD × ?</sub> | **out** · Lanczos basis (N-by-ncv, column-major; out) |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `iparam` | `Int32Array` | **in/out** · Input/output parameters (length 11; in/out) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| ↳ `offsetIparam` | `NonNegativeInteger` | Starting index for `iparam` |
+| `workd` | `Float64Array` | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
+| `workl` | `Float64Array` | **in/out** · Private workspace (length >= ncv^2 + 8\*ncv) |
+| ↳ `strideWorkl` | `integer` | Stride length for `workl` |
+| ↳ `offsetWorkl` | `NonNegativeInteger` | Starting index for `workl` |
+| `lworkl` | `integer` | Length of `workl` |
+| `iwork` | `Int32Array`<br><sub>length ≥ N</sub> | **in/out** · Integer pivot workspace (length >= N) |
+| ↳ `strideIwork` | `integer` | Stride length for `iwork` |
+| ↳ `offsetIwork` | `NonNegativeInteger` | Starting index for `iwork` |
+| `infoIn` | `integer` | **in/out** · Nonzero on entry to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 

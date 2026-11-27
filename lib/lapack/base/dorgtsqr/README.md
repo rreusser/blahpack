@@ -22,18 +22,18 @@ dorgtsqr( order, M, N, mb, nb, A, LDA, T, LDT, WORK ) → integer
 
 Generates an `M`-by-`N` real matrix `Q` with orthonormal columns from a Tall-Skinny QR factorization (`dlatsqr`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `Q` (`M >= 0`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of `Q` (`0 <= N <= M`) |
-| `mb` | `integer` | in |  | rejects `mb <= N` | row block size used by `dlatsqr` (`mb > N`) |
-| `nb` | `integer` | in |  | rejects `nb < 1` | column block size used by `dlatsqr` (`nb >= 1`) |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Float64Array` | in | `min( nb, N ) × N*NIRB` |  | block triangular factors from `dlatsqr` |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, min( nb, N ) )` | leading dimension of `T` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ MAX(1,LWORKOPT)` |  | workspace of length at least `(M+nb)*N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `Q` (`M >= 0`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `Q` (`0 <= N <= M`)<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size used by `dlatsqr` (`mb > N`)<br>Rejects `mb <= N` |
+| `nb` | `integer` | Column block size used by `dlatsqr` (`nb >= 1`)<br>Rejects `nb < 1` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Float64Array`<br><sub>min(nb, N) × N*NIRB</sub> | Block triangular factors from `dlatsqr` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, min(nb, N))` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Workspace of length at least `(M+nb)*N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,23 +98,23 @@ Generates an `M`-by-`N` real matrix `Q` with orthonormal columns from a Tall-Ski
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `Q` (`M >= 0`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of `Q` (`0 <= N <= M`) |
-| `mb` | `integer` | in |  | rejects `mb <= N` | row block size used by `dlatsqr` (`mb > N`) |
-| `nb` | `integer` | in |  | rejects `nb < 1` | column block size used by `dlatsqr` (`nb >= 1`) |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Float64Array` | in | `min( nb, N ) × N*NIRB` |  | block triangular factors from `dlatsqr` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `WORK` | `Float64Array` | out | `≥ MAX(1,LWORKOPT)` |  | workspace of length at least `M*N + N*min(nb,N)` |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `Q` (`M >= 0`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `Q` (`0 <= N <= M`)<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size used by `dlatsqr` (`mb > N`)<br>Rejects `mb <= N` |
+| `nb` | `integer` | Column block size used by `dlatsqr` (`nb >= 1`)<br>Rejects `nb < 1` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Float64Array`<br><sub>min(nb, N) × N*NIRB</sub> | Block triangular factors from `dlatsqr` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `WORK` | `Float64Array`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Workspace of length at least `M*N + N*min(nb,N)` |
+| ↳ `strideWork` | `integer` | Element stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

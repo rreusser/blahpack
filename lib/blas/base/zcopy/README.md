@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zcopy( N, x, strideX, y, strideY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `zx` stride length |
-| `y` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `zy` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `zx` stride length |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideY` | `integer` | `zy` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,15 +45,15 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zcopy.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in | `N` |  | source complex vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `zx` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `zx` (in complex elements) |
-| `y` | `Complex128Array` | out | `N` |  | destination complex vector |
-| ↳ `strideY` | `integer` | in |  |  | stride for `zy` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `zy` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Source complex vector |
+| ↳ `strideX` | `integer` | Stride for `zx` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `zx` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **out** · Destination complex vector |
+| ↳ `strideY` | `integer` | Stride for `zy` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `zy` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

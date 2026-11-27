@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlar2v( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to apply |
-| `x` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| `z` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | third input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of cosines of the plane rotations |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| `s` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of sines of the plane rotations |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to apply |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| `z` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Third input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of cosines of the plane rotations |
+| ↳ `strideC` | `integer` | `c` stride length |
+| `s` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of sines of the plane rotations |
+| ↳ `strideS` | `integer` | `s` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -63,24 +63,24 @@ dlar2v.ndarray(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to apply |
-| `x` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `z` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | third input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of cosines of the plane rotations |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `s` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of sines of the plane rotations |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to apply |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `z` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Third input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of cosines of the plane rotations |
+| ↳ `strideC` | `integer` | `c` stride length |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `s` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of sines of the plane rotations |
+| ↳ `strideS` | `integer` | `s` stride length |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

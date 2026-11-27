@@ -22,18 +22,18 @@ dsyconvf( order, uplo, way, N, A, LDA, E, strideE, IPIV, strideIPIV ) → intege
 
 Converts the factorization output format used in `dsytrf` to the format used in `dsytrf_rk` and vice versa.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | `'convert'` or `'revert'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `E` | `Float64Array` | in/out | `N` |  | auxiliary array of length `N` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (length `N`) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `way` | `"convert" \| "revert"` | `'convert'` or `'revert'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `E` | `Float64Array`<br><sub>length N</sub> | **in/out** · Auxiliary array of length `N` |
+| ↳ `strideE` | `integer` | Stride length for `E` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (length `N`) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -121,21 +121,21 @@ Converts the factorization output format used in `dsytrf` to the format used in 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | `'convert'` or `'revert'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `E` | `Float64Array` | in/out | `N` |  | auxiliary array of length `N` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `E` |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (length `N`) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `way` | `"convert" \| "revert"` | `'convert'` or `'revert'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `E` | `Float64Array`<br><sub>length N</sub> | **in/out** · Auxiliary array of length `N` |
+| ↳ `strideE` | `integer` | Stride length for `E` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `E` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (length `N`) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

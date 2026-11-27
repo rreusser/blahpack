@@ -22,18 +22,18 @@ zsyconvf_rook( order, uplo, way, N, A, LDA, e, strideE, IPIV, strideIPIV ) → i
 
 Converts the factorization output format used in zsytrf_rook for complex symmetric matrices.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `e` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `IPIV` | `Int32Array` | in | `N` |  | output array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `way` | `"convert" \| "revert"` | Specifies the operation type<br>One of `'convert'`, `'revert'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `e` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Output array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,21 +115,21 @@ Converts the factorization output format used in `zsytrf_rook` into the `zsytrf_
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | `'convert'` or `'revert'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix (column-major via strides) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `e` | `Complex128Array` | in/out | `N` |  | array to store/read off-diagonal elements of `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` (complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zsytrf_rook` (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `way` | `"convert" \| "revert"` | `'convert'` or `'revert'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix (column-major via strides) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `e` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Array to store/read off-diagonal elements of `D` |
+| ↳ `strideE` | `integer` | Stride length for `e` (complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zsytrf_rook` (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

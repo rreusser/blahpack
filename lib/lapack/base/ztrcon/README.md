@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztrcon( order, norm, uplo, diag, N, A, LDA, RCOND, WORK, RWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | `'one-norm'` or `'inf-norm'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `RCOND` | `Float64Array` | out |  |  | output array (single element) receiving the reciprocal condition number |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace (>= `2*N` complex elements); auto-allocated when `null` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace (>= `N` reals); auto-allocated when `null` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | `'one-norm'` or `'inf-norm'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `RCOND` | `Float64Array` | **out** · Output array (single element) receiving the reciprocal condition number |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace (>= `2*N` complex elements); auto-allocated when `null` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace (>= `N` reals); auto-allocated when `null` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,23 +88,23 @@ then the reciprocal of the condition number is computed as:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in | `N × N` |  | input triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1; RCOND[0] receives the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace of length 2*N (complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | workspace of length N (real) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1; RCOND[0] receives the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length 2\*N (complex elements) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace of length N (real) |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

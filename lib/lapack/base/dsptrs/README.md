@@ -29,17 +29,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsptrs( order, uplo, N, nrhs, AP, IPIV, strideIPIV, B, LDB ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of A is packed ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from dsptrf, length N*(N+1)/2 |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dsptrf, length N |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | right-hand side matrix, overwritten with solution |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of B (>= max(1,N)) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of A is packed ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from dsptrf, length N\*(N+1)/2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dsptrf, length N |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Right-hand side matrix, overwritten with solution |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (>= max(1,N))<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -85,21 +85,21 @@ Solves a system of linear equations with a real symmetric matrix in packed stora
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side vectors |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from dsptrf |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dsptrf |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | input/output right-hand side / solution matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side vectors<br>Requires `nrhs ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from dsptrf |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dsptrf |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right-hand side / solution matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

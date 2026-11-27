@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaed6( kniter, orgati, rho, d, strideD, z, strideZ, finit, tau ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `kniter` | `integer` | in |  |  | iteration count hint from dlaed4 |
-| `orgati` | `boolean` | in |  |  | if true, root is between `d[1]` and `d[2]`; otherwise between `d[0]` and `d[1]` |
-| `rho` | `number` | in |  |  | scalar in the secular equation |
-| `d` | `Float64Array` | in | `3` |  | input array of length 3 containing the original eigenvalues |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `z` | `Float64Array` | in | `3` |  | input array of length 3 containing the updating vector components |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| `finit` | `number` | in |  |  | value of f at 0 |
-| `tau` | `Float64Array` | out |  |  | output array of length 1; `tau[0]` receives the computed root |
+| Parameter | Type | Description |
+|---|---|---|
+| `kniter` | `integer` | Iteration count hint from dlaed4 |
+| `orgati` | `boolean` | If true, root is between `d[1]` and `d[2]`; otherwise between `d[0]` and `d[1]` |
+| `rho` | `number` | Scalar in the secular equation |
+| `d` | `Float64Array`<br><sub>length 3</sub> | Input array of length 3 containing the original eigenvalues |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `z` | `Float64Array`<br><sub>length 3</sub> | Input array of length 3 containing the updating vector components |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| `finit` | `number` | Value of f at 0 |
+| `tau` | `Float64Array` | **out** · Output array of length 1; `tau[0]` receives the computed root |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,19 +61,19 @@ dlaed6.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `kniter` | `integer` | in |  |  | iteration count hint from dlaed4 |
-| `orgati` | `boolean` | in |  |  | if true, root is between `d[1]` and `d[2]`; otherwise between `d[0]` and `d[1]` |
-| `rho` | `number` | in |  |  | scalar in the secular equation |
-| `d` | `Float64Array` | in | `3` |  | input array of length 3 containing the original eigenvalues |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `z` | `Float64Array` | in | `3` |  | input array of length 3 containing the updating vector components |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `finit` | `number` | in |  |  | value of f at 0 |
-| `tau` | `Float64Array` | out |  |  | output array of length 1; `tau[0]` receives the computed root |
+| Parameter | Type | Description |
+|---|---|---|
+| `kniter` | `integer` | Iteration count hint from dlaed4 |
+| `orgati` | `boolean` | If true, root is between `d[1]` and `d[2]`; otherwise between `d[0]` and `d[1]` |
+| `rho` | `number` | Scalar in the secular equation |
+| `d` | `Float64Array`<br><sub>length 3</sub> | Input array of length 3 containing the original eigenvalues |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `z` | `Float64Array`<br><sub>length 3</sub> | Input array of length 3 containing the updating vector components |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `finit` | `number` | Value of f at 0 |
+| `tau` | `Float64Array` | **out** · Output array of length 1; `tau[0]` receives the computed root |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

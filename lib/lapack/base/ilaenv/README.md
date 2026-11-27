@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ilaenv( ispec, name, opts, n1, n2, n3, n4 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | parameter to return (1-17) |
-| `name` | `string` | in |  |  | name of the calling routine (e.g. `'DGEQRF'`) |
-| `opts` | `string` | in |  |  | character options of the calling routine, concatenated (not read) |
-| `n1` | `integer` | in |  |  | first problem dimension |
-| `n2` | `integer` | in |  |  | second problem dimension |
-| `n3` | `integer` | in |  |  | third problem dimension |
-| `n4` | `integer` | in |  |  | fourth problem dimension |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | Parameter to return (1-17) |
+| `name` | `string` | Name of the calling routine (e.g. `'DGEQRF'`) |
+| `opts` | `string` | Character options of the calling routine, concatenated (not read) |
+| `n1` | `integer` | First problem dimension |
+| `n2` | `integer` | Second problem dimension |
+| `n3` | `integer` | Third problem dimension |
+| `n4` | `integer` | Fourth problem dimension |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,15 +69,15 @@ ilaenv.ndarray( ispec, name, opts, n1, n2, n3, n4 ) → integer
 
 Returns problem-dependent parameters for the local environment, using alternative indexing semantics (the routine takes no arrays).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | parameter to return (1-17) |
-| `name` | `string` | in |  |  | name of the calling routine (e.g. `'DGEQRF'`) |
-| `opts` | `string` | in |  |  | character options of the calling routine, concatenated (not read) |
-| `n1` | `integer` | in |  |  | first problem dimension |
-| `n2` | `integer` | in |  |  | second problem dimension |
-| `n3` | `integer` | in |  |  | third problem dimension |
-| `n4` | `integer` | in |  |  | fourth problem dimension |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | Parameter to return (1-17) |
+| `name` | `string` | Name of the calling routine (e.g. `'DGEQRF'`) |
+| `opts` | `string` | Character options of the calling routine, concatenated (not read) |
+| `n1` | `integer` | First problem dimension |
+| `n2` | `integer` | Second problem dimension |
+| `n3` | `integer` | Third problem dimension |
+| `n4` | `integer` | Fourth problem dimension |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

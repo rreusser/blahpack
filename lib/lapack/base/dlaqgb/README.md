@@ -28,23 +28,23 @@ dlaqgb(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `kl` | `NonNegativeInteger` | in |  |  | number of sub-diagonals within the band of A |
-| `ku` | `NonNegativeInteger` | in |  |  | number of super-diagonals within the band of A |
-| `AB` | `Float64Array` | in/out | `null × N` |  | input/output band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of AB |
-| `r` | `Float64Array` | in | `M` |  | row scale factors, length M |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| `c` | `Float64Array` | in | `N` |  | column scale factors, length N |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| `rowcnd` | `number` | in |  |  | ratio of smallest to largest R(i) |
-| `colcnd` | `number` | in |  |  | ratio of smallest to largest C(i) |
-| `amax` | `number` | in |  |  | absolute value of largest matrix entry |
-| `equed` | `Array.<string>` | out |  |  | specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) * A * diag(C). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals within the band of A |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals within the band of A |
+| `AB` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input/output band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of AB |
+| `r` | `Float64Array`<br><sub>length M</sub> | Row scale factors, length M |
+| ↳ `strideR` | `integer` | Stride for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scale factors, length N |
+| ↳ `strideC` | `integer` | Stride for c |
+| `rowcnd` | `number` | Ratio of smallest to largest R(i) |
+| `colcnd` | `number` | Ratio of smallest to largest C(i) |
+| `amax` | `number` | Absolute value of largest matrix entry |
+| `equed` | `Array.<string>` | **out** · Specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) \* A \* diag(C). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -99,26 +99,26 @@ or 'both' (both row and column).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `kl` | `NonNegativeInteger` | in |  |  | number of sub-diagonals within the band of A |
-| `ku` | `NonNegativeInteger` | in |  |  | number of super-diagonals within the band of A |
-| `AB` | `Float64Array` | in/out | `null × N` |  | input/output band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | index offset for AB |
-| `r` | `Float64Array` | in | `M` |  | row scale factors, length M |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for r |
-| `c` | `Float64Array` | in | `N` |  | column scale factors, length N |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for c |
-| `rowcnd` | `number` | in |  |  | ratio of smallest to largest R(i) |
-| `colcnd` | `number` | in |  |  | ratio of smallest to largest C(i) |
-| `amax` | `number` | in |  |  | absolute value of largest matrix entry |
-| `equed` | `Array.<string>` | out |  |  | specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) * A * diag(C). |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals within the band of A |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals within the band of A |
+| `AB` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input/output band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB |
+| ↳ `offsetAB` | `NonNegativeInteger` | Index offset for AB |
+| `r` | `Float64Array`<br><sub>length M</sub> | Row scale factors, length M |
+| ↳ `strideR` | `integer` | Stride for r |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scale factors, length N |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for c |
+| `rowcnd` | `number` | Ratio of smallest to largest R(i) |
+| `colcnd` | `number` | Ratio of smallest to largest C(i) |
+| `amax` | `number` | Absolute value of largest matrix entry |
+| `equed` | `Array.<string>` | **out** · Specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) \* A \* diag(C). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

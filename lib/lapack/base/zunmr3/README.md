@@ -28,22 +28,22 @@ zunmr3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies the operation type |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > (side === 'left' ? M : N)` | number of superdiagonals |
-| `l` | `NonNegativeInteger` | in |  | rejects `(L < 0 \|\| (side === 'left' && L > M)) \|\| (side !== 'left' && L > N)` | the number of columns of the matrix A containing the meaningful part of the Householder reflectors. |
-| `A` | `Complex128Array` | in | `K × (side === 'left' ? M : N)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, K )`; row-major requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `K` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type<br>One of `'left'`, `'right'`. |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of superdiagonals<br>Rejects `K < 0 \|\| K > (side === 'left' ? M : N)` |
+| `l` | `NonNegativeInteger` | The number of columns of the matrix A containing the meaningful part of the Householder reflectors.<br>Rejects `(L < 0 \|\| (side === 'left' && L > M)) \|\| (side !== 'left' && L > N)` |
+| `A` | `Complex128Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, K)`<br>Row-major requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,28 +102,28 @@ Overwrites the general `M`-by-`N` complex matrix `C` with `Q*C`, `Q**H*C`, `C*Q`
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` applies `Q` (or `Q**H`) from the left; `'right'` applies from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` applies `Q`; `'conjugate-transpose'` applies `Q**H` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `C` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `C` |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > (side === 'left' ? M : N)` | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  | rejects `(L < 0 \|\| (side === 'left' && L > M)) \|\| (side !== 'left' && L > N)` | number of meaningful trailing entries in each reflector |
-| `A` | `Complex128Array` | in | `K × (side === 'left' ? M : N)` |  | reflector vectors |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `TAU` | `Complex128Array` | in | `K` |  | scalar factors of the reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for `TAU` (in complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` applies `Q` (or `Q**H`) from the left; `'right'` applies from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` applies `Q`; `'conjugate-transpose'` applies `Q**H` |
+| `M` | `NonNegativeInteger` | Number of rows of `C`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `C`<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Rejects `K < 0 \|\| K > (side === 'left' ? M : N)` |
+| `l` | `NonNegativeInteger` | Number of meaningful trailing entries in each reflector<br>Rejects `(L < 0 \|\| (side === 'left' && L > M)) \|\| (side !== 'left' && L > N)` |
+| `A` | `Complex128Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Reflector vectors |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Scalar factors of the reflectors |
+| ↳ `strideTAU` | `integer` | Stride for `TAU` (in complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasr( order, side, pivot, direct, M, N, c, strideC, s, strideS, A, LDA ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `pivot` | `("variable"\|"top"\|"bottom")` | in |  | one of `'bottom'`, `'top'`, `'variable'` | `'variable'`, `'top'`, or `'bottom'` |
-| `direct` | `("forward"\|"backward")` | in |  | one of `'backward'`, `'forward'` | `'forward'` or `'backward'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `c` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | input array |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| `s` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `pivot` | `"variable" \| "top" \| "bottom"` | `'variable'`, `'top'`, or `'bottom'` |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `c` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Input array |
+| ↳ `strideC` | `integer` | `c` stride length |
+| `s` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Input array |
+| ↳ `strideS` | `integer` | `s` stride length |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,23 +88,23 @@ dlasr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `pivot` | `("variable"\|"top"\|"bottom")` | in |  | one of `'bottom'`, `'top'`, `'variable'` | `'variable'`, `'top'`, or `'bottom'` |
-| `direct` | `("forward"\|"backward")` | in |  | one of `'backward'`, `'forward'` | `'forward'` or `'backward'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `c` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | array of cosines |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `s` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | array of sines |
-| ↳ `strideS` | `integer` | in |  |  | stride for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `pivot` | `"variable" \| "top" \| "bottom"` | `'variable'`, `'top'`, or `'bottom'` |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `c` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Array of cosines |
+| ↳ `strideC` | `integer` | Stride for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `s` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Array of sines |
+| ↳ `strideS` | `integer` | Stride for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

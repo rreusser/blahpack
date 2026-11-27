@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpbsv( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of linear equations, i.e., the order of the matrix A. |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | the number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | on entry, the upper or lower triangle of the Hermitian band matrix A, stored in the first KD+1 rows of the array. On exit, if INFO = 0, the triangular factor U or L from the Cholesky factorization A = U**H *U or A = L*L**H of the band matrix A, in the same storage format as A. |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The number of linear equations, i.e., the order of the matrix A.<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | The number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`.<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · On entry, the upper or lower triangle of the Hermitian band matrix A, stored in the first KD+1 rows of the array. On exit, if INFO = 0, the triangular factor U or L from the Cholesky factorization A = U\*\*H \*U or A = L\*L\*\*H of the band matrix A, in the same storage format as A. |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,20 +89,20 @@ band matrix. The factored form of A is then used to solve the system.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper': upper triangle of A is stored; 'lower': lower triangle of A is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of linear equations / order of A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super/sub-diagonals of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | on entry, the upper or lower triangle of A in band storage; on exit, the triangular factor U or L |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the RHS matrix B; on exit, the solution matrix X |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper': upper triangle of A is stored; 'lower': lower triangle of A is stored |
+| `N` | `NonNegativeInteger` | Number of linear equations / order of A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super/sub-diagonals of A<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · On entry, the upper or lower triangle of A in band storage; on exit, the triangular factor U or L |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the RHS matrix B; on exit, the solution matrix X |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

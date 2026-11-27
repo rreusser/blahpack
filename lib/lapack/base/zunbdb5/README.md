@@ -30,21 +30,21 @@ zunbdb5(
 
 Orthogonalizes the complex column vector `X = [X1; X2]` against the columns of `Q = [Q1; Q2]`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `m1` | `NonNegativeInteger` | in |  | requires `m1 ≥ 0` | dimension of `X1` and rows of `Q1` |
-| `m2` | `NonNegativeInteger` | in |  | requires `m2 ≥ 0` | dimension of `X2` and rows of `Q2` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns in `Q1` and `Q2` |
-| `X1` | `Complex128Array` | in/out | `m1` |  | top part of the vector |
-| ↳ `strideX1` | `integer` | in |  |  | `X1` stride length (in complex elements) |
-| `X2` | `Complex128Array` | in/out | `m2` |  | bottom part of the vector |
-| ↳ `strideX2` | `integer` | in |  |  | `X2` stride length (in complex elements) |
-| `Q1` | `Complex128Array` | in | `m1 × N` |  | top part of the orthonormal basis matrix |
-| ↳ `LDQ1` | `PositiveInteger` | in |  | column-major requires `LDQ1 ≥ max( 1, m1 )`; row-major requires `LDQ1 ≥ max( 1, N )` | leading dimension of `Q1` |
-| `Q2` | `Complex128Array` | in | `m2 × N` |  | bottom part of the orthonormal basis matrix |
-| ↳ `LDQ2` | `PositiveInteger` | in |  | column-major requires `LDQ2 ≥ max( 1, m2 )`; row-major requires `LDQ2 ≥ max( 1, N )` | leading dimension of `Q2` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | workspace array (length at least `N`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `m1` | `NonNegativeInteger` | Dimension of `X1` and rows of `Q1`<br>Requires `m1 ≥ 0` |
+| `m2` | `NonNegativeInteger` | Dimension of `X2` and rows of `Q2`<br>Requires `m2 ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns in `Q1` and `Q2`<br>Requires `N ≥ 0` |
+| `X1` | `Complex128Array`<br><sub>length m1</sub> | **in/out** · Top part of the vector |
+| ↳ `strideX1` | `integer` | `X1` stride length (in complex elements) |
+| `X2` | `Complex128Array`<br><sub>length m2</sub> | **in/out** · Bottom part of the vector |
+| ↳ `strideX2` | `integer` | `X2` stride length (in complex elements) |
+| `Q1` | `Complex128Array`<br><sub>m1 × N</sub> | Top part of the orthonormal basis matrix |
+| ↳ `LDQ1` | `PositiveInteger` | Leading dimension of `Q1`<br>Column-major requires `LDQ1 ≥ max(1, m1)`<br>Row-major requires `LDQ1 ≥ max(1, N)` |
+| `Q2` | `Complex128Array`<br><sub>m2 × N</sub> | Bottom part of the orthonormal basis matrix |
+| ↳ `LDQ2` | `PositiveInteger` | Leading dimension of `Q2`<br>Column-major requires `LDQ2 ≥ max(1, m2)`<br>Row-major requires `LDQ2 ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array (length at least `N`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -100,28 +100,28 @@ Orthogonalizes the complex column vector `X = [X1; X2]` against the columns of `
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `m1` | `NonNegativeInteger` | in |  | requires `m1 ≥ 0` | dimension of `X1` and number of rows in `Q1` |
-| `m2` | `NonNegativeInteger` | in |  | requires `m2 ≥ 0` | dimension of `X2` and number of rows in `Q2` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns in `Q1` and `Q2` |
-| `X1` | `Complex128Array` | in/out | `m1` |  | top part of the vector |
-| ↳ `strideX1` | `integer` | in |  |  | `X1` stride length (in complex elements) |
-| ↳ `offsetX1` | `NonNegativeInteger` | in |  |  | starting index for `X1` (in complex elements) |
-| `X2` | `Complex128Array` | in/out | `m2` |  | bottom part of the vector |
-| ↳ `strideX2` | `integer` | in |  |  | `X2` stride length (in complex elements) |
-| ↳ `offsetX2` | `NonNegativeInteger` | in |  |  | starting index for `X2` (in complex elements) |
-| `Q1` | `Complex128Array` | in | `m1 × N` |  | top part of the orthonormal basis matrix |
-| ↳ `strideQ11` | `integer` | in |  |  | stride of the first dimension of `Q1` (in complex elements) |
-| ↳ `strideQ12` | `integer` | in |  |  | stride of the second dimension of `Q1` (in complex elements) |
-| ↳ `offsetQ1` | `NonNegativeInteger` | in |  |  | starting index for `Q1` (in complex elements) |
-| `Q2` | `Complex128Array` | in | `m2 × N` |  | bottom part of the orthonormal basis matrix |
-| ↳ `strideQ21` | `integer` | in |  |  | stride of the first dimension of `Q2` (in complex elements) |
-| ↳ `strideQ22` | `integer` | in |  |  | stride of the second dimension of `Q2` (in complex elements) |
-| ↳ `offsetQ2` | `NonNegativeInteger` | in |  |  | starting index for `Q2` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace array (length at least `N`) |
-| ↳ `strideWork` | `integer` | in |  |  | `WORK` stride length (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `m1` | `NonNegativeInteger` | Dimension of `X1` and number of rows in `Q1`<br>Requires `m1 ≥ 0` |
+| `m2` | `NonNegativeInteger` | Dimension of `X2` and number of rows in `Q2`<br>Requires `m2 ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns in `Q1` and `Q2`<br>Requires `N ≥ 0` |
+| `X1` | `Complex128Array`<br><sub>length m1</sub> | **in/out** · Top part of the vector |
+| ↳ `strideX1` | `integer` | `X1` stride length (in complex elements) |
+| ↳ `offsetX1` | `NonNegativeInteger` | Starting index for `X1` (in complex elements) |
+| `X2` | `Complex128Array`<br><sub>length m2</sub> | **in/out** · Bottom part of the vector |
+| ↳ `strideX2` | `integer` | `X2` stride length (in complex elements) |
+| ↳ `offsetX2` | `NonNegativeInteger` | Starting index for `X2` (in complex elements) |
+| `Q1` | `Complex128Array`<br><sub>m1 × N</sub> | Top part of the orthonormal basis matrix |
+| ↳ `strideQ11` | `integer` | Stride of the first dimension of `Q1` (in complex elements) |
+| ↳ `strideQ12` | `integer` | Stride of the second dimension of `Q1` (in complex elements) |
+| ↳ `offsetQ1` | `NonNegativeInteger` | Starting index for `Q1` (in complex elements) |
+| `Q2` | `Complex128Array`<br><sub>m2 × N</sub> | Bottom part of the orthonormal basis matrix |
+| ↳ `strideQ21` | `integer` | Stride of the first dimension of `Q2` (in complex elements) |
+| ↳ `strideQ22` | `integer` | Stride of the second dimension of `Q2` (in complex elements) |
+| ↳ `offsetQ2` | `NonNegativeInteger` | Starting index for `Q2` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace array (length at least `N`) |
+| ↳ `strideWork` | `integer` | `WORK` stride length (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,17 +29,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zupgtr( order, uplo, N, AP, TAU, strideTAU, Q, LDQ, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle was used in ZHPTRD ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix Q |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed reflector vectors from ZHPTRD |
-| `TAU` | `Complex128Array` | in | `N - 1` |  | scalar factors of the reflectors from ZHPTRD (length N-1) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `Q` | `Complex128Array` | out | `N × N` |  | output unitary matrix (N x N) |
-| ↳ `LDQ` | `PositiveInteger` | in |  | requires `LDQ ≥ max( 1, N )` | leading dimension of `Q` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N - 1` |  | workspace array (length >= N-1) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle was used in ZHPTRD ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of the matrix Q<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed reflector vectors from ZHPTRD |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | Scalar factors of the reflectors from ZHPTRD (length N-1) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output unitary matrix (N x N) |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Requires `LDQ ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N - 1</sub> | **out** · Workspace array (length >= N-1) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,23 +83,23 @@ Generates an orthogonal matrix Q which is defined as the product of n-1 elementa
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `TAU` | `Complex128Array` | in | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `Q` | `Complex128Array` | out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `WORK` | `Complex128Array` | out | `≥ N - 1` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N - 1</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

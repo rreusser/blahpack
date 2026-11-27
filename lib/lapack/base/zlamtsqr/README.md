@@ -31,23 +31,23 @@ zlamtsqr(
 
 Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the complex unitary matrix from a Tall-Skinny QR factorization (`zlatsqr`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < K` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `mb` | `integer` | in |  |  | row block size used by `zlatsqr` (must equal the value used to factor) |
-| `nb` | `integer` | in |  | rejects `K < nb \|\| nb < 1` | inner block size used by the compact-WY representation |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × K` |  | reflector vectors from `zlatsqr` |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, side === 'left' ? M : N )`; row-major requires `LDA ≥ max( 1, K )` | leading dimension of A |
-| `T` | `Complex128Array` | in | `nb × null` |  | block triangular factors from `zlatsqr` |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, nb )` | leading dimension of T |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, side === 'left' ? N * nb : M * nb )` |  | workspace buffer (length `>= max(1, N)*nb` when `side='left'`, `>= max(1, M)*nb` when `side='right'`, in complex elements); `null` requests internal allocation |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Rejects `M < K` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `mb` | `integer` | Row block size used by `zlatsqr` (must equal the value used to factor) |
+| `nb` | `integer` | Inner block size used by the compact-WY representation<br>Rejects `K < nb \|\| nb < 1` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × K</sub> | Reflector vectors from `zlatsqr` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Column-major requires `LDA ≥ max(1, side === 'left' ? M : N)`<br>Row-major requires `LDA ≥ max(1, K)` |
+| `T` | `Complex128Array`<br><sub>nb × ?</sub> | Block triangular factors from `zlatsqr` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of T<br>Requires `LDT ≥ max(1, nb)` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, side === 'left' ? N * nb : M * nb)</sub> | **out** · Workspace buffer (length `>= max(1, N)*nb` when `side='left'`, `>= max(1, M)*nb` when `side='right'`, in complex elements); `null` requests internal allocation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -111,30 +111,30 @@ Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is the
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < K` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `mb` | `integer` | in |  |  | row block size used by `zlatsqr` |
-| `nb` | `integer` | in |  | rejects `K < nb \|\| nb < 1` | inner block size used by the compact-WY representation |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × K` |  | reflector vectors from `zlatsqr` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `T` | `Complex128Array` | in | `nb × null` |  | block triangular factors from `zlatsqr` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T (in complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T (in complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, side === 'left' ? N * nb : M * nb )` |  | caller-provided workspace (length `>= max(1, N)*nb` when `side='left'`, `>= max(1, M)*nb` when `side='right'`, in complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Rejects `M < K` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `mb` | `integer` | Row block size used by `zlatsqr` |
+| `nb` | `integer` | Inner block size used by the compact-WY representation<br>Rejects `K < nb \|\| nb < 1` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × K</sub> | Reflector vectors from `zlatsqr` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `T` | `Complex128Array`<br><sub>nb × ?</sub> | Block triangular factors from `zlatsqr` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T (in complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T (in complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, side === 'left' ? N * nb : M * nb)</sub> | **out** · Caller-provided workspace (length `>= max(1, N)*nb` when `side='left'`, `>= max(1, M)*nb` when `side='right'`, in complex elements) |
+| ↳ `strideWork` | `integer` | Element stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

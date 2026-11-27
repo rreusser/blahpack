@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarf( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Float64Array` | in | `( side === 'left' ) ? M : N` |  | input array |
-| ↳ `strideV` | `integer` | in |  |  | `v` stride length |
-| `tau` | `number` | in |  |  | scalar factor |
-| `C` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Float64Array`<br><sub>length (side === 'left') ? M : N</sub> | Input array |
+| ↳ `strideV` | `integer` | `v` stride length |
+| `tau` | `number` | Scalar factor |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,22 +73,22 @@ dlarf.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Float64Array` | in | `( side === 'left' ) ? M : N` |  | reflector vector |
-| ↳ `strideV` | `integer` | in |  |  | stride for v |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for v |
-| `tau` | `number` | in |  |  | scalar factor |
-| `C` | `Float64Array` | in/out | `M × N` |  | matrix, modified in-place |
-| ↳ `strideC1` | `integer` | in |  |  | stride of first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Float64Array` | out | `≥ N` |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Float64Array`<br><sub>length (side === 'left') ? M : N</sub> | Reflector vector |
+| ↳ `strideV` | `integer` | Stride for v |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for v |
+| `tau` | `number` | Scalar factor |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Matrix, modified in-place |
+| ↳ `strideC1` | `integer` | Stride of first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

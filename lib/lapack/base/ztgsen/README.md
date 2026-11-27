@@ -37,34 +37,34 @@ ztgsen(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ijob` | `integer` | in |  | rejects `ijob < 0 \|\| ijob > 5` | specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT. |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `ALPHA` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| `BETA` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (wantq && ldq < N)` | leading dimension of `Q` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (wantz && ldz < N)` | leading dimension of `Z` |
-| `M` | `Int32Array` | out |  |  | input/output (length-1 array): number of rows |
-| `pl` | `Float64Array` | out |  |  | input/output (length-1 array): pl |
-| `pr` | `Float64Array` | out |  |  | input/output (length-1 array): pr |
-| `DIF` | `Float64Array` | out | `2` |  | input array |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, 2 * m * (N - m) ) : (ijob === 3 \|\| ijob === 5 ? max( 1, 4 * m * (N - m) ) : 1)` |  | workspace of length at least 1; for `ijob` 1, 2 or 4, `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference's `2*M*(N-M)`, plus the 1 its ZTGSYL checks for); for `ijob` 3 or 5, `max(1, 4*M*(N-M))`; M is the number of selected eigenvalues, or `null` to allocate it |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, N + 2 ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 2 ) : 1)` |  | integer workspace of length at least 1; for `ijob` 1, 2 or 4, `N+2`; for `ijob` 3 or 5, `max(2*M*(N-M), N+2)`, or `null` to allocate it |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ijob` | `integer` | Specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT.<br>Rejects `ijob < 0 \|\| ijob > 5` |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (wantq && ldq < N)` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (wantz && ldz < N)` |
+| `M` | `Int32Array` | **out** · Input/output (length-1 array): number of rows |
+| `pl` | `Float64Array` | **out** · Input/output (length-1 array): pl |
+| `pr` | `Float64Array` | **out** · Input/output (length-1 array): pr |
+| `DIF` | `Float64Array`<br><sub>length 2</sub> | **out** · Input array |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, 2 * m * (N - m)) : (ijob === 3 \|\| ijob === 5 ? max(1, 4 * m * (N - m)) : 1)</sub> | **out** · Workspace of length at least 1; for `ijob` 1, 2 or 4, `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference's `2*M*(N-M)`, plus the 1 its ZTGSYL checks for); for `ijob` 3 or 5, `max(1, 4*M*(N-M))`; M is the number of selected eigenvalues, or `null` to allocate it |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, N + 2) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 2 * m * (N - m)), N + 2) : 1)</sub> | **out** · Integer workspace of length at least 1; for `ijob` 1, 2 or 4, `N+2`; for `ijob` 3 or 5, `max(2*M*(N-M), N+2)`, or `null` to allocate it |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -133,49 +133,49 @@ ztgsen.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ijob` | `integer` | in |  | rejects `ijob < 0 \|\| ijob > 5` | specifies whether condition numbers are required (0-5) |
-| `wantq` | `boolean` | in |  |  | whether to update the left transformation matrix Q |
-| `wantz` | `boolean` | in |  |  | whether to update the right transformation matrix Z |
-| `SELECT` | `Uint8Array` | in | `N` |  | boolean selection array of length N |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A, B, Q, Z |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output array of length N |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for `ALPHA` |
-| `BETA` | `Complex128Array` | out | `N` |  | output array of length N |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for `BETA` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `M` | `Int32Array` | out |  |  | input/output (length-1 array): number of selected eigenvalues |
-| `pl` | `Float64Array` | out |  |  | input/output (length-1 array): pl |
-| `pr` | `Float64Array` | out |  |  | input/output (length-1 array): pr |
-| `DIF` | `Float64Array` | out | `2` |  | output array of length 2 |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| ↳ `offsetDIF` | `NonNegativeInteger` | in |  |  | starting index for `DIF` |
-| `WORK` | `Complex128Array` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, 2 * m * (N - m) ) : (ijob === 3 \|\| ijob === 5 ? max( 1, 4 * m * (N - m) ) : 1)` |  | workspace of length at least 1; for `ijob` 1, 2 or 4, `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference's `2*M*(N-M)`, plus the 1 its ZTGSYL checks for); for `ijob` 3 or 5, `max(1, 4*M*(N-M))`; M is the number of selected eigenvalues |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (must be 1; workspace is contiguous) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, N + 2 ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 2 ) : 1)` |  | integer workspace of length at least 1; for `ijob` 1, 2 or 4, `N+2`; for `ijob` 3 or 5, `max(2*M*(N-M), N+2)` |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` (must be 1; workspace is contiguous) |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ijob` | `integer` | Specifies whether condition numbers are required (0-5)<br>Rejects `ijob < 0 \|\| ijob > 5` |
+| `wantq` | `boolean` | Whether to update the left transformation matrix Q |
+| `wantz` | `boolean` | Whether to update the right transformation matrix Z |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Boolean selection array of length N |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Order of the matrices A, B, Q, Z<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array of length N |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for `ALPHA` |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array of length N |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for `BETA` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `M` | `Int32Array` | **out** · Input/output (length-1 array): number of selected eigenvalues |
+| `pl` | `Float64Array` | **out** · Input/output (length-1 array): pl |
+| `pr` | `Float64Array` | **out** · Input/output (length-1 array): pr |
+| `DIF` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array of length 2 |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| ↳ `offsetDIF` | `NonNegativeInteger` | Starting index for `DIF` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, 2 * m * (N - m)) : (ijob === 3 \|\| ijob === 5 ? max(1, 4 * m * (N - m)) : 1)</sub> | **out** · Workspace of length at least 1; for `ijob` 1, 2 or 4, `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference's `2*M*(N-M)`, plus the 1 its ZTGSYL checks for); for `ijob` 3 or 5, `max(1, 4*M*(N-M))`; M is the number of selected eigenvalues |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (must be 1; workspace is contiguous) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, N + 2) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 2 * m * (N - m)), N + 2) : 1)</sub> | **out** · Integer workspace of length at least 1; for `ijob` 1, 2 or 4, `N+2`; for `ijob` 3 or 5, `max(2*M*(N-M), N+2)` |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` (must be 1; workspace is contiguous) |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 iparmq( ispec, name, opts, N, ilo, ihi ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | parameter to return (12-17) |
-| `name` | `string` | in |  |  | name of the calling routine |
-| `opts` | `string` | in |  |  | character options of the calling routine (not read) |
-| `N` | `integer` | in |  |  | order of the Hessenberg matrix |
-| `ilo` | `integer` | in |  |  | first row/column of the active block (1-based) |
-| `ihi` | `integer` | in |  |  | last row/column of the active block (1-based) |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | Parameter to return (12-17) |
+| `name` | `string` | Name of the calling routine |
+| `opts` | `string` | Character options of the calling routine (not read) |
+| `N` | `integer` | Order of the Hessenberg matrix |
+| `ilo` | `integer` | First row/column of the active block (1-based) |
+| `ihi` | `integer` | Last row/column of the active block (1-based) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,14 +106,14 @@ iparmq.ndarray( ispec, name, opts, N, ilo, ihi ) → integer
 
 Returns the tuning parameters of the multishift QR algorithm, using alternative indexing semantics (the routine takes no arrays).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | parameter to return (12-17) |
-| `name` | `string` | in |  |  | name of the calling routine |
-| `opts` | `string` | in |  |  | character options of the calling routine (not read) |
-| `N` | `integer` | in |  |  | order of the Hessenberg matrix |
-| `ilo` | `integer` | in |  |  | first row/column of the active block (1-based) |
-| `ihi` | `integer` | in |  |  | last row/column of the active block (1-based) |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | Parameter to return (12-17) |
+| `name` | `string` | Name of the calling routine |
+| `opts` | `string` | Character options of the calling routine (not read) |
+| `N` | `integer` | Order of the Hessenberg matrix |
+| `ilo` | `integer` | First row/column of the active block (1-based) |
+| `ihi` | `integer` | Last row/column of the active block (1-based) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

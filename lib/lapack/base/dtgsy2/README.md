@@ -36,30 +36,30 @@ dtgsy2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'`: solve the generalized Sylvester equation (1). `'transpose'`: solve the 'transposed' system (3). |
-| `ijob` | `integer` | in |  | rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` | specifies what kind of functionality to be performed. = 0: solve (1) only. = 1: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. |
-| `M` | `NonNegativeInteger` | in |  | rejects `M <= 0` | the order of A and D, and the row dimension of C, F, R and L. |
-| `N` | `NonNegativeInteger` | in |  | rejects `N <= 0` | the order of B and E, and the column dimension of C, F, R and L. |
-| `A` | `Float64Array` | in | `M × M` |  | on entry, A contains an upper quasi triangular matrix. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `B` | `Float64Array` | in | `N × N` |  | on entry, B contains an upper quasi triangular matrix. |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `C` | `Float64Array` | in/out | `M × N` |  | on entry, C contains the right-hand-side of the first matrix equation in (1). On exit, if IJOB = 0, C has been overwritten by the solution R. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `D` | `Float64Array` | in | `M × M` |  | on entry, D contains an upper triangular matrix. |
-| ↳ `LDD` | `PositiveInteger` | in |  | requires `LDD ≥ max( 1, M )` | leading dimension of `D` |
-| `E` | `Float64Array` | in | `N × N` |  | on entry, E contains an upper triangular matrix. |
-| ↳ `LDE` | `PositiveInteger` | in |  | requires `LDE ≥ max( 1, N )` | leading dimension of `E` |
-| `F` | `Float64Array` | in/out | `M × N` |  | on entry, F contains the right-hand-side of the second matrix equation in (1). On exit, if IJOB = 0, F has been overwritten by the solution L. |
-| ↳ `LDF` | `PositiveInteger` | in |  | column-major requires `LDF ≥ max( 1, M )`; row-major requires `LDF ≥ max( 1, N )` | leading dimension of `F` |
-| `scale` | `Float64Array` | out |  |  | on exit, 0 <= SCALE <= 1. |
-| `rdsum` | `Float64Array` | in/out |  |  | on entry, the sum of squares of computed contributions to the Dif-estimate under computation by DTGSYL, where the scaling factor RDSCAL (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. |
-| `rdscal` | `Float64Array` | in/out |  |  | on entry, scaling factor used to prevent overflow in RDSUM. On exit, RDSCAL is updated w.r.t. the current contributions in RDSUM. |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ M + N + 2` |  | caller-owned integer workspace of length M+N+2 (allocated internally when `null`) |
-| `pq` | `Int32Array` | out |  |  | on exit, the number of subsystems (of size 2-by-2, 4-by-4 and 8-by-8) solved by this routine. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'`: solve the generalized Sylvester equation (1). `'transpose'`: solve the 'transposed' system (3). |
+| `ijob` | `integer` | Specifies what kind of functionality to be performed. = 0: solve (1) only. = 1: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed.<br>Rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` |
+| `M` | `NonNegativeInteger` | The order of A and D, and the row dimension of C, F, R and L.<br>Rejects `M <= 0` |
+| `N` | `NonNegativeInteger` | The order of B and E, and the column dimension of C, F, R and L.<br>Rejects `N <= 0` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | On entry, A contains an upper quasi triangular matrix. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | On entry, B contains an upper quasi triangular matrix. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, C contains the right-hand-side of the first matrix equation in (1). On exit, if IJOB = 0, C has been overwritten by the solution R. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `D` | `Float64Array`<br><sub>M × M</sub> | On entry, D contains an upper triangular matrix. |
+| ↳ `LDD` | `PositiveInteger` | Leading dimension of `D`<br>Requires `LDD ≥ max(1, M)` |
+| `E` | `Float64Array`<br><sub>N × N</sub> | On entry, E contains an upper triangular matrix. |
+| ↳ `LDE` | `PositiveInteger` | Leading dimension of `E`<br>Requires `LDE ≥ max(1, N)` |
+| `F` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, F contains the right-hand-side of the second matrix equation in (1). On exit, if IJOB = 0, F has been overwritten by the solution L. |
+| ↳ `LDF` | `PositiveInteger` | Leading dimension of `F`<br>Column-major requires `LDF ≥ max(1, M)`<br>Row-major requires `LDF ≥ max(1, N)` |
+| `scale` | `Float64Array` | **out** · On exit, 0 <= SCALE <= 1. |
+| `rdsum` | `Float64Array` | **in/out** · On entry, the sum of squares of computed contributions to the Dif-estimate under computation by DTGSYL, where the scaling factor RDSCAL (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. |
+| `rdscal` | `Float64Array` | **in/out** · On entry, scaling factor used to prevent overflow in RDSUM. On exit, RDSCAL is updated w.r.t. the current contributions in RDSUM. |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ M + N + 2</sub> | **out** · Caller-owned integer workspace of length M+N+2 (allocated internally when `null`) |
+| `pq` | `Int32Array` | **out** · On exit, the number of subsystems (of size 2-by-2, 4-by-4 and 8-by-8) solved by this routine. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -148,43 +148,43 @@ _   -R_B^T - L_E^T = scale_F
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `ijob` | `integer` | in |  | rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` | 0: solve only; 1/2: solve + estimate DIF |
-| `M` | `NonNegativeInteger` | in |  | rejects `M <= 0` | number of rows in C, F, and order of (A,D) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N <= 0` | number of columns in C, F, and order of (B,E) |
-| `A` | `Float64Array` | in | `M × M` |  | M-by-M upper quasi-triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in | `N × N` |  | N-by-N upper quasi-triangular matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `C` | `Float64Array` | in/out | `M × N` |  | M-by-N right-hand side / solution |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `D` | `Float64Array` | in | `M × M` |  | M-by-M upper triangular matrix |
-| ↳ `strideD1` | `integer` | in |  |  | stride of the first dimension of D |
-| ↳ `strideD2` | `integer` | in |  |  | stride of the second dimension of D |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for D |
-| `E` | `Float64Array` | in | `N × N` |  | N-by-N upper triangular matrix |
-| ↳ `strideE1` | `integer` | in |  |  | stride of the first dimension of E |
-| ↳ `strideE2` | `integer` | in |  |  | stride of the second dimension of E |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for E |
-| `F` | `Float64Array` | in/out | `M × N` |  | M-by-N right-hand side / solution |
-| ↳ `strideF1` | `integer` | in |  |  | stride of the first dimension of F |
-| ↳ `strideF2` | `integer` | in |  |  | stride of the second dimension of F |
-| ↳ `offsetF` | `NonNegativeInteger` | in |  |  | starting index for F |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scaling factor |
-| `rdsum` | `Float64Array` | in/out |  |  | in/out: rdsum[0] (used when ijob > 0) |
-| `rdscal` | `Float64Array` | in/out |  |  | in/out: rdscal[0] (used when ijob > 0) |
-| `IWORK` | `Int32Array` | out | `≥ M + N + 2` |  | caller-owned integer workspace of length M+N+2 |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
-| `pq` | `Int32Array` | out |  |  | output: pq[0] = P*Q |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `"no-transpose" \| "transpose"` | 'no-transpose' or 'transpose' |
+| `ijob` | `integer` | 0: solve only; 1/2: solve + estimate DIF<br>Rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` |
+| `M` | `NonNegativeInteger` | Number of rows in C, F, and order of (A,D)<br>Rejects `M <= 0` |
+| `N` | `NonNegativeInteger` | Number of columns in C, F, and order of (B,E)<br>Rejects `N <= 0` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | M-by-M upper quasi-triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>N × N</sub> | N-by-N upper quasi-triangular matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N right-hand side / solution |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `D` | `Float64Array`<br><sub>M × M</sub> | M-by-M upper triangular matrix |
+| ↳ `strideD1` | `integer` | Stride of the first dimension of D |
+| ↳ `strideD2` | `integer` | Stride of the second dimension of D |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for D |
+| `E` | `Float64Array`<br><sub>N × N</sub> | N-by-N upper triangular matrix |
+| ↳ `strideE1` | `integer` | Stride of the first dimension of E |
+| ↳ `strideE2` | `integer` | Stride of the second dimension of E |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for E |
+| `F` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N right-hand side / solution |
+| ↳ `strideF1` | `integer` | Stride of the first dimension of F |
+| ↳ `strideF2` | `integer` | Stride of the second dimension of F |
+| ↳ `offsetF` | `NonNegativeInteger` | Starting index for F |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scaling factor |
+| `rdsum` | `Float64Array` | **in/out** · In/out: rdsum[0] (used when ijob > 0) |
+| `rdscal` | `Float64Array` | **in/out** · In/out: rdscal[0] (used when ijob > 0) |
+| `IWORK` | `Int32Array`<br><sub>length ≥ M + N + 2</sub> | **out** · Caller-owned integer workspace of length M+N+2 |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
+| `pq` | `Int32Array` | **out** · Output: pq[0] = P\*Q |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

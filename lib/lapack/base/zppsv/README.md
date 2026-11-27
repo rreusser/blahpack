@@ -29,15 +29,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zppsv( order, uplo, N, nrhs, AP, B, LDB ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of `A` is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix, overwritten with Cholesky factor |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right-hand side matrix, overwritten with solution on exit |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix, overwritten with Cholesky factor |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right-hand side matrix, overwritten with solution on exit |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -81,18 +81,18 @@ zppsv.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of `A` is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix, overwritten with Cholesky factor |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right-hand side matrix, overwritten with solution on exit |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix, overwritten with Cholesky factor |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right-hand side matrix, overwritten with solution on exit |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

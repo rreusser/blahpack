@@ -41,35 +41,35 @@ zlar1v(
 
 Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1` through `bn` of the tridiagonal matrix `L*D*L^T - lambda*I` (complex eigenvector container).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `b1` | `integer` | in |  |  | (1-based) first index of the submatrix |
-| `bn` | `integer` | in |  |  | (1-based) last index of the submatrix |
-| `lambda` | `number` | in |  |  | shift (approximate eigenvalue) |
-| `D` | `Float64Array` | in | `N` |  | diagonal of `L*D*L^T` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| `L` | `Float64Array` | in | `N - 1` |  | sub-diagonal of the unit lower bidiagonal factor |
-| ↳ `strideL` | `integer` | in |  |  | stride length for `L` |
-| `LD` | `Float64Array` | in | `N - 1` |  | element-wise product `L*D` |
-| ↳ `strideLD` | `integer` | in |  |  | stride length for `LD` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | element-wise product `L*D*L` |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `gaptol` | `number` | in |  |  | tolerance that determines when a column of the inverse has converged |
-| `Z` | `Complex128Array` | in/out | `N` |  | output eigenvector (length `N`) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| `wantnc` | `boolean` | in |  |  | if `true`, compute `negcnt` |
-| `negcnt` | `Int32Array` | out |  |  | output (length >= 1) |
-| `ztz` | `Float64Array` | out |  |  | output (length >= 1) |
-| `mingma` | `Float64Array` | out |  |  | output (length >= 1) |
-| `r` | `Int32Array` | in/out |  |  | in/out (length >= 1) |
-| `ISUPPZ` | `Int32Array` | out | `2` |  | output (length >= 2) |
-| ↳ `strideISUPPZ` | `integer` | in |  |  | stride length for `ISUPPZ` |
-| `nrminv` | `Float64Array` | out |  |  | output (length >= 1) |
-| `resid` | `Float64Array` | out |  |  | output (length >= 1) |
-| `rqcorr` | `Float64Array` | out |  |  | output (length >= 1) |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | workspace (length >= 4*N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `b1` | `integer` | (1-based) first index of the submatrix |
+| `bn` | `integer` | (1-based) last index of the submatrix |
+| `lambda` | `number` | Shift (approximate eigenvalue) |
+| `D` | `Float64Array`<br><sub>length N</sub> | Diagonal of `L*D*L^T` |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| `L` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of the unit lower bidiagonal factor |
+| ↳ `strideL` | `integer` | Stride length for `L` |
+| `LD` | `Float64Array`<br><sub>length N - 1</sub> | Element-wise product `L*D` |
+| ↳ `strideLD` | `integer` | Stride length for `LD` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | Element-wise product `L*D*L` |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `gaptol` | `number` | Tolerance that determines when a column of the inverse has converged |
+| `Z` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Output eigenvector (length `N`) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| `wantnc` | `boolean` | If `true`, compute `negcnt` |
+| `negcnt` | `Int32Array` | **out** · Output (length >= 1) |
+| `ztz` | `Float64Array` | **out** · Output (length >= 1) |
+| `mingma` | `Float64Array` | **out** · Output (length >= 1) |
+| `r` | `Int32Array` | **in/out** · In/out (length >= 1) |
+| `ISUPPZ` | `Int32Array`<br><sub>length 2</sub> | **out** · Output (length >= 2) |
+| ↳ `strideISUPPZ` | `integer` | Stride length for `ISUPPZ` |
+| `nrminv` | `Float64Array` | **out** · Output (length >= 1) |
+| `resid` | `Float64Array` | **out** · Output (length >= 1) |
+| `rqcorr` | `Float64Array` | **out** · Output (length >= 1) |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace (length >= 4\*N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -132,43 +132,43 @@ zlar1v.ndarray(
 
 Computes the (scaled) `r`-th column of the inverse of the submatrix in rows `b1` through `bn` of the tridiagonal matrix `L*D*L^T - lambda*I` (complex eigenvector container).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `b1` | `integer` | in |  |  | (1-based) first index of the submatrix |
-| `bn` | `integer` | in |  |  | (1-based) last index of the submatrix |
-| `lambda` | `number` | in |  |  | shift (approximate eigenvalue) |
-| `D` | `Float64Array` | in | `N` |  | diagonal of `L*D*L^T` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
-| `L` | `Float64Array` | in | `N - 1` |  | sub-diagonal of the unit lower bidiagonal factor |
-| ↳ `strideL` | `integer` | in |  |  | stride length for `L` |
-| ↳ `offsetL` | `NonNegativeInteger` | in |  |  | starting index for `L` |
-| `LD` | `Float64Array` | in | `N - 1` |  | element-wise product `L*D` |
-| ↳ `strideLD` | `integer` | in |  |  | stride length for `LD` |
-| ↳ `offsetLD` | `NonNegativeInteger` | in |  |  | starting index for `LD` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | element-wise product `L*D*L` |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| ↳ `offsetLLD` | `NonNegativeInteger` | in |  |  | starting index for `LLD` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `gaptol` | `number` | in |  |  | tolerance that determines when a column of the inverse has converged |
-| `Z` | `Complex128Array` | in/out | `N` |  | output eigenvector (length `N`) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `wantnc` | `boolean` | in |  |  | if `true`, compute `negcnt` |
-| `negcnt` | `Int32Array` | out |  |  | output (length >= 1) |
-| `ztz` | `Float64Array` | out |  |  | output (length >= 1) |
-| `mingma` | `Float64Array` | out |  |  | output (length >= 1) |
-| `r` | `Int32Array` | in/out |  |  | in/out (length >= 1) |
-| `ISUPPZ` | `Int32Array` | out | `2` |  | output (length >= 2) |
-| ↳ `strideISUPPZ` | `integer` | in |  |  | stride length for `ISUPPZ` |
-| ↳ `offsetISUPPZ` | `NonNegativeInteger` | in |  |  | starting index for `ISUPPZ` |
-| `nrminv` | `Float64Array` | out |  |  | output (length >= 1) |
-| `resid` | `Float64Array` | out |  |  | output (length >= 1) |
-| `rqcorr` | `Float64Array` | out |  |  | output (length >= 1) |
-| `WORK` | `Float64Array` | out | `≥ 4 * N` |  | workspace (length >= 4*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `b1` | `integer` | (1-based) first index of the submatrix |
+| `bn` | `integer` | (1-based) last index of the submatrix |
+| `lambda` | `number` | Shift (approximate eigenvalue) |
+| `D` | `Float64Array`<br><sub>length N</sub> | Diagonal of `L*D*L^T` |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
+| `L` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of the unit lower bidiagonal factor |
+| ↳ `strideL` | `integer` | Stride length for `L` |
+| ↳ `offsetL` | `NonNegativeInteger` | Starting index for `L` |
+| `LD` | `Float64Array`<br><sub>length N - 1</sub> | Element-wise product `L*D` |
+| ↳ `strideLD` | `integer` | Stride length for `LD` |
+| ↳ `offsetLD` | `NonNegativeInteger` | Starting index for `LD` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | Element-wise product `L*D*L` |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| ↳ `offsetLLD` | `NonNegativeInteger` | Starting index for `LLD` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `gaptol` | `number` | Tolerance that determines when a column of the inverse has converged |
+| `Z` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Output eigenvector (length `N`) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `wantnc` | `boolean` | If `true`, compute `negcnt` |
+| `negcnt` | `Int32Array` | **out** · Output (length >= 1) |
+| `ztz` | `Float64Array` | **out** · Output (length >= 1) |
+| `mingma` | `Float64Array` | **out** · Output (length >= 1) |
+| `r` | `Int32Array` | **in/out** · In/out (length >= 1) |
+| `ISUPPZ` | `Int32Array`<br><sub>length 2</sub> | **out** · Output (length >= 2) |
+| ↳ `strideISUPPZ` | `integer` | Stride length for `ISUPPZ` |
+| ↳ `offsetISUPPZ` | `NonNegativeInteger` | Starting index for `ISUPPZ` |
+| `nrminv` | `Float64Array` | **out** · Output (length >= 1) |
+| `resid` | `Float64Array` | **out** · Output (length >= 1) |
+| `rqcorr` | `Float64Array` | **out** · Output (length >= 1) |
+| `WORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace (length >= 4\*N) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

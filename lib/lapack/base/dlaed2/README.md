@@ -36,35 +36,35 @@ dlaed2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `k` | `Int32Array` | out |  |  | output (length-1 array): the number of non-deflated eigenvalues, and the order of the related secular equation |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | dimension of the symmetric tridiagonal matrix |
-| `n1` | `NonNegativeInteger` | in |  | rejects `min( 1, trunc( N / 2 ) ) > n1 \|\| trunc( N / 2 ) < n1` | location of the last eigenvalue in the leading sub-matrix |
-| `d` | `Float64Array` | in/out | `N` |  | eigenvalues of the two submatrices (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | eigenvectors (N-by-N, column-major with leading dimension LDQ) |
-| ↳ `LDQ` | `PositiveInteger` | in |  | requires `LDQ ≥ max( 1, N )` | leading dimension of Q |
-| `INDXQ` | `Int32Array` | in/out | `N` |  | permutation sorting each sub-problem (1-based, length N) |
-| ↳ `strideINDXQ` | `integer` | in |  |  | stride length for `INDXQ` |
-| `rho` | `Float64Array` | in/out |  |  | input/output (length-1 array): off-diagonal element associated with the rank-1 cut |
-| `z` | `Float64Array` | in | `N` |  | updating vector (length N) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| `DLAMBDA` | `Float64Array` | out | `N` |  | output eigenvalues for secular equation (length N) |
-| ↳ `strideDLAMBDA` | `integer` | in |  |  | stride length for `DLAMBDA` |
-| `w` | `Float64Array` | out | `N` |  | output z-vector for secular equation (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Q2` | `Float64Array` | out | `N * N` |  | output eigenvectors for matrix multiply |
-| ↳ `strideQ21` | `integer` | in |  |  | stride length for `Q2` |
-| `INDX` | `Int32Array` | out | `N` |  | output permutation (length N) |
-| ↳ `strideINDX` | `integer` | in |  |  | stride length for `INDX` |
-| `INDXC` | `Int32Array` | out | `N` |  | output permutation (length N) |
-| ↳ `strideINDXC` | `integer` | in |  |  | stride length for `INDXC` |
-| `INDXP` | `Int32Array` | out | `N` |  | output permutation (length N) |
-| ↳ `strideINDXP` | `integer` | in |  |  | stride length for `INDXP` |
-| `COLTYP` | `Int32Array` | out | `N` |  | output column types (length max(N,4)) |
-| ↳ `strideCOLTYP` | `integer` | in |  |  | stride length for `COLTYP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `k` | `Int32Array` | **out** · Output (length-1 array): the number of non-deflated eigenvalues, and the order of the related secular equation |
+| `N` | `NonNegativeInteger` | Dimension of the symmetric tridiagonal matrix<br>Requires `N ≥ 0` |
+| `n1` | `NonNegativeInteger` | Location of the last eigenvalue in the leading sub-matrix<br>Rejects `min(1, trunc(N / 2)) > n1 \|\| trunc(N / 2) < n1` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Eigenvalues of the two submatrices (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Eigenvectors (N-by-N, column-major with leading dimension LDQ) |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of Q<br>Requires `LDQ ≥ max(1, N)` |
+| `INDXQ` | `Int32Array`<br><sub>length N</sub> | **in/out** · Permutation sorting each sub-problem (1-based, length N) |
+| ↳ `strideINDXQ` | `integer` | Stride length for `INDXQ` |
+| `rho` | `Float64Array` | **in/out** · Input/output (length-1 array): off-diagonal element associated with the rank-1 cut |
+| `z` | `Float64Array`<br><sub>length N</sub> | Updating vector (length N) |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| `DLAMBDA` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalues for secular equation (length N) |
+| ↳ `strideDLAMBDA` | `integer` | Stride length for `DLAMBDA` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output z-vector for secular equation (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Q2` | `Float64Array`<br><sub>length N * N</sub> | **out** · Output eigenvectors for matrix multiply |
+| ↳ `strideQ21` | `integer` | Stride length for `Q2` |
+| `INDX` | `Int32Array`<br><sub>length N</sub> | **out** · Output permutation (length N) |
+| ↳ `strideINDX` | `integer` | Stride length for `INDX` |
+| `INDXC` | `Int32Array`<br><sub>length N</sub> | **out** · Output permutation (length N) |
+| ↳ `strideINDXC` | `integer` | Stride length for `INDXC` |
+| `INDXP` | `Int32Array`<br><sub>length N</sub> | **out** · Output permutation (length N) |
+| ↳ `strideINDXP` | `integer` | Stride length for `INDXP` |
+| `COLTYP` | `Int32Array`<br><sub>length N</sub> | **out** · Output column types (length max(N,4)) |
+| ↳ `strideCOLTYP` | `integer` | Stride length for `COLTYP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -125,46 +125,46 @@ Merges the two sets of eigenvalues together into a single sorted set, then tries
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `k` | `Int32Array` | out |  |  | output (length-1 array): the number of non-deflated eigenvalues, and the order of the related secular equation |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | dimension of the symmetric tridiagonal matrix |
-| `n1` | `NonNegativeInteger` | in |  | rejects `min( 1, trunc( N / 2 ) ) > n1 \|\| trunc( N / 2 ) < n1` | location of the last eigenvalue in the leading sub-matrix |
-| `d` | `Float64Array` | in/out | `N` |  | eigenvalues of the two submatrices (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | eigenvectors of two submatrices (N-by-N) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `INDXQ` | `Int32Array` | in/out | `N` |  | permutation sorting each sub-problem (1-based values, length N) |
-| ↳ `strideINDXQ` | `integer` | in |  |  | stride length for `INDXQ` |
-| ↳ `offsetINDXQ` | `NonNegativeInteger` | in |  |  | starting index for `INDXQ` |
-| `rho` | `Float64Array` | in/out |  |  | input/output (length-1 array): off-diagonal element associated with the rank-1 cut |
-| `z` | `Float64Array` | in | `N` |  | updating vector (length N) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `DLAMBDA` | `Float64Array` | out | `N` |  | output: first K eigenvalues for the secular equation (length N) |
-| ↳ `strideDLAMBDA` | `integer` | in |  |  | stride length for `DLAMBDA` |
-| ↳ `offsetDLAMBDA` | `NonNegativeInteger` | in |  |  | starting index for `DLAMBDA` |
-| `w` | `Float64Array` | out | `N` |  | output: first K values of the deflation-altered z-vector (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Q2` | `Float64Array` | out | `N * N` |  | output: copy of eigenvectors for matrix multiply |
-| ↳ `strideQ21` | `integer` | in |  |  | stride length for `Q2` |
-| ↳ `offsetQ2` | `NonNegativeInteger` | in |  |  | starting index for `Q2` |
-| `INDX` | `Int32Array` | out | `N` |  | output: permutation sorting DLAMBDA (1-based, length N) |
-| ↳ `strideINDX` | `integer` | in |  |  | stride length for `INDX` |
-| ↳ `offsetINDX` | `NonNegativeInteger` | in |  |  | starting index for `INDX` |
-| `INDXC` | `Int32Array` | out | `N` |  | output: permutation arranging Q columns by type (1-based, length N) |
-| ↳ `strideINDXC` | `integer` | in |  |  | stride length for `INDXC` |
-| ↳ `offsetINDXC` | `NonNegativeInteger` | in |  |  | starting index for `INDXC` |
-| `INDXP` | `Int32Array` | out | `N` |  | output: permutation placing deflated values at end (1-based, length N) |
-| ↳ `strideINDXP` | `integer` | in |  |  | stride length for `INDXP` |
-| ↳ `offsetINDXP` | `NonNegativeInteger` | in |  |  | starting index for `INDXP` |
-| `COLTYP` | `Int32Array` | out | `N` |  | output: column type labels (length N) |
-| ↳ `strideCOLTYP` | `integer` | in |  |  | stride length for `COLTYP` |
-| ↳ `offsetCOLTYP` | `NonNegativeInteger` | in |  |  | starting index for `COLTYP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `k` | `Int32Array` | **out** · Output (length-1 array): the number of non-deflated eigenvalues, and the order of the related secular equation |
+| `N` | `NonNegativeInteger` | Dimension of the symmetric tridiagonal matrix<br>Requires `N ≥ 0` |
+| `n1` | `NonNegativeInteger` | Location of the last eigenvalue in the leading sub-matrix<br>Rejects `min(1, trunc(N / 2)) > n1 \|\| trunc(N / 2) < n1` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Eigenvalues of the two submatrices (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Eigenvectors of two submatrices (N-by-N) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `INDXQ` | `Int32Array`<br><sub>length N</sub> | **in/out** · Permutation sorting each sub-problem (1-based values, length N) |
+| ↳ `strideINDXQ` | `integer` | Stride length for `INDXQ` |
+| ↳ `offsetINDXQ` | `NonNegativeInteger` | Starting index for `INDXQ` |
+| `rho` | `Float64Array` | **in/out** · Input/output (length-1 array): off-diagonal element associated with the rank-1 cut |
+| `z` | `Float64Array`<br><sub>length N</sub> | Updating vector (length N) |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `DLAMBDA` | `Float64Array`<br><sub>length N</sub> | **out** · Output: first K eigenvalues for the secular equation (length N) |
+| ↳ `strideDLAMBDA` | `integer` | Stride length for `DLAMBDA` |
+| ↳ `offsetDLAMBDA` | `NonNegativeInteger` | Starting index for `DLAMBDA` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output: first K values of the deflation-altered z-vector (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Q2` | `Float64Array`<br><sub>length N * N</sub> | **out** · Output: copy of eigenvectors for matrix multiply |
+| ↳ `strideQ21` | `integer` | Stride length for `Q2` |
+| ↳ `offsetQ2` | `NonNegativeInteger` | Starting index for `Q2` |
+| `INDX` | `Int32Array`<br><sub>length N</sub> | **out** · Output: permutation sorting DLAMBDA (1-based, length N) |
+| ↳ `strideINDX` | `integer` | Stride length for `INDX` |
+| ↳ `offsetINDX` | `NonNegativeInteger` | Starting index for `INDX` |
+| `INDXC` | `Int32Array`<br><sub>length N</sub> | **out** · Output: permutation arranging Q columns by type (1-based, length N) |
+| ↳ `strideINDXC` | `integer` | Stride length for `INDXC` |
+| ↳ `offsetINDXC` | `NonNegativeInteger` | Starting index for `INDXC` |
+| `INDXP` | `Int32Array`<br><sub>length N</sub> | **out** · Output: permutation placing deflated values at end (1-based, length N) |
+| ↳ `strideINDXP` | `integer` | Stride length for `INDXP` |
+| ↳ `offsetINDXP` | `NonNegativeInteger` | Starting index for `INDXP` |
+| `COLTYP` | `Int32Array`<br><sub>length N</sub> | **out** · Output: column type labels (length N) |
+| ↳ `strideCOLTYP` | `integer` | Stride length for `COLTYP` |
+| ↳ `offsetCOLTYP` | `NonNegativeInteger` | Starting index for `COLTYP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

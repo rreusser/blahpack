@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaqsy( order, uplo, N, A, LDA, s, strideS, scond, amax, equed ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of the symmetric matrix A is stored. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `A` | `Float64Array` | in/out | `max( N, 1 ) × N` |  | on entry, the symmetric matrix A. On exit, if `equed === 'yes'`, the equilibrated matrix: diag(S) * A * diag(S). |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `s` | `Float64Array` | in | `N` |  | the scale factors for A. |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `scond` | `number` | in |  |  | ratio of the smallest S(i) to the largest S(i). |
-| `amax` | `number` | in |  |  | absolute value of largest matrix entry. |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of the symmetric matrix A is stored. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `A` | `Float64Array`<br><sub>max(N, 1) × N</sub> | **in/out** · On entry, the symmetric matrix A. On exit, if `equed === 'yes'`, the equilibrated matrix: diag(S) \* A \* diag(S). |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `s` | `Float64Array`<br><sub>length N</sub> | The scale factors for A. |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `scond` | `number` | Ratio of the smallest S(i) to the largest S(i). |
+| `amax` | `number` | Absolute value of largest matrix entry. |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -87,20 +87,20 @@ Returns the equilibration type:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `A` | `Float64Array` | in/out | `max( N, 1 ) × N` |  | input/output N-by-N symmetric matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `s` | `Float64Array` | in | `N` |  | scaling factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride for s |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index offset for s |
-| `scond` | `number` | in |  |  | ratio of smallest to largest scaling factor |
-| `amax` | `number` | in |  |  | absolute value of largest matrix element |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `A` | `Float64Array`<br><sub>max(N, 1) × N</sub> | **in/out** · Input/output N-by-N symmetric matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `s` | `Float64Array`<br><sub>length N</sub> | Scaling factors, length N |
+| ↳ `strideS` | `integer` | Stride for s |
+| ↳ `offsetS` | `NonNegativeInteger` | Index offset for s |
+| `scond` | `number` | Ratio of smallest to largest scaling factor |
+| `amax` | `number` | Absolute value of largest matrix element |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

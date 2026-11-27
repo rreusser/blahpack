@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsyconv( order, uplo, way, N, A, LDA, IPIV, strideIPIV, E, strideE ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the details of the factorization are stored as an upper or lower triangular matrix. `'upper'`: Upper triangular, form is A = U*D*U**T; `'lower'`: Lower triangular, form is A = L*D*L**T. |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | `'convert'`: Convert `'revert'`: Revert. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | the block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | in | `N` |  | details of the interchanges and the block structure of D as determined by ZSYTRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `E` | `Complex128Array` | out | `N` |  | e stores the supdiagonal/subdiagonal of the symmetric 1-by-1 or 2-by-2 block diagonal matrix D in LDLT. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the details of the factorization are stored as an upper or lower triangular matrix. `'upper'`: Upper triangular, form is A = U\*D\*U\*\*T; `'lower'`: Lower triangular, form is A = L\*D\*L\*\*T. |
+| `way` | `"convert" \| "revert"` | `'convert'`: Convert `'revert'`: Revert. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Details of the interchanges and the block structure of D as determined by ZSYTRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `E` | `Complex128Array`<br><sub>length N</sub> | **out** · E stores the supdiagonal/subdiagonal of the symmetric 1-by-1 or 2-by-2 block diagonal matrix D in LDLT. |
+| ↳ `strideE` | `integer` | Stride length for `E` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,21 +93,21 @@ array E, and applies (or reverts) the permutations stored in IPIV.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `way` | `("convert"\|"revert")` | in |  | one of `'convert'`, `'revert'` | `'convert'` or `'revert'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix (column-major via strides) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zsytrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `E` | `Complex128Array` | out | `N` |  | array to store off-diagonal elements of D |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` (complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `E` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `way` | `"convert" \| "revert"` | `'convert'` or `'revert'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix (column-major via strides) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zsytrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `E` | `Complex128Array`<br><sub>length N</sub> | **out** · Array to store off-diagonal elements of D |
+| ↳ `strideE` | `integer` | Stride length for `E` (complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `E` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

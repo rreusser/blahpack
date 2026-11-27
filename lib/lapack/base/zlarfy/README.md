@@ -22,17 +22,17 @@ zlarfy( order, uplo, N, v, strideV, tau, C, LDC, WORK ) → Complex128Array
 
 Applies an elementary reflector, or Householder matrix, `H`, to an N-by-N Hermitian matrix `C`, from both the left and the right.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `C` is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `C` |
-| `v` | `Complex128Array` | in | `N` |  | reflector vector |
-| ↳ `strideV` | `integer` | in |  |  | stride for `v` (in complex elements) |
-| `tau` | `Complex128` | in |  |  | complex scalar factor |
-| `C` | `Complex128Array` | in/out | `N × N` |  | Hermitian matrix (modified in place) |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | workspace array of length N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `C` is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `C` |
+| `v` | `Complex128Array`<br><sub>length N</sub> | Reflector vector |
+| ↳ `strideV` | `integer` | Stride for `v` (in complex elements) |
+| `tau` | `Complex128` | Complex scalar factor |
+| `C` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Hermitian matrix (modified in place) |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,21 +76,21 @@ Applies an elementary reflector, or Householder matrix, `H`, to an N-by-N Hermit
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `C` is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `C` |
-| `v` | `Complex128Array` | in | `N` |  | reflector vector |
-| ↳ `strideV` | `integer` | in |  |  | stride for `v` (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` (in complex elements) |
-| `tau` | `Complex128` | in |  |  | complex scalar factor |
-| `C` | `Complex128Array` | in/out | `N × N` |  | Hermitian matrix (modified in place) |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `C` is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `C` |
+| `v` | `Complex128Array`<br><sub>length N</sub> | Reflector vector |
+| ↳ `strideV` | `integer` | Stride for `v` (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` (in complex elements) |
+| `tau` | `Complex128` | Complex scalar factor |
+| `C` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Hermitian matrix (modified in place) |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

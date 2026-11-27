@@ -41,35 +41,35 @@ dseupd(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `rvec` | `boolean` | in |  |  | if `true`, compute Ritz vectors; if `false`, compute Ritz values only |
-| `howmny` | `("all"\|"partial"\|"select")` | in |  |  | `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented) |
-| `select` | `Uint8Array` | in/out | `ncv` |  | logical work array of length `ncv` |
-| ↳ `strideSelect` | `integer` | in |  |  | stride length for `select` |
-| `d` | `Float64Array` | out | `nev` |  | output array for the Ritz values (length `nev`) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `z` | `Float64Array` | out | `null × nev` |  | output matrix of Ritz vectors (N-by-nev when howmny is `'all'`) |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `z` |
-| `sigma` | `number` | in |  |  | shift used when the mode is 3, 4, or 5 |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` for a standard problem, `'generalized'` for a generalized problem |
-| `N` | `NonNegativeInteger` | in |  |  | dimension of the eigenproblem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
-| `nev` | `NonNegativeInteger` | in |  |  | number of eigenvalues requested |
-| `tol` | `number` | in |  |  | relative accuracy tolerance used by `dsaupd` |
-| `resid` | `Float64Array` | in/out | `N` |  | final residual vector (length N) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `ncv` | `NonNegativeInteger` | in |  |  | number of Lanczos basis vectors |
-| `v` | `Float64Array` | in/out | `null × ncv` |  | Lanczos basis matrix (N-by-ncv); overwritten on exit |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `v` |
-| `iparam` | `Int32Array` | in | `7` |  | ARPACK parameter array (`iparam[4]`=nconv, `iparam[6]`=mode) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| `ipntr` | `Int32Array` | in/out | `11` |  | ARPACK pointer array into `workl` |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| `workd` | `(Float64Array\|null)` | in | `≥ 2 * N` |  | work array of length `2*N` |
-| `workl` | `(Float64Array\|null)` | in/out |  |  | private work array set by `dsaupd` (length `lworkl`); modified on exit |
-| `lworkl` | `NonNegativeInteger` | in |  |  | length of `workl` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `rvec` | `boolean` | If `true`, compute Ritz vectors; if `false`, compute Ritz values only |
+| `howmny` | `"all" \| "partial" \| "select"` | `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented) |
+| `select` | `Uint8Array`<br><sub>length ncv</sub> | **in/out** · Logical work array of length `ncv` |
+| ↳ `strideSelect` | `integer` | Stride length for `select` |
+| `d` | `Float64Array`<br><sub>length nev</sub> | **out** · Output array for the Ritz values (length `nev`) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `z` | `Float64Array`<br><sub>? × nev</sub> | **out** · Output matrix of Ritz vectors (N-by-nev when howmny is `'all'`) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `z` |
+| `sigma` | `number` | Shift used when the mode is 3, 4, or 5 |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` for a standard problem, `'generalized'` for a generalized problem |
+| `N` | `NonNegativeInteger` | Dimension of the eigenproblem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
+| `nev` | `NonNegativeInteger` | Number of eigenvalues requested |
+| `tol` | `number` | Relative accuracy tolerance used by `dsaupd` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Final residual vector (length N) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `ncv` | `NonNegativeInteger` | Number of Lanczos basis vectors |
+| `v` | `Float64Array`<br><sub>? × ncv</sub> | **in/out** · Lanczos basis matrix (N-by-ncv); overwritten on exit |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `v` |
+| `iparam` | `Int32Array`<br><sub>length 7</sub> | ARPACK parameter array (`iparam[4]`=nconv, `iparam[6]`=mode) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| `ipntr` | `Int32Array`<br><sub>length 11</sub> | **in/out** · ARPACK pointer array into `workl` |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | Work array of length `2*N` |
+| `workl` | `Float64Array \| null` | **in/out** · Private work array set by `dsaupd` (length `lworkl`); modified on exit |
+| `lworkl` | `NonNegativeInteger` | Length of `workl` |
 
 **Returns** `info: integer`: 0 on success; a negative error code otherwise
 
@@ -115,47 +115,47 @@ dseupd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `rvec` | `boolean` | in |  |  | if `true`, compute Ritz vectors; if `false`, compute Ritz values only |
-| `howmny` | `("all"\|"partial"\|"select")` | in |  |  | `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented) |
-| `select` | `Uint8Array` | in/out | `ncv` |  | logical work array of length `ncv` |
-| ↳ `strideSelect` | `integer` | in |  |  | stride length for `select` |
-| ↳ `offsetSelect` | `NonNegativeInteger` | in |  |  | starting index for `select` |
-| `d` | `Float64Array` | out | `nev` |  | output array for the Ritz values (length `nev`) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `z` | `Float64Array` | out | `null × nev` |  | output matrix of Ritz vectors (N-by-nev when howmny is `'all'`) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first (row) dimension of `z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second (column) dimension of `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `sigma` | `number` | in |  |  | shift used when the mode is 3, 4, or 5 |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` for a standard problem, `'generalized'` for a generalized problem |
-| `N` | `NonNegativeInteger` | in |  |  | dimension of the eigenproblem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
-| `nev` | `NonNegativeInteger` | in |  |  | number of eigenvalues requested |
-| `tol` | `number` | in |  |  | relative accuracy tolerance used by `dsaupd` |
-| `resid` | `Float64Array` | in/out | `N` |  | final residual vector (length N) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `ncv` | `NonNegativeInteger` | in |  |  | number of Lanczos basis vectors |
-| `v` | `Float64Array` | in/out | `null × ncv` |  | Lanczos basis matrix (N-by-ncv); overwritten on exit |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `v` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
-| `iparam` | `Int32Array` | in | `7` |  | ARPACK parameter array (`iparam[4]`=nconv, `iparam[6]`=mode) |
-| ↳ `strideIparam` | `integer` | in |  |  | stride length for `iparam` |
-| ↳ `offsetIparam` | `NonNegativeInteger` | in |  |  | starting index for `iparam` |
-| `ipntr` | `Int32Array` | in/out | `11` |  | ARPACK pointer array into `workl` |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| ↳ `offsetIpntr` | `NonNegativeInteger` | in |  |  | starting index for `ipntr` |
-| `workd` | `Float64Array` | in | `≥ 2 * N` |  | work array of length `2*N` |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
-| `workl` | `Float64Array` | in/out |  |  | private work array set by `dsaupd` (length `lworkl`); modified on exit |
-| ↳ `strideWorkl` | `integer` | in |  |  | stride length for `workl` |
-| ↳ `offsetWorkl` | `NonNegativeInteger` | in |  |  | starting index for `workl` |
-| `lworkl` | `NonNegativeInteger` | in |  |  | length of `workl` |
+| Parameter | Type | Description |
+|---|---|---|
+| `rvec` | `boolean` | If `true`, compute Ritz vectors; if `false`, compute Ritz values only |
+| `howmny` | `"all" \| "partial" \| "select"` | `'all'`, `'partial'`, or `'select'` (only `'all'` is implemented) |
+| `select` | `Uint8Array`<br><sub>length ncv</sub> | **in/out** · Logical work array of length `ncv` |
+| ↳ `strideSelect` | `integer` | Stride length for `select` |
+| ↳ `offsetSelect` | `NonNegativeInteger` | Starting index for `select` |
+| `d` | `Float64Array`<br><sub>length nev</sub> | **out** · Output array for the Ritz values (length `nev`) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `z` | `Float64Array`<br><sub>? × nev</sub> | **out** · Output matrix of Ritz vectors (N-by-nev when howmny is `'all'`) |
+| ↳ `strideZ1` | `integer` | Stride of the first (row) dimension of `z` |
+| ↳ `strideZ2` | `integer` | Stride of the second (column) dimension of `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `sigma` | `number` | Shift used when the mode is 3, 4, or 5 |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` for a standard problem, `'generalized'` for a generalized problem |
+| `N` | `NonNegativeInteger` | Dimension of the eigenproblem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Eigenvalue selection: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
+| `nev` | `NonNegativeInteger` | Number of eigenvalues requested |
+| `tol` | `number` | Relative accuracy tolerance used by `dsaupd` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Final residual vector (length N) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `ncv` | `NonNegativeInteger` | Number of Lanczos basis vectors |
+| `v` | `Float64Array`<br><sub>? × ncv</sub> | **in/out** · Lanczos basis matrix (N-by-ncv); overwritten on exit |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `v` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
+| `iparam` | `Int32Array`<br><sub>length 7</sub> | ARPACK parameter array (`iparam[4]`=nconv, `iparam[6]`=mode) |
+| ↳ `strideIparam` | `integer` | Stride length for `iparam` |
+| ↳ `offsetIparam` | `NonNegativeInteger` | Starting index for `iparam` |
+| `ipntr` | `Int32Array`<br><sub>length 11</sub> | **in/out** · ARPACK pointer array into `workl` |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| ↳ `offsetIpntr` | `NonNegativeInteger` | Starting index for `ipntr` |
+| `workd` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | Work array of length `2*N` |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
+| `workl` | `Float64Array` | **in/out** · Private work array set by `dsaupd` (length `lworkl`); modified on exit |
+| ↳ `strideWorkl` | `integer` | Stride length for `workl` |
+| ↳ `offsetWorkl` | `NonNegativeInteger` | Starting index for `workl` |
+| `lworkl` | `NonNegativeInteger` | Length of `workl` |
 
 **Returns** `info: integer`: 0 on success; a negative error code otherwise
 

@@ -27,19 +27,19 @@ dgttrf(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `DL` | `Float64Array` | in/out | `N - 1` |  | on entry, DL must contain the (n-1) sub-diagonal elements of A. On exit, DL is overwritten by the (n-1) multipliers that define the matrix L from the LU factorization of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in/out | `N - 1` |  | on entry, DU must contain the (n-1) super-diagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first super-diagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DU2` | `Float64Array` | out | `N - 2` |  | on exit, DU2 is overwritten by the (n-2) elements of the second super-diagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | out | `N` |  | the pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DL must contain the (n-1) sub-diagonal elements of A. On exit, DL is overwritten by the (n-1) multipliers that define the matrix L from the LU factorization of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DU must contain the (n-1) super-diagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first super-diagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | **out** · On exit, DU2 is overwritten by the (n-2) elements of the second super-diagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · The pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,24 +93,24 @@ with nonzeros in only the main diagonal and first two superdiagonals.
 -   INFO is returned: 0 = success, k > 0 means U(k,k) is exactly zero
     (1-based index, matching Fortran convention).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `DL` | `Float64Array` | in/out | `N - 1` |  | sub-diagonal elements (length N-1), overwritten with multipliers |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N), overwritten with U diagonal |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `DU` | `Float64Array` | in/out | `N - 1` |  | super-diagonal elements (length N-1), overwritten with first superdiagonal of U |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` |
-| `DU2` | `Float64Array` | out | `N - 2` |  | second superdiagonal fill-in (length N-2), output |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for `DU2` |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot indices (length N), output, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (length N-1), overwritten with multipliers |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N), overwritten with U diagonal |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (length N-1), overwritten with first superdiagonal of U |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | **out** · Second superdiagonal fill-in (length N-2), output |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot indices (length N), output, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

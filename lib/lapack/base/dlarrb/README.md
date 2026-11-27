@@ -33,29 +33,29 @@ dlarrb(
 
 Provides limited bisection to locate eigenvalues for more accuracy.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | input array |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| `ifirst` | `integer` | in |  |  | the index of the first eigenvalue to be computed. |
-| `ilast` | `integer` | in |  |  | the index of the last eigenvalue to be computed. |
-| `rtol1` | `number` | in |  |  | tolerance for the convergence of the bisection intervals. |
-| `rtol2` | `number` | in |  |  | tolerance for the convergence of the bisection intervals. |
-| `offset` | `integer` | in |  |  | offset for the arrays W, WGAP and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
-| `w` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `WGAP` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWGAP` | `integer` | in |  |  | stride length for `WGAP` |
-| `WERR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `WERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | input array |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 2 * N` |  | output array |
-| `pivmin` | `number` | in |  |  | the minimum pivot in the Sturm sequence. |
-| `spdiam` | `number` | in |  |  | the spectral diameter of the matrix. |
-| `twist` | `integer` | in |  |  | the twist index for the twisted factorization that is used for the negcount. |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| `ifirst` | `integer` | The index of the first eigenvalue to be computed. |
+| `ilast` | `integer` | The index of the last eigenvalue to be computed. |
+| `rtol1` | `number` | Tolerance for the convergence of the bisection intervals. |
+| `rtol2` | `number` | Tolerance for the convergence of the bisection intervals. |
+| `offset` | `integer` | Offset for the arrays W, WGAP and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
+| `w` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `WGAP` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWGAP` | `integer` | Stride length for `WGAP` |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWERR` | `integer` | Stride length for `WERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Output array |
+| `pivmin` | `number` | The minimum pivot in the Sturm sequence. |
+| `spdiam` | `number` | The spectral diameter of the matrix. |
+| `twist` | `integer` | The twist index for the twisted factorization that is used for the negcount. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -105,38 +105,38 @@ dlarrb.ndarray(
 
 Provides limited bisection to locate eigenvalues for more accuracy.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | input array |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| ↳ `offsetLLD` | `NonNegativeInteger` | in |  |  | starting index for `LLD` |
-| `ifirst` | `integer` | in |  |  | the index of the first eigenvalue to be computed. |
-| `ilast` | `integer` | in |  |  | the index of the last eigenvalue to be computed. |
-| `rtol1` | `number` | in |  |  | tolerance for the convergence of the bisection intervals. |
-| `rtol2` | `number` | in |  |  | tolerance for the convergence of the bisection intervals. |
-| `offset` | `integer` | in |  |  | offset for the arrays W, WGAP and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
-| `w` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `WGAP` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWGAP` | `integer` | in |  |  | stride length for `WGAP` |
-| ↳ `offsetWGAP` | `NonNegativeInteger` | in |  |  | starting index for `WGAP` |
-| `WERR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `WERR` |
-| ↳ `offsetWERR` | `NonNegativeInteger` | in |  |  | starting index for `WERR` |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ 2 * N` |  | output array |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
-| `pivmin` | `number` | in |  |  | the minimum pivot in the Sturm sequence. |
-| `spdiam` | `number` | in |  |  | the spectral diameter of the matrix. |
-| `twist` | `integer` | in |  |  | the twist index for the twisted factorization that is used for the negcount. |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| ↳ `offsetLLD` | `NonNegativeInteger` | Starting index for `LLD` |
+| `ifirst` | `integer` | The index of the first eigenvalue to be computed. |
+| `ilast` | `integer` | The index of the last eigenvalue to be computed. |
+| `rtol1` | `number` | Tolerance for the convergence of the bisection intervals. |
+| `rtol2` | `number` | Tolerance for the convergence of the bisection intervals. |
+| `offset` | `integer` | Offset for the arrays W, WGAP and WERR, i.e., the IFIRST-OFFSET through ILAST-OFFSET elements of these arrays are to be used. |
+| `w` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `WGAP` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWGAP` | `integer` | Stride length for `WGAP` |
+| ↳ `offsetWGAP` | `NonNegativeInteger` | Starting index for `WGAP` |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWERR` | `integer` | Stride length for `WERR` |
+| ↳ `offsetWERR` | `NonNegativeInteger` | Starting index for `WERR` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 2 * N</sub> | **out** · Output array |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
+| `pivmin` | `number` | The minimum pivot in the Sturm sequence. |
+| `spdiam` | `number` | The spectral diameter of the matrix. |
+| `twist` | `integer` | The twist index for the twisted factorization that is used for the negcount. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

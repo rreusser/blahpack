@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dorhr_col( order, M, N, nb, A, LDA, T, LDT, d, strideD ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns of `A` |
-| `nb` | `integer` | in |  | rejects `nb < 1` | block size used to build `T` |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Float64Array` | out | `min( nb, N ) × N` |  | output block reflector matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ max( 1, min( nb, N ) )`; row-major requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `d` | `Float64Array` | out |  |  | output diagonal sign vector, length `N` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Rejects `N < 0 \|\| N > M` |
+| `nb` | `integer` | Block size used to build `T`<br>Rejects `nb < 1` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Float64Array`<br><sub>min(nb, N) × N</sub> | **out** · Output block reflector matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Column-major requires `LDT ≥ max(1, min(nb, N))`<br>Row-major requires `LDT ≥ max(1, N)` |
+| `d` | `Float64Array` | **out** · Output diagonal sign vector, length `N` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,22 +98,22 @@ dorhr_col.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns of `A` |
-| `nb` | `integer` | in |  | rejects `nb < 1` | block size used to build `T` |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Float64Array` | out | `min( nb, N ) × N` |  | output block reflector matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `d` | `Float64Array` | out |  |  | output diagonal sign vector, length `N` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Rejects `N < 0 \|\| N > M` |
+| `nb` | `integer` | Block size used to build `T`<br>Rejects `nb < 1` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Float64Array`<br><sub>min(nb, N) × N</sub> | **out** · Output block reflector matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `d` | `Float64Array` | **out** · Output diagonal sign vector, length `N` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

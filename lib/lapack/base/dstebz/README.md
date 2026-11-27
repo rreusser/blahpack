@@ -33,30 +33,30 @@ dstebz(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `range` | `("all"\|"value"\|"index")` | in |  |  | `'all'`: ("All") all eigenvalues will be found. `'value'`: ("Value") all eigenvalues in the half-open interval (VL, VU] will be found. `'index'`: ("Index") the IL-th through IU-th eigenvalues (of the entire matrix) will be found. |
-| `order` | `("block"\|"entire")` | in |  | one of `'block'`, `'entire'` | storage layout (`'row-major'` or `'column-major'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the tridiagonal matrix T. |
-| `vl` | `number` | in |  |  | if `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
-| `vu` | `number` | in |  |  | if `range === 'value'`, the upper bound of the interval to be searched for eigenvalues. |
-| `il` | `integer` | in |  |  | if `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `iu` | `integer` | in |  |  | if `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `abstol` | `number` | in |  |  | the absolute tolerance for the eigenvalues. |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the tridiagonal matrix T. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in | `N - 1` |  | the (n-1) off-diagonal elements of the tridiagonal matrix T. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `M` | `Int32Array` | out |  |  | the actual number of eigenvalues found. 0 <= M <= N. |
-| `nsplit` | `Int32Array` | out |  |  | the number of diagonal blocks in the matrix T. 1 <= NSPLIT <= N. |
-| `w` | `Float64Array` | out | `N` |  | on exit, the first M elements of W will contain the eigenvalues. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `IBLOCK` | `Int32Array` | out | `N` |  | at each row/column j where E(j) is zero or small, the matrix T is considered to split into a block diagonal matrix (0-based). |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride length for `IBLOCK` |
-| `ISPLIT` | `Int32Array` | out | `N` |  | the splitting points, at which T breaks up into submatrices (0-based). |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride length for `ISPLIT` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | caller-provided workspace of at least `4 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `range` | `"all" \| "value" \| "index"` | `'all'`: ("All") all eigenvalues will be found. `'value'`: ("Value") all eigenvalues in the half-open interval (VL, VU] will be found. `'index'`: ("Index") the IL-th through IU-th eigenvalues (of the entire matrix) will be found. |
+| `order` | `"block" \| "entire"` | Storage layout (`'row-major'` or `'column-major'`)<br>One of `'block'`, `'entire'`. |
+| `N` | `NonNegativeInteger` | The order of the tridiagonal matrix T.<br>Requires `N ≥ 0` |
+| `vl` | `number` | If `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
+| `vu` | `number` | If `range === 'value'`, the upper bound of the interval to be searched for eigenvalues. |
+| `il` | `integer` | If `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
+| `iu` | `integer` | If `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
+| `abstol` | `number` | The absolute tolerance for the eigenvalues. |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the tridiagonal matrix T. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) off-diagonal elements of the tridiagonal matrix T. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `M` | `Int32Array` | **out** · The actual number of eigenvalues found. 0 <= M <= N. |
+| `nsplit` | `Int32Array` | **out** · The number of diagonal blocks in the matrix T. 1 <= NSPLIT <= N. |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, the first M elements of W will contain the eigenvalues. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | **out** · At each row/column j where E(j) is zero or small, the matrix T is considered to split into a block diagonal matrix (0-based). |
+| ↳ `strideIBLOCK` | `integer` | Stride length for `IBLOCK` |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | **out** · The splitting points, at which T breaks up into submatrices (0-based). |
+| ↳ `strideISPLIT` | `integer` | Stride length for `ISPLIT` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Caller-provided workspace of at least `4 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -121,39 +121,39 @@ dstebz.ndarray(
 Computes selected eigenvalues of a real symmetric tridiagonal matrix T.
 by bisection.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `range` | `("all"\|"value"\|"index")` | in |  |  | `'all'`, `'value'`, or `'index'` |
-| `order` | `("block"\|"entire")` | in |  | one of `'block'`, `'entire'` | `'block'` or `'entire'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix |
-| `vl` | `number` | in |  |  | lower bound of interval (range=`'value'`) |
-| `vu` | `number` | in |  |  | upper bound of interval (range=`'value'`) |
-| `il` | `integer` | in |  |  | index of smallest eigenvalue (range=`'index'`, 1-based) |
-| `iu` | `integer` | in |  |  | index of largest eigenvalue (range=`'index'`, 1-based) |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in | `N - 1` |  | off-diagonal elements, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `M` | `Int32Array` | out |  |  | output: number of eigenvalues found (M[0]) |
-| `nsplit` | `Int32Array` | out |  |  | output: number of diagonal blocks (nsplit[0]) |
-| `w` | `Float64Array` | out | `N` |  | output: eigenvalues, length N |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `IBLOCK` | `Int32Array` | out | `N` |  | output: block indices for eigenvalues |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride for IBLOCK |
-| ↳ `offsetIBLOCK` | `NonNegativeInteger` | in |  |  | starting index for IBLOCK |
-| `ISPLIT` | `Int32Array` | out | `N` |  | output: splitting points |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride for ISPLIT |
-| ↳ `offsetISPLIT` | `NonNegativeInteger` | in |  |  | starting index for ISPLIT |
-| `WORK` | `Float64Array` | out | `≥ 4 * N` |  | workspace, length 4*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ 3 * N` |  | workspace, length 3*N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `order` | `"block" \| "entire"` | `'block'` or `'entire'` |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix<br>Requires `N ≥ 0` |
+| `vl` | `number` | Lower bound of interval (range=`'value'`) |
+| `vu` | `number` | Upper bound of interval (range=`'value'`) |
+| `il` | `integer` | Index of smallest eigenvalue (range=`'index'`, 1-based) |
+| `iu` | `integer` | Index of largest eigenvalue (range=`'index'`, 1-based) |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements, length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Off-diagonal elements, length N-1 |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `M` | `Int32Array` | **out** · Output: number of eigenvalues found (M[0]) |
+| `nsplit` | `Int32Array` | **out** · Output: number of diagonal blocks (nsplit[0]) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output: eigenvalues, length N |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | **out** · Output: block indices for eigenvalues |
+| ↳ `strideIBLOCK` | `integer` | Stride for IBLOCK |
+| ↳ `offsetIBLOCK` | `NonNegativeInteger` | Starting index for IBLOCK |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | **out** · Output: splitting points |
+| ↳ `strideISPLIT` | `integer` | Stride for ISPLIT |
+| ↳ `offsetISPLIT` | `NonNegativeInteger` | Starting index for ISPLIT |
+| `WORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace, length 4\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace, length 3\*N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

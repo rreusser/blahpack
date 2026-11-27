@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlacn2( N, V, strideV, X, strideX, EST, KASE, ISAVE, strideISAVE ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix. |
-| `V` | `Complex128Array` | out | `N` |  | on the final return, V = A*W, where EST = norm(V)/norm(W) (W is not returned). |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `V` |
-| `X` | `Complex128Array` | in/out | `N` |  | on an intermediate return, X should be overwritten by A * X, if KASE=1, A**H * X, if KASE=2, where A**H is the conjugate transpose of A, and ZLACN2 must be re-called with all the other parameters unchanged. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `X` |
-| `EST` | `Float64Array` | in/out |  |  | on entry with KASE = 1 or 2 and ISAVE(1) = 3, EST should be unchanged from the previous call to ZLACN2. On exit, EST is an estimate (a lower bound) for norm(A). |
-| `KASE` | `Int32Array` | in/out |  |  | on the initial call to ZLACN2, KASE should be 0. |
-| `ISAVE` | `Int32Array` | in/out | `3` |  | iSAVE is used to save variables between calls to ZLACN2 (0-based). |
-| ↳ `strideISAVE` | `integer` | in |  |  | stride length for `ISAVE` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The order of the matrix. |
+| `V` | `Complex128Array`<br><sub>length N</sub> | **out** · On the final return, V = A\*W, where EST = norm(V)/norm(W) (W is not returned). |
+| ↳ `strideV` | `integer` | Stride length for `V` |
+| `X` | `Complex128Array`<br><sub>length N</sub> | **in/out** · On an intermediate return, X should be overwritten by A \* X, if KASE=1, A\*\*H \* X, if KASE=2, where A\*\*H is the conjugate transpose of A, and ZLACN2 must be re-called with all the other parameters unchanged. |
+| ↳ `strideX` | `integer` | Stride length for `X` |
+| `EST` | `Float64Array` | **in/out** · On entry with KASE = 1 or 2 and ISAVE(1) = 3, EST should be unchanged from the previous call to ZLACN2. On exit, EST is an estimate (a lower bound) for norm(A). |
+| `KASE` | `Int32Array` | **in/out** · On the initial call to ZLACN2, KASE should be 0. |
+| `ISAVE` | `Int32Array`<br><sub>length 3</sub> | **in/out** · ISAVE is used to save variables between calls to ZLACN2 (0-based). |
+| ↳ `strideISAVE` | `integer` | Stride length for `ISAVE` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -84,20 +84,20 @@ This is a reverse communication interface routine. The caller must:
 
 ISAVE is used to maintain state between calls (3 elements).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `V` | `Complex128Array` | out | `N` |  | workspace vector of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride for V (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N` |  | input/output vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride for X (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X (in complex elements) |
-| `EST` | `Float64Array` | in/out |  |  | in/out: EST[0] is the estimated 1-norm |
-| `KASE` | `Int32Array` | in/out |  |  | in/out: KASE[0] is the operation to perform |
-| `ISAVE` | `Int32Array` | in/out | `3` |  | state array of length 3 |
-| ↳ `strideISAVE` | `integer` | in |  |  | stride for ISAVE |
-| ↳ `offsetISAVE` | `NonNegativeInteger` | in |  |  | starting index for ISAVE |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `V` | `Complex128Array`<br><sub>length N</sub> | **out** · Workspace vector of length N |
+| ↳ `strideV` | `integer` | Stride for V (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (in complex elements) |
+| `X` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output vector of length N |
+| ↳ `strideX` | `integer` | Stride for X (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X (in complex elements) |
+| `EST` | `Float64Array` | **in/out** · In/out: EST[0] is the estimated 1-norm |
+| `KASE` | `Int32Array` | **in/out** · In/out: KASE[0] is the operation to perform |
+| `ISAVE` | `Int32Array`<br><sub>length 3</sub> | **in/out** · State array of length 3 |
+| ↳ `strideISAVE` | `integer` | Stride for ISAVE |
+| ↳ `offsetISAVE` | `NonNegativeInteger` | Starting index for ISAVE |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

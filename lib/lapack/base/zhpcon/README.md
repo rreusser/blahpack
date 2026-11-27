@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhpcon( order, uplo, N, AP, IPIV, strideIPIV, anorm, rcond, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from zhptrf |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zhptrf |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | output: rcond[0] is the reciprocal condition number |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace array of length at least 2*N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from zhptrf |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zhptrf |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output: rcond[0] is the reciprocal condition number |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -72,21 +72,21 @@ zhpcon.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower', must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from zhptrf |
-| ↳ `strideAP` | `integer` | in |  |  | stride for AP (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for AP (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zhptrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length at least 2*N (in complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower', must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from zhptrf |
+| ↳ `strideAP` | `integer` | Stride for AP (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for AP (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zhptrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N (in complex elements) |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -31,21 +31,21 @@ zhpgv(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix A (length N*(N+1)/2) |
-| `BP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian positive definite matrix B (length N*(N+1)/2) |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Complex128Array` | out | `N × N` |  | output eigenvector matrix (N x N) |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of Z |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N - 1 )` |  | complex workspace array (length >= max(1, 2*N-1)) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace array (length >= max(1, 3*N-2)) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix A (length N\*(N+1)/2) |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian positive definite matrix B (length N\*(N+1)/2) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output eigenvector matrix (N x N) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of Z<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N - 1)</sub> | **out** · Complex workspace array (length >= max(1, 2\*N-1)) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace array (length >= max(1, 3\*N-2)) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,31 +106,31 @@ zhpgv.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix A; on exit, overwritten |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `BP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian positive definite matrix B; on exit, Cholesky factor |
-| ↳ `strideBP` | `integer` | in |  |  | stride length for `BP` (in complex elements) |
-| ↳ `offsetBP` | `NonNegativeInteger` | in |  |  | starting index for `BP` (in complex elements) |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Z` | `Complex128Array` | out | `N × N` |  | output eigenvector matrix (N x N); referenced only if jobz = `'compute-vectors'` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (in complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (in complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N - 1 )` |  | complex workspace array (length >= max(1, 2*N-1)) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace array (length >= max(1, 3*N-2)) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix A; on exit, overwritten |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian positive definite matrix B; on exit, Cholesky factor |
+| ↳ `strideBP` | `integer` | Stride length for `BP` (in complex elements) |
+| ↳ `offsetBP` | `NonNegativeInteger` | Starting index for `BP` (in complex elements) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output eigenvector matrix (N x N); referenced only if jobz = `'compute-vectors'` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (in complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (in complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N - 1)</sub> | **out** · Complex workspace array (length >= max(1, 2\*N-1)) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace array (length >= max(1, 3\*N-2)) |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

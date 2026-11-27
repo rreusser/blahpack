@@ -34,28 +34,28 @@ ztgsy2(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | 'no-transpose' or 'conjugate-transpose' |
-| `ijob` | `integer` | in |  | rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` | 0: solve only; 2: solve + estimate DIF |
-| `M` | `NonNegativeInteger` | in |  | rejects `M <= 0` | number of rows in C, F and order of (A,D) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N <= 0` | number of columns in C, F and order of (B,E) |
-| `A` | `Complex128Array` | in | `M × M` |  | M-by-M upper triangular matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of A |
-| `B` | `Complex128Array` | in | `N × N` |  | N-by-N upper triangular matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `C` | `Complex128Array` | in/out | `M × N` |  | M-by-N right-hand side / solution |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `D` | `Complex128Array` | in | `M × M` |  | M-by-M upper triangular matrix |
-| ↳ `LDD` | `PositiveInteger` | in |  | requires `LDD ≥ max( 1, M )` | leading dimension of D |
-| `E` | `Complex128Array` | in | `N × N` |  | N-by-N upper triangular matrix |
-| ↳ `LDE` | `PositiveInteger` | in |  | requires `LDE ≥ max( 1, N )` | leading dimension of E |
-| `F` | `Complex128Array` | in/out | `M × N` |  | M-by-N right-hand side / solution |
-| ↳ `LDF` | `PositiveInteger` | in |  | column-major requires `LDF ≥ max( 1, M )`; row-major requires `LDF ≥ max( 1, N )` | leading dimension of F |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scaling factor |
-| `rdsum` | `Float64Array` | in/out |  |  | in/out: rdsum[0] |
-| `rdscal` | `Float64Array` | in/out |  |  | in/out: rdscal[0] |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | 'no-transpose' or 'conjugate-transpose' |
+| `ijob` | `integer` | 0: solve only; 2: solve + estimate DIF<br>Rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` |
+| `M` | `NonNegativeInteger` | Number of rows in C, F and order of (A,D)<br>Rejects `M <= 0` |
+| `N` | `NonNegativeInteger` | Number of columns in C, F and order of (B,E)<br>Rejects `N <= 0` |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | M-by-M upper triangular matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | N-by-N upper triangular matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N right-hand side / solution |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `D` | `Complex128Array`<br><sub>M × M</sub> | M-by-M upper triangular matrix |
+| ↳ `LDD` | `PositiveInteger` | Leading dimension of D<br>Requires `LDD ≥ max(1, M)` |
+| `E` | `Complex128Array`<br><sub>N × N</sub> | N-by-N upper triangular matrix |
+| ↳ `LDE` | `PositiveInteger` | Leading dimension of E<br>Requires `LDE ≥ max(1, N)` |
+| `F` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N right-hand side / solution |
+| ↳ `LDF` | `PositiveInteger` | Leading dimension of F<br>Column-major requires `LDF ≥ max(1, M)`<br>Row-major requires `LDF ≥ max(1, N)` |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scaling factor |
+| `rdsum` | `Float64Array` | **in/out** · In/out: rdsum[0] |
+| `rdscal` | `Float64Array` | **in/out** · In/out: rdscal[0] |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -125,39 +125,39 @@ ztgsy2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the operation type |
-| `ijob` | `integer` | in |  | rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` | specifies what kind of functionality to be performed. =0: solve (1) only. =1: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed. |
-| `M` | `NonNegativeInteger` | in |  | rejects `M <= 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | rejects `N <= 0` | number of columns |
-| `A` | `Complex128Array` | in | `M × M` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `D` | `Complex128Array` | in | `M × M` |  | input matrix |
-| ↳ `strideD1` | `integer` | in |  |  | stride of the first dimension of `D` |
-| ↳ `strideD2` | `integer` | in |  |  | stride of the second dimension of `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
-| `E` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `strideE1` | `integer` | in |  |  | stride of the first dimension of `E` |
-| ↳ `strideE2` | `integer` | in |  |  | stride of the second dimension of `E` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `E` |
-| `F` | `Complex128Array` | in/out | `M × N` |  | output matrix |
-| ↳ `strideF1` | `integer` | in |  |  | stride of the first dimension of `F` |
-| ↳ `strideF2` | `integer` | in |  |  | stride of the second dimension of `F` |
-| ↳ `offsetF` | `NonNegativeInteger` | in |  |  | starting index for `F` |
-| `scale` | `Float64Array` | out |  |  | on exit, 0 <= SCALE <= 1. |
-| `rdsum` | `Float64Array` | in/out |  |  | on entry, the sum of squares of computed contributions to the Dif-estimate under computation by ZTGSYL, where the scaling factor RDSCAL (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. |
-| `rdscal` | `Float64Array` | in/out |  |  | on entry, scaling factor used to prevent overflow in RDSUM. On exit, RDSCAL is updated w.r.t. the current contributions in RDSUM. |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`. |
+| `ijob` | `integer` | Specifies what kind of functionality to be performed. =0: solve (1) only. =1: A contribution from this subsystem to a Frobenius norm-based estimate of the separation between two matrix pairs is computed.<br>Rejects `trans === 'no-transpose' && (ijob < 0 \|\| ijob > 2)` |
+| `M` | `NonNegativeInteger` | Number of rows<br>Rejects `M <= 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Rejects `N <= 0` |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `D` | `Complex128Array`<br><sub>M × M</sub> | Input matrix |
+| ↳ `strideD1` | `integer` | Stride of the first dimension of `D` |
+| ↳ `strideD2` | `integer` | Stride of the second dimension of `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
+| `E` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideE1` | `integer` | Stride of the first dimension of `E` |
+| ↳ `strideE2` | `integer` | Stride of the second dimension of `E` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `E` |
+| `F` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Output matrix |
+| ↳ `strideF1` | `integer` | Stride of the first dimension of `F` |
+| ↳ `strideF2` | `integer` | Stride of the second dimension of `F` |
+| ↳ `offsetF` | `NonNegativeInteger` | Starting index for `F` |
+| `scale` | `Float64Array` | **out** · On exit, 0 <= SCALE <= 1. |
+| `rdsum` | `Float64Array` | **in/out** · On entry, the sum of squares of computed contributions to the Dif-estimate under computation by ZTGSYL, where the scaling factor RDSCAL (see below) has been factored out. On exit, the corresponding sum of squares updated with the contributions from the current sub-system. |
+| `rdscal` | `Float64Array` | **in/out** · On entry, scaling factor used to prevent overflow in RDSUM. On exit, RDSCAL is updated w.r.t. the current contributions in RDSUM. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

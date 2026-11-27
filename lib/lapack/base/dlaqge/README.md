@@ -28,21 +28,21 @@ dlaqge(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix A. |
-| `A` | `Float64Array` | in/out | `max( M, 1 ) × N` |  | on entry, the M by N matrix A. On exit, the equilibrated matrix. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `r` | `Float64Array` | in | `M` |  | the row scale factors for A. |
-| ↳ `strideR` | `integer` | in |  |  | stride length for `r` |
-| `c` | `Float64Array` | in | `N` |  | the column scale factors for A. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `rowcnd` | `number` | in |  |  | ratio of the smallest R(i) to the largest R(i). |
-| `colcnd` | `number` | in |  |  | ratio of the smallest C(i) to the largest C(i). |
-| `amax` | `number` | in |  |  | absolute value of largest matrix entry. |
-| `equed` | `Array.<string>` | out |  |  | specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) * A * diag(C). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A. |
+| `A` | `Float64Array`<br><sub>max(M, 1) × N</sub> | **in/out** · On entry, the M by N matrix A. On exit, the equilibrated matrix. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `r` | `Float64Array`<br><sub>length M</sub> | The row scale factors for A. |
+| ↳ `strideR` | `integer` | Stride length for `r` |
+| `c` | `Float64Array`<br><sub>length N</sub> | The column scale factors for A. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `rowcnd` | `number` | Ratio of the smallest R(i) to the largest R(i). |
+| `colcnd` | `number` | Ratio of the smallest C(i) to the largest C(i). |
+| `amax` | `number` | Absolute value of largest matrix entry. |
+| `equed` | `Array.<string>` | **out** · Specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) \* A \* diag(C). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,24 +93,24 @@ or 'B' (both row and column).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `A` | `Float64Array` | in/out | `max( M, 1 ) × N` |  | input/output M-by-N matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `r` | `Float64Array` | in | `M` |  | row scale factors, length M |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for r |
-| `c` | `Float64Array` | in | `N` |  | column scale factors, length N |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for c |
-| `rowcnd` | `number` | in |  |  | ratio of smallest to largest R(i) |
-| `colcnd` | `number` | in |  |  | ratio of smallest to largest C(i) |
-| `amax` | `number` | in |  |  | absolute value of largest matrix entry |
-| `equed` | `Array.<string>` | out |  |  | specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) * A * diag(C). |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `A` | `Float64Array`<br><sub>max(M, 1) × N</sub> | **in/out** · Input/output M-by-N matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `r` | `Float64Array`<br><sub>length M</sub> | Row scale factors, length M |
+| ↳ `strideR` | `integer` | Stride for r |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scale factors, length N |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for c |
+| `rowcnd` | `number` | Ratio of smallest to largest R(i) |
+| `colcnd` | `number` | Ratio of smallest to largest C(i) |
+| `amax` | `number` | Absolute value of largest matrix entry |
+| `equed` | `Array.<string>` | **out** · Specifies the form of equilibration that was done. `'none'`: No equilibration `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) \* A \* diag(C). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

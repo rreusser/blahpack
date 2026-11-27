@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlas2( f, g, h, ssmin, ssmax ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | the (1,1) element |
-| `g` | `number` | in |  |  | the (1,2) element |
-| `h` | `number` | in |  |  | the (2,2) element |
-| `ssmin` | `Float64Array` | out |  |  | output (length-1 array): the smaller singular value |
-| `ssmax` | `Float64Array` | out |  |  | output (length-1 array): the larger singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | The (1,1) element |
+| `g` | `number` | The (1,2) element |
+| `h` | `number` | The (2,2) element |
+| `ssmin` | `Float64Array` | **out** · Output (length-1 array): the smaller singular value |
+| `ssmax` | `Float64Array` | **out** · Output (length-1 array): the larger singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -51,13 +51,13 @@ dlas2.ndarray( f, g, h, ssmin, ssmax ) → void
 
 Computes singular values of a 2-by-2 triangular matrix, using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | the (1,1) element of the 2-by-2 matrix |
-| `g` | `number` | in |  |  | the (1,2) element of the 2-by-2 matrix |
-| `h` | `number` | in |  |  | the (2,2) element of the 2-by-2 matrix |
-| `ssmin` | `Float64Array` | out |  |  | output (length-1 array): the smaller singular value |
-| `ssmax` | `Float64Array` | out |  |  | output (length-1 array): the larger singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | The (1,1) element of the 2-by-2 matrix |
+| `g` | `number` | The (1,2) element of the 2-by-2 matrix |
+| `h` | `number` | The (2,2) element of the 2-by-2 matrix |
+| `ssmin` | `Float64Array` | **out** · Output (length-1 array): the smaller singular value |
+| `ssmax` | `Float64Array` | **out** · Output (length-1 array): the larger singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -35,31 +35,31 @@ zhpgvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`, `'value'`, or `'index'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix A (length N*(N+1)/2) |
-| `BP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian positive definite matrix B (length N*(N+1)/2) |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval (range='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval (range='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && il < 1` | index of smallest eigenvalue to compute (1-based, range='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue to compute (1-based, range='index') |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Complex128Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvector matrix (N x M) |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of Z (in complex elements) |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | complex workspace (length >= 2*N) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 7 * N` |  | real workspace (length >= 7*N) |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 5 * N` |  | integer workspace (length >= 5*N) |
-| `IFAIL` | `Int32Array` | out | `N` |  | output: indices of non-converged eigenvectors (length N) |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride length for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix A (length N\*(N+1)/2) |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian positive definite matrix B (length N\*(N+1)/2) |
+| `vl` | `number` | Lower bound of eigenvalue interval (range='value') |
+| `vu` | `number` | Upper bound of eigenvalue interval (range='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && il < 1` |
+| `iu` | `integer` | Index of largest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Complex128Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvector matrix (N x M) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of Z (in complex elements)<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace (length >= 2\*N) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 7 * N</sub> | **out** · Real workspace (length >= 7\*N) |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace (length >= 5\*N) |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · Output: indices of non-converged eigenvectors (length N) |
+| ↳ `strideIFAIL` | `integer` | Stride length for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -151,44 +151,44 @@ zhpgvx.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`, `'value'`, or `'index'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix A; on exit, overwritten |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (complex elements) |
-| `BP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian positive definite matrix B; on exit, Cholesky factor |
-| ↳ `strideBP` | `integer` | in |  |  | stride length for `BP` (complex elements) |
-| ↳ `offsetBP` | `NonNegativeInteger` | in |  |  | starting index for `BP` (complex elements) |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval (range='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval (range='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && il < 1` | index of smallest eigenvalue to compute (1-based, range='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue to compute (1-based, range='index') |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Z` | `Complex128Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvector matrix (N x M) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | complex workspace array (length >= 2*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 7 * N` |  | real workspace array (length >= 7*N) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
-| `IWORK` | `Int32Array` | out | `≥ 5 * N` |  | integer workspace (length >= 5*N) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
-| `IFAIL` | `Int32Array` | out | `N` |  | output: indices of non-converged eigenvectors (length N) |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for `IFAIL` |
-| ↳ `offsetIFAIL` | `NonNegativeInteger` | in |  |  | starting index for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix A; on exit, overwritten |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (complex elements) |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian positive definite matrix B; on exit, Cholesky factor |
+| ↳ `strideBP` | `integer` | Stride length for `BP` (complex elements) |
+| ↳ `offsetBP` | `NonNegativeInteger` | Starting index for `BP` (complex elements) |
+| `vl` | `number` | Lower bound of eigenvalue interval (range='value') |
+| `vu` | `number` | Upper bound of eigenvalue interval (range='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && il < 1` |
+| `iu` | `integer` | Index of largest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Z` | `Complex128Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvector matrix (N x M) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace array (length >= 2\*N) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 7 * N</sub> | **out** · Real workspace array (length >= 7\*N) |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace (length >= 5\*N) |
+| ↳ `strideIWork` | `integer` | Stride for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · Output: indices of non-converged eigenvectors (length N) |
+| ↳ `strideIFAIL` | `integer` | Stride for `IFAIL` |
+| ↳ `offsetIFAIL` | `NonNegativeInteger` | Starting index for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

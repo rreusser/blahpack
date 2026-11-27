@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlartg( f, g, c, s, r ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | first component of the vector to be rotated |
-| `g` | `number` | in |  |  | second component of the vector to be rotated |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): `c` |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): `s` |
-| `r` | `Float64Array` | out |  |  | output (length-1 array): `r` |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | First component of the vector to be rotated |
+| `g` | `number` | Second component of the vector to be rotated |
+| `c` | `Float64Array` | **out** · Output (length-1 array): `c` |
+| `s` | `Float64Array` | **out** · Output (length-1 array): `s` |
+| `r` | `Float64Array` | **out** · Output (length-1 array): `r` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -51,13 +51,13 @@ dlartg.ndarray( f, g, c, s, r ) → void
 
 Generates a plane rotation with real cosine and real sine, using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | first component of the vector to be rotated |
-| `g` | `number` | in |  |  | second component of the vector to be rotated |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): `c` |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): `s` |
-| `r` | `Float64Array` | out |  |  | output (length-1 array): `r` |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | First component of the vector to be rotated |
+| `g` | `number` | Second component of the vector to be rotated |
+| `c` | `Float64Array` | **out** · Output (length-1 array): `c` |
+| `s` | `Float64Array` | **out** · Output (length-1 array): `s` |
+| `r` | `Float64Array` | **out** · Output (length-1 array): `r` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

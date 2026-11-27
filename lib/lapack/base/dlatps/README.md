@@ -28,20 +28,20 @@ dlatps(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix of length N*(N+1)/2 |
-| `x` | `Float64Array` | in/out | `N` |  | in/out right-hand side vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `scale` | `Float64Array` | out |  |  | out: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column norm array of length N |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix of length N\*(N+1)/2 |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out right-hand side vector of length N |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `scale` | `Float64Array` | **out** · Out: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column norm array of length N |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,23 +106,23 @@ dlatps.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix of length N*(N+1)/2 |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `x` | `Float64Array` | in/out | `N` |  | in/out right-hand side vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `scale` | `Float64Array` | out |  |  | out: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column norm array of length N |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix of length N\*(N+1)/2 |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out right-hand side vector of length N |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `scale` | `Float64Array` | **out** · Out: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column norm array of length N |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

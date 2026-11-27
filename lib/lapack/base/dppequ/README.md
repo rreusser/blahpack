@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dppequ( order, uplo, N, AP, s, strideS, scond, amax ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | input symmetric positive definite matrix in packed storage |
-| `s` | `Float64Array` | out | `N` |  | output scale factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input symmetric positive definite matrix in packed storage |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · Output scale factors, length N |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,18 +70,18 @@ dppequ.ndarray(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | input symmetric positive definite matrix in packed storage |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `s` | `Float64Array` | out | `N` |  | output scale factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input symmetric positive definite matrix in packed storage |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · Output scale factors, length N |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

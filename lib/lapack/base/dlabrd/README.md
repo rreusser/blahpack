@@ -30,26 +30,26 @@ dlabrd(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `nb` | `NonNegativeInteger` | in |  |  | number of leading rows and columns to reduce |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `d` | `Float64Array` | out | `nb` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | out | `nb` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAUQ` | `Float64Array` | out | `nb` |  | input array |
-| ↳ `strideTAUQ` | `integer` | in |  |  | `TAUQ` stride length |
-| `TAUP` | `Float64Array` | out | `nb` |  | input array |
-| ↳ `strideTAUP` | `integer` | in |  |  | `TAUP` stride length |
-| `X` | `Float64Array` | out | `M × nb` |  | input matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `Y` | `Float64Array` | out | `N × nb` |  | input matrix |
-| ↳ `LDY` | `PositiveInteger` | in |  |  | leading dimension of `Y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `nb` | `NonNegativeInteger` | Number of leading rows and columns to reduce |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `d` | `Float64Array`<br><sub>length nb</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length nb</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAUQ` | `Float64Array`<br><sub>length nb</sub> | **out** · Input array |
+| ↳ `strideTAUQ` | `integer` | `TAUQ` stride length |
+| `TAUP` | `Float64Array`<br><sub>length nb</sub> | **out** · Input array |
+| ↳ `strideTAUP` | `integer` | `TAUP` stride length |
+| `X` | `Float64Array`<br><sub>M × nb</sub> | **out** · Input matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `Y` | `Float64Array`<br><sub>N × nb</sub> | **out** · Input matrix |
+| ↳ `LDY` | `PositiveInteger` | Leading dimension of `Y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -108,35 +108,35 @@ dlabrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `nb` | `NonNegativeInteger` | in |  |  | number of leading rows and columns to reduce |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix (M-by-N, column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `d` | `Float64Array` | out | `nb` |  | real diagonal elements (length nb) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `nb` |  | real off-diagonal elements (length nb) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `TAUQ` | `Float64Array` | out | `nb` |  | scalars for Q reflectors (length nb) |
-| ↳ `strideTAUQ` | `integer` | in |  |  | stride length for `TAUQ` |
-| ↳ `offsetTAUQ` | `NonNegativeInteger` | in |  |  | starting index for `TAUQ` |
-| `TAUP` | `Float64Array` | out | `nb` |  | scalars for P reflectors (length nb) |
-| ↳ `strideTAUP` | `integer` | in |  |  | stride length for `TAUP` |
-| ↳ `offsetTAUP` | `NonNegativeInteger` | in |  |  | starting index for `TAUP` |
-| `X` | `Float64Array` | out | `M × nb` |  | output matrix (M-by-NB, column-major) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `Y` | `Float64Array` | out | `N × nb` |  | output matrix (N-by-NB, column-major) |
-| ↳ `strideY1` | `integer` | in |  |  | stride of the first dimension of `Y` |
-| ↳ `strideY2` | `integer` | in |  |  | stride of the second dimension of `Y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `Y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `nb` | `NonNegativeInteger` | Number of leading rows and columns to reduce |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix (M-by-N, column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `d` | `Float64Array`<br><sub>length nb</sub> | **out** · Real diagonal elements (length nb) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length nb</sub> | **out** · Real off-diagonal elements (length nb) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `TAUQ` | `Float64Array`<br><sub>length nb</sub> | **out** · Scalars for Q reflectors (length nb) |
+| ↳ `strideTAUQ` | `integer` | Stride length for `TAUQ` |
+| ↳ `offsetTAUQ` | `NonNegativeInteger` | Starting index for `TAUQ` |
+| `TAUP` | `Float64Array`<br><sub>length nb</sub> | **out** · Scalars for P reflectors (length nb) |
+| ↳ `strideTAUP` | `integer` | Stride length for `TAUP` |
+| ↳ `offsetTAUP` | `NonNegativeInteger` | Starting index for `TAUP` |
+| `X` | `Float64Array`<br><sub>M × nb</sub> | **out** · Output matrix (M-by-NB, column-major) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `Y` | `Float64Array`<br><sub>N × nb</sub> | **out** · Output matrix (N-by-NB, column-major) |
+| ↳ `strideY1` | `integer` | Stride of the first dimension of `Y` |
+| ↳ `strideY2` | `integer` | Stride of the second dimension of `Y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `Y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

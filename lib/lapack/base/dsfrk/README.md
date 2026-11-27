@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsfrk( order, transr, uplo, trans, N, K, alpha, A, LDA, beta, C, strideC ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the operation (`'no-transpose'` or `'transpose'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the symmetric matrix C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns of A (if trans='no-transpose') or rows (if trans='transpose') |
-| `alpha` | `number` | in |  |  | scalar multiplier for A*A^T or A^T*A |
-| `A` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? N : K )`; row-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? K : N )` | leading dimension of `A` |
-| `beta` | `number` | in |  |  | scalar multiplier for C |
-| `C` | `Float64Array` | in/out | `NT` |  | RFP array of length N*(N+1)/2 |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `trans` | `"no-transpose" \| "transpose"` | Specifies the operation (`'no-transpose'` or `'transpose'`) |
+| `N` | `NonNegativeInteger` | Order of the symmetric matrix C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns of A (if trans='no-transpose') or rows (if trans='transpose')<br>Requires `K ≥ 0` |
+| `alpha` | `number` | Scalar multiplier for A\*A^T or A^T\*A |
+| `A` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, trans === 'no-transpose' ? N : K)`<br>Row-major requires `LDA ≥ max(1, trans === 'no-transpose' ? K : N)` |
+| `beta` | `number` | Scalar multiplier for C |
+| `C` | `Float64Array`<br><sub>length NT</sub> | **in/out** · RFP array of length N\*(N+1)/2 |
+| ↳ `strideC` | `integer` | Stride length for `C` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -104,22 +104,22 @@ dsfrk.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the operation (`'no-transpose'` or `'transpose'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the symmetric matrix C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns of A (if trans='no-transpose') or rows (if trans='transpose') |
-| `alpha` | `number` | in |  |  | scalar multiplier for A*A^T or A^T*A |
-| `A` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `beta` | `number` | in |  |  | scalar multiplier for C |
-| `C` | `Float64Array` | in/out | `NT` |  | RFP array of length N*(N+1)/2 |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `trans` | `"no-transpose" \| "transpose"` | Specifies the operation (`'no-transpose'` or `'transpose'`) |
+| `N` | `NonNegativeInteger` | Order of the symmetric matrix C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns of A (if trans='no-transpose') or rows (if trans='transpose')<br>Requires `K ≥ 0` |
+| `alpha` | `number` | Scalar multiplier for A\*A^T or A^T\*A |
+| `A` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `beta` | `number` | Scalar multiplier for C |
+| `C` | `Float64Array`<br><sub>length NT</sub> | **in/out** · RFP array of length N\*(N+1)/2 |
+| ↳ `strideC` | `integer` | Stride length for `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

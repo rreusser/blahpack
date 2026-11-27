@@ -43,23 +43,23 @@ dgeev(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix (N x N), overwritten on exit |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues (length N) |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues (length N) |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors (N x N), not referenced if jobvl=`'no-vectors'` |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors (N x N), not referenced if jobvr=`'no-vectors'` |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` | leading dimension of `VR` |
-| `work` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | workspace of at least `max(1,3*N)` elements (`max(1,4*N)` with eigenvectors), or `null` to allocate the optimum (see above) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix (N x N), overwritten on exit |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues (length N) |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues (length N) |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors (N x N), not referenced if jobvl=`'no-vectors'` |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors (N x N), not referenced if jobvr=`'no-vectors'` |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,3*N)` elements (`max(1,4*N)` with eigenvectors), or `null` to allocate the optimum (see above) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -129,32 +129,32 @@ the wrapper allocates when `work` is `null`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix (N x N), overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues (length N) |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | offset for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues (length N) |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | offset for WI |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors (N x N), not referenced if jobvl=`'no-vectors'` |
-| ↳ `strideVL1` | `integer` | in |  |  | first dimension stride of VL |
-| ↳ `strideVL2` | `integer` | in |  |  | second dimension stride of VL |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors (N x N), not referenced if jobvr=`'no-vectors'` |
-| ↳ `strideVR1` | `integer` | in |  |  | first dimension stride of VR |
-| ↳ `strideVR2` | `integer` | in |  |  | second dimension stride of VR |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR |
-| `work` | `Float64Array` | out | `≥ MINWRK` |  | caller-provided workspace (minimum size: max(1,3*N), or max(1,4*N) with eigenvectors; for good performance, the optimum MAXWRK the wrapper allocates for `null`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for work (must be 1) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for work |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix (N x N), overwritten on exit |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues (length N) |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| ↳ `offsetWR` | `NonNegativeInteger` | Offset for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues (length N) |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| ↳ `offsetWI` | `NonNegativeInteger` | Offset for WI |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors (N x N), not referenced if jobvl=`'no-vectors'` |
+| ↳ `strideVL1` | `integer` | First dimension stride of VL |
+| ↳ `strideVL2` | `integer` | Second dimension stride of VL |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors (N x N), not referenced if jobvr=`'no-vectors'` |
+| ↳ `strideVR1` | `integer` | First dimension stride of VR |
+| ↳ `strideVR2` | `integer` | Second dimension stride of VR |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR |
+| `work` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Caller-provided workspace (minimum size: max(1,3\*N), or max(1,4\*N) with eigenvectors; for good performance, the optimum MAXWRK the wrapper allocates for `null`) |
+| ↳ `strideWork` | `integer` | Stride for work (must be 1) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for work |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlantr( order, norm, uplo, diag, M, N, A, LDA, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the value to be returned in ZLANTR as described above. |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the matrix A is upper or lower trapezoidal. `'upper'`: Upper trapezoidal `'lower'`: Lower trapezoidal Note that A is triangular instead of trapezoidal if M = N. |
-| `diag` | `DiagonalType` | in |  |  | specifies whether or not the matrix A has unit diagonal. `'non-unit'`: Non-unit diagonal `'unit'`: Unit diagonal. |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix A. |
-| `A` | `Complex128Array` | in | `max( M, 1 ) × N` |  | the trapezoidal matrix A (A is triangular if M = N). |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | caller-provided workspace |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the value to be returned in ZLANTR as described above. |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix A is upper or lower trapezoidal. `'upper'`: Upper trapezoidal `'lower'`: Lower trapezoidal Note that A is triangular instead of trapezoidal if M = N. |
+| `diag` | `DiagonalType` | Specifies whether or not the matrix A has unit diagonal. `'non-unit'`: Non-unit diagonal `'unit'`: Unit diagonal. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A. |
+| `A` | `Complex128Array`<br><sub>max(M, 1) × N</sub> | The trapezoidal matrix A (A is triangular if M = N). |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `WORK` | `Float64Array \| null` | **out** · Caller-provided workspace |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,20 +80,20 @@ Supports norms: `'max'`, `'one-norm'`, `'inf-norm'`, `'frobenius'`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | norm type: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `diag` | `DiagonalType` | in |  |  | `'unit'` or `'non-unit'` |
-| `M` | `NonNegativeInteger` | in |  |  | rows |
-| `N` | `NonNegativeInteger` | in |  |  | columns |
-| `A` | `Complex128Array` | in | `max( M, 1 ) × N` |  | complex matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `WORK` | `Float64Array` | out |  |  | workspace (length >= M for `'inf-norm'`, real) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Norm type: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `M` | `NonNegativeInteger` | Rows |
+| `N` | `NonNegativeInteger` | Columns |
+| `A` | `Complex128Array`<br><sub>max(M, 1) × N</sub> | Complex matrix |
+| ↳ `strideA1` | `integer` | First dimension stride (in complex elements) |
+| ↳ `strideA2` | `integer` | Second dimension stride (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `WORK` | `Float64Array` | **out** · Workspace (length >= M for `'inf-norm'`, real) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

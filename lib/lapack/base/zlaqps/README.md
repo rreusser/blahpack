@@ -33,28 +33,28 @@ zlaqps(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | total rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | columns of current submatrix |
-| `offset` | `integer` | in |  |  | rows already factored |
-| `nb` | `NonNegativeInteger` | in |  |  | desired block size |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns actually factorized |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `JPVT` | `Int32Array` | in/out | `N` |  | input array |
-| ↳ `strideJPVT` | `integer` | in |  |  | `JPVT` stride length |
-| `TAU` | `Complex128Array` | out | `kb` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `VN1` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVN1` | `integer` | in |  |  | `VN1` stride length |
-| `VN2` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVN2` | `integer` | in |  |  | `VN2` stride length |
-| `AUXV` | `Complex128Array` | in/out | `nb` |  | input array |
-| ↳ `strideAUXV` | `integer` | in |  |  | `AUXV` stride length |
-| `F` | `Complex128Array` | in/out | `N × nb` |  | input matrix |
-| ↳ `LDF` | `PositiveInteger` | in |  |  | leading dimension of `F` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Total rows of A |
+| `N` | `NonNegativeInteger` | Columns of current submatrix |
+| `offset` | `integer` | Rows already factored |
+| `nb` | `NonNegativeInteger` | Desired block size |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns actually factorized |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideJPVT` | `integer` | `JPVT` stride length |
+| `TAU` | `Complex128Array`<br><sub>length kb</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVN1` | `integer` | `VN1` stride length |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVN2` | `integer` | `VN2` stride length |
+| `AUXV` | `Complex128Array`<br><sub>length nb</sub> | **in/out** · Input array |
+| ↳ `strideAUXV` | `integer` | `AUXV` stride length |
+| `F` | `Complex128Array`<br><sub>N × nb</sub> | **in/out** · Input matrix |
+| ↳ `LDF` | `PositiveInteger` | Leading dimension of `F` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,36 +102,36 @@ zlaqps.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | total rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | columns of current submatrix |
-| `offset` | `integer` | in |  |  | rows already factored |
-| `nb` | `NonNegativeInteger` | in |  |  | desired block size |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns actually factorized |
-| `A` | `Complex128Array` | in/out | `M × N` |  | matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dim stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dim stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Complex128Array` | out | `kb` |  | reflector scalars |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `VN1` | `Float64Array` | in/out | `N` |  | partial column norms (real) |
-| ↳ `strideVN1` | `integer` | in |  |  | stride for VN1 |
-| ↳ `offsetVN1` | `NonNegativeInteger` | in |  |  | starting index for VN1 |
-| `VN2` | `Float64Array` | in/out | `N` |  | original column norms (real) |
-| ↳ `strideVN2` | `integer` | in |  |  | stride for VN2 |
-| ↳ `offsetVN2` | `NonNegativeInteger` | in |  |  | starting index for VN2 |
-| `AUXV` | `Complex128Array` | in/out | `nb` |  | auxiliary vector (length >= NB) |
-| ↳ `strideAUXV` | `integer` | in |  |  | stride for AUXV (complex elements) |
-| ↳ `offsetAUXV` | `NonNegativeInteger` | in |  |  | starting index for AUXV (complex elements) |
-| `F` | `Complex128Array` | in/out | `N × nb` |  | panel update matrix (N-by-NB) |
-| ↳ `strideF1` | `integer` | in |  |  | first dim stride of F (complex elements) |
-| ↳ `strideF2` | `integer` | in |  |  | second dim stride of F (complex elements) |
-| ↳ `offsetF` | `NonNegativeInteger` | in |  |  | starting index for F (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total rows of A |
+| `N` | `NonNegativeInteger` | Columns of current submatrix |
+| `offset` | `integer` | Rows already factored |
+| `nb` | `NonNegativeInteger` | Desired block size |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns actually factorized |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Matrix |
+| ↳ `strideA1` | `integer` | First dim stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second dim stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Complex128Array`<br><sub>length kb</sub> | **out** · Reflector scalars |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Partial column norms (real) |
+| ↳ `strideVN1` | `integer` | Stride for VN1 |
+| ↳ `offsetVN1` | `NonNegativeInteger` | Starting index for VN1 |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Original column norms (real) |
+| ↳ `strideVN2` | `integer` | Stride for VN2 |
+| ↳ `offsetVN2` | `NonNegativeInteger` | Starting index for VN2 |
+| `AUXV` | `Complex128Array`<br><sub>length nb</sub> | **in/out** · Auxiliary vector (length >= NB) |
+| ↳ `strideAUXV` | `integer` | Stride for AUXV (complex elements) |
+| ↳ `offsetAUXV` | `NonNegativeInteger` | Starting index for AUXV (complex elements) |
+| `F` | `Complex128Array`<br><sub>N × nb</sub> | **in/out** · Panel update matrix (N-by-NB) |
+| ↳ `strideF1` | `integer` | First dim stride of F (complex elements) |
+| ↳ `strideF2` | `integer` | Second dim stride of F (complex elements) |
+| ↳ `offsetF` | `NonNegativeInteger` | Starting index for F (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

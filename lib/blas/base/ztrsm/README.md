@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztrsm( order, side, uplo, transa, diag, M, N, alpha, A, LDA, B, LDB ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` (upper or lower triangular) |
-| `transa` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier for B |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` (upper or lower triangular) |
+| `transa` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier for B |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -119,23 +119,23 @@ Solves one of the complex matrix equations op(A)_X = alpha_B or X_op(A) = alpha_
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies whether op(A) appears on the left or right of X |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether A is upper or lower triangular |
-| `transa` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of op(A) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether A is unit or non-unit triangular |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `alpha` | `Complex128` | in |  |  | complex scalar constant |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | complex triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `M × N` |  | complex input/output matrix |
-| ↳ `strideB1` | `integer` | in |  |  | first dimension stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second dimension stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset for B (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies whether op(A) appears on the left or right of X |
+| `uplo` | `MatrixTriangle` | Specifies whether A is upper or lower triangular |
+| `transa` | `TransposeOperation` | Specifies the form of op(A)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether A is unit or non-unit triangular |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar constant |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Complex triangular matrix |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Complex input/output matrix |
+| ↳ `strideB1` | `integer` | First dimension stride of B |
+| ↳ `strideB2` | `integer` | Second dimension stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset for B (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

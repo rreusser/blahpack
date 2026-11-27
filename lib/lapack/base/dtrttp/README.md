@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtrttp( order, uplo, N, A, LDA, AP ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether `A` is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix in full storage |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AP` | `Float64Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in packed storage |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix in full storage |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in packed storage |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -66,17 +66,17 @@ dtrttp.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether `A` is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix in full storage |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `AP` | `Float64Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in packed storage |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix in full storage |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in packed storage |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

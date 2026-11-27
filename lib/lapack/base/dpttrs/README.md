@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dpttrs( order, N, nrhs, d, strideD, e, strideE, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the tridiagonal matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the diagonal matrix D from the L*D*L**T factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in | `N - 1` |  | the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L**T factorization of A. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the tridiagonal matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the diagonal matrix D from the L\*D\*L\*\*T factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) subdiagonal elements of the unit bidiagonal factor L from the L\*D\*L\*\*T factorization of A. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -71,20 +71,20 @@ _ using the L_D*L^T factorization of A computed by dpttrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix A (N >= 0) |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of D, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in | `N - 1` |  | subdiagonal elements of L, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | right hand side matrix (N x NRHS), overwritten with solution X |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (row stride) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (column stride) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix A (N >= 0)<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of D, length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Subdiagonal elements of L, length N-1 |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix (N x NRHS), overwritten with solution X |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (row stride) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (column stride) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

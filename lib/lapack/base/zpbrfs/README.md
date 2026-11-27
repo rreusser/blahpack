@@ -32,27 +32,27 @@ zpbrfs(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether 'upper' or 'lower' triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (or subdiagonals) of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | original Hermitian band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of AB (in complex elements) |
-| `AFB` | `Complex128Array` | in | `kd + 1 × N` |  | Cholesky-factored band matrix (from zpbtrf) |
-| ↳ `LDAFB` | `PositiveInteger` | in |  | column-major requires `LDAFB ≥ kd + 1`; row-major requires `LDAFB ≥ max( 1, N )` | leading dimension of AFB (in complex elements) |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix (column-major) |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of B (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of X (in complex elements) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | complex workspace array (length >= 2*N) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace array (length >= N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether 'upper' or 'lower' triangle is stored |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (or subdiagonals) of A<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Original Hermitian band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of AB (in complex elements)<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `AFB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Cholesky-factored band matrix (from zpbtrf) |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of AFB (in complex elements)<br>Column-major requires `LDAFB ≥ kd + 1`<br>Row-major requires `LDAFB ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix (column-major) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (in complex elements)<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of X (in complex elements)<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace array (length >= 2\*N) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace array (length >= N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,40 +115,40 @@ Improves the computed solution to a complex system `A * X = B` where `A` is Herm
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether 'upper' or 'lower' triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (or subdiagonals) of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | original Hermitian band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB (in complex elements) |
-| `AFB` | `Complex128Array` | in | `kd + 1 × N` |  | Cholesky-factored band matrix (from zpbtrf) |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of the first dimension of AFB (in complex elements) |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of the second dimension of AFB (in complex elements) |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | starting index for AFB (in complex elements) |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X (in complex elements) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for BERR |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | complex workspace array (length >= 2*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace array (length >= N) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether 'upper' or 'lower' triangle is stored |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (or subdiagonals) of A<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Original Hermitian band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB (in complex elements) |
+| `AFB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Cholesky-factored band matrix (from zpbtrf) |
+| ↳ `strideAFB1` | `integer` | Stride of the first dimension of AFB (in complex elements) |
+| ↳ `strideAFB2` | `integer` | Stride of the second dimension of AFB (in complex elements) |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Starting index for AFB (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X (in complex elements) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride length for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride length for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace array (length >= 2\*N) |
+| ↳ `strideWork` | `integer` | Stride length for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace array (length >= N) |
+| ↳ `strideRWork` | `integer` | Stride length for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

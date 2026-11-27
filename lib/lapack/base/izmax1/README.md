@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 izmax1( N, x, strideX ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | the number of elements in the vector ZX. |
-| `x` | `Complex128Array` | in | `N` |  | ZX |
-| ↳ `strideX` | `integer` | in |  |  | strideZX |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The number of elements in the vector ZX. |
+| `x` | `Complex128Array`<br><sub>length N</sub> | ZX |
+| ↳ `strideX` | `integer` | StrideZX |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -51,12 +51,12 @@ absolute value (cabs) rather than dcabs1.
 
 Returns a 0-based index (Fortran returns 1-based).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `ZX` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `ZX` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Complex input vector |
+| ↳ `strideX` | `integer` | Stride for `ZX` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `ZX` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

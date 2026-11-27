@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhpgst( order, itype, uplo, N, AP, BP ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | Hermitian matrix A in packed storage |
-| `BP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | triangular factor from Cholesky factorization of B in packed storage |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Hermitian matrix A in packed storage |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Triangular factor from Cholesky factorization of B in packed storage |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,17 +73,17 @@ zhpgst.ndarray(
 
 Reduces a complex Hermitian-definite generalized eigenproblem to standard form using packed storage.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | Hermitian matrix A in packed storage |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `BP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | triangular factor from Cholesky factorization of B in packed storage |
-| ↳ `strideBP` | `integer` | in |  |  | stride length for `BP` (in complex elements) |
-| ↳ `offsetBP` | `NonNegativeInteger` | in |  |  | starting index for `BP` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Hermitian matrix A in packed storage |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `BP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Triangular factor from Cholesky factorization of B in packed storage |
+| ↳ `strideBP` | `integer` | Stride length for `BP` (in complex elements) |
+| ↳ `offsetBP` | `NonNegativeInteger` | Starting index for `BP` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

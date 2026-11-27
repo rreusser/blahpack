@@ -32,24 +32,24 @@ ztrevc(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `T` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `VL` | `Complex128Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | input array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'backtransform'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -122,34 +122,34 @@ ztrevc.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `T` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `VL` | `Complex128Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Complex128Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'backtransform'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

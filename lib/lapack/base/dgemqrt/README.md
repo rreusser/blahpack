@@ -22,22 +22,22 @@ dgemqrt( order, side, trans, M, N, K, nb, V, LDV, T, LDT, C, LDC, WORK ) → int
 
 Overwrites a real M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is a real orthogonal matrix represented in the compact WY form returned by `dgeqrt`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to build T |
-| `V` | `Float64Array` | in | `Q × K` |  | reflector vectors from `dgeqrt` |
-| ↳ `LDV` | `PositiveInteger` | in |  | requires `LDV ≥ MAX(1,Q)` | leading dimension of V |
-| `T` | `Float64Array` | in | `nb × K` |  | block triangular factors from `dgeqrt` |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ nb`; row-major requires `LDT ≥ max( 1, K )` | leading dimension of T (>= nb) |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace buffer |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `nb` | `integer` | Block size used to build T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Float64Array`<br><sub>Q × K</sub> | Reflector vectors from `dgeqrt` |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of V<br>Requires `LDV ≥ MAX(1,Q)` |
+| `T` | `Float64Array`<br><sub>nb × K</sub> | Block triangular factors from `dgeqrt` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of T (>= nb)<br>Column-major requires `LDT ≥ nb`<br>Row-major requires `LDT ≥ max(1, K)` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace buffer |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,29 +98,29 @@ Overwrites a real M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is a real
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to build T |
-| `V` | `Float64Array` | in | `Q × K` |  | reflector vectors from `dgeqrt` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `T` | `Float64Array` | in | `nb × K` |  | block triangular factors from `dgeqrt` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Float64Array` | out |  |  | workspace buffer |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `nb` | `integer` | Block size used to build T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Float64Array`<br><sub>Q × K</sub> | Reflector vectors from `dgeqrt` |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `T` | `Float64Array`<br><sub>nb × K</sub> | Block triangular factors from `dgeqrt` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Float64Array` | **out** · Workspace buffer |
+| ↳ `strideWork` | `integer` | Element stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

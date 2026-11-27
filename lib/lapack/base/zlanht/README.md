@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlanht( norm, N, d, strideD, e, strideE ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements (real), length N |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Complex128Array` | in | `N - 1` |  | off-diagonal elements (complex), length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (real), length N |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | Off-diagonal elements (complex), length N-1 |
+| ↳ `strideE` | `integer` | `e` stride length (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -54,16 +54,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zlanht.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements (real), length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Complex128Array` | in | `N - 1` |  | off-diagonal elements (complex), length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e (in complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (real), length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | Off-diagonal elements (complex), length N-1 |
+| ↳ `strideE` | `integer` | Stride for e (in complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

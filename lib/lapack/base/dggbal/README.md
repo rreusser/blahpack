@@ -31,22 +31,22 @@ dggbal(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices |
-| `A` | `Float64Array` | in/out | `N × N` |  | first real matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Float64Array` | in/out | `N × N` |  | second real matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | left scaling factors |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| `RSCALE` | `Float64Array` | out | `N` |  | right scaling factors |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of matrices<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · First real matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Second real matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Left scaling factors |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Right scaling factors |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,29 +113,29 @@ dggbal.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Float64Array` | in/out | `N × N` |  | first real matrix (modified in-place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `N × N` |  | second real matrix (modified in-place) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
-| `LSCALE` | `Float64Array` | out | `N` |  | left scaling/permutation factors (length N) |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| ↳ `offsetLSCALE` | `NonNegativeInteger` | in |  |  | starting index for LSCALE |
-| `RSCALE` | `Float64Array` | out | `N` |  | right scaling/permutation factors (length N) |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| ↳ `offsetRSCALE` | `NonNegativeInteger` | in |  |  | starting index for RSCALE |
-| `WORK` | `Float64Array` | out |  |  | workspace array (length >= 6*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · First real matrix (modified in-place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Second real matrix (modified in-place) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 and B(i,j) = 0 if i > j and j = 1,...,ILO-1 or i = IHI+1,...,N |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Left scaling/permutation factors (length N) |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| ↳ `offsetLSCALE` | `NonNegativeInteger` | Starting index for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Right scaling/permutation factors (length N) |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| ↳ `offsetRSCALE` | `NonNegativeInteger` | Starting index for RSCALE |
+| `WORK` | `Float64Array` | **out** · Workspace array (length >= 6\*N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

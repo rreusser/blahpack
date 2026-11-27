@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztbmv( order, uplo, trans, diag, N, K, A, LDA, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the matrix is an upper or lower triangular matrix as follows: `uplo === 'upper'` A is an upper triangular matrix. `uplo === 'lower'` A is a lower triangular matrix. |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | the operation to be performed as follows: `trans === 'no-transpose'` x := A*x. `trans === 'transpose'` x := A**T*x. `trans === 'conjugate-transpose'` x := A**H*x. |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | whether or not A is unit triangular as follows: `diag === 'unit'` A is assumed to be unit triangular. `diag === 'non-unit'` A is not assumed to be unit triangular. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | on entry with `uplo === 'upper'`, K specifies the number of super-diagonals of the matrix A. |
-| `A` | `Complex128Array` | in | `K + 1 × N` |  | before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ K + 1`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in/out | `N` |  | before entry, the incremented array X must contain the n element vector x. On exit, X is overwritten with the transformed vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Whether the matrix is an upper or lower triangular matrix as follows: `uplo === 'upper'` A is an upper triangular matrix. `uplo === 'lower'` A is a lower triangular matrix. |
+| `trans` | `TransposeOperation` | The operation to be performed as follows: `trans === 'no-transpose'` x := A\*x. `trans === 'transpose'` x := A\*\*T\*x. `trans === 'conjugate-transpose'` x := A\*\*H\*x. |
+| `diag` | `DiagonalType` | Whether or not A is unit triangular as follows: `diag === 'unit'` A is assumed to be unit triangular. `diag === 'non-unit'` A is not assumed to be unit triangular. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | On entry with `uplo === 'upper'`, K specifies the number of super-diagonals of the matrix A.<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ K + 1`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Before entry, the incremented array X must contain the n element vector x. On exit, X is overwritten with the transformed vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -131,20 +131,20 @@ Lower band: `A_band[s*sa1 + j*sa2] = A(j+s, j)` for s = 0..min(K, N-1-j)
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation to be performed |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit or non-unit triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of super/sub-diagonals |
-| `A` | `Complex128Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `x` | `Complex128Array` | in/out | `N` |  | input/output vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `trans` | `TransposeOperation` | Specifies the operation to be performed<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit or non-unit triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of super/sub-diagonals<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output vector |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

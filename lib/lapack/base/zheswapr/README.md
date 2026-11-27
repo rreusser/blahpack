@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zheswapr( order, uplo, N, A, LDA, i1, i2 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle of `A` is stored |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `i1` | `integer` | in |  |  | zero-based index of the first row/column to swap |
-| `i2` | `integer` | in |  |  | zero-based index of the second row/column to swap |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle of `A` is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `i1` | `integer` | Zero-based index of the first row/column to swap |
+| `i2` | `integer` | Zero-based index of the second row/column to swap |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -65,16 +65,16 @@ zheswapr.ndarray( uplo, N, A, strideA1, strideA2, offsetA, i1, i2 ) → Complex1
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle of `A` is stored |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `i1` | `integer` | in |  |  | zero-based index of the first row/column to swap |
-| `i2` | `integer` | in |  |  | zero-based index of the second row/column to swap |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle of `A` is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `i1` | `integer` | Zero-based index of the first row/column to swap |
+| `i2` | `integer` | Zero-based index of the second row/column to swap |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

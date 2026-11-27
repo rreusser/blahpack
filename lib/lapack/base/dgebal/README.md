@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgebal( order, job, N, A, LDA, ilo, ihi, SCALE, strideSCALE ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Float64Array` | in/out | `N × N` |  | on entry, the input matrix A. On exit, A is overwritten by the balanced matrix. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N |
-| `SCALE` | `Float64Array` | out | `N` |  | details of the permutations and scaling factors applied to A. |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the input matrix A. On exit, A is overwritten by the balanced matrix. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Details of the permutations and scaling factors applied to A. |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,19 +91,19 @@ columns as close in norm as possible.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix (modified in-place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N |
-| `SCALE` | `Float64Array` | out | `N` |  | output array of length N (permutation/scaling info) |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride for SCALE |
-| ↳ `offsetSCALE` | `NonNegativeInteger` | in |  |  | starting index for SCALE |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix (modified in-place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are set to integers such that on exit A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output array of length N (permutation/scaling info) |
+| ↳ `strideSCALE` | `integer` | Stride for SCALE |
+| ↳ `offsetSCALE` | `NonNegativeInteger` | Starting index for SCALE |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

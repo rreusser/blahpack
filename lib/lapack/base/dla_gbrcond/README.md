@@ -31,24 +31,24 @@ dla_gbrcond(
 ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > N - 1` | the number of subdiagonals within the band of A. |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | the number of superdiagonals within the band of A. |
-| `AB` | `Float64Array` | in | `kl + ku + 1 × N` |  | input matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `AFB` | `Float64Array` | in | `2 * kl + ku + 1 × N` |  | input matrix |
-| ↳ `LDAFB` | `PositiveInteger` | in |  | column-major requires `LDAFB ≥ 2 * kl + ku + 1`; row-major requires `LDAFB ≥ max( 1, N )` | leading dimension of `AFB` |
-| `IPIV` | `Int32Array` | in | `N` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `cmode` | `integer` | in |  |  | determines op2(C) in the formula op(A) * op2(C) as follows: CMODE = 1 op2(C) = C CMODE = 0 op2(C) = I CMODE = -1 op2(C) = inv(C) |
-| `c` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 5 * N` |  | input array |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of subdiagonals within the band of A.<br>Rejects `kl < 0 \|\| kl > N - 1` |
+| `ku` | `NonNegativeInteger` | The number of superdiagonals within the band of A.<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | Input matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `AFB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | Input matrix |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of `AFB`<br>Column-major requires `LDAFB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAFB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `cmode` | `integer` | Determines op2(C) in the formula op(A) \* op2(C) as follows: CMODE = 1 op2(C) = C CMODE = 0 op2(C) = I CMODE = -1 op2(C) = inv(C) |
+| `c` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Input array |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -110,33 +110,33 @@ dla_gbrcond.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > N - 1` | the number of subdiagonals within the band of A. |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | the number of superdiagonals within the band of A. |
-| `AB` | `Float64Array` | in | `kl + ku + 1 × N` |  | input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `AFB` | `Float64Array` | in | `2 * kl + ku + 1 × N` |  | input matrix |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of the first dimension of `AFB` |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of the second dimension of `AFB` |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | starting index for `AFB` |
-| `IPIV` | `Int32Array` | in | `N` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `cmode` | `integer` | in |  |  | determines op2(C) in the formula op(A) * op2(C) as follows: CMODE = 1 op2(C) = C CMODE = 0 op2(C) = I CMODE = -1 op2(C) = inv(C) |
-| `c` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `WORK` | `Float64Array` | out | `≥ 5 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | output array |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies the operation type<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of subdiagonals within the band of A.<br>Rejects `kl < 0 \|\| kl > N - 1` |
+| `ku` | `NonNegativeInteger` | The number of superdiagonals within the band of A.<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | Input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `AFB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | Input matrix |
+| ↳ `strideAFB1` | `integer` | Stride of the first dimension of `AFB` |
+| ↳ `strideAFB2` | `integer` | Stride of the second dimension of `AFB` |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Starting index for `AFB` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `cmode` | `integer` | Determines op2(C) in the formula op(A) \* op2(C) as follows: CMODE = 1 op2(C) = C CMODE = 0 op2(C) = I CMODE = -1 op2(C) = inv(C) |
+| `c` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 5 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

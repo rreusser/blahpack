@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaqr1( order, N, H, LDH, s1, s2, v, strideV ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H (2 or 3) |
-| `H` | `Complex128Array` | in | `null × N` |  | upper Hessenberg matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `s1` | `Complex128` | in |  |  | first shift |
-| `s2` | `Complex128` | in |  |  | second shift |
-| `v` | `Complex128Array` | out | `N` |  | output vector (length `N`) |
-| ↳ `strideV` | `integer` | in |  |  | `v` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix H (2 or 3) |
+| `H` | `Complex128Array`<br><sub>? × N</sub> | Upper Hessenberg matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `s1` | `Complex128` | First shift |
+| `s2` | `Complex128` | Second shift |
+| `v` | `Complex128Array`<br><sub>length N</sub> | **out** · Output vector (length `N`) |
+| ↳ `strideV` | `integer` | `v` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,18 +70,18 @@ H is an upper Hessenberg matrix, and s1, s2 are complex shifts.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H (must be 2 or 3) |
-| `H` | `Complex128Array` | in | `null × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` (complex elements) |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` (complex elements) |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` (complex elements) |
-| `s1` | `Complex128` | in |  |  | first shift |
-| `s2` | `Complex128` | in |  |  | second shift |
-| `v` | `Complex128Array` | out | `N` |  | output array of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` (complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix H (must be 2 or 3) |
+| `H` | `Complex128Array`<br><sub>? × N</sub> | Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` (complex elements) |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` (complex elements) |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` (complex elements) |
+| `s1` | `Complex128` | First shift |
+| `s2` | `Complex128` | Second shift |
+| `v` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array of length N |
+| ↳ `strideV` | `integer` | Stride length for `v` (complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

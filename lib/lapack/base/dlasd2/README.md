@@ -37,39 +37,39 @@ dlasd2(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`row-major` or `column-major`) |
-| `NL` | `integer` | in |  | rejects `nl < 1` | row dimension of the upper block (>= 1) |
-| `NR` | `integer` | in |  | rejects `nr < 1` | row dimension of the lower block (>= 1) |
-| `SQRE` | `integer` | in |  | rejects `sqre !== 1 && sqre !== 0` | 0 if lower block is square, 1 if rectangular |
-| `K` | `Int32Array` | out |  |  | output array; `K[0]` set to dimension of non-deflated matrix |
-| `D` | `Float64Array` | in/out | `nl + nr + 1` |  | singular values (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| `Z` | `Float64Array` | out | `nl + nr + 1` |  | updating row vector (length N) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| `ALPHA` | `number` | in |  |  | diagonal element associated with the added row |
-| `BETA` | `number` | in |  |  | off-diagonal element associated with the added row |
-| `U` | `Float64Array` | in/out | `nl + nr + 1 × nl + nr + 1` |  | left singular vectors (N x N) |
-| ↳ `LDU` | `PositiveInteger` | in |  | requires `LDU ≥ nl + nr + 1` | leading dimension of U |
-| `VT` | `Float64Array` | in/out | `nl + nr + 1 + sqre × nl + nr + 1 + sqre` |  | right singular vectors (M x M) |
-| ↳ `LDVT` | `PositiveInteger` | in |  | requires `LDVT ≥ nl + nr + 1 + sqre` | leading dimension of VT |
-| `DSIGMA` | `Float64Array` | out | `nl + nr + 1` |  | output singular values (length N) |
-| ↳ `strideDSIGMA` | `integer` | in |  |  | stride length for `DSIGMA` |
-| `U2` | `Float64Array` | out | `nl + nr + 1 × nl + nr + 1` |  | output left singular vectors copy (N x N) |
-| ↳ `LDU2` | `PositiveInteger` | in |  | requires `LDU2 ≥ nl + nr + 1` | leading dimension of U2 |
-| `VT2` | `Float64Array` | out | `nl + nr + 1 + sqre × nl + nr + 1` |  | output right singular vectors copy (M x M) |
-| ↳ `LDVT2` | `PositiveInteger` | in |  | column-major requires `LDVT2 ≥ nl + nr + 1 + sqre`; row-major requires `LDVT2 ≥ max( 1, nl + nr + 1 )` | leading dimension of VT2 |
-| `IDXP` | `Int32Array` | out | `nl + nr + 1` |  | permutation array (length N) |
-| ↳ `strideIDXP` | `integer` | in |  |  | stride length for `IDXP` |
-| `IDX` | `Int32Array` | out | `nl + nr + 1` |  | permutation array (length N) |
-| ↳ `strideIDX` | `integer` | in |  |  | stride length for `IDX` |
-| `IDXC` | `Int32Array` | out | `nl + nr + 1` |  | permutation array (length N) |
-| ↳ `strideIDXC` | `integer` | in |  |  | stride length for `IDXC` |
-| `IDXQ` | `Int32Array` | in/out | `nl + nr + 1` |  | permutation array (length N) |
-| ↳ `strideIDXQ` | `integer` | in |  |  | stride length for `IDXQ` |
-| `COLTYP` | `Int32Array` | out | `nl + nr + 1` |  | column type array (length max(N,4)) |
-| ↳ `strideCOLTYP` | `integer` | in |  |  | stride length for `COLTYP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`row-major` or `column-major`) |
+| `NL` | `integer` | Row dimension of the upper block (>= 1)<br>Rejects `nl < 1` |
+| `NR` | `integer` | Row dimension of the lower block (>= 1)<br>Rejects `nr < 1` |
+| `SQRE` | `integer` | 0 if lower block is square, 1 if rectangular<br>Rejects `sqre !== 1 && sqre !== 0` |
+| `K` | `Int32Array` | **out** · Output array; `K[0]` set to dimension of non-deflated matrix |
+| `D` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Singular values (length N) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| `Z` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Updating row vector (length N) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| `ALPHA` | `number` | Diagonal element associated with the added row |
+| `BETA` | `number` | Off-diagonal element associated with the added row |
+| `U` | `Float64Array`<br><sub>(nl + nr + 1) × (nl + nr + 1)</sub> | **in/out** · Left singular vectors (N x N) |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of U<br>Requires `LDU ≥ nl + nr + 1` |
+| `VT` | `Float64Array`<br><sub>(nl + nr + 1 + sqre) × (nl + nr + 1 + sqre)</sub> | **in/out** · Right singular vectors (M x M) |
+| ↳ `LDVT` | `PositiveInteger` | Leading dimension of VT<br>Requires `LDVT ≥ nl + nr + 1 + sqre` |
+| `DSIGMA` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Output singular values (length N) |
+| ↳ `strideDSIGMA` | `integer` | Stride length for `DSIGMA` |
+| `U2` | `Float64Array`<br><sub>(nl + nr + 1) × (nl + nr + 1)</sub> | **out** · Output left singular vectors copy (N x N) |
+| ↳ `LDU2` | `PositiveInteger` | Leading dimension of U2<br>Requires `LDU2 ≥ nl + nr + 1` |
+| `VT2` | `Float64Array`<br><sub>(nl + nr + 1 + sqre) × (nl + nr + 1)</sub> | **out** · Output right singular vectors copy (M x M) |
+| ↳ `LDVT2` | `PositiveInteger` | Leading dimension of VT2<br>Column-major requires `LDVT2 ≥ nl + nr + 1 + sqre`<br>Row-major requires `LDVT2 ≥ max(1, nl + nr + 1)` |
+| `IDXP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation array (length N) |
+| ↳ `strideIDXP` | `integer` | Stride length for `IDXP` |
+| `IDX` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation array (length N) |
+| ↳ `strideIDX` | `integer` | Stride length for `IDX` |
+| `IDXC` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation array (length N) |
+| ↳ `strideIDXC` | `integer` | Stride length for `IDXC` |
+| `IDXQ` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Permutation array (length N) |
+| ↳ `strideIDXQ` | `integer` | Stride length for `IDXQ` |
+| `COLTYP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Column type array (length max(N,4)) |
+| ↳ `strideCOLTYP` | `integer` | Stride length for `COLTYP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -148,54 +148,54 @@ Merge two sets of singular values in bidiagonal SVD divide and conquer.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `nl` | `integer` | in |  | rejects `nl < 1` | the row dimension of the upper block. |
-| `nr` | `integer` | in |  | rejects `nr < 1` | the row dimension of the lower block. |
-| `sqre` | `integer` | in |  | rejects `sqre !== 1 && sqre !== 0` | = 0: the lower block is an NR-by-NR square matrix. = 1: the lower block is an NR-by-(NR+1) rectangular matrix. |
-| `K` | `Int32Array` | out |  |  | output array; `K[0]` set to dimension of non-deflated matrix |
-| `d` | `Float64Array` | in/out | `nl + nr + 1` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `z` | `Float64Array` | out | `nl + nr + 1` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `beta` | `number` | in |  |  | scalar constant |
-| `U` | `Float64Array` | in/out | `nl + nr + 1 × nl + nr + 1` |  | input matrix |
-| ↳ `strideU1` | `integer` | in |  |  | stride of the first dimension of `U` |
-| ↳ `strideU2` | `integer` | in |  |  | stride of the second dimension of `U` |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for `U` |
-| `VT` | `Float64Array` | in/out | `nl + nr + 1 + sqre × nl + nr + 1 + sqre` |  | input matrix |
-| ↳ `strideVT1` | `integer` | in |  |  | stride of the first dimension of `VT` |
-| ↳ `strideVT2` | `integer` | in |  |  | stride of the second dimension of `VT` |
-| ↳ `offsetVT` | `NonNegativeInteger` | in |  |  | starting index for `VT` |
-| `DSIGMA` | `Float64Array` | out | `nl + nr + 1` |  | input array |
-| ↳ `strideDSIGMA` | `integer` | in |  |  | stride length for `DSIGMA` |
-| ↳ `offsetDSIGMA` | `NonNegativeInteger` | in |  |  | starting index for `DSIGMA` |
-| `U2` | `Float64Array` | out | `nl + nr + 1 × nl + nr + 1` |  | input matrix |
-| ↳ `strideU21` | `integer` | in |  |  | stride of the first dimension of `U2` |
-| ↳ `strideU22` | `integer` | in |  |  | stride of the second dimension of `U2` |
-| ↳ `offsetU2` | `NonNegativeInteger` | in |  |  | starting index for `U2` |
-| `VT2` | `Float64Array` | out | `nl + nr + 1 + sqre × nl + nr + 1` |  | input matrix |
-| ↳ `strideVT21` | `integer` | in |  |  | stride of the first dimension of `VT2` |
-| ↳ `strideVT22` | `integer` | in |  |  | stride of the second dimension of `VT2` |
-| ↳ `offsetVT2` | `NonNegativeInteger` | in |  |  | starting index for `VT2` |
-| `IDXP` | `Int32Array` | out | `nl + nr + 1` |  | input array |
-| ↳ `strideIDXP` | `integer` | in |  |  | stride length for `IDXP` |
-| ↳ `offsetIDXP` | `NonNegativeInteger` | in |  |  | starting index for `IDXP` |
-| `IDX` | `Int32Array` | out | `nl + nr + 1` |  | input array |
-| ↳ `strideIDX` | `integer` | in |  |  | stride length for `IDX` |
-| ↳ `offsetIDX` | `NonNegativeInteger` | in |  |  | starting index for `IDX` |
-| `IDXC` | `Int32Array` | out | `nl + nr + 1` |  | input array |
-| ↳ `strideIDXC` | `integer` | in |  |  | stride length for `IDXC` |
-| ↳ `offsetIDXC` | `NonNegativeInteger` | in |  |  | starting index for `IDXC` |
-| `IDXQ` | `Int32Array` | in/out | `nl + nr + 1` |  | input array |
-| ↳ `strideIDXQ` | `integer` | in |  |  | stride length for `IDXQ` |
-| ↳ `offsetIDXQ` | `NonNegativeInteger` | in |  |  | starting index for `IDXQ` |
-| `COLTYP` | `Int32Array` | out | `nl + nr + 1` |  | output array |
-| ↳ `strideCOLTYP` | `integer` | in |  |  | stride length for `COLTYP` |
-| ↳ `offsetCOLTYP` | `NonNegativeInteger` | in |  |  | starting index for `COLTYP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `nl` | `integer` | The row dimension of the upper block.<br>Rejects `nl < 1` |
+| `nr` | `integer` | The row dimension of the lower block.<br>Rejects `nr < 1` |
+| `sqre` | `integer` | = 0: the lower block is an NR-by-NR square matrix. = 1: the lower block is an NR-by-(NR+1) rectangular matrix.<br>Rejects `sqre !== 1 && sqre !== 0` |
+| `K` | `Int32Array` | **out** · Output array; `K[0]` set to dimension of non-deflated matrix |
+| `d` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `z` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Input array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `alpha` | `number` | Scalar constant |
+| `beta` | `number` | Scalar constant |
+| `U` | `Float64Array`<br><sub>(nl + nr + 1) × (nl + nr + 1)</sub> | **in/out** · Input matrix |
+| ↳ `strideU1` | `integer` | Stride of the first dimension of `U` |
+| ↳ `strideU2` | `integer` | Stride of the second dimension of `U` |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for `U` |
+| `VT` | `Float64Array`<br><sub>(nl + nr + 1 + sqre) × (nl + nr + 1 + sqre)</sub> | **in/out** · Input matrix |
+| ↳ `strideVT1` | `integer` | Stride of the first dimension of `VT` |
+| ↳ `strideVT2` | `integer` | Stride of the second dimension of `VT` |
+| ↳ `offsetVT` | `NonNegativeInteger` | Starting index for `VT` |
+| `DSIGMA` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Input array |
+| ↳ `strideDSIGMA` | `integer` | Stride length for `DSIGMA` |
+| ↳ `offsetDSIGMA` | `NonNegativeInteger` | Starting index for `DSIGMA` |
+| `U2` | `Float64Array`<br><sub>(nl + nr + 1) × (nl + nr + 1)</sub> | **out** · Input matrix |
+| ↳ `strideU21` | `integer` | Stride of the first dimension of `U2` |
+| ↳ `strideU22` | `integer` | Stride of the second dimension of `U2` |
+| ↳ `offsetU2` | `NonNegativeInteger` | Starting index for `U2` |
+| `VT2` | `Float64Array`<br><sub>(nl + nr + 1 + sqre) × (nl + nr + 1)</sub> | **out** · Input matrix |
+| ↳ `strideVT21` | `integer` | Stride of the first dimension of `VT2` |
+| ↳ `strideVT22` | `integer` | Stride of the second dimension of `VT2` |
+| ↳ `offsetVT2` | `NonNegativeInteger` | Starting index for `VT2` |
+| `IDXP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Input array |
+| ↳ `strideIDXP` | `integer` | Stride length for `IDXP` |
+| ↳ `offsetIDXP` | `NonNegativeInteger` | Starting index for `IDXP` |
+| `IDX` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Input array |
+| ↳ `strideIDX` | `integer` | Stride length for `IDX` |
+| ↳ `offsetIDX` | `NonNegativeInteger` | Starting index for `IDX` |
+| `IDXC` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Input array |
+| ↳ `strideIDXC` | `integer` | Stride length for `IDXC` |
+| ↳ `offsetIDXC` | `NonNegativeInteger` | Starting index for `IDXC` |
+| `IDXQ` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Input array |
+| ↳ `strideIDXQ` | `integer` | Stride length for `IDXQ` |
+| ↳ `offsetIDXQ` | `NonNegativeInteger` | Starting index for `IDXQ` |
+| `COLTYP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Output array |
+| ↳ `strideCOLTYP` | `integer` | Stride length for `COLTYP` |
+| ↳ `offsetCOLTYP` | `NonNegativeInteger` | Starting index for `COLTYP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,22 +20,22 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgghrd( order, compq, compz, N, ilo, ihi, A, LDA, B, LDB, Q, LDQ, Z, LDZ ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A and B |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | ilo (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | ihi (1-based) |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrices A and B<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | Ihi (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -90,29 +90,29 @@ zgghrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A and B |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | ilo (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | ihi (1-based) |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input/output matrix B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (complex elements) |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input/output matrix Q |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` (complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` (complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` (complex elements) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | input/output matrix Z |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrices A and B<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | Ihi (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix A |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (complex elements) |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Q |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` (complex elements) |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` (complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` (complex elements) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix Z |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

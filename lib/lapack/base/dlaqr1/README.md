@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaqr1( order, N, H, LDH, sr1, si1, sr2, si2, v, strideV ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H. |
-| `H` | `Float64Array` | in | `null × N` |  | the 2-by-2 or 3-by-3 matrix H in (*). |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `sr1` | `number` | in |  |  | the shifts in (*). |
-| `si1` | `number` | in |  |  | the shifts in (*). |
-| `sr2` | `number` | in |  |  | the shifts in (*). |
-| `si2` | `number` | in |  |  | the shifts in (*). |
-| `v` | `Float64Array` | out | `N` |  | a scalar multiple of the first column of the matrix K in (*). |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix H. |
+| `H` | `Float64Array`<br><sub>? × N</sub> | The 2-by-2 or 3-by-3 matrix H in (\*). |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `sr1` | `number` | The shifts in (\*). |
+| `si1` | `number` | The shifts in (\*). |
+| `sr2` | `number` | The shifts in (\*). |
+| `si2` | `number` | The shifts in (\*). |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · A scalar multiple of the first column of the matrix K in (\*). |
+| ↳ `strideV` | `integer` | Stride length for `v` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,20 +69,20 @@ overflows and most underflows.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H (must be 2 or 3) |
-| `H` | `Float64Array` | in | `null × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `sr1` | `number` | in |  |  | real part of first shift |
-| `si1` | `number` | in |  |  | imaginary part of first shift |
-| `sr2` | `number` | in |  |  | real part of second shift |
-| `si2` | `number` | in |  |  | imaginary part of second shift |
-| `v` | `Float64Array` | out | `N` |  | output array of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix H (must be 2 or 3) |
+| `H` | `Float64Array`<br><sub>? × N</sub> | Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `sr1` | `number` | Real part of first shift |
+| `si1` | `number` | Imaginary part of first shift |
+| `sr2` | `number` | Real part of second shift |
+| `si2` | `number` | Imaginary part of second shift |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · Output array of length N |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

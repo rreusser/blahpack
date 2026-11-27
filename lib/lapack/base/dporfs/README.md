@@ -32,26 +32,26 @@ dporfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrices B and X. |
-| `A` | `Float64Array` | in | `N × N` |  | the symmetric matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Float64Array` | in | `N × N` |  | the triangular factor U or L from the Cholesky factorization A = U**T*U or A = L*L**T, as computed by DPOTRF. |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | the right hand side matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the solution matrix X, as computed by DPOTRS. On exit, the improved solution matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace (length >= 3*N); if `null`, allocated internally |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | integer workspace (length >= N); if `null`, allocated internally |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices B and X.<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | The symmetric matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | The triangular factor U or L from the Cholesky factorization A = U\*\*T\*U or A = L\*L\*\*T, as computed by DPOTRF. |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | The right hand side matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the solution matrix X, as computed by DPOTRS. On exit, the improved solution matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace (length >= 3\*N); if `null`, allocated internally |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Integer workspace (length >= N); if `null`, allocated internally |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,39 +115,39 @@ are allocated internally.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' if upper Cholesky factor stored, 'lower' if lower |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Float64Array` | in | `N × N` |  | original N-by-N symmetric matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `AF` | `Float64Array` | in | `N × N` |  | Cholesky-factored N-by-N matrix (from dpotrf) |
-| ↳ `strideAF1` | `integer` | in |  |  | stride of the first dimension of AF |
-| ↳ `strideAF2` | `integer` | in |  |  | stride of the second dimension of AF |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | index offset for AF |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | index offset for X |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | index offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | index offset for BERR |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace array (length >= N) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | index offset for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' if upper Cholesky factor stored, 'lower' if lower |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Original N-by-N symmetric matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | Cholesky-factored N-by-N matrix (from dpotrf) |
+| ↳ `strideAF1` | `integer` | Stride of the first dimension of AF |
+| ↳ `strideAF2` | `integer` | Stride of the second dimension of AF |
+| ↳ `offsetAF` | `NonNegativeInteger` | Index offset for AF |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Index offset for X |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Index offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Index offset for BERR |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace array (length >= N) |
+| ↳ `strideIWork` | `integer` | Stride for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Index offset for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlangt( norm, N, DL, strideDL, d, strideD, DU, strideDU ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the value to be returned in DLANGT as described above. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) sub-diagonal elements of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the diagonal elements of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) super-diagonal elements of A. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the value to be returned in DLANGT as described above. |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) sub-diagonal elements of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The diagonal elements of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) super-diagonal elements of A. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,19 +67,19 @@ Computes the norm of a real general tridiagonal matrix A.
 
 The matrix A has sub-diagonal DL, diagonal D, and super-diagonal DU.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | 'max', 'one-norm', 'inf-norm', or 'frobenius' |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `DL` | `Float64Array` | in | `N - 1` |  | sub-diagonal elements (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for DL |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `DU` | `Float64Array` | in | `N - 1` |  | super-diagonal elements (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for DU |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | 'max', 'one-norm', 'inf-norm', or 'frobenius' |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal elements (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for DL |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | Super-diagonal elements (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for DU |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

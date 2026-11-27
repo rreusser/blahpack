@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgbsv( order, N, kl, ku, nrhs, AB, LDAB, IPIV, strideIPIV, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides (columns of B) |
-| `AB` | `Float64Array` | in/out | `2 * kl + ku + 1 × N` |  | input matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ 2 * kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `IPIV` | `Int32Array` | out | `N` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `B` | `Float64Array` | in/out | `max( N, 1 ) × nrhs` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( N, 1 )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | **in/out** · Input matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `B` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(N, 1)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,23 +76,23 @@ dgbsv.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides (columns of B) |
-| `AB` | `Float64Array` | in/out | `2 * kl + ku + 1 × N` |  | band matrix in LAPACK band storage (2*KL+KU+1 by N) |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot index array of length N (output, 0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `B` | `Float64Array` | in/out | `max( N, 1 ) × nrhs` |  | right-hand side matrix (N by NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | **in/out** · Band matrix in LAPACK band storage (2\*KL+KU+1 by N) |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot index array of length N (output, 0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `B` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · Right-hand side matrix (N by NRHS) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

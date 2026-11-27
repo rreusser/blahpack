@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dswap( N, x, strideX, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in input vector(s) |
-| `x` | `Float64Array` | in/out | `N` |  | storage spacing between elements of DX. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | storage spacing between elements of DY. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in input vector(s) |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Storage spacing between elements of DX. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Storage spacing between elements of DY. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,15 +47,15 @@ dswap.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
 
 Interchange two double-precision floating-point vectors.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `x` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | output array |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Output array |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

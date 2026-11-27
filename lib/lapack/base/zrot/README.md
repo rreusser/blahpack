@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zrot( N, x, strideX, y, strideY, c, s ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `cx` stride length |
-| `y` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `cy` stride length |
-| `c` | `number` | in |  |  | cosine of rotation (real) |
-| `s` | `Complex128` | in |  |  | sine of rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `cx` stride length |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | `cy` stride length |
+| `c` | `number` | Cosine of rotation (real) |
+| `s` | `Complex128` | Sine of rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -56,17 +56,17 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zrot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | first input/output array |
-| ↳ `strideX` | `integer` | in |  |  | stride for `cx` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `cx` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `N` |  | second input/output array |
-| ↳ `strideY` | `integer` | in |  |  | stride for `cy` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `cy` (in complex elements) |
-| `c` | `number` | in |  |  | cosine of rotation (real) |
-| `s` | `Complex128` | in |  |  | sine of rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · First input/output array |
+| ↳ `strideX` | `integer` | Stride for `cx` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `cx` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Second input/output array |
+| ↳ `strideY` | `integer` | Stride for `cy` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `cy` (in complex elements) |
+| `c` | `number` | Cosine of rotation (real) |
+| `s` | `Complex128` | Sine of rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -30,24 +30,24 @@ dlahqr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
-| `wantz` | `boolean` | in |  |  | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix H. |
-| `ilo` | `integer` | in |  |  | it is assumed that H is already upper quasi-triangular in rows and columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless ILO = 1). |
-| `ihi` | `integer` | in |  |  | it is assumed that H is already upper quasi-triangular in rows and columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless ILO = 1). |
-| `H` | `Float64Array` | in/out | `N × N` |  | on entry, the upper Hessenberg matrix H. On exit, if INFO is zero and if WANTT is `true`, H is upper quasi-triangular in rows and columns ILO:IHI, with any 2-by-2 diagonal blocks in standard form. |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `WR` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the computed eigenvalues ILO to IHI are stored in the corresponding elements of WR and WI. |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the computed eigenvalues ILO to IHI are stored in the corresponding elements of WR and WI. |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `ihiz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `Z` | `Float64Array` | in/out | `N × N` |  | if WANTZ is `true`, on entry Z must contain the current matrix Z of transformations accumulated by DHSEQR, and on exit Z has been updated; transformations are applied only to the submatrix Z(ILOZ:IHIZ,ILO:IHI). |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
+| `wantz` | `boolean` | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
+| `N` | `NonNegativeInteger` | The order of the matrix H. |
+| `ilo` | `integer` | It is assumed that H is already upper quasi-triangular in rows and columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless ILO = 1). |
+| `ihi` | `integer` | It is assumed that H is already upper quasi-triangular in rows and columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless ILO = 1). |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper Hessenberg matrix H. On exit, if INFO is zero and if WANTT is `true`, H is upper quasi-triangular in rows and columns ILO:IHI, with any 2-by-2 diagonal blocks in standard form. |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues ILO to IHI are stored in the corresponding elements of WR and WI. |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues ILO to IHI are stored in the corresponding elements of WR and WI. |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `ihiz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · If WANTZ is `true`, on entry Z must contain the current matrix Z of transformations accumulated by DHSEQR, and on exit Z has been updated; transformations are applied only to the submatrix Z(ILOZ:IHIZ,ILO:IHI). |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -103,29 +103,29 @@ Note: ILO and IHI are 1-based indices (Fortran convention).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | if true, compute the full Schur form T |
-| `wantz` | `boolean` | in |  |  | if true, compute the Schur vectors Z |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ilo` | `integer` | in |  |  | first row/col of the block (1-based) |
-| `ihi` | `integer` | in |  |  | last row/col of the block (1-based) |
-| `H` | `Float64Array` | in/out | `N × N` |  | upper Hessenberg matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `WR` | `Float64Array` | out | `N` |  | output array for real parts of eigenvalues |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | output array for imaginary parts of eigenvalues |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for `WI` |
-| `iloz` | `integer` | in |  |  | first row of Z to update (1-based) |
-| `ihiz` | `integer` | in |  |  | last row of Z to update (1-based) |
-| `Z` | `Float64Array` | in/out | `N × N` |  | Schur vectors (updated if wantz is true) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | If true, compute the full Schur form T |
+| `wantz` | `boolean` | If true, compute the Schur vectors Z |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ilo` | `integer` | First row/col of the block (1-based) |
+| `ihi` | `integer` | Last row/col of the block (1-based) |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for real parts of eigenvalues |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for imaginary parts of eigenvalues |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for `WI` |
+| `iloz` | `integer` | First row of Z to update (1-based) |
+| `ihiz` | `integer` | Last row of Z to update (1-based) |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Schur vectors (updated if wantz is true) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

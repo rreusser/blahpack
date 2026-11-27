@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of rows of `A` |
-| `K` | `NonNegativeInteger` | in |  |  | offset for the reduction |
-| `nb` | `NonNegativeInteger` | in |  |  | number of columns to reduce |
-| `A` | `Complex128Array` | in/out | `N × N - K + 1` |  | input/output matrix (`N`-by-`(N-K+1)`) |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `tau` | `Complex128Array` | out | `nb` |  | output array of scalar factors (length `nb`) |
-| ↳ `strideTAU` | `integer` | in |  |  | `tau` stride length (in complex elements) |
-| `T` | `Complex128Array` | out | `nb × nb` |  | output upper triangular matrix (`nb`-by-`nb`) |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `Y` | `Complex128Array` | out | `N × nb` |  | output matrix (`N`-by-`nb`) |
-| ↳ `LDY` | `PositiveInteger` | in |  |  | leading dimension of `Y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of rows of `A` |
+| `K` | `NonNegativeInteger` | Offset for the reduction |
+| `nb` | `NonNegativeInteger` | Number of columns to reduce |
+| `A` | `Complex128Array`<br><sub>N × (N - K + 1)</sub> | **in/out** · Input/output matrix (`N`-by-`(N-K+1)`) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `tau` | `Complex128Array`<br><sub>length nb</sub> | **out** · Output array of scalar factors (length `nb`) |
+| ↳ `strideTAU` | `integer` | `tau` stride length (in complex elements) |
+| `T` | `Complex128Array`<br><sub>nb × nb</sub> | **out** · Output upper triangular matrix (`nb`-by-`nb`) |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `Y` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Output matrix (`N`-by-`nb`) |
+| ↳ `LDY` | `PositiveInteger` | Leading dimension of `Y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,26 +77,26 @@ Reduces the first nb columns of a complex general rectangular matrix to upper tr
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of rows |
-| `K` | `NonNegativeInteger` | in |  |  | offset for the reduction |
-| `nb` | `NonNegativeInteger` | in |  |  | number of columns to reduce |
-| `A` | `Complex128Array` | in/out | `N × N - K + 1` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `tau` | `Complex128Array` | out | `nb` |  | output array of scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride of tau |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | offset into tau |
-| `T` | `Complex128Array` | out | `nb × nb` |  | output upper triangular factor |
-| ↳ `strideT1` | `integer` | in |  |  | first stride of T |
-| ↳ `strideT2` | `integer` | in |  |  | second stride of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | offset into T |
-| `Y` | `Complex128Array` | out | `N × nb` |  | output matrix |
-| ↳ `strideY1` | `integer` | in |  |  | first stride of Y |
-| ↳ `strideY2` | `integer` | in |  |  | second stride of Y |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | offset into Y |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows |
+| `K` | `NonNegativeInteger` | Offset for the reduction |
+| `nb` | `NonNegativeInteger` | Number of columns to reduce |
+| `A` | `Complex128Array`<br><sub>N × (N - K + 1)</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `tau` | `Complex128Array`<br><sub>length nb</sub> | **out** · Output array of scalar factors |
+| ↳ `strideTAU` | `integer` | Stride of tau |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Offset into tau |
+| `T` | `Complex128Array`<br><sub>nb × nb</sub> | **out** · Output upper triangular factor |
+| ↳ `strideT1` | `integer` | First stride of T |
+| ↳ `strideT2` | `integer` | Second stride of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Offset into T |
+| `Y` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Output matrix |
+| ↳ `strideY1` | `integer` | First stride of Y |
+| ↳ `strideY2` | `integer` | Second stride of Y |
+| ↳ `offsetY` | `NonNegativeInteger` | Offset into Y |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

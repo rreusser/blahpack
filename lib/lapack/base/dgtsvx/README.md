@@ -39,40 +39,40 @@ dgtsvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | specifies whether or not the factored form of A has been supplied on entry. `'factored'`: DLF, DF, DUF, DU2, and IPIV contain the factored form of A; DL, D, DU, DLF, DF, DUF, DU2 and IPIV will not be modified. `'not-factored'`: The matrix will be copied to DLF, DF, and DUF and factored. |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system of equations: `'no-transpose'`: A * X = B (No transpose) `'transpose'`: A**T * X = B (Transpose) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) subdiagonal elements of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) superdiagonal elements of A. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DLF` | `Float64Array` | in/out | `N - 1` |  | if `fact === 'factored'`, then DLF is an input argument and on entry contains the (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
-| ↳ `strideDLF` | `integer` | in |  |  | stride length for `DLF` |
-| `DF` | `Float64Array` | in/out | `N` |  | if `fact === 'factored'`, then DF is an input argument and on entry contains the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideDF` | `integer` | in |  |  | stride length for `DF` |
-| `DUF` | `Float64Array` | in/out | `N - 1` |  | if `fact === 'factored'`, then DUF is an input argument and on entry contains the (n-1) elements of the first superdiagonal of U. |
-| ↳ `strideDUF` | `integer` | in |  |  | stride length for `DUF` |
-| `DU2` | `Float64Array` | in/out | `N - 2` |  | if `fact === 'factored'`, then DU2 is an input argument and on entry contains the (n-2) elements of the second superdiagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | in/out | `N` |  | if `fact === 'factored'`, then IPIV is an input argument and on entry contains the pivot indices from the LU factorization of A as computed by DGTTRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | the N-by-NRHS right hand side matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | out | `N × nrhs` |  | if INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `rcond` | `Float64Array` | out |  |  | the estimate of the reciprocal condition number of the matrix A. |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "factored"` | Specifies whether or not the factored form of A has been supplied on entry. `'factored'`: DLF, DF, DUF, DU2, and IPIV contain the factored form of A; DL, D, DU, DLF, DF, DUF, DU2 and IPIV will not be modified. `'not-factored'`: The matrix will be copied to DLF, DF, and DUF and factored. |
+| `trans` | `TransposeOperation` | Specifies the form of the system of equations: `'no-transpose'`: A \* X = B (No transpose) `'transpose'`: A\*\*T \* X = B (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) subdiagonal elements of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) superdiagonal elements of A. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DLF` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · If `fact === 'factored'`, then DLF is an input argument and on entry contains the (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
+| ↳ `strideDLF` | `integer` | Stride length for `DLF` |
+| `DF` | `Float64Array`<br><sub>length N</sub> | **in/out** · If `fact === 'factored'`, then DF is an input argument and on entry contains the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideDF` | `integer` | Stride length for `DF` |
+| `DUF` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · If `fact === 'factored'`, then DUF is an input argument and on entry contains the (n-1) elements of the first superdiagonal of U. |
+| ↳ `strideDUF` | `integer` | Stride length for `DUF` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | **in/out** · If `fact === 'factored'`, then DU2 is an input argument and on entry contains the (n-2) elements of the second superdiagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · If `fact === 'factored'`, then IPIV is an input argument and on entry contains the pivot indices from the LU factorization of A as computed by DGTTRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | The N-by-NRHS right hand side matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · The estimate of the reciprocal condition number of the matrix A. |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -163,57 +163,57 @@ Error bounds on the solution and a condition estimate are also provided.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'not-factored' or 'factored' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Float64Array` | in | `N - 1` |  | sub-diagonal of A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | offset for DL |
-| `d` | `Float64Array` | in | `N` |  | diagonal of A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `DU` | `Float64Array` | in | `N - 1` |  | super-diagonal of A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | offset for DU |
-| `DLF` | `Float64Array` | in/out | `N - 1` |  | factored sub-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDLF` | `integer` | in |  |  | stride for DLF |
-| ↳ `offsetDLF` | `NonNegativeInteger` | in |  |  | offset for DLF |
-| `DF` | `Float64Array` | in/out | `N` |  | factored diagonal (length N), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDF` | `integer` | in |  |  | stride for DF |
-| ↳ `offsetDF` | `NonNegativeInteger` | in |  |  | offset for DF |
-| `DUF` | `Float64Array` | in/out | `N - 1` |  | factored super-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDUF` | `integer` | in |  |  | stride for DUF |
-| ↳ `offsetDUF` | `NonNegativeInteger` | in |  |  | offset for DUF |
-| `DU2` | `Float64Array` | in/out | `N - 2` |  | second superdiagonal fill-in (length N-2), input if fact='factored', output if fact='not-factored' |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for DU2 |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | offset for DU2 |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset for IPIV |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right hand side matrix (N x NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | row stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | column stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset for B |
-| `X` | `Float64Array` | out | `N × nrhs` |  | solution matrix (N x NRHS), output |
-| ↳ `strideX1` | `integer` | in |  |  | row stride of X |
-| ↳ `strideX2` | `integer` | in |  |  | column stride of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset for X |
-| `rcond` | `Float64Array` | out |  |  | output: rcond[0] is the reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output: forward error bound for each RHS |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output: backward error for each RHS |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | offset for BERR |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "factored"` | 'not-factored' or 'factored' |
+| `trans` | `TransposeOperation` | 'no-transpose' or 'transpose'<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL |
+| ↳ `offsetDL` | `NonNegativeInteger` | Offset for DL |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of A (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | Super-diagonal of A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU |
+| ↳ `offsetDU` | `NonNegativeInteger` | Offset for DU |
+| `DLF` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Factored sub-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDLF` | `integer` | Stride for DLF |
+| ↳ `offsetDLF` | `NonNegativeInteger` | Offset for DLF |
+| `DF` | `Float64Array`<br><sub>length N</sub> | **in/out** · Factored diagonal (length N), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDF` | `integer` | Stride for DF |
+| ↳ `offsetDF` | `NonNegativeInteger` | Offset for DF |
+| `DUF` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Factored super-diagonal (length N-1), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDUF` | `integer` | Stride for DUF |
+| ↳ `offsetDUF` | `NonNegativeInteger` | Offset for DUF |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | **in/out** · Second superdiagonal fill-in (length N-2), input if fact='factored', output if fact='not-factored' |
+| ↳ `strideDU2` | `integer` | Stride for DU2 |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Offset for DU2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset for IPIV |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right hand side matrix (N x NRHS) |
+| ↳ `strideB1` | `integer` | Row stride of B |
+| ↳ `strideB2` | `integer` | Column stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset for B |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (N x NRHS), output |
+| ↳ `strideX1` | `integer` | Row stride of X |
+| ↳ `strideX2` | `integer` | Column stride of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset for X |
+| `rcond` | `Float64Array` | **out** · Output: rcond[0] is the reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: forward error bound for each RHS |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: backward error for each RHS |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Offset for BERR |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace of length at least N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

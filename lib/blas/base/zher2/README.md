@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zher2( order, uplo, N, alpha, x, strideX, y, strideY, A, LDA ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `x` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,21 +83,21 @@ Performs the Hermitian rank 2 operation `A = alpha*x*conj(y)^T + conj(alpha)*y*c
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of `A` is used |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `Complex128` | in |  |  | complex scalar constant |
-| `x` | `Complex128Array` | in | `N` |  | first input vector |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Complex128Array` | in | `N` |  | second input vector |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is used |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar constant |
+| `x` | `Complex128Array`<br><sub>length N</sub> | First input vector |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Second input vector |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

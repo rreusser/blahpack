@@ -31,21 +31,21 @@ dsycon_3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | factored matrix from `dsytrf_rk` |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `e` | `Float64Array` | in | `N` |  | super- or sub-diagonal entries of the block diagonal matrix `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `dsytrf_rk` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix `A` |
-| `rcond` | `Float64Array` | out |  |  | output: `rcond[0]` is the reciprocal condition number |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace array of length at least `2*N` |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | workspace array of length at least `N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Factored matrix from `dsytrf_rk` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `e` | `Float64Array`<br><sub>length N</sub> | Super- or sub-diagonal entries of the block diagonal matrix `D` |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `dsytrf_rk` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix `A`<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output: `rcond[0]` is the reciprocal condition number |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least `2*N` |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least `N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,28 +98,28 @@ dsycon_3.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | factored matrix from `dsytrf_rk` (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `e` | `Float64Array` | in | `N` |  | super- or sub-diagonal entries of the block diagonal matrix `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `dsytrf_rk` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix `A` |
-| `rcond` | `Float64Array` | out |  |  | output: `rcond[0]` is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | workspace array of length at least `2*N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length at least `N` |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Factored matrix from `dsytrf_rk` (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `e` | `Float64Array`<br><sub>length N</sub> | Super- or sub-diagonal entries of the block diagonal matrix `D` |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `dsytrf_rk` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix `A`<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output: `rcond[0]` is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least `2*N` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least `N` |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

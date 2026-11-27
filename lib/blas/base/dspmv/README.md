@@ -28,18 +28,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dspmv( order, uplo, N, alpha, AP, x, strideX, beta, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix |
-| `x` | `Float64Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `N` |  | output vector |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed symmetric matrix |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Output vector |
+| ↳ `strideY` | `integer` | `y` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -92,21 +92,21 @@ Performs the matrix-vector operation `y = alpha*A*x + beta*y` where `A` is an.
 `N` by `N` symmetric matrix supplied in packed form, `x` and `y` are
 `N`-element vectors, and `alpha` and `beta` are scalars.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `x` | `Float64Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `N` |  | output vector |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed symmetric matrix |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Output vector |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

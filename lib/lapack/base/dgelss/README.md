@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgelss( order, M, N, nrhs, A, LDA, B, LDB, S, strideS, rcond, rank, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `max( M, N ) × nrhs` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, max( M, N ) )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `S` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | `S` stride length |
-| `rcond` | `number` | in |  |  | used to determine the effective rank of A. |
-| `rank` | `Int32Array` | out |  |  | output array; rank[0] set to the effective rank of A |
-| `WORK` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | workspace of length at least the reference's MINWRK (`max(3*N+MM, 3*N+nrhs, 5*N)` for `M >= N`, `MM = N` when `M >= 1.6*N` and `M` otherwise; `max(3*M+nrhs, 3*M+N, 5*M)` for `M < N`); for optimum performance the reference's MAXWRK, which lets the blocked callees use their ILAENV block size; if `null`, MAXWRK elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>max(M, N) × nrhs</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, max(M, N))`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `S` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | `S` stride length |
+| `rcond` | `number` | Used to determine the effective rank of A. |
+| `rank` | `Int32Array` | **out** · Output array; rank[0] set to the effective rank of A |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of length at least the reference's MINWRK (`max(3*N+MM, 3*N+nrhs, 5*N)` for `M >= N`, `MM = N` when `M >= 1.6*N` and `M` otherwise; `max(3*M+nrhs, 3*M+N, 5*M)` for `M < N`); for optimum performance the reference's MAXWRK, which lets the blocked callees use their ILAENV block size; if `null`, MAXWRK elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -84,27 +84,27 @@ Solves overdetermined or underdetermined systems for general matrices, using alt
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix, overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `max( M, N ) × nrhs` |  | on entry, M-by-NRHS (or max(M,N)-by-NRHS) RHS matrix; |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `S` | `Float64Array` | out | `min( M, N )` |  | output array of singular values in decreasing order (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride length for S |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for S |
-| `rcond` | `number` | in |  |  | used to determine the effective rank of A. |
-| `rank` | `Int32Array` | out |  |  | output array; rank[0] set to the effective rank of A |
-| `WORK` | `Float64Array` | out | `≥ MINWRK` |  | caller-provided workspace (LAPACKE convention). Minimum size: the reference's MINWRK (`computeMinWorkSize(M,N,nrhs)` from `base.js`): `max(3*N+MM, 3*N+nrhs, 5*N)` for `M >= N` (`MM = N` when `M >= 1.6*N`, else `M`), `max(3*M+nrhs, 3*M+N, 5*M)` for `M < N`. For optimum performance, the reference's MAXWRK (`computeWorkSize(M,N,nrhs)` from `base.js`), which the `null`-WORK wrapper allocates. |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix, overwritten on exit |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>max(M, N) × nrhs</sub> | **in/out** · On entry, M-by-NRHS (or max(M,N)-by-NRHS) RHS matrix; |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `S` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of singular values in decreasing order (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride length for S |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for S |
+| `rcond` | `number` | Used to determine the effective rank of A. |
+| `rank` | `Int32Array` | **out** · Output array; rank[0] set to the effective rank of A |
+| `WORK` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Caller-provided workspace (LAPACKE convention). Minimum size: the reference's MINWRK (`computeMinWorkSize(M,N,nrhs)` from `base.js`): `max(3*N+MM, 3*N+nrhs, 5*N)` for `M >= N` (`MM = N` when `M >= 1.6*N`, else `M`), `max(3*M+nrhs, 3*M+N, 5*M)` for `M < N`. For optimum performance, the reference's MAXWRK (`computeWorkSize(M,N,nrhs)` from `base.js`), which the `null`-WORK wrapper allocates. |
+| ↳ `strideWork` | `integer` | Stride length for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

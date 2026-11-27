@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtbcon( order, norm, uplo, diag, N, kd, AB, LDAB, rcond, WORK, IWORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (upper) or subdiagonals (lower) |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | triangular band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `rcond` | `Float64Array` | out |  |  | output array of length 1 |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | integer workspace array of length at least N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (upper) or subdiagonals (lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Triangular band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `rcond` | `Float64Array` | **out** · Output array of length 1 |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Integer workspace array of length at least N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -87,24 +87,24 @@ Estimates the reciprocal condition number of a real triangular band matrix.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (upper) or subdiagonals (lower) |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | triangular band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `rcond` | `Float64Array` | out |  |  | output array of length 1; rcond[0] receives the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace array of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (upper) or subdiagonals (lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Triangular band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `rcond` | `Float64Array` | **out** · Output array of length 1; rcond[0] receives the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace array of length at least N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

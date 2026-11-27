@@ -34,35 +34,35 @@ dsbgvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`, `'value'`, or `'index'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super- (or sub-) diagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super- (or sub-) diagonals of B |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ ka + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `BB` | `Float64Array` | in/out | `kb + 1 × N` |  | band matrix B in band storage |
-| ↳ `LDBB` | `PositiveInteger` | in |  | column-major requires `LDBB ≥ kb + 1`; row-major requires `LDBB ≥ max( 1, N )` | leading dimension of `BB` |
-| `Q` | `Float64Array` | out | `N × N` |  | output transformation matrix (N-by-N) |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (jobz === 'compute-vectors' && ldq < N)` | leading dimension of `Q` |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | index of smallest eigenvalue (1-based) |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue (1-based) |
-| `abstol` | `number` | in |  |  | absolute tolerance |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvectors |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 7 * N` |  | workspace |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 5 * N` |  | integer workspace |
-| `IFAIL` | `Int32Array` | out | `m` |  | output failure indices |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of B<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ ka + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | **in/out** · Band matrix B in band storage |
+| ↳ `LDBB` | `PositiveInteger` | Leading dimension of `BB`<br>Column-major requires `LDBB ≥ kb + 1`<br>Row-major requires `LDBB ≥ max(1, N)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **out** · Output transformation matrix (N-by-N) |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (jobz === 'compute-vectors' && ldq < N)` |
+| `vl` | `number` | Lower bound of eigenvalue interval |
+| `vu` | `number` | Upper bound of eigenvalue interval<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue (1-based)<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | Index of largest eigenvalue (1-based)<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalues |
+| ↳ `strideW` | `integer` | Stride for `w` |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvectors |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 7 * N</sub> | **out** · Workspace |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace |
+| `IFAIL` | `Int32Array`<br><sub>length m</sub> | **out** · Output failure indices |
+| ↳ `strideIFAIL` | `integer` | Stride for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -156,48 +156,48 @@ dsbgvx.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`, `'value'`, or `'index'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super- (or sub-) diagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super- (or sub-) diagonals of B |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `BB` | `Float64Array` | in/out | `kb + 1 × N` |  | band matrix B in band storage |
-| ↳ `strideBB1` | `integer` | in |  |  | stride of the first dimension of `BB` |
-| ↳ `strideBB2` | `integer` | in |  |  | stride of the second dimension of `BB` |
-| ↳ `offsetBB` | `NonNegativeInteger` | in |  |  | starting index for `BB` |
-| `Q` | `Float64Array` | out | `N × N` |  | output transformation matrix (N-by-N) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval (range='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval (range='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | index of smallest eigenvalue to compute (1-based, range='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue to compute (1-based, range='index') |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvector matrix (N-by-M) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dimension of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dimension of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `WORK` | `Float64Array` | out | `≥ 7 * N` |  | workspace (length >= 7*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ 5 * N` |  | integer workspace (length >= 5*N) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
-| `IFAIL` | `Int32Array` | out | `m` |  | output: indices of non-converged eigenvectors (length N) |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for IFAIL |
-| ↳ `offsetIFAIL` | `NonNegativeInteger` | in |  |  | starting index for IFAIL |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of B<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | **in/out** · Band matrix B in band storage |
+| ↳ `strideBB1` | `integer` | Stride of the first dimension of `BB` |
+| ↳ `strideBB2` | `integer` | Stride of the second dimension of `BB` |
+| ↳ `offsetBB` | `NonNegativeInteger` | Starting index for `BB` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **out** · Output transformation matrix (N-by-N) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `vl` | `number` | Lower bound of eigenvalue interval (range='value') |
+| `vu` | `number` | Upper bound of eigenvalue interval (range='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | Index of largest eigenvalue to compute (1-based, range='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvector matrix (N-by-M) |
+| ↳ `strideZ1` | `integer` | Stride of first dimension of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dimension of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ 7 * N</sub> | **out** · Workspace (length >= 7\*N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace (length >= 5\*N) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
+| `IFAIL` | `Int32Array`<br><sub>length m</sub> | **out** · Output: indices of non-converged eigenvectors (length N) |
+| ↳ `strideIFAIL` | `integer` | Stride for IFAIL |
+| ↳ `offsetIFAIL` | `NonNegativeInteger` | Starting index for IFAIL |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

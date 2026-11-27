@@ -33,30 +33,30 @@ dhgeqz(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | specifies the operation type |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | iLO and IHI mark the rows and columns of H which are in Hessenberg form (0-based). |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | iLO and IHI mark the rows and columns of H which are in Hessenberg form (0-based). |
-| `H` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  | requires `LDH ≥ N` | leading dimension of `H` |
-| `T` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ N` | leading dimension of `T` |
-| `ALPHAR` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"eigenvalues" \| "schur"` | Specifies the operation type<br>One of `'eigenvalues'`, `'schur'`. |
+| `compq` | `"none" \| "initialize" \| "update"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `compz` | `"none" \| "initialize" \| "update"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | ILO and IHI mark the rows and columns of H which are in Hessenberg form (0-based).<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | ILO and IHI mark the rows and columns of H which are in Hessenberg form (0-based).<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H`<br>Requires `LDH ≥ N` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ N` |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -125,42 +125,42 @@ dhgeqz.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | specifies the operation type |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | iLO and IHI mark the rows and columns of H which are in Hessenberg form (0-based). |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | iLO and IHI mark the rows and columns of H which are in Hessenberg form (0-based). |
-| `H` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `T` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `ALPHAR` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| ↳ `offsetALPHAR` | `NonNegativeInteger` | in |  |  | starting index for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| ↳ `offsetALPHAI` | `NonNegativeInteger` | in |  |  | starting index for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for `BETA` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `WORK` | `Float64Array` | out | `≥ max( 1, N )` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "schur"` | Specifies the operation type<br>One of `'eigenvalues'`, `'schur'`. |
+| `compq` | `"none" \| "initialize" \| "update"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `compz` | `"none" \| "initialize" \| "update"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | ILO and IHI mark the rows and columns of H which are in Hessenberg form (0-based).<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | ILO and IHI mark the rows and columns of H which are in Hessenberg form (0-based).<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| ↳ `offsetALPHAR` | `NonNegativeInteger` | Starting index for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| ↳ `offsetALPHAI` | `NonNegativeInteger` | Starting index for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for `BETA` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

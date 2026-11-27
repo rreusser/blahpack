@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarnv( idist, iseed, strideISEED, N, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `idist` | `integer` | in |  |  | distribution type: 1=uniform(0,1), 2=uniform(-1,1), 3=normal(0,1), 4=uniform disc, 5=uniform circle |
-| `iseed` | `Int32Array` | in/out | `4` |  | seed array of 4 integers |
-| ↳ `strideISEED` | `integer` | in |  |  | stride for iseed |
-| `N` | `NonNegativeInteger` | in |  |  | number of complex random numbers to generate |
-| `x` | `Complex128Array` | out | `N` |  | output array |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `idist` | `integer` | Distribution type: 1=uniform(0,1), 2=uniform(-1,1), 3=normal(0,1), 4=uniform disc, 5=uniform circle |
+| `iseed` | `Int32Array`<br><sub>length 4</sub> | **in/out** · Seed array of 4 integers |
+| ↳ `strideISEED` | `integer` | Stride for iseed |
+| `N` | `NonNegativeInteger` | Number of complex random numbers to generate |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -60,16 +60,16 @@ zlarnv.ndarray(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `idist` | `integer` | in |  |  | distribution type: 1=uniform(0,1), 2=uniform(-1,1), 3=normal(0,1), 4=uniform disc, 5=uniform circle |
-| `iseed` | `Int32Array` | in/out | `4` |  | seed array of 4 integers |
-| ↳ `strideISEED` | `integer` | in |  |  | stride for iseed |
-| ↳ `offsetISEED` | `NonNegativeInteger` | in |  |  | offset for iseed |
-| `N` | `NonNegativeInteger` | in |  |  | number of complex random numbers to generate |
-| `x` | `Complex128Array` | out | `N` |  | output array |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset for x (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `idist` | `integer` | Distribution type: 1=uniform(0,1), 2=uniform(-1,1), 3=normal(0,1), 4=uniform disc, 5=uniform circle |
+| `iseed` | `Int32Array`<br><sub>length 4</sub> | **in/out** · Seed array of 4 integers |
+| ↳ `strideISEED` | `integer` | Stride for iseed |
+| ↳ `offsetISEED` | `NonNegativeInteger` | Offset for iseed |
+| `N` | `NonNegativeInteger` | Number of complex random numbers to generate |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset for x (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

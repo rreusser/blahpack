@@ -30,21 +30,21 @@ dlaqtr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ltran` | `boolean` | in |  |  | the option of conjugate transpose: = `false`, op(T+i*B) = T+i*B, = `true`, op(T+i*B) = (T+i*B)**T. |
-| `lreal` | `boolean` | in |  |  | the input matrix structure: = `false`, the input is complex = `true`, the input is real. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `T` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `b` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideB` | `integer` | in |  |  | stride length for `b` |
-| `w` | `number` | in |  |  | on entry, W is the diagonal element of the matrix B. |
-| `scale` | `Float64Array` | out |  |  | output (length-1 array): sCALE is the scale factor |
-| `x` | `Float64Array` | in/out | `2 * N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ltran` | `boolean` | The option of conjugate transpose: = `false`, op(T+i\*B) = T+i\*B, = `true`, op(T+i\*B) = (T+i\*B)\*\*T. |
+| `lreal` | `boolean` | The input matrix structure: = `false`, the input is complex = `true`, the input is real. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `T` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `b` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideB` | `integer` | Stride length for `b` |
+| `w` | `number` | On entry, W is the diagonal element of the matrix B. |
+| `scale` | `Float64Array` | **out** · Output (length-1 array): sCALE is the scale factor |
+| `x` | `Float64Array`<br><sub>length 2 * N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -95,26 +95,26 @@ dlaqtr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ltran` | `boolean` | in |  |  | the option of conjugate transpose: = `false`, op(T+i*B) = T+i*B, = `true`, op(T+i*B) = (T+i*B)**T. |
-| `lreal` | `boolean` | in |  |  | the input matrix structure: = `false`, the input is complex = `true`, the input is real. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `T` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `b` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideB` | `integer` | in |  |  | stride length for `b` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `b` |
-| `w` | `number` | in |  |  | on entry, W is the diagonal element of the matrix B. |
-| `scale` | `Float64Array` | out |  |  | output (length-1 array): sCALE is the scale factor |
-| `x` | `Float64Array` | in/out | `2 * N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ltran` | `boolean` | The option of conjugate transpose: = `false`, op(T+i\*B) = T+i\*B, = `true`, op(T+i\*B) = (T+i\*B)\*\*T. |
+| `lreal` | `boolean` | The input matrix structure: = `false`, the input is complex = `true`, the input is real. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `T` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `b` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideB` | `integer` | Stride length for `b` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `b` |
+| `w` | `number` | On entry, W is the diagonal element of the matrix B. |
+| `scale` | `Float64Array` | **out** · Output (length-1 array): sCALE is the scale factor |
+| `x` | `Float64Array`<br><sub>length 2 * N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasd5( i, D, strideD, Z, strideZ, DELTA, strideDELTA, rho, dsigma, WORK ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i` | `integer` | in |  |  | eigenvalue index (1 or 2) |
-| `D` | `Float64Array` | in | `2` |  | diagonal entries (length 2) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| `Z` | `Float64Array` | in | `2` |  | updating vector components (length 2) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| `DELTA` | `Float64Array` | out | `2` |  | output array for `D[j] - sigma_i` (length 2) |
-| ↳ `strideDELTA` | `integer` | in |  |  | stride length for `DELTA` |
-| `rho` | `number` | in |  |  | scalar in the symmetric updating formula |
-| `dsigma` | `Float64Array` | out |  |  | single-element output array; on exit, the computed sigma_i |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2` |  | output array for `D[j] + sigma_i` (length 2) |
+| Parameter | Type | Description |
+|---|---|---|
+| `i` | `integer` | Eigenvalue index (1 or 2) |
+| `D` | `Float64Array`<br><sub>length 2</sub> | Diagonal entries (length 2) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| `Z` | `Float64Array`<br><sub>length 2</sub> | Updating vector components (length 2) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| `DELTA` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for `D[j] - sigma_i` (length 2) |
+| ↳ `strideDELTA` | `integer` | Stride length for `DELTA` |
+| `rho` | `number` | Scalar in the symmetric updating formula |
+| `dsigma` | `Float64Array` | **out** · Single-element output array; on exit, the computed sigma_i |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2</sub> | **out** · Output array for `D[j] + sigma_i` (length 2) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -66,23 +66,23 @@ dlasd5.ndarray(
 
 Compute the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i` | `integer` | in |  |  | the index of the eigenvalue to be computed. |
-| `d` | `Float64Array` | in | `2` |  | diagonal entries (length 2) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `z` | `Float64Array` | in | `2` |  | updating vector components (length 2) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `DELTA` | `Float64Array` | out | `2` |  | output array for `d[j] - sigma_i` (length 2) |
-| ↳ `strideDELTA` | `integer` | in |  |  | stride length for `DELTA` |
-| ↳ `offsetDELTA` | `NonNegativeInteger` | in |  |  | starting index for `DELTA` |
-| `rho` | `number` | in |  |  | scalar in the symmetric updating formula |
-| `dsigma` | `Float64Array` | out |  |  | single-element output array; on exit, the computed sigma_i |
-| `WORK` | `Float64Array` | out | `≥ 2` |  | output array for `d[j] + sigma_i` (length 2) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `i` | `integer` | The index of the eigenvalue to be computed. |
+| `d` | `Float64Array`<br><sub>length 2</sub> | Diagonal entries (length 2) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `z` | `Float64Array`<br><sub>length 2</sub> | Updating vector components (length 2) |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `DELTA` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for `d[j] - sigma_i` (length 2) |
+| ↳ `strideDELTA` | `integer` | Stride length for `DELTA` |
+| ↳ `offsetDELTA` | `NonNegativeInteger` | Starting index for `DELTA` |
+| `rho` | `number` | Scalar in the symmetric updating formula |
+| `dsigma` | `Float64Array` | **out** · Single-element output array; on exit, the computed sigma_i |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2</sub> | **out** · Output array for `d[j] + sigma_i` (length 2) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

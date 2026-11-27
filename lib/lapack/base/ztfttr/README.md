@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztfttr( order, transr, uplo, N, ARF, strideARF, A, LDA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ARF` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| `A` | `Complex128Array` | out | `N × N` |  | output matrix in full format |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix in full format |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,18 +75,18 @@ Copy a triangular matrix from Rectangular Full Packed format (RFP) to standard f
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether `ARF` is in normal or conjugate-transpose format |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ARF` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| ↳ `offsetARF` | `NonNegativeInteger` | in |  |  | starting index for `ARF` |
-| `A` | `Complex128Array` | out | `N × N` |  | output matrix in full format |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether `ARF` is in normal or conjugate-transpose format<br>One of `'conjugate-transpose'`, `'no-transpose'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| ↳ `offsetARF` | `NonNegativeInteger` | Starting index for `ARF` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix in full format |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

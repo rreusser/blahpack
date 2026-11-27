@@ -33,29 +33,29 @@ zhgeqz(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' 0 'column-major') |
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'` 0 `'schur'` |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, 0 `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, 0 `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices H, T, Q, Z |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | start of active block (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | end of active block (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  | requires `LDH ≥ N` | leading dimension of `H` |
-| `T` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ N` | leading dimension of `T` |
-| `ALPHA` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideALPHA` | `integer` | in |  |  | `ALPHA` stride length |
-| `BETA` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | `BETA` stride length |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| ((compq === 'initialize' \|\| compq === 'update') && ldq < N)` | leading dimension of `Q` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N )` |  | input array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' 0 'column-major') |
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'` 0 `'schur'` |
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, 0 `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, 0 `'update'` |
+| `N` | `NonNegativeInteger` | Order of matrices H, T, Q, Z<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Start of active block (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | End of active block (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H`<br>Requires `LDH ≥ N` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ N` |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHA` | `integer` | `ALPHA` stride length |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | `BETA` stride length |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| ((compq === 'initialize' \|\| compq === 'update') && ldq < N)` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Input array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -126,42 +126,42 @@ zhgeqz.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'` or `'schur'` |
-| `compq` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices H, T, Q, Z |
-| `ilo` | `integer` | in |  | rejects `ilo < 1` | start of active block (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi > N \|\| ihi < ilo - 1` | end of active block (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix |
-| ↳ `strideH1` | `integer` | in |  |  | row stride for H (complex elements) |
-| ↳ `strideH2` | `integer` | in |  |  | column stride for H (complex elements) |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for H (complex elements) |
-| `T` | `Complex128Array` | in/out | `N × N` |  | upper triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | row stride for T (complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | column stride for T (complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T (complex elements) |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output eigenvalue numerators |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA (complex elements) |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA (complex elements) |
-| `BETA` | `Complex128Array` | out | `N` |  | output eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA (complex elements) |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA (complex elements) |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | left Schur vectors |
-| ↳ `strideQ1` | `integer` | in |  |  | row stride for Q (complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | column stride for Q (complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q (complex elements) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | right Schur vectors |
-| ↳ `strideZ1` | `integer` | in |  |  | row stride for Z (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | column stride for Z (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N )` |  | workspace |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace (length >= N) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'` or `'schur'` |
+| `compq` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of matrices H, T, Q, Z<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Start of active block (1-based)<br>Rejects `ilo < 1` |
+| `ihi` | `integer` | End of active block (1-based)<br>Rejects `ihi > N \|\| ihi < ilo - 1` |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix |
+| ↳ `strideH1` | `integer` | Row stride for H (complex elements) |
+| ↳ `strideH2` | `integer` | Column stride for H (complex elements) |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for H (complex elements) |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper triangular matrix |
+| ↳ `strideT1` | `integer` | Row stride for T (complex elements) |
+| ↳ `strideT2` | `integer` | Column stride for T (complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T (complex elements) |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue numerators |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA (complex elements) |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA (complex elements) |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride for BETA (complex elements) |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA (complex elements) |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Left Schur vectors |
+| ↳ `strideQ1` | `integer` | Row stride for Q (complex elements) |
+| ↳ `strideQ2` | `integer` | Column stride for Q (complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q (complex elements) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Right Schur vectors |
+| ↳ `strideZ1` | `integer` | Row stride for Z (complex elements) |
+| ↳ `strideZ2` | `integer` | Column stride for Z (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace (length >= N) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

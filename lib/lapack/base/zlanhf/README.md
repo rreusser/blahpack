@@ -29,15 +29,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlanhf( norm, transr, uplo, N, A, strideA, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  |  | `'no-transpose'` or `'conjugate-transpose'` |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | RFP array of length `N*(N+1)/2` |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array (length >= N for one/inf norms) |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | RFP array of length `N*(N+1)/2` |
+| ↳ `strideA` | `integer` | Stride length for `A` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array (length >= N for one/inf norms) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,18 +80,18 @@ zlanhf.ndarray(
 ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  |  | `'no-transpose'` or `'conjugate-transpose'` |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | RFP array |
-| ↳ `strideA` | `integer` | in |  |  | stride for A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `WORK` | `Float64Array` | out |  |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | RFP array |
+| ↳ `strideA` | `integer` | Stride for A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `WORK` | `Float64Array` | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -22,13 +22,13 @@ dlarfgp( N, alpha, x, strideX, tau ) → Float64Array
 
 Generates a real elementary reflector `H` of order `N` with non-negative `beta`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Float64Array` | in/out |  |  | on entry, the scalar `alpha`; on exit, the scalar `beta` (non-negative) |
-| `x` | `Float64Array` | in/out | `1 + (N - 2) * abs( incx )` |  | input array, overwritten with `v` on exit |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `tau` | `Float64Array` | out |  |  | output scalar |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Float64Array` | **in/out** · On entry, the scalar `alpha`; on exit, the scalar `beta` (non-negative) |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Input array, overwritten with `v` on exit |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `tau` | `Float64Array` | **out** · Output scalar |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,16 +61,16 @@ dlarfgp.ndarray(
 
 Generates a real elementary reflector `H` of order `N` with non-negative `beta`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Float64Array` | in/out |  |  | on entry, the scalar `alpha`; on exit, the scalar `beta` (non-negative) |
-| ↳ `offsetAlpha` | `NonNegativeInteger` | in |  |  | index into `alpha` |
-| `x` | `Float64Array` | in/out | `1 + (N - 2) * abs( incx )` |  | vector, overwritten with `v` on exit |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `tau` | `Float64Array` | out |  |  | output scalar |
-| ↳ `offsetTau` | `NonNegativeInteger` | in |  |  | index into `tau` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Float64Array` | **in/out** · On entry, the scalar `alpha`; on exit, the scalar `beta` (non-negative) |
+| ↳ `offsetAlpha` | `NonNegativeInteger` | Index into `alpha` |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Vector, overwritten with `v` on exit |
+| ↳ `strideX` | `integer` | Stride for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `tau` | `Float64Array` | **out** · Output scalar |
+| ↳ `offsetTau` | `NonNegativeInteger` | Index into `tau` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

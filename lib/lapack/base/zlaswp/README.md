@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaswp( order, N, A, LDA, k1, k2, IPIV, strideIPIV, incx ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `k1` | `NonNegativeInteger` | in |  |  | index of first row to interchange (0-based) |
-| `k2` | `NonNegativeInteger` | in |  |  | index of last row to interchange (0-based) |
-| `IPIV` | `Int32Array` | in | `abs( k2 - k1 ) + 1` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `incx` | `integer` | in |  |  | direction in which to apply pivots (-1 to apply in reverse order; otherwise, apply in provided order) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `k1` | `NonNegativeInteger` | Index of first row to interchange (0-based) |
+| `k2` | `NonNegativeInteger` | Index of last row to interchange (0-based) |
+| `IPIV` | `Int32Array`<br><sub>length abs(k2 - k1) + 1</sub> | Input array |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `incx` | `integer` | Direction in which to apply pivots (-1 to apply in reverse order; otherwise, apply in provided order) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -66,19 +66,19 @@ zlaswp.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` (in complex elements) |
-| `k1` | `NonNegativeInteger` | in |  |  | index of first row to interchange (0-based) |
-| `k2` | `NonNegativeInteger` | in |  |  | index of last row to interchange (0-based) |
-| `IPIV` | `Int32Array` | in | `abs( k2 - k1 ) + 1` |  | vector of pivot indices (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for `IPIV` |
-| `incx` | `integer` | in |  |  | direction in which to apply pivots (-1 to apply in reverse order; otherwise, apply in provided order) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` (in complex elements) |
+| `k1` | `NonNegativeInteger` | Index of first row to interchange (0-based) |
+| `k2` | `NonNegativeInteger` | Index of last row to interchange (0-based) |
+| `IPIV` | `Int32Array`<br><sub>length abs(k2 - k1) + 1</sub> | Vector of pivot indices (0-based) |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for `IPIV` |
+| `incx` | `integer` | Direction in which to apply pivots (-1 to apply in reverse order; otherwise, apply in provided order) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

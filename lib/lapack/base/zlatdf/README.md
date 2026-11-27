@@ -30,21 +30,21 @@ zlatdf(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ijob` | `integer` | in |  |  | method flag: 2 uses zgecon approximation; otherwise local look-ahead |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix Z |
-| `Z` | `Complex128Array` | in | `null × N` |  | LU-factored N-by-N matrix from zgetc2 |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `RHS` | `Complex128Array` | in/out | `N` |  | right-hand side vector (overwritten with solution) |
-| ↳ `strideRHS` | `integer` | in |  |  | stride for `RHS` (in complex elements) |
-| `rdsum` | `Float64Array` | in/out |  |  | input/output (length-1 array): input sum of squares contribution |
-| `rdscal` | `Float64Array` | in/out |  |  | input/output (length-1 array): input scaling factor |
-| `IPIV` | `Int32Array` | in | `N` |  | row pivot indices from zgetc2, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| `JPIV` | `Int32Array` | in | `N` |  | column pivot indices from zgetc2, 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for `JPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ijob` | `integer` | Method flag: 2 uses zgecon approximation; otherwise local look-ahead |
+| `N` | `NonNegativeInteger` | Order of the matrix Z |
+| `Z` | `Complex128Array`<br><sub>? × N</sub> | LU-factored N-by-N matrix from zgetc2 |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `RHS` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Right-hand side vector (overwritten with solution) |
+| ↳ `strideRHS` | `integer` | Stride for `RHS` (in complex elements) |
+| `rdsum` | `Float64Array` | **in/out** · Input/output (length-1 array): input sum of squares contribution |
+| `rdscal` | `Float64Array` | **in/out** · Input/output (length-1 array): input scaling factor |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Row pivot indices from zgetc2, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | Column pivot indices from zgetc2, 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for `JPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -97,25 +97,25 @@ Computes a contribution to the reciprocal Dif-estimate using the LU factorizatio
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ijob` | `integer` | in |  |  | method flag: 2 uses zgecon approximation; otherwise local look-ahead |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix Z |
-| `Z` | `Complex128Array` | in | `null × N` |  | LU-factored N-by-N matrix from zgetc2 |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (in complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (in complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (in complex elements) |
-| `RHS` | `Complex128Array` | in/out | `N` |  | right-hand side vector (overwritten with solution) |
-| ↳ `strideRHS` | `integer` | in |  |  | stride for `RHS` (in complex elements) |
-| ↳ `offsetRHS` | `NonNegativeInteger` | in |  |  | starting index for `RHS` (in complex elements) |
-| `rdsum` | `Float64Array` | in/out |  |  | input/output (length-1 array): input sum of squares contribution |
-| `rdscal` | `Float64Array` | in/out |  |  | input/output (length-1 array): input scaling factor |
-| `IPIV` | `Int32Array` | in | `N` |  | row pivot indices from zgetc2, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `JPIV` | `Int32Array` | in | `N` |  | column pivot indices from zgetc2, 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for `JPIV` |
-| ↳ `offsetJPIV` | `NonNegativeInteger` | in |  |  | starting index for `JPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ijob` | `integer` | Method flag: 2 uses zgecon approximation; otherwise local look-ahead |
+| `N` | `NonNegativeInteger` | Order of the matrix Z |
+| `Z` | `Complex128Array`<br><sub>? × N</sub> | LU-factored N-by-N matrix from zgetc2 |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (in complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (in complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (in complex elements) |
+| `RHS` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Right-hand side vector (overwritten with solution) |
+| ↳ `strideRHS` | `integer` | Stride for `RHS` (in complex elements) |
+| ↳ `offsetRHS` | `NonNegativeInteger` | Starting index for `RHS` (in complex elements) |
+| `rdsum` | `Float64Array` | **in/out** · Input/output (length-1 array): input sum of squares contribution |
+| `rdscal` | `Float64Array` | **in/out** · Input/output (length-1 array): input scaling factor |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Row pivot indices from zgetc2, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | Column pivot indices from zgetc2, 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for `JPIV` |
+| ↳ `offsetJPIV` | `NonNegativeInteger` | Starting index for `JPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

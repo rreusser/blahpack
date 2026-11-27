@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zla_syamv( order, uplo, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -86,22 +86,22 @@ zla_syamv.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `x` | `Complex128Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is referenced (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dpttrf( N, d, strideD, e, strideE ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, the n diagonal elements of the tridiagonal matrix A. On exit, the n diagonal elements of the diagonal matrix D from the L*D*L**T factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | on entry, the (n-1) subdiagonal elements of the tridiagonal matrix A. On exit, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L**T factorization of A. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the n diagonal elements of the tridiagonal matrix A. On exit, the n diagonal elements of the diagonal matrix D from the L\*D\*L\*\*T factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A. On exit, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L\*D\*L\*\*T factorization of A. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -59,15 +59,15 @@ Computes the L_D_L^T factorization of a real symmetric positive definite tridiag
 -   On entry, `e` contains the (n-1) subdiagonal elements of A. On exit, the (n-1) subdiagonal elements of the unit bidiagonal factor L.
 -   The routine uses a 4-unrolled loop matching the reference LAPACK implementation.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | subdiagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Subdiagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

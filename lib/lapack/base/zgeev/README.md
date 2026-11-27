@@ -30,22 +30,22 @@ zgeev(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: left eigenvectors of A are not computed; `'compute-vectors'`: left eigenvectors of are computed. |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: right eigenvectors of A are not computed; `'compute-vectors'`: right eigenvectors of A are computed. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, the N-by-N matrix A. On exit, A has been overwritten. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `w` | `Complex128Array` | out | `N` |  | w contains the computed eigenvalues. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `VL` | `Complex128Array` | out | `N × N` |  | if `jobvl === 'compute-vectors'`, the left eigenvectors u(j) are stored one after another in the columns of VL, in the same order as their eigenvalues. |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | out | `N × N` |  | if `jobvr === 'compute-vectors'`, the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues. |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` | leading dimension of `VR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | workspace of at least `max(1,2*N)` complex elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB`, ztrevc3 `N + 2*N*NB` with eigenvectors, and zhseqr's LWKOPT) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | caller-provided workspace of at least `2 * N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: left eigenvectors of A are not computed; `'compute-vectors'`: left eigenvectors of are computed. |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: right eigenvectors of A are not computed; `'compute-vectors'`: right eigenvectors of A are computed. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the N-by-N matrix A. On exit, A has been overwritten. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · W contains the computed eigenvalues. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · If `jobvl === 'compute-vectors'`, the left eigenvectors u(j) are stored one after another in the columns of VL, in the same order as their eigenvalues. |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · If `jobvr === 'compute-vectors'`, the right eigenvectors v(j) are stored one after another in the columns of VR, in the same order as their eigenvalues. |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,2*N)` complex elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB`, ztrevc3 `N + 2*N*NB` with eigenvectors, and zhseqr's LWKOPT) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-provided workspace of at least `2 * N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -108,32 +108,32 @@ and largest component real.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix (N x N), overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `w` | `Complex128Array` | out | `N` |  | output: eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for w (complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w (complex elements) |
-| `VL` | `Complex128Array` | out | `N × N` |  | output: left eigenvectors (N x N) |
-| ↳ `strideVL1` | `integer` | in |  |  | first dimension stride of VL (complex elements) |
-| ↳ `strideVL2` | `integer` | in |  |  | second dimension stride of VL (complex elements) |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for VL (complex elements) |
-| `VR` | `Complex128Array` | out | `N × N` |  | output: right eigenvectors (N x N) |
-| ↳ `strideVR1` | `integer` | in |  |  | first dimension stride of VR (complex elements) |
-| ↳ `strideVR2` | `integer` | in |  |  | second dimension stride of VR (complex elements) |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for VR (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | workspace of at least `max(1,2*N)` complex elements; for good performance, the optimum MAXWRK the wrapper allocates for `null` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 2 * N` |  | real workspace (length >= 2*N) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix (N x N), overwritten on exit |
+| ↳ `strideA1` | `integer` | First dimension stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second dimension stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for w (complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w (complex elements) |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors (N x N) |
+| ↳ `strideVL1` | `integer` | First dimension stride of VL (complex elements) |
+| ↳ `strideVL2` | `integer` | Second dimension stride of VL (complex elements) |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for VL (complex elements) |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors (N x N) |
+| ↳ `strideVR1` | `integer` | First dimension stride of VR (complex elements) |
+| ↳ `strideVR2` | `integer` | Second dimension stride of VR (complex elements) |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for VR (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,2*N)` complex elements; for good performance, the optimum MAXWRK the wrapper allocates for `null` |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Real workspace (length >= 2\*N) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlansf( norm, transr, uplo, N, A, strideA, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `transr` | `("no-transpose"\|"transpose")` | in |  |  | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array in RFP format |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array, length >= N |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array in RFP format |
+| ↳ `strideA` | `integer` | Stride length for `A` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array, length >= N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,18 +69,18 @@ dlansf.ndarray(
 ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `transr` | `("no-transpose"\|"transpose")` | in |  |  | specifies the storage format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | RFP array of length N*(N+1)/2 |
-| ↳ `strideA` | `integer` | in |  |  | stride for `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `WORK` | `Float64Array` | out |  |  | workspace of length N (only for `'one-norm'`/`'inf-norm'` norms) |
-| ↳ `strideWork` | `integer` | in |  |  | stride of WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index of WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `transr` | `"no-transpose" \| "transpose"` | Specifies the storage format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | RFP array of length N\*(N+1)/2 |
+| ↳ `strideA` | `integer` | Stride for `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `WORK` | `Float64Array` | **out** · Workspace of length N (only for `'one-norm'`/`'inf-norm'` norms) |
+| ↳ `strideWork` | `integer` | Stride of WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index of WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

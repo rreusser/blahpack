@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtrexc( order, compq, N, T, LDT, Q, LDQ, ifst, ilst, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `compq` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | `'update'`: update the matrix Q of Schur vectors; `'none'`: do not update Q. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix T. |
-| `T` | `Float64Array` | in/out | `N × N` |  | on entry, the upper quasi-triangular matrix T, in Schur Schur canonical form. On exit, the reordered upper quasi-triangular matrix, again in Schur canonical form. |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | on entry, if `compq === 'update'`, the matrix Q of Schur vectors. On exit, if `compq === 'update'`, Q has been postmultiplied by the orthogonal transformation matrix Z which reorders T. |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (compq === 'update' && ldq < max( 1, N ))` | leading dimension of `Q` |
-| `ifst` | `Int32Array` | in/out |  | rejects `(ifst < 1 \|\| ifst > N) && N > 0` | input/output (length-1 array): ifst |
-| `ilst` | `Int32Array` | in/out |  | rejects `(ilst < 1 \|\| ilst > N) && N > 0` | input/output (length-1 array): ilst |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `compq` | `"none" \| "update"` | `'update'`: update the matrix Q of Schur vectors; `'none'`: do not update Q. |
+| `N` | `NonNegativeInteger` | The order of the matrix T.<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper quasi-triangular matrix T, in Schur Schur canonical form. On exit, the reordered upper quasi-triangular matrix, again in Schur canonical form. |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, if `compq === 'update'`, the matrix Q of Schur vectors. On exit, if `compq === 'update'`, Q has been postmultiplied by the orthogonal transformation matrix Z which reorders T. |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (compq === 'update' && ldq < max(1, N))` |
+| `ifst` | `Int32Array` | **in/out** · Input/output (length-1 array): ifst<br>Rejects `(ifst < 1 \|\| ifst > N) && N > 0` |
+| `ilst` | `Int32Array` | **in/out** · Input/output (length-1 array): ilst<br>Rejects `(ilst < 1 \|\| ilst > N) && N > 0` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,23 +93,23 @@ on return when they point to the second row of a 2-by-2 block.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `compq` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | `'update'` to update Q, `'none'` to not update Q |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `T` | `Float64Array` | in/out | `N × N` |  | the upper quasi-triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `Q` | `Float64Array` | in/out | `N × N` |  | orthogonal matrix (updated if compq=`'update'`) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `ifst` | `Int32Array` | in/out |  | rejects `(ifst < 1 \|\| ifst > N) && N > 0` | input/output (length-1 array): row index of the block to move (1-based) |
-| `ilst` | `Int32Array` | in/out |  | rejects `(ilst < 1 \|\| ilst > N) && N > 0` | input/output (length-1 array): target row index (1-based) |
-| `WORK` | `Float64Array` | out | `≥ N` |  | workspace of length N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `compq` | `"none" \| "update"` | `'update'` to update Q, `'none'` to not update Q |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · The upper quasi-triangular matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Orthogonal matrix (updated if compq=`'update'`) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `ifst` | `Int32Array` | **in/out** · Input/output (length-1 array): row index of the block to move (1-based)<br>Rejects `(ifst < 1 \|\| ifst > N) && N > 0` |
+| `ilst` | `Int32Array` | **in/out** · Input/output (length-1 array): target row index (1-based)<br>Rejects `(ilst < 1 \|\| ilst > N) && N > 0` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace of length N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -34,30 +34,30 @@ zsysvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | specifies whether or not the factored form of A has been supplied on entry. `'factored'`: On entry, AF and IPIV contain the factored form of A. A, AF and IPIV will not be modified. `'not-factored'`: The matrix A will be copied to AF and factored. |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of linear equations, i.e., the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrices B and X. |
-| `A` | `Complex128Array` | in | `N × N` |  | the symmetric matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Complex128Array` | in/out | `N × N` |  | if `fact === 'factored'`, then AF is an input argument and on entry contains the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U*D*U**T or A = L*D*L**T as computed by ZSYTRF. |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `IPIV` | `Int32Array` | in/out | `N` |  | if `fact === 'factored'`, then IPIV is an input argument and on entry contains details of the interchanges and the block structure of D, as determined by ZSYTRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | the N-by-NRHS right hand side matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | if INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `rcond` | `Float64Array` | out |  |  | the estimate of the reciprocal condition number of the matrix A. |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N )` |  | caller-owned complex workspace, or `null` to allocate the reference's optimal size (`max(1,2*N)` complex elements, and `N*NB` when `fact` is `'not-factored'`, with `NB = 64` the zsytrf block size from `ilaenv`) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-owned real workspace, or `null` to auto-allocate at the minimum required size (`max(1,N)` elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "factored"` | Specifies whether or not the factored form of A has been supplied on entry. `'factored'`: On entry, AF and IPIV contain the factored form of A. A, AF and IPIV will not be modified. `'not-factored'`: The matrix A will be copied to AF and factored. |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The number of linear equations, i.e., the order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices B and X.<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | The symmetric matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · If `fact === 'factored'`, then AF is an input argument and on entry contains the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U\*D\*U\*\*T or A = L\*D\*L\*\*T as computed by ZSYTRF. |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · If `fact === 'factored'`, then IPIV is an input argument and on entry contains details of the interchanges and the block structure of D, as determined by ZSYTRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | The N-by-NRHS right hand side matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · The estimate of the reciprocal condition number of the matrix A. |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-owned complex workspace, or `null` to allocate the reference's optimal size (`max(1,2*N)` complex elements, and `N*NB` when `fact` is `'not-factored'`, with `NB = 64` the zsytrf block size from `ilaenv`) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-owned real workspace, or `null` to auto-allocate at the minimum required size (`max(1,N)` elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -134,44 +134,44 @@ NOTE: SYMMETRIC (not Hermitian). No conjugation.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"factored")` | in |  | one of `'factored'`, `'not-factored'` | 'not-factored' or 'factored' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of RHS columns |
-| `A` | `Complex128Array` | in | `N × N` |  | symmetric matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `AF` | `Complex128Array` | in/out | `N × N` |  | factored form of A |
-| ↳ `strideAF1` | `integer` | in |  |  | first stride of AF |
-| ↳ `strideAF2` | `integer` | in |  |  | second stride of AF |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | offset into AF |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | first stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset into B |
-| `X` | `Complex128Array` | out | `N × nrhs` |  | solution matrix (output) |
-| ↳ `strideX1` | `integer` | in |  |  | first stride of X |
-| ↳ `strideX2` | `integer` | in |  |  | second stride of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset into X |
-| `rcond` | `Float64Array` | out |  |  | single-element array for reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | offset for BERR |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N )` |  | caller-owned complex workspace of at least `max(1,2*N)` complex elements from `offsetWork` (never allocated here) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | caller-owned real workspace of at least `max(1,N)` elements from `offsetRWork` (never allocated here) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | offset for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "factored"` | 'not-factored' or 'factored' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of RHS columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Symmetric matrix A |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Factored form of A |
+| ↳ `strideAF1` | `integer` | First stride of AF |
+| ↳ `strideAF2` | `integer` | Second stride of AF |
+| ↳ `offsetAF` | `NonNegativeInteger` | Offset into AF |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | First stride of B |
+| ↳ `strideB2` | `integer` | Second stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset into B |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **out** · Solution matrix (output) |
+| ↳ `strideX1` | `integer` | First stride of X |
+| ↳ `strideX2` | `integer` | Second stride of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset into X |
+| `rcond` | `Float64Array` | **out** · Single-element array for reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Offset for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-owned complex workspace of at least `max(1,2*N)` complex elements from `offsetWork` (never allocated here) |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Caller-owned real workspace of at least `max(1,N)` elements from `offsetRWork` (never allocated here) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Offset for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

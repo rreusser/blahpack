@@ -50,24 +50,24 @@ dlatrs3(
 
 Solves a triangular system of equations with the scale factors set to prevent overflow.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if `CNORM` already contains column norms, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `A` | `Float64Array` | in | `N × N` |  | input N-by-N triangular matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | in/out N-by-NRHS right-hand side matrix, overwritten by solution |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `SCALE` | `Float64Array` | out | `nrhs` |  | out: scale factors of length `NRHS` |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column-norm workspace of length `N` |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
-| `work` | `(Float64Array\|null)` | out | `≥ MAX` |  | workspace of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba` (the reference's LSCALE + LANRM, also its optimum) where `NB = min( 64, max( 8, ILAENV( 1, 'DLATRS', ... ) ) )` (32) and `nba = max( 1, ceil(N/NB) )`; if `null`, that size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'yes'` if `CNORM` already contains column norms, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input N-by-N triangular matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · In/out N-by-NRHS right-hand side matrix, overwritten by solution |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `SCALE` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Out: scale factors of length `NRHS` |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column-norm workspace of length `N` |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ MAX</sub> | **out** · Workspace of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba` (the reference's LSCALE + LANRM, also its optimum) where `NB = min( 64, max( 8, ILAENV( 1, 'DLATRS', ... ) ) )` (32) and `nba = max( 1, ceil(N/NB) )`; if `null`, that size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -145,31 +145,31 @@ matrices, and scale is an NRHS-element vector of scaling factors.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if `CNORM` already contains column norms, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `A` | `Float64Array` | in | `N × N` |  | input N-by-N triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | in/out N-by-NRHS right-hand side matrix, overwritten by solution |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `SCALE` | `Float64Array` | out | `nrhs` |  | out: scale factors of length `NRHS` |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| ↳ `offsetSCALE` | `NonNegativeInteger` | in |  |  | starting index for `SCALE` |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column-norm workspace of length `N` |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for `CNORM` |
-| `work` | `Float64Array` | out | `≥ MAX` |  | workspace of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba` (the reference's LSCALE + LANRM; any length when `N` or `nrhs` is 0) where `NB = min( 64, max( 8, ILAENV( 1, 'DLATRS', ... ) ) )` (32) and `nba = max( 1, ceil(N/NB) )` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` (must be 1) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `work` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'yes'` if `CNORM` already contains column norms, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input N-by-N triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · In/out N-by-NRHS right-hand side matrix, overwritten by solution |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `SCALE` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Out: scale factors of length `NRHS` |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| ↳ `offsetSCALE` | `NonNegativeInteger` | Starting index for `SCALE` |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column-norm workspace of length `N` |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for `CNORM` |
+| `work` | `Float64Array`<br><sub>length ≥ MAX</sub> | **out** · Workspace of length >= `nba*max(nba, min(nrhs, 32)) + nba*nba` (the reference's LSCALE + LANRM; any length when `N` or `nrhs` is 0) where `NB = min( 64, max( 8, ILAENV( 1, 'DLATRS', ... ) ) )` (32) and `nba = max( 1, ceil(N/NB) )` |
+| ↳ `strideWork` | `integer` | Stride length for `work` (must be 1) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `work` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

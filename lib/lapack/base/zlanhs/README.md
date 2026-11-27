@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlanhs( order, norm, N, A, LDA, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in | `max( N, 1 ) × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>max(N, 1) × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `WORK` | `Float64Array \| null` | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,17 +61,17 @@ zlanhs.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in | `max( N, 1 ) × N` |  | upper Hessenberg matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `WORK` | `Float64Array` | out |  |  | workspace (length >= N, used for inf-norm only, real) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>max(N, 1) × N</sub> | Upper Hessenberg matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `WORK` | `Float64Array` | **out** · Workspace (length >= N, used for inf-norm only, real) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

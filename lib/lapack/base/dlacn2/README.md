@@ -28,19 +28,19 @@ dlacn2(
 ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `v` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideV` | `integer` | in |  |  | `v` stride length |
-| `x` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `ISGN` | `Int32Array` | out | `N` |  | input array |
-| ↳ `strideISGN` | `integer` | in |  |  | `ISGN` stride length |
-| `EST` | `Float64Array` | in/out |  |  | in/out: EST[0] is the estimated norm |
-| `KASE` | `Int32Array` | in/out |  |  | in/out: KASE[0] is the operation to perform |
-| `ISAVE` | `Int32Array` | in/out | `3` |  | input array |
-| ↳ `strideISAVE` | `integer` | in |  |  | `ISAVE` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideV` | `integer` | `v` stride length |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `ISGN` | `Int32Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideISGN` | `integer` | `ISGN` stride length |
+| `EST` | `Float64Array` | **in/out** · In/out: EST[0] is the estimated norm |
+| `KASE` | `Int32Array` | **in/out** · In/out: KASE[0] is the operation to perform |
+| `ISAVE` | `Int32Array`<br><sub>length 3</sub> | **in/out** · Input array |
+| ↳ `strideISAVE` | `integer` | `ISAVE` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,23 +82,23 @@ dlacn2.ndarray(
 ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `v` | `Float64Array` | out | `N` |  | workspace array of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
-| `x` | `Float64Array` | in/out | `N` |  | input/output vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `ISGN` | `Int32Array` | out | `N` |  | sign array of length N |
-| ↳ `strideISGN` | `integer` | in |  |  | stride length for `ISGN` |
-| ↳ `offsetISGN` | `NonNegativeInteger` | in |  |  | starting index for `ISGN` |
-| `EST` | `Float64Array` | in/out |  |  | in/out: EST[0] is the estimated norm |
-| `KASE` | `Int32Array` | in/out |  |  | in/out: KASE[0] is the operation to perform |
-| `ISAVE` | `Int32Array` | in/out | `3` |  | state array of length 3 |
-| ↳ `strideISAVE` | `integer` | in |  |  | stride length for `ISAVE` |
-| ↳ `offsetISAVE` | `NonNegativeInteger` | in |  |  | starting index for `ISAVE` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `v` | `Float64Array`<br><sub>length N</sub> | **out** · Workspace array of length N |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input/output vector of length N |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `ISGN` | `Int32Array`<br><sub>length N</sub> | **out** · Sign array of length N |
+| ↳ `strideISGN` | `integer` | Stride length for `ISGN` |
+| ↳ `offsetISGN` | `NonNegativeInteger` | Starting index for `ISGN` |
+| `EST` | `Float64Array` | **in/out** · In/out: EST[0] is the estimated norm |
+| `KASE` | `Int32Array` | **in/out** · In/out: KASE[0] is the operation to perform |
+| `ISAVE` | `Int32Array`<br><sub>length 3</sub> | **in/out** · State array of length 3 |
+| ↳ `strideISAVE` | `integer` | Stride length for `ISAVE` |
+| ↳ `offsetISAVE` | `NonNegativeInteger` | Starting index for `ISAVE` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

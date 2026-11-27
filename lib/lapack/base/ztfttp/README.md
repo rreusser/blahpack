@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztfttp( transr, uplo, N, ARF, strideARF, AP, strideAP ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ARF` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| `AP` | `Complex128Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in standard packed format |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in standard packed format |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -71,17 +71,17 @@ ztfttp.ndarray(
 
 Copy a complex triangular matrix from Rectangular Full Packed (RFP) format to standard packed format (TP).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ARF` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| ↳ `offsetARF` | `NonNegativeInteger` | in |  |  | starting index for `ARF` |
-| `AP` | `Complex128Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in standard packed format |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether `ARF` is in normal or conjugate-transpose format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| ↳ `offsetARF` | `NonNegativeInteger` | Starting index for `ARF` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in standard packed format |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpbcon( order, uplo, N, kd, AB, LDAB, anorm, rcond, WORK, RWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super-/sub-diagonals of A |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | banded Cholesky factor (from `zpbtrf`) |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` (>= `kd+1`) |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | output array (single element) receiving the reciprocal condition number |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace (>= `2*N` complex elements); auto-allocated when `null` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace (>= `N` reals); auto-allocated when `null` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super-/sub-diagonals of A<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Banded Cholesky factor (from `zpbtrf`) |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` (>= `kd+1`)<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `anorm` | `number` | The 1-norm of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output array (single element) receiving the reciprocal condition number |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace (>= `2*N` complex elements); auto-allocated when `null` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace (>= `N` reals); auto-allocated when `null` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,23 +82,23 @@ A = U^H_U or A = L_L^H computed by zpbtrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' if upper Cholesky factor, 'lower' if lower |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (upper) or subdiagonals (lower) |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | Cholesky factorization from zpbtrf, (KD+1) by N |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (complex elements) |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm (or infinity-norm) of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' if upper Cholesky factor, 'lower' if lower |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (upper) or subdiagonals (lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Cholesky factorization from zpbtrf, (KD+1) by N |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (complex elements) |
+| `anorm` | `number` | The 1-norm (or infinity-norm) of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

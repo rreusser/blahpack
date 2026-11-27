@@ -20,22 +20,22 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgemm( order, transa, transb, M, N, K, alpha, A, LDA, B, LDB, beta, C, LDC ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `transa` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `transb` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | rows of op(A) and C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | columns of op(B) and C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | columns of op(A) / rows of op(B) |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `A` | `Complex128Array` | in | `(transa === 'no-transpose' ? M : K) × (transa === 'no-transpose' ? K : M)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, transa === 'no-transpose' ? M : K )`; row-major requires `LDA ≥ max( 1, transa === 'no-transpose' ? K : M )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in | `(transb === 'no-transpose' ? K : N) × (transb === 'no-transpose' ? N : K)` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, transb === 'no-transpose' ? K : N )`; row-major requires `LDB ≥ max( 1, transb === 'no-transpose' ? N : K )` | leading dimension of `B` |
-| `beta` | `Complex128` | in |  |  | complex scalar |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `transa` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `transb` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Rows of op(A) and C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Columns of op(B) and C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Columns of op(A) / rows of op(B)<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar |
+| `A` | `Complex128Array`<br><sub>(transa === 'no-transpose' ? M : K) × (transa === 'no-transpose' ? K : M)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, transa === 'no-transpose' ? M : K)`<br>Row-major requires `LDA ≥ max(1, transa === 'no-transpose' ? K : M)` |
+| `B` | `Complex128Array`<br><sub>(transb === 'no-transpose' ? K : N) × (transb === 'no-transpose' ? N : K)</sub> | Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, transb === 'no-transpose' ? K : N)`<br>Row-major requires `LDB ≥ max(1, transb === 'no-transpose' ? N : K)` |
+| `beta` | `Complex128` | Complex scalar |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -114,27 +114,27 @@ Performs one of the complex matrix-matrix operations `C = alpha*op(A)*op(B) + be
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transa` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation for matrix `A` |
-| `transb` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation for matrix `B` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `C` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `C` |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | inner dimension |
-| `alpha` | `Complex128` | in |  |  | scalar constant |
-| `A` | `Complex128Array` | in | `(transa === 'no-transpose' ? M : K) × (transa === 'no-transpose' ? K : M)` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in | `(transb === 'no-transpose' ? K : N) × (transb === 'no-transpose' ? N : K)` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `beta` | `Complex128` | in |  |  | scalar constant |
-| `C` | `Complex128Array` | in/out | `M × N` |  | output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transa` | `TransposeOperation` | Specifies the operation for matrix `A`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `transb` | `TransposeOperation` | Specifies the operation for matrix `B`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows of `C`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `C`<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Inner dimension<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | Scalar constant |
+| `A` | `Complex128Array`<br><sub>(transa === 'no-transpose' ? M : K) × (transa === 'no-transpose' ? K : M)</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>(transb === 'no-transpose' ? K : N) × (transb === 'no-transpose' ? N : K)</sub> | Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `beta` | `Complex128` | Scalar constant |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

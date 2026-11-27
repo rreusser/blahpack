@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsyr( order, uplo, N, alpha, x, strideX, A, LDA ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier |
-| `x` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,18 +80,18 @@ Performs the symmetric rank-1 update of a complex symmetric matrix, using altern
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier |
-| `x` | `Complex128Array` | in | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x (in complex elements) |
-| `A` | `Complex128Array` | in/out | `N × N` |  | complex symmetric matrix (updated in place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Complex input vector |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x (in complex elements) |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Complex symmetric matrix (updated in place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

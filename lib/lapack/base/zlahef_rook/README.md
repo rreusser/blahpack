@@ -22,19 +22,19 @@ zlahef_rook( order, uplo, N, nb, kb, A, LDA, IPIV, strideIPIV, W, LDW ) → inte
 
 Computes a partial factorization of a complex Hermitian indefinite matrix using the bounded Bunch-Kaufman ("rook") diagonal pivoting method.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `nb` | `NonNegativeInteger` | in |  |  | maximum number of columns to factor |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns of A that were actually factored |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot index output array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `W` | `Complex128Array` | out | `N × nb` |  | workspace matrix (`N x nb`) |
-| ↳ `LDW` | `PositiveInteger` | in |  |  | leading dimension of `W` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `nb` | `NonNegativeInteger` | Maximum number of columns to factor |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns of A that were actually factored |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot index output array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `W` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Workspace matrix (`N x nb`) |
+| ↳ `LDW` | `PositiveInteger` | Leading dimension of `W` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -94,23 +94,23 @@ Computes a partial factorization of a complex Hermitian indefinite matrix using 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `nb` | `NonNegativeInteger` | in |  |  | maximum number of columns to factor |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns of A that were actually factored |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot index output array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `W` | `Complex128Array` | out | `N × nb` |  | workspace matrix (`N x nb`) |
-| ↳ `strideW1` | `integer` | in |  |  | stride of the first dimension of `W` |
-| ↳ `strideW2` | `integer` | in |  |  | stride of the second dimension of `W` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `W` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `nb` | `NonNegativeInteger` | Maximum number of columns to factor |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns of A that were actually factored |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot index output array |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `W` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Workspace matrix (`N x nb`) |
+| ↳ `strideW1` | `integer` | Stride of the first dimension of `W` |
+| ↳ `strideW2` | `integer` | Stride of the second dimension of `W` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `W` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgemv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `alpha` | `number` | in |  |  | scalar multiplier for A*x |
-| `A` | `Float64Array` | in | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Float64Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `beta` | `number` | in |  |  | scalar multiplier for y |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar multiplier for A\*x |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `beta` | `number` | Scalar multiplier for y |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | `y` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -94,23 +94,23 @@ Performs one of the matrix-vector operations `y = alpha*A*x + beta*y` or `y = al
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies whether `A` should be transposed or not transposed |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows in the matrix `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns in the matrix `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Float64Array` | in | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `x` | `Float64Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | first input vector |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | second input vector |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies whether `A` should be transposed or not transposed<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows in the matrix `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns in the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `x` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | First input vector |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Second input vector |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

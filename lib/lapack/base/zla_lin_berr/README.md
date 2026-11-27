@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zla_lin_berr( order, N, nz, nrhs, res, LDRES, ayb, LDAYB, berr, strideBERR ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of rows of `res` and `ayb` |
-| `nz` | `integer` | in |  |  | sparsity guard parameter |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right-hand sides |
-| `res` | `Complex128Array` | in | `N × nrhs` |  | residual matrix, dimension `(N, nrhs)` |
-| ↳ `LDRES` | `PositiveInteger` | in |  |  | leading dimension of `res` |
-| `ayb` | `Float64Array` | in | `N × nrhs` |  | denominator matrix, dimension `(N, nrhs)` |
-| ↳ `LDAYB` | `PositiveInteger` | in |  |  | leading dimension of `ayb` |
-| `berr` | `Float64Array` | out | `nrhs` |  | output array, dimension `nrhs` |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `berr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of rows of `res` and `ayb` |
+| `nz` | `integer` | Sparsity guard parameter |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides |
+| `res` | `Complex128Array`<br><sub>N × nrhs</sub> | Residual matrix, dimension `(N, nrhs)` |
+| ↳ `LDRES` | `PositiveInteger` | Leading dimension of `res` |
+| `ayb` | `Float64Array`<br><sub>N × nrhs</sub> | Denominator matrix, dimension `(N, nrhs)` |
+| ↳ `LDAYB` | `PositiveInteger` | Leading dimension of `ayb` |
+| `berr` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output array, dimension `nrhs` |
+| ↳ `strideBERR` | `integer` | Stride length for `berr` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,22 +69,22 @@ zla_lin_berr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of rows of `res` and `ayb` |
-| `nz` | `integer` | in |  |  | sparsity guard parameter |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right-hand sides |
-| `res` | `Complex128Array` | in | `N × nrhs` |  | residual matrix, dimension `(N, nrhs)` |
-| ↳ `strideRES1` | `integer` | in |  |  | stride of dim 1 of `res` |
-| ↳ `strideRES2` | `integer` | in |  |  | stride of dim 2 of `res` |
-| ↳ `offsetRES` | `NonNegativeInteger` | in |  |  | starting complex index for `res` |
-| `ayb` | `Float64Array` | in | `N × nrhs` |  | denominator matrix, dimension `(N, nrhs)` |
-| ↳ `strideAYB1` | `integer` | in |  |  | stride of dim 1 of `ayb` |
-| ↳ `strideAYB2` | `integer` | in |  |  | stride of dim 2 of `ayb` |
-| ↳ `offsetAYB` | `NonNegativeInteger` | in |  |  | starting index for `ayb` |
-| `berr` | `Float64Array` | out | `nrhs` |  | output array, dimension `nrhs` |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `berr` |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for `berr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows of `res` and `ayb` |
+| `nz` | `integer` | Sparsity guard parameter |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides |
+| `res` | `Complex128Array`<br><sub>N × nrhs</sub> | Residual matrix, dimension `(N, nrhs)` |
+| ↳ `strideRES1` | `integer` | Stride of dim 1 of `res` |
+| ↳ `strideRES2` | `integer` | Stride of dim 2 of `res` |
+| ↳ `offsetRES` | `NonNegativeInteger` | Starting complex index for `res` |
+| `ayb` | `Float64Array`<br><sub>N × nrhs</sub> | Denominator matrix, dimension `(N, nrhs)` |
+| ↳ `strideAYB1` | `integer` | Stride of dim 1 of `ayb` |
+| ↳ `strideAYB2` | `integer` | Stride of dim 2 of `ayb` |
+| ↳ `offsetAYB` | `NonNegativeInteger` | Starting index for `ayb` |
+| `berr` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output array, dimension `nrhs` |
+| ↳ `strideBERR` | `integer` | Stride length for `berr` |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for `berr` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

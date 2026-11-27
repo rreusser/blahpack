@@ -34,26 +34,26 @@ dgsvj0(
 
 Pre-processor for dgesvj performing Jacobi rotations.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobv` | `("compute-v"\|"apply-v"\|"no-v")` | in |  | one of `'apply-v'`, `'no-v'`, `'compute-v'` | `'compute-v'` to accumulate into V (RSVEC), `'apply-v'` to apply to existing MV-by-N V (APPLV), `'no-v'` otherwise |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ M`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `sva` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideSVA` | `integer` | in |  |  | stride length for `sva` |
-| `mv` | `integer` | in |  | rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` | if `jobv === 'apply-v'`, then MV rows of V are post-multiplied by a sequence of Jacobi rotations. |
-| `V` | `Float64Array` | in/out | `N × N` |  | output matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `(jobv === 'compute-v' && ldv < N) \|\| (jobv === 'apply-v' && ldv < mv)` | leading dimension of `V` |
-| `eps` | `number` | in |  |  | ePS = DLAMCH('Epsilon') |
-| `sfmin` | `number` | in |  |  | sFMIN = DLAMCH('Safe Minimum') |
-| `tol` | `number` | in |  | rejects `tol <= eps` | tOL is the threshold for Jacobi rotations. |
-| `nsweep` | `NonNegativeInteger` | in |  | requires `nsweep ≥ 0` | nSWEEP is the number of sweeps of Jacobi rotations to be performed. |
-| `work` | `(Float64Array\|null)` | out | `≥ M` |  | workspace of at least `M` elements (the reference's LWORK >= M); if `null`, `max( 1, M )` are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobv` | `"compute-v" \| "apply-v" \| "no-v"` | `'compute-v'` to accumulate into V (RSVEC), `'apply-v'` to apply to existing MV-by-N V (APPLV), `'no-v'` otherwise |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Rejects `N < 0 \|\| N > M` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ M`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `sva` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideSVA` | `integer` | Stride length for `sva` |
+| `mv` | `integer` | If `jobv === 'apply-v'`, then MV rows of V are post-multiplied by a sequence of Jacobi rotations.<br>Rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` |
+| `V` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Output matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Rejects `(jobv === 'compute-v' && ldv < N) \|\| (jobv === 'apply-v' && ldv < mv)` |
+| `eps` | `number` | EPS = DLAMCH('Epsilon') |
+| `sfmin` | `number` | SFMIN = DLAMCH('Safe Minimum') |
+| `tol` | `number` | TOL is the threshold for Jacobi rotations.<br>Rejects `tol <= eps` |
+| `nsweep` | `NonNegativeInteger` | NSWEEP is the number of sweeps of Jacobi rotations to be performed.<br>Requires `nsweep ≥ 0` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ M</sub> | **out** · Workspace of at least `M` elements (the reference's LWORK >= M); if `null`, `max( 1, M )` are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -127,33 +127,33 @@ Pre-processor for dgesvj performing Jacobi rotations.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobv` | `("compute-v"\|"apply-v"\|"no-v")` | in |  | one of `'apply-v'`, `'no-v'`, `'compute-v'` | `'compute-v'` to accumulate into V (RSVEC), `'apply-v'` to apply to existing MV-by-N V (APPLV), `'no-v'` otherwise |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `sva` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideSVA` | `integer` | in |  |  | stride length for `sva` |
-| ↳ `offsetSVA` | `NonNegativeInteger` | in |  |  | starting index for `sva` |
-| `mv` | `integer` | in |  | rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` | if `jobv === 'apply-v'`, then MV rows of V are post-multiplied by a sequence of Jacobi rotations. |
-| `V` | `Float64Array` | in/out | `N × N` |  | output matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `eps` | `number` | in |  |  | ePS = DLAMCH('Epsilon') |
-| `sfmin` | `number` | in |  |  | sFMIN = DLAMCH('Safe Minimum') |
-| `tol` | `number` | in |  | rejects `tol <= eps` | tOL is the threshold for Jacobi rotations. |
-| `nsweep` | `NonNegativeInteger` | in |  | requires `nsweep ≥ 0` | nSWEEP is the number of sweeps of Jacobi rotations to be performed. |
-| `work` | `Float64Array` | out | `≥ M` |  | workspace of at least `M` elements (the reference's LWORK >= M) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `work` |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobv` | `"compute-v" \| "apply-v" \| "no-v"` | `'compute-v'` to accumulate into V (RSVEC), `'apply-v'` to apply to existing MV-by-N V (APPLV), `'no-v'` otherwise |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Rejects `N < 0 \|\| N > M` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `sva` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideSVA` | `integer` | Stride length for `sva` |
+| ↳ `offsetSVA` | `NonNegativeInteger` | Starting index for `sva` |
+| `mv` | `integer` | If `jobv === 'apply-v'`, then MV rows of V are post-multiplied by a sequence of Jacobi rotations.<br>Rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` |
+| `V` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Output matrix |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `eps` | `number` | EPS = DLAMCH('Epsilon') |
+| `sfmin` | `number` | SFMIN = DLAMCH('Safe Minimum') |
+| `tol` | `number` | TOL is the threshold for Jacobi rotations.<br>Rejects `tol <= eps` |
+| `nsweep` | `NonNegativeInteger` | NSWEEP is the number of sweeps of Jacobi rotations to be performed.<br>Requires `nsweep ≥ 0` |
+| `work` | `Float64Array`<br><sub>length ≥ M</sub> | **out** · Workspace of at least `M` elements (the reference's LWORK >= M) |
+| ↳ `strideWork` | `integer` | Stride length for `work` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `work` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

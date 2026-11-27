@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhetrs_rook( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side vectors |
-| `A` | `Complex128Array` | in | `N × N` |  | factored matrix from `zhetrf_rook` |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zhetrf_rook` |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | input/output right-hand side / solution matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side vectors<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from `zhetrf_rook` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zhetrf_rook` |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right-hand side / solution matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,22 +76,22 @@ zhetrs_rook.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side vectors |
-| `A` | `Complex128Array` | in | `N × N` |  | factored matrix from `zhetrf_rook` |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into `A` (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zhetrf_rook` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset into `IPIV` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | input/output right-hand side / solution matrix |
-| ↳ `strideB1` | `integer` | in |  |  | first stride of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | second stride of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset into `B` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side vectors<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from `zhetrf_rook` |
+| ↳ `strideA1` | `integer` | First stride of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Second stride of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into `A` (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zhetrf_rook` |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset into `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right-hand side / solution matrix |
+| ↳ `strideB1` | `integer` | First stride of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Second stride of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset into `B` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

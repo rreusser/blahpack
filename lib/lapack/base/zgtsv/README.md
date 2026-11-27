@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgtsv( order, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Complex128Array` | in/out | `N - 1` |  | on entry, DL must contain the (n-1) subdiagonal elements of A. On exit, DL is overwritten by the (n-2) elements of the second superdiagonal of the upper triangular matrix U from the LU factorization of A, in DL(1), ..., DL(n-2). |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Complex128Array` | in/out | `N` |  | on entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Complex128Array` | in/out | `N - 1` |  | on entry, DU must contain the (n-1) superdiagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DL must contain the (n-1) subdiagonal elements of A. On exit, DL is overwritten by the (n-2) elements of the second superdiagonal of the upper triangular matrix U from the LU factorization of A, in DL(1), ..., DL(n-2). |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · On entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DU must contain the (n-1) superdiagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,23 +83,23 @@ using Gaussian elimination with partial pivoting.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Complex128Array` | in/out | `N - 1` |  | sub-diagonal elements (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` (complex elements) |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` (complex elements) |
-| `d` | `Complex128Array` | in/out | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` (complex elements) |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` (complex elements) |
-| `DU` | `Complex128Array` | in/out | `N - 1` |  | super-diagonal elements (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` (complex elements) |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right hand side matrix (N x nrhs) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (length N-1) |
+| ↳ `strideDL` | `integer` | Stride length for `DL` (complex elements) |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` (complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` (complex elements) |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` (complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (length N-1) |
+| ↳ `strideDU` | `integer` | Stride length for `DU` (complex elements) |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix (N x nrhs) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

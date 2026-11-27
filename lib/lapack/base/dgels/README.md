@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgels( order, trans, M, N, nrhs, A, LDA, B, LDB, work ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `max( max( 1, M ), N ) × nrhs` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( max( 1, M ), N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `work` | `(Float64Array\|null)` | out | `≥ max( 1, min( M, N ) + max( min( M, N ), nrhs ) )` |  | workspace of length at least `max(1, MN + max(MN,nrhs))` (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`); or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` or `'transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>max(max(1, M), N) × nrhs</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(max(1, M), N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ max(1, min(M, N) + max(min(M, N), nrhs))</sub> | **out** · Workspace of length at least `max(1, MN + max(MN,nrhs))` (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`); or `null` to allocate the optimal size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -85,23 +85,23 @@ M-by-N matrix A, or its transpose, using a QR or LQ factorization of A.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix, overwritten with factorization on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `max( max( 1, M ), N ) × nrhs` |  | on entry, RHS matrix; on exit, the solution |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `work` | `Float64Array` | out | `≥ max( 1, min( M, N ) + max( min( M, N ), nrhs ) )` |  | workspace of length at least `max(1, MN + max(MN,nrhs))` (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the dormqr/dormlq optimum's T part, which enables the blocked paths |
-| ↳ `strideWork` | `integer` | in |  |  | stride for work |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for work |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `"no-transpose" \| "transpose"` | 'no-transpose' or 'transpose' |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix, overwritten with factorization on exit |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>max(max(1, M), N) × nrhs</sub> | **in/out** · On entry, RHS matrix; on exit, the solution |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `work` | `Float64Array`<br><sub>length ≥ max(1, min(M, N) + max(min(M, N), nrhs))</sub> | **out** · Workspace of length at least `max(1, MN + max(MN,nrhs))` (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the dormqr/dormlq optimum's T part, which enables the blocked paths |
+| ↳ `strideWork` | `integer` | Stride for work |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for work |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgehd2( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,21 +68,21 @@ dgehd2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

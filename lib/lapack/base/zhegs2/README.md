@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhegs2( order, itype, uplo, N, A, LDA, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H); = 2 or 3: compute U*A*U**H or L**H *A*L. |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of the Hermitian matrix A is stored, and how B has been factorized. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrices A and B. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, the Hermitian matrix A. On exit, if INFO = 0, the transformed matrix, stored in the same format as A. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | the triangular factor from the Cholesky factorization of B, as returned by ZPOTRF. |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itype` | `integer` | = 1: compute inv(U\*\*H)\*A\*inv(U) or inv(L)\*A\*inv(L\*\*H); = 2 or 3: compute U\*A\*U\*\*H or L\*\*H \*A\*L.<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored, and how B has been factorized. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
+| `N` | `NonNegativeInteger` | The order of the matrices A and B.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the Hermitian matrix A. On exit, if INFO = 0, the transformed matrix, stored in the same format as A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · The triangular factor from the Cholesky factorization of B, as returned by ZPOTRF. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,19 +88,19 @@ B must have been previously factorized as U^H_U or L_L^H by zpotrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | triangular factor from Cholesky factorization of B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Triangular factor from Cholesky factorization of B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

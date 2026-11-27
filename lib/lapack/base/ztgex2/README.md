@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztgex2( order, wantq, wantz, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, j1 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Complex128Array` | in/out | `N × null` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × null` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | output matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `j1` | `integer` | in |  |  | the index to the first block (A11, B11). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Complex128Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Complex128Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Output matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `j1` | `integer` | The index to the first block (A11, B11). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -74,28 +74,28 @@ ztgex2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantq` | `boolean` | in |  |  | whether to update the left transformation matrix Q |
-| `wantz` | `boolean` | in |  |  | whether to update the right transformation matrix Z |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrices |
-| `A` | `Complex128Array` | in/out | `N × null` |  | upper triangular matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × null` |  | upper triangular matrix B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (complex elements) |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | left transformation matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` (complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` (complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` (complex elements) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | right transformation matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (complex elements) |
-| `j1` | `integer` | in |  |  | index of the first block to swap (0-based) |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantq` | `boolean` | Whether to update the left transformation matrix Q |
+| `wantz` | `boolean` | Whether to update the right transformation matrix Z |
+| `N` | `NonNegativeInteger` | Order of the matrices |
+| `A` | `Complex128Array`<br><sub>N × ?</sub> | **in/out** · Upper triangular matrix A |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × ?</sub> | **in/out** · Upper triangular matrix B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (complex elements) |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Left transformation matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` (complex elements) |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` (complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` (complex elements) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Right transformation matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (complex elements) |
+| `j1` | `integer` | Index of the first block to swap (0-based) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

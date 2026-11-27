@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaruv( iseed, strideISEED, N, x, strideX ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `iseed` | `Int32Array` | in/out | `4` |  | on entry, the seed of the random number generator; the array elements must be between 0 and 4095, and ISEED(4) must be odd. On exit, the seed is updated (0-based). |
-| ↳ `strideISEED` | `integer` | in |  |  | stride length for `iseed` |
-| `N` | `NonNegativeInteger` | in |  |  | the number of random numbers to be generated. |
-| `x` | `Float64Array` | out | `N` |  | the generated random numbers. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `iseed` | `Int32Array`<br><sub>length 4</sub> | **in/out** · On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and ISEED(4) must be odd. On exit, the seed is updated (0-based). |
+| ↳ `strideISEED` | `integer` | Stride length for `iseed` |
+| `N` | `NonNegativeInteger` | The number of random numbers to be generated. |
+| `x` | `Float64Array`<br><sub>length N</sub> | **out** · The generated random numbers. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -53,15 +53,15 @@ Uses a multiplicative congruential method with modulus 2^48 and multiplier
 33952834046453. The 48-bit integers are stored in 4 integer array elements
 with 12 bits per element.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `iseed` | `Int32Array` | in/out | `4` |  | seed array of 4 integers (each 0..4095, iseed[3] odd) |
-| ↳ `strideISEED` | `integer` | in |  |  | stride for iseed |
-| ↳ `offsetISEED` | `NonNegativeInteger` | in |  |  | offset for iseed |
-| `N` | `NonNegativeInteger` | in |  |  | number of random numbers to generate (N <= 128) |
-| `x` | `Float64Array` | out | `N` |  | output array |
-| ↳ `strideX` | `integer` | in |  |  | stride for x |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset for x |
+| Parameter | Type | Description |
+|---|---|---|
+| `iseed` | `Int32Array`<br><sub>length 4</sub> | **in/out** · Seed array of 4 integers (each 0..4095, iseed[3] odd) |
+| ↳ `strideISEED` | `integer` | Stride for iseed |
+| ↳ `offsetISEED` | `NonNegativeInteger` | Offset for iseed |
+| `N` | `NonNegativeInteger` | Number of random numbers to generate (N <= 128) |
+| `x` | `Float64Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideX` | `integer` | Stride for x |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset for x |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -49,29 +49,29 @@ dlasq3(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `Int32Array` | in/out |  |  | input/output (length-1 array): last index (1-based) |
-| `z` | `Float64Array` | in/out | `4 * n0` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
-| `pp` | `Int32Array` | in/out |  |  | input/output (length-1 array): ping-pong flag (0, 1, or 2) |
-| `dmin` | `Float64Array` | out |  |  | input/output (length-1 array): minimum value of d |
-| `sigma` | `Float64Array` | out |  |  | input/output (length-1 array): accumulated shift |
-| `desig` | `Float64Array` | in/out |  |  | input/output (length-1 array): lower order part of sigma |
-| `qmax` | `Float64Array` | in/out |  |  | input/output (length-1 array): maximum value of q |
-| `nfail` | `Int32Array` | in/out |  |  | input/output (length-1 array): failure counter |
-| `iter` | `Int32Array` | in/out |  |  | input/output (length-1 array): iteration counter |
-| `ndiv` | `Int32Array` | in/out |  |  | input/output (length-1 array): division counter |
-| `ieee` | `boolean` | in |  |  | flag for IEEE arithmetic |
-| `ttype` | `Int32Array` | in/out |  |  | input/output (length-1 array): shift type |
-| `dmin1` | `Float64Array` | in/out |  |  | input/output (length-1 array): min d excluding d(n0) |
-| `dmin2` | `Float64Array` | in/out |  |  | input/output (length-1 array): min d excluding d(n0) and d(n0-1) |
-| `dn` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0) |
-| `dn1` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0-1) |
-| `dn2` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0-2) |
-| `g` | `Float64Array` | in/out |  |  | input/output (length-1 array): damping parameter |
-| `tau` | `Float64Array` | in/out |  |  | input/output (length-1 array): shift value |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `Int32Array` | **in/out** · Input/output (length-1 array): last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4 * n0</sub> | **in/out** · Input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
+| `pp` | `Int32Array` | **in/out** · Input/output (length-1 array): ping-pong flag (0, 1, or 2) |
+| `dmin` | `Float64Array` | **out** · Input/output (length-1 array): minimum value of d |
+| `sigma` | `Float64Array` | **out** · Input/output (length-1 array): accumulated shift |
+| `desig` | `Float64Array` | **in/out** · Input/output (length-1 array): lower order part of sigma |
+| `qmax` | `Float64Array` | **in/out** · Input/output (length-1 array): maximum value of q |
+| `nfail` | `Int32Array` | **in/out** · Input/output (length-1 array): failure counter |
+| `iter` | `Int32Array` | **in/out** · Input/output (length-1 array): iteration counter |
+| `ndiv` | `Int32Array` | **in/out** · Input/output (length-1 array): division counter |
+| `ieee` | `boolean` | Flag for IEEE arithmetic |
+| `ttype` | `Int32Array` | **in/out** · Input/output (length-1 array): shift type |
+| `dmin1` | `Float64Array` | **in/out** · Input/output (length-1 array): min d excluding d(n0) |
+| `dmin2` | `Float64Array` | **in/out** · Input/output (length-1 array): min d excluding d(n0) and d(n0-1) |
+| `dn` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0) |
+| `dn1` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0-1) |
+| `dn2` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0-2) |
+| `g` | `Float64Array` | **in/out** · Input/output (length-1 array): damping parameter |
+| `tau` | `Float64Array` | **in/out** · Input/output (length-1 array): shift value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -124,30 +124,30 @@ dlasq3.ndarray(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `Int32Array` | in/out |  |  | input/output (length-1 array): last index (1-based) |
-| `z` | `Float64Array` | in/out | `4 * n0` |  | qd array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `pp` | `Int32Array` | in/out |  |  | input/output (length-1 array): ping-pong flag (0, 1, or 2) |
-| `dmin` | `Float64Array` | out |  |  | input/output (length-1 array): minimum value of d |
-| `sigma` | `Float64Array` | out |  |  | input/output (length-1 array): accumulated shift |
-| `desig` | `Float64Array` | in/out |  |  | input/output (length-1 array): lower order part of sigma |
-| `qmax` | `Float64Array` | in/out |  |  | input/output (length-1 array): maximum value of q |
-| `nfail` | `Int32Array` | in/out |  |  | input/output (length-1 array): failure counter |
-| `iter` | `Int32Array` | in/out |  |  | input/output (length-1 array): iteration counter |
-| `ndiv` | `Int32Array` | in/out |  |  | input/output (length-1 array): division counter |
-| `ieee` | `boolean` | in |  |  | flag for IEEE arithmetic |
-| `ttype` | `Int32Array` | in/out |  |  | input/output (length-1 array): shift type |
-| `dmin1` | `Float64Array` | in/out |  |  | input/output (length-1 array): min d excluding d(n0) |
-| `dmin2` | `Float64Array` | in/out |  |  | input/output (length-1 array): min d excluding d(n0) and d(n0-1) |
-| `dn` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0) |
-| `dn1` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0-1) |
-| `dn2` | `Float64Array` | in/out |  |  | input/output (length-1 array): d(n0-2) |
-| `g` | `Float64Array` | in/out |  |  | input/output (length-1 array): damping parameter |
-| `tau` | `Float64Array` | in/out |  |  | input/output (length-1 array): shift value |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `Int32Array` | **in/out** · Input/output (length-1 array): last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4 * n0</sub> | **in/out** · Qd array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `pp` | `Int32Array` | **in/out** · Input/output (length-1 array): ping-pong flag (0, 1, or 2) |
+| `dmin` | `Float64Array` | **out** · Input/output (length-1 array): minimum value of d |
+| `sigma` | `Float64Array` | **out** · Input/output (length-1 array): accumulated shift |
+| `desig` | `Float64Array` | **in/out** · Input/output (length-1 array): lower order part of sigma |
+| `qmax` | `Float64Array` | **in/out** · Input/output (length-1 array): maximum value of q |
+| `nfail` | `Int32Array` | **in/out** · Input/output (length-1 array): failure counter |
+| `iter` | `Int32Array` | **in/out** · Input/output (length-1 array): iteration counter |
+| `ndiv` | `Int32Array` | **in/out** · Input/output (length-1 array): division counter |
+| `ieee` | `boolean` | Flag for IEEE arithmetic |
+| `ttype` | `Int32Array` | **in/out** · Input/output (length-1 array): shift type |
+| `dmin1` | `Float64Array` | **in/out** · Input/output (length-1 array): min d excluding d(n0) |
+| `dmin2` | `Float64Array` | **in/out** · Input/output (length-1 array): min d excluding d(n0) and d(n0-1) |
+| `dn` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0) |
+| `dn1` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0-1) |
+| `dn2` | `Float64Array` | **in/out** · Input/output (length-1 array): d(n0-2) |
+| `g` | `Float64Array` | **in/out** · Input/output (length-1 array): damping parameter |
+| `tau` | `Float64Array` | **in/out** · Input/output (length-1 array): shift value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

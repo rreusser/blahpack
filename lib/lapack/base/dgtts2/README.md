@@ -30,24 +30,24 @@ dgtts2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itrans` | `integer` | in |  |  | specifies the form of the system of equations. = 0: A * X = B (No transpose) = 1: A**T* X = B (Transpose) = 2: A**T* X = B (Conjugate transpose = Transpose) |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  |  | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) multipliers that define the matrix L from the LU factorization of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) elements of the first super-diagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DU2` | `Float64Array` | in | `N - 2` |  | the (n-2) elements of the second super-diagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X. |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itrans` | `integer` | Specifies the form of the system of equations. = 0: A \* X = B (No transpose) = 1: A\*\*T\* X = B (Transpose) = 2: A\*\*T\* X = B (Conjugate transpose = Transpose) |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B. |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) multipliers that define the matrix L from the LU factorization of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) elements of the first super-diagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | The (n-2) elements of the second super-diagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -101,30 +101,30 @@ tridiagonal matrix A using the LU factorization computed by dgttrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itrans` | `integer` | in |  |  | 0 for A*X=B, 1 or 2 for A^T*X=B |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right hand sides (columns of B) |
-| `DL` | `Float64Array` | in | `N - 1` |  | multipliers from LU factorization (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` |
-| `d` | `Float64Array` | in | `N` |  | diagonal of U (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | first superdiagonal of U (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` |
-| `DU2` | `Float64Array` | in | `N - 2` |  | second superdiagonal of U (length N-2) |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for `DU2` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | right hand side matrix, overwritten with solution |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `itrans` | `integer` | 0 for A\*X=B, 1 or 2 for A^T\*X=B |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B) |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Multipliers from LU factorization (length N-1) |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of U (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | First superdiagonal of U (length N-1) |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | Second superdiagonal of U (length N-2) |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix, overwritten with solution |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

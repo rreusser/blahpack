@@ -28,20 +28,20 @@ dlarra(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of the tridiagonal matrix, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `N` |  | subdiagonal elements (in/out), length N |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `E2` | `Float64Array` | in/out | `N` |  | squares of subdiagonal elements (in/out), length N |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| `spltol` | `number` | in |  |  | splitting threshold |
-| `tnrm` | `number` | in |  |  | norm of the matrix |
-| `nsplit` | `Int32Array` | out |  |  | output: number of blocks (nsplit[0]) |
-| `ISPLIT` | `Int32Array` | out | `N` |  | output: splitting points array |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride length for `ISPLIT` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of the tridiagonal matrix, length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N</sub> | **in/out** · Subdiagonal elements (in/out), length N |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `E2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Squares of subdiagonal elements (in/out), length N |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| `spltol` | `number` | Splitting threshold |
+| `tnrm` | `number` | Norm of the matrix |
+| `nsplit` | `Int32Array` | **out** · Output: number of blocks (nsplit[0]) |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | **out** · Output: splitting points array |
+| ↳ `strideISPLIT` | `integer` | Stride length for `ISPLIT` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,24 +75,24 @@ dlarra.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of the tridiagonal matrix, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N` |  | subdiagonal elements (in/out), length N |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `E2` | `Float64Array` | in/out | `N` |  | squares of subdiagonal elements (in/out), length N |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| ↳ `offsetE2` | `NonNegativeInteger` | in |  |  | starting index for `E2` |
-| `spltol` | `number` | in |  |  | splitting threshold |
-| `tnrm` | `number` | in |  |  | norm of the matrix |
-| `nsplit` | `Int32Array` | out |  |  | output: number of blocks (nsplit[0]) |
-| `ISPLIT` | `Int32Array` | out | `N` |  | output: splitting points array |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride length for `ISPLIT` |
-| ↳ `offsetISPLIT` | `NonNegativeInteger` | in |  |  | starting index for `ISPLIT` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of the tridiagonal matrix, length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N</sub> | **in/out** · Subdiagonal elements (in/out), length N |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `E2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Squares of subdiagonal elements (in/out), length N |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| ↳ `offsetE2` | `NonNegativeInteger` | Starting index for `E2` |
+| `spltol` | `number` | Splitting threshold |
+| `tnrm` | `number` | Norm of the matrix |
+| `nsplit` | `Int32Array` | **out** · Output: number of blocks (nsplit[0]) |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | **out** · Output: splitting points array |
+| ↳ `strideISPLIT` | `integer` | Stride length for `ISPLIT` |
+| ↳ `offsetISPLIT` | `NonNegativeInteger` | Starting index for `ISPLIT` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

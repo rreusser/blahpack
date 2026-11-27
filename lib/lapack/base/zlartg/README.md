@@ -33,13 +33,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlartg( f, g, c, s, r ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `Complex128Array` | in |  |  | first component (input only) |
-| `g` | `Complex128Array` | in |  |  | second component (input only) |
-| `c` | `Float64Array` | out |  |  | on exit, the real cosine of the rotation |
-| `s` | `Complex128Array` | out |  |  | on exit, the complex sine of the rotation |
-| `r` | `Complex128Array` | out |  |  | on exit, the complex result |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `Complex128Array` | First component (input only) |
+| `g` | `Complex128Array` | Second component (input only) |
+| `c` | `Float64Array` | **out** · On exit, the real cosine of the rotation |
+| `s` | `Complex128Array` | **out** · On exit, the complex sine of the rotation |
+| `r` | `Complex128Array` | **out** · On exit, the complex result |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,18 +73,18 @@ where C is real and `C**2 + |S|**2 = 1`.
 
 F and G are unchanged on return.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `Complex128Array` | in |  |  | first component (input only) |
-| ↳ `offsetF` | `NonNegativeInteger` | in |  |  | index offset for `f` (in complex elements) |
-| `g` | `Complex128Array` | in |  |  | second component (input only) |
-| ↳ `offsetG` | `NonNegativeInteger` | in |  |  | index offset for `g` (in complex elements) |
-| `c` | `Float64Array` | out |  |  | on exit, the real cosine of the rotation |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for `c` |
-| `s` | `Complex128Array` | out |  |  | on exit, the complex sine of the rotation |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index offset for `s` (in complex elements) |
-| `r` | `Complex128Array` | out |  |  | on exit, the complex result |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for `r` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `Complex128Array` | First component (input only) |
+| ↳ `offsetF` | `NonNegativeInteger` | Index offset for `f` (in complex elements) |
+| `g` | `Complex128Array` | Second component (input only) |
+| ↳ `offsetG` | `NonNegativeInteger` | Index offset for `g` (in complex elements) |
+| `c` | `Float64Array` | **out** · On exit, the real cosine of the rotation |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for `c` |
+| `s` | `Complex128Array` | **out** · On exit, the complex sine of the rotation |
+| ↳ `offsetS` | `NonNegativeInteger` | Index offset for `s` (in complex elements) |
+| `r` | `Complex128Array` | **out** · On exit, the complex result |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for `r` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,22 +29,22 @@ zgbequ(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | band matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `r` | `Float64Array` | out | `M` |  | row scale factors |
-| ↳ `strideR` | `integer` | in |  |  | stride for `r` |
-| `c` | `Float64Array` | out | `N` |  | column scale factors |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
-| `rowcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
-| `colcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Band matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `r` | `Float64Array`<br><sub>length M</sub> | **out** · Row scale factors |
+| ↳ `strideR` | `integer` | Stride for `r` |
+| `c` | `Float64Array`<br><sub>length N</sub> | **out** · Column scale factors |
+| ↳ `strideC` | `integer` | Stride for `c` |
+| `rowcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
+| `colcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -94,25 +94,25 @@ Computes row and column scalings intended to equilibrate an M-by-N complex band 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals within the band |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals within the band |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | band matrix in LAPACK band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | index offset for AB (in complex elements) |
-| `r` | `Float64Array` | out | `M` |  | output row scale factors, length M |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for r |
-| `c` | `Float64Array` | out | `N` |  | output column scale factors, length N |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for c |
-| `rowcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
-| `colcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals within the band<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals within the band<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Band matrix in LAPACK band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Index offset for AB (in complex elements) |
+| `r` | `Float64Array`<br><sub>length M</sub> | **out** · Output row scale factors, length M |
+| ↳ `strideR` | `integer` | Stride for r |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | **out** · Output column scale factors, length N |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for c |
+| `rowcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
+| `colcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

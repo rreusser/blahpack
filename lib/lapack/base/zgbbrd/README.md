@@ -32,29 +32,29 @@ zgbbrd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `vect` | `("no-vectors"\|"q-only"\|"p-only"\|"both")` | in |  | one of `'both'`, `'no-vectors'`, `'p-only'`, `'q-only'` | one of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | number of columns of C |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Complex128Array` | in/out | `kl + ku + 1 × N` |  | band matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` (in complex elements) |
-| `d` | `Float64Array` | out | `min( M, N )` |  | real diagonal of B |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | real superdiagonal of B |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `Q` | `Complex128Array` | out | `M × M` |  | on output, the unitary matrix Q |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| ((vect === 'q-only' \|\| vect === 'both') && ldq < max( 1, M ))` | leading dimension of `Q` (in complex elements) |
-| `PT` | `Complex128Array` | out | `N × N` |  | on output, the unitary matrix P**H |
-| ↳ `LDPT` | `PositiveInteger` | in |  | rejects `ldpt < 1 \|\| ((vect === 'p-only' \|\| vect === 'both') && ldpt < max( 1, N ))` | leading dimension of `PT` (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × ncc` |  | on input m-by-ncc; on output Q**H*C |
-| ↳ `LDC` | `PositiveInteger` | in |  | rejects `ldc < 1 \|\| (ncc > 0 && ldc < max( 1, M ))` | leading dimension of `C` (in complex elements) |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( M, N )` |  | complex workspace array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ max( M, N )` |  | real workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `vect` | `"no-vectors" \| "q-only" \| "p-only" \| "both"` | One of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `ncc` | `NonNegativeInteger` | Number of columns of C<br>Requires `ncc ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · Band matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` (in complex elements)<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Real diagonal of B |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Real superdiagonal of B |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `Q` | `Complex128Array`<br><sub>M × M</sub> | **out** · On output, the unitary matrix Q |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` (in complex elements)<br>Rejects `ldq < 1 \|\| ((vect === 'q-only' \|\| vect === 'both') && ldq < max(1, M))` |
+| `PT` | `Complex128Array`<br><sub>N × N</sub> | **out** · On output, the unitary matrix P\*\*H |
+| ↳ `LDPT` | `PositiveInteger` | Leading dimension of `PT` (in complex elements)<br>Rejects `ldpt < 1 \|\| ((vect === 'p-only' \|\| vect === 'both') && ldpt < max(1, N))` |
+| `C` | `Complex128Array`<br><sub>M × ncc</sub> | **in/out** · On input m-by-ncc; on output Q\*\*H\*C |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` (in complex elements)<br>Rejects `ldc < 1 \|\| (ncc > 0 && ldc < max(1, M))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(M, N)</sub> | **out** · Complex workspace array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ max(M, N)</sub> | **out** · Real workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,42 +118,42 @@ zgbbrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("no-vectors"\|"q-only"\|"p-only"\|"both")` | in |  | one of `'both'`, `'no-vectors'`, `'p-only'`, `'q-only'` | one of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | number of columns of C |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Complex128Array` | in/out | `kl + ku + 1 × N` |  | band matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (in complex elements) |
-| `d` | `Float64Array` | out | `min( M, N )` |  | real diagonal of B |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | real superdiagonal of B |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `Q` | `Complex128Array` | out | `M × M` |  | on output, the unitary matrix Q (if requested) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` (in complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` (in complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` (in complex elements) |
-| `PT` | `Complex128Array` | out | `N × N` |  | on output, the unitary matrix P**H (if requested) |
-| ↳ `stridePT1` | `integer` | in |  |  | stride of the first dimension of `PT` (in complex elements) |
-| ↳ `stridePT2` | `integer` | in |  |  | stride of the second dimension of `PT` (in complex elements) |
-| ↳ `offsetPT` | `NonNegativeInteger` | in |  |  | starting index for `PT` (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × ncc` |  | on input, m-by-ncc matrix; on output, Q**H*C |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( M, N )` |  | complex workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ max( M, N )` |  | real workspace array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"no-vectors" \| "q-only" \| "p-only" \| "both"` | One of `'no-vectors'`, `'q-only'`, `'p-only'`, or `'both'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `ncc` | `NonNegativeInteger` | Number of columns of C<br>Requires `ncc ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · Band matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (in complex elements) |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Real diagonal of B |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Real superdiagonal of B |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `Q` | `Complex128Array`<br><sub>M × M</sub> | **out** · On output, the unitary matrix Q (if requested) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` (in complex elements) |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` (in complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` (in complex elements) |
+| `PT` | `Complex128Array`<br><sub>N × N</sub> | **out** · On output, the unitary matrix P\*\*H (if requested) |
+| ↳ `stridePT1` | `integer` | Stride of the first dimension of `PT` (in complex elements) |
+| ↳ `stridePT2` | `integer` | Stride of the second dimension of `PT` (in complex elements) |
+| ↳ `offsetPT` | `NonNegativeInteger` | Starting index for `PT` (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × ncc</sub> | **in/out** · On input, m-by-ncc matrix; on output, Q\*\*H\*C |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(M, N)</sub> | **out** · Complex workspace array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ max(M, N)</sub> | **out** · Real workspace array |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

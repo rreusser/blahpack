@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhbmv( order, uplo, N, K, alpha, A, LDA, x, strideX, beta, y, strideY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the band matrix A is being supplied as follows: `uplo === 'upper'` The upper triangular part of A is being supplied. `uplo === 'lower'` The lower triangular part of A is being supplied. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | the number of super-diagonals of the matrix A. |
-| `alpha` | `Complex128` | in |  |  | the scalar alpha. |
-| `A` | `Complex128Array` | in | `K + 1 × N` |  | before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the hermitian matrix, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ K + 1`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in | `N` |  | before entry, the incremented array X must contain the vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `Complex128` | in |  |  | the scalar beta. |
-| `y` | `Complex128Array` | in/out | `N` |  | before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the band matrix A is being supplied as follows: `uplo === 'upper'` The upper triangular part of A is being supplied. `uplo === 'lower'` The lower triangular part of A is being supplied. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | The number of super-diagonals of the matrix A.<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | The scalar alpha. |
+| `A` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the hermitian matrix, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ K + 1`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Before entry, the incremented array X must contain the vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `Complex128` | The scalar beta. |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -122,23 +122,23 @@ full matrix is at band position `A_band[i-j, j]`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored: `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of super-diagonals (or sub-diagonals) |
-| `alpha` | `Complex128` | in |  |  | complex scalar constant |
-| `A` | `Complex128Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `x` | `Complex128Array` | in | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `beta` | `Complex128` | in |  |  | complex scalar constant |
-| `y` | `Complex128Array` | in/out | `N` |  | complex input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored: `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of super-diagonals (or sub-diagonals)<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar constant |
+| `A` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Complex input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `beta` | `Complex128` | Complex scalar constant |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Complex input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

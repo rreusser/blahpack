@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsycon( order, uplo, N, A, LDA, IPIV, strideIPIV, anorm, rcond, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the details of the factorization are stored as an upper or lower triangular matrix. `'upper'`: Upper triangular, form is A = U*D*U**T; `'lower'`: Lower triangular, form is A = L*D*L**T. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Complex128Array` | in | `N × N` |  | the block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | in | `N` |  | details of the interchanges and the block structure of D as determined by ZSYTRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A. |
-| `rcond` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | caller-provided workspace of at least `2 * N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the details of the factorization are stored as an upper or lower triangular matrix. `'upper'`: Upper triangular, form is A = U\*D\*U\*\*T; `'lower'`: Lower triangular, form is A = L\*D\*L\*\*T. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | The block diagonal matrix D and the multipliers used to obtain the factor U or L as computed by ZSYTRF. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Details of the interchanges and the block structure of D as determined by ZSYTRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix A.<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM \* AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-provided workspace of at least `2 * N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,22 +89,22 @@ IPIV uses the same 0-based convention as zsytf2/zsytrf:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower', must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | factored matrix from zsytrf (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zsytrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length at least 2*N (in complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower', must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from zsytrf (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zsytrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N (in complex elements) |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

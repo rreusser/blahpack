@@ -34,29 +34,29 @@ ztrsna(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | `'eigenvalues'`, `'eigenvectors'`, or `'both'` |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | `'all'` or `'selected'` |
-| `SELECT` | `Uint8Array` | in | `N` |  | boolean selection array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `T` | `Complex128Array` | in | `N × N` |  | input upper triangular matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `VL` | `Complex128Array` | in | `N × mm` |  | left eigenvector matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | in | `N × mm` |  | right eigenvector matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `s` | `Float64Array` | out | `mm` |  | output: reciprocal condition numbers of eigenvalues |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `SEP` | `Float64Array` | out | `mm` |  | output: reciprocal condition numbers of eigenvectors |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
-| `mm` | `NonNegativeInteger` | in |  |  | column dimension of VL/VR/WORK |
-| `M` | `Int32Array` | out |  |  | output: M[0] = number of condition numbers produced |
-| `WORK` | `(Complex128Array\|null)` | out | `N × (N < 2 ? N : N + 1)` |  | complex workspace |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | `'eigenvalues'`, `'eigenvectors'`, or `'both'` |
+| `howmny` | `"all" \| "selected"` | `'all'` or `'selected'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Boolean selection array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | Input upper triangular matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | Left eigenvector matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | Right eigenvector matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvr < N)` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Output: reciprocal condition numbers of eigenvalues |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `SEP` | `Float64Array`<br><sub>length mm</sub> | **out** · Output: reciprocal condition numbers of eigenvectors |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
+| `mm` | `NonNegativeInteger` | Column dimension of VL/VR/WORK |
+| `M` | `Int32Array` | **out** · Output: M[0] = number of condition numbers produced |
+| `WORK` | `Complex128Array \| null`<br><sub>N × (N &lt; 2 ? N : N + 1)</sub> | **out** · Complex workspace |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -122,41 +122,41 @@ ztrsna.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | `'eigenvalues'`, `'eigenvectors'`, or `'both'` |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | `'all'` or `'selected'` |
-| `SELECT` | `Uint8Array` | in | `N` |  | boolean selection array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `T` | `Complex128Array` | in | `N × N` |  | input upper triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `VL` | `Complex128Array` | in | `N × mm` |  | left eigenvector matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Complex128Array` | in | `N × mm` |  | right eigenvector matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `s` | `Float64Array` | out | `mm` |  | output: reciprocal condition numbers of eigenvalues |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `SEP` | `Float64Array` | out | `mm` |  | output: reciprocal condition numbers of eigenvectors |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
-| ↳ `offsetSEP` | `NonNegativeInteger` | in |  |  | starting index for `SEP` |
-| `mm` | `NonNegativeInteger` | in |  |  | column dimension of VL/VR/WORK |
-| `M` | `Int32Array` | out |  |  | output: M[0] = number of condition numbers produced |
-| `WORK` | `Complex128Array` | out | `N × (N < 2 ? N : N + 1)` |  | complex workspace |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | `'eigenvalues'`, `'eigenvectors'`, or `'both'` |
+| `howmny` | `"all" \| "selected"` | `'all'` or `'selected'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Boolean selection array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | Input upper triangular matrix |
+| ↳ `strideT1` | `integer` | Stride of first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | Left eigenvector matrix |
+| ↳ `strideVL1` | `integer` | Stride of first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | Right eigenvector matrix |
+| ↳ `strideVR1` | `integer` | Stride of first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Output: reciprocal condition numbers of eigenvalues |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `SEP` | `Float64Array`<br><sub>length mm</sub> | **out** · Output: reciprocal condition numbers of eigenvectors |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
+| ↳ `offsetSEP` | `NonNegativeInteger` | Starting index for `SEP` |
+| `mm` | `NonNegativeInteger` | Column dimension of VL/VR/WORK |
+| `M` | `Int32Array` | **out** · Output: M[0] = number of condition numbers produced |
+| `WORK` | `Complex128Array`<br><sub>N × (N &lt; 2 ? N : N + 1)</sub> | **out** · Complex workspace |
+| ↳ `strideWork1` | `integer` | Stride of first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

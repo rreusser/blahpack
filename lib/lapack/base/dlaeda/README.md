@@ -40,31 +40,31 @@ Computes the Z vector determining the rank-one modification of the diagonal matr
 -   `N` is the size of the current subproblem; `z` and `ZTEMP` have length `N`.
 -   The tree-indexed arrays (`PRMPTR`, `PERM`, `GIVPTR`, `q`, `QPTR`) are addressed through stored pointers, so their length is not derivable from `N`; for a negative stride, their first element is the last element reachable from the end of the buffer.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout of `GIVCOL` and `GIVNUM` ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | size of the current subproblem |
-| `tlvls` | `integer` | in |  |  | total number of merging levels in the divide-and-conquer tree |
-| `curlvl` | `integer` | in |  |  | current level in the merge routine |
-| `curpbm` | `integer` | in |  |  | current problem in the current level |
-| `PRMPTR` | `Int32Array` | in | `NLGN` |  | pointers into `PERM` (1-based) |
-| ↳ `stridePRMPTR` | `integer` | in |  |  | stride length for `PRMPTR` |
-| `PERM` | `Int32Array` | in | `NLGN` |  | permutations from deflation and sorting (1-based) |
-| ↳ `stridePERM` | `integer` | in |  |  | stride length for `PERM` |
-| `GIVPTR` | `Int32Array` | in | `NLGN` |  | pointers into `GIVCOL` (1-based) |
-| ↳ `strideGIVPTR` | `integer` | in |  |  | stride length for `GIVPTR` |
-| `GIVCOL` | `Int32Array` | in | `2 × NLGN` |  | 2-by-* matrix of column pairs for Givens rotations (1-based) |
-| ↳ `LDGIVCOL` | `PositiveInteger` | in |  |  | leading dimension of `GIVCOL` |
-| `GIVNUM` | `Float64Array` | in | `2 × NLGN` |  | 2-by-* matrix of Givens rotation C and S values |
-| ↳ `LDGIVNUM` | `PositiveInteger` | in |  |  | leading dimension of `GIVNUM` |
-| `q` | `Float64Array` | in | `N**2` |  | eigenblocks from previous levels |
-| ↳ `strideQ` | `integer` | in |  |  | stride length for `q` |
-| `QPTR` | `Int32Array` | in | `N + 2` |  | pointers into `q` (1-based) |
-| ↳ `strideQPTR` | `integer` | in |  |  | stride length for `QPTR` |
-| `z` | `Float64Array` | out | `N` |  | output updating vector, length `N` |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| `ZTEMP` | `Float64Array` | out | `N` |  | workspace, length `N` |
-| ↳ `strideZTEMP` | `integer` | in |  |  | stride length for `ZTEMP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout of `GIVCOL` and `GIVNUM` ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Size of the current subproblem<br>Requires `N ≥ 0` |
+| `tlvls` | `integer` | Total number of merging levels in the divide-and-conquer tree |
+| `curlvl` | `integer` | Current level in the merge routine |
+| `curpbm` | `integer` | Current problem in the current level |
+| `PRMPTR` | `Int32Array`<br><sub>length NLGN</sub> | Pointers into `PERM` (1-based) |
+| ↳ `stridePRMPTR` | `integer` | Stride length for `PRMPTR` |
+| `PERM` | `Int32Array`<br><sub>length NLGN</sub> | Permutations from deflation and sorting (1-based) |
+| ↳ `stridePERM` | `integer` | Stride length for `PERM` |
+| `GIVPTR` | `Int32Array`<br><sub>length NLGN</sub> | Pointers into `GIVCOL` (1-based) |
+| ↳ `strideGIVPTR` | `integer` | Stride length for `GIVPTR` |
+| `GIVCOL` | `Int32Array`<br><sub>2 × NLGN</sub> | 2-by-\* matrix of column pairs for Givens rotations (1-based) |
+| ↳ `LDGIVCOL` | `PositiveInteger` | Leading dimension of `GIVCOL` |
+| `GIVNUM` | `Float64Array`<br><sub>2 × NLGN</sub> | 2-by-\* matrix of Givens rotation C and S values |
+| ↳ `LDGIVNUM` | `PositiveInteger` | Leading dimension of `GIVNUM` |
+| `q` | `Float64Array`<br><sub>length N**2</sub> | Eigenblocks from previous levels |
+| ↳ `strideQ` | `integer` | Stride length for `q` |
+| `QPTR` | `Int32Array`<br><sub>length N + 2</sub> | Pointers into `q` (1-based) |
+| ↳ `strideQPTR` | `integer` | Stride length for `QPTR` |
+| `z` | `Float64Array`<br><sub>length N</sub> | **out** · Output updating vector, length `N` |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| `ZTEMP` | `Float64Array`<br><sub>length N</sub> | **out** · Workspace, length `N` |
+| ↳ `strideZTEMP` | `integer` | Stride length for `ZTEMP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,41 +115,41 @@ dlaeda.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `tlvls` | `integer` | in |  |  | the total number of merging levels in the overall divide and conquer tree. |
-| `curlvl` | `integer` | in |  |  | the current level in the overall merge routine, 0 <= curlvl <= tlvls. |
-| `curpbm` | `integer` | in |  |  | the current problem in the current level in the overall merge routine (counting from upper left to lower right). |
-| `PRMPTR` | `Int32Array` | in | `NLGN` |  | input array |
-| ↳ `stridePRMPTR` | `integer` | in |  |  | stride length for `PRMPTR` |
-| ↳ `offsetPRMPTR` | `NonNegativeInteger` | in |  |  | starting index for `PRMPTR` |
-| `PERM` | `Int32Array` | in | `NLGN` |  | input array |
-| ↳ `stridePERM` | `integer` | in |  |  | stride length for `PERM` |
-| ↳ `offsetPERM` | `NonNegativeInteger` | in |  |  | starting index for `PERM` |
-| `GIVPTR` | `Int32Array` | in | `NLGN` |  | input array |
-| ↳ `strideGIVPTR` | `integer` | in |  |  | stride length for `GIVPTR` |
-| ↳ `offsetGIVPTR` | `NonNegativeInteger` | in |  |  | starting index for `GIVPTR` |
-| `GIVCOL` | `Int32Array` | in | `2 × NLGN` |  | input matrix |
-| ↳ `strideGIVCOL1` | `integer` | in |  |  | stride of the first dimension of `GIVCOL` |
-| ↳ `strideGIVCOL2` | `integer` | in |  |  | stride of the second dimension of `GIVCOL` |
-| ↳ `offsetGIVCOL` | `NonNegativeInteger` | in |  |  | starting index for `GIVCOL` |
-| `GIVNUM` | `Float64Array` | in | `2 × NLGN` |  | input matrix |
-| ↳ `strideGIVNUM1` | `integer` | in |  |  | stride of the first dimension of `GIVNUM` |
-| ↳ `strideGIVNUM2` | `integer` | in |  |  | stride of the second dimension of `GIVNUM` |
-| ↳ `offsetGIVNUM` | `NonNegativeInteger` | in |  |  | starting index for `GIVNUM` |
-| `q` | `Float64Array` | in | `N**2` |  | input array |
-| ↳ `strideQ` | `integer` | in |  |  | stride length for `q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `q` |
-| `QPTR` | `Int32Array` | in | `N + 2` |  | input array |
-| ↳ `strideQPTR` | `integer` | in |  |  | stride length for `QPTR` |
-| ↳ `offsetQPTR` | `NonNegativeInteger` | in |  |  | starting index for `QPTR` |
-| `z` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `ZTEMP` | `Float64Array` | out | `N` |  | output array |
-| ↳ `strideZTEMP` | `integer` | in |  |  | stride length for `ZTEMP` |
-| ↳ `offsetZTEMP` | `NonNegativeInteger` | in |  |  | starting index for `ZTEMP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `tlvls` | `integer` | The total number of merging levels in the overall divide and conquer tree. |
+| `curlvl` | `integer` | The current level in the overall merge routine, 0 <= curlvl <= tlvls. |
+| `curpbm` | `integer` | The current problem in the current level in the overall merge routine (counting from upper left to lower right). |
+| `PRMPTR` | `Int32Array`<br><sub>length NLGN</sub> | Input array |
+| ↳ `stridePRMPTR` | `integer` | Stride length for `PRMPTR` |
+| ↳ `offsetPRMPTR` | `NonNegativeInteger` | Starting index for `PRMPTR` |
+| `PERM` | `Int32Array`<br><sub>length NLGN</sub> | Input array |
+| ↳ `stridePERM` | `integer` | Stride length for `PERM` |
+| ↳ `offsetPERM` | `NonNegativeInteger` | Starting index for `PERM` |
+| `GIVPTR` | `Int32Array`<br><sub>length NLGN</sub> | Input array |
+| ↳ `strideGIVPTR` | `integer` | Stride length for `GIVPTR` |
+| ↳ `offsetGIVPTR` | `NonNegativeInteger` | Starting index for `GIVPTR` |
+| `GIVCOL` | `Int32Array`<br><sub>2 × NLGN</sub> | Input matrix |
+| ↳ `strideGIVCOL1` | `integer` | Stride of the first dimension of `GIVCOL` |
+| ↳ `strideGIVCOL2` | `integer` | Stride of the second dimension of `GIVCOL` |
+| ↳ `offsetGIVCOL` | `NonNegativeInteger` | Starting index for `GIVCOL` |
+| `GIVNUM` | `Float64Array`<br><sub>2 × NLGN</sub> | Input matrix |
+| ↳ `strideGIVNUM1` | `integer` | Stride of the first dimension of `GIVNUM` |
+| ↳ `strideGIVNUM2` | `integer` | Stride of the second dimension of `GIVNUM` |
+| ↳ `offsetGIVNUM` | `NonNegativeInteger` | Starting index for `GIVNUM` |
+| `q` | `Float64Array`<br><sub>length N**2</sub> | Input array |
+| ↳ `strideQ` | `integer` | Stride length for `q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `q` |
+| `QPTR` | `Int32Array`<br><sub>length N + 2</sub> | Input array |
+| ↳ `strideQPTR` | `integer` | Stride length for `QPTR` |
+| ↳ `offsetQPTR` | `NonNegativeInteger` | Starting index for `QPTR` |
+| `z` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `ZTEMP` | `Float64Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideZTEMP` | `integer` | Stride length for `ZTEMP` |
+| ↳ `offsetZTEMP` | `NonNegativeInteger` | Starting index for `ZTEMP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

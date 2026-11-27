@@ -42,41 +42,41 @@ dlarrd(
 
 Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `range` | `("all"\|"value"\|"index")` | in |  |  | `'all'`, `'value'`, or `'index'` |
-| `order` | `("block"\|"entire")` | in |  |  | `'block'` or `'entire'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `vl` | `number` | in |  |  | lower bound (range=`'value'`) |
-| `vu` | `number` | in |  |  | upper bound (range=`'value'`) |
-| `il` | `integer` | in |  |  | lower index (range=`'index'`) |
-| `iu` | `integer` | in |  |  | upper index (range=`'index'`) |
-| `GERS` | `Float64Array` | in | `2 * N` |  | Gershgorin intervals, length 2*N |
-| ↳ `strideGERS` | `integer` | in |  |  | stride for GERS |
-| `reltol` | `number` | in |  |  | relative tolerance |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| `e` | `Float64Array` | in | `N - 1` |  | off-diagonal elements, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| `E2` | `Float64Array` | in | `N - 1` |  | squared off-diagonal elements, length N-1 |
-| ↳ `strideE2` | `integer` | in |  |  | stride for E2 |
-| `pivmin` | `number` | in |  |  | minimum pivot |
-| `nsplit` | `integer` | in |  |  | number of diagonal blocks |
-| `ISPLIT` | `Int32Array` | in | `N` |  | splitting points, length nsplit |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride for ISPLIT |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the actual number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output eigenvalues, length N |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| `WERR` | `Float64Array` | out | `N` |  | output eigenvalue errors, length N |
-| ↳ `strideWERR` | `integer` | in |  |  | stride for WERR |
-| `wl` | `Float64Array` | out |  |  | output (length-1 array): `wl` |
-| `wu` | `Float64Array` | out |  |  | output (length-1 array): the interval (WL, WU] contains all the wanted eigenvalues |
-| `IBLOCK` | `Int32Array` | out | `N` |  | output block indices, length N |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride for IBLOCK |
-| `INDEXW` | `Int32Array` | out | `N` |  | output within-block indices, length N |
-| ↳ `strideINDEXW` | `integer` | in |  |  | stride for INDEXW |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | workspace, length >= 4*N; if `null`, allocated internally |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 3 * N` |  | integer workspace, length >= 3*N; if `null`, allocated internally |
+| Parameter | Type | Description |
+|---|---|---|
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `order` | `"block" \| "entire"` | `'block'` or `'entire'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `vl` | `number` | Lower bound (range=`'value'`) |
+| `vu` | `number` | Upper bound (range=`'value'`) |
+| `il` | `integer` | Lower index (range=`'index'`) |
+| `iu` | `integer` | Upper index (range=`'index'`) |
+| `GERS` | `Float64Array`<br><sub>length 2 * N</sub> | Gershgorin intervals, length 2\*N |
+| ↳ `strideGERS` | `integer` | Stride for GERS |
+| `reltol` | `number` | Relative tolerance |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements, length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Off-diagonal elements, length N-1 |
+| ↳ `strideE` | `integer` | Stride for e |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Squared off-diagonal elements, length N-1 |
+| ↳ `strideE2` | `integer` | Stride for E2 |
+| `pivmin` | `number` | Minimum pivot |
+| `nsplit` | `integer` | Number of diagonal blocks |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | Splitting points, length nsplit |
+| ↳ `strideISPLIT` | `integer` | Stride for ISPLIT |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the actual number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalues, length N |
+| ↳ `strideW` | `integer` | Stride for w |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalue errors, length N |
+| ↳ `strideWERR` | `integer` | Stride for WERR |
+| `wl` | `Float64Array` | **out** · Output (length-1 array): `wl` |
+| `wu` | `Float64Array` | **out** · Output (length-1 array): the interval (WL, WU] contains all the wanted eigenvalues |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | **out** · Output block indices, length N |
+| ↳ `strideIBLOCK` | `integer` | Stride for IBLOCK |
+| `INDEXW` | `Int32Array`<br><sub>length N</sub> | **out** · Output within-block indices, length N |
+| ↳ `strideINDEXW` | `integer` | Stride for INDEXW |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace, length >= 4\*N; if `null`, allocated internally |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Integer workspace, length >= 3\*N; if `null`, allocated internally |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -156,54 +156,54 @@ dlarrd.ndarray(
 
 Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `range` | `("all"\|"value"\|"index")` | in |  |  | `'all'`, `'value'`, or `'index'` |
-| `order` | `("block"\|"entire")` | in |  |  | `'block'` or `'entire'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `vl` | `number` | in |  |  | lower bound (range=`'value'`) |
-| `vu` | `number` | in |  |  | upper bound (range=`'value'`) |
-| `il` | `integer` | in |  |  | lower index (range=`'index'`) |
-| `iu` | `integer` | in |  |  | upper index (range=`'index'`) |
-| `GERS` | `Float64Array` | in | `2 * N` |  | Gershgorin intervals |
-| ↳ `strideGERS` | `integer` | in |  |  | stride for GERS |
-| ↳ `offsetGERS` | `NonNegativeInteger` | in |  |  | offset for GERS |
-| `reltol` | `number` | in |  |  | relative tolerance |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `e` | `Float64Array` | in | `N - 1` |  | off-diagonal elements |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | offset for e |
-| `E2` | `Float64Array` | in | `N - 1` |  | squared off-diagonal elements |
-| ↳ `strideE2` | `integer` | in |  |  | stride for E2 |
-| ↳ `offsetE2` | `NonNegativeInteger` | in |  |  | offset for E2 |
-| `pivmin` | `number` | in |  |  | minimum pivot |
-| `nsplit` | `integer` | in |  |  | number of blocks |
-| `ISPLIT` | `Int32Array` | in | `N` |  | splitting points |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride for ISPLIT |
-| ↳ `offsetISPLIT` | `NonNegativeInteger` | in |  |  | offset for ISPLIT |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the actual number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | offset for w |
-| `WERR` | `Float64Array` | out | `N` |  | output errors |
-| ↳ `strideWERR` | `integer` | in |  |  | stride for WERR |
-| ↳ `offsetWERR` | `NonNegativeInteger` | in |  |  | offset for WERR |
-| `wl` | `Float64Array` | out |  |  | output (length-1 array): `wl` |
-| `wu` | `Float64Array` | out |  |  | output (length-1 array): the interval (WL, WU] contains all the wanted eigenvalues |
-| `IBLOCK` | `Int32Array` | out | `N` |  | output block indices |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride for IBLOCK |
-| ↳ `offsetIBLOCK` | `NonNegativeInteger` | in |  |  | offset for IBLOCK |
-| `INDEXW` | `Int32Array` | out | `N` |  | output within-block indices |
-| ↳ `strideINDEXW` | `integer` | in |  |  | stride for INDEXW |
-| ↳ `offsetINDEXW` | `NonNegativeInteger` | in |  |  | offset for INDEXW |
-| `WORK` | `Float64Array` | out | `≥ 4 * N` |  | workspace, length >= 4*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ 3 * N` |  | integer workspace, length >= 3*N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `range` | `"all" \| "value" \| "index"` | `'all'`, `'value'`, or `'index'` |
+| `order` | `"block" \| "entire"` | `'block'` or `'entire'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `vl` | `number` | Lower bound (range=`'value'`) |
+| `vu` | `number` | Upper bound (range=`'value'`) |
+| `il` | `integer` | Lower index (range=`'index'`) |
+| `iu` | `integer` | Upper index (range=`'index'`) |
+| `GERS` | `Float64Array`<br><sub>length 2 * N</sub> | Gershgorin intervals |
+| ↳ `strideGERS` | `integer` | Stride for GERS |
+| ↳ `offsetGERS` | `NonNegativeInteger` | Offset for GERS |
+| `reltol` | `number` | Relative tolerance |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Off-diagonal elements |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Offset for e |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Squared off-diagonal elements |
+| ↳ `strideE2` | `integer` | Stride for E2 |
+| ↳ `offsetE2` | `NonNegativeInteger` | Offset for E2 |
+| `pivmin` | `number` | Minimum pivot |
+| `nsplit` | `integer` | Number of blocks |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | Splitting points |
+| ↳ `strideISPLIT` | `integer` | Stride for ISPLIT |
+| ↳ `offsetISPLIT` | `NonNegativeInteger` | Offset for ISPLIT |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the actual number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output eigenvalues |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Offset for w |
+| `WERR` | `Float64Array`<br><sub>length N</sub> | **out** · Output errors |
+| ↳ `strideWERR` | `integer` | Stride for WERR |
+| ↳ `offsetWERR` | `NonNegativeInteger` | Offset for WERR |
+| `wl` | `Float64Array` | **out** · Output (length-1 array): `wl` |
+| `wu` | `Float64Array` | **out** · Output (length-1 array): the interval (WL, WU] contains all the wanted eigenvalues |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | **out** · Output block indices |
+| ↳ `strideIBLOCK` | `integer` | Stride for IBLOCK |
+| ↳ `offsetIBLOCK` | `NonNegativeInteger` | Offset for IBLOCK |
+| `INDEXW` | `Int32Array`<br><sub>length N</sub> | **out** · Output within-block indices |
+| ↳ `strideINDEXW` | `integer` | Stride for INDEXW |
+| ↳ `offsetINDEXW` | `NonNegativeInteger` | Offset for INDEXW |
+| `WORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace, length >= 4\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 3 * N</sub> | **out** · Integer workspace, length >= 3\*N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -251,8 +251,8 @@ Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
 
 - `TypeError` first argument must be one of the following: "all", "value", "index"
 - `TypeError` second argument must be one of the following: "block", "entire"
-- `RangeError` WORK must have at least 4*N elements
-- `RangeError` IWORK must have at least 3*N elements
+- `RangeError` WORK must have at least 4\*N elements
+- `RangeError` IWORK must have at least 3\*N elements
 
 ### Status codes
 

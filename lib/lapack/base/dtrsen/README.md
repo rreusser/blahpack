@@ -34,27 +34,27 @@ dtrsen(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"eigenvalues"\|"subspace"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'none'`, `'subspace'` | specifies whether condition numbers are required for the cluster of eigenvalues (S) or the invariant subspace (SEP): `'none'`: none; `'eigenvalues'`: for eigenvalues only (S); `'subspace'`: for invariant subspace only (SEP); `'both'`: for both eigenvalues and invariant subspace (S and SEP). |
-| `compq` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | `'update'`: update the matrix Q of Schur vectors; `'none'`: do not update Q. |
-| `SELECT` | `Uint8Array` | in | `N` |  | sELECT specifies the eigenvalues in the selected cluster. |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix T. |
-| `T` | `Float64Array` | in/out | `N × N` |  | on entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, T is overwritten by the reordered matrix T, again in Schur canonical form, with the selected eigenvalues in the leading diagonal blocks. |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | on entry, if `compq === 'update'`, the matrix Q of Schur vectors. On exit, if `compq === 'update'`, Q has been postmultiplied by the orthogonal transformation matrix which reorders T; the leading M columns of Q form an orthonormal basis for the specified invariant subspace. |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (compq === 'update' && ldq < N)` | leading dimension of `Q` |
-| `WR` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the reordered eigenvalues of T. |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | the real and imaginary parts, respectively, of the reordered eigenvalues of T. |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `M` | `Int32Array` | out |  |  | the dimension of the specified invariant subspace. 0 < = M <= N. |
-| `s` | `Float64Array` | out |  |  | if `job === 'eigenvalues'` or `job === 'both'`, S is a lower bound on the reciprocal condition number for the selected cluster of eigenvalues. |
-| `sep` | `Float64Array` | out |  |  | if `job === 'subspace'` or `job === 'both'`, SEP is the estimated reciprocal condition number of the specified invariant subspace. |
-| `WORK` | `(Float64Array\|null)` | out | `≥ LWMIN` |  | caller-provided workspace of at least `LWMIN` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ LIWMIN` |  | caller-provided workspace of at least `LIWMIN` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "eigenvalues" \| "subspace" \| "both"` | Specifies whether condition numbers are required for the cluster of eigenvalues (S) or the invariant subspace (SEP): `'none'`: none; `'eigenvalues'`: for eigenvalues only (S); `'subspace'`: for invariant subspace only (SEP); `'both'`: for both eigenvalues and invariant subspace (S and SEP). |
+| `compq` | `"none" \| "update"` | `'update'`: update the matrix Q of Schur vectors; `'none'`: do not update Q. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | SELECT specifies the eigenvalues in the selected cluster. |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | The order of the matrix T.<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, T is overwritten by the reordered matrix T, again in Schur canonical form, with the selected eigenvalues in the leading diagonal blocks. |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, if `compq === 'update'`, the matrix Q of Schur vectors. On exit, if `compq === 'update'`, Q has been postmultiplied by the orthogonal transformation matrix which reorders T; the leading M columns of Q form an orthonormal basis for the specified invariant subspace. |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (compq === 'update' && ldq < N)` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the reordered eigenvalues of T. |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · The real and imaginary parts, respectively, of the reordered eigenvalues of T. |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `M` | `Int32Array` | **out** · The dimension of the specified invariant subspace. 0 < = M <= N. |
+| `s` | `Float64Array` | **out** · If `job === 'eigenvalues'` or `job === 'both'`, S is a lower bound on the reciprocal condition number for the selected cluster of eigenvalues. |
+| `sep` | `Float64Array` | **out** · If `job === 'subspace'` or `job === 'both'`, SEP is the estimated reciprocal condition number of the specified invariant subspace. |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ LWMIN</sub> | **out** · Caller-provided workspace of at least `LWMIN` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ LIWMIN</sub> | **out** · Caller-provided workspace of at least `LIWMIN` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -125,37 +125,37 @@ and of the invariant subspace (SEP).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"eigenvalues"\|"subspace"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'none'`, `'subspace'` | `'none'`, `'eigenvalues'`, `'subspace'`, or `'both'` |
-| `compq` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | `'update'` or `'none'` |
-| `SELECT` | `Uint8Array` | in | `N` |  | boolean array of length N indicating selected eigenvalues |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride for SELECT |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for SELECT |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `T` | `Float64Array` | in/out | `N × N` |  | N-by-N upper quasi-triangular matrix (Schur form) |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `Q` | `Float64Array` | in/out | `N × N` |  | N-by-N orthogonal matrix of Schur vectors |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for WI |
-| `M` | `Int32Array` | out |  |  | output: M[0] = dimension of selected subspace |
-| `s` | `Float64Array` | out |  |  | output: s[0] = reciprocal condition number of selected cluster |
-| `sep` | `Float64Array` | out |  |  | output: sep[0] = reciprocal condition number of subspace |
-| `WORK` | `Float64Array` | out | `≥ LWMIN` |  | workspace (length `>= max(1, N)` for `job='none'`, `>= max(1, M*(N-M))` for `job='eigenvalues'`, `>= max(1, 2*M*(N-M))` for `job='subspace'` or `job='both'`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ LIWMIN` |  | integer workspace (length `>= 1` for `job='none'` or `job='eigenvalues'`, `>= max(1, M*(N-M))` for `job='subspace'` or `job='both'`) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "eigenvalues" \| "subspace" \| "both"` | `'none'`, `'eigenvalues'`, `'subspace'`, or `'both'` |
+| `compq` | `"none" \| "update"` | `'update'` or `'none'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Boolean array of length N indicating selected eigenvalues |
+| ↳ `strideSELECT` | `integer` | Stride for SELECT |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for SELECT |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N upper quasi-triangular matrix (Schur form) |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N orthogonal matrix of Schur vectors |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for WI |
+| `M` | `Int32Array` | **out** · Output: M[0] = dimension of selected subspace |
+| `s` | `Float64Array` | **out** · Output: s[0] = reciprocal condition number of selected cluster |
+| `sep` | `Float64Array` | **out** · Output: sep[0] = reciprocal condition number of subspace |
+| `WORK` | `Float64Array`<br><sub>length ≥ LWMIN</sub> | **out** · Workspace (length `>= max(1, N)` for `job='none'`, `>= max(1, M*(N-M))` for `job='eigenvalues'`, `>= max(1, 2*M*(N-M))` for `job='subspace'` or `job='both'`) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ LIWMIN</sub> | **out** · Integer workspace (length `>= 1` for `job='none'` or `job='eigenvalues'`, `>= max(1, M*(N-M))` for `job='subspace'` or `job='both'`) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

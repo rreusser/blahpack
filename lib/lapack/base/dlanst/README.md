@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlanst( norm, N, d, strideD, e, strideE ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `d` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | in | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `d` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -54,16 +54,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlanst.ndarray( norm, N, d, strideD, offsetD, e, strideE, offsetE ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in | `N - 1` |  | off-diagonal elements, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements, length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Off-diagonal elements, length N-1 |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

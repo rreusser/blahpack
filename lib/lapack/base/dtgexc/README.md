@@ -31,23 +31,23 @@ dtgexc(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (wantq && ldq < max( 1, N ))` | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (wantz && ldz < max( 1, N ))` | leading dimension of `Z` |
-| `ifst` | `Int32Array` | in/out |  | rejects `ifst < 1 \|\| ifst > N` | input/output (length-1 array): ifst |
-| `ilst` | `Int32Array` | in/out |  | rejects `ilst < 1 \|\| ilst > N` | input/output (length-1 array): ilst |
-| `WORK` | `(Float64Array\|null)` | out | `≥ LWMIN` |  | workspace of length at least `1` when `N <= 1`, otherwise `4*N + 16`, or `null` to allocate it |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (wantq && ldq < max(1, N))` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (wantz && ldz < max(1, N))` |
+| `ifst` | `Int32Array` | **in/out** · Input/output (length-1 array): ifst<br>Rejects `ifst < 1 \|\| ifst > N` |
+| `ilst` | `Int32Array` | **in/out** · Input/output (length-1 array): ilst<br>Rejects `ilst < 1 \|\| ilst > N` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ LWMIN</sub> | **out** · Workspace of length at least `1` when `N <= 1`, otherwise `4*N + 16`, or `null` to allocate it |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -97,32 +97,32 @@ dtgexc.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `ifst` | `Int32Array` | in/out |  | rejects `ifst < 1 \|\| ifst > N` | input/output (length-1 array): ifst |
-| `ilst` | `Int32Array` | in/out |  | rejects `ilst < 1 \|\| ilst > N` | input/output (length-1 array): ilst |
-| `WORK` | `Float64Array` | out | `≥ LWMIN` |  | workspace of length at least `1` when `N <= 1`, otherwise `4*N + 16` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `ifst` | `Int32Array` | **in/out** · Input/output (length-1 array): ifst<br>Rejects `ifst < 1 \|\| ifst > N` |
+| `ilst` | `Int32Array` | **in/out** · Input/output (length-1 array): ilst<br>Rejects `ilst < 1 \|\| ilst > N` |
+| `WORK` | `Float64Array`<br><sub>length ≥ LWMIN</sub> | **out** · Workspace of length at least `1` when `N <= 1`, otherwise `4*N + 16` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

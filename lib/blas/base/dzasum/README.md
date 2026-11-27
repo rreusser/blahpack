@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dzasum( N, x, strideX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in input vector(s) |
-| `x` | `Complex128Array` | in/out | `N` |  | zx |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in input vector(s) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Zx |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,12 +47,12 @@ Computes the sum of the absolute values of the real and imaginary components of 
 
 `dzasum` takes the sum of `(|Re(.)| + |Im(.)|)` for each element and returns a double-precision result.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Complex128Array` | in/out | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride in complex elements |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Complex input vector |
+| ↳ `strideX` | `integer` | Stride in complex elements |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 daxpy( N, alpha, x, strideX, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `alpha` | `number` | Scalar constant |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | `y` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,16 +47,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 daxpy.ndarray( N, alpha, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting `x` index |
-| `y` | `Float64Array` | in/out | `N` |  | output array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting `y` index |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `alpha` | `number` | Scalar constant |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting `x` index |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Output array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting `y` index |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

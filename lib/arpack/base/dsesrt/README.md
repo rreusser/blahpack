@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsesrt( order, which, apply, N, x, strideX, na, A, LDA ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
-| `apply` | `boolean` | in |  |  | whether to apply the sorting permutation to the columns of `A` |
-| `N` | `NonNegativeInteger` | in |  |  | number of elements to sort |
-| `x` | `Float64Array` | in/out | `0:N-1` |  | array whose values determine (and receive) the sort |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `na` | `integer` | in |  |  | number of rows of `A` to permute |
-| `A` | `Float64Array` | in/out | `null × (0:N-1)` |  | companion matrix (column-major) whose columns are permuted alongside `x` when `apply` is `true` |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA"` | Ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
+| `apply` | `boolean` | Whether to apply the sorting permutation to the columns of `A` |
+| `N` | `NonNegativeInteger` | Number of elements to sort |
+| `x` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Array whose values determine (and receive) the sort |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `na` | `integer` | Number of rows of `A` to permute |
+| `A` | `Float64Array`<br><sub>? × (0:N-1)</sub> | **in/out** · Companion matrix (column-major) whose columns are permuted alongside `x` when `apply` is `true` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
 
 **Returns** `Float64Array`
 
@@ -59,19 +59,19 @@ Sorts the values in `x` with a gapped (Shell) insertion sort, optionally applyin
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `which` | `("LM"\|"SM"\|"LA"\|"SA")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
-| `apply` | `boolean` | in |  |  | whether to apply the sorting permutation to the columns of `A` |
-| `N` | `NonNegativeInteger` | in |  |  | number of elements to sort |
-| `x` | `Float64Array` | in/out | `0:N-1` |  | array whose values determine (and receive) the sort |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `na` | `integer` | in |  |  | number of rows of `A` to permute |
-| `A` | `Float64Array` | in/out | `null × (0:N-1)` |  | companion matrix whose columns are permuted alongside `x` when `apply` is `true` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first (row) dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second (column) dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `which` | `"LM" \| "SM" \| "LA" \| "SA"` | Ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
+| `apply` | `boolean` | Whether to apply the sorting permutation to the columns of `A` |
+| `N` | `NonNegativeInteger` | Number of elements to sort |
+| `x` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Array whose values determine (and receive) the sort |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `na` | `integer` | Number of rows of `A` to permute |
+| `A` | `Float64Array`<br><sub>? × (0:N-1)</sub> | **in/out** · Companion matrix whose columns are permuted alongside `x` when `apply` is `true` |
+| ↳ `strideA1` | `integer` | Stride of the first (row) dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second (column) dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 **Returns** `Float64Array`
 

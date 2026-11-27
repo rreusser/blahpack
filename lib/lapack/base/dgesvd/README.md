@@ -29,22 +29,22 @@ dgesvd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `jobu` | `("all-columns"\|"economy"\|"overwrite"\|"none")` | in |  | one of `'all-columns'`, `'none'`, `'overwrite'`, `'economy'` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
-| `jobvt` | `("all-rows"\|"economy"\|"overwrite"\|"none")` | in |  | rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` | `'all-rows'`: all N rows of V^T returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `s` | `Float64Array` | out | `min( M, N )` |  | output array of singular values (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `U` | `Float64Array` | out | `M × (jobu === 'all-columns' ? M : min( M, N ))` |  | output matrix for left singular vectors |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| ((jobu === 'all-columns' \|\| jobu === 'economy') && ldu < M)` | leading dimension of `U` |
-| `VT` | `Float64Array` | out | `N × N` |  | output matrix for right singular vectors (V^T) |
-| ↳ `LDVT` | `PositiveInteger` | in |  | rejects `(ldvt < 1 \|\| (jobvt === 'all-rows' && ldvt < N)) \|\| (jobvt === 'economy' && ldvt < min( M, N ))` | leading dimension of `VT` |
-| `work` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | workspace of at least the reference's MINWRK (at most `max( 1, 3*min(M,N) + max(M,N), 5*min(M,N) )`), or `null` to allocate the reference's MAXWRK, which enables the fast QR/LQ paths and the callees' blocked code |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `jobu` | `"all-columns" \| "economy" \| "overwrite" \| "none"` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
+| `jobvt` | `"all-rows" \| "economy" \| "overwrite" \| "none"` | `'all-rows'`: all N rows of V^T returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT<br>Rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `s` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of singular values (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `U` | `Float64Array`<br><sub>M × (jobu === 'all-columns' ? M : min(M, N))</sub> | **out** · Output matrix for left singular vectors |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Rejects `ldu < 1 \|\| ((jobu === 'all-columns' \|\| jobu === 'economy') && ldu < M)` |
+| `VT` | `Float64Array`<br><sub>N × N</sub> | **out** · Output matrix for right singular vectors (V^T) |
+| ↳ `LDVT` | `PositiveInteger` | Leading dimension of `VT`<br>Rejects `(ldvt < 1 \|\| (jobvt === 'all-rows' && ldvt < N)) \|\| (jobvt === 'economy' && ldvt < min(M, N))` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least the reference's MINWRK (at most `max( 1, 3*min(M,N) + max(M,N), 5*min(M,N) )`), or `null` to allocate the reference's MAXWRK, which enables the fast QR/LQ paths and the callees' blocked code |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,30 +118,30 @@ dgesvd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("all-columns"\|"economy"\|"overwrite"\|"none")` | in |  | one of `'all-columns'`, `'none'`, `'overwrite'`, `'economy'` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
-| `jobvt` | `("all-rows"\|"economy"\|"overwrite"\|"none")` | in |  | rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` | `'all-rows'`: all N rows of V^T returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `s` | `Float64Array` | out | `min( M, N )` |  | output array of singular values (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride for s |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for s |
-| `U` | `Float64Array` | out | `M × (jobu === 'all-columns' ? M : min( M, N ))` |  | output matrix for left singular vectors |
-| ↳ `strideU1` | `integer` | in |  |  | stride of the first dimension of U |
-| ↳ `strideU2` | `integer` | in |  |  | stride of the second dimension of U |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U |
-| `VT` | `Float64Array` | out | `N × N` |  | output matrix for right singular vectors (V^T) |
-| ↳ `strideVT1` | `integer` | in |  |  | stride of the first dimension of VT |
-| ↳ `strideVT2` | `integer` | in |  |  | stride of the second dimension of VT |
-| ↳ `offsetVT` | `NonNegativeInteger` | in |  |  | starting index for VT |
-| `work` | `Float64Array` | out | `≥ MINWRK` |  | workspace of at least the reference's MINWRK, `computeMinWorkSize( jobu, jobvt, M, N )` elements from `offsetWork` (`5*min(M,N)` when M is much larger than N with jobu `'none'`, or N much larger than M with jobvt `'none'`; otherwise `max( 3*min(M,N) + max(M,N), 5*min(M,N) )`); the reference's MAXWRK, `computeWorkSize( jobu, jobvt, M, N )`, enables the fast QR/LQ paths and the callees' blocked code |
-| ↳ `strideWork` | `integer` | in |  |  | stride for work |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for work |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"all-columns" \| "economy" \| "overwrite" \| "none"` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
+| `jobvt` | `"all-rows" \| "economy" \| "overwrite" \| "none"` | `'all-rows'`: all N rows of V^T returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT<br>Rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `s` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of singular values (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride for s |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for s |
+| `U` | `Float64Array`<br><sub>M × (jobu === 'all-columns' ? M : min(M, N))</sub> | **out** · Output matrix for left singular vectors |
+| ↳ `strideU1` | `integer` | Stride of the first dimension of U |
+| ↳ `strideU2` | `integer` | Stride of the second dimension of U |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U |
+| `VT` | `Float64Array`<br><sub>N × N</sub> | **out** · Output matrix for right singular vectors (V^T) |
+| ↳ `strideVT1` | `integer` | Stride of the first dimension of VT |
+| ↳ `strideVT2` | `integer` | Stride of the second dimension of VT |
+| ↳ `offsetVT` | `NonNegativeInteger` | Starting index for VT |
+| `work` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least the reference's MINWRK, `computeMinWorkSize( jobu, jobvt, M, N )` elements from `offsetWork` (`5*min(M,N)` when M is much larger than N with jobu `'none'`, or N much larger than M with jobvt `'none'`; otherwise `max( 3*min(M,N) + max(M,N), 5*min(M,N) )`); the reference's MAXWRK, `computeWorkSize( jobu, jobvt, M, N )`, enables the fast QR/LQ paths and the callees' blocked code |
+| ↳ `strideWork` | `integer` | Stride for work |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for work |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

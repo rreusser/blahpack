@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgetsqrhrt( order, M, N, mb1, nb1, nb2, A, LDA, T, LDT, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` (`M >= N`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of the matrix `A` |
-| `mb1` | `integer` | in |  | rejects `mb1 <= N` | row block size for the internal TSQR (`mb1 > N`) |
-| `nb1` | `integer` | in |  | rejects `nb1 < 1` | column block size for the internal TSQR (`nb1 >= 1`) |
-| `nb2` | `integer` | in |  | rejects `nb2 < 1` | block size for the output blocked QR (`nb2 >= 1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Complex128Array` | out | `min( nb2, N ) × N` |  | output upper-triangular block reflector factors |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ max( 1, min( nb2, N ) )`; row-major requires `LDT ≥ max( 1, N )` | leading dimension of `T` (`LDT >= max(1, min(nb2, N))`) |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MAX(1,LWORKOPT)` |  | complex workspace array (auto-allocated when `null`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A` (`M >= N`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Rejects `N < 0 \|\| M < N` |
+| `mb1` | `integer` | Row block size for the internal TSQR (`mb1 > N`)<br>Rejects `mb1 <= N` |
+| `nb1` | `integer` | Column block size for the internal TSQR (`nb1 >= 1`)<br>Rejects `nb1 < 1` |
+| `nb2` | `integer` | Block size for the output blocked QR (`nb2 >= 1`)<br>Rejects `nb2 < 1` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Complex128Array`<br><sub>min(nb2, N) × N</sub> | **out** · Output upper-triangular block reflector factors |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` (`LDT >= max(1, min(nb2, N))`)<br>Column-major requires `LDT ≥ max(1, min(nb2, N))`<br>Row-major requires `LDT ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Complex workspace array (auto-allocated when `null`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -90,24 +90,24 @@ zgetsqrhrt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` (`M >= N`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of the matrix `A` |
-| `mb1` | `integer` | in |  | rejects `mb1 <= N` | row block size for the internal TSQR (`mb1 > N`) |
-| `nb1` | `integer` | in |  | rejects `nb1 < 1` | column block size for the internal TSQR (`nb1 >= 1`) |
-| `nb2` | `integer` | in |  | rejects `nb2 < 1` | block size for the output blocked QR (`nb2 >= 1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Complex128Array` | out | `min( nb2, N ) × N` |  | output upper-triangular block reflector factors |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `WORK` | `Complex128Array` | out | `≥ MAX(1,LWORKOPT)` |  | complex workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A` (`M >= N`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Rejects `N < 0 \|\| M < N` |
+| `mb1` | `integer` | Row block size for the internal TSQR (`mb1 > N`)<br>Rejects `mb1 <= N` |
+| `nb1` | `integer` | Column block size for the internal TSQR (`nb1 >= 1`)<br>Rejects `nb1 < 1` |
+| `nb2` | `integer` | Block size for the output blocked QR (`nb2 >= 1`)<br>Rejects `nb2 < 1` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Complex128Array`<br><sub>min(nb2, N) × N</sub> | **out** · Output upper-triangular block reflector factors |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MAX(1,LWORKOPT)</sub> | **out** · Complex workspace array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhpr2( order, uplo, N, alpha, x, strideX, y, strideY, AP ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the matrix A is supplied in the packed array AP as follows: `uplo === 'upper'` The upper triangular part of A is supplied in AP. `uplo === 'lower'` The lower triangular part of A is supplied in AP. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `alpha` | `Complex128` | in |  |  | the scalar alpha. |
-| `x` | `Complex128Array` | in | `N` |  | before entry, the incremented array X must contain the n element vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Complex128Array` | in | `N` |  | before entry, the incremented array Y must contain the n element vector y. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | before entry with `uplo === 'upper'`, the array AP must contain the upper triangular part of the hermitian matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. On exit, the array AP is overwritten by the upper triangular part of the updated matrix. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the matrix A is supplied in the packed array AP as follows: `uplo === 'upper'` The upper triangular part of A is supplied in AP. `uplo === 'lower'` The lower triangular part of A is supplied in AP. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | The scalar alpha. |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Before entry, the incremented array X must contain the n element vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Before entry, the incremented array Y must contain the n element vector y. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Before entry with `uplo === 'upper'`, the array AP must contain the upper triangular part of the hermitian matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. On exit, the array AP is overwritten by the upper triangular part of the updated matrix. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,20 +83,20 @@ Performs the Hermitian packed rank-2 update `A := alpha*x*y**H + conj(alpha)*y*x
 `alpha` is a complex scalar, `x` and `y` are `N` element complex vectors,
 and `A` is an `N` by `N` Hermitian matrix supplied in packed form.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `Complex128` | in |  |  | complex scalar constant |
-| `x` | `Complex128Array` | in | `N` |  | first input vector |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `y` | `Complex128Array` | in | `N` |  | second input vector |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix |
-| ↳ `strideAP` | `integer` | in |  |  | `AP` stride length (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar constant |
+| `x` | `Complex128Array`<br><sub>length N</sub> | First input vector |
+| ↳ `strideX` | `integer` | `x` stride length (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Second input vector |
+| ↳ `strideY` | `integer` | `y` stride length (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix |
+| ↳ `strideAP` | `integer` | `AP` stride length (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

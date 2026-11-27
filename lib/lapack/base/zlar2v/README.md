@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlar2v( N, x, strideX, y, strideY, z, strideZ, c, strideC, s, strideS ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to apply |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | first input array (elements assumed real) |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length (in complex elements) |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | second input array (elements assumed real) |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length (in complex elements) |
-| `z` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | third input array (complex) |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length (in complex elements) |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of cosines of the plane rotations (real) |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| `s` | `Complex128Array` | in | `1 + (N - 1) * incc` |  | array of sines of the plane rotations (complex) |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to apply |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First input array (elements assumed real) |
+| ↳ `strideX` | `integer` | `x` stride length (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Second input array (elements assumed real) |
+| ↳ `strideY` | `integer` | `y` stride length (in complex elements) |
+| `z` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Third input array (complex) |
+| ↳ `strideZ` | `integer` | `z` stride length (in complex elements) |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of cosines of the plane rotations (real) |
+| ↳ `strideC` | `integer` | `c` stride length |
+| `s` | `Complex128Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of sines of the plane rotations (complex) |
+| ↳ `strideS` | `integer` | `s` stride length (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -65,24 +65,24 @@ zlar2v.ndarray(
 
 Apply a vector of complex plane rotations with real cosines from both sides to a sequence of 2-by-2 complex Hermitian matrices.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `z` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | input array |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `s` | `Complex128Array` | in | `1 + (N - 1) * incc` |  | output array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `z` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Input array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Input array |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `s` | `Complex128Array`<br><sub>length 1 + (N - 1) * incc</sub> | Output array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

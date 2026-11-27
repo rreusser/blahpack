@@ -28,18 +28,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpteqr( order, compz, N, d, strideD, e, strideE, Z, LDZ, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies whether eigenvectors are computed |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | in/out | `N - 1` |  | subdiagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | unitary matrix (N-by-N) |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| ((compz === 'none' ? 0 : (compz === 'update' ? 1 : 2)) > 0 && ldz < max( 1, N ))` | leading dimension of `Z` (complex elements) |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | workspace (length >= 4*N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `compz` | `"none" \| "initialize" \| "update"` | Specifies whether eigenvectors are computed<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Subdiagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Unitary matrix (N-by-N) |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` (complex elements)<br>Rejects `ldz < 1 \|\| ((compz === 'none' ? 0 : (compz === 'update' ? 1 : 2)) > 0 && ldz < max(1, N))` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace (length >= 4\*N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,23 +82,23 @@ zpteqr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies whether eigenvectors are computed |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements of the tridiagonal matrix (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | subdiagonal elements of the tridiagonal matrix (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | unitary matrix Z (N-by-N) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (complex elements) |
-| `WORK` | `Float64Array` | out | `≥ 4 * N` |  | workspace array (length >= 4*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `compz` | `"none" \| "initialize" \| "update"` | Specifies whether eigenvectors are computed<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements of the tridiagonal matrix (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Subdiagonal elements of the tridiagonal matrix (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Unitary matrix Z (N-by-N) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (complex elements) |
+| `WORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace array (length >= 4\*N) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

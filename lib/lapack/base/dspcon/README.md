@@ -28,18 +28,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dspcon( order, uplo, N, AP, IPIV, strideIPIV, anorm, rcond, WORK, IWORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangular part of A is packed ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from dsptrf, length N*(N+1)/2 |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dsptrf, length N |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace array of length at least 2*N |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | workspace array of length at least N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of A is packed ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from dsptrf, length N\*(N+1)/2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dsptrf, length N |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,24 +82,24 @@ dspcon.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower', must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | factored packed matrix from dsptrf, length N*(N+1)/2 |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dsptrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm of the original matrix A |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | workspace array of length at least 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower', must match the factorization |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Factored packed matrix from dsptrf, length N\*(N+1)/2 |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dsptrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `anorm` | `number` | The 1-norm of the original matrix A<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

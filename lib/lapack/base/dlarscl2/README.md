@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarscl2( order, M, N, d, strideD, X, LDX ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `M` |  | diagonal scaling vector of length `M` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `X` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length M</sub> | Diagonal scaling vector of length `M` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `X` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -60,17 +60,17 @@ dlarscl2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `M` |  | diagonal scaling vector of length `M` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `X` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length M</sub> | Diagonal scaling vector of length `M` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `X` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

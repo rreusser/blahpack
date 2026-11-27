@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpbtrs( order, uplo, N, kd, nrhs, AB, LDAB, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super/sub-diagonals |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | input matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super/sub-diagonals<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Input matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,20 +76,20 @@ zpbtrs.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super/sub-diagonals |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | factored band matrix from zpbtrf |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | input/output right-hand side / solution matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super/sub-diagonals<br>Requires `kd ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Factored band matrix from zpbtrf |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right-hand side / solution matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

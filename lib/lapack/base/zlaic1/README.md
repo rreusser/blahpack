@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaic1( job, j, x, strideX, sest, w, strideW, gamma, sestpr, s, c ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("largest-singular-value"\|"smallest-singular-value")` | in |  |  | specifies whether to estimate the largest or smallest singular value (`largest-singular-value` or `smallest-singular-value`) |
-| `j` | `NonNegativeInteger` | in |  |  | length of X and W |
-| `x` | `Complex128Array` | in | `J` |  | input vector x |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| `sest` | `number` | in |  |  | estimated singular value of L |
-| `w` | `Complex128Array` | in | `J` |  | input vector w |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` (in complex elements) |
-| `gamma` | `Complex128` | in |  |  | diagonal element gamma |
-| `sestpr` | `Float64Array` | out |  |  | output: `sestpr[0]` receives the updated singular value estimate |
-| `s` | `Complex128Array` | out |  |  | output: receives the sine |
-| `c` | `Complex128Array` | out |  |  | output: receives the cosine |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"largest-singular-value" \| "smallest-singular-value"` | Specifies whether to estimate the largest or smallest singular value (`largest-singular-value` or `smallest-singular-value`) |
+| `j` | `NonNegativeInteger` | Length of X and W |
+| `x` | `Complex128Array`<br><sub>length J</sub> | Input vector x |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| `sest` | `number` | Estimated singular value of L |
+| `w` | `Complex128Array`<br><sub>length J</sub> | Input vector w |
+| ↳ `strideW` | `integer` | Stride for `w` (in complex elements) |
+| `gamma` | `Complex128` | Diagonal element gamma |
+| `sestpr` | `Float64Array` | **out** · Output: `sestpr[0]` receives the updated singular value estimate |
+| `s` | `Complex128Array` | **out** · Output: receives the sine |
+| `c` | `Complex128Array` | **out** · Output: receives the cosine |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,23 +76,23 @@ zlaic1.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("largest-singular-value"\|"smallest-singular-value")` | in |  |  | specifies whether to estimate the largest or smallest singular value (`largest-singular-value` or `smallest-singular-value`) |
-| `j` | `NonNegativeInteger` | in |  |  | length of X and W |
-| `x` | `Complex128Array` | in | `J` |  | input vector x |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `sest` | `number` | in |  |  | estimated singular value of L |
-| `w` | `Complex128Array` | in | `J` |  | input vector w |
-| ↳ `strideW` | `integer` | in |  |  | stride for `w` (in complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` (in complex elements) |
-| `gamma` | `Complex128` | in |  |  | diagonal element gamma |
-| `sestpr` | `Float64Array` | out |  |  | output: `sestpr[0]` receives the updated singular value estimate |
-| `s` | `Complex128Array` | out |  |  | output: receives the sine |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index of the sine in `s` |
-| `c` | `Complex128Array` | out |  |  | output: receives the cosine |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index of the cosine in `c` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"largest-singular-value" \| "smallest-singular-value"` | Specifies whether to estimate the largest or smallest singular value (`largest-singular-value` or `smallest-singular-value`) |
+| `j` | `NonNegativeInteger` | Length of X and W |
+| `x` | `Complex128Array`<br><sub>length J</sub> | Input vector x |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `sest` | `number` | Estimated singular value of L |
+| `w` | `Complex128Array`<br><sub>length J</sub> | Input vector w |
+| ↳ `strideW` | `integer` | Stride for `w` (in complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` (in complex elements) |
+| `gamma` | `Complex128` | Diagonal element gamma |
+| `sestpr` | `Float64Array` | **out** · Output: `sestpr[0]` receives the updated singular value estimate |
+| `s` | `Complex128Array` | **out** · Output: receives the sine |
+| ↳ `offsetS` | `NonNegativeInteger` | Index of the sine in `s` |
+| `c` | `Complex128Array` | **out** · Output: receives the cosine |
+| ↳ `offsetC` | `NonNegativeInteger` | Index of the cosine in `c` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

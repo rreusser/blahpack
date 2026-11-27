@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlae2( a, b, c, rt1, rt2 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `number` | in |  |  | (1,1) element of the 2-by-2 matrix |
-| `b` | `number` | in |  |  | (1,2) element (also (2,1)) of the 2-by-2 matrix |
-| `c` | `number` | in |  |  | (2,2) element of the 2-by-2 matrix |
-| `rt1` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of larger absolute value |
-| `rt2` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of smaller absolute value |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `number` | (1,1) element of the 2-by-2 matrix |
+| `b` | `number` | (1,2) element (also (2,1)) of the 2-by-2 matrix |
+| `c` | `number` | (2,2) element of the 2-by-2 matrix |
+| `rt1` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of larger absolute value |
+| `rt2` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of smaller absolute value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -49,13 +49,13 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlae2.ndarray( a, b, c, rt1, rt2 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `number` | in |  |  | (1,1) element of the 2-by-2 matrix |
-| `b` | `number` | in |  |  | (1,2) element (also (2,1)) of the 2-by-2 matrix |
-| `c` | `number` | in |  |  | (2,2) element of the 2-by-2 matrix |
-| `rt1` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of larger absolute value |
-| `rt2` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of smaller absolute value |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `number` | (1,1) element of the 2-by-2 matrix |
+| `b` | `number` | (1,2) element (also (2,1)) of the 2-by-2 matrix |
+| `c` | `number` | (2,2) element of the 2-by-2 matrix |
+| `rt1` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of larger absolute value |
+| `rt2` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of smaller absolute value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

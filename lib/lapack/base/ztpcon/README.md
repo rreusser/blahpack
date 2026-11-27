@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztpcon( order, norm, uplo, diag, N, AP, RCOND, WORK, RWORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1 |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace of length 2*N |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace of length N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1 |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length 2\*N |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace of length N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -78,22 +78,22 @@ ztpcon.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix |
-| ↳ `strideAP` | `integer` | in |  |  | stride for `AP` (complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (complex elements) |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1 |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | workspace of length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix |
+| ↳ `strideAP` | `integer` | Stride for `AP` (complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (complex elements) |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1 |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace of length N |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

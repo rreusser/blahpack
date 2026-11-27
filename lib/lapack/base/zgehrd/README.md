@@ -29,17 +29,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgehrd( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | lower index of the balanced matrix (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | upper index of the balanced matrix (1-based) |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | output array of scalar factors (length `N-1`) |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length (in complex elements) |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N )` |  | workspace, or `null` to allocate the optimum; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Lower index of the balanced matrix (1-based)<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Upper index of the balanced matrix (1-based)<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Output array of scalar factors (length `N-1`) |
+| ↳ `strideTAU` | `integer` | `TAU` stride length (in complex elements) |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace, or `null` to allocate the optimum; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,21 +80,21 @@ Reduces a complex general matrix to upper Hessenberg form using blocked algorith
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | lower index of the balanced matrix |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | upper index of the balanced matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | output array of scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride of TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | offset into TAU |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N )` |  | workspace array; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride of WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset into WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Lower index of the balanced matrix<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Upper index of the balanced matrix<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Output array of scalar factors |
+| ↳ `strideTAU` | `integer` | Stride of TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Offset into TAU |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride of WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset into WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

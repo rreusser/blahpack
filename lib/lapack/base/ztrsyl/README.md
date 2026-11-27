@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztrsyl( order, trana, tranb, isgn, M, N, A, LDA, B, LDB, C, LDC, scale ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trana` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the option op(A): `'no-transpose'`: op(A) = A (No transpose) `'conjugate-transpose'`: op(A) = A**H (Conjugate transpose) |
-| `tranb` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the option op(B): `'no-transpose'`: op(B) = B (No transpose) `'conjugate-transpose'`: op(B) = B**H (Conjugate transpose) |
-| `isgn` | `integer` | in |  | rejects `isgn !== 1 && isgn !== -1` | specifies the sign in the equation: = +1: solve op(A)*X + X*op(B) = scale*C = -1: solve op(A)*X - X*op(B) = scale*C. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the order of the matrix A, and the number of rows in the matrices X and C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix B, and the number of columns in the matrices X and C. |
-| `A` | `Complex128Array` | in | `M × M` |  | the upper triangular matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in | `N × N` |  | the upper triangular matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | on entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `scale` | `Float64Array` | out |  |  | the scale factor, scale, set <= 1 to avoid overflow in X. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trana` | `"no-transpose" \| "conjugate-transpose"` | Specifies the option op(A): `'no-transpose'`: op(A) = A (No transpose) `'conjugate-transpose'`: op(A) = A\*\*H (Conjugate transpose) |
+| `tranb` | `"no-transpose" \| "conjugate-transpose"` | Specifies the option op(B): `'no-transpose'`: op(B) = B (No transpose) `'conjugate-transpose'`: op(B) = B\*\*H (Conjugate transpose) |
+| `isgn` | `integer` | Specifies the sign in the equation: = +1: solve op(A)\*X + X\*op(B) = scale\*C = -1: solve op(A)\*X - X\*op(B) = scale\*C.<br>Rejects `isgn !== 1 && isgn !== -1` |
+| `M` | `NonNegativeInteger` | The order of the matrix A, and the number of rows in the matrices X and C.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The order of the matrix B, and the number of columns in the matrices X and C.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | The upper triangular matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | The upper triangular matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `scale` | `Float64Array` | **out** · The scale factor, scale, set <= 1 to avoid overflow in X. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,26 +102,26 @@ M-by-N; and scale is an output scale factor, set <= 1 to avoid overflow.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trana` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` or `'conjugate-transpose'` of A |
-| `tranb` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` or `'conjugate-transpose'` of B |
-| `isgn` | `integer` | in |  | rejects `isgn !== 1 && isgn !== -1` | +1 or -1 |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | order of matrix A, rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix B, columns of C |
-| `A` | `Complex128Array` | in | `M × M` |  | upper triangular matrix A (M-by-M) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `B` | `Complex128Array` | in | `N × N` |  | upper triangular matrix B (N-by-N) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | M-by-N right hand side, overwritten with solution X |
-| ↳ `strideC1` | `integer` | in |  |  | stride of first dimension of C (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of second dimension of C (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (in complex elements) |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] = scaling factor |
+| Parameter | Type | Description |
+|---|---|---|
+| `trana` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` of A |
+| `tranb` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` of B |
+| `isgn` | `integer` | +1 or -1<br>Rejects `isgn !== 1 && isgn !== -1` |
+| `M` | `NonNegativeInteger` | Order of matrix A, rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Order of matrix B, columns of C<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × M</sub> | Upper triangular matrix A (M-by-M) |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | Upper triangular matrix B (N-by-N) |
+| ↳ `strideB1` | `integer` | Stride of first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N right hand side, overwritten with solution X |
+| ↳ `strideC1` | `integer` | Stride of first dimension of C (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of second dimension of C (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (in complex elements) |
+| `scale` | `Float64Array` | **out** · Output: scale[0] = scaling factor |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

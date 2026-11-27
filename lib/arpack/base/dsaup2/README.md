@@ -42,38 +42,38 @@ dsaup2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `nev` | `Int32Array` | in/out |  |  | number of eigenvalues to compute (length-1; in/out) |
-| `np` | `Int32Array` | in/out |  |  | number of implicit shifts (length-1; in/out) |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `mode` | `integer` | in |  |  | problem mode |
-| `iupd` | `integer` | in |  |  | restart strategy flag |
-| `ishift` | `integer` | in |  |  | `0` user shifts (reverse communication), `1` exact shifts |
-| `mxiter` | `Int32Array` | in/out |  |  | max (in) / actual (out) iterations (length-1; in/out) |
-| `V` | `Float64Array` | in/out | `null × NEV+NP` |  | Lanczos basis (N-by-(nev+np), column-major) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `H` | `Float64Array` | in/out | `null × 2` |  | tridiagonal matrix in 2-column column-major layout |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `ritz` | `Float64Array` | out | `nev + np` |  | Ritz values (out) |
-| ↳ `strideRitz` | `integer` | in |  |  | stride length for `ritz` |
-| `bounds` | `Float64Array` | out | `nev + np` |  | Ritz estimates (out) |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| `Q` | `Float64Array` | in/out | `null × NEV+NP` |  | rotation accumulation matrix ((nev+np)-by-(nev+np), column-major) |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `workl` | `(Float64Array\|null)` | in/out | `≥ 3 * (nev + np)` |  | Lanczos state carried between calls (length >= 3*(nev+np)); required |
-| `ipntr` | `Int32Array` | out | `3` |  | operator pointers into `workd` (0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| `workd` | `(Float64Array\|null)` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
-| `infoIn` | `integer` | in/out |  |  | nonzero on the first call to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `nev` | `Int32Array` | **in/out** · Number of eigenvalues to compute (length-1; in/out) |
+| `np` | `Int32Array` | **in/out** · Number of implicit shifts (length-1; in/out) |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `mode` | `integer` | Problem mode |
+| `iupd` | `integer` | Restart strategy flag |
+| `ishift` | `integer` | `0` user shifts (reverse communication), `1` exact shifts |
+| `mxiter` | `Int32Array` | **in/out** · Max (in) / actual (out) iterations (length-1; in/out) |
+| `V` | `Float64Array`<br><sub>? × NEV+NP</sub> | **in/out** · Lanczos basis (N-by-(nev+np), column-major) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Tridiagonal matrix in 2-column column-major layout |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `ritz` | `Float64Array`<br><sub>length nev + np</sub> | **out** · Ritz values (out) |
+| ↳ `strideRitz` | `integer` | Stride length for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length nev + np</sub> | **out** · Ritz estimates (out) |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| `Q` | `Float64Array`<br><sub>? × NEV+NP</sub> | **in/out** · Rotation accumulation matrix ((nev+np)-by-(nev+np), column-major) |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `workl` | `Float64Array \| null`<br><sub>length ≥ 3 * (nev + np)</sub> | **in/out** · Lanczos state carried between calls (length >= 3\*(nev+np)); required |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Operator pointers into `workd` (0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| `infoIn` | `integer` | **in/out** · Nonzero on the first call to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 
@@ -117,51 +117,51 @@ dsaup2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
-| `nev` | `Int32Array` | in/out |  |  | number of eigenvalues to compute (length-1; in/out) |
-| `np` | `Int32Array` | in/out |  |  | number of implicit shifts (length-1; in/out) |
-| `tol` | `number` | in |  |  | relative accuracy for Ritz value convergence |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `mode` | `integer` | in |  |  | problem mode |
-| `iupd` | `integer` | in |  |  | restart strategy flag |
-| `ishift` | `integer` | in |  |  | `0` user shifts (reverse communication), `1` exact shifts |
-| `mxiter` | `Int32Array` | in/out |  |  | max (in) / actual (out) iterations (length-1; in/out) |
-| `V` | `Float64Array` | in/out | `null × NEV+NP` |  | Lanczos basis |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `H` | `Float64Array` | in/out | `null × 2` |  | tridiagonal matrix in 2-column layout |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first (row) dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second (column) dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `ritz` | `Float64Array` | out | `nev + np` |  | Ritz values (out) |
-| ↳ `strideRitz` | `integer` | in |  |  | stride length for `ritz` |
-| ↳ `offsetRitz` | `NonNegativeInteger` | in |  |  | starting index for `ritz` |
-| `bounds` | `Float64Array` | out | `nev + np` |  | Ritz estimates (out) |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| ↳ `offsetBounds` | `NonNegativeInteger` | in |  |  | starting index for `bounds` |
-| `Q` | `Float64Array` | in/out | `null × NEV+NP` |  | rotation accumulation matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first (row) dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second (column) dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `workl` | `Float64Array` | in/out | `≥ 3 * (nev + np)` |  | workspace array (length >= 3*(nev+np)) |
-| ↳ `strideWorkl` | `integer` | in |  |  | stride length for `workl` |
-| ↳ `offsetWorkl` | `NonNegativeInteger` | in |  |  | starting index for `workl` |
-| `ipntr` | `Int32Array` | out | `3` |  | operator pointers into `workd` (0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| ↳ `offsetIpntr` | `NonNegativeInteger` | in |  |  | starting index for `ipntr` |
-| `workd` | `Float64Array` | in/out | `≥ 3 * N` |  | reverse-communication workspace (length >= 3*N) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
-| `infoIn` | `integer` | in/out |  |  | nonzero on the first call to signal a user-supplied initial residual |
+| Parameter | Type | Description |
+|---|---|---|
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Which eigenvalues to compute (`'LM'`, `'SM'`, `'LA'`, `'SA'`, `'BE'`) |
+| `nev` | `Int32Array` | **in/out** · Number of eigenvalues to compute (length-1; in/out) |
+| `np` | `Int32Array` | **in/out** · Number of implicit shifts (length-1; in/out) |
+| `tol` | `number` | Relative accuracy for Ritz value convergence |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `mode` | `integer` | Problem mode |
+| `iupd` | `integer` | Restart strategy flag |
+| `ishift` | `integer` | `0` user shifts (reverse communication), `1` exact shifts |
+| `mxiter` | `Int32Array` | **in/out** · Max (in) / actual (out) iterations (length-1; in/out) |
+| `V` | `Float64Array`<br><sub>? × NEV+NP</sub> | **in/out** · Lanczos basis |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `H` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Tridiagonal matrix in 2-column layout |
+| ↳ `strideH1` | `integer` | Stride of the first (row) dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second (column) dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `ritz` | `Float64Array`<br><sub>length nev + np</sub> | **out** · Ritz values (out) |
+| ↳ `strideRitz` | `integer` | Stride length for `ritz` |
+| ↳ `offsetRitz` | `NonNegativeInteger` | Starting index for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length nev + np</sub> | **out** · Ritz estimates (out) |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| ↳ `offsetBounds` | `NonNegativeInteger` | Starting index for `bounds` |
+| `Q` | `Float64Array`<br><sub>? × NEV+NP</sub> | **in/out** · Rotation accumulation matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first (row) dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second (column) dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `workl` | `Float64Array`<br><sub>length ≥ 3 * (nev + np)</sub> | **in/out** · Workspace array (length >= 3\*(nev+np)) |
+| ↳ `strideWorkl` | `integer` | Stride length for `workl` |
+| ↳ `offsetWorkl` | `NonNegativeInteger` | Starting index for `workl` |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Operator pointers into `workd` (0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| ↳ `offsetIpntr` | `NonNegativeInteger` | Starting index for `ipntr` |
+| `workd` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **in/out** · Reverse-communication workspace (length >= 3\*N) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
+| `infoIn` | `integer` | **in/out** · Nonzero on the first call to signal a user-supplied initial residual |
 
 **Returns** `integer`: INFO
 

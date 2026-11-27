@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlansy( order, norm, uplo, N, A, LDA, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the value to be returned in ZLANSY as described above. |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of the symmetric matrix A is to be referenced. `'upper'`: Upper triangular part of A is referenced `'lower'`: Lower triangular part of A is referenced. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `A` | `Complex128Array` | in | `max( N, 1 ) × N` |  | the symmetric matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | caller-provided workspace |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the value to be returned in ZLANSY as described above. |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of the symmetric matrix A is to be referenced. `'upper'`: Upper triangular part of A is referenced `'lower'`: Lower triangular part of A is referenced. |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `A` | `Complex128Array`<br><sub>max(N, 1) × N</sub> | The symmetric matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `WORK` | `Float64Array \| null` | **out** · Caller-provided workspace |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,18 +73,18 @@ NOTE: This is for SYMMETRIC matrices (not Hermitian).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in | `max( N, 1 ) × N` |  | the matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A (complex elements) |
-| `WORK` | `Float64Array` | out |  |  | workspace of length N (only for `'one-norm'`/`'inf-norm'` norms) |
-| ↳ `strideWork` | `integer` | in |  |  | stride of WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset into WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>max(N, 1) × N</sub> | The matrix |
+| ↳ `strideA1` | `integer` | First stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A (complex elements) |
+| `WORK` | `Float64Array` | **out** · Workspace of length N (only for `'one-norm'`/`'inf-norm'` norms) |
+| ↳ `strideWork` | `integer` | Stride of WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset into WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -28,22 +28,22 @@ zlatbs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'no'` (CNORM is computed) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super-/sub-diagonals |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | triangular band matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` (>= `kd+1`) |
-| `x` | `Complex128Array` | in/out | `N` |  | right-hand side; overwritten by the solution |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `scale` | `Float64Array` | out |  |  | output array (single element) receiving the scaling factor |
-| `CNORM` | `Float64Array` | in/out | `N` |  | workspace/column norms (length `N`) |
-| ↳ `strideCNORM` | `integer` | in |  |  | `CNORM` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'no'` (CNORM is computed)<br>One of `'no'`, `'yes'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super-/sub-diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Triangular band matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` (>= `kd+1`)<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Right-hand side; overwritten by the solution |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `scale` | `Float64Array` | **out** · Output array (single element) receiving the scaling factor |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · Workspace/column norms (length `N`) |
+| ↳ `strideCNORM` | `integer` | `CNORM` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -123,25 +123,25 @@ x and b are N-vectors, and s is a real scaling factor chosen to prevent overflow
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'non-unit' or 'unit' |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | 'yes' if CNORM contains column norms on input, 'no' to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of sub/super-diagonals |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | triangular band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | first dimension stride of AB (complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | second dimension stride of AB (complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB (complex elements) |
-| `x` | `Complex128Array` | in/out | `N` |  | in/out right-hand side vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x (complex elements) |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column norm array of length N |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride for CNORM |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for CNORM |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `trans` | `TransposeOperation` | 'no-transpose', 'transpose', or 'conjugate-transpose' |
+| `diag` | `DiagonalType` | 'non-unit' or 'unit' |
+| `normin` | `"no" \| "yes"` | 'yes' if CNORM contains column norms on input, 'no' to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of sub/super-diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Triangular band matrix in band storage |
+| ↳ `strideAB1` | `integer` | First dimension stride of AB (complex elements) |
+| ↳ `strideAB2` | `integer` | Second dimension stride of AB (complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB (complex elements) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · In/out right-hand side vector of length N |
+| ↳ `strideX` | `integer` | Stride for x (complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x (complex elements) |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column norm array of length N |
+| ↳ `strideCNORM` | `integer` | Stride for CNORM |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for CNORM |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

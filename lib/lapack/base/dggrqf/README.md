@@ -40,21 +40,21 @@ dggrqf(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAUA` | `Float64Array` | out | `min( M, N )` |  | scalar factors of reflectors for Q |
-| ↳ `strideTAUA` | `integer` | in |  |  | stride for TAUA |
-| `B` | `Float64Array` | in/out | `P × N` |  | P-by-N matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, P )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `TAUB` | `Float64Array` | out | `min( P, N )` |  | scalar factors of reflectors for Z |
-| ↳ `strideTAUB` | `integer` | in |  |  | stride for TAUB |
-| `work` | `(Float64Array\|null)` | out | `≥ max( max( max( 1, M ), P ), N )` |  | workspace of length at least `max(1,M,P,N)`; for optimal performance at least `max( max(M,P,N)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`): the reference's `max(M,P,N)*NB` with the dormrq optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `TAUA` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Scalar factors of reflectors for Q |
+| ↳ `strideTAUA` | `integer` | Stride for TAUA |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, P)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `TAUB` | `Float64Array`<br><sub>length min(P, N)</sub> | **out** · Scalar factors of reflectors for Z |
+| ↳ `strideTAUB` | `integer` | Stride for TAUB |
+| `work` | `Float64Array \| null`<br><sub>length ≥ max(max(max(1, M), P), N)</sub> | **out** · Workspace of length at least `max(1,M,P,N)`; for optimal performance at least `max( max(M,P,N)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`): the reference's `max(M,P,N)*NB` with the dormrq optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -115,28 +115,28 @@ The caller must supply `work` as a `Float64Array` of length at least
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix (overwritten with R and reflectors) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `TAUA` | `Float64Array` | out | `min( M, N )` |  | output: scalar factors of reflectors for Q |
-| ↳ `strideTAUA` | `integer` | in |  |  | stride for TAUA |
-| ↳ `offsetTAUA` | `NonNegativeInteger` | in |  |  | offset for TAUA |
-| `B` | `Float64Array` | in/out | `P × N` |  | P-by-N matrix (overwritten with T and reflectors) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `TAUB` | `Float64Array` | out | `min( P, N )` |  | output: scalar factors of reflectors for Z |
-| ↳ `strideTAUB` | `integer` | in |  |  | stride for TAUB |
-| ↳ `offsetTAUB` | `NonNegativeInteger` | in |  |  | offset for TAUB |
-| `work` | `Float64Array` | out | `≥ max( max( max( 1, M ), P ), N )` |  | workspace of length at least `max(1,M,P,N)`; for optimal performance at least `max( max(M,P,N)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`): the reference's `max(M,P,N)*NB` with the dormrq optimum's T part, which enables the blocked paths (from `offsetWork`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for work |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for work |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix (overwritten with R and reflectors) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `TAUA` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output: scalar factors of reflectors for Q |
+| ↳ `strideTAUA` | `integer` | Stride for TAUA |
+| ↳ `offsetTAUA` | `NonNegativeInteger` | Offset for TAUA |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix (overwritten with T and reflectors) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `TAUB` | `Float64Array`<br><sub>length min(P, N)</sub> | **out** · Output: scalar factors of reflectors for Z |
+| ↳ `strideTAUB` | `integer` | Stride for TAUB |
+| ↳ `offsetTAUB` | `NonNegativeInteger` | Offset for TAUB |
+| `work` | `Float64Array`<br><sub>length ≥ max(max(max(1, M), P), N)</sub> | **out** · Workspace of length at least `max(1,M,P,N)`; for optimal performance at least `max( max(M,P,N)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`): the reference's `max(M,P,N)*NB` with the dormrq optimum's T part, which enables the blocked paths (from `offsetWork`) |
+| ↳ `strideWork` | `integer` | Stride for work |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for work |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

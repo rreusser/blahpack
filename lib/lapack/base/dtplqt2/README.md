@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtplqt2( order, M, N, l, A, LDA, B, LDB, T, LDT ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > min( M, N )` | the number of rows of the lower trapezoidal part of B. |
-| `A` | `Float64Array` | in/out | `M × M` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `T` | `Float64Array` | out | `M × M` |  | output matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, M )` | leading dimension of `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `l` | `NonNegativeInteger` | The number of rows of the lower trapezoidal part of B.<br>Rejects `L < 0 \|\| L > min(M, N)` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `T` | `Float64Array`<br><sub>M × M</sub> | **out** · Output matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, M)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,23 +76,23 @@ Computes an LQ factorization of a real triangular-pentagonal matrix `C = [A, B]`
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `B` and order of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `B` |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > min( M, N )` | number of rows of the lower trapezoidal part of `B` |
-| `A` | `Float64Array` | in/out | `M × M` |  | input/output matrix; on exit contains the lower triangular factor `L` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input/output pentagonal matrix; on exit contains the Householder reflectors |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `T` | `Float64Array` | out | `M × M` |  | output upper triangular factor of the block reflector |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `B` and order of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `B`<br>Requires `N ≥ 0` |
+| `l` | `NonNegativeInteger` | Number of rows of the lower trapezoidal part of `B`<br>Rejects `L < 0 \|\| L > min(M, N)` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | **in/out** · Input/output matrix; on exit contains the lower triangular factor `L` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output pentagonal matrix; on exit contains the Householder reflectors |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `T` | `Float64Array`<br><sub>M × M</sub> | **out** · Output upper triangular factor of the block reflector |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

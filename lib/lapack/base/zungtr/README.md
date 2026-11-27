@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zungtr( order, uplo, N, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A contains elementary reflectors from ZHETRD; `'lower'`: Lower triangle of A contains elementary reflectors from ZHETRD. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix Q. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, the vectors which define the elementary reflectors, as returned by ZHETRD. On exit, the N-by-N unitary matrix Q. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `N - 1` |  | tAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZHETRD. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N - 1 )` |  | workspace of length at least `max(1,N-1)` (complex elements); for optimum performance it should hold `(N-1)*NB` elements (`NB = 32`, the zungql/zungqr block size), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A contains elementary reflectors from ZHETRD; `'lower'`: Lower triangle of A contains elementary reflectors from ZHETRD. |
+| `N` | `NonNegativeInteger` | The order of the matrix Q.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the vectors which define the elementary reflectors, as returned by ZHETRD. On exit, the N-by-N unitary matrix Q. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | TAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZHETRD. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N - 1)</sub> | **out** · Workspace of length at least `max(1,N-1)` (complex elements); for optimum performance it should hold `(N-1)*NB` elements (`NB = 32`, the zungql/zungqr block size), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,20 +82,20 @@ elementary reflectors of order N, as returned by ZHETRD.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle was used in ZHETRD (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix Q |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, contains the reflectors from ZHETRD; on exit, the unitary matrix Q |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (complex elements) |
-| `TAU` | `Complex128Array` | in | `N - 1` |  | scalar factors of the reflectors from ZHETRD (length N-1) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N - 1 )` |  | workspace of length at least `max(1,N-1)` (complex elements); for optimum performance it should hold `(N-1)*NB` elements (`NB = 32`, the zungql/zungqr block size), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle was used in ZHETRD (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix Q<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, contains the reflectors from ZHETRD; on exit, the unitary matrix Q |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | Scalar factors of the reflectors from ZHETRD (length N-1) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N - 1)</sub> | **out** · Workspace of length at least `max(1,N-1)` (complex elements); for optimum performance it should hold `(N-1)*NB` elements (`NB = 32`, the zungql/zungqr block size), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

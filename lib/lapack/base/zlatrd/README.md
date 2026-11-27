@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of matrix A |
-| `nb` | `NonNegativeInteger` | in |  |  | number of rows/columns to reduce |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `e` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `W` | `Complex128Array` | out | `N × nb` |  | input matrix |
-| ↳ `LDW` | `PositiveInteger` | in |  |  | leading dimension of `W` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrix A |
+| `nb` | `NonNegativeInteger` | Number of rows/columns to reduce |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `W` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Input matrix |
+| ↳ `LDW` | `PositiveInteger` | Leading dimension of `W` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,25 +91,25 @@ zlatrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of matrix A |
-| `nb` | `NonNegativeInteger` | in |  |  | number of rows/columns to reduce |
-| `A` | `Complex128Array` | in/out | `N × N` |  | complex Hermitian matrix (complex-element strides) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `e` | `Float64Array` | out | `N - 1` |  | off-diagonal elements |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | scalar factors of reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `W` | `Complex128Array` | out | `N × nb` |  | output workspace matrix (N-by-NB) (complex-element strides) |
-| ↳ `strideW1` | `integer` | in |  |  | stride of first dimension of W (complex elements) |
-| ↳ `strideW2` | `integer` | in |  |  | stride of second dimension of W (complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for W (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrix A |
+| `nb` | `NonNegativeInteger` | Number of rows/columns to reduce |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Complex Hermitian matrix (complex-element strides) |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Off-diagonal elements |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Scalar factors of reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `W` | `Complex128Array`<br><sub>N × nb</sub> | **out** · Output workspace matrix (N-by-NB) (complex-element strides) |
+| ↳ `strideW1` | `integer` | Stride of first dimension of W (complex elements) |
+| ↳ `strideW2` | `integer` | Stride of second dimension of W (complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for W (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

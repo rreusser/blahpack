@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhptrd( order, uplo, N, AP, d, strideD, e, strideE, TAU, strideTAU ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed Hermitian matrix (complex elements) |
-| `d` | `Float64Array` | out | `N` |  | output array for diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | out | `N - 1` |  | output array for off-diagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | output array for reflector scalars (length N-1, complex elements) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed Hermitian matrix (complex elements) |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output array for off-diagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Output array for reflector scalars (length N-1, complex elements) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,22 +73,22 @@ zhptrd.ndarray(
 
 Reduces a complex Hermitian matrix stored in packed form to real symmetric tridiagonal form.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `d` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `TAU` | `Complex128Array` | out | `N - 1` |  | output array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `TAU` | `Complex128Array`<br><sub>length N - 1</sub> | **out** · Output array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

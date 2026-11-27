@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlargv( N, x, strideX, y, strideY, c, strideC ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to generate |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | input/output complex vector x |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | input/output complex vector y |
-| ↳ `strideY` | `integer` | in |  |  | stride for `y` (in complex elements) |
-| `c` | `Float64Array` | out | `1 + (N - 1) * incc` |  | output vector for cosines |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to generate |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Input/output complex vector x |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Input/output complex vector y |
+| ↳ `strideY` | `integer` | Stride for `y` (in complex elements) |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | **out** · Output vector for cosines |
+| ↳ `strideC` | `integer` | Stride for `c` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,18 +67,18 @@ For `i = 0, 1, ..., N-1`:
 On exit, `x` is overwritten by `r`, `y` is overwritten by the complex
 sines, and `c` receives the real cosines of the plane rotations.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to generate |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | input/output complex vector x |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | input/output complex vector y |
-| ↳ `strideY` | `integer` | in |  |  | stride for `y` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
-| `c` | `Float64Array` | out | `1 + (N - 1) * incc` |  | output vector for cosines |
-| ↳ `strideC` | `integer` | in |  |  | stride for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to generate |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · Input/output complex vector x |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Input/output complex vector y |
+| ↳ `strideY` | `integer` | Stride for `y` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | **out** · Output vector for cosines |
+| ↳ `strideC` | `integer` | Stride for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

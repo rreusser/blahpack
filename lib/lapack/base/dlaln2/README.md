@@ -32,26 +32,26 @@ dlaln2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ltrans` | `boolean` | in |  |  | =`true`: A-transpose will be used. =`false`: A will be used (not transposed.) |
-| `na` | `NonNegativeInteger` | in |  |  | the size of the matrix A. |
-| `nw` | `NonNegativeInteger` | in |  |  | 1 if "w" is real, 2 if "w" is complex. |
-| `smin` | `number` | in |  |  | the desired lower bound on the singular values of A. |
-| `ca` | `number` | in |  |  | the coefficient c, which A is multiplied by. |
-| `A` | `Float64Array` | in | `na × na` |  | the NA x NA matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `d1` | `number` | in |  |  | the 1,1 element in the diagonal matrix D. |
-| `d2` | `number` | in |  |  | the 2,2 element in the diagonal matrix D. |
-| `B` | `Float64Array` | in | `na × nw` |  | the NA x NW matrix B (right-hand side). |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `wr` | `number` | in |  |  | the real part of the scalar "w". |
-| `wi` | `number` | in |  |  | the imaginary part of the scalar "w". |
-| `X` | `Float64Array` | out | `na × nw` |  | the NA x NW matrix X (unknowns), as computed by DLALN2. |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `scale` | `Float64Array` | out |  |  | output (length-1 array): the scale factor that B must be multiplied by to insure that overflow does not occur when computing X |
-| `xnorm` | `Float64Array` | out |  |  | output (length-1 array): the infinity-norm of X, when X is regarded as an NA x NW real matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ltrans` | `boolean` | =`true`: A-transpose will be used. =`false`: A will be used (not transposed.) |
+| `na` | `NonNegativeInteger` | The size of the matrix A. |
+| `nw` | `NonNegativeInteger` | 1 if "w" is real, 2 if "w" is complex. |
+| `smin` | `number` | The desired lower bound on the singular values of A. |
+| `ca` | `number` | The coefficient c, which A is multiplied by. |
+| `A` | `Float64Array`<br><sub>na × na</sub> | The NA x NA matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `d1` | `number` | The 1,1 element in the diagonal matrix D. |
+| `d2` | `number` | The 2,2 element in the diagonal matrix D. |
+| `B` | `Float64Array`<br><sub>na × nw</sub> | The NA x NW matrix B (right-hand side). |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `wr` | `number` | The real part of the scalar "w". |
+| `wi` | `number` | The imaginary part of the scalar "w". |
+| `X` | `Float64Array`<br><sub>na × nw</sub> | **out** · The NA x NW matrix X (unknowns), as computed by DLALN2. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `scale` | `Float64Array` | **out** · Output (length-1 array): the scale factor that B must be multiplied by to insure that overflow does not occur when computing X |
+| `xnorm` | `Float64Array` | **out** · Output (length-1 array): the infinity-norm of X, when X is regarded as an NA x NW real matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -108,31 +108,31 @@ diagonal matrix, and scale is chosen (0 < scale <= 1) to prevent overflow.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ltrans` | `boolean` | in |  |  | if true, solve transposed system |
-| `na` | `NonNegativeInteger` | in |  |  | order of A (1 or 2) |
-| `nw` | `NonNegativeInteger` | in |  |  | 1 for real, 2 for complex system |
-| `smin` | `number` | in |  |  | lower bound on singular values; clamped to machine threshold |
-| `ca` | `number` | in |  |  | scalar multiplier for A |
-| `A` | `Float64Array` | in | `na × na` |  | matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `d1` | `number` | in |  |  | D(1,1) diagonal element |
-| `d2` | `number` | in |  |  | D(2,2) diagonal element |
-| `B` | `Float64Array` | in | `na × nw` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | first dimension stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second dimension stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `wr` | `number` | in |  |  | real part of the scalar w |
-| `wi` | `number` | in |  |  | imaginary part of the scalar w |
-| `X` | `Float64Array` | out | `na × nw` |  | output matrix (solution) |
-| ↳ `strideX1` | `integer` | in |  |  | first dimension stride of X |
-| ↳ `strideX2` | `integer` | in |  |  | second dimension stride of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X |
-| `scale` | `Float64Array` | out |  |  | output (length-1 array): the scale factor that B must be multiplied by to insure that overflow does not occur when computing X |
-| `xnorm` | `Float64Array` | out |  |  | output (length-1 array): the infinity-norm of X, when X is regarded as an NA x NW real matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `ltrans` | `boolean` | If true, solve transposed system |
+| `na` | `NonNegativeInteger` | Order of A (1 or 2) |
+| `nw` | `NonNegativeInteger` | 1 for real, 2 for complex system |
+| `smin` | `number` | Lower bound on singular values; clamped to machine threshold |
+| `ca` | `number` | Scalar multiplier for A |
+| `A` | `Float64Array`<br><sub>na × na</sub> | Matrix A |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `d1` | `number` | D(1,1) diagonal element |
+| `d2` | `number` | D(2,2) diagonal element |
+| `B` | `Float64Array`<br><sub>na × nw</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | First dimension stride of B |
+| ↳ `strideB2` | `integer` | Second dimension stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `wr` | `number` | Real part of the scalar w |
+| `wi` | `number` | Imaginary part of the scalar w |
+| `X` | `Float64Array`<br><sub>na × nw</sub> | **out** · Output matrix (solution) |
+| ↳ `strideX1` | `integer` | First dimension stride of X |
+| ↳ `strideX2` | `integer` | Second dimension stride of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X |
+| `scale` | `Float64Array` | **out** · Output (length-1 array): the scale factor that B must be multiplied by to insure that overflow does not occur when computing X |
+| `xnorm` | `Float64Array` | **out** · Output (length-1 array): the infinity-norm of X, when X is regarded as an NA x NW real matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

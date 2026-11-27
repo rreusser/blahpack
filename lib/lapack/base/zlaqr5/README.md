@@ -37,34 +37,34 @@ zlaqr5(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | whether the full Schur form is being computed |
-| `wantz` | `boolean` | in |  |  | whether the Schur vectors are being accumulated |
-| `kacc22` | `integer` | in |  |  | accumulation strategy (0, 1, or 2) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ktop` | `integer` | in |  |  | first row/column of the active block (1-based) |
-| `kbot` | `integer` | in |  |  | last row/column of the active block (1-based) |
-| `nshfts` | `NonNegativeInteger` | in |  |  | number of simultaneous shifts (even) |
-| `s` | `Complex128Array` | in/out | `nshfts` |  | shifts (length `nshfts`) |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix; overwritten |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `iloz` | `integer` | in |  |  | lower row index for accumulating Z (1-based) |
-| `ihiz` | `NonNegativeInteger` | in |  |  | upper row index for accumulating Z (1-based) |
-| `Z` | `Complex128Array` | in/out | `N × ihiz` |  | Schur vectors; updated when `wantz` is true |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `V` | `Complex128Array` | out | `3 × trunc( nshfts / 2 )` |  | workspace of bulge data (`3 x nshfts/2`) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `U` | `Complex128Array` | out | `2 * nshfts × 2 * nshfts` |  | accumulator workspace (`(2*nshfts+1) x (2*nshfts+1)`) |
-| ↳ `LDU` | `PositiveInteger` | in |  |  | leading dimension of `U` |
-| `nv` | `integer` | in |  |  | number of rows of the horizontal workspace `WV` |
-| `WV` | `Complex128Array` | out | `nv × 2 * nshfts` |  | vertical workspace |
-| ↳ `LDWV` | `PositiveInteger` | in |  |  | leading dimension of `WV` |
-| `nh` | `NonNegativeInteger` | in |  |  | number of columns of the horizontal workspace `WH` |
-| `WH` | `Complex128Array` | out | `2 * nshfts × nh` |  | horizontal workspace |
-| ↳ `LDWH` | `PositiveInteger` | in |  |  | leading dimension of `WH` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | Whether the full Schur form is being computed |
+| `wantz` | `boolean` | Whether the Schur vectors are being accumulated |
+| `kacc22` | `integer` | Accumulation strategy (0, 1, or 2) |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ktop` | `integer` | First row/column of the active block (1-based) |
+| `kbot` | `integer` | Last row/column of the active block (1-based) |
+| `nshfts` | `NonNegativeInteger` | Number of simultaneous shifts (even) |
+| `s` | `Complex128Array`<br><sub>length nshfts</sub> | **in/out** · Shifts (length `nshfts`) |
+| ↳ `strideS` | `integer` | `s` stride length |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix; overwritten |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `iloz` | `integer` | Lower row index for accumulating Z (1-based) |
+| `ihiz` | `NonNegativeInteger` | Upper row index for accumulating Z (1-based) |
+| `Z` | `Complex128Array`<br><sub>N × ihiz</sub> | **in/out** · Schur vectors; updated when `wantz` is true |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `V` | `Complex128Array`<br><sub>3 × (trunc(nshfts / 2))</sub> | **out** · Workspace of bulge data (`3 x nshfts/2`) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `U` | `Complex128Array`<br><sub>(2 * nshfts) × (2 * nshfts)</sub> | **out** · Accumulator workspace (`(2*nshfts+1) x (2*nshfts+1)`) |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U` |
+| `nv` | `integer` | Number of rows of the horizontal workspace `WV` |
+| `WV` | `Complex128Array`<br><sub>nv × (2 * nshfts)</sub> | **out** · Vertical workspace |
+| ↳ `LDWV` | `PositiveInteger` | Leading dimension of `WV` |
+| `nh` | `NonNegativeInteger` | Number of columns of the horizontal workspace `WH` |
+| `WH` | `Complex128Array`<br><sub>(2 * nshfts) × nh</sub> | **out** · Horizontal workspace |
+| ↳ `LDWH` | `PositiveInteger` | Leading dimension of `WH` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -128,46 +128,46 @@ Complex multi-shift QR sweep.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | wANTT = `true` if the triangular Schur factor is being computed. |
-| `wantz` | `boolean` | in |  |  | wANTZ = `true` if the unitary Schur factor is being computed. |
-| `kacc22` | `integer` | in |  |  | specifies the computation mode of far-from-diagonal orthogonal updates. = 0: ZLAQR5 does not accumulate reflections and does not use matrix-matrix multiply to update far-from-diagonal matrix entries. = 1: ZLAQR5 accumulates reflections and uses matrix-matrix multiply to update the far-from-diagonal matrix entries. = 2: Same as KACC22 = 1. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `ktop` | `integer` | in |  |  | these are the first and last rows and columns of an isolated diagonal block upon which the QR sweep is to be applied. |
-| `kbot` | `integer` | in |  |  | these are the first and last rows and columns of an isolated diagonal block upon which the QR sweep is to be applied. |
-| `nshfts` | `NonNegativeInteger` | in |  |  | nSHFTS gives the number of simultaneous shifts. |
-| `s` | `Complex128Array` | in/out | `nshfts` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `H` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `ihiz` | `NonNegativeInteger` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `Z` | `Complex128Array` | in/out | `N × ihiz` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `V` | `Complex128Array` | out | `3 × trunc( nshfts / 2 )` |  | input matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `U` | `Complex128Array` | out | `2 * nshfts × 2 * nshfts` |  | input matrix |
-| ↳ `strideU1` | `integer` | in |  |  | stride of the first dimension of `U` |
-| ↳ `strideU2` | `integer` | in |  |  | stride of the second dimension of `U` |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for `U` |
-| `nv` | `integer` | in |  |  | nV is the number of rows in WV agailable for workspace. |
-| `WV` | `Complex128Array` | out | `nv × 2 * nshfts` |  | input matrix |
-| ↳ `strideWV1` | `integer` | in |  |  | stride of the first dimension of `WV` |
-| ↳ `strideWV2` | `integer` | in |  |  | stride of the second dimension of `WV` |
-| ↳ `offsetWV` | `NonNegativeInteger` | in |  |  | starting index for `WV` |
-| `nh` | `NonNegativeInteger` | in |  |  | nH is the number of columns in array WH available for workspace. |
-| `WH` | `Complex128Array` | out | `2 * nshfts × nh` |  | output matrix |
-| ↳ `strideWH1` | `integer` | in |  |  | stride of the first dimension of `WH` |
-| ↳ `strideWH2` | `integer` | in |  |  | stride of the second dimension of `WH` |
-| ↳ `offsetWH` | `NonNegativeInteger` | in |  |  | starting index for `WH` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | WANTT = `true` if the triangular Schur factor is being computed. |
+| `wantz` | `boolean` | WANTZ = `true` if the unitary Schur factor is being computed. |
+| `kacc22` | `integer` | Specifies the computation mode of far-from-diagonal orthogonal updates. = 0: ZLAQR5 does not accumulate reflections and does not use matrix-matrix multiply to update far-from-diagonal matrix entries. = 1: ZLAQR5 accumulates reflections and uses matrix-matrix multiply to update the far-from-diagonal matrix entries. = 2: Same as KACC22 = 1. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `ktop` | `integer` | These are the first and last rows and columns of an isolated diagonal block upon which the QR sweep is to be applied. |
+| `kbot` | `integer` | These are the first and last rows and columns of an isolated diagonal block upon which the QR sweep is to be applied. |
+| `nshfts` | `NonNegativeInteger` | NSHFTS gives the number of simultaneous shifts. |
+| `s` | `Complex128Array`<br><sub>length nshfts</sub> | **in/out** · Input array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `ihiz` | `NonNegativeInteger` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `Z` | `Complex128Array`<br><sub>N × ihiz</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `V` | `Complex128Array`<br><sub>3 × (trunc(nshfts / 2))</sub> | **out** · Input matrix |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `U` | `Complex128Array`<br><sub>(2 * nshfts) × (2 * nshfts)</sub> | **out** · Input matrix |
+| ↳ `strideU1` | `integer` | Stride of the first dimension of `U` |
+| ↳ `strideU2` | `integer` | Stride of the second dimension of `U` |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for `U` |
+| `nv` | `integer` | NV is the number of rows in WV agailable for workspace. |
+| `WV` | `Complex128Array`<br><sub>nv × (2 * nshfts)</sub> | **out** · Input matrix |
+| ↳ `strideWV1` | `integer` | Stride of the first dimension of `WV` |
+| ↳ `strideWV2` | `integer` | Stride of the second dimension of `WV` |
+| ↳ `offsetWV` | `NonNegativeInteger` | Starting index for `WV` |
+| `nh` | `NonNegativeInteger` | NH is the number of columns in array WH available for workspace. |
+| `WH` | `Complex128Array`<br><sub>(2 * nshfts) × nh</sub> | **out** · Output matrix |
+| ↳ `strideWH1` | `integer` | Stride of the first dimension of `WH` |
+| ↳ `strideWH2` | `integer` | Stride of the second dimension of `WH` |
+| ↳ `offsetWH` | `NonNegativeInteger` | Starting index for `WH` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

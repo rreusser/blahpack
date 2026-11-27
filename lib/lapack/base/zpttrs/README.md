@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpttrs( order, uplo, N, nrhs, d, strideD, e, strideE, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the form of the factorization and whether the vector E is the superdiagonal of the upper bidiagonal factor U or the subdiagonal of the lower bidiagonal factor L. `'upper'`: A = U**H *D*U, E is the superdiagonal of U `'lower'`: A = L*D*L**H, E is the subdiagonal of L. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the tridiagonal matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the diagonal matrix D from the factorization A = U**H *D*U or A = L*D*L**H. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Complex128Array` | in | `N - 1` |  | if `uplo === 'upper'`, the (n-1) superdiagonal elements of the unit bidiagonal factor U from the factorization A = U**H*D*U. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies the form of the factorization and whether the vector E is the superdiagonal of the upper bidiagonal factor U or the subdiagonal of the lower bidiagonal factor L. `'upper'`: A = U\*\*H \*D\*U, E is the superdiagonal of U `'lower'`: A = L\*D\*L\*\*H, E is the subdiagonal of L. |
+| `N` | `NonNegativeInteger` | The order of the tridiagonal matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the diagonal matrix D from the factorization A = U\*\*H \*D\*U or A = L\*D\*L\*\*H. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | If `uplo === 'upper'`, the (n-1) superdiagonal elements of the unit bidiagonal factor U from the factorization A = U\*\*H\*D\*U. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the right hand side vectors B for the system of linear equations. On exit, the solution vectors, X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,21 +83,21 @@ complex vector E, and X and B are N by NRHS complex matrices.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` for U^H*D*U factorization, `'lower'` for L*D*L^H factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix A (N >= 0) |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of D (real), length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Complex128Array` | in | `N - 1` |  | off-diagonal elements of L or U, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` (in complex elements) |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right hand side matrix (N x NRHS), overwritten with solution X |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` for U^H\*D\*U factorization, `'lower'` for L\*D\*L^H factorization |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix A (N >= 0)<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of D (real), length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Complex128Array`<br><sub>length N - 1</sub> | Off-diagonal elements of L or U, length N-1 |
+| ↳ `strideE` | `integer` | Stride length for `e` (in complex elements) |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix (N x NRHS), overwritten with solution X |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dasum( N, x, strideX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -43,12 +43,12 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dasum.ndarray( N, x, strideX, offsetX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

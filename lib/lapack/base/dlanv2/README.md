@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlanv2( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `A` | `Float64Array` | in/out |  |  | the (1,1) element of the matrix |
-| `B` | `Float64Array` | in/out |  |  | the (1,2) element of the matrix |
-| `C` | `Float64Array` | in/out |  |  | the (2,1) element of the matrix |
-| `D` | `Float64Array` | in/out |  |  | the (2,2) element of the matrix |
-| `rt1r` | `Float64Array` | out |  |  | output (length-1 array): `rt1r` |
-| `rt1i` | `Float64Array` | out |  |  | output (length-1 array): `rt1i` |
-| `rt2r` | `Float64Array` | out |  |  | output (length-1 array): `rt2r` |
-| `rt2i` | `Float64Array` | out |  |  | output (length-1 array): the real and imaginary parts of the eigenvalues |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): `cs` |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): parameters of the rotation matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `A` | `Float64Array` | **in/out** · The (1,1) element of the matrix |
+| `B` | `Float64Array` | **in/out** · The (1,2) element of the matrix |
+| `C` | `Float64Array` | **in/out** · The (2,1) element of the matrix |
+| `D` | `Float64Array` | **in/out** · The (2,2) element of the matrix |
+| `rt1r` | `Float64Array` | **out** · Output (length-1 array): `rt1r` |
+| `rt1i` | `Float64Array` | **out** · Output (length-1 array): `rt1i` |
+| `rt2r` | `Float64Array` | **out** · Output (length-1 array): `rt2r` |
+| `rt2i` | `Float64Array` | **out** · Output (length-1 array): the real and imaginary parts of the eigenvalues |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): `cs` |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): parameters of the rotation matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -54,18 +54,18 @@ dlanv2.ndarray( A, B, C, D, rt1r, rt1i, rt2r, rt2i, cs, sn ) → void
 
 Computes the Schur factorization of A real 2-by-2 nonsymmetric matrix in standard form.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `A` | `Float64Array` | in/out |  |  | input/output (length-1 array): the (1,1) element of the matrix |
-| `B` | `Float64Array` | in/out |  |  | input/output (length-1 array): the (1,2) element of the matrix |
-| `C` | `Float64Array` | in/out |  |  | input/output (length-1 array): the (2,1) element of the matrix |
-| `D` | `Float64Array` | in/out |  |  | input/output (length-1 array): the (2,2) element of the matrix |
-| `rt1r` | `Float64Array` | out |  |  | output (length-1 array): `rt1r` |
-| `rt1i` | `Float64Array` | out |  |  | output (length-1 array): `rt1i` |
-| `rt2r` | `Float64Array` | out |  |  | output (length-1 array): `rt2r` |
-| `rt2i` | `Float64Array` | out |  |  | output (length-1 array): the real and imaginary parts of the eigenvalues |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): `cs` |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): parameters of the rotation matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `A` | `Float64Array` | **in/out** · Input/output (length-1 array): the (1,1) element of the matrix |
+| `B` | `Float64Array` | **in/out** · Input/output (length-1 array): the (1,2) element of the matrix |
+| `C` | `Float64Array` | **in/out** · Input/output (length-1 array): the (2,1) element of the matrix |
+| `D` | `Float64Array` | **in/out** · Input/output (length-1 array): the (2,2) element of the matrix |
+| `rt1r` | `Float64Array` | **out** · Output (length-1 array): `rt1r` |
+| `rt1i` | `Float64Array` | **out** · Output (length-1 array): `rt1i` |
+| `rt2r` | `Float64Array` | **out** · Output (length-1 array): `rt2r` |
+| `rt2i` | `Float64Array` | **out** · Output (length-1 array): the real and imaginary parts of the eigenvalues |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): `cs` |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): parameters of the rotation matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

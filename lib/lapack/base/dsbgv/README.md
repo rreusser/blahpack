@@ -29,23 +29,23 @@ dsbgv(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super- (or sub-) diagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super- (or sub-) diagonals of B |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ ka + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `BB` | `Float64Array` | in/out | `kb + 1 × N` |  | band matrix B in band storage |
-| ↳ `LDBB` | `PositiveInteger` | in |  | column-major requires `LDBB ≥ kb + 1`; row-major requires `LDBB ≥ max( 1, N )` | leading dimension of `BB` |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | `w` stride length |
-| `Z` | `Float64Array` | out | `N × N` |  | output matrix for eigenvectors |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of B<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ ka + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | **in/out** · Band matrix B in band storage |
+| ↳ `LDBB` | `PositiveInteger` | Leading dimension of `BB`<br>Column-major requires `LDBB ≥ kb + 1`<br>Row-major requires `LDBB ≥ max(1, N)` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues |
+| ↳ `strideW` | `integer` | `w` stride length |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · Output matrix for eigenvectors |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,31 +106,31 @@ dsbgv.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super- (or sub-) diagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super- (or sub-) diagonals of B |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `BB` | `Float64Array` | in/out | `kb + 1 × N` |  | band matrix B in band storage |
-| ↳ `strideBB1` | `integer` | in |  |  | stride of the first dimension of `BB` |
-| ↳ `strideBB2` | `integer` | in |  |  | stride of the second dimension of `BB` |
-| ↳ `offsetBB` | `NonNegativeInteger` | in |  |  | starting index for `BB` |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `Z` | `Float64Array` | out | `N × N` |  | output matrix for eigenvectors (N-by-N) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array (length >= 3*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super- (or sub-) diagonals of B<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | **in/out** · Band matrix B in band storage |
+| ↳ `strideBB1` | `integer` | Stride of the first dimension of `BB` |
+| ↳ `strideBB2` | `integer` | Stride of the second dimension of `BB` |
+| ↳ `offsetBB` | `NonNegativeInteger` | Starting index for `BB` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · Output matrix for eigenvectors (N-by-N) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array (length >= 3\*N) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

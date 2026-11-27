@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlahr2( order, N, K, nb, A, LDA, tau, strideTAU, T, LDT, Y, LDY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of rows of `A` |
-| `K` | `NonNegativeInteger` | in |  |  | offset for the reduction |
-| `nb` | `NonNegativeInteger` | in |  |  | number of columns to reduce |
-| `A` | `Float64Array` | in/out | `N × N - K + 1` |  | input/output matrix (`N`-by-`(N-K+1)`) |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `tau` | `Float64Array` | out | `nb` |  | output array of scalar factors (length `nb`) |
-| ↳ `strideTAU` | `integer` | in |  |  | `tau` stride length |
-| `T` | `Float64Array` | out | `nb × nb` |  | output upper triangular matrix (`nb`-by-`nb`) |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `Y` | `Float64Array` | out | `N × nb` |  | output matrix (`N`-by-`nb`) |
-| ↳ `LDY` | `PositiveInteger` | in |  |  | leading dimension of `Y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of rows of `A` |
+| `K` | `NonNegativeInteger` | Offset for the reduction |
+| `nb` | `NonNegativeInteger` | Number of columns to reduce |
+| `A` | `Float64Array`<br><sub>N × (N - K + 1)</sub> | **in/out** · Input/output matrix (`N`-by-`(N-K+1)`) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `tau` | `Float64Array`<br><sub>length nb</sub> | **out** · Output array of scalar factors (length `nb`) |
+| ↳ `strideTAU` | `integer` | `tau` stride length |
+| `T` | `Float64Array`<br><sub>nb × nb</sub> | **out** · Output upper triangular matrix (`nb`-by-`nb`) |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `Y` | `Float64Array`<br><sub>N × nb</sub> | **out** · Output matrix (`N`-by-`nb`) |
+| ↳ `LDY` | `PositiveInteger` | Leading dimension of `Y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,26 +77,26 @@ Reduce NB columns of a general matrix in Hessenberg form.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `nb` | `NonNegativeInteger` | in |  |  | the number of columns to be reduced. |
-| `A` | `Float64Array` | in/out | `N × N - K + 1` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `tau` | `Float64Array` | out | `nb` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `tau` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `tau` |
-| `T` | `Float64Array` | out | `nb × nb` |  | input array |
-| ↳ `strideT1` | `integer` | in |  |  | first dimension stride of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | second dimension stride of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `Y` | `Float64Array` | out | `N × nb` |  | input array |
-| ↳ `strideY1` | `integer` | in |  |  | first dimension stride of `Y` |
-| ↳ `strideY2` | `integer` | in |  |  | second dimension stride of `Y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `Y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `nb` | `NonNegativeInteger` | The number of columns to be reduced. |
+| `A` | `Float64Array`<br><sub>N × (N - K + 1)</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `tau` | `Float64Array`<br><sub>length nb</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `tau` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `tau` |
+| `T` | `Float64Array`<br><sub>nb × nb</sub> | **out** · Input array |
+| ↳ `strideT1` | `integer` | First dimension stride of `T` |
+| ↳ `strideT2` | `integer` | Second dimension stride of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `Y` | `Float64Array`<br><sub>N × nb</sub> | **out** · Input array |
+| ↳ `strideY1` | `integer` | First dimension stride of `Y` |
+| ↳ `strideY2` | `integer` | Second dimension stride of `Y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `Y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

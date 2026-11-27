@@ -31,23 +31,23 @@ dtrevc3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | `'right'`: compute right eigenvectors only; `'left'`: compute left eigenvectors only; `'both'`: compute both right and left eigenvectors. |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | `'all'`: compute all right and/or left eigenvectors; `'backtransform'`: compute all right and/or left eigenvectors, backtransformed by the matrices in VR and/or VL; `'selected'`: compute selected right and/or left eigenvectors, as indicated by the logical array SELECT. |
-| `SELECT` | `Uint8Array` | in/out | `N` |  | if `howmny === 'selected'`, SELECT specifies the eigenvectors to be computed. |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix T. |
-| `T` | `Float64Array` | in | `N × N` |  | the upper quasi-triangular matrix T in Schur canonical form. |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | on entry, if `side === 'left'` or `side === 'both'` and `howmny === 'backtransform'`, VL must contain an N-by-N matrix Q (usually the orthogonal matrix Q of Schur vectors returned by DHSEQR). On exit, if `side === 'left'` or `side === 'both'`, VL contains: if `howmny === 'all'`, the matrix Y of left eigenvectors of T; if `howmny === 'backtransform'`, the matrix Q*Y; if `howmny === 'selected'`, the left eigenvectors of T specified by SELECT, stored consecutively in the columns of VL, in the same order as their eigenvalues. |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | on entry, if `side === 'right'` or `side === 'both'` and `howmny === 'backtransform'`, VR must contain an N-by-N matrix Q (usually the orthogonal matrix Q of Schur vectors returned by DHSEQR). On exit, if `side === 'right'` or `side === 'both'`, VR contains: if `howmny === 'all'`, the matrix X of right eigenvectors of T; if `howmny === 'backtransform'`, the matrix Q*X; if `howmny === 'selected'`, the right eigenvectors of T specified by SELECT, stored consecutively in the columns of VR, in the same order as their eigenvalues. |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, 3 * N )` |  | caller-provided workspace of at least `max( 1, 3 * N )` elements; when back-transforming, at least `N + 2*N*8` enables the blocked back-transformation; `null` allocates the optimal size `max( 1, N + 2*N*NB )`, with NB from `ilaenv` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `"left" \| "right" \| "both"` | `'right'`: compute right eigenvectors only; `'left'`: compute left eigenvectors only; `'both'`: compute both right and left eigenvectors. |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | `'all'`: compute all right and/or left eigenvectors; `'backtransform'`: compute all right and/or left eigenvectors, backtransformed by the matrices in VR and/or VL; `'selected'`: compute selected right and/or left eigenvectors, as indicated by the logical array SELECT. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | **in/out** · If `howmny === 'selected'`, SELECT specifies the eigenvectors to be computed. |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | The order of the matrix T.<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | The upper quasi-triangular matrix T in Schur canonical form. |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · On entry, if `side === 'left'` or `side === 'both'` and `howmny === 'backtransform'`, VL must contain an N-by-N matrix Q (usually the orthogonal matrix Q of Schur vectors returned by DHSEQR). On exit, if `side === 'left'` or `side === 'both'`, VL contains: if `howmny === 'all'`, the matrix Y of left eigenvectors of T; if `howmny === 'backtransform'`, the matrix Q\*Y; if `howmny === 'selected'`, the left eigenvectors of T specified by SELECT, stored consecutively in the columns of VL, in the same order as their eigenvalues. |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · On entry, if `side === 'right'` or `side === 'both'` and `howmny === 'backtransform'`, VR must contain an N-by-N matrix Q (usually the orthogonal matrix Q of Schur vectors returned by DHSEQR). On exit, if `side === 'right'` or `side === 'both'`, VR contains: if `howmny === 'all'`, the matrix X of right eigenvectors of T; if `howmny === 'backtransform'`, the matrix Q\*X; if `howmny === 'selected'`, the right eigenvectors of T specified by SELECT, stored consecutively in the columns of VR, in the same order as their eigenvalues. |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 3 * N)</sub> | **out** · Caller-provided workspace of at least `max( 1, 3 * N )` elements; when back-transforming, at least `N + 2*N*8` enables the blocked back-transformation; `null` allocates the optimal size `max( 1, N + 2*N*NB )`, with NB from `ilaenv` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -130,31 +130,31 @@ done one vector at a time otherwise.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | `'right'`, `'left'`, or `'both'` |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | `'all'`, `'backtransform'`, or `'selected'` |
-| `SELECT` | `Uint8Array` | in/out | `N` |  | boolean selection array (used only if howmny=`'selected'`) |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride for SELECT |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | offset for SELECT |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix T |
-| `T` | `Float64Array` | in | `N × N` |  | quasi-triangular Schur matrix (N x N) |
-| ↳ `strideT1` | `integer` | in |  |  | first dimension stride of T |
-| ↳ `strideT2` | `integer` | in |  |  | second dimension stride of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | offset for T |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | left eigenvector matrix (N x MM) |
-| ↳ `strideVL1` | `integer` | in |  |  | first dimension stride of VL |
-| ↳ `strideVL2` | `integer` | in |  |  | second dimension stride of VL |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | right eigenvector matrix (N x MM) |
-| ↳ `strideVR1` | `integer` | in |  |  | first dimension stride of VR |
-| ↳ `strideVR2` | `integer` | in |  |  | second dimension stride of VR |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR |
-| `mm` | `NonNegativeInteger` | in |  |  | number of columns available in VL/VR |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 3 * N )` |  | workspace; length from `offsetWork` at least `max(1,3*N)`; when back-transforming, a length of at least `N + 2*N*8` enables the blocked back-transformation, and `N + 2*N*NB` (NB from `ilaenv`) is optimal |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (must be 1) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `"left" \| "right" \| "both"` | `'right'`, `'left'`, or `'both'` |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | `'all'`, `'backtransform'`, or `'selected'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | **in/out** · Boolean selection array (used only if howmny=`'selected'`) |
+| ↳ `strideSELECT` | `integer` | Stride for SELECT |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Offset for SELECT |
+| `N` | `NonNegativeInteger` | Order of matrix T<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | Quasi-triangular Schur matrix (N x N) |
+| ↳ `strideT1` | `integer` | First dimension stride of T |
+| ↳ `strideT2` | `integer` | Second dimension stride of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Offset for T |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Left eigenvector matrix (N x MM) |
+| ↳ `strideVL1` | `integer` | First dimension stride of VL |
+| ↳ `strideVL2` | `integer` | Second dimension stride of VL |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Right eigenvector matrix (N x MM) |
+| ↳ `strideVR1` | `integer` | First dimension stride of VR |
+| ↳ `strideVR2` | `integer` | Second dimension stride of VR |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR |
+| `mm` | `NonNegativeInteger` | Number of columns available in VL/VR |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 3 * N)</sub> | **out** · Workspace; length from `offsetWork` at least `max(1,3*N)`; when back-transforming, a length of at least `N + 2*N*8` enables the blocked back-transformation, and `N + 2*N*NB` (NB from `ilaenv`) is optimal |
+| ↳ `strideWork` | `integer` | Stride for WORK (must be 1) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

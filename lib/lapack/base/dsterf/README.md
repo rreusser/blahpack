@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsterf( N, d, strideD, e, strideE ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | in/out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -51,15 +51,15 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dsterf.ndarray( N, d, strideD, offsetD, e, strideE, offsetE ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N); on exit, eigenvalues in ascending order |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | off-diagonal elements (length N-1); destroyed on exit |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N); on exit, eigenvalues in ascending order |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Off-diagonal elements (length N-1); destroyed on exit |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

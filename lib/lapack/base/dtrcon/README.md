@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtrcon( order, norm, uplo, diag, N, A, LDA, RCOND, WORK, IWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: A is upper triangular; `'lower'`: A is lower triangular. |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'non-unit'`: A is non-unit triangular; `'unit'`: A is unit triangular. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Float64Array` | in | `N × N` |  | the triangular matrix A. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `RCOND` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) * norm(inv(A))). |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
+| `uplo` | `MatrixTriangle` | `'upper'`: A is upper triangular; `'lower'`: A is lower triangular. |
+| `diag` | `DiagonalType` | `'non-unit'`: A is non-unit triangular; `'unit'`: A is unit triangular. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | The triangular matrix A. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `RCOND` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) \* norm(inv(A))). |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,23 +89,23 @@ then the reciprocal of the condition number is computed as:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in | `N × N` |  | input triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1; RCOND[0] receives the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace array of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1; RCOND[0] receives the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace array of length at least N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

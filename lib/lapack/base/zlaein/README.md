@@ -30,22 +30,22 @@ zlaein(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `rightv` | `boolean` | in |  |  | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
-| `noinit` | `boolean` | in |  |  | = `true` : no initial vector supplied in V = `false`: initial vector supplied in V. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `H` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `w` | `Complex128` | in |  |  | complex eigenvalue |
-| `v` | `Complex128Array` | in/out | `N` |  | in/out eigenvector of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| `B` | `Complex128Array` | out | `N × N` |  | workspace matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | output array |
-| `eps3` | `number` | in |  |  | a small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
-| `smlnum` | `number` | in |  |  | a machine-dependent value close to the underflow threshold. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `rightv` | `boolean` | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
+| `noinit` | `boolean` | = `true` : no initial vector supplied in V = `false`: initial vector supplied in V. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `w` | `Complex128` | Complex eigenvalue |
+| `v` | `Complex128Array`<br><sub>length N</sub> | **in/out** · In/out eigenvector of length N |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **out** · Workspace matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
+| `eps3` | `number` | A small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
+| `smlnum` | `number` | A machine-dependent value close to the underflow threshold. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -89,28 +89,28 @@ zlaein.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `rightv` | `boolean` | in |  |  | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
-| `noinit` | `boolean` | in |  |  | = `true` : no initial vector supplied in V = `false`: initial vector supplied in V. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `H` | `Complex128Array` | in | `N × N` |  | upper Hessenberg matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `w` | `Complex128` | in |  |  | complex eigenvalue |
-| `v` | `Complex128Array` | in/out | `N` |  | in/out eigenvector |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
-| `B` | `Complex128Array` | out | `N × N` |  | workspace matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
-| `eps3` | `number` | in |  |  | a small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
-| `smlnum` | `number` | in |  |  | a machine-dependent value close to the underflow threshold. |
+| Parameter | Type | Description |
+|---|---|---|
+| `rightv` | `boolean` | = `true` : compute right eigenvector; = `false`: compute left eigenvector. |
+| `noinit` | `boolean` | = `true` : no initial vector supplied in V = `false`: initial vector supplied in V. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | Upper Hessenberg matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `w` | `Complex128` | Complex eigenvalue |
+| `v` | `Complex128Array`<br><sub>length N</sub> | **in/out** · In/out eigenvector |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **out** · Workspace matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
+| `eps3` | `number` | A small machine-dependent value which is used to perturb close eigenvalues, and to replace zero pivots. |
+| `smlnum` | `number` | A machine-dependent value close to the underflow threshold. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

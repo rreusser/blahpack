@@ -29,22 +29,22 @@ dormhr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'`: apply Q or Q**T from the Left; `'right'`: apply Q or Q**T from the Right. |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'`: No transpose, apply Q; `'transpose'`: Transpose, apply Q**T. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrix C. |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, side === 'left' ? M : N )` | iLO and IHI must have the same values as in the previous call of DGEHRD. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, side === 'left' ? M : N ) \|\| ihi > (side === 'left' ? M : N)` | iLO and IHI must have the same values as in the previous call of DGEHRD. |
-| `A` | `Float64Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | the vectors which define the elementary reflectors, as returned by DGEHRD. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `TAU` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | tAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by DGEHRD. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `C` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N matrix C. On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'`: apply Q or Q\*\*T from the Left; `'right'`: apply Q or Q\*\*T from the Right. |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'`: No transpose, apply Q; `'transpose'`: Transpose, apply Q\*\*T. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix C.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix C.<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | ILO and IHI must have the same values as in the previous call of DGEHRD.<br>Rejects `ilo < 1 \|\| ilo > max(1, side === 'left' ? M : N)` |
+| `ihi` | `integer` | ILO and IHI must have the same values as in the previous call of DGEHRD.<br>Rejects `ihi < min(ilo, side === 'left' ? M : N) \|\| ihi > (side === 'left' ? M : N)` |
+| `A` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | The vectors which define the elementary reflectors, as returned by DGEHRD. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `TAU` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | TAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by DGEHRD. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix C. On exit, C is overwritten by Q\*C or Q\*\*T\*C or C\*Q\*\*T or C\*Q. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,28 +113,28 @@ IHI-ILO elementary reflectors, as returned by dgehrd:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | 'left' to apply Q from left, 'right' from right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | 'no-transpose' for Q, 'transpose' for Q^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, side === 'left' ? M : N )` | 1-based lower index from dgehrd (1 <= ILO <= IHI) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, side === 'left' ? M : N ) \|\| ihi > (side === 'left' ? M : N)` | 1-based upper index from dgehrd |
-| `A` | `Float64Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | matrix containing reflectors from dgehrd |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `TAU` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | scalar factors of the elementary reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output M-by-N matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Float64Array` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr optimum) enable the full blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | 'left' to apply Q from left, 'right' from right |
+| `trans` | `"no-transpose" \| "transpose"` | 'no-transpose' for Q, 'transpose' for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | 1-based lower index from dgehrd (1 <= ILO <= IHI)<br>Rejects `ilo < 1 \|\| ilo > max(1, side === 'left' ? M : N)` |
+| `ihi` | `integer` | 1-based upper index from dgehrd<br>Rejects `ihi < min(ilo, side === 'left' ? M : N) \|\| ihi > (side === 'left' ? M : N)` |
+| `A` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Matrix containing reflectors from dgehrd |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `TAU` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Scalar factors of the elementary reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output M-by-N matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Float64Array`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr optimum) enable the full blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

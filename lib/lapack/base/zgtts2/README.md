@@ -30,24 +30,24 @@ zgtts2(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itrans` | `integer` | in |  |  | specifies the form of the system of equations. = 0: A * X = B (No transpose) = 1: A**T * X = B (Transpose) = 2: A**H * X = B (Conjugate transpose) |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  |  | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Complex128Array` | in | `N - 1` |  | the (n-1) multipliers that define the matrix L from the LU factorization of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Complex128Array` | in | `N` |  | the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Complex128Array` | in | `N - 1` |  | the (n-1) elements of the first super-diagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DU2` | `Complex128Array` | in | `N - 2` |  | the (n-2) elements of the second super-diagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | on entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X. |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itrans` | `integer` | Specifies the form of the system of equations. = 0: A \* X = B (No transpose) = 1: A\*\*T \* X = B (Transpose) = 2: A\*\*H \* X = B (Conjugate transpose) |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B. |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | The (n-1) multipliers that define the matrix L from the LU factorization of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Complex128Array`<br><sub>length N</sub> | The n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | The (n-1) elements of the first super-diagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | The (n-2) elements of the second super-diagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the matrix of right hand side vectors B. On exit, B is overwritten by the solution vectors X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,30 +102,30 @@ with a complex tridiagonal matrix A using the LU factorization computed by zgttr
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itrans` | `integer` | in |  |  | 0 for A*X=B, 1 for A^T*X=B, 2 for A^H*X=B |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right hand sides (columns of B) |
-| `DL` | `Complex128Array` | in | `N - 1` |  | multipliers from LU factorization (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for `DL` (complex elements) |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` (complex elements) |
-| `d` | `Complex128Array` | in | `N` |  | diagonal of U (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for `d` (complex elements) |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` (complex elements) |
-| `DU` | `Complex128Array` | in | `N - 1` |  | first superdiagonal of U (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for `DU` (complex elements) |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` (complex elements) |
-| `DU2` | `Complex128Array` | in | `N - 2` |  | second superdiagonal of U (length N-2) |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for `DU2` (complex elements) |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for `DU2` (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right hand side matrix, overwritten with solution |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `itrans` | `integer` | 0 for A\*X=B, 1 for A^T\*X=B, 2 for A^H\*X=B |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B) |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | Multipliers from LU factorization (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for `DL` (complex elements) |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` (complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | Diagonal of U (length N) |
+| ↳ `strideD` | `integer` | Stride for `d` (complex elements) |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` (complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | First superdiagonal of U (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for `DU` (complex elements) |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` (complex elements) |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | Second superdiagonal of U (length N-2) |
+| ↳ `strideDU2` | `integer` | Stride for `DU2` (complex elements) |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for `DU2` (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix, overwritten with solution |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -31,24 +31,24 @@ dtgex2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Float64Array` | in/out | `N × null` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `N × null` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `j1` | `integer` | in |  |  | the 0-based index of the first block (A11, B11) |
-| `n1` | `NonNegativeInteger` | in |  |  | the order of the first block (A11, B11). |
-| `n2` | `NonNegativeInteger` | in |  |  | the order of the second block (A22, B22). |
-| `WORK` | `(Float64Array\|null)` | out | `≥ MAX` |  | workspace of length at least `max(1, N*(n1+n2), (n1+n2)*(n1+n2)*2)` (none when `N <= 1`, `n1 = 0` or `n2 = 0`), or `null` to allocate it |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Float64Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `j1` | `integer` | The 0-based index of the first block (A11, B11) |
+| `n1` | `NonNegativeInteger` | The order of the first block (A11, B11). |
+| `n2` | `NonNegativeInteger` | The order of the second block (A22, B22). |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ MAX</sub> | **out** · Workspace of length at least `max(1, N*(n1+n2), (n1+n2)*(n1+n2)*2)` (none when `N <= 1`, `n1 = 0` or `n2 = 0`), or `null` to allocate it |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,33 +93,33 @@ dtgex2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `A` | `Float64Array` | in/out | `N × null` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `N × null` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `j1` | `integer` | in |  |  | the 0-based index of the first block (A11, B11) |
-| `n1` | `NonNegativeInteger` | in |  |  | the order of the first block (A11, B11). |
-| `n2` | `NonNegativeInteger` | in |  |  | the order of the second block (A22, B22). |
-| `WORK` | `Float64Array` | out | `≥ MAX` |  | workspace of length at least `max(1, N*(n1+n2), (n1+n2)*(n1+n2)*2)` (none when `N <= 1`, `n1 = 0` or `n2 = 0`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `A` | `Float64Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × ?</sub> | **in/out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `j1` | `integer` | The 0-based index of the first block (A11, B11) |
+| `n1` | `NonNegativeInteger` | The order of the first block (A11, B11). |
+| `n2` | `NonNegativeInteger` | The order of the second block (A22, B22). |
+| `WORK` | `Float64Array`<br><sub>length ≥ MAX</sub> | **out** · Workspace of length at least `max(1, N*(n1+n2), (n1+n2)*(n1+n2)*2)` (none when `N <= 1`, `n1 = 0` or `n2 = 0`) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -22,15 +22,15 @@ zgeqrt2( order, M, N, A, LDA, T, LDT ) → integer
 
 Computes a QR factorization of a complex M-by-N matrix using the compact WY representation of Q.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `integer` | in |  | rejects `m < N` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `m × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, m )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Complex128Array` | out | `N × N` |  | output matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `integer` | Number of rows<br>Rejects `m < N` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>m × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, m)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,18 +70,18 @@ Computes a QR factorization of a complex `M`-by-`N` matrix `A = Q * R` (with `M 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `integer` | in |  | rejects `m < N` | number of rows in `A` (must satisfy `M >= N`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns in `A` |
-| `A` | `Complex128Array` | in/out | `m × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `T` | `Complex128Array` | out | `N × N` |  | output block reflector factor |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` (in complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` (in complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `integer` | Number of rows in `A` (must satisfy `M >= N`)<br>Rejects `m < N` |
+| `N` | `NonNegativeInteger` | Number of columns in `A`<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>m × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output block reflector factor |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` (in complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` (in complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -41,35 +41,35 @@ Computes the generalized singular value decomposition of two complex upper trian
 
 -   This is a placeholder for a future BLAS/LAPACK-style API (order/layout, LDA). Use `ztgsja.ndarray` for the strided interface.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobu` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `jobv` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `jobq` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `K` | `integer` | in |  |  | dimension of the first block |
-| `l` | `integer` | in |  |  | dimension of the second block |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix A (overwritten) |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Complex128Array` | in/out | `P × N` |  | P-by-N matrix B (overwritten) |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, P )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `tola` | `number` | in |  |  | convergence tolerance for A |
-| `tolb` | `number` | in |  |  | convergence tolerance for B |
-| `ALPHA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| `BETA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `U` | `Complex128Array` | in/out | `M × M` |  | M-by-M unitary matrix U |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| ((jobu === 'initialize' \|\| jobu === 'update') && ldu < M)` | leading dimension of U |
-| `V` | `Complex128Array` | in/out | `P × P` |  | P-by-P unitary matrix V |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `ldv < 1 \|\| ((jobv === 'initialize' \|\| jobv === 'update') && ldv < P)` | leading dimension of V |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | N-by-N unitary matrix Q |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| ((jobq === 'initialize' \|\| jobq === 'update') && ldq < N)` | leading dimension of Q |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace array |
-| `ncycle` | `Int32Array` | out |  |  | output: ncycle[0] receives the number of cycles |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobu` | `"update" \| "initialize" \| "none"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `jobv` | `"update" \| "initialize" \| "none"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `jobq` | `"update" \| "initialize" \| "none"` | Specifies the operation type<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `K` | `integer` | Dimension of the first block |
+| `l` | `integer` | Dimension of the second block |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A (overwritten) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B (overwritten) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Column-major requires `LDB ≥ max(1, P)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `tola` | `number` | Convergence tolerance for A |
+| `tolb` | `number` | Convergence tolerance for B |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `U` | `Complex128Array`<br><sub>M × M</sub> | **in/out** · M-by-M unitary matrix U |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of U<br>Rejects `ldu < 1 \|\| ((jobu === 'initialize' \|\| jobu === 'update') && ldu < M)` |
+| `V` | `Complex128Array`<br><sub>P × P</sub> | **in/out** · P-by-P unitary matrix V |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of V<br>Rejects `ldv < 1 \|\| ((jobv === 'initialize' \|\| jobv === 'update') && ldv < P)` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · N-by-N unitary matrix Q |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of Q<br>Rejects `ldq < 1 \|\| ((jobq === 'initialize' \|\| jobq === 'update') && ldq < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array |
+| `ncycle` | `Int32Array` | **out** · Output: ncycle[0] receives the number of cycles |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -203,48 +203,48 @@ unitary matrices.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `jobv` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `jobq` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `K` | `integer` | in |  |  | dimension of the first block |
-| `l` | `integer` | in |  |  | dimension of the second block |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix A (overwritten) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `P × N` |  | P-by-N matrix B (overwritten) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `tola` | `number` | in |  |  | convergence tolerance for A |
-| `tolb` | `number` | in |  |  | convergence tolerance for B |
-| `ALPHA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA |
-| `BETA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA |
-| `U` | `Complex128Array` | in/out | `M × M` |  | M-by-M unitary matrix U |
-| ↳ `strideU1` | `integer` | in |  |  | stride of first dimension of U (complex elements) |
-| ↳ `strideU2` | `integer` | in |  |  | stride of second dimension of U (complex elements) |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U (complex elements) |
-| `V` | `Complex128Array` | in/out | `P × P` |  | P-by-P unitary matrix V |
-| ↳ `strideV1` | `integer` | in |  |  | stride of first dimension of V (complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of second dimension of V (complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (complex elements) |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | N-by-N unitary matrix Q |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of first dimension of Q (complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of second dimension of Q (complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `ncycle` | `Int32Array` | out |  |  | output: ncycle[0] receives the number of cycles |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `jobv` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `jobq` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `K` | `integer` | Dimension of the first block |
+| `l` | `integer` | Dimension of the second block |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A (overwritten) |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B (overwritten) |
+| ↳ `strideB1` | `integer` | Stride of first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `tola` | `number` | Convergence tolerance for A |
+| `tolb` | `number` | Convergence tolerance for B |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA |
+| `U` | `Complex128Array`<br><sub>M × M</sub> | **in/out** · M-by-M unitary matrix U |
+| ↳ `strideU1` | `integer` | Stride of first dimension of U (complex elements) |
+| ↳ `strideU2` | `integer` | Stride of second dimension of U (complex elements) |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U (complex elements) |
+| `V` | `Complex128Array`<br><sub>P × P</sub> | **in/out** · P-by-P unitary matrix V |
+| ↳ `strideV1` | `integer` | Stride of first dimension of V (complex elements) |
+| ↳ `strideV2` | `integer` | Stride of second dimension of V (complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (complex elements) |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · N-by-N unitary matrix Q |
+| ↳ `strideQ1` | `integer` | Stride of first dimension of Q (complex elements) |
+| ↳ `strideQ2` | `integer` | Stride of second dimension of Q (complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `ncycle` | `Int32Array` | **out** · Output: ncycle[0] receives the number of cycles |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

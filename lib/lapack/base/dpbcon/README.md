@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dpbcon( order, uplo, N, kd, AB, LDAB, anorm, rcond, WORK, IWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangular factor stored in AB; `'lower'`: Lower triangular factor stored in AB. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | the number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`. |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | the triangular factor U or L from the Cholesky factorization A = U**T*U or A = L*L**T of the band matrix A, stored in the first KD+1 rows of the array. |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm (or infinity-norm) of the symmetric band matrix A. |
-| `rcond` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangular factor stored in AB; `'lower'`: Lower triangular factor stored in AB. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | The number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`.<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | The triangular factor U or L from the Cholesky factorization A = U\*\*T\*U or A = L\*L\*\*T of the band matrix A, stored in the first KD+1 rows of the array. |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `anorm` | `number` | The 1-norm (or infinity-norm) of the symmetric band matrix A.<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM \* AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,23 +83,23 @@ _ A = L_L^T computed by dpbtrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' if upper Cholesky factor, 'lower' if lower |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (upper) or subdiagonals (lower) |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | Cholesky factorization from dpbtrf, (KD+1) by N |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm (or infinity-norm) of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' if upper Cholesky factor, 'lower' if lower |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (upper) or subdiagonals (lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Cholesky factorization from dpbtrf, (KD+1) by N |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `anorm` | `number` | The 1-norm (or infinity-norm) of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length 3\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

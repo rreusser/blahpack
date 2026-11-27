@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zdotu( N, x, strideX, y, strideY ) → Complex128
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in input vector(s) |
-| `x` | `Complex128Array` | in | `N` |  | storage spacing between elements of ZX. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Complex128Array` | in | `N` |  | storage spacing between elements of ZY. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in input vector(s) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Storage spacing between elements of ZX. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Storage spacing between elements of ZY. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,15 +47,15 @@ zdotu.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Complex128
 
 Forms the dot product of two complex vectors ZDOTU = Xᵀ·Y, using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in | `N` |  | first complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `y` | `Complex128Array` | in | `N` |  | second complex input vector |
-| ↳ `strideY` | `integer` | in |  |  | stride for `y` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | First complex input vector |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | Second complex input vector |
+| ↳ `strideY` | `integer` | Stride for `y` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

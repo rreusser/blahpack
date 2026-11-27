@@ -22,17 +22,17 @@ zgelqt( order, M, N, mb, A, LDA, T, LDT, WORK ) → integer
 
 Computes a blocked LQ factorization of a complex `M`-by-`N` matrix `A` using the compact WY representation of `Q`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of the matrix `A` |
-| `mb` | `NonNegativeInteger` | in |  | rejects `mb < 1 \|\| (mb > min( M, N ) && min( M, N ) > 0)` | block size |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Complex128Array` | out | `mb × min( M, N )` |  | output `mb`-by-min(`M`,`N`) block triangular factor |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ mb`; row-major requires `LDT ≥ max( 1, min( M, N ) )` | leading dimension of `T` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ mb * N` |  | workspace array (length `mb*N` complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Requires `N ≥ 0` |
+| `mb` | `NonNegativeInteger` | Block size<br>Rejects `mb < 1 \|\| (mb > min(M, N) && min(M, N) > 0)` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Complex128Array`<br><sub>mb × min(M, N)</sub> | **out** · Output `mb`-by-min(`M`,`N`) block triangular factor |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Column-major requires `LDT ≥ mb`<br>Row-major requires `LDT ≥ max(1, min(M, N))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ mb * N</sub> | **out** · Workspace array (length `mb*N` complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,22 +75,22 @@ Computes a blocked LQ factorization of a complex `M`-by-`N` matrix `A` using the
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of the matrix `A` |
-| `mb` | `NonNegativeInteger` | in |  | rejects `mb < 1 \|\| (mb > min( M, N ) && min( M, N ) > 0)` | block size (`mb >= 1` and `mb <= min(M,N)` when `min(M,N) > 0`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix; on exit contains `L` and `V` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `T` | `Complex128Array` | out | `mb × min( M, N )` |  | output `mb`-by-min(`M`,`N`) block triangular factor |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` (in complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` (in complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ mb * N` |  | workspace array (length `mb*N` complex elements) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Requires `N ≥ 0` |
+| `mb` | `NonNegativeInteger` | Block size (`mb >= 1` and `mb <= min(M,N)` when `min(M,N) > 0`)<br>Rejects `mb < 1 \|\| (mb > min(M, N) && min(M, N) > 0)` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix; on exit contains `L` and `V` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `T` | `Complex128Array`<br><sub>mb × min(M, N)</sub> | **out** · Output `mb`-by-min(`M`,`N`) block triangular factor |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` (in complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` (in complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ mb * N</sub> | **out** · Workspace array (length `mb*N` complex elements) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -22,18 +22,18 @@ zlatsqr( order, M, N, mb, nb, A, LDA, T, LDT, WORK ) → integer
 
 Computes a blocked Tall-Skinny QR (TSQR) factorization of a complex `M`-by-`N` matrix `A` (with `M >= N`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` (`M >= N`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of the matrix `A` |
-| `mb` | `integer` | in |  | rejects `mb < 1` | row block size (`mb >= 1`) |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > N && N > 0)` | column block size (`1 <= nb <= N` when `N > 0`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Complex128Array` | out | `nb × N*NUMBER_OF_ROW_BLOCKS` |  | output matrix of upper triangular block reflector factors |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ nb` | leading dimension of `T` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N * nb` |  | workspace array of length at least `nb*N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A` (`M >= N`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size (`mb >= 1`)<br>Rejects `mb < 1` |
+| `nb` | `integer` | Column block size (`1 <= nb <= N` when `N > 0`)<br>Rejects `nb < 1 \|\| (nb > N && N > 0)` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Complex128Array`<br><sub>nb × N*NUMBER_OF_ROW_BLOCKS</sub> | **out** · Output matrix of upper triangular block reflector factors |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ nb` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N * nb</sub> | **out** · Workspace array of length at least `nb*N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,23 +82,23 @@ Computes a blocked Tall-Skinny QR (TSQR) factorization of a complex `M`-by-`N` m
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` (`M >= N`) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| M < N` | number of columns of the matrix `A` |
-| `mb` | `integer` | in |  | rejects `mb < 1` | row block size (`mb >= 1`) |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > N && N > 0)` | column block size (`1 <= nb <= N` when `N > 0`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Complex128Array` | out | `nb × N*NUMBER_OF_ROW_BLOCKS` |  | output matrix of upper triangular block reflector factors |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `WORK` | `Complex128Array` | out | `≥ N * nb` |  | workspace array of length at least `nb*N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A` (`M >= N`)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Rejects `N < 0 \|\| M < N` |
+| `mb` | `integer` | Row block size (`mb >= 1`)<br>Rejects `mb < 1` |
+| `nb` | `integer` | Column block size (`1 <= nb <= N` when `N > 0`)<br>Rejects `nb < 1 \|\| (nb > N && N > 0)` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Complex128Array`<br><sub>nb × N*NUMBER_OF_ROW_BLOCKS</sub> | **out** · Output matrix of upper triangular block reflector factors |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N * nb</sub> | **out** · Workspace array of length at least `nb*N` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

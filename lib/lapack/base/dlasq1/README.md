@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasq1( N, d, strideD, e, strideE, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows and columns |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows and columns<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -57,18 +57,18 @@ dlasq1.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows and columns |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements of the bidiagonal matrix, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N` |  | off-diagonal elements of the bidiagonal matrix in `e[0..N-2]`, length N (overwritten on exit) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `WORK` | `Float64Array` | out | `≥ 4 * N` |  | workspace array of length at least 4*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows and columns<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements of the bidiagonal matrix, length N |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N</sub> | **in/out** · Off-diagonal elements of the bidiagonal matrix in `e[0..N-2]`, length N (overwritten on exit) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Workspace array of length at least 4\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

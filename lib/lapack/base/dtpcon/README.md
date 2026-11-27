@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtpcon( order, norm, uplo, diag, N, AP, rcond, WORK, IWORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix of length N*(N+1)/2 |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | workspace array of length at least N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix of length N\*(N+1)/2 |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,22 +83,22 @@ The norm of A is computed and an estimate is obtained for norm(inv(A)),
 then the reciprocal of the condition number is computed as
 RCOND = 1 / ( norm(A) * norm(inv(A)) ).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix of length N*(N+1)/2 |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1; RCOND[0] receives the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace array of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix of length N\*(N+1)/2 |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1; RCOND[0] receives the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace array of length at least N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

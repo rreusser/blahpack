@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgels( order, trans, M, N, nrhs, A, LDA, B, LDB, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of `B`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix, overwritten with its factorization |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `max( max( 1, M ), N ) × nrhs` |  | on entry, the right-hand sides; on exit, the solution (its leading extent must be `max(M,N)`) |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( max( 1, M ), N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, min( M, N ) + max( min( M, N ), nrhs ) )` |  | workspace of at least `max(1, MN + max(MN,nrhs))` complex elements (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the zunmqr/zunmlq optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of `B`)<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix, overwritten with its factorization |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>max(max(1, M), N) × nrhs</sub> | **in/out** · On entry, the right-hand sides; on exit, the solution (its leading extent must be `max(M,N)`) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(max(1, M), N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, min(M, N) + max(min(M, N), nrhs))</sub> | **out** · Workspace of at least `max(1, MN + max(MN,nrhs))` complex elements (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the zunmqr/zunmlq optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,23 +102,23 @@ The following options are provided:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | 'no-transpose' or 'conjugate-transpose' |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix, overwritten with factorization on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `max( max( 1, M ), N ) × nrhs` |  | on entry, RHS matrix; on exit, solution |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, min( M, N ) + max( min( M, N ), nrhs ) )` |  | workspace of at least `max(1, MN + max(MN,nrhs))` complex elements (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the zunmqr/zunmlq optimum's T part, which enables the blocked paths |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | 'no-transpose' or 'conjugate-transpose' |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix, overwritten with factorization on exit |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>max(max(1, M), N) × nrhs</sub> | **in/out** · On entry, RHS matrix; on exit, solution |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, min(M, N) + max(min(M, N), nrhs))</sub> | **out** · Workspace of at least `max(1, MN + max(MN,nrhs))` complex elements (`MN = min(M,N)`); for optimal performance at least `MN + max( MN*NB, nrhs*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `MN + max(MN,nrhs)*NB` with the zunmqr/zunmlq optimum's T part, which enables the blocked paths |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

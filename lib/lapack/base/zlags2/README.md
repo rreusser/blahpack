@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `upper` | `boolean` | in |  |  | whether the input matrices are upper triangular |
-| `a1` | `number` | in |  |  | (1,1) element of A (real) |
-| `a2` | `Complex128` | in |  |  | off-diagonal element of A (complex) |
-| `a3` | `number` | in |  |  | (2,2) element of A (real) |
-| `b1` | `number` | in |  |  | (1,1) element of B (real) |
-| `b2` | `Complex128` | in |  |  | off-diagonal element of B (complex) |
-| `b3` | `number` | in |  |  | (2,2) element of B (real) |
-| `csu` | `Float64Array` | out |  |  | output (length-1 array): `csu` |
-| `snu` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix U |
-| `csv` | `Float64Array` | out |  |  | output (length-1 array): `csv` |
-| `snv` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix V |
-| `csq` | `Float64Array` | out |  |  | output (length-1 array): `csq` |
-| `snq` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix Q |
+| Parameter | Type | Description |
+|---|---|---|
+| `upper` | `boolean` | Whether the input matrices are upper triangular |
+| `a1` | `number` | (1,1) element of A (real) |
+| `a2` | `Complex128` | Off-diagonal element of A (complex) |
+| `a3` | `number` | (2,2) element of A (real) |
+| `b1` | `number` | (1,1) element of B (real) |
+| `b2` | `Complex128` | Off-diagonal element of B (complex) |
+| `b3` | `number` | (2,2) element of B (real) |
+| `csu` | `Float64Array` | **out** · Output (length-1 array): `csu` |
+| `snu` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix U |
+| `csv` | `Float64Array` | **out** · Output (length-1 array): `csv` |
+| `snv` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix V |
+| `csq` | `Float64Array` | **out** · Output (length-1 array): `csq` |
+| `snq` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix Q |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -66,24 +66,24 @@ zlags2.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `upper` | `boolean` | in |  |  | whether the input matrices are upper triangular |
-| `a1` | `number` | in |  |  | (1,1) element of A (real) |
-| `a2` | `Complex128` | in |  |  | off-diagonal element of A (complex) |
-| `a3` | `number` | in |  |  | (2,2) element of A (real) |
-| `b1` | `number` | in |  |  | (1,1) element of B (real) |
-| `b2` | `Complex128` | in |  |  | off-diagonal element of B (complex) |
-| `b3` | `number` | in |  |  | (2,2) element of B (real) |
-| `csu` | `Float64Array` | out |  |  | output (length-1 array): `csu` |
-| `snu` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix U |
-| ↳ `offsetSnu` | `NonNegativeInteger` | in |  |  | starting index for `snu` (in complex elements) |
-| `csv` | `Float64Array` | out |  |  | output (length-1 array): `csv` |
-| `snv` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix V |
-| ↳ `offsetSnv` | `NonNegativeInteger` | in |  |  | starting index for `snv` (in complex elements) |
-| `csq` | `Float64Array` | out |  |  | output (length-1 array): `csq` |
-| `snq` | `Complex128Array` | out |  |  | output (length-1 array): the desired unitary matrix Q |
-| ↳ `offsetSnq` | `NonNegativeInteger` | in |  |  | starting index for `snq` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `upper` | `boolean` | Whether the input matrices are upper triangular |
+| `a1` | `number` | (1,1) element of A (real) |
+| `a2` | `Complex128` | Off-diagonal element of A (complex) |
+| `a3` | `number` | (2,2) element of A (real) |
+| `b1` | `number` | (1,1) element of B (real) |
+| `b2` | `Complex128` | Off-diagonal element of B (complex) |
+| `b3` | `number` | (2,2) element of B (real) |
+| `csu` | `Float64Array` | **out** · Output (length-1 array): `csu` |
+| `snu` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix U |
+| ↳ `offsetSnu` | `NonNegativeInteger` | Starting index for `snu` (in complex elements) |
+| `csv` | `Float64Array` | **out** · Output (length-1 array): `csv` |
+| `snv` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix V |
+| ↳ `offsetSnv` | `NonNegativeInteger` | Starting index for `snv` (in complex elements) |
+| `csq` | `Float64Array` | **out** · Output (length-1 array): `csq` |
+| `snq` | `Complex128Array` | **out** · Output (length-1 array): the desired unitary matrix Q |
+| ↳ `offsetSnq` | `NonNegativeInteger` | Starting index for `snq` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

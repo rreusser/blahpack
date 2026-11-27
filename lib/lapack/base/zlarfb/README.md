@@ -28,24 +28,24 @@ zlarfb(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'conjugate-transpose'` |
-| `direct` | `("forward"\|"backward")` | in |  |  | `'forward'` or `'backward'` |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | `'columnwise'` or `'rowwise'` |
-| `M` | `NonNegativeInteger` | in |  |  | rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Complex128Array` | in | `M × K` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `T` | `Complex128Array` | in | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `N × K` |  | input matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'conjugate-transpose'` |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `storev` | `"columnwise" \| "rowwise"` | `'columnwise'` or `'rowwise'` |
+| `M` | `NonNegativeInteger` | Rows of C |
+| `N` | `NonNegativeInteger` | Columns of C |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Complex128Array`<br><sub>M × K</sub> | Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Complex128Array \| null`<br><sub>N × K</sub> | **out** · Input matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,31 +102,31 @@ zlarfb.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'conjugate-transpose'` |
-| `direct` | `("forward"\|"backward")` | in |  |  | `'forward'` or `'backward'` |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | `'columnwise'` or `'rowwise'` |
-| `M` | `NonNegativeInteger` | in |  |  | rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Complex128Array` | in | `M × K` |  | matrix of reflector vectors |
-| ↳ `strideV1` | `integer` | in |  |  | first dim stride of V (complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | second dim stride of V (complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (in complex elements) |
-| `T` | `Complex128Array` | in | `K × K` |  | triangular factor |
-| ↳ `strideT1` | `integer` | in |  |  | first dim stride of T (complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | second dim stride of T (complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | matrix, modified in-place |
-| ↳ `strideC1` | `integer` | in |  |  | first dim stride of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | second dim stride of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (in complex elements) |
-| `WORK` | `Complex128Array` | out | `N × K` |  | workspace |
-| ↳ `strideWork1` | `integer` | in |  |  | first dim stride of WORK (complex elements) |
-| ↳ `strideWork2` | `integer` | in |  |  | second dim stride of WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'conjugate-transpose'` |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `storev` | `"columnwise" \| "rowwise"` | `'columnwise'` or `'rowwise'` |
+| `M` | `NonNegativeInteger` | Rows of C |
+| `N` | `NonNegativeInteger` | Columns of C |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Complex128Array`<br><sub>M × K</sub> | Matrix of reflector vectors |
+| ↳ `strideV1` | `integer` | First dim stride of V (complex elements) |
+| ↳ `strideV2` | `integer` | Second dim stride of V (complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (in complex elements) |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Triangular factor |
+| ↳ `strideT1` | `integer` | First dim stride of T (complex elements) |
+| ↳ `strideT2` | `integer` | Second dim stride of T (complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Matrix, modified in-place |
+| ↳ `strideC1` | `integer` | First dim stride of C (complex elements) |
+| ↳ `strideC2` | `integer` | Second dim stride of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>N × K</sub> | **out** · Workspace |
+| ↳ `strideWork1` | `integer` | First dim stride of WORK (complex elements) |
+| ↳ `strideWork2` | `integer` | Second dim stride of WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

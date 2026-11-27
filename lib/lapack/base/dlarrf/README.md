@@ -36,33 +36,33 @@ dlarrf(
 
 Finds a new relatively robust representation (RRR) for a tridiagonal cluster.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the tridiagonal matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal of the parent representation |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `l` | `Float64Array` | in | `N - 1` |  | subdiagonal of the unit bidiagonal factor |
-| ↳ `strideL` | `integer` | in |  |  | stride length for `l` |
-| `ld` | `Float64Array` | in | `N - 1` |  | elementwise product L*D |
-| ↳ `strideLD` | `integer` | in |  |  | stride length for `ld` |
-| `clstrt` | `integer` | in |  |  | first index of the cluster (1-based) |
-| `clend` | `integer` | in |  |  | last index of the cluster (1-based) |
-| `w` | `Float64Array` | in |  |  | approximate eigenvalues of the parent |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `wgap` | `Float64Array` | in/out |  |  | approximate gaps between eigenvalues |
-| ↳ `strideWGAP` | `integer` | in |  |  | stride length for `wgap` |
-| `werr` | `Float64Array` | in |  |  | errors in the approximate eigenvalues |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `werr` |
-| `spdiam` | `number` | in |  |  | estimate of the spectral diameter |
-| `clgapl` | `number` | in |  |  | left gap of the cluster |
-| `clgapr` | `number` | in |  |  | right gap of the cluster |
-| `pivmin` | `number` | in |  |  | minimum pivot allowed in the Sturm sequence |
-| `sigma` | `Float64Array` | out |  |  | output (length 1): `sigma[0]` receives the chosen shift |
-| `dplus` | `Float64Array` | out | `N` |  | output: diagonal of the new RRR |
-| ↳ `strideDPLUS` | `integer` | in |  |  | stride length for `dplus` |
-| `lplus` | `Float64Array` | out | `N - 1` |  | output: subdiagonal of the new RRR |
-| ↳ `strideLPLUS` | `integer` | in |  |  | stride length for `lplus` |
-| `work` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace of length 2*N |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of the parent representation |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `l` | `Float64Array`<br><sub>length N - 1</sub> | Subdiagonal of the unit bidiagonal factor |
+| ↳ `strideL` | `integer` | Stride length for `l` |
+| `ld` | `Float64Array`<br><sub>length N - 1</sub> | Elementwise product L\*D |
+| ↳ `strideLD` | `integer` | Stride length for `ld` |
+| `clstrt` | `integer` | First index of the cluster (1-based) |
+| `clend` | `integer` | Last index of the cluster (1-based) |
+| `w` | `Float64Array` | Approximate eigenvalues of the parent |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `wgap` | `Float64Array` | **in/out** · Approximate gaps between eigenvalues |
+| ↳ `strideWGAP` | `integer` | Stride length for `wgap` |
+| `werr` | `Float64Array` | Errors in the approximate eigenvalues |
+| ↳ `strideWERR` | `integer` | Stride length for `werr` |
+| `spdiam` | `number` | Estimate of the spectral diameter |
+| `clgapl` | `number` | Left gap of the cluster |
+| `clgapr` | `number` | Right gap of the cluster |
+| `pivmin` | `number` | Minimum pivot allowed in the Sturm sequence |
+| `sigma` | `Float64Array` | **out** · Output (length 1): `sigma[0]` receives the chosen shift |
+| `dplus` | `Float64Array`<br><sub>length N</sub> | **out** · Output: diagonal of the new RRR |
+| ↳ `strideDPLUS` | `integer` | Stride length for `dplus` |
+| `lplus` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output: subdiagonal of the new RRR |
+| ↳ `strideLPLUS` | `integer` | Stride length for `lplus` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length 2\*N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -116,43 +116,43 @@ dlarrf.ndarray(
 
 Finds a new relatively robust representation (RRR) for a tridiagonal cluster.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the tridiagonal matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal of the parent representation |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `l` | `Float64Array` | in | `N - 1` |  | subdiagonal of the unit bidiagonal factor |
-| ↳ `strideL` | `integer` | in |  |  | stride length for `l` |
-| ↳ `offsetL` | `NonNegativeInteger` | in |  |  | starting index for `l` |
-| `ld` | `Float64Array` | in | `N - 1` |  | elementwise product L*D |
-| ↳ `strideLD` | `integer` | in |  |  | stride length for `ld` |
-| ↳ `offsetLD` | `NonNegativeInteger` | in |  |  | starting index for `ld` |
-| `clstrt` | `integer` | in |  |  | first index of the cluster (1-based) |
-| `clend` | `integer` | in |  |  | last index of the cluster (1-based) |
-| `w` | `Float64Array` | in |  |  | approximate eigenvalues of the parent |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `wgap` | `Float64Array` | in/out |  |  | approximate gaps between eigenvalues |
-| ↳ `strideWGAP` | `integer` | in |  |  | stride length for `wgap` |
-| ↳ `offsetWGAP` | `NonNegativeInteger` | in |  |  | starting index for `wgap` |
-| `werr` | `Float64Array` | in |  |  | errors in the approximate eigenvalues |
-| ↳ `strideWERR` | `integer` | in |  |  | stride length for `werr` |
-| ↳ `offsetWERR` | `NonNegativeInteger` | in |  |  | starting index for `werr` |
-| `spdiam` | `number` | in |  |  | estimate of the spectral diameter |
-| `clgapl` | `number` | in |  |  | left gap of the cluster |
-| `clgapr` | `number` | in |  |  | right gap of the cluster |
-| `pivmin` | `number` | in |  |  | minimum pivot allowed in the Sturm sequence |
-| `sigma` | `Float64Array` | out |  |  | output (length 1): `sigma[0]` receives the chosen shift |
-| `dplus` | `Float64Array` | out | `N` |  | output: diagonal of the new RRR |
-| ↳ `strideDPLUS` | `integer` | in |  |  | stride length for `dplus` |
-| ↳ `offsetDPLUS` | `NonNegativeInteger` | in |  |  | starting index for `dplus` |
-| `lplus` | `Float64Array` | out | `N - 1` |  | output: subdiagonal of the new RRR |
-| ↳ `strideLPLUS` | `integer` | in |  |  | stride length for `lplus` |
-| ↳ `offsetLPLUS` | `NonNegativeInteger` | in |  |  | starting index for `lplus` |
-| `work` | `Float64Array` | out | `≥ 2 * N` |  | workspace of length at least `2*N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `work` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of the parent representation |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `l` | `Float64Array`<br><sub>length N - 1</sub> | Subdiagonal of the unit bidiagonal factor |
+| ↳ `strideL` | `integer` | Stride length for `l` |
+| ↳ `offsetL` | `NonNegativeInteger` | Starting index for `l` |
+| `ld` | `Float64Array`<br><sub>length N - 1</sub> | Elementwise product L\*D |
+| ↳ `strideLD` | `integer` | Stride length for `ld` |
+| ↳ `offsetLD` | `NonNegativeInteger` | Starting index for `ld` |
+| `clstrt` | `integer` | First index of the cluster (1-based) |
+| `clend` | `integer` | Last index of the cluster (1-based) |
+| `w` | `Float64Array` | Approximate eigenvalues of the parent |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `wgap` | `Float64Array` | **in/out** · Approximate gaps between eigenvalues |
+| ↳ `strideWGAP` | `integer` | Stride length for `wgap` |
+| ↳ `offsetWGAP` | `NonNegativeInteger` | Starting index for `wgap` |
+| `werr` | `Float64Array` | Errors in the approximate eigenvalues |
+| ↳ `strideWERR` | `integer` | Stride length for `werr` |
+| ↳ `offsetWERR` | `NonNegativeInteger` | Starting index for `werr` |
+| `spdiam` | `number` | Estimate of the spectral diameter |
+| `clgapl` | `number` | Left gap of the cluster |
+| `clgapr` | `number` | Right gap of the cluster |
+| `pivmin` | `number` | Minimum pivot allowed in the Sturm sequence |
+| `sigma` | `Float64Array` | **out** · Output (length 1): `sigma[0]` receives the chosen shift |
+| `dplus` | `Float64Array`<br><sub>length N</sub> | **out** · Output: diagonal of the new RRR |
+| ↳ `strideDPLUS` | `integer` | Stride length for `dplus` |
+| ↳ `offsetDPLUS` | `NonNegativeInteger` | Starting index for `dplus` |
+| `lplus` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output: subdiagonal of the new RRR |
+| ↳ `strideLPLUS` | `integer` | Stride length for `lplus` |
+| ↳ `offsetLPLUS` | `NonNegativeInteger` | Starting index for `lplus` |
+| `work` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length at least `2*N` |
+| ↳ `strideWork` | `integer` | Stride length for `work` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `work` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

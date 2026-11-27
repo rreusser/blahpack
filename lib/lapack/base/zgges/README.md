@@ -45,30 +45,30 @@ LWKOPT, with NB from `ilaenv`, plus the zunmqr optimum's T part,
 `TSIZE = 4160`), the others at the required size. Prefer passing caller-owned
 buffers for batched use.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvsl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvsr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'sort'` or `'none'` |
-| `selctg` | `Function` | in |  |  | selection function `(alphaRe, alphaIm, betaRe, betaIm) => boolean` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten on exit |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten on exit |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `sdim` | `Int32Array` | out |  |  | output (length-1 array): if SORT = `'N'`, SDIM = 0 |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output: eigenvalue numerators (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| `BETA` | `Complex128Array` | out | `N` |  | output: eigenvalue denominators (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `VSL` | `Complex128Array` | out | `N × N` |  | output: left Schur vectors (N x N) |
-| ↳ `LDVSL` | `PositiveInteger` | in |  | rejects `ldvsl < 1 \|\| ((jobvsl === 'compute-vectors') && ldvsl < N)` | leading dimension of VSL |
-| `VSR` | `Complex128Array` | out | `N × N` |  | output: right Schur vectors (N x N) |
-| ↳ `LDVSR` | `PositiveInteger` | in |  | rejects `ldvsr < 1 \|\| ((jobvsr === 'compute-vectors') && ldvsr < N)` | leading dimension of VSR |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N )` |  | caller-provided complex workspace of length at least max(1,2*N), or null to auto-allocate |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 8 * N` |  | caller-provided real workspace of length at least 8*N, or null to auto-allocate |
-| `BWORK` | `(Uint8Array\|null)` | out | `≥ N` |  | caller-provided logical workspace of length at least N, or null to auto-allocate |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvsl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvsr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `sort` | `"none" \| "sort"` | `'sort'` or `'none'` |
+| `selctg` | `Function` | Selection function `(alphaRe, alphaIm, betaRe, betaIm) => boolean` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten on exit |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten on exit |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `sdim` | `Int32Array` | **out** · Output (length-1 array): if SORT = `'N'`, SDIM = 0 |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalue numerators (length N) |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalue denominators (length N) |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `VSL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: left Schur vectors (N x N) |
+| ↳ `LDVSL` | `PositiveInteger` | Leading dimension of VSL<br>Rejects `ldvsl < 1 \|\| ((jobvsl === 'compute-vectors') && ldvsl < N)` |
+| `VSR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: right Schur vectors (N x N) |
+| ↳ `LDVSR` | `PositiveInteger` | Leading dimension of VSR<br>Rejects `ldvsr < 1 \|\| ((jobvsr === 'compute-vectors') && ldvsr < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-provided complex workspace of length at least max(1,2\*N), or null to auto-allocate |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 8 * N</sub> | **out** · Caller-provided real workspace of length at least 8\*N, or null to auto-allocate |
+| `BWORK` | `Uint8Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided logical workspace of length at least N, or null to auto-allocate |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -148,45 +148,45 @@ a pair of N-by-N complex nonsymmetric matrices (A,B).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvsl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvsr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'sort'` or `'none'` |
-| `selctg` | `Function` | in |  |  | selection function `(alphaRe, alphaIm, betaRe, betaIm) => boolean` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten on exit |
-| ↳ `strideB1` | `integer` | in |  |  | first dimension stride of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | second dimension stride of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `sdim` | `Int32Array` | out |  |  | output (length-1 array): if SORT = `'N'`, SDIM = 0 |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output: eigenvalue numerators (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA (complex elements) |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | offset for ALPHA (complex elements) |
-| `BETA` | `Complex128Array` | out | `N` |  | output: eigenvalue denominators (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA (complex elements) |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | offset for BETA (complex elements) |
-| `VSL` | `Complex128Array` | out | `N × N` |  | output: left Schur vectors (N x N) |
-| ↳ `strideVSL1` | `integer` | in |  |  | first dimension stride of VSL (complex elements) |
-| ↳ `strideVSL2` | `integer` | in |  |  | second dimension stride of VSL (complex elements) |
-| ↳ `offsetVSL` | `NonNegativeInteger` | in |  |  | starting index for VSL (complex elements) |
-| `VSR` | `Complex128Array` | out | `N × N` |  | output: right Schur vectors (N x N) |
-| ↳ `strideVSR1` | `integer` | in |  |  | first dimension stride of VSR (complex elements) |
-| ↳ `strideVSR2` | `integer` | in |  |  | second dimension stride of VSR (complex elements) |
-| ↳ `offsetVSR` | `NonNegativeInteger` | in |  |  | starting index for VSR (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N )` |  | caller-provided complex workspace; must have at least max(1,2*N) elements from offsetWork |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 8 * N` |  | caller-provided real workspace; must have at least 8*N elements from offsetRwork |
-| ↳ `strideRwork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRwork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
-| `BWORK` | `Uint8Array` | out | `≥ N` |  | caller-provided logical workspace of length at least N from offsetBwork (used when sort='sort') |
-| ↳ `strideBwork` | `integer` | in |  |  | stride for BWORK |
-| ↳ `offsetBwork` | `NonNegativeInteger` | in |  |  | starting index for BWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvsl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvsr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `sort` | `"none" \| "sort"` | `'sort'` or `'none'` |
+| `selctg` | `Function` | Selection function `(alphaRe, alphaIm, betaRe, betaIm) => boolean` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten on exit |
+| ↳ `strideA1` | `integer` | First dimension stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second dimension stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten on exit |
+| ↳ `strideB1` | `integer` | First dimension stride of B (complex elements) |
+| ↳ `strideB2` | `integer` | Second dimension stride of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `sdim` | `Int32Array` | **out** · Output (length-1 array): if SORT = `'N'`, SDIM = 0 |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalue numerators (length N) |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA (complex elements) |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Offset for ALPHA (complex elements) |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalue denominators (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA (complex elements) |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Offset for BETA (complex elements) |
+| `VSL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: left Schur vectors (N x N) |
+| ↳ `strideVSL1` | `integer` | First dimension stride of VSL (complex elements) |
+| ↳ `strideVSL2` | `integer` | Second dimension stride of VSL (complex elements) |
+| ↳ `offsetVSL` | `NonNegativeInteger` | Starting index for VSL (complex elements) |
+| `VSR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: right Schur vectors (N x N) |
+| ↳ `strideVSR1` | `integer` | First dimension stride of VSR (complex elements) |
+| ↳ `strideVSR2` | `integer` | Second dimension stride of VSR (complex elements) |
+| ↳ `offsetVSR` | `NonNegativeInteger` | Starting index for VSR (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-provided complex workspace; must have at least max(1,2\*N) elements from offsetWork |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 8 * N</sub> | **out** · Caller-provided real workspace; must have at least 8\*N elements from offsetRwork |
+| ↳ `strideRwork` | `integer` | Stride for RWORK |
+| ↳ `offsetRwork` | `NonNegativeInteger` | Starting index for RWORK |
+| `BWORK` | `Uint8Array`<br><sub>length ≥ N</sub> | **out** · Caller-provided logical workspace of length at least N from offsetBwork (used when sort='sort') |
+| ↳ `strideBwork` | `integer` | Stride for BWORK |
+| ↳ `offsetBwork` | `NonNegativeInteger` | Starting index for BWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

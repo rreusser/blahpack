@@ -33,30 +33,30 @@ dstevr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. For `range === 'value'` or `range === 'index'` and IU - IL < N - 1, DSTEBZ and DSTEIN are called. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix. |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `max( 1, N - 1 )` |  | on entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `vl` | `number` | in |  |  | if `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | if `range === 'value'`, the upper bound of the interval to be searched for eigenvalues. |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | if `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | if `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `abstol` | `number` | in |  |  | the absolute error tolerance for the eigenvalues. |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | the first M elements contain the selected eigenvalues in ascending order. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `ISUPPZ` | `Int32Array` | out | `2 * max( 1, m )` |  | the support of the eigenvectors in Z, i.e., the indices indicating the nonzero elements in Z (0-based). |
-| ↳ `strideISUPPZ` | `integer` | in |  |  | stride length for `ISUPPZ` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, 20 * N )` |  | caller-provided workspace of at least `max( 1, 20 * N )` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ max( 1, 10 * N )` |  | caller-provided workspace of at least `max( 1, 10 * N )` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
+| `range` | `"all" \| "value" \| "index"` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. For `range === 'value'` or `range === 'index'` and IU - IL < N - 1, DSTEBZ and DSTEIN are called. |
+| `N` | `NonNegativeInteger` | The order of the matrix.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length max(1, N - 1)</sub> | **in/out** · On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `vl` | `number` | If `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
+| `vu` | `number` | If `range === 'value'`, the upper bound of the interval to be searched for eigenvalues.<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | If `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | If `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | The absolute error tolerance for the eigenvalues. |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · The first M elements contain the selected eigenvalues in ascending order. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `ISUPPZ` | `Int32Array`<br><sub>length 2 * max(1, m)</sub> | **out** · The support of the eigenvectors in Z, i.e., the indices indicating the nonzero elements in Z (0-based). |
+| ↳ `strideISUPPZ` | `integer` | Stride length for `ISUPPZ` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 20 * N)</sub> | **out** · Caller-provided workspace of at least `max( 1, 20 * N )` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ max(1, 10 * N)</sub> | **out** · Caller-provided workspace of at least `max( 1, 10 * N )` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -153,39 +153,39 @@ It is returned via the out object: out.M.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | 'no-vectors' or 'compute-vectors' |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | 'all', 'value', or 'index' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N), destroyed on exit |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in/out | `max( 1, N - 1 )` |  | off-diagonal elements (length N-1), destroyed on exit |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval (RANGE='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval (RANGE='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | index of smallest eigenvalue to compute (1-based, RANGE='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue to compute (1-based, RANGE='index') |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvector matrix (N x M) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dimension of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dimension of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `ISUPPZ` | `Int32Array` | out | `2 * max( 1, m )` |  | support of eigenvectors (length 2*M) |
-| ↳ `strideISUPPZ` | `integer` | in |  |  | stride for ISUPPZ |
-| ↳ `offsetISUPPZ` | `NonNegativeInteger` | in |  |  | starting index for ISUPPZ |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 20 * N )` |  | workspace (length >= `max( 1, 20*N )`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ max( 1, 10 * N )` |  | integer workspace (length >= `max( 1, 10*N )`) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | 'no-vectors' or 'compute-vectors' |
+| `range` | `"all" \| "value" \| "index"` | 'all', 'value', or 'index' |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N), destroyed on exit |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length max(1, N - 1)</sub> | **in/out** · Off-diagonal elements (length N-1), destroyed on exit |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `vl` | `number` | Lower bound of eigenvalue interval (RANGE='value') |
+| `vu` | `number` | Upper bound of eigenvalue interval (RANGE='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue to compute (1-based, RANGE='index')<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | Index of largest eigenvalue to compute (1-based, RANGE='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvector matrix (N x M) |
+| ↳ `strideZ1` | `integer` | Stride of first dimension of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dimension of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `ISUPPZ` | `Int32Array`<br><sub>length 2 * max(1, m)</sub> | **out** · Support of eigenvectors (length 2\*M) |
+| ↳ `strideISUPPZ` | `integer` | Stride for ISUPPZ |
+| ↳ `offsetISUPPZ` | `NonNegativeInteger` | Starting index for ISUPPZ |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 20 * N)</sub> | **out** · Workspace (length >= `max( 1, 20*N )`) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ max(1, 10 * N)</sub> | **out** · Integer workspace (length >= `max( 1, 10*N )`) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

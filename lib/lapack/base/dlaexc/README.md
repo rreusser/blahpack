@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaexc( order, wantq, N, T, LDT, Q, LDQ, j1, n1, n2, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantq` | `boolean` | in |  |  | = `true` : accumulate the transformation in the matrix Q; = `false`: do not accumulate the transformation. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix T. |
-| `T` | `Float64Array` | in/out | `N × N` |  | on entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, the updated matrix T, again in Schur canonical form. |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | on entry, if WANTQ is `true`, the orthogonal matrix Q. On exit, if WANTQ is `true`, the updated matrix Q. |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `j1` | `integer` | in |  |  | the index of the first row of the first block T11. |
-| `n1` | `NonNegativeInteger` | in |  |  | the order of the first block T11. |
-| `n2` | `NonNegativeInteger` | in |  |  | the order of the second block T22. |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantq` | `boolean` | = `true` : accumulate the transformation in the matrix Q; = `false`: do not accumulate the transformation. |
+| `N` | `NonNegativeInteger` | The order of the matrix T. |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper quasi-triangular matrix T, in Schur canonical form. On exit, the updated matrix T, again in Schur canonical form. |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, if WANTQ is `true`, the orthogonal matrix Q. On exit, if WANTQ is `true`, the updated matrix Q. |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `j1` | `integer` | The index of the first row of the first block T11. |
+| `n1` | `NonNegativeInteger` | The order of the first block T11. |
+| `n2` | `NonNegativeInteger` | The order of the second block T22. |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,24 +80,24 @@ Note: j1 is 1-based (Fortran convention).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantq` | `boolean` | in |  |  | if true, accumulate transformation into Q |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix T |
-| `T` | `Float64Array` | in/out | `N × N` |  | the upper quasi-triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `Q` | `Float64Array` | in/out | `N × N` |  | orthogonal matrix (updated if wantq) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `j1` | `integer` | in |  |  | position of first block (1-based) |
-| `n1` | `NonNegativeInteger` | in |  |  | order of first block (1 or 2) |
-| `n2` | `NonNegativeInteger` | in |  |  | order of second block (1 or 2) |
-| `WORK` | `Float64Array` | out | `≥ N` |  | workspace of length N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantq` | `boolean` | If true, accumulate transformation into Q |
+| `N` | `NonNegativeInteger` | Order of the matrix T |
+| `T` | `Float64Array`<br><sub>N × N</sub> | **in/out** · The upper quasi-triangular matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Orthogonal matrix (updated if wantq) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `j1` | `integer` | Position of first block (1-based) |
+| `n1` | `NonNegativeInteger` | Order of first block (1 or 2) |
+| `n2` | `NonNegativeInteger` | Order of second block (1 or 2) |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace of length N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dorm22( order, side, trans, M, N, n1, n2, Q, LDQ, C, LDC, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies the operation type |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `n1` | `integer` | in |  | rejects `n1 < 0 \|\| n1 + n2 !== (side === 'left' ? M : N)` | n2 is INTEGER The dimension of Q12 and Q21, respectively. |
-| `n2` | `NonNegativeInteger` | in |  | requires `n2 ≥ 0` | n2 is INTEGER The dimension of Q12 and Q21, respectively. |
-| `Q` | `Float64Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | requires `LDQ ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `Q` |
-| `C` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ n1 === 0 \|\| n2 === 0 ? 1 : (side === 'left' ? M : N)` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type<br>One of `'left'`, `'right'`. |
+| `trans` | `"no-transpose" \| "transpose"` | Specifies the operation type<br>One of `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `n1` | `integer` | N2 is INTEGER The dimension of Q12 and Q21, respectively.<br>Rejects `n1 < 0 \|\| n1 + n2 !== (side === 'left' ? M : N)` |
+| `n2` | `NonNegativeInteger` | N2 is INTEGER The dimension of Q12 and Q21, respectively.<br>Requires `n2 ≥ 0` |
+| `Q` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Requires `LDQ ≥ max(1, side === 'left' ? M : N)` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ n1 === 0 \|\| n2 === 0 ? 1 : (side === 'left' ? M : N)</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,25 +88,25 @@ dorm22.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies the operation type |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `n1` | `integer` | in |  | rejects `n1 < 0 \|\| n1 + n2 !== (side === 'left' ? M : N)` | n2 is INTEGER The dimension of Q12 and Q21, respectively. |
-| `n2` | `NonNegativeInteger` | in |  | requires `n2 ≥ 0` | n2 is INTEGER The dimension of Q12 and Q21, respectively. |
-| `Q` | `Float64Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `C` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `≥ n1 === 0 \|\| n2 === 0 ? 1 : (side === 'left' ? M : N)` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies the operation type<br>One of `'left'`, `'right'`. |
+| `trans` | `"no-transpose" \| "transpose"` | Specifies the operation type<br>One of `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `n1` | `integer` | N2 is INTEGER The dimension of Q12 and Q21, respectively.<br>Rejects `n1 < 0 \|\| n1 + n2 !== (side === 'left' ? M : N)` |
+| `n2` | `NonNegativeInteger` | N2 is INTEGER The dimension of Q12 and Q21, respectively.<br>Requires `n2 ≥ 0` |
+| `Q` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>length ≥ n1 === 0 \|\| n2 === 0 ? 1 : (side === 'left' ? M : N)</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

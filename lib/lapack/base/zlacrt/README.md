@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlacrt( N, x, strideX, y, strideY, c, s ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | first complex input/output vector |
-| ↳ `strideX` | `integer` | in |  |  | `cx` stride length (in complex elements) |
-| `y` | `Complex128Array` | in/out | `N` |  | second complex input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | `cy` stride length (in complex elements) |
-| `c` | `Complex128` | in |  |  | complex cosine of the rotation |
-| `s` | `Complex128` | in |  |  | complex sine of the rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · First complex input/output vector |
+| ↳ `strideX` | `integer` | `cx` stride length (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Second complex input/output vector |
+| ↳ `strideY` | `integer` | `cy` stride length (in complex elements) |
+| `c` | `Complex128` | Complex cosine of the rotation |
+| `s` | `Complex128` | Complex sine of the rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -54,17 +54,17 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zlacrt.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in/out | `N` |  | first complex input/output vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `cx` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `cx` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `N` |  | second complex input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride for `cy` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `cy` (in complex elements) |
-| `c` | `Complex128` | in |  |  | complex cosine of the rotation |
-| `s` | `Complex128` | in |  |  | complex sine of the rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · First complex input/output vector |
+| ↳ `strideX` | `integer` | Stride for `cx` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `cx` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Second complex input/output vector |
+| ↳ `strideY` | `integer` | Stride for `cy` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `cy` (in complex elements) |
+| `c` | `Complex128` | Complex cosine of the rotation |
+| `s` | `Complex128` | Complex sine of the rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

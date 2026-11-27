@@ -29,21 +29,21 @@ zggbak(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | specifies the type of backward transformation: |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows of V |
-| `ilo` | `integer` | in |  | rejects `ilo < 1`; rejects `N === 0 && ihi === 0 && ilo !== 1` | ilo from balancing (1-based) |
-| `ihi` | `integer` | in |  | rejects `N > 0 && (ihi < ilo \|\| ihi > max( 1, N ))`; rejects `N === 0 && ilo === 1 && ihi !== 0` | ihi from balancing (1-based) |
-| `LSCALE` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideLSCALE` | `integer` | in |  |  | `LSCALE` stride length |
-| `RSCALE` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideRSCALE` | `integer` | in |  |  | `RSCALE` stride length |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of columns of V |
-| `V` | `Complex128Array` | in/out | `N × M` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  | column-major requires `LDV ≥ max( 1, N )`; row-major requires `LDV ≥ max( 1, M )` | leading dimension of `V` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | Specifies the type of backward transformation:<br>One of `'both'`, `'none'`, `'permute'`, `'scale'`. |
+| `side` | `OperationSide` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
+| `N` | `NonNegativeInteger` | Number of rows of V<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo from balancing (1-based)<br>Rejects `ilo < 1`<br>Rejects `N === 0 && ihi === 0 && ilo !== 1` |
+| `ihi` | `integer` | Ihi from balancing (1-based)<br>Rejects `N > 0 && (ihi < ilo \|\| ihi > max(1, N))`<br>Rejects `N === 0 && ilo === 1 && ihi !== 0` |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideLSCALE` | `integer` | `LSCALE` stride length |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideRSCALE` | `integer` | `RSCALE` stride length |
+| `M` | `NonNegativeInteger` | Number of columns of V<br>Requires `M ≥ 0` |
+| `V` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Column-major requires `LDV ≥ max(1, N)`<br>Row-major requires `LDV ≥ max(1, M)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -101,24 +101,24 @@ zggbak.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | specifies the type of backward transformation: |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows of V |
-| `ilo` | `integer` | in |  | rejects `ilo < 1`; rejects `N === 0 && ihi === 0 && ilo !== 1` | ilo from balancing (1-based) |
-| `ihi` | `integer` | in |  | rejects `N > 0 && (ihi < ilo \|\| ihi > max( 1, N ))`; rejects `N === 0 && ilo === 1 && ihi !== 0` | ihi from balancing (1-based) |
-| `LSCALE` | `Float64Array` | in | `N` |  | left scaling/permutation factors from ZGGBAL |
-| ↳ `strideLSCALE` | `integer` | in |  |  | stride for LSCALE |
-| ↳ `offsetLSCALE` | `NonNegativeInteger` | in |  |  | starting index for LSCALE |
-| `RSCALE` | `Float64Array` | in | `N` |  | right scaling/permutation factors from ZGGBAL |
-| ↳ `strideRSCALE` | `integer` | in |  |  | stride for RSCALE |
-| ↳ `offsetRSCALE` | `NonNegativeInteger` | in |  |  | starting index for RSCALE |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of columns of V |
-| `V` | `Complex128Array` | in/out | `N × M` |  | eigenvector matrix (modified in-place) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V (complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V (complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | Specifies the type of backward transformation:<br>One of `'both'`, `'none'`, `'permute'`, `'scale'`. |
+| `side` | `OperationSide` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
+| `N` | `NonNegativeInteger` | Number of rows of V<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Ilo from balancing (1-based)<br>Rejects `ilo < 1`<br>Rejects `N === 0 && ihi === 0 && ilo !== 1` |
+| `ihi` | `integer` | Ihi from balancing (1-based)<br>Rejects `N > 0 && (ihi < ilo \|\| ihi > max(1, N))`<br>Rejects `N === 0 && ilo === 1 && ihi !== 0` |
+| `LSCALE` | `Float64Array`<br><sub>length N</sub> | Left scaling/permutation factors from ZGGBAL |
+| ↳ `strideLSCALE` | `integer` | Stride for LSCALE |
+| ↳ `offsetLSCALE` | `NonNegativeInteger` | Starting index for LSCALE |
+| `RSCALE` | `Float64Array`<br><sub>length N</sub> | Right scaling/permutation factors from ZGGBAL |
+| ↳ `strideRSCALE` | `integer` | Stride for RSCALE |
+| ↳ `offsetRSCALE` | `NonNegativeInteger` | Starting index for RSCALE |
+| `M` | `NonNegativeInteger` | Number of columns of V<br>Requires `M ≥ 0` |
+| `V` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · Eigenvector matrix (modified in-place) |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V (complex elements) |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V (complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

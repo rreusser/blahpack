@@ -33,28 +33,28 @@ zgerfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Complex128Array` | in | `N × N` |  | original matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Complex128Array` | in | `N × N` |  | LU factorization of `A` (from `zgetrf`) |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zgetrf` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix; refined in place |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length `nrhs`) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error estimates (length `nrhs`) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace (>= `2*N` complex elements); auto-allocated when `null` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace (>= `N` reals); auto-allocated when `null` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | LU factorization of `A` (from `zgetrf`) |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zgetrf` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix; refined in place |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length `nrhs`) |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error estimates (length `nrhs`) |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace (>= `2*N` complex elements); auto-allocated when `null` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace (>= `N` reals); auto-allocated when `null` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -130,42 +130,42 @@ requires the adjoint for complex matrices.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Complex128Array` | in | `N × N` |  | original N-by-N complex matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (complex elements) |
-| `AF` | `Complex128Array` | in | `N × N` |  | LU-factored N-by-N complex matrix (from zgetrf) |
-| ↳ `strideAF1` | `integer` | in |  |  | stride of the first dimension of AF (complex elements) |
-| ↳ `strideAF2` | `integer` | in |  |  | stride of the second dimension of AF (complex elements) |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | index offset for AF (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zgetrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B (complex elements) |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X (complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X (complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | index offset for X (complex elements) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | index offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | index offset for BERR |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace of length >= 2*N complex elements |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace of length >= N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | index offset for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies the form of the system<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original N-by-N complex matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (complex elements) |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | LU-factored N-by-N complex matrix (from zgetrf) |
+| ↳ `strideAF1` | `integer` | Stride of the first dimension of AF (complex elements) |
+| ↳ `strideAF2` | `integer` | Stride of the second dimension of AF (complex elements) |
+| ↳ `offsetAF` | `NonNegativeInteger` | Index offset for AF (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zgetrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B (complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X (complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X (complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Index offset for X (complex elements) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Index offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Index offset for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length >= 2\*N complex elements |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace of length >= N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Index offset for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

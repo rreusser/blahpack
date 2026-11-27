@@ -20,12 +20,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zrscl( N, a, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements |
-| `a` | `Complex128` | in |  |  | complex scalar divisor |
-| `x` | `Complex128Array` | in/out | `N` |  | input/output complex vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements |
+| `a` | `Complex128` | Complex scalar divisor |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output complex vector |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -46,13 +46,13 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zrscl.ndarray( N, a, x, strideX, offsetX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements |
-| `a` | `Complex128` | in |  |  | complex scalar divisor |
-| `x` | `Complex128Array` | in/out | `N` |  | input/output complex vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements |
+| `a` | `Complex128` | Complex scalar divisor |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output complex vector |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

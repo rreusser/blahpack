@@ -20,12 +20,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasrt( id, N, d, strideD ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `id` | `("increasing"\|"decreasing")` | in |  | one of `'decreasing'`, `'increasing'` | sort direction: 'increasing' or 'decreasing' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of elements to sort |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `id` | `"increasing" \| "decreasing"` | Sort direction: 'increasing' or 'decreasing' |
+| `N` | `NonNegativeInteger` | Number of elements to sort<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -55,13 +55,13 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlasrt.ndarray( id, N, d, strideD, offsetD ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `id` | `("increasing"\|"decreasing")` | in |  | one of `'decreasing'`, `'increasing'` | sort direction: 'increasing' or 'decreasing' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of elements to sort |
-| `d` | `Float64Array` | in/out | `N` |  | array to sort in-place |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
+| Parameter | Type | Description |
+|---|---|---|
+| `id` | `"increasing" \| "decreasing"` | Sort direction: 'increasing' or 'decreasing' |
+| `N` | `NonNegativeInteger` | Number of elements to sort<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Array to sort in-place |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

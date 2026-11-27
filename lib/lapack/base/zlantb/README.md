@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlantb( order, norm, uplo, diag, N, K, AB, LDAB, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | norm type |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `diag` | `DiagonalType` | in |  |  | `'unit'` or `'non-unit'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `K` | `NonNegativeInteger` | in |  |  | number of super/sub-diagonals |
-| `AB` | `Complex128Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Norm type |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `K` | `NonNegativeInteger` | Number of super/sub-diagonals |
+| `AB` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -78,20 +78,20 @@ zlantb.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies the operation type |
-| `diag` | `DiagonalType` | in |  |  | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `AB` | `Complex128Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `WORK` | `Float64Array` | out |  |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the operation type |
+| `uplo` | `MatrixTriangle` | Specifies the operation type |
+| `diag` | `DiagonalType` | Specifies the operation type |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `AB` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `WORK` | `Float64Array` | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

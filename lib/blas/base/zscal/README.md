@@ -20,12 +20,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zscal( N, alpha, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `x` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `zx` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `alpha` | `Complex128` | Complex scalar |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `zx` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,13 +45,13 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zscal.ndarray( N, alpha, x, strideX, offsetX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `x` | `Complex128Array` | in/out | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `zx` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `zx` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `alpha` | `Complex128` | Complex scalar |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Complex input vector |
+| ↳ `strideX` | `integer` | Stride for `zx` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `zx` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

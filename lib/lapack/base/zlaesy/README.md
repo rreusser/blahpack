@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaesy( a, b, c, rt1, rt2, evscal, cs1, sn1 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128` | in |  |  | the (1,1) element of the input matrix |
-| `b` | `Complex128` | in |  |  | the (1,2) and (2,1) element of the input matrix |
-| `c` | `Complex128` | in |  |  | the (2,2) element of the input matrix |
-| `rt1` | `Complex128Array` | out |  |  | output (length-1 array): the eigenvalue of larger modulus |
-| `rt2` | `Complex128Array` | out |  |  | output (length-1 array): the eigenvalue of smaller modulus |
-| `evscal` | `Complex128Array` | out |  |  | output (length-1 array): the complex value by which the eigenvector matrix was scaled to make it orthonormal |
-| `cs1` | `Complex128Array` | out |  |  | output (length-1 array): `cs1` |
-| `sn1` | `Complex128Array` | out |  |  | output (length-1 array): if EVSCAL .NE |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128` | The (1,1) element of the input matrix |
+| `b` | `Complex128` | The (1,2) and (2,1) element of the input matrix |
+| `c` | `Complex128` | The (2,2) element of the input matrix |
+| `rt1` | `Complex128Array` | **out** · Output (length-1 array): the eigenvalue of larger modulus |
+| `rt2` | `Complex128Array` | **out** · Output (length-1 array): the eigenvalue of smaller modulus |
+| `evscal` | `Complex128Array` | **out** · Output (length-1 array): the complex value by which the eigenvector matrix was scaled to make it orthonormal |
+| `cs1` | `Complex128Array` | **out** · Output (length-1 array): `cs1` |
+| `sn1` | `Complex128Array` | **out** · Output (length-1 array): if EVSCAL .NE |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,21 +61,21 @@ zlaesy.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128` | in |  |  | the (1,1) element of the input matrix |
-| `b` | `Complex128` | in |  |  | the (1,2) and (2,1) element of the input matrix |
-| `c` | `Complex128` | in |  |  | the (2,2) element of the input matrix |
-| `rt1` | `Complex128Array` | out |  |  | output (length-1 array): the eigenvalue of larger modulus |
-| ↳ `offsetRt1` | `NonNegativeInteger` | in |  |  | starting index for `rt1` (in complex elements) |
-| `rt2` | `Complex128Array` | out |  |  | output (length-1 array): the eigenvalue of smaller modulus |
-| ↳ `offsetRt2` | `NonNegativeInteger` | in |  |  | starting index for `rt2` (in complex elements) |
-| `evscal` | `Complex128Array` | out |  |  | output (length-1 array): the complex value by which the eigenvector matrix was scaled to make it orthonormal |
-| ↳ `offsetEvscal` | `NonNegativeInteger` | in |  |  | starting index for `evscal` (in complex elements) |
-| `cs1` | `Complex128Array` | out |  |  | output (length-1 array): `cs1` |
-| ↳ `offsetCs1` | `NonNegativeInteger` | in |  |  | starting index for `cs1` (in complex elements) |
-| `sn1` | `Complex128Array` | out |  |  | output (length-1 array): if EVSCAL .NE |
-| ↳ `offsetSn1` | `NonNegativeInteger` | in |  |  | starting index for `sn1` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128` | The (1,1) element of the input matrix |
+| `b` | `Complex128` | The (1,2) and (2,1) element of the input matrix |
+| `c` | `Complex128` | The (2,2) element of the input matrix |
+| `rt1` | `Complex128Array` | **out** · Output (length-1 array): the eigenvalue of larger modulus |
+| ↳ `offsetRt1` | `NonNegativeInteger` | Starting index for `rt1` (in complex elements) |
+| `rt2` | `Complex128Array` | **out** · Output (length-1 array): the eigenvalue of smaller modulus |
+| ↳ `offsetRt2` | `NonNegativeInteger` | Starting index for `rt2` (in complex elements) |
+| `evscal` | `Complex128Array` | **out** · Output (length-1 array): the complex value by which the eigenvector matrix was scaled to make it orthonormal |
+| ↳ `offsetEvscal` | `NonNegativeInteger` | Starting index for `evscal` (in complex elements) |
+| `cs1` | `Complex128Array` | **out** · Output (length-1 array): `cs1` |
+| ↳ `offsetCs1` | `NonNegativeInteger` | Starting index for `cs1` (in complex elements) |
+| `sn1` | `Complex128Array` | **out** · Output (length-1 array): if EVSCAL .NE |
+| ↳ `offsetSn1` | `NonNegativeInteger` | Starting index for `sn1` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

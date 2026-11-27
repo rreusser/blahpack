@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlartv( N, x, strideX, y, strideY, c, strideC, s, strideS ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to apply |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of cosines of the plane rotations |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| `s` | `Complex128Array` | in | `1 + (N - 1) * incc` |  | array of complex sines of the plane rotations |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to apply |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of cosines of the plane rotations |
+| ↳ `strideC` | `integer` | `c` stride length |
+| `s` | `Complex128Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of complex sines of the plane rotations |
+| ↳ `strideS` | `integer` | `s` stride length (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,21 +61,21 @@ zlartv.ndarray(
 
 Apply a vector of complex plane rotations with real cosines to two complex vectors.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of plane rotations to apply |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `c` | `Float64Array` | in | `1 + (N - 1) * incc` |  | array of cosines of the plane rotations |
-| ↳ `strideC` | `integer` | in |  |  | `c` stride length |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `s` | `Complex128Array` | in | `1 + (N - 1) * incc` |  | array of complex sines of the plane rotations |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of plane rotations to apply |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `c` | `Float64Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of cosines of the plane rotations |
+| ↳ `strideC` | `integer` | `c` stride length |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `s` | `Complex128Array`<br><sub>length 1 + (N - 1) * incc</sub> | Array of complex sines of the plane rotations |
+| ↳ `strideS` | `integer` | `s` stride length |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

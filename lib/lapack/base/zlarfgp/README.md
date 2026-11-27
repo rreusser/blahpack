@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarfgp( N, alpha, x, strideX, tau ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Complex128Array` | in/out |  |  | complex scalar, overwritten with beta |
-| `x` | `Complex128Array` | in/out | `1 + (N - 2) * abs( incx )` |  | complex vector, overwritten with `v` |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| `tau` | `Complex128Array` | out |  |  | output complex scalar |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Complex128Array` | **in/out** · Complex scalar, overwritten with beta |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Complex vector, overwritten with `v` |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| `tau` | `Complex128Array` | **out** · Output complex scalar |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -57,16 +57,16 @@ zlarfgp.ndarray(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the reflector |
-| `alpha` | `Complex128Array` | in/out |  |  | complex scalar, overwritten with beta |
-| ↳ `offsetAlpha` | `NonNegativeInteger` | in |  |  | starting index for `alpha` (in complex elements) |
-| `x` | `Complex128Array` | in/out | `1 + (N - 2) * abs( incx )` |  | complex vector, overwritten with `v` |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `tau` | `Complex128Array` | out |  |  | output complex scalar |
-| ↳ `offsetTau` | `NonNegativeInteger` | in |  |  | starting index for `tau` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the reflector |
+| `alpha` | `Complex128Array` | **in/out** · Complex scalar, overwritten with beta |
+| ↳ `offsetAlpha` | `NonNegativeInteger` | Starting index for `alpha` (in complex elements) |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 2) * abs(incx)</sub> | **in/out** · Complex vector, overwritten with `v` |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `tau` | `Complex128Array` | **out** · Output complex scalar |
+| ↳ `offsetTau` | `NonNegativeInteger` | Starting index for `tau` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

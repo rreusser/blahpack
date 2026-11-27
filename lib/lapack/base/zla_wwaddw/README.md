@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zla_wwaddw( N, x, strideX, y, strideY, w, strideW ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements |
-| `x` | `Complex128Array` | in/out | `N` |  | high-order part of the doubled-single accumulation vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Complex128Array` | in/out | `N` |  | low-order part of the doubled-single accumulation vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| `w` | `Complex128Array` | in | `N` |  | vector to be added |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · High-order part of the doubled-single accumulation vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Low-order part of the doubled-single accumulation vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | Vector to be added |
+| ↳ `strideW` | `integer` | Stride length for `w` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -61,18 +61,18 @@ zla_wwaddw.ndarray(
 
 Adds a complex vector W into a doubled-single accumulation vector (X, Y).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | length of vectors X, Y, and W |
-| `x` | `Complex128Array` | in/out | `N` |  | first part of the doubled-single accumulation vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `N` |  | second part of the doubled-single accumulation vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
-| `w` | `Complex128Array` | in | `N` |  | vector to be added |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` (in complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Length of vectors X, Y, and W |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · First part of the doubled-single accumulation vector |
+| ↳ `strideX` | `integer` | Stride length for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Second part of the doubled-single accumulation vector |
+| ↳ `strideY` | `integer` | Stride length for `y` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
+| `w` | `Complex128Array`<br><sub>length N</sub> | Vector to be added |
+| ↳ `strideW` | `integer` | Stride length for `w` (in complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

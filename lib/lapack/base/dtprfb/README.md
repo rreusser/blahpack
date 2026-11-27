@@ -29,27 +29,27 @@ dtprfb(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation type |
-| `direct` | `("forward"\|"backward")` | in |  |  | specifies the operation type |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `l` | `NonNegativeInteger` | in |  |  | the order of the trapezoidal part of V. |
-| `V` | `Float64Array` | in | `M × K` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `T` | `Float64Array` | in | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `A` | `Float64Array` | in/out | `K × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `WORK` | `(Float64Array\|null)` | out | `K × N` |  | output matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type |
+| `trans` | `TransposeOperation` | Specifies the operation type |
+| `direct` | `"forward" \| "backward"` | Specifies the operation type |
+| `storev` | `"columnwise" \| "rowwise"` | Specifies the operation type |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `l` | `NonNegativeInteger` | The order of the trapezoidal part of V. |
+| `V` | `Float64Array`<br><sub>M × K</sub> | Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `A` | `Float64Array`<br><sub>K × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `WORK` | `Float64Array \| null`<br><sub>K × N</sub> | **out** · Output matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,36 +118,36 @@ Applies a real triangular-pentagonal block reflector `H` or its transpose to the
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'transpose'` |
-| `direct` | `("forward"\|"backward")` | in |  |  | `'forward'` or `'backward'` |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | `'columnwise'` or `'rowwise'` |
-| `M` | `NonNegativeInteger` | in |  |  | rows of `B` |
-| `N` | `NonNegativeInteger` | in |  |  | columns of `B` |
-| `K` | `NonNegativeInteger` | in |  |  | order of the triangular factor `T` |
-| `l` | `NonNegativeInteger` | in |  |  | trapezoidal index |
-| `V` | `Float64Array` | in | `M × K` |  | pentagonal matrix of reflector vectors |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `T` | `Float64Array` | in | `K × K` |  | triangular factor |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `A` | `Float64Array` | in/out | `K × N` |  | upper block of `C`, modified in-place |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | lower/right block of `C`, modified in-place |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `WORK` | `Float64Array` | out | `K × N` |  | workspace |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'` |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `storev` | `"columnwise" \| "rowwise"` | `'columnwise'` or `'rowwise'` |
+| `M` | `NonNegativeInteger` | Rows of `B` |
+| `N` | `NonNegativeInteger` | Columns of `B` |
+| `K` | `NonNegativeInteger` | Order of the triangular factor `T` |
+| `l` | `NonNegativeInteger` | Trapezoidal index |
+| `V` | `Float64Array`<br><sub>M × K</sub> | Pentagonal matrix of reflector vectors |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Triangular factor |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `A` | `Float64Array`<br><sub>K × N</sub> | **in/out** · Upper block of `C`, modified in-place |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Lower/right block of `C`, modified in-place |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `WORK` | `Float64Array`<br><sub>K × N</sub> | **out** · Workspace |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

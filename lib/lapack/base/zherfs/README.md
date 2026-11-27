@@ -45,28 +45,28 @@ zherfs(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Complex128Array` | in | `N × N` |  | original Hermitian N-by-N matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Complex128Array` | in | `N × N` |  | factored N-by-N matrix (from zhetrf) |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zhetrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | complex workspace of at least `max(1,2*N)` elements; if `null`, allocated internally |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace of at least `max(1,N)` elements; if `null`, allocated internally |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original Hermitian N-by-N matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | Factored N-by-N matrix (from zhetrf) |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zhetrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace of at least `max(1,2*N)` elements; if `null`, allocated internally |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace of at least `max(1,N)` elements; if `null`, allocated internally |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -129,42 +129,42 @@ Uses the factorization A = U_D_U^H or A = L_D_L^H computed by zhetrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'`, must match the factorization |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Complex128Array` | in | `N × N` |  | original Hermitian N-by-N matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `AF` | `Complex128Array` | in | `N × N` |  | factored matrix from zhetrf |
-| ↳ `strideAF1` | `integer` | in |  |  | first stride of AF |
-| ↳ `strideAF2` | `integer` | in |  |  | second stride of AF |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | offset into AF |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zhetrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset for IPIV |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | first stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset into B |
-| `X` | `Complex128Array` | in/out | `N × nrhs` |  | solution matrix (improved on exit) |
-| ↳ `strideX1` | `integer` | in |  |  | first stride of X |
-| ↳ `strideX2` | `integer` | in |  |  | second stride of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset into X |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds (length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds (length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | offset for BERR |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | caller-owned complex workspace of at least `2*N` elements from `offsetWork` (never allocated here) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (must be 1; workspace is contiguous) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | caller-owned real workspace of at least `N` elements from `offsetRWork` (never allocated here) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK (must be 1; workspace is contiguous) |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'`, must match the factorization |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original Hermitian N-by-N matrix |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | Factored matrix from zhetrf |
+| ↳ `strideAF1` | `integer` | First stride of AF |
+| ↳ `strideAF2` | `integer` | Second stride of AF |
+| ↳ `offsetAF` | `NonNegativeInteger` | Offset into AF |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zhetrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset for IPIV |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | First stride of B |
+| ↳ `strideB2` | `integer` | Second stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset into B |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (improved on exit) |
+| ↳ `strideX1` | `integer` | First stride of X |
+| ↳ `strideX2` | `integer` | Second stride of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset into X |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds (length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds (length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Offset for BERR |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-owned complex workspace of at least `2*N` elements from `offsetWork` (never allocated here) |
+| ↳ `strideWork` | `integer` | Stride for WORK (must be 1; workspace is contiguous) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Caller-owned real workspace of at least `N` elements from `offsetRWork` (never allocated here) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK (must be 1; workspace is contiguous) |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlat2s( order, uplo, N, A, LDA, SA, LDSA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether `A` is upper (`'upper'`) or lower (`'lower'`) triangular |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | input double-precision matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `SA` | `Float32Array` | out | `M × N` |  | output single-precision matrix |
-| ↳ `LDSA` | `PositiveInteger` | in |  |  | leading dimension of `SA` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper (`'upper'`) or lower (`'lower'`) triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input double-precision matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `SA` | `Float32Array`<br><sub>M × N</sub> | **out** · Output single-precision matrix |
+| ↳ `LDSA` | `PositiveInteger` | Leading dimension of `SA` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,18 +67,18 @@ dlat2s.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether `A` is upper (`'upper'`) or lower (`'lower'`) triangular |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Float64Array` | in | `N × N` |  | input double-precision matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` |
-| `SA` | `Float32Array` | out | `M × N` |  | output single-precision matrix |
-| ↳ `strideSA1` | `integer` | in |  |  | stride of the first dimension of `SA` |
-| ↳ `strideSA2` | `integer` | in |  |  | stride of the second dimension of `SA` |
-| ↳ `offsetSA` | `NonNegativeInteger` | in |  |  | index offset for `SA` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper (`'upper'`) or lower (`'lower'`) triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input double-precision matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` |
+| `SA` | `Float32Array`<br><sub>M × N</sub> | **out** · Output single-precision matrix |
+| ↳ `strideSA1` | `integer` | Stride of the first dimension of `SA` |
+| ↳ `strideSA2` | `integer` | Stride of the second dimension of `SA` |
+| ↳ `offsetSA` | `NonNegativeInteger` | Index offset for `SA` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

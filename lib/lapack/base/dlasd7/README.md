@@ -50,47 +50,47 @@ Merges two sets of singular values together into a single sorted set and deflate
 -   `d`, `DSIGMA`, `IDX`, `IDXP`, `IDXQ`, and `PERM` have length `N`; `z`, `ZW`, `VF`, `VFW`, `VL`, and `VLW` have length `M`.
 -   `GIVCOL` and `GIVNUM` are `N`-by-2 matrices.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout of `GIVCOL` and `GIVNUM` ('row-major' or 'column-major') |
-| `icompq` | `integer` | in |  | rejects `icompq < 0 \|\| icompq > 1` | specifies whether singular vectors are to be computed (0: singular values only, 1: compact form) |
-| `nl` | `integer` | in |  | rejects `nl < 1` | row dimension of the upper block |
-| `nr` | `integer` | in |  | rejects `nr < 1` | row dimension of the lower block |
-| `sqre` | `integer` | in |  | rejects `sqre < 0 \|\| sqre > 1` | 0: square lower block; 1: rectangular |
-| `k` | `Int32Array` | out |  |  | output (length-1 array): contains the dimension of the non-deflated matrix, this is the order of the related secular equation |
-| `d` | `Float64Array` | in/out | `nl + nr + 1` |  | singular values |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `z` | `Float64Array` | out | `M` |  | updating row vector |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| `ZW` | `Float64Array` | out | `M` |  | workspace for `z` |
-| ↳ `strideZW` | `integer` | in |  |  | stride length for `ZW` |
-| `VF` | `Float64Array` | in/out | `M` |  | first components of right singular vectors |
-| ↳ `strideVF` | `integer` | in |  |  | stride length for `VF` |
-| `VFW` | `Float64Array` | out | `M` |  | workspace for `VF` |
-| ↳ `strideVFW` | `integer` | in |  |  | stride length for `VFW` |
-| `VL` | `Float64Array` | in/out | `M` |  | last components of right singular vectors |
-| ↳ `strideVL` | `integer` | in |  |  | stride length for `VL` |
-| `VLW` | `Float64Array` | out | `M` |  | workspace for `VL` |
-| ↳ `strideVLW` | `integer` | in |  |  | stride length for `VLW` |
-| `alpha` | `number` | in |  |  | diagonal element associated with the added row |
-| `beta` | `number` | in |  |  | off-diagonal element associated with the added row |
-| `DSIGMA` | `Float64Array` | out | `nl + nr + 1` |  | output singular values in secular equation |
-| ↳ `strideDSIGMA` | `integer` | in |  |  | stride length for `DSIGMA` |
-| `IDX` | `Int32Array` | out | `nl + nr + 1` |  | permutation to sort D |
-| ↳ `strideIDX` | `integer` | in |  |  | stride length for `IDX` |
-| `IDXP` | `Int32Array` | out | `nl + nr + 1` |  | permutation to place deflated values at end |
-| ↳ `strideIDXP` | `integer` | in |  |  | stride length for `IDXP` |
-| `IDXQ` | `Int32Array` | in | `nl + nr + 1` |  | permutation sorting each sub-problem |
-| ↳ `strideIDXQ` | `integer` | in |  |  | stride length for `IDXQ` |
-| `PERM` | `Int32Array` | out | `nl + nr + 1` |  | permutations from deflation and sorting |
-| ↳ `stridePERM` | `integer` | in |  |  | stride length for `PERM` |
-| `givptr` | `Int32Array` | out |  |  | output (length-1 array): the number of Givens rotations which took place in this subproblem |
-| `GIVCOL` | `Int32Array` | out | `nl + nr + 1 × 2` |  | pairs of columns for Givens rotations (`N`-by-2) |
-| ↳ `LDGIVCOL` | `PositiveInteger` | in |  |  | leading dimension of `GIVCOL` |
-| `GIVNUM` | `Float64Array` | out | `nl + nr + 1 × 2` |  | C and S values for Givens rotations (`N`-by-2) |
-| ↳ `LDGIVNUM` | `PositiveInteger` | in |  |  | leading dimension of `GIVNUM` |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): c contains garbage if SQRE =0 and the C-value of a Givens rotation related to the right null space if SQRE = 1 |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): s contains garbage if SQRE =0 and the S-value of a Givens rotation related to the right null space if SQRE = 1 |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout of `GIVCOL` and `GIVNUM` ('row-major' or 'column-major') |
+| `icompq` | `integer` | Specifies whether singular vectors are to be computed (0: singular values only, 1: compact form)<br>Rejects `icompq < 0 \|\| icompq > 1` |
+| `nl` | `integer` | Row dimension of the upper block<br>Rejects `nl < 1` |
+| `nr` | `integer` | Row dimension of the lower block<br>Rejects `nr < 1` |
+| `sqre` | `integer` | 0: square lower block; 1: rectangular<br>Rejects `sqre < 0 \|\| sqre > 1` |
+| `k` | `Int32Array` | **out** · Output (length-1 array): contains the dimension of the non-deflated matrix, this is the order of the related secular equation |
+| `d` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Singular values |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `z` | `Float64Array`<br><sub>length M</sub> | **out** · Updating row vector |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| `ZW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for `z` |
+| ↳ `strideZW` | `integer` | Stride length for `ZW` |
+| `VF` | `Float64Array`<br><sub>length M</sub> | **in/out** · First components of right singular vectors |
+| ↳ `strideVF` | `integer` | Stride length for `VF` |
+| `VFW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for `VF` |
+| ↳ `strideVFW` | `integer` | Stride length for `VFW` |
+| `VL` | `Float64Array`<br><sub>length M</sub> | **in/out** · Last components of right singular vectors |
+| ↳ `strideVL` | `integer` | Stride length for `VL` |
+| `VLW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for `VL` |
+| ↳ `strideVLW` | `integer` | Stride length for `VLW` |
+| `alpha` | `number` | Diagonal element associated with the added row |
+| `beta` | `number` | Off-diagonal element associated with the added row |
+| `DSIGMA` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Output singular values in secular equation |
+| ↳ `strideDSIGMA` | `integer` | Stride length for `DSIGMA` |
+| `IDX` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation to sort D |
+| ↳ `strideIDX` | `integer` | Stride length for `IDX` |
+| `IDXP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation to place deflated values at end |
+| ↳ `strideIDXP` | `integer` | Stride length for `IDXP` |
+| `IDXQ` | `Int32Array`<br><sub>length nl + nr + 1</sub> | Permutation sorting each sub-problem |
+| ↳ `strideIDXQ` | `integer` | Stride length for `IDXQ` |
+| `PERM` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutations from deflation and sorting |
+| ↳ `stridePERM` | `integer` | Stride length for `PERM` |
+| `givptr` | `Int32Array` | **out** · Output (length-1 array): the number of Givens rotations which took place in this subproblem |
+| `GIVCOL` | `Int32Array`<br><sub>(nl + nr + 1) × 2</sub> | **out** · Pairs of columns for Givens rotations (`N`-by-2) |
+| ↳ `LDGIVCOL` | `PositiveInteger` | Leading dimension of `GIVCOL` |
+| `GIVNUM` | `Float64Array`<br><sub>(nl + nr + 1) × 2</sub> | **out** · C and S values for Givens rotations (`N`-by-2) |
+| ↳ `LDGIVNUM` | `PositiveInteger` | Leading dimension of `GIVNUM` |
+| `c` | `Float64Array` | **out** · Output (length-1 array): c contains garbage if SQRE =0 and the C-value of a Givens rotation related to the right null space if SQRE = 1 |
+| `s` | `Float64Array` | **out** · Output (length-1 array): s contains garbage if SQRE =0 and the S-value of a Givens rotation related to the right null space if SQRE = 1 |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -179,62 +179,62 @@ Merges the two sets of singular values together into a single sorted set. Then i
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `icompq` | `integer` | in |  | rejects `icompq < 0 \|\| icompq > 1` | specifies whether singular vectors are to be computed (0: singular values only, 1: compact form) |
-| `nl` | `integer` | in |  | rejects `nl < 1` | row dimension of the upper block (nl >= 1) |
-| `nr` | `integer` | in |  | rejects `nr < 1` | row dimension of the lower block (nr >= 1) |
-| `sqre` | `integer` | in |  | rejects `sqre < 0 \|\| sqre > 1` | 0: lower block is square; 1: lower block is rectangular |
-| `k` | `Int32Array` | out |  |  | output (length-1 array): contains the dimension of the non-deflated matrix, this is the order of the related secular equation |
-| `d` | `Float64Array` | in/out | `nl + nr + 1` |  | singular values array of dimension N = nl + nr + 1 |
-| ↳ `strideD` | `integer` | in |  |  | stride for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `z` | `Float64Array` | out | `M` |  | updating row vector of dimension M = N + sqre |
-| ↳ `strideZ` | `integer` | in |  |  | stride for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `ZW` | `Float64Array` | out | `M` |  | workspace for z (dimension M) |
-| ↳ `strideZW` | `integer` | in |  |  | stride for `ZW` |
-| ↳ `offsetZW` | `NonNegativeInteger` | in |  |  | starting index for `ZW` |
-| `VF` | `Float64Array` | in/out | `M` |  | first components of right singular vectors (dimension M) |
-| ↳ `strideVF` | `integer` | in |  |  | stride for `VF` |
-| ↳ `offsetVF` | `NonNegativeInteger` | in |  |  | starting index for `VF` |
-| `VFW` | `Float64Array` | out | `M` |  | workspace for VF (dimension M) |
-| ↳ `strideVFW` | `integer` | in |  |  | stride for `VFW` |
-| ↳ `offsetVFW` | `NonNegativeInteger` | in |  |  | starting index for `VFW` |
-| `VL` | `Float64Array` | in/out | `M` |  | last components of right singular vectors (dimension M) |
-| ↳ `strideVL` | `integer` | in |  |  | stride for `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VLW` | `Float64Array` | out | `M` |  | workspace for VL (dimension M) |
-| ↳ `strideVLW` | `integer` | in |  |  | stride for `VLW` |
-| ↳ `offsetVLW` | `NonNegativeInteger` | in |  |  | starting index for `VLW` |
-| `alpha` | `number` | in |  |  | diagonal element associated with the added row |
-| `beta` | `number` | in |  |  | off-diagonal element associated with the added row |
-| `DSIGMA` | `Float64Array` | out | `nl + nr + 1` |  | output array for singular values in secular equation (dimension N) |
-| ↳ `strideDSIGMA` | `integer` | in |  |  | stride for `DSIGMA` |
-| ↳ `offsetDSIGMA` | `NonNegativeInteger` | in |  |  | starting index for `DSIGMA` |
-| `IDX` | `Int32Array` | out | `nl + nr + 1` |  | permutation to sort D into ascending order (dimension N) |
-| ↳ `strideIDX` | `integer` | in |  |  | stride for `IDX` |
-| ↳ `offsetIDX` | `NonNegativeInteger` | in |  |  | starting index for `IDX` |
-| `IDXP` | `Int32Array` | out | `nl + nr + 1` |  | permutation to place deflated values at end (dimension N) |
-| ↳ `strideIDXP` | `integer` | in |  |  | stride for `IDXP` |
-| ↳ `offsetIDXP` | `NonNegativeInteger` | in |  |  | starting index for `IDXP` |
-| `IDXQ` | `Int32Array` | in | `nl + nr + 1` |  | permutation sorting each sub-problem (dimension N) |
-| ↳ `strideIDXQ` | `integer` | in |  |  | stride for `IDXQ` |
-| ↳ `offsetIDXQ` | `NonNegativeInteger` | in |  |  | starting index for `IDXQ` |
-| `PERM` | `Int32Array` | out | `nl + nr + 1` |  | permutations from deflation and sorting (dimension N, not referenced if icompq=0) |
-| ↳ `stridePERM` | `integer` | in |  |  | stride for `PERM` |
-| ↳ `offsetPERM` | `NonNegativeInteger` | in |  |  | starting index for `PERM` |
-| `givptr` | `Int32Array` | out |  |  | output (length-1 array): the number of Givens rotations which took place in this subproblem |
-| `GIVCOL` | `Int32Array` | out | `nl + nr + 1 × 2` |  | pairs of columns for Givens rotations (dimension (LDGCOL, 2), not referenced if icompq=0) |
-| ↳ `strideGIVCOL1` | `integer` | in |  |  | first dimension stride for `GIVCOL` |
-| ↳ `strideGIVCOL2` | `integer` | in |  |  | second dimension stride for `GIVCOL` |
-| ↳ `offsetGIVCOL` | `NonNegativeInteger` | in |  |  | starting index for `GIVCOL` |
-| `GIVNUM` | `Float64Array` | out | `nl + nr + 1 × 2` |  | C and S values for Givens rotations (dimension (LDGNUM, 2), not referenced if icompq=0) |
-| ↳ `strideGIVNUM1` | `integer` | in |  |  | first dimension stride for `GIVNUM` |
-| ↳ `strideGIVNUM2` | `integer` | in |  |  | second dimension stride for `GIVNUM` |
-| ↳ `offsetGIVNUM` | `NonNegativeInteger` | in |  |  | starting index for `GIVNUM` |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): c contains garbage if SQRE =0 and the C-value of a Givens rotation related to the right null space if SQRE = 1 |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): s contains garbage if SQRE =0 and the S-value of a Givens rotation related to the right null space if SQRE = 1 |
+| Parameter | Type | Description |
+|---|---|---|
+| `icompq` | `integer` | Specifies whether singular vectors are to be computed (0: singular values only, 1: compact form)<br>Rejects `icompq < 0 \|\| icompq > 1` |
+| `nl` | `integer` | Row dimension of the upper block (nl >= 1)<br>Rejects `nl < 1` |
+| `nr` | `integer` | Row dimension of the lower block (nr >= 1)<br>Rejects `nr < 1` |
+| `sqre` | `integer` | 0: lower block is square; 1: lower block is rectangular<br>Rejects `sqre < 0 \|\| sqre > 1` |
+| `k` | `Int32Array` | **out** · Output (length-1 array): contains the dimension of the non-deflated matrix, this is the order of the related secular equation |
+| `d` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **in/out** · Singular values array of dimension N = nl + nr + 1 |
+| ↳ `strideD` | `integer` | Stride for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `z` | `Float64Array`<br><sub>length M</sub> | **out** · Updating row vector of dimension M = N + sqre |
+| ↳ `strideZ` | `integer` | Stride for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `ZW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for z (dimension M) |
+| ↳ `strideZW` | `integer` | Stride for `ZW` |
+| ↳ `offsetZW` | `NonNegativeInteger` | Starting index for `ZW` |
+| `VF` | `Float64Array`<br><sub>length M</sub> | **in/out** · First components of right singular vectors (dimension M) |
+| ↳ `strideVF` | `integer` | Stride for `VF` |
+| ↳ `offsetVF` | `NonNegativeInteger` | Starting index for `VF` |
+| `VFW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for VF (dimension M) |
+| ↳ `strideVFW` | `integer` | Stride for `VFW` |
+| ↳ `offsetVFW` | `NonNegativeInteger` | Starting index for `VFW` |
+| `VL` | `Float64Array`<br><sub>length M</sub> | **in/out** · Last components of right singular vectors (dimension M) |
+| ↳ `strideVL` | `integer` | Stride for `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VLW` | `Float64Array`<br><sub>length M</sub> | **out** · Workspace for VL (dimension M) |
+| ↳ `strideVLW` | `integer` | Stride for `VLW` |
+| ↳ `offsetVLW` | `NonNegativeInteger` | Starting index for `VLW` |
+| `alpha` | `number` | Diagonal element associated with the added row |
+| `beta` | `number` | Off-diagonal element associated with the added row |
+| `DSIGMA` | `Float64Array`<br><sub>length nl + nr + 1</sub> | **out** · Output array for singular values in secular equation (dimension N) |
+| ↳ `strideDSIGMA` | `integer` | Stride for `DSIGMA` |
+| ↳ `offsetDSIGMA` | `NonNegativeInteger` | Starting index for `DSIGMA` |
+| `IDX` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation to sort D into ascending order (dimension N) |
+| ↳ `strideIDX` | `integer` | Stride for `IDX` |
+| ↳ `offsetIDX` | `NonNegativeInteger` | Starting index for `IDX` |
+| `IDXP` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutation to place deflated values at end (dimension N) |
+| ↳ `strideIDXP` | `integer` | Stride for `IDXP` |
+| ↳ `offsetIDXP` | `NonNegativeInteger` | Starting index for `IDXP` |
+| `IDXQ` | `Int32Array`<br><sub>length nl + nr + 1</sub> | Permutation sorting each sub-problem (dimension N) |
+| ↳ `strideIDXQ` | `integer` | Stride for `IDXQ` |
+| ↳ `offsetIDXQ` | `NonNegativeInteger` | Starting index for `IDXQ` |
+| `PERM` | `Int32Array`<br><sub>length nl + nr + 1</sub> | **out** · Permutations from deflation and sorting (dimension N, not referenced if icompq=0) |
+| ↳ `stridePERM` | `integer` | Stride for `PERM` |
+| ↳ `offsetPERM` | `NonNegativeInteger` | Starting index for `PERM` |
+| `givptr` | `Int32Array` | **out** · Output (length-1 array): the number of Givens rotations which took place in this subproblem |
+| `GIVCOL` | `Int32Array`<br><sub>(nl + nr + 1) × 2</sub> | **out** · Pairs of columns for Givens rotations (dimension (LDGCOL, 2), not referenced if icompq=0) |
+| ↳ `strideGIVCOL1` | `integer` | First dimension stride for `GIVCOL` |
+| ↳ `strideGIVCOL2` | `integer` | Second dimension stride for `GIVCOL` |
+| ↳ `offsetGIVCOL` | `NonNegativeInteger` | Starting index for `GIVCOL` |
+| `GIVNUM` | `Float64Array`<br><sub>(nl + nr + 1) × 2</sub> | **out** · C and S values for Givens rotations (dimension (LDGNUM, 2), not referenced if icompq=0) |
+| ↳ `strideGIVNUM1` | `integer` | First dimension stride for `GIVNUM` |
+| ↳ `strideGIVNUM2` | `integer` | Second dimension stride for `GIVNUM` |
+| ↳ `offsetGIVNUM` | `NonNegativeInteger` | Starting index for `GIVNUM` |
+| `c` | `Float64Array` | **out** · Output (length-1 array): c contains garbage if SQRE =0 and the C-value of a Givens rotation related to the right null space if SQRE = 1 |
+| `s` | `Float64Array` | **out** · Output (length-1 array): s contains garbage if SQRE =0 and the S-value of a Givens rotation related to the right null space if SQRE = 1 |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

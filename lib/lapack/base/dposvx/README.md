@@ -35,31 +35,31 @@ dposvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"equilibrate"\|"factored")` | in |  | one of `'equilibrate'`, `'factored'`, `'not-factored'` | 'not-factored', 'equilibrate', or 'factored' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle of `A` is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Float64Array` | in/out | `N × N` |  | input/output Cholesky factor of `A` |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `equed` | `Array.<string>` | in/out |  | rejects `fact === 'factored' && !((equed === 'yes') \|\| equed === 'none')` | equilibration type ('none' or 'yes'); input if `fact` is 'factored' |
-| `s` | `Float64Array` | in/out | `N` |  | scale factors for `A` |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | input/output right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | out | `N × nrhs` |  | output solution matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `rcond` | `Float64Array` | out |  |  | output array; on return, `rcond[0]` is the reciprocal condition number estimate |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output forward error bounds |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output backward error bounds |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | workspace of length at least `3*N` (allocated if `null`) |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | integer workspace of length at least `N` (allocated if `null`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "equilibrate" \| "factored"` | 'not-factored', 'equilibrate', or 'factored' |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle of `A` is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output Cholesky factor of `A` |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `equed` | `Array.<string>` | **in/out** · Equilibration type ('none' or 'yes'); input if `fact` is 'factored'<br>Rejects `fact === 'factored' && !((equed === 'yes') \|\| equed === 'none')` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **in/out** · Scale factors for `A` |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · Output solution matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · Output array; on return, `rcond[0]` is the reciprocal condition number estimate |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output forward error bounds |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output backward error bounds |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace of length at least `3*N` (allocated if `null`) |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Integer workspace of length at least `N` (allocated if `null`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -161,45 +161,45 @@ Returns { info, equed, rcond } where:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"equilibrate"\|"factored")` | in |  | one of `'equilibrate'`, `'factored'`, `'not-factored'` | 'not-factored', 'equilibrate', or 'factored' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | N-by-N symmetric positive definite matrix (may be equilibrated on exit) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `AF` | `Float64Array` | in/out | `N × N` |  | N-by-N factored matrix (output) |
-| ↳ `strideAF1` | `integer` | in |  |  | stride of the first dimension of AF |
-| ↳ `strideAF2` | `integer` | in |  |  | stride of the second dimension of AF |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | index offset for AF |
-| `equed` | `Array.<string>` | in/out |  | rejects `fact === 'factored' && !((equed === 'yes') \|\| equed === 'none')` | equilibration type (input if FACT='factored') |
-| `s` | `Float64Array` | in/out | `N` |  | scaling factors (input if FACT='factored' and equed='yes', output if FACT='equilibrate') |
-| ↳ `strideS` | `integer` | in |  |  | stride for s |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index offset for s |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | N-by-NRHS right-hand side (may be scaled on exit) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B |
-| `X` | `Float64Array` | out | `N × nrhs` |  | N-by-NRHS solution matrix (output) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | index offset for X |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds (output, length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | index offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds (output, length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | index offset for BERR |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace array of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | index offset for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "equilibrate" \| "factored"` | 'not-factored', 'equilibrate', or 'factored' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N symmetric positive definite matrix (may be equilibrated on exit) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N factored matrix (output) |
+| ↳ `strideAF1` | `integer` | Stride of the first dimension of AF |
+| ↳ `strideAF2` | `integer` | Stride of the second dimension of AF |
+| ↳ `offsetAF` | `NonNegativeInteger` | Index offset for AF |
+| `equed` | `Array.<string>` | **in/out** · Equilibration type (input if FACT='factored')<br>Rejects `fact === 'factored' && !((equed === 'yes') \|\| equed === 'none')` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **in/out** · Scaling factors (input if FACT='factored' and equed='yes', output if FACT='equilibrate') |
+| ↳ `strideS` | `integer` | Stride for s |
+| ↳ `offsetS` | `NonNegativeInteger` | Index offset for s |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · N-by-NRHS right-hand side (may be scaled on exit) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · N-by-NRHS solution matrix (output) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Index offset for X |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds (output, length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Index offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds (output, length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Index offset for BERR |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace array of length N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Index offset for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

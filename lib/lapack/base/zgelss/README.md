@@ -41,22 +41,22 @@ zgelss(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix, overwritten on exit |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `max( M, N ) × nrhs` |  | on entry, M-by-NRHS RHS matrix; on exit, the N-by-NRHS solution matrix (its leading extent must be `max(M,N)`) |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, max( M, N ) )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `S` | `Float64Array` | out | `min( M, N )` |  | output array of singular values in decreasing order (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `S` |
-| `rcond` | `number` | in |  |  | used to determine the effective rank of A |
-| `rank` | `Int32Array` | out |  |  | output array; rank[0] set to the effective rank of A |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | complex workspace of at least the reference's MINWRK (`2*N + max(nrhs,M)` for `M >= N`, `2*M + max(nrhs,N)` for `M < N`); for optimum performance the reference's MAXWRK, which enables the LQ-first path (N >> M) and the blocked callees; if `null`, MAXWRK elements are allocated |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 5 * min( M, N )` |  | caller-owned real workspace, or `null` to auto-allocate at the minimum required size (`max(1, 5*min(M,N))`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix, overwritten on exit |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>max(M, N) × nrhs</sub> | **in/out** · On entry, M-by-NRHS RHS matrix; on exit, the N-by-NRHS solution matrix (its leading extent must be `max(M,N)`) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, max(M, N))`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `S` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of singular values in decreasing order (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride length for `S` |
+| `rcond` | `number` | Used to determine the effective rank of A |
+| `rank` | `Int32Array` | **out** · Output array; rank[0] set to the effective rank of A |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of at least the reference's MINWRK (`2*N + max(nrhs,M)` for `M >= N`, `2*M + max(nrhs,N)` for `M < N`); for optimum performance the reference's MAXWRK, which enables the LQ-first path (N >> M) and the blocked callees; if `null`, MAXWRK elements are allocated |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 5 * min(M, N)</sub> | **out** · Caller-owned real workspace, or `null` to auto-allocate at the minimum required size (`max(1, 5*min(M,N))`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -119,30 +119,30 @@ values which are less than RCOND times the largest singular value.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides (columns of B) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix, overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `B` | `Complex128Array` | in/out | `max( M, N ) × nrhs` |  | on entry, M-by-NRHS (or max(M,N)-by-NRHS) RHS matrix; |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `S` | `Float64Array` | out | `min( M, N )` |  | output array of singular values in decreasing order (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride length for S |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for S |
-| `rcond` | `number` | in |  |  | used to determine the effective rank of A. |
-| `rank` | `Int32Array` | out |  |  | output array; rank[0] set to the effective rank of A |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | caller-owned complex workspace of at least the reference's MINWRK, `computeMinWorkSize(M,N,nrhs)` complex elements from `offsetWork` (`2*N + max(nrhs,M)` for `M >= N`, `2*M + max(nrhs,N)` for `M < N`); for optimum performance the reference's MAXWRK (`computeWorkSize(M,N,nrhs)` from `base.js`), which the `null`-WORK wrapper allocates |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 5 * min( M, N )` |  | caller-owned real workspace of at least `max(1, 5*min(M,N))` elements from `offsetRWork` (never allocated here) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of B)<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix, overwritten on exit |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `B` | `Complex128Array`<br><sub>max(M, N) × nrhs</sub> | **in/out** · On entry, M-by-NRHS (or max(M,N)-by-NRHS) RHS matrix; |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `S` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of singular values in decreasing order (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride length for S |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for S |
+| `rcond` | `number` | Used to determine the effective rank of A. |
+| `rank` | `Int32Array` | **out** · Output array; rank[0] set to the effective rank of A |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Caller-owned complex workspace of at least the reference's MINWRK, `computeMinWorkSize(M,N,nrhs)` complex elements from `offsetWork` (`2*N + max(nrhs,M)` for `M >= N`, `2*M + max(nrhs,N)` for `M < N`); for optimum performance the reference's MAXWRK (`computeWorkSize(M,N,nrhs)` from `base.js`), which the `null`-WORK wrapper allocates |
+| ↳ `strideWork` | `integer` | Stride length for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 5 * min(M, N)</sub> | **out** · Caller-owned real workspace of at least `max(1, 5*min(M,N))` elements from `offsetRWork` (never allocated here) |
+| ↳ `strideRWork` | `integer` | Stride length for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

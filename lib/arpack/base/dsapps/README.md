@@ -29,23 +29,23 @@ dsapps(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `n` | `NonNegativeInteger` | in |  |  | problem size (dimension of the matrix `A`) |
-| `kev` | `NonNegativeInteger` | in |  |  | number of wanted eigenvalues; on exit, the order of the updated factorization |
-| `np` | `NonNegativeInteger` | in |  |  | number of implicit shifts to apply |
-| `shift` | `Float64Array` | in | `np` |  | shifts to apply (length `np`) |
-| ↳ `strideShift` | `integer` | in |  |  | stride length for `shift` |
-| `v` | `Float64Array` | in/out | `null × kev + np` |  | Arnoldi vectors in column-major order, `n` by `kev+np` |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `v` |
-| `h` | `Float64Array` | in/out | `null × 2` |  | symmetric tridiagonal matrix in 2-column column-major layout (subdiagonal in column 0, diagonal in column 1), `kev+np` by 2 |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `h` |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length `n`); updated in place |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `q` | `Float64Array` | in/out | `null × kev + np` |  | workspace to accumulate the rotations in column-major order, `kev+np` by `kev+np` |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `q` |
-| `workd` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace array (length >= `2*n`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `n` | `NonNegativeInteger` | Problem size (dimension of the matrix `A`) |
+| `kev` | `NonNegativeInteger` | Number of wanted eigenvalues; on exit, the order of the updated factorization |
+| `np` | `NonNegativeInteger` | Number of implicit shifts to apply |
+| `shift` | `Float64Array`<br><sub>length np</sub> | Shifts to apply (length `np`) |
+| ↳ `strideShift` | `integer` | Stride length for `shift` |
+| `v` | `Float64Array`<br><sub>? × (kev + np)</sub> | **in/out** · Arnoldi vectors in column-major order, `n` by `kev+np` |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `v` |
+| `h` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Symmetric tridiagonal matrix in 2-column column-major layout (subdiagonal in column 0, diagonal in column 1), `kev+np` by 2 |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `h` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length `n`); updated in place |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `q` | `Float64Array`<br><sub>? × (kev + np)</sub> | **in/out** · Workspace to accumulate the rotations in column-major order, `kev+np` by `kev+np` |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `q` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array (length >= `2*n`) |
 
 **Returns** `Float64Array`
 
@@ -75,32 +75,32 @@ dsapps.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `n` | `NonNegativeInteger` | in |  |  | problem size (dimension of the matrix `A`) |
-| `kev` | `NonNegativeInteger` | in |  |  | number of wanted eigenvalues; on exit, the order of the updated factorization |
-| `np` | `NonNegativeInteger` | in |  |  | number of implicit shifts to apply |
-| `shift` | `Float64Array` | in | `np` |  | shifts to apply (length `np`) |
-| ↳ `strideShift` | `integer` | in |  |  | stride length for `shift` |
-| ↳ `offsetShift` | `NonNegativeInteger` | in |  |  | starting index for `shift` |
-| `v` | `Float64Array` | in/out | `null × kev + np` |  | Arnoldi vectors, `n` by `kev+np` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `v` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
-| `h` | `Float64Array` | in/out | `null × 2` |  | symmetric tridiagonal matrix in 2-column layout (subdiagonal in column 0, diagonal in column 1), `kev+np` by 2 |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first (row) dimension of `h` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second (column) dimension of `h` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `h` |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length `n`); updated in place |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `q` | `Float64Array` | in/out | `null × kev + np` |  | workspace to accumulate the rotations, `kev+np` by `kev+np` |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first (row) dimension of `q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second (column) dimension of `q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `q` |
-| `workd` | `Float64Array` | out | `≥ 2 * N` |  | workspace array (length >= `2*n`) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
+| Parameter | Type | Description |
+|---|---|---|
+| `n` | `NonNegativeInteger` | Problem size (dimension of the matrix `A`) |
+| `kev` | `NonNegativeInteger` | Number of wanted eigenvalues; on exit, the order of the updated factorization |
+| `np` | `NonNegativeInteger` | Number of implicit shifts to apply |
+| `shift` | `Float64Array`<br><sub>length np</sub> | Shifts to apply (length `np`) |
+| ↳ `strideShift` | `integer` | Stride length for `shift` |
+| ↳ `offsetShift` | `NonNegativeInteger` | Starting index for `shift` |
+| `v` | `Float64Array`<br><sub>? × (kev + np)</sub> | **in/out** · Arnoldi vectors, `n` by `kev+np` |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `v` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
+| `h` | `Float64Array`<br><sub>? × 2</sub> | **in/out** · Symmetric tridiagonal matrix in 2-column layout (subdiagonal in column 0, diagonal in column 1), `kev+np` by 2 |
+| ↳ `strideH1` | `integer` | Stride of the first (row) dimension of `h` |
+| ↳ `strideH2` | `integer` | Stride of the second (column) dimension of `h` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `h` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length `n`); updated in place |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `q` | `Float64Array`<br><sub>? × (kev + np)</sub> | **in/out** · Workspace to accumulate the rotations, `kev+np` by `kev+np` |
+| ↳ `strideQ1` | `integer` | Stride of the first (row) dimension of `q` |
+| ↳ `strideQ2` | `integer` | Stride of the second (column) dimension of `q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `q` |
+| `workd` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array (length >= `2*n`) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
 
 **Returns** `Float64Array`
 

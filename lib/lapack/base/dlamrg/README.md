@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlamrg( n1, n2, a, strideA, dtrd1, dtrd2, INDEX, strideINDEX ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `n1` | `NonNegativeInteger` | in |  |  | these arguments contain the respective lengths of the two sorted lists to be merged. |
-| `n2` | `NonNegativeInteger` | in |  |  | these arguments contain the respective lengths of the two sorted lists to be merged. |
-| `a` | `Float64Array` | in | `n1 + n2` |  | the first N1 elements of A contain a list of numbers which are sorted in either ascending or descending order. |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `a` |
-| `dtrd1` | `integer` | in |  |  | these are the strides to be taken through the array A. |
-| `dtrd2` | `integer` | in |  |  | these are the strides to be taken through the array A. |
-| `INDEX` | `Int32Array` | out | `n1 + n2` |  | on exit this array will contain a permutation such that if B( I ) = A( INDEX( I ) ) for I=1,N1+N2, then B will be sorted in ascending order (0-based). |
-| ↳ `strideINDEX` | `integer` | in |  |  | stride length for `INDEX` |
+| Parameter | Type | Description |
+|---|---|---|
+| `n1` | `NonNegativeInteger` | These arguments contain the respective lengths of the two sorted lists to be merged. |
+| `n2` | `NonNegativeInteger` | These arguments contain the respective lengths of the two sorted lists to be merged. |
+| `a` | `Float64Array`<br><sub>length n1 + n2</sub> | The first N1 elements of A contain a list of numbers which are sorted in either ascending or descending order. |
+| ↳ `strideA` | `integer` | Stride length for `a` |
+| `dtrd1` | `integer` | These are the strides to be taken through the array A. |
+| `dtrd2` | `integer` | These are the strides to be taken through the array A. |
+| `INDEX` | `Int32Array`<br><sub>length n1 + n2</sub> | **out** · On exit this array will contain a permutation such that if B( I ) = A( INDEX( I ) ) for I=1,N1+N2, then B will be sorted in ascending order (0-based). |
+| ↳ `strideINDEX` | `integer` | Stride length for `INDEX` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,18 +68,18 @@ forward (+1) or backward (-1).
 NOTE: INDEX values are 1-based (Fortran convention) as they are used
 internally by the divide-and-conquer eigensolver.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `n1` | `NonNegativeInteger` | in |  |  | length of first sorted sublist |
-| `n2` | `NonNegativeInteger` | in |  |  | length of second sorted sublist |
-| `a` | `Float64Array` | in | `n1 + n2` |  | array containing two sorted sublists |
-| ↳ `strideA` | `integer` | in |  |  | stride for a |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for a |
-| `dtrd1` | `integer` | in |  |  | direction for first sublist (+1 forward, -1 backward) |
-| `dtrd2` | `integer` | in |  |  | direction for second sublist (+1 forward, -1 backward) |
-| `INDEX` | `Int32Array` | out | `n1 + n2` |  | output merged index list (1-based values) |
-| ↳ `strideINDEX` | `integer` | in |  |  | stride for INDEX |
-| ↳ `offsetINDEX` | `NonNegativeInteger` | in |  |  | starting index for INDEX |
+| Parameter | Type | Description |
+|---|---|---|
+| `n1` | `NonNegativeInteger` | Length of first sorted sublist |
+| `n2` | `NonNegativeInteger` | Length of second sorted sublist |
+| `a` | `Float64Array`<br><sub>length n1 + n2</sub> | Array containing two sorted sublists |
+| ↳ `strideA` | `integer` | Stride for a |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for a |
+| `dtrd1` | `integer` | Direction for first sublist (+1 forward, -1 backward) |
+| `dtrd2` | `integer` | Direction for second sublist (+1 forward, -1 backward) |
+| `INDEX` | `Int32Array`<br><sub>length n1 + n2</sub> | **out** · Output merged index list (1-based values) |
+| ↳ `strideINDEX` | `integer` | Stride for INDEX |
+| ↳ `offsetINDEX` | `NonNegativeInteger` | Starting index for INDEX |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

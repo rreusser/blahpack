@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zaxpy( N, alpha, x, strideX, y, strideY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `x` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `zx` stride length |
-| `y` | `Complex128Array` | in/out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `zy` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `alpha` | `Complex128` | Complex scalar |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `zx` stride length |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | `zy` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,16 +47,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zaxpy.ndarray( N, alpha, x, strideX, offsetX, y, strideY, offsetY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `alpha` | `Complex128` | in |  |  | complex scalar |
-| `x` | `Complex128Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `zx` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `zx` (in complex elements) |
-| `y` | `Complex128Array` | in/out | `N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride for `zy` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `zy` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `alpha` | `Complex128` | Complex scalar |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride for `zx` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `zx` (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride for `zy` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `zy` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

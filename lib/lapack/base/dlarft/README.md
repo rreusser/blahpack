@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarft( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `direct` | `("forward"\|"backward")` | in |  |  | `'forward'` or `'backward'` |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | `'columnwise'` or `'rowwise'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Float64Array` | in | `N × K` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `TAU` | `Float64Array` | in | `K` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `T` | `Float64Array` | out | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `storev` | `"columnwise" \| "rowwise"` | `'columnwise'` or `'rowwise'` |
+| `N` | `NonNegativeInteger` | Order of the block reflector |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Float64Array`<br><sub>N × K</sub> | Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `TAU` | `Float64Array`<br><sub>length K</sub> | Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `T` | `Float64Array`<br><sub>K × K</sub> | **out** · Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,23 +77,23 @@ dlarft.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `direct` | `("forward"\|"backward")` | in |  |  | `'forward'` or `'backward'` |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | `'columnwise'` or `'rowwise'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Float64Array` | in | `N × K` |  | matrix of reflector vectors |
-| ↳ `strideV1` | `integer` | in |  |  | stride of first dim of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of second dim of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `TAU` | `Float64Array` | in | `K` |  | array of scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `T` | `Float64Array` | out | `K × K` |  | output triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of first dim of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of second dim of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
+| Parameter | Type | Description |
+|---|---|---|
+| `direct` | `"forward" \| "backward"` | `'forward'` or `'backward'` |
+| `storev` | `"columnwise" \| "rowwise"` | `'columnwise'` or `'rowwise'` |
+| `N` | `NonNegativeInteger` | Order of the block reflector |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Float64Array`<br><sub>N × K</sub> | Matrix of reflector vectors |
+| ↳ `strideV1` | `integer` | Stride of first dim of V |
+| ↳ `strideV2` | `integer` | Stride of second dim of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `TAU` | `Float64Array`<br><sub>length K</sub> | Array of scalar factors |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `T` | `Float64Array`<br><sub>K × K</sub> | **out** · Output triangular matrix |
+| ↳ `strideT1` | `integer` | Stride of first dim of T |
+| ↳ `strideT2` | `integer` | Stride of second dim of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

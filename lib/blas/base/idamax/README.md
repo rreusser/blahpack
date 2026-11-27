@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 idamax( N, x, strideX ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in input vector(s) |
-| `x` | `Float64Array` | in | `N` |  | storage spacing between elements of DX. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in input vector(s) |
+| `x` | `Float64Array`<br><sub>length N</sub> | Storage spacing between elements of DX. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,12 +45,12 @@ idamax.ndarray( N, x, strideX, offsetX ) → integer
 
 Finds the index of the first element having the maximum absolute value.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | strideX length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | StrideX length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

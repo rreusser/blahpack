@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zunglq( order, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of Q (0 <= M <= N) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < M` | number of columns of Q (N >= 0) |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > M` | number of elementary reflectors (0 <= K <= M) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `K` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, M )` |  | workspace of length at least `max(1,M)`; `M*NB` (`NB = 32`) enables the blocked path when `K > 128`; if `null`, a workspace of the optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of Q (0 <= M <= N)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of Q (N >= 0)<br>Rejects `N < M` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors (0 <= K <= M)<br>Rejects `K < 0 \|\| K > M` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, M)</sub> | **out** · Workspace of length at least `max(1,M)`; `M*NB` (`NB = 32`) enables the blocked path when `K > 128`; if `null`, a workspace of the optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,21 +70,21 @@ zunglq.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of Q (0 <= M <= N) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < M` | number of columns of Q (N >= 0) |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > M` | number of elementary reflectors (0 <= K <= M) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (M x N) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `TAU` | `Complex128Array` | in | `K` |  | scalar factors of reflectors (length K) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, M )` |  | workspace of length at least `max(1,M)`; `M*NB` (`NB = 32`) enables the blocked path when `K > 128` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of Q (0 <= M <= N)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of Q (N >= 0)<br>Rejects `N < M` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors (0 <= K <= M)<br>Rejects `K < 0 \|\| K > M` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M x N) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Scalar factors of reflectors (length K) |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, M)</sub> | **out** · Workspace of length at least `max(1,M)`; `M*NB` (`NB = 32`) enables the blocked path when `K > 128` |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

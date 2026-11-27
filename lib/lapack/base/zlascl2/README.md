@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlascl2( order, M, N, d, strideD, X, LDX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in |  |  | real scaling vector of length `M` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `X` | `Complex128Array` | in/out | `M × N` |  | input/output complex matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array` | Real scaling vector of length `M` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `X` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output complex matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -58,17 +58,17 @@ Perform diagonal scaling on a complex matrix.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in |  |  | real scaling vector of length `M` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `X` | `Complex128Array` | in/out | `M × N` |  | input/output complex matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array` | Real scaling vector of length `M` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `X` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output complex matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

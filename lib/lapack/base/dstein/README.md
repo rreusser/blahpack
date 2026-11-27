@@ -33,27 +33,27 @@ dstein(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix. |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the tridiagonal matrix T. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in | `N - 1` |  | the (n-1) subdiagonal elements of the tridiagonal matrix T, in elements 1 to N-1. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < 0 \|\| M > N` | the number of eigenvectors to be found. 0 <= M <= N. |
-| `w` | `Float64Array` | in | `N` |  | the first M elements of W contain the eigenvalues for which eigenvectors are to be computed. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `IBLOCK` | `Int32Array` | in | `N` |  | the submatrix indices associated with the corresponding eigenvalues in W (0-based). |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride length for `IBLOCK` |
-| `ISPLIT` | `Int32Array` | in | `N` |  | the splitting points, at which T breaks up into submatrices (0-based). |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride length for `ISPLIT` |
-| `Z` | `Float64Array` | out | `N × M` |  | the computed eigenvectors. |
-| ↳ `LDZ` | `PositiveInteger` | in |  | column-major requires `LDZ ≥ max( 1, N )`; row-major requires `LDZ ≥ max( 1, M )` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 5 * N` |  | caller-provided workspace of at least `5 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
-| `IFAIL` | `Int32Array` | out | `M` |  | on normal exit, all elements of IFAIL are zero (0-based). |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride length for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the tridiagonal matrix T. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) subdiagonal elements of the tridiagonal matrix T, in elements 1 to N-1. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `M` | `NonNegativeInteger` | The number of eigenvectors to be found. 0 <= M <= N.<br>Rejects `M < 0 \|\| M > N` |
+| `w` | `Float64Array`<br><sub>length N</sub> | The first M elements of W contain the eigenvalues for which eigenvectors are to be computed. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | The submatrix indices associated with the corresponding eigenvalues in W (0-based). |
+| ↳ `strideIBLOCK` | `integer` | Stride length for `IBLOCK` |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | The splitting points, at which T breaks up into submatrices (0-based). |
+| ↳ `strideISPLIT` | `integer` | Stride length for `ISPLIT` |
+| `Z` | `Float64Array`<br><sub>N × M</sub> | **out** · The computed eigenvectors. |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Column-major requires `LDZ ≥ max(1, N)`<br>Row-major requires `LDZ ≥ max(1, M)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Caller-provided workspace of at least `5 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
+| `IFAIL` | `Int32Array`<br><sub>length M</sub> | **out** · On normal exit, all elements of IFAIL are zero (0-based). |
+| ↳ `strideIFAIL` | `integer` | Stride length for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -105,38 +105,38 @@ corresponding to specified eigenvalues, using inverse iteration.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements of T, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `e` | `Float64Array` | in | `N - 1` |  | subdiagonal elements of T, length N-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | offset for e |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < 0 \|\| M > N` | number of eigenvectors to compute |
-| `w` | `Float64Array` | in | `N` |  | eigenvalues (first M elements), grouped by block |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | offset for w |
-| `IBLOCK` | `Int32Array` | in | `N` |  | block indices for eigenvalues |
-| ↳ `strideIBLOCK` | `integer` | in |  |  | stride for IBLOCK |
-| ↳ `offsetIBLOCK` | `NonNegativeInteger` | in |  |  | offset for IBLOCK |
-| `ISPLIT` | `Int32Array` | in | `N` |  | splitting points |
-| ↳ `strideISPLIT` | `integer` | in |  |  | stride for ISPLIT |
-| ↳ `offsetISPLIT` | `NonNegativeInteger` | in |  |  | offset for ISPLIT |
-| `Z` | `Float64Array` | out | `N × M` |  | output eigenvectors (N x M column-major) |
-| ↳ `strideZ1` | `integer` | in |  |  | first dimension stride for Z |
-| ↳ `strideZ2` | `integer` | in |  |  | second dimension stride for Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | offset for Z |
-| `WORK` | `Float64Array` | out | `≥ 5 * N` |  | workspace of length 5*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
-| `IFAIL` | `Int32Array` | out | `M` |  | output, indices of non-converged eigenvectors |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for IFAIL |
-| ↳ `offsetIFAIL` | `NonNegativeInteger` | in |  |  | offset for IFAIL |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements of T, length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | Subdiagonal elements of T, length N-1 |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Offset for e |
+| `M` | `NonNegativeInteger` | Number of eigenvectors to compute<br>Rejects `M < 0 \|\| M > N` |
+| `w` | `Float64Array`<br><sub>length N</sub> | Eigenvalues (first M elements), grouped by block |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Offset for w |
+| `IBLOCK` | `Int32Array`<br><sub>length N</sub> | Block indices for eigenvalues |
+| ↳ `strideIBLOCK` | `integer` | Stride for IBLOCK |
+| ↳ `offsetIBLOCK` | `NonNegativeInteger` | Offset for IBLOCK |
+| `ISPLIT` | `Int32Array`<br><sub>length N</sub> | Splitting points |
+| ↳ `strideISPLIT` | `integer` | Stride for ISPLIT |
+| ↳ `offsetISPLIT` | `NonNegativeInteger` | Offset for ISPLIT |
+| `Z` | `Float64Array`<br><sub>N × M</sub> | **out** · Output eigenvectors (N x M column-major) |
+| ↳ `strideZ1` | `integer` | First dimension stride for Z |
+| ↳ `strideZ2` | `integer` | Second dimension stride for Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Offset for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ 5 * N</sub> | **out** · Workspace of length 5\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace of length N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
+| `IFAIL` | `Int32Array`<br><sub>length M</sub> | **out** · Output, indices of non-converged eigenvectors |
+| ↳ `strideIFAIL` | `integer` | Stride for IFAIL |
+| ↳ `offsetIFAIL` | `NonNegativeInteger` | Offset for IFAIL |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

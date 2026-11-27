@@ -29,23 +29,23 @@ zlaqp2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | total number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `offset` | `NonNegativeInteger` | in |  |  | number of rows already factored |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `JPVT` | `Int32Array` | in/out | `N` |  | input array |
-| ↳ `strideJPVT` | `integer` | in |  |  | `JPVT` stride length |
-| `TAU` | `Complex128Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `VN1` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVN1` | `integer` | in |  |  | `VN1` stride length |
-| `VN2` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideVN2` | `integer` | in |  |  | `VN2` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Total number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `offset` | `NonNegativeInteger` | Number of rows already factored |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideJPVT` | `integer` | `JPVT` stride length |
+| `TAU` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVN1` | `integer` | `VN1` stride length |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideVN2` | `integer` | `VN2` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -85,30 +85,30 @@ zlaqp2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | total number of rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of A |
-| `offset` | `NonNegativeInteger` | in |  |  | number of rows already factored |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation array (length >= N) |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Complex128Array` | out | `min( M, N )` |  | output reflector scalars |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `VN1` | `Float64Array` | in/out | `N` |  | partial column norms (real array) |
-| ↳ `strideVN1` | `integer` | in |  |  | stride for VN1 |
-| ↳ `offsetVN1` | `NonNegativeInteger` | in |  |  | starting index for VN1 |
-| `VN2` | `Float64Array` | in/out | `N` |  | original column norms (real array) |
-| ↳ `strideVN2` | `integer` | in |  |  | stride for VN2 |
-| ↳ `offsetVN2` | `NonNegativeInteger` | in |  |  | starting index for VN2 |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total number of rows of A |
+| `N` | `NonNegativeInteger` | Number of columns of A |
+| `offset` | `NonNegativeInteger` | Number of rows already factored |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation array (length >= N) |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Output reflector scalars |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Partial column norms (real array) |
+| ↳ `strideVN1` | `integer` | Stride for VN1 |
+| ↳ `offsetVN1` | `NonNegativeInteger` | Starting index for VN1 |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Original column norms (real array) |
+| ↳ `strideVN2` | `integer` | Stride for VN2 |
+| ↳ `offsetVN2` | `NonNegativeInteger` | Starting index for VN2 |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

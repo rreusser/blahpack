@@ -22,20 +22,20 @@ dtplqt( order, M, N, l, mb, A, LDA, B, LDB, T, LDT, WORK ) → integer
 
 Computes a blocked LQ factorization of a real triangular-pentagonal matrix `C = [A, B]` using the compact WY representation for `Q`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `B` and the order of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `B` |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| (L > min( M, N ) && min( M, N ) >= 0)` | number of rows of the lower trapezoidal part of `B` (`0 <= l <= min(M,N)`) |
-| `mb` | `NonNegativeInteger` | in |  | rejects `mb < 1 \|\| (mb > M && M > 0)` | block size (`1 <= mb`; if `M > 0`, also `mb <= M`) |
-| `A` | `Float64Array` | in/out | `M × M` |  | input/output matrix; on exit contains the lower triangular factor `L` |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input/output pentagonal matrix; on exit contains the Householder reflectors `V` |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `T` | `Float64Array` | out | `mb × M` |  | output matrix of block reflector factors |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ mb`; row-major requires `LDT ≥ max( 1, M )` | leading dimension of `T` (`LDT >= mb`) |
-| `WORK` | `(Float64Array\|null)` | out | `≥ mb * M` |  | workspace array of length at least `mb*M` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `B` and the order of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `B`<br>Requires `N ≥ 0` |
+| `l` | `NonNegativeInteger` | Number of rows of the lower trapezoidal part of `B` (`0 <= l <= min(M,N)`)<br>Rejects `L < 0 \|\| (L > min(M, N) && min(M, N) >= 0)` |
+| `mb` | `NonNegativeInteger` | Block size (`1 <= mb`; if `M > 0`, also `mb <= M`)<br>Rejects `mb < 1 \|\| (mb > M && M > 0)` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | **in/out** · Input/output matrix; on exit contains the lower triangular factor `L` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output pentagonal matrix; on exit contains the Householder reflectors `V` |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `T` | `Float64Array`<br><sub>mb × M</sub> | **out** · Output matrix of block reflector factors |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` (`LDT >= mb`)<br>Column-major requires `LDT ≥ mb`<br>Row-major requires `LDT ≥ max(1, M)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ mb * M</sub> | **out** · Workspace array of length at least `mb*M` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -84,27 +84,27 @@ Computes a blocked LQ factorization of a real triangular-pentagonal matrix `C = 
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `B` and the order of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `B` |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| (L > min( M, N ) && min( M, N ) >= 0)` | number of rows of the lower trapezoidal part of `B` (`0 <= l <= min(M,N)`) |
-| `mb` | `NonNegativeInteger` | in |  | rejects `mb < 1 \|\| (mb > M && M > 0)` | block size (`1 <= mb`; if `M > 0`, also `mb <= M`) |
-| `A` | `Float64Array` | in/out | `M × M` |  | input/output matrix; on exit contains the lower triangular factor `L` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `M × N` |  | input/output pentagonal matrix; on exit contains the Householder reflectors `V` |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `T` | `Float64Array` | out | `mb × M` |  | output matrix of upper triangular block reflector factors |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `WORK` | `Float64Array` | out | `≥ mb * M` |  | workspace array of length at least `mb*M` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `B` and the order of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `B`<br>Requires `N ≥ 0` |
+| `l` | `NonNegativeInteger` | Number of rows of the lower trapezoidal part of `B` (`0 <= l <= min(M,N)`)<br>Rejects `L < 0 \|\| (L > min(M, N) && min(M, N) >= 0)` |
+| `mb` | `NonNegativeInteger` | Block size (`1 <= mb`; if `M > 0`, also `mb <= M`)<br>Rejects `mb < 1 \|\| (mb > M && M > 0)` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | **in/out** · Input/output matrix; on exit contains the lower triangular factor `L` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output pentagonal matrix; on exit contains the Householder reflectors `V` |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `T` | `Float64Array`<br><sub>mb × M</sub> | **out** · Output matrix of upper triangular block reflector factors |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `WORK` | `Float64Array`<br><sub>length ≥ mb * M</sub> | **out** · Workspace array of length at least `mb*M` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,22 +29,22 @@ zgebrd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAUQ` | `Complex128Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAUQ` | `integer` | in |  |  | `TAUQ` stride length |
-| `TAUP` | `Complex128Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAUP` | `integer` | in |  |  | `TAUP` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( max( 1, M ), N )` |  | workspace of length at least `max(1,M,N)`; `(M+N)*NB` (NB from ilaenv) enables the blocked path; if `null`, that optimum is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAUQ` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAUQ` | `integer` | `TAUQ` stride length |
+| `TAUP` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAUP` | `integer` | `TAUP` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(max(1, M), N)</sub> | **out** · Workspace of length at least `max(1,M,N)`; `(M+N)*NB` (NB from ilaenv) enables the blocked path; if `null`, that optimum is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,29 +106,29 @@ zgebrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `d` | `Float64Array` | out | `min( M, N )` |  | output array of real diagonal elements of B |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | output array of real off-diagonal elements of B |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `TAUQ` | `Complex128Array` | out | `min( M, N )` |  | output array of scalar factors for Q |
-| ↳ `strideTAUQ` | `integer` | in |  |  | stride for TAUQ (in complex elements) |
-| ↳ `offsetTAUQ` | `NonNegativeInteger` | in |  |  | starting index for TAUQ (in complex elements) |
-| `TAUP` | `Complex128Array` | out | `min( M, N )` |  | output array of scalar factors for P |
-| ↳ `strideTAUP` | `integer` | in |  |  | stride for TAUP (in complex elements) |
-| ↳ `offsetTAUP` | `NonNegativeInteger` | in |  |  | starting index for TAUP (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( max( 1, M ), N )` |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of real diagonal elements of B |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Output array of real off-diagonal elements of B |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `TAUQ` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Output array of scalar factors for Q |
+| ↳ `strideTAUQ` | `integer` | Stride for TAUQ (in complex elements) |
+| ↳ `offsetTAUQ` | `NonNegativeInteger` | Starting index for TAUQ (in complex elements) |
+| `TAUP` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Output array of scalar factors for P |
+| ↳ `strideTAUP` | `integer` | Stride for TAUP (in complex elements) |
+| ↳ `offsetTAUP` | `NonNegativeInteger` | Starting index for TAUP (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(max(1, M), N)</sub> | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

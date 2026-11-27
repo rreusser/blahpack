@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaset( order, uplo, M, N, alpha, beta, A, LDA ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | `'upper'` or `'lower'`, otherwise full |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `alpha` | `Complex128` | in |  |  | complex off-diagonal value |
-| `beta` | `Complex128` | in |  |  | complex diagonal value |
-| `A` | `Complex128Array` | out | `m × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `"upper" \| "lower" \| "all"` | `'upper'` or `'lower'`, otherwise full |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `alpha` | `Complex128` | Complex off-diagonal value |
+| `beta` | `Complex128` | Complex diagonal value |
+| `A` | `Complex128Array`<br><sub>m × N</sub> | **out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,17 +67,17 @@ zlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Co
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | `'upper'` or `'lower'`, otherwise full |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `alpha` | `Complex128` | in |  |  | complex off-diagonal value |
-| `beta` | `Complex128` | in |  |  | complex diagonal value |
-| `A` | `Complex128Array` | out | `m × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `"upper" \| "lower" \| "all"` | `'upper'` or `'lower'`, otherwise full |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `alpha` | `Complex128` | Complex off-diagonal value |
+| `beta` | `Complex128` | Complex diagonal value |
+| `A` | `Complex128Array`<br><sub>m × N</sub> | **out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

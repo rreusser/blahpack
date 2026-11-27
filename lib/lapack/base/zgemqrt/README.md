@@ -22,22 +22,22 @@ zgemqrt( order, side, trans, M, N, K, nb, V, LDV, T, LDT, C, LDC, WORK ) → int
 
 Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is a complex unitary matrix represented in the compact WY form returned by `zgeqrt`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to build T |
-| `V` | `Complex128Array` | in | `Q × K` |  | reflector vectors from `zgeqrt` |
-| ↳ `LDV` | `PositiveInteger` | in |  | requires `LDV ≥ MAX(1,Q)` | leading dimension of V |
-| `T` | `Complex128Array` | in | `nb × K` |  | block triangular factors from `zgeqrt` |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ nb`; row-major requires `LDT ≥ max( 1, K )` | leading dimension of T (>= nb) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `WORK` | `(Complex128Array\|null)` | out |  |  | workspace buffer |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `nb` | `integer` | Block size used to build T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Complex128Array`<br><sub>Q × K</sub> | Reflector vectors from `zgeqrt` |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of V<br>Requires `LDV ≥ MAX(1,Q)` |
+| `T` | `Complex128Array`<br><sub>nb × K</sub> | Block triangular factors from `zgeqrt` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of T (>= nb)<br>Column-major requires `LDT ≥ nb`<br>Row-major requires `LDT ≥ max(1, K)` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null` | **out** · Workspace buffer |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,29 +98,29 @@ Overwrites a complex M-by-N matrix C with `op(Q)*C` or `C*op(Q)`, where Q is a c
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to build T |
-| `V` | `Complex128Array` | in | `Q × K` |  | reflector vectors from `zgeqrt` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V (complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V (complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (complex elements) |
-| `T` | `Complex128Array` | in | `nb × K` |  | block triangular factors from `zgeqrt` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T (complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T (complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T (complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (complex elements) |
-| `WORK` | `Complex128Array` | out |  |  | workspace buffer |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `nb` | `integer` | Block size used to build T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Complex128Array`<br><sub>Q × K</sub> | Reflector vectors from `zgeqrt` |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V (complex elements) |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V (complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (complex elements) |
+| `T` | `Complex128Array`<br><sub>nb × K</sub> | Block triangular factors from `zgeqrt` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T (complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T (complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T (complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (complex elements) |
+| `WORK` | `Complex128Array` | **out** · Workspace buffer |
+| ↳ `strideWork` | `integer` | Element stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

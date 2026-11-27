@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaqhb( order, uplo, N, KD, AB, LDAB, S, strideS, scond, amax, equed ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `KD` | `NonNegativeInteger` | in |  |  | number of super-diagonals (upper) or sub-diagonals (lower) |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | band matrix, dimension (LDAB, N) |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of AB |
-| `S` | `Float64Array` | in | `N` |  | scaling factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride for S |
-| `scond` | `number` | in |  |  | ratio of smallest to largest scaling factor |
-| `amax` | `number` | in |  |  | absolute value of largest matrix element |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `KD` | `NonNegativeInteger` | Number of super-diagonals (upper) or sub-diagonals (lower) |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Band matrix, dimension (LDAB, N) |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of AB |
+| `S` | `Float64Array`<br><sub>length N</sub> | Scaling factors, length N |
+| ↳ `strideS` | `integer` | Stride for S |
+| `scond` | `number` | Ratio of smallest to largest scaling factor |
+| `amax` | `number` | Absolute value of largest matrix element |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,21 +82,21 @@ zlaqhb.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  |  | number of super-diagonals (upper) or sub-diagonals (lower) |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | input/output band matrix, dimension (LDAB, N) |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (complex elements) |
-| `S` | `Float64Array` | in | `N` |  | scaling factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `S` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `S` |
-| `scond` | `number` | in |  |  | ratio of smallest to largest scaling factor |
-| `amax` | `number` | in |  |  | absolute value of largest matrix element |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `kd` | `NonNegativeInteger` | Number of super-diagonals (upper) or sub-diagonals (lower) |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Input/output band matrix, dimension (LDAB, N) |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (complex elements) |
+| `S` | `Float64Array`<br><sub>length N</sub> | Scaling factors, length N |
+| ↳ `strideS` | `integer` | Stride length for `S` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `S` |
+| `scond` | `number` | Ratio of smallest to largest scaling factor |
+| `amax` | `number` | Absolute value of largest matrix element |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

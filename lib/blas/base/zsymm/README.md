@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsymm( order, side, uplo, M, N, alpha, A, LDA, B, LDB, beta, C, LDC ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | whether the symmetric matrix A appears on the left or right in the operation as follows: `side === 'left'` C := alpha*A*B + beta*C, `side === 'right'` C := alpha*B*A + beta*C. |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the symmetric matrix A is to be referenced as follows: `uplo === 'upper'` Only the upper triangular part of the symmetric matrix is to be referenced. `uplo === 'lower'` Only the lower triangular part of the symmetric matrix is to be referenced. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrix C. |
-| `alpha` | `Complex128` | in |  |  | the scalar alpha. |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | m when `side === 'left'` and is n otherwise. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in | `M × N` |  | before entry, the leading m by n part of the array B must contain the matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `beta` | `Complex128` | in |  |  | the scalar beta. |
-| `C` | `Complex128Array` | in/out | `M × N` |  | before entry, the leading m by n part of the array C must contain the matrix C, except when beta is zero, in which case C need not be set on entry. On exit, the array C is overwritten by the m by n updated matrix. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | Whether the symmetric matrix A appears on the left or right in the operation as follows: `side === 'left'` C := alpha\*A\*B + beta\*C, `side === 'right'` C := alpha\*B\*A + beta\*C. |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the symmetric matrix A is to be referenced as follows: `uplo === 'upper'` Only the upper triangular part of the symmetric matrix is to be referenced. `uplo === 'lower'` Only the lower triangular part of the symmetric matrix is to be referenced. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix C.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix C.<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | The scalar alpha. |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | M when `side === 'left'` and is n otherwise. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | Before entry, the leading m by n part of the array B must contain the matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `beta` | `Complex128` | The scalar beta. |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Before entry, the leading m by n part of the array C must contain the matrix C, except when beta is zero, in which case C need not be set on entry. On exit, the array C is overwritten by the m by n updated matrix. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,26 +102,26 @@ Performs the symmetric matrix-matrix operation `C := α*A*B + β*C` or `C := α*
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | 'left' if A is on the left, 'right' if A is on the right |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower', specifies which triangle of A is stored |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier for A*B or B*A |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (side === 'left' ? M : N)` |  | symmetric matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (in complex elements) |
-| `B` | `Complex128Array` | in | `M × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B (in complex elements) |
-| `beta` | `Complex128` | in |  |  | complex scalar multiplier for C |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for C (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | 'left' if A is on the left, 'right' if A is on the right |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower', specifies which triangle of A is stored |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier for A\*B or B\*A |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (side === 'left' ? M : N)</sub> | Symmetric matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (in complex elements) |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B (in complex elements) |
+| `beta` | `Complex128` | Complex scalar multiplier for C |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for C (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

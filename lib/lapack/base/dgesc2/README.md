@@ -28,19 +28,19 @@ dgesc2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `A` | `Float64Array` | in | `N × N` |  | on entry, the LU part of the factorization of the n-by-n matrix A computed by DGETC2: A = P * L * U * Q. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `RHS` | `Float64Array` | in/out | `N` |  | on entry, the right hand side vector b. On exit, the solution vector X. |
-| ↳ `strideRHS` | `integer` | in |  |  | stride length for `RHS` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= N, row i of the matrix has been interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `JPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= j <= N, column j of the matrix has been interchanged with column JPIV(j) (0-based). |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride length for `JPIV` |
-| `scale` | `Float64Array` | out |  |  | on exit, SCALE contains the scale factor. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `A` | `Float64Array`<br><sub>N × N</sub> | On entry, the LU part of the factorization of the n-by-n matrix A computed by DGETC2: A = P \* L \* U \* Q. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `RHS` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the right hand side vector b. On exit, the solution vector X. |
+| ↳ `strideRHS` | `integer` | Stride length for `RHS` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= N, row i of the matrix has been interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= j <= N, column j of the matrix has been interchanged with column JPIV(j) (0-based). |
+| ↳ `strideJPIV` | `integer` | Stride length for `JPIV` |
+| `scale` | `Float64Array` | **out** · On exit, SCALE contains the scale factor. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,23 +83,23 @@ IPIV and JPIV are 0-based pivot indices from dgetc2.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `A` | `Float64Array` | in | `N × N` |  | LU-factored N-by-N matrix from dgetc2 |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `RHS` | `Float64Array` | in/out | `N` |  | right-hand side vector (overwritten with solution) |
-| ↳ `strideRHS` | `integer` | in |  |  | stride for RHS |
-| ↳ `offsetRHS` | `NonNegativeInteger` | in |  |  | starting index for RHS |
-| `IPIV` | `Int32Array` | in | `N` |  | row pivot indices from dgetc2, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `JPIV` | `Int32Array` | in | `N` |  | column pivot indices from dgetc2, 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
-| ↳ `offsetJPIV` | `NonNegativeInteger` | in |  |  | starting index for JPIV |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] receives the scaling factor |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `A` | `Float64Array`<br><sub>N × N</sub> | LU-factored N-by-N matrix from dgetc2 |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `RHS` | `Float64Array`<br><sub>length N</sub> | **in/out** · Right-hand side vector (overwritten with solution) |
+| ↳ `strideRHS` | `integer` | Stride for RHS |
+| ↳ `offsetRHS` | `NonNegativeInteger` | Starting index for RHS |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Row pivot indices from dgetc2, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | Column pivot indices from dgetc2, 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
+| ↳ `offsetJPIV` | `NonNegativeInteger` | Starting index for JPIV |
+| `scale` | `Float64Array` | **out** · Output: scale[0] receives the scaling factor |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

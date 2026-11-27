@@ -30,21 +30,21 @@ dgbcon(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | the number of subdiagonals within the band of A. |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | the number of superdiagonals within the band of A. |
-| `AB` | `Float64Array` | in | `2 * kl + ku + 1 × N` |  | details of the LU factorization of the band matrix A, as computed by DGBTRF. |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ 2 * kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= N, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | if `norm === 'one-norm'`, the 1-norm of the original matrix A. |
-| `rcond` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) * norm(inv(A))). |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of subdiagonals within the band of A.<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | The number of superdiagonals within the band of A.<br>Requires `ku ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | Details of the LU factorization of the band matrix A, as computed by DGBTRF. |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= N, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | If `norm === 'one-norm'`, the 1-norm of the original matrix A.<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) \* norm(inv(A))). |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -99,27 +99,27 @@ computed by dgbtrf.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Float64Array` | in | `2 * kl + ku + 1 × N` |  | LU factorization from dgbtrf, (2*KL+KU+1) by N |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dgbtrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm or infinity-norm of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace array of length 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factorization from dgbtrf, (2\*KL+KU+1) by N |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dgbtrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `anorm` | `number` | The 1-norm or infinity-norm of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace array of length 3\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

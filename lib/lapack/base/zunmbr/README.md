@@ -28,22 +28,22 @@ zunmbr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` or `'apply-P'` |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix for ZGEBRD |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (min( side === 'left' ? M : N, K ))` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | rejects `(vect === 'apply-Q' && lda < max( 1, side === 'left' ? M : N )) \|\| (vect !== 'apply-Q' && lda < max( 1, min( side === 'left' ? M : N, K ) ))` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `min( side === 'left' ? M : N, K )` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr/zunmlq optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` or `'apply-P'` |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix for ZGEBRD<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (min(side === 'left' ? M : N, K))</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Rejects `(vect === 'apply-Q' && lda < max(1, side === 'left' ? M : N)) \|\| (vect !== 'apply-Q' && lda < max(1, min(side === 'left' ? M : N, K)))` |
+| `TAU` | `Complex128Array`<br><sub>length min(side === 'left' ? M : N, K)</sub> | Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr/zunmlq optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -105,28 +105,28 @@ Multiplies a general matrix by the unitary matrix Q or P from a bidiagonal reduc
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` or `'apply-P'` |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix for ZGEBRD |
-| `A` | `Complex128Array` | in | `(side === 'left' ? M : N) × (min( side === 'left' ? M : N, K ))` |  | matrix containing reflectors from ZGEBRD |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `TAU` | `Complex128Array` | in | `min( side === 'left' ? M : N, K )` |  | scalar factors of reflectors (TAUQ or TAUP) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr/zunmlq optimum) enable the full blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` or `'apply-P'` |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix for ZGEBRD<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>(side === 'left' ? M : N) × (min(side === 'left' ? M : N, K))</sub> | Matrix containing reflectors from ZGEBRD |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length min(side === 'left' ? M : N, K)</sub> | Scalar factors of reflectors (TAUQ or TAUP) |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`, complex elements); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the zunmqr/zunmlq optimum) enable the full blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

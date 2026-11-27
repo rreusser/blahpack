@@ -33,27 +33,27 @@ dorbdb2(
 
 Simultaneously bidiagonalizes the blocks of a tall and skinny matrix `[X11; X21]` with orthonormal columns.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | total number of rows |
-| `P` | `NonNegativeInteger` | in |  | rejects `P < 0 \|\| P > M - P` | number of rows in `X11` |
-| `Q` | `NonNegativeInteger` | in |  | rejects `(Q < 0 \|\| Q < P) \|\| M - Q < P` | number of columns |
-| `X11` | `Float64Array` | in/out | `P × Q` |  | top block (`P`-by-`Q`) |
-| ↳ `LDX11` | `PositiveInteger` | in |  | column-major requires `LDX11 ≥ max( 1, P )`; row-major requires `LDX11 ≥ max( 1, Q )` | leading dimension of `X11` |
-| `X21` | `Float64Array` | in/out | `M - P × Q` |  | bottom block (`(M-P)`-by-`Q`) |
-| ↳ `LDX21` | `PositiveInteger` | in |  | column-major requires `LDX21 ≥ max( 1, M - P )`; row-major requires `LDX21 ≥ max( 1, Q )` | leading dimension of `X21` |
-| `THETA` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTHETA` | `integer` | in |  |  | stride length for `THETA` |
-| `PHI` | `Float64Array` | out | `Q - 1` |  | output array (length at least `Q-1`) |
-| ↳ `stridePHI` | `integer` | in |  |  | stride length for `PHI` |
-| `TAUP1` | `Float64Array` | out | `P - 1` |  | output array (length at least `P-1`) |
-| ↳ `strideTAUP1` | `integer` | in |  |  | stride length for `TAUP1` |
-| `TAUP2` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUP2` | `integer` | in |  |  | stride length for `TAUP2` |
-| `TAUQ1` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUQ1` | `integer` | in |  |  | stride length for `TAUQ1` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 2 + max( max( P - 1, M - P ), Q - 1 ) - 1, 2 + (Q - 1) - 1 )` |  | workspace (length at least `max(P, M-P+1, Q)`, the reference minimum and optimum `LWORK`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Total number of rows<br>Requires `M ≥ 0` |
+| `P` | `NonNegativeInteger` | Number of rows in `X11`<br>Rejects `P < 0 \|\| P > M - P` |
+| `Q` | `NonNegativeInteger` | Number of columns<br>Rejects `(Q < 0 \|\| Q < P) \|\| M - Q < P` |
+| `X11` | `Float64Array`<br><sub>P × Q</sub> | **in/out** · Top block (`P`-by-`Q`) |
+| ↳ `LDX11` | `PositiveInteger` | Leading dimension of `X11`<br>Column-major requires `LDX11 ≥ max(1, P)`<br>Row-major requires `LDX11 ≥ max(1, Q)` |
+| `X21` | `Float64Array`<br><sub>(M - P) × Q</sub> | **in/out** · Bottom block (`(M-P)`-by-`Q`) |
+| ↳ `LDX21` | `PositiveInteger` | Leading dimension of `X21`<br>Column-major requires `LDX21 ≥ max(1, M - P)`<br>Row-major requires `LDX21 ≥ max(1, Q)` |
+| `THETA` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTHETA` | `integer` | Stride length for `THETA` |
+| `PHI` | `Float64Array`<br><sub>length Q - 1</sub> | **out** · Output array (length at least `Q-1`) |
+| ↳ `stridePHI` | `integer` | Stride length for `PHI` |
+| `TAUP1` | `Float64Array`<br><sub>length P - 1</sub> | **out** · Output array (length at least `P-1`) |
+| ↳ `strideTAUP1` | `integer` | Stride length for `TAUP1` |
+| `TAUP2` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUP2` | `integer` | Stride length for `TAUP2` |
+| `TAUQ1` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUQ1` | `integer` | Stride length for `TAUQ1` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(2 + max(max(P - 1, M - P), Q - 1) - 1, 2 + (Q - 1) - 1)</sub> | **out** · Workspace (length at least `max(P, M-P+1, Q)`, the reference minimum and optimum `LWORK`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -111,37 +111,37 @@ Simultaneously bidiagonalizes the blocks of a tall and skinny matrix `[X11; X21]
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | total number of rows |
-| `P` | `NonNegativeInteger` | in |  | rejects `P < 0 \|\| P > M - P` | number of rows in `X11` |
-| `Q` | `NonNegativeInteger` | in |  | rejects `(Q < 0 \|\| Q < P) \|\| M - Q < P` | number of columns |
-| `X11` | `Float64Array` | in/out | `P × Q` |  | top block (`P`-by-`Q`) |
-| ↳ `strideX111` | `integer` | in |  |  | stride of the first dimension of `X11` |
-| ↳ `strideX112` | `integer` | in |  |  | stride of the second dimension of `X11` |
-| ↳ `offsetX11` | `NonNegativeInteger` | in |  |  | starting index for `X11` |
-| `X21` | `Float64Array` | in/out | `M - P × Q` |  | bottom block (`(M-P)`-by-`Q`) |
-| ↳ `strideX211` | `integer` | in |  |  | stride of the first dimension of `X21` |
-| ↳ `strideX212` | `integer` | in |  |  | stride of the second dimension of `X21` |
-| ↳ `offsetX21` | `NonNegativeInteger` | in |  |  | starting index for `X21` |
-| `THETA` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTHETA` | `integer` | in |  |  | stride length for `THETA` |
-| ↳ `offsetTHETA` | `NonNegativeInteger` | in |  |  | starting index for `THETA` |
-| `PHI` | `Float64Array` | out | `Q - 1` |  | output array (length at least `Q-1`) |
-| ↳ `stridePHI` | `integer` | in |  |  | stride length for `PHI` |
-| ↳ `offsetPHI` | `NonNegativeInteger` | in |  |  | starting index for `PHI` |
-| `TAUP1` | `Float64Array` | out | `P - 1` |  | output array (length at least `P-1`) |
-| ↳ `strideTAUP1` | `integer` | in |  |  | stride length for `TAUP1` |
-| ↳ `offsetTAUP1` | `NonNegativeInteger` | in |  |  | starting index for `TAUP1` |
-| `TAUP2` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUP2` | `integer` | in |  |  | stride length for `TAUP2` |
-| ↳ `offsetTAUP2` | `NonNegativeInteger` | in |  |  | starting index for `TAUP2` |
-| `TAUQ1` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUQ1` | `integer` | in |  |  | stride length for `TAUQ1` |
-| ↳ `offsetTAUQ1` | `NonNegativeInteger` | in |  |  | starting index for `TAUQ1` |
-| `WORK` | `Float64Array` | out | `≥ max( 2 + max( max( P - 1, M - P ), Q - 1 ) - 1, 2 + (Q - 1) - 1 )` |  | workspace (length at least `max(P, M-P+1, Q)`, the reference minimum and optimum `LWORK`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total number of rows<br>Requires `M ≥ 0` |
+| `P` | `NonNegativeInteger` | Number of rows in `X11`<br>Rejects `P < 0 \|\| P > M - P` |
+| `Q` | `NonNegativeInteger` | Number of columns<br>Rejects `(Q < 0 \|\| Q < P) \|\| M - Q < P` |
+| `X11` | `Float64Array`<br><sub>P × Q</sub> | **in/out** · Top block (`P`-by-`Q`) |
+| ↳ `strideX111` | `integer` | Stride of the first dimension of `X11` |
+| ↳ `strideX112` | `integer` | Stride of the second dimension of `X11` |
+| ↳ `offsetX11` | `NonNegativeInteger` | Starting index for `X11` |
+| `X21` | `Float64Array`<br><sub>(M - P) × Q</sub> | **in/out** · Bottom block (`(M-P)`-by-`Q`) |
+| ↳ `strideX211` | `integer` | Stride of the first dimension of `X21` |
+| ↳ `strideX212` | `integer` | Stride of the second dimension of `X21` |
+| ↳ `offsetX21` | `NonNegativeInteger` | Starting index for `X21` |
+| `THETA` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTHETA` | `integer` | Stride length for `THETA` |
+| ↳ `offsetTHETA` | `NonNegativeInteger` | Starting index for `THETA` |
+| `PHI` | `Float64Array`<br><sub>length Q - 1</sub> | **out** · Output array (length at least `Q-1`) |
+| ↳ `stridePHI` | `integer` | Stride length for `PHI` |
+| ↳ `offsetPHI` | `NonNegativeInteger` | Starting index for `PHI` |
+| `TAUP1` | `Float64Array`<br><sub>length P - 1</sub> | **out** · Output array (length at least `P-1`) |
+| ↳ `strideTAUP1` | `integer` | Stride length for `TAUP1` |
+| ↳ `offsetTAUP1` | `NonNegativeInteger` | Starting index for `TAUP1` |
+| `TAUP2` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUP2` | `integer` | Stride length for `TAUP2` |
+| ↳ `offsetTAUP2` | `NonNegativeInteger` | Starting index for `TAUP2` |
+| `TAUQ1` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUQ1` | `integer` | Stride length for `TAUQ1` |
+| ↳ `offsetTAUQ1` | `NonNegativeInteger` | Starting index for `TAUQ1` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(2 + max(max(P - 1, M - P), Q - 1) - 1, 2 + (Q - 1) - 1)</sub> | **out** · Workspace (length at least `max(P, M-P+1, Q)`, the reference minimum and optimum `LWORK`) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

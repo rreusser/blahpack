@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlat2c( order, uplo, N, A, LDA, SA, LDSA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether `A` is upper or lower triangular |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `SA` | `Complex64Array` | out | `M × N` |  | output matrix |
-| ↳ `LDSA` | `PositiveInteger` | in |  |  | leading dimension of `SA` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper or lower triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `SA` | `Complex64Array`<br><sub>M × N</sub> | **out** · Output matrix |
+| ↳ `LDSA` | `PositiveInteger` | Leading dimension of `SA` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,18 +67,18 @@ zlat2c.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether `A` is upper or lower triangular |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix `A` |
-| `A` | `Complex128Array` | in | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `SA` | `Complex64Array` | out | `M × N` |  | output matrix |
-| ↳ `strideSA1` | `integer` | in |  |  | stride of the first dimension of `SA` |
-| ↳ `strideSA2` | `integer` | in |  |  | stride of the second dimension of `SA` |
-| ↳ `offsetSA` | `NonNegativeInteger` | in |  |  | starting index for `SA` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether `A` is upper or lower triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix `A` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `SA` | `Complex64Array`<br><sub>M × N</sub> | **out** · Output matrix |
+| ↳ `strideSA1` | `integer` | Stride of the first dimension of `SA` |
+| ↳ `strideSA2` | `integer` | Stride of the second dimension of `SA` |
+| ↳ `offsetSA` | `NonNegativeInteger` | Starting index for `SA` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

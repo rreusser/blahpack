@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgebak( order, job, side, N, ilo, ihi, SCALE, strideSCALE, M, V, LDV ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | specifies the type of backward transformation required: `'none'`: do nothing, return immediately; `'permute'`: do backward transformation for permutation only; `'scale'`: do backward transformation for scaling only; `'both'`: do backward transformations for both permutation and scaling. JOB must be the same as the argument JOB supplied to ZGEBAL. |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'right'`: V contains right eigenvectors; `'left'`: V contains left eigenvectors. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of rows of the matrix V. |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | the integers ILO and IHI determined by ZGEBAL. 1 <= ILO <= IHI <= N, if N > 0. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | the integers ILO and IHI determined by ZGEBAL. 1 <= ILO <= IHI <= N, if N > 0. |
-| `SCALE` | `Float64Array` | in | `N` |  | details of the permutation and scaling factors, as returned by ZGEBAL. |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of columns of the matrix V. |
-| `V` | `Complex128Array` | in/out | `N × M` |  | on entry, the matrix of right or left eigenvectors to be transformed, as returned by ZHSEIN or ZTREVC. On exit, V is overwritten by the transformed eigenvectors. |
-| ↳ `LDV` | `PositiveInteger` | in |  | column-major requires `LDV ≥ max( 1, N )`; row-major requires `LDV ≥ max( 1, M )` | leading dimension of `V` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | Specifies the type of backward transformation required: `'none'`: do nothing, return immediately; `'permute'`: do backward transformation for permutation only; `'scale'`: do backward transformation for scaling only; `'both'`: do backward transformations for both permutation and scaling. JOB must be the same as the argument JOB supplied to ZGEBAL. |
+| `side` | `OperationSide` | `'right'`: V contains right eigenvectors; `'left'`: V contains left eigenvectors. |
+| `N` | `NonNegativeInteger` | The number of rows of the matrix V.<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | The integers ILO and IHI determined by ZGEBAL. 1 <= ILO <= IHI <= N, if N > 0.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | The integers ILO and IHI determined by ZGEBAL. 1 <= ILO <= IHI <= N, if N > 0.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | Details of the permutation and scaling factors, as returned by ZGEBAL. |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| `M` | `NonNegativeInteger` | The number of columns of the matrix V.<br>Requires `M ≥ 0` |
+| `V` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · On entry, the matrix of right or left eigenvectors to be transformed, as returned by ZHSEIN or ZTREVC. On exit, V is overwritten by the transformed eigenvectors. |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Column-major requires `LDV ≥ max(1, N)`<br>Row-major requires `LDV ≥ max(1, M)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -100,21 +100,21 @@ by zgebal.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows of the matrix V |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | index determined by zgebal (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | index determined by zgebal (1-based) |
-| `SCALE` | `Float64Array` | in | `N` |  | permutation and scaling factors from zgebal |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| ↳ `offsetSCALE` | `NonNegativeInteger` | in |  |  | starting index for `SCALE` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of columns of the matrix V |
-| `V` | `Complex128Array` | in/out | `N × M` |  | matrix of eigenvectors to be transformed (overwritten on exit) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` (in complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `side` | `OperationSide` | `'right'` for right eigenvectors, `'left'` for left eigenvectors |
+| `N` | `NonNegativeInteger` | Number of rows of the matrix V<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Index determined by zgebal (1-based)<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Index determined by zgebal (1-based)<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | Permutation and scaling factors from zgebal |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| ↳ `offsetSCALE` | `NonNegativeInteger` | Starting index for `SCALE` |
+| `M` | `NonNegativeInteger` | Number of columns of the matrix V<br>Requires `M ≥ 0` |
+| `V` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · Matrix of eigenvectors to be transformed (overwritten on exit) |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` (in complex elements) |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

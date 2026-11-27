@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsytd2( order, uplo, N, A, LDA, d, strideD, e, strideE, TAU, strideTAU ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,23 +75,23 @@ dsytd2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix; on exit, contains tridiagonal form and reflectors |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `d` | `Float64Array` | out | `N` |  | output array for the diagonal elements of T (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `N - 1` |  | output array for the off-diagonal elements of T (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | output array for the scalar factors of the reflectors (length N-1) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper ('upper') or lower ('lower') triangular part of A is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix; on exit, contains tridiagonal form and reflectors |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for the diagonal elements of T (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output array for the off-diagonal elements of T (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output array for the scalar factors of the reflectors (length N-1) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

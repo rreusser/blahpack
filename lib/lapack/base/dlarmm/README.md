@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarmm( anorm, bnorm, cnorm ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `anorm` | `number` | in |  |  | the infinity norm of A. |
-| `bnorm` | `number` | in |  |  | the infinity norm of B. |
-| `cnorm` | `number` | in |  |  | the infinity norm of C. |
+| Parameter | Type | Description |
+|---|---|---|
+| `anorm` | `number` | The infinity norm of A. |
+| `bnorm` | `number` | The infinity norm of B. |
+| `cnorm` | `number` | The infinity norm of C. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,11 +45,11 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlarmm.ndarray( anorm, bnorm, cnorm ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `anorm` | `number` | in |  |  | the infinity norm of A. |
-| `bnorm` | `number` | in |  |  | the infinity norm of B. |
-| `cnorm` | `number` | in |  |  | the infinity norm of C. |
+| Parameter | Type | Description |
+|---|---|---|
+| `anorm` | `number` | The infinity norm of A. |
+| `bnorm` | `number` | The infinity norm of B. |
+| `cnorm` | `number` | The infinity norm of C. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

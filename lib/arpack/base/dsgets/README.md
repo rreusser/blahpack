@@ -27,18 +27,18 @@ dsgets(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ishift` | `integer` | in |  |  | if 1, compute the shifts; if 0, leave `shifts` untouched |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
-| `kev` | `NonNegativeInteger` | in |  |  | number of wanted Ritz values |
-| `np` | `NonNegativeInteger` | in |  |  | number of shifts (unwanted Ritz values) |
-| `ritz` | `Float64Array` | in/out | `kev + np` |  | Ritz values (length kev+np); reordered in place |
-| ↳ `strideRitz` | `integer` | in |  |  | stride length for `ritz` |
-| `bounds` | `Float64Array` | in/out | `kev + np` |  | Ritz estimates (length kev+np); permuted alongside `ritz` |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| `shifts` | `Float64Array` | out | `np` |  | output array for the selected shifts (length np) |
-| ↳ `strideShifts` | `integer` | in |  |  | stride length for `shifts` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ishift` | `integer` | If 1, compute the shifts; if 0, leave `shifts` untouched |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Ordering: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
+| `kev` | `NonNegativeInteger` | Number of wanted Ritz values |
+| `np` | `NonNegativeInteger` | Number of shifts (unwanted Ritz values) |
+| `ritz` | `Float64Array`<br><sub>length kev + np</sub> | **in/out** · Ritz values (length kev+np); reordered in place |
+| ↳ `strideRitz` | `integer` | Stride length for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length kev + np</sub> | **in/out** · Ritz estimates (length kev+np); permuted alongside `ritz` |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| `shifts` | `Float64Array`<br><sub>length np</sub> | **out** · Output array for the selected shifts (length np) |
+| ↳ `strideShifts` | `integer` | Stride length for `shifts` |
 
 **Returns** `Float64Array`
 
@@ -61,21 +61,21 @@ dsgets.ndarray(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ishift` | `integer` | in |  |  | if 1, compute the shifts; if 0, leave `shifts` untouched |
-| `which` | `("LM"\|"SM"\|"LA"\|"SA"\|"BE")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
-| `kev` | `NonNegativeInteger` | in |  |  | number of wanted Ritz values |
-| `np` | `NonNegativeInteger` | in |  |  | number of shifts (unwanted Ritz values) |
-| `ritz` | `Float64Array` | in/out | `kev + np` |  | Ritz values (length kev+np); reordered in place |
-| ↳ `strideRitz` | `integer` | in |  |  | stride length for `ritz` |
-| ↳ `offsetRitz` | `NonNegativeInteger` | in |  |  | starting index for `ritz` |
-| `bounds` | `Float64Array` | in/out | `kev + np` |  | Ritz estimates (length kev+np); permuted alongside `ritz` |
-| ↳ `strideBounds` | `integer` | in |  |  | stride length for `bounds` |
-| ↳ `offsetBounds` | `NonNegativeInteger` | in |  |  | starting index for `bounds` |
-| `shifts` | `Float64Array` | out | `np` |  | output array for the selected shifts (length np) |
-| ↳ `strideShifts` | `integer` | in |  |  | stride length for `shifts` |
-| ↳ `offsetShifts` | `NonNegativeInteger` | in |  |  | starting index for `shifts` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ishift` | `integer` | If 1, compute the shifts; if 0, leave `shifts` untouched |
+| `which` | `"LM" \| "SM" \| "LA" \| "SA" \| "BE"` | Ordering: `'LM'`, `'SM'`, `'LA'`, `'SA'`, or `'BE'` |
+| `kev` | `NonNegativeInteger` | Number of wanted Ritz values |
+| `np` | `NonNegativeInteger` | Number of shifts (unwanted Ritz values) |
+| `ritz` | `Float64Array`<br><sub>length kev + np</sub> | **in/out** · Ritz values (length kev+np); reordered in place |
+| ↳ `strideRitz` | `integer` | Stride length for `ritz` |
+| ↳ `offsetRitz` | `NonNegativeInteger` | Starting index for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length kev + np</sub> | **in/out** · Ritz estimates (length kev+np); permuted alongside `ritz` |
+| ↳ `strideBounds` | `integer` | Stride length for `bounds` |
+| ↳ `offsetBounds` | `NonNegativeInteger` | Starting index for `bounds` |
+| `shifts` | `Float64Array`<br><sub>length np</sub> | **out** · Output array for the selected shifts (length np) |
+| ↳ `strideShifts` | `integer` | Stride length for `shifts` |
+| ↳ `offsetShifts` | `NonNegativeInteger` | Starting index for `shifts` |
 
 **Returns** `Float64Array`
 

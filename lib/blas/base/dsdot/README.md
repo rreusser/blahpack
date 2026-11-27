@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsdot( N, x, strideX, y, strideY ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in input vector(s) |
-| `x` | `Float64Array` | in | `N` |  | first input vector, with N elements (accumulated in double precision). |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Float64Array` | in | `N` |  | second input vector, with N elements. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in input vector(s) |
+| `x` | `Float64Array`<br><sub>length N</sub> | First input vector, with N elements (accumulated in double precision). |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | Second input vector, with N elements. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -49,15 +49,15 @@ dsdot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → number
 
 Computes the dot product of two vectors with extended precision accumulation.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting `x` index |
-| `y` | `Float64Array` | in | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting `y` index |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting `x` index |
+| `y` | `Float64Array`<br><sub>length N</sub> | Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting `y` index |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

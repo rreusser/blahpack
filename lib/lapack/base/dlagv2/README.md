@@ -31,23 +31,23 @@ dlagv2(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `A` | `Float64Array` | in/out | `2 × 2` |  | input/output 2-by-2 matrix A (column-major) |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `2 × 2` |  | input/output 2-by-2 upper triangular matrix B (column-major) |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `alphar` | `Float64Array` | out | `2` |  | output array for real parts of eigenvalue numerators |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `alphar` |
-| `alphai` | `Float64Array` | out | `2` |  | output array for imaginary parts of eigenvalue numerators |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `alphai` |
-| `beta` | `Float64Array` | out | `2` |  | output array for eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `beta` |
-| `csl` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the left rotation matrix |
-| `snl` | `Float64Array` | out |  |  | output (length-1 array): the sine of the left rotation matrix |
-| `csr` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the right rotation matrix |
-| `snr` | `Float64Array` | out |  |  | output (length-1 array): the sine of the right rotation matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `A` | `Float64Array`<br><sub>2 × 2</sub> | **in/out** · Input/output 2-by-2 matrix A (column-major) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>2 × 2</sub> | **in/out** · Input/output 2-by-2 upper triangular matrix B (column-major) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `alphar` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for real parts of eigenvalue numerators |
+| ↳ `strideALPHAR` | `integer` | Stride length for `alphar` |
+| `alphai` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for imaginary parts of eigenvalue numerators |
+| ↳ `strideALPHAI` | `integer` | Stride length for `alphai` |
+| `beta` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride length for `beta` |
+| `csl` | `Float64Array` | **out** · Output (length-1 array): the cosine of the left rotation matrix |
+| `snl` | `Float64Array` | **out** · Output (length-1 array): the sine of the left rotation matrix |
+| `csr` | `Float64Array` | **out** · Output (length-1 array): the cosine of the right rotation matrix |
+| `snr` | `Float64Array` | **out** · Output (length-1 array): the sine of the right rotation matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,29 +88,29 @@ dlagv2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `A` | `Float64Array` | in/out | `2 × 2` |  | input/output 2-by-2 matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `2 × 2` |  | input/output 2-by-2 upper triangular matrix B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `alphar` | `Float64Array` | out | `2` |  | output array for real parts of eigenvalue numerators |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `alphar` |
-| ↳ `offsetALPHAR` | `NonNegativeInteger` | in |  |  | starting index for `alphar` |
-| `alphai` | `Float64Array` | out | `2` |  | output array for imaginary parts of eigenvalue numerators |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `alphai` |
-| ↳ `offsetALPHAI` | `NonNegativeInteger` | in |  |  | starting index for `alphai` |
-| `beta` | `Float64Array` | out | `2` |  | output array for eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `beta` |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for `beta` |
-| `csl` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the left rotation matrix |
-| `snl` | `Float64Array` | out |  |  | output (length-1 array): the sine of the left rotation matrix |
-| `csr` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the right rotation matrix |
-| `snr` | `Float64Array` | out |  |  | output (length-1 array): the sine of the right rotation matrix |
+| Parameter | Type | Description |
+|---|---|---|
+| `A` | `Float64Array`<br><sub>2 × 2</sub> | **in/out** · Input/output 2-by-2 matrix A |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>2 × 2</sub> | **in/out** · Input/output 2-by-2 upper triangular matrix B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `alphar` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for real parts of eigenvalue numerators |
+| ↳ `strideALPHAR` | `integer` | Stride length for `alphar` |
+| ↳ `offsetALPHAR` | `NonNegativeInteger` | Starting index for `alphar` |
+| `alphai` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for imaginary parts of eigenvalue numerators |
+| ↳ `strideALPHAI` | `integer` | Stride length for `alphai` |
+| ↳ `offsetALPHAI` | `NonNegativeInteger` | Starting index for `alphai` |
+| `beta` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array for eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride length for `beta` |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for `beta` |
+| `csl` | `Float64Array` | **out** · Output (length-1 array): the cosine of the left rotation matrix |
+| `snl` | `Float64Array` | **out** · Output (length-1 array): the sine of the left rotation matrix |
+| `csr` | `Float64Array` | **out** · Output (length-1 array): the cosine of the right rotation matrix |
+| `snr` | `Float64Array` | **out** · Output (length-1 array): the sine of the right rotation matrix |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

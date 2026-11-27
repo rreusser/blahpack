@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zpoequ( order, N, A, LDA, s, strideS, scond, amax ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Complex128Array` | in | `N × N` |  | the N-by-N Hermitian positive definite matrix whose scaling factors are to be computed. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `s` | `Float64Array` | out | `N` |  | if INFO = 0, S contains the scale factors for A. |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | The N-by-N Hermitian positive definite matrix whose scaling factors are to be computed. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · If INFO = 0, S contains the scale factors for A. |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,18 +77,18 @@ Returns an object with:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | input N-by-N Hermitian positive definite matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (in complex elements) |
-| `s` | `Float64Array` | out | `N` |  | output scale factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride for s |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index offset for s |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input N-by-N Hermitian positive definite matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (in complex elements) |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · Output scale factors, length N |
+| ↳ `strideS` | `integer` | Stride for s |
+| ↳ `offsetS` | `NonNegativeInteger` | Index offset for s |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

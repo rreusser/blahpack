@@ -33,17 +33,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaed5( i, D, strideD, Z, strideZ, DELTA, strideDELTA, rho, dlam ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i` | `integer` | in |  |  | index of the eigenvalue to compute (1 or 2) |
-| `D` | `Float64Array` | in | `2` |  | input array of length 2 containing the original eigenvalues |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| `Z` | `Float64Array` | in | `2` |  | input array of length 2 containing the updating vector components |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| `DELTA` | `Float64Array` | out | `2` |  | output array of length 2 for eigenvector construction info |
-| ↳ `strideDELTA` | `integer` | in |  |  | stride length for `DELTA` |
-| `rho` | `number` | in |  |  | scalar in the symmetric updating formula |
-| `dlam` | `Float64Array` | out |  |  | output array of length 1; `dlam[0]` receives the computed eigenvalue |
+| Parameter | Type | Description |
+|---|---|---|
+| `i` | `integer` | Index of the eigenvalue to compute (1 or 2) |
+| `D` | `Float64Array`<br><sub>length 2</sub> | Input array of length 2 containing the original eigenvalues |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| `Z` | `Float64Array`<br><sub>length 2</sub> | Input array of length 2 containing the updating vector components |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| `DELTA` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array of length 2 for eigenvector construction info |
+| ↳ `strideDELTA` | `integer` | Stride length for `DELTA` |
+| `rho` | `number` | Scalar in the symmetric updating formula |
+| `dlam` | `Float64Array` | **out** · Output array of length 1; `dlam[0]` receives the computed eigenvalue |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -76,20 +76,20 @@ dlaed5.ndarray(
 
 Solves the 2-by-2 secular equation.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i` | `integer` | in |  |  | index of the eigenvalue to compute (1 or 2) |
-| `D` | `Float64Array` | in | `2` |  | input array of length 2 containing the original eigenvalues |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
-| `Z` | `Float64Array` | in | `2` |  | input array of length 2 containing the updating vector components |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `DELTA` | `Float64Array` | out | `2` |  | output array of length 2 for eigenvector construction info |
-| ↳ `strideDELTA` | `integer` | in |  |  | stride length for `DELTA` |
-| ↳ `offsetDELTA` | `NonNegativeInteger` | in |  |  | starting index for `DELTA` |
-| `rho` | `number` | in |  |  | scalar in the symmetric updating formula |
-| `dlam` | `Float64Array` | out |  |  | output array of length 1; `dlam[0]` receives the computed eigenvalue |
+| Parameter | Type | Description |
+|---|---|---|
+| `i` | `integer` | Index of the eigenvalue to compute (1 or 2) |
+| `D` | `Float64Array`<br><sub>length 2</sub> | Input array of length 2 containing the original eigenvalues |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
+| `Z` | `Float64Array`<br><sub>length 2</sub> | Input array of length 2 containing the updating vector components |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `DELTA` | `Float64Array`<br><sub>length 2</sub> | **out** · Output array of length 2 for eigenvector construction info |
+| ↳ `strideDELTA` | `integer` | Stride length for `DELTA` |
+| ↳ `offsetDELTA` | `NonNegativeInteger` | Starting index for `DELTA` |
+| `rho` | `number` | Scalar in the symmetric updating formula |
+| `dlam` | `Float64Array` | **out** · Output array of length 1; `dlam[0]` receives the computed eigenvalue |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

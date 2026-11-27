@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarrk( N, iw, gl, gu, d, strideD, E2, strideE2, pivmin, reltol, w, werr ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `iw` | `integer` | in |  |  | the index of the eigenvalues to be returned. |
-| `gl` | `number` | in |  |  | an upper and a lower bound on the eigenvalue. |
-| `gu` | `number` | in |  |  | an upper and a lower bound on the eigenvalue. |
-| `d` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `E2` | `Float64Array` | in | `N - 1` |  | output array |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `reltol` | `number` | in |  |  | relative tolerance for convergence |
-| `w` | `Float64Array` | out |  |  | output array for the computed eigenvalue |
-| `werr` | `Float64Array` | out |  |  | output array for the error bound |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `iw` | `integer` | The index of the eigenvalues to be returned. |
+| `gl` | `number` | An upper and a lower bound on the eigenvalue. |
+| `gu` | `number` | An upper and a lower bound on the eigenvalue. |
+| `d` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Output array |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `reltol` | `number` | Relative tolerance for convergence |
+| `w` | `Float64Array` | **out** · Output array for the computed eigenvalue |
+| `werr` | `Float64Array` | **out** · Output array for the error bound |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -71,22 +71,22 @@ dlarrk.ndarray(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `iw` | `integer` | in |  |  | 1-based index of the eigenvalue to compute |
-| `gl` | `number` | in |  |  | lower bound of the initial interval |
-| `gu` | `number` | in |  |  | upper bound of the initial interval |
-| `D` | `Float64Array` | in | `N` |  | diagonal elements (length `N`) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
-| `E2` | `Float64Array` | in | `N - 1` |  | squared off-diagonal elements (length `N-1`) |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| ↳ `offsetE2` | `NonNegativeInteger` | in |  |  | starting index for `E2` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `reltol` | `number` | in |  |  | relative tolerance for the returned eigenvalue |
-| `w` | `Float64Array` | out |  |  | output array for the computed eigenvalue (length >= 1) |
-| `werr` | `Float64Array` | out |  |  | output array for the error bound (length >= 1) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `iw` | `integer` | 1-based index of the eigenvalue to compute |
+| `gl` | `number` | Lower bound of the initial interval |
+| `gu` | `number` | Upper bound of the initial interval |
+| `D` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (length `N`) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
+| `E2` | `Float64Array`<br><sub>length N - 1</sub> | Squared off-diagonal elements (length `N-1`) |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| ↳ `offsetE2` | `NonNegativeInteger` | Starting index for `E2` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `reltol` | `number` | Relative tolerance for the returned eigenvalue |
+| `w` | `Float64Array` | **out** · Output array for the computed eigenvalue (length >= 1) |
+| `werr` | `Float64Array` | **out** · Output array for the error bound (length >= 1) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

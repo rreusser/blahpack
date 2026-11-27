@@ -29,22 +29,22 @@ zgbmv(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | the operation to be performed as follows: `trans === 'no-transpose'` y := alpha*A*x + beta*y. `trans === 'transpose'` y := alpha*A**T*x + beta*y. `trans === 'conjugate-transpose'` y := alpha*A**H*x + beta*y. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrix A. |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | the number of sub-diagonals of the matrix A. |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | the number of super-diagonals of the matrix A. |
-| `alpha` | `Complex128` | in |  |  | the scalar alpha. |
-| `A` | `Complex128Array` | in | `kl + ku + 1 × N` |  | before entry, the leading ( kl + ku + 1 ) by n part of the array A must contain the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row ( ku + 1 ) of the array, the first super-diagonal starting at position 2 in row ku, the first sub-diagonal starting at position 1 in row ( ku + 2 ), and so on. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ kl + ku + 1`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | before entry, the incremented array X must contain the vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `Complex128` | in |  |  | the scalar beta. |
-| `y` | `Complex128Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `trans` | `TransposeOperation` | The operation to be performed as follows: `trans === 'no-transpose'` y := alpha\*A\*x + beta\*y. `trans === 'transpose'` y := alpha\*A\*\*T\*x + beta\*y. `trans === 'conjugate-transpose'` y := alpha\*A\*\*H\*x + beta\*y. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A.<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of sub-diagonals of the matrix A.<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | The number of super-diagonals of the matrix A.<br>Requires `ku ≥ 0` |
+| `alpha` | `Complex128` | The scalar alpha. |
+| `A` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Before entry, the leading ( kl + ku + 1 ) by n part of the array A must contain the matrix of coefficients, supplied column by column, with the leading diagonal of the matrix in row ( ku + 1 ) of the array, the first super-diagonal starting at position 2 in row ku, the first sub-diagonal starting at position 1 in row ( ku + 2 ), and so on. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ kl + ku + 1`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Before entry, the incremented array X must contain the vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `Complex128` | The scalar beta. |
+| `y` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -126,25 +126,25 @@ diagonal at row `ku`. Element `A(i,j)` of the full matrix is at band position
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of sub-diagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of super-diagonals |
-| `alpha` | `Complex128` | in |  |  | complex scalar constant |
-| `A` | `Complex128Array` | in | `kl + ku + 1 × N` |  | band matrix in band storage |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `x` | `Complex128Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `beta` | `Complex128` | in |  |  | complex scalar constant |
-| `y` | `Complex128Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals<br>Requires `ku ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar constant |
+| `A` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `x` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `beta` | `Complex128` | Complex scalar constant |
+| `y` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

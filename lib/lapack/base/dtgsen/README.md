@@ -38,36 +38,36 @@ dtgsen(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ijob` | `integer` | in |  | rejects `ijob < 0 \|\| ijob > 5` | specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT. |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `ALPHAR` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (wantq && ldq < N)` | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (wantz && ldz < N)` | leading dimension of `Z` |
-| `M` | `Int32Array` | out |  |  | number of rows |
-| `pl` | `Float64Array` | out |  |  | if IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
-| `pr` | `Float64Array` | out |  |  | if IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
-| `DIF` | `Float64Array` | out | `2` |  | input array |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( max( 1, 4 * N + 16 ), 2 * m * (N - m) ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 4 * N + 16 ), 4 * m * (N - m) ) : max( 1, 4 * N + 16 ))` |  | workspace of length at least `max(1,4N+16)`; for `ijob` 1, 2 or 4, also `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference documents `2*M*(N-M)`, but its DTGSYL calls get `LWORK - 2*M*(N-M)` and reject less than 1); for `ijob` 3 or 5, also `4*M*(N-M)`; M is the dimension of the selected deflating subspaces, or `null` to allocate it (the reference's optimum, raised to that minimum) |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, N + 6 ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 6 ) : 1)` |  | integer workspace of length at least 1; for `ijob` 1, 2 or 4, `max(1,N+6)`; for `ijob` 3 or 5, `max(1,2*M*(N-M),N+6)`, or `null` to allocate the reference's optimum |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ijob` | `integer` | Specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT.<br>Rejects `ijob < 0 \|\| ijob > 5` |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (wantq && ldq < N)` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (wantz && ldz < N)` |
+| `M` | `Int32Array` | **out** · Number of rows |
+| `pl` | `Float64Array` | **out** · If IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
+| `pr` | `Float64Array` | **out** · If IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
+| `DIF` | `Float64Array`<br><sub>length 2</sub> | **out** · Input array |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(max(1, 4 * N + 16), 2 * m * (N - m)) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 4 * N + 16), 4 * m * (N - m)) : max(1, 4 * N + 16))</sub> | **out** · Workspace of length at least `max(1,4N+16)`; for `ijob` 1, 2 or 4, also `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference documents `2*M*(N-M)`, but its DTGSYL calls get `LWORK - 2*M*(N-M)` and reject less than 1); for `ijob` 3 or 5, also `4*M*(N-M)`; M is the dimension of the selected deflating subspaces, or `null` to allocate it (the reference's optimum, raised to that minimum) |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, N + 6) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 2 * m * (N - m)), N + 6) : 1)</sub> | **out** · Integer workspace of length at least 1; for `ijob` 1, 2 or 4, `max(1,N+6)`; for `ijob` 3 or 5, `max(1,2*M*(N-M),N+6)`, or `null` to allocate the reference's optimum |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -136,52 +136,52 @@ dtgsen.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ijob` | `integer` | in |  | rejects `ijob < 0 \|\| ijob > 5` | specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT. |
-| `wantq` | `boolean` | in |  |  | `true` : update the left transformation matrix Q; `false`: do not update Q. |
-| `wantz` | `boolean` | in |  |  | `true` : update the right transformation matrix Z; `false`: do not update Z. |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `ALPHAR` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| ↳ `offsetALPHAR` | `NonNegativeInteger` | in |  |  | starting index for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| ↳ `offsetALPHAI` | `NonNegativeInteger` | in |  |  | starting index for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for `BETA` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `M` | `Int32Array` | out |  |  | number of rows |
-| `pl` | `Float64Array` | out |  |  | if IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
-| `pr` | `Float64Array` | out |  |  | if IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
-| `DIF` | `Float64Array` | out | `2` |  | input array |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| ↳ `offsetDIF` | `NonNegativeInteger` | in |  |  | starting index for `DIF` |
-| `WORK` | `Float64Array` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( max( 1, 4 * N + 16 ), 2 * m * (N - m) ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 4 * N + 16 ), 4 * m * (N - m) ) : max( 1, 4 * N + 16 ))` |  | workspace of length at least `max(1,4N+16)`; for `ijob` 1, 2 or 4, also `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference documents `2*M*(N-M)`, but its DTGSYL calls get `LWORK - 2*M*(N-M)` and reject less than 1); for `ijob` 3 or 5, also `4*M*(N-M)`; M is the dimension of the selected deflating subspaces |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max( 1, N + 6 ) : (ijob === 3 \|\| ijob === 5 ? max( max( 1, 2 * m * (N - m) ), N + 6 ) : 1)` |  | integer workspace of length at least 1; for `ijob` 1, 2 or 4, `max(1,N+6)`; for `ijob` 3 or 5, `max(1,2*M*(N-M),N+6)` |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ijob` | `integer` | Specifies whether condition numbers are required for the cluster of eigenvalues (PL and PR) or the deflating subspaces (Difu and Difl): =0: Only reorder w.r.t. SELECT.<br>Rejects `ijob < 0 \|\| ijob > 5` |
+| `wantq` | `boolean` | `true` : update the left transformation matrix Q; `false`: do not update Q. |
+| `wantz` | `boolean` | `true` : update the right transformation matrix Z; `false`: do not update Z. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| ↳ `offsetALPHAR` | `NonNegativeInteger` | Starting index for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| ↳ `offsetALPHAI` | `NonNegativeInteger` | Starting index for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for `BETA` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `M` | `Int32Array` | **out** · Number of rows |
+| `pl` | `Float64Array` | **out** · If IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
+| `pr` | `Float64Array` | **out** · If IJOB = 1, 4 or 5, PL, PR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 0 < PL, PR <= 1. |
+| `DIF` | `Float64Array`<br><sub>length 2</sub> | **out** · Input array |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| ↳ `offsetDIF` | `NonNegativeInteger` | Starting index for `DIF` |
+| `WORK` | `Float64Array`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(max(1, 4 * N + 16), 2 * m * (N - m)) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 4 * N + 16), 4 * m * (N - m)) : max(1, 4 * N + 16))</sub> | **out** · Workspace of length at least `max(1,4N+16)`; for `ijob` 1, 2 or 4, also `2*M*(N-M) + 1` when `M*(N-M) > 0` (the reference documents `2*M*(N-M)`, but its DTGSYL calls get `LWORK - 2*M*(N-M)` and reject less than 1); for `ijob` 3 or 5, also `4*M*(N-M)`; M is the dimension of the selected deflating subspaces |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ (ijob === 1 \|\| ijob === 2) \|\| ijob === 4 ? max(1, N + 6) : (ijob === 3 \|\| ijob === 5 ? max(max(1, 2 * m * (N - m)), N + 6) : 1)</sub> | **out** · Integer workspace of length at least 1; for `ijob` 1, 2 or 4, `max(1,N+6)`; for `ijob` 3 or 5, `max(1,2*M*(N-M),N+6)` |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

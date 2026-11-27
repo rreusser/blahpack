@@ -25,15 +25,15 @@ Adds a vector `W` to a doubled-single precision accumulator `(X, Y)` in place.
 The accumulator's high-order part is stored in `X` and low-order part in `Y`
 so that `X[i] + Y[i]` approximates the running sum with extra precision.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in `X`, `Y`, and `W` |
-| `x` | `Float64Array` | in/out | `N` |  | high-order part of the accumulator (modified in place) |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | low-order part of the accumulator (modified in place) |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| `w` | `Float64Array` | in | `N` |  | vector to be added |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in `X`, `Y`, and `W` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · High-order part of the accumulator (modified in place) |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Low-order part of the accumulator (modified in place) |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| `w` | `Float64Array`<br><sub>length N</sub> | Vector to be added |
+| ↳ `strideW` | `integer` | Stride length for `w` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,18 +67,18 @@ dla_wwaddw.ndarray(
 Adds a vector `W` to a doubled-single precision accumulator `(X, Y)` in place.
 using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements in `X`, `Y`, and `W` |
-| `x` | `Float64Array` | in/out | `N` |  | high-order part of the accumulator (modified in place) |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | low-order part of the accumulator (modified in place) |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `w` | `Float64Array` | in | `N` |  | vector to be added |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements in `X`, `Y`, and `W` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · High-order part of the accumulator (modified in place) |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Low-order part of the accumulator (modified in place) |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `w` | `Float64Array`<br><sub>length N</sub> | Vector to be added |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

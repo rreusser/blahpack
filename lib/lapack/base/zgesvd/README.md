@@ -30,23 +30,23 @@ zgesvd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' 0 'column-major') |
-| `jobu` | `("all-columns"\|"economy"\|"overwrite"\|"none")` | in |  | one of `'all-columns'`, `'none'`, `'overwrite'`, `'economy'` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
-| `jobvt` | `("all-rows"\|"economy"\|"overwrite"\|"none")` | in |  | rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` | `'all-rows'`: all N rows of V^H returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `s` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | `s` stride length |
-| `U` | `Complex128Array` | out | `M × (jobu === 'all-columns' ? M : min( M, N ))` |  | input matrix |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| ((jobu === 'all-columns' \|\| jobu === 'economy') && ldu < M)` | leading dimension of `U` |
-| `VT` | `Complex128Array` | out | `N × N` |  | input matrix |
-| ↳ `LDVT` | `PositiveInteger` | in |  | rejects `(ldvt < 1 \|\| (jobvt === 'all-rows' && ldvt < N)) \|\| (jobvt === 'economy' && ldvt < min( M, N ))` | leading dimension of `VT` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | complex workspace of at least the reference's MINWRK (at most `max( 1, 2*min(M,N) + max(M,N) )`), or `null` to allocate the reference's MAXWRK, which enables the fast QR/LQ paths and the callees' blocked code |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 5 * min( M, N )` |  | real workspace, or `null` to auto-allocate at the minimum required size (`max(1, 5*min(M,N))`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' 0 'column-major') |
+| `jobu` | `"all-columns" \| "economy" \| "overwrite" \| "none"` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
+| `jobvt` | `"all-rows" \| "economy" \| "overwrite" \| "none"` | `'all-rows'`: all N rows of V^H returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT<br>Rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `s` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | `s` stride length |
+| `U` | `Complex128Array`<br><sub>M × (jobu === 'all-columns' ? M : min(M, N))</sub> | **out** · Input matrix |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Rejects `ldu < 1 \|\| ((jobu === 'all-columns' \|\| jobu === 'economy') && ldu < M)` |
+| `VT` | `Complex128Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `LDVT` | `PositiveInteger` | Leading dimension of `VT`<br>Rejects `(ldvt < 1 \|\| (jobvt === 'all-rows' && ldvt < N)) \|\| (jobvt === 'economy' && ldvt < min(M, N))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of at least the reference's MINWRK (at most `max( 1, 2*min(M,N) + max(M,N) )`), or `null` to allocate the reference's MAXWRK, which enables the fast QR/LQ paths and the callees' blocked code |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 5 * min(M, N)</sub> | **out** · Real workspace, or `null` to auto-allocate at the minimum required size (`max(1, 5*min(M,N))`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -122,33 +122,33 @@ zgesvd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("all-columns"\|"economy"\|"overwrite"\|"none")` | in |  | one of `'all-columns'`, `'none'`, `'overwrite'`, `'economy'` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
-| `jobvt` | `("all-rows"\|"economy"\|"overwrite"\|"none")` | in |  | rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` | `'all-rows'`: all N rows of V^H returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `s` | `Float64Array` | out | `min( M, N )` |  | output array of real singular values (length min(M,N)) |
-| ↳ `strideS` | `integer` | in |  |  | stride for s |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for s |
-| `U` | `Complex128Array` | out | `M × (jobu === 'all-columns' ? M : min( M, N ))` |  | output matrix for left singular vectors |
-| ↳ `strideU1` | `integer` | in |  |  | stride of the first dimension of U (in complex elements) |
-| ↳ `strideU2` | `integer` | in |  |  | stride of the second dimension of U (in complex elements) |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U (in complex elements) |
-| `VT` | `Complex128Array` | out | `N × N` |  | output matrix for right singular vectors |
-| ↳ `strideVT1` | `integer` | in |  |  | stride of the first dimension of VT (in complex elements) |
-| ↳ `strideVT2` | `integer` | in |  |  | stride of the second dimension of VT (in complex elements) |
-| ↳ `offsetVT` | `NonNegativeInteger` | in |  |  | starting index for VT (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | complex workspace of at least the reference's MINWRK, `computeMinWorkSize( jobu, jobvt, M, N )` complex elements from `offsetWork` (`3*min(M,N)` when M is much larger than N with jobu `'none'`, or N much larger than M with jobvt `'none'`; otherwise `2*min(M,N) + max(M,N)`); the reference's MAXWRK, `computeWorkSize( jobu, jobvt, M, N )`, enables the fast QR/LQ paths and the callees' blocked code |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 5 * min( M, N )` |  | caller-owned real workspace of at least `max(1, 5*min(M,N))` elements from `offsetRWork` (never allocated here) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"all-columns" \| "economy" \| "overwrite" \| "none"` | `'all-columns'`: all M columns of U returned, `'economy'`: first min(M,N) columns, `'overwrite'`: overwrite A, `'none'`: no U |
+| `jobvt` | `"all-rows" \| "economy" \| "overwrite" \| "none"` | `'all-rows'`: all N rows of V^H returned, `'economy'`: first min(M,N) rows, `'overwrite'`: overwrite A, `'none'`: no VT<br>Rejects `!(((jobvt === 'all-rows' \|\| jobvt === 'economy') \|\| jobvt === 'overwrite') \|\| jobvt === 'none') \|\| (jobvt === 'overwrite' && jobu === 'overwrite')` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `s` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of real singular values (length min(M,N)) |
+| ↳ `strideS` | `integer` | Stride for s |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for s |
+| `U` | `Complex128Array`<br><sub>M × (jobu === 'all-columns' ? M : min(M, N))</sub> | **out** · Output matrix for left singular vectors |
+| ↳ `strideU1` | `integer` | Stride of the first dimension of U (in complex elements) |
+| ↳ `strideU2` | `integer` | Stride of the second dimension of U (in complex elements) |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U (in complex elements) |
+| `VT` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output matrix for right singular vectors |
+| ↳ `strideVT1` | `integer` | Stride of the first dimension of VT (in complex elements) |
+| ↳ `strideVT2` | `integer` | Stride of the second dimension of VT (in complex elements) |
+| ↳ `offsetVT` | `NonNegativeInteger` | Starting index for VT (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of at least the reference's MINWRK, `computeMinWorkSize( jobu, jobvt, M, N )` complex elements from `offsetWork` (`3*min(M,N)` when M is much larger than N with jobu `'none'`, or N much larger than M with jobvt `'none'`; otherwise `2*min(M,N) + max(M,N)`); the reference's MAXWRK, `computeWorkSize( jobu, jobvt, M, N )`, enables the fast QR/LQ paths and the callees' blocked code |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 5 * min(M, N)</sub> | **out** · Caller-owned real workspace of at least `max(1, 5*min(M,N))` elements from `offsetRWork` (never allocated here) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

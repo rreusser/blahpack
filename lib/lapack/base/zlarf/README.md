@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarf( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Complex128Array` | in | `( side === 'left' ) ? M : N` |  | input array |
-| ↳ `strideV` | `integer` | in |  |  | `v` stride length |
-| `tau` | `Complex128Array` | in |  |  | complex scalar |
-| `C` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Complex128Array`<br><sub>length (side === 'left') ? M : N</sub> | Input array |
+| ↳ `strideV` | `integer` | `v` stride length |
+| `tau` | `Complex128Array` | Complex scalar |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,23 +73,23 @@ zlarf.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Complex128Array` | in | `( side === 'left' ) ? M : N` |  | reflector vector |
-| ↳ `strideV` | `integer` | in |  |  | stride for v (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for v (in complex elements) |
-| `tau` | `Complex128Array` | in |  |  | complex scalar |
-| ↳ `offsetTau` | `NonNegativeInteger` | in |  |  | starting index for tau (in complex elements) |
-| `C` | `Complex128Array` | in/out | `M × N` |  | matrix, modified in-place |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Complex128Array`<br><sub>length (side === 'left') ? M : N</sub> | Reflector vector |
+| ↳ `strideV` | `integer` | Stride for v (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for v (in complex elements) |
+| `tau` | `Complex128Array` | Complex scalar |
+| ↳ `offsetTau` | `NonNegativeInteger` | Starting index for tau (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Matrix, modified in-place |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -32,24 +32,24 @@ dgees(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvs` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Schur vectors are not computed; `'compute-vectors'`: Schur vectors are computed. |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | specifies whether or not to order the eigenvalues on the diagonal of the Schur form. `'none'`: Eigenvalues are not ordered; `'sort'`: Eigenvalues are ordered (see SELECT). |
-| `select` | `Function` | in |  |  | sELECT must be declared EXTERNAL in the calling subroutine. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Float64Array` | in/out | `N × N` |  | on entry, the N-by-N matrix A. On exit, A has been overwritten by its real Schur form T. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `sdim` | `Int32Array` | out |  |  | if `sort === 'none'`, SDIM = 0. |
-| `WR` | `Float64Array` | out | `N` |  | wR and WI contain the real and imaginary parts, respectively, of the computed eigenvalues in the same order that they appear on the diagonal of the output Schur form T. |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | out | `N` |  | wR and WI contain the real and imaginary parts, respectively, of the computed eigenvalues in the same order that they appear on the diagonal of the output Schur form T. |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `VS` | `Float64Array` | out | `N × N` |  | if `jobvs === 'compute-vectors'`, VS contains the orthogonal matrix Z of Schur vectors. |
-| ↳ `LDVS` | `PositiveInteger` | in |  | rejects `ldvs < 1 \|\| (jobvs === 'compute-vectors' && ldvs < N)` | leading dimension of `VS` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | workspace of at least `max(1,3*N)` elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: dgehrd `N*NB + 4160`, dorghr `(N-1)*NB` with Schur vectors, and dhseqr's LWKOPT) |
-| `BWORK` | `(Uint8Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvs` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Schur vectors are not computed; `'compute-vectors'`: Schur vectors are computed. |
+| `sort` | `"none" \| "sort"` | Specifies whether or not to order the eigenvalues on the diagonal of the Schur form. `'none'`: Eigenvalues are not ordered; `'sort'`: Eigenvalues are ordered (see SELECT). |
+| `select` | `Function` | SELECT must be declared EXTERNAL in the calling subroutine. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the N-by-N matrix A. On exit, A has been overwritten by its real Schur form T. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `sdim` | `Int32Array` | **out** · If `sort === 'none'`, SDIM = 0. |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · WR and WI contain the real and imaginary parts, respectively, of the computed eigenvalues in the same order that they appear on the diagonal of the output Schur form T. |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · WR and WI contain the real and imaginary parts, respectively, of the computed eigenvalues in the same order that they appear on the diagonal of the output Schur form T. |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `VS` | `Float64Array`<br><sub>N × N</sub> | **out** · If `jobvs === 'compute-vectors'`, VS contains the orthogonal matrix Z of Schur vectors. |
+| ↳ `LDVS` | `PositiveInteger` | Leading dimension of `VS`<br>Rejects `ldvs < 1 \|\| (jobvs === 'compute-vectors' && ldvs < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,3*N)` elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: dgehrd `N*NB + 4160`, dorghr `(N-1)*NB` with Schur vectors, and dhseqr's LWKOPT) |
+| `BWORK` | `Uint8Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -119,33 +119,33 @@ to the selected eigenvalues.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvs` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'none'` or `'compute-vectors'` |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'none'` or `'sort'` |
-| `select` | `Function` | in |  |  | function(wr, wi) returning boolean; used when sort=`'sort'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | N-by-N matrix, overwritten with Schur form T on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `sdim` | `Int32Array` | out |  |  | output: sdim[0] = number of eigenvalues for which SELECT is true |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for WI |
-| `VS` | `Float64Array` | out | `N × N` |  | output: N-by-N matrix of Schur vectors |
-| ↳ `strideVS1` | `integer` | in |  |  | stride of the first dimension of VS |
-| ↳ `strideVS2` | `integer` | in |  |  | stride of the second dimension of VS |
-| ↳ `offsetVS` | `NonNegativeInteger` | in |  |  | starting index for VS |
-| `WORK` | `Float64Array` | out | `≥ MINWRK` |  | workspace of at least `max(1,3*N)` elements (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `BWORK` | `Uint8Array` | out | `≥ N` |  | boolean workspace of length N (used when sort=`'sort'`) |
-| ↳ `strideBWork` | `integer` | in |  |  | stride for BWORK |
-| ↳ `offsetBWork` | `NonNegativeInteger` | in |  |  | starting index for BWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvs` | `"no-vectors" \| "compute-vectors"` | `'none'` or `'compute-vectors'`<br>One of `'no-vectors'`, `'compute-vectors'`. |
+| `sort` | `"none" \| "sort"` | `'none'` or `'sort'` |
+| `select` | `Function` | Function(wr, wi) returning boolean; used when sort=`'sort'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N matrix, overwritten with Schur form T on exit |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `sdim` | `Int32Array` | **out** · Output: sdim[0] = number of eigenvalues for which SELECT is true |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for WI |
+| `VS` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: N-by-N matrix of Schur vectors |
+| ↳ `strideVS1` | `integer` | Stride of the first dimension of VS |
+| ↳ `strideVS2` | `integer` | Stride of the second dimension of VS |
+| ↳ `offsetVS` | `NonNegativeInteger` | Starting index for VS |
+| `WORK` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,3*N)` elements (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `BWORK` | `Uint8Array`<br><sub>length ≥ N</sub> | **out** · Boolean workspace of length N (used when sort=`'sort'`) |
+| ↳ `strideBWork` | `integer` | Stride for BWORK |
+| ↳ `offsetBWork` | `NonNegativeInteger` | Starting index for BWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

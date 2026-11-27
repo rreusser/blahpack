@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhetrd_he2hb( order, uplo, N, kd, A, LDA, AB, LDAB, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super-/sub-diagonals of the reduced band matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AB` | `Complex128Array` | out | `kd + 1 × N` |  | output band-diagonal matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ max( 1, kd + 1 )`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `TAU` | `Complex128Array` | out | `N - kd` |  | output reflector scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ LWMIN` |  | workspace of at least the reference's minimum (and optimum) `max(1, N*kd + N*max(kd,32) + 2*kd*kd)` complex elements; `null` allocates that size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super-/sub-diagonals of the reduced band matrix<br>Requires `kd ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **out** · Output band-diagonal matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ max(1, kd + 1)`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length N - kd</sub> | **out** · Output reflector scalar factors |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ LWMIN</sub> | **out** · Workspace of at least the reference's minimum (and optimum) `max(1, N*kd + N*max(kd,32) + 2*kd*kd)` complex elements; `null` allocates that size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,25 +79,25 @@ zhetrd_he2hb.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super-/sub-diagonals of the reduced band matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix (complex-element strides) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `AB` | `Complex128Array` | out | `kd + 1 × N` |  | output band-diagonal matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (in complex elements) |
-| `TAU` | `Complex128Array` | out | `N - kd` |  | output array of reflector scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for `TAU` (in complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ LWMIN` |  | workspace; length from `offsetWork` at least the reference's minimum (and optimum) `max(1, N*kd + N*max(kd,32) + 2*kd*kd)` complex elements when `N > 0`, including when `N <= kd+1` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super-/sub-diagonals of the reduced band matrix<br>Requires `kd ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix (complex-element strides) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **out** · Output band-diagonal matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (in complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length N - kd</sub> | **out** · Output array of reflector scalar factors |
+| ↳ `strideTAU` | `integer` | Stride for `TAU` (in complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ LWMIN</sub> | **out** · Workspace; length from `offsetWork` at least the reference's minimum (and optimum) `max(1, N*kd + N*max(kd,32) + 2*kd*kd)` complex elements when `N > 0`, including when `N <= kd+1` |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

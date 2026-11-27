@@ -20,12 +20,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zdrscl( N, sa, x, strideX ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | the number of components of the vector x. |
-| `sa` | `number` | in |  |  | the scalar a which is used to divide each component of x. |
-| `x` | `Complex128Array` | in/out | `N` |  | the n-element vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The number of components of the vector x. |
+| `sa` | `number` | The scalar a which is used to divide each component of x. |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · The n-element vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -51,13 +51,13 @@ scaling carefully to avoid overflow/underflow.
 
 Computes x <- x / sa by iteratively multiplying by safe scale factors.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of elements |
-| `sa` | `number` | in |  |  | real scalar divisor |
-| `x` | `Complex128Array` | in/out | `N` |  | input/output complex vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of elements |
+| `sa` | `number` | Real scalar divisor |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output complex vector |
+| ↳ `strideX` | `integer` | Stride for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

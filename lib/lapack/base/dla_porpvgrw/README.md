@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dla_porpvgrw( order, uplo, ncols, A, LDA, AF, LDAF, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
-| `ncols` | `NonNegativeInteger` | in |  |  | number of columns of the matrix A |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix A (column-major) |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `AF` | `Float64Array` | in | `N × N` |  | triangular factor from the Cholesky factorization (column-major) |
-| ↳ `LDAF` | `PositiveInteger` | in |  |  | leading dimension of `AF` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2*N` |  | workspace array of length at least `2*ncols` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
+| `ncols` | `NonNegativeInteger` | Number of columns of the matrix A |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix A (column-major) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | Triangular factor from the Cholesky factorization (column-major) |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2*N</sub> | **out** · Workspace array of length at least `2*ncols` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,21 +68,21 @@ dla_porpvgrw.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
-| `ncols` | `NonNegativeInteger` | in |  |  | number of columns of the matrix A |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `AF` | `Float64Array` | in | `N × N` |  | triangular factor from the Cholesky factorization |
-| ↳ `strideAF1` | `integer` | in |  |  | stride of the first dimension of `AF` |
-| ↳ `strideAF2` | `integer` | in |  |  | stride of the second dimension of `AF` |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | starting index for `AF` |
-| `WORK` | `Float64Array` | out | `≥ 2*N` |  | workspace array of length at least `2*ncols` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
+| `ncols` | `NonNegativeInteger` | Number of columns of the matrix A |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `AF` | `Float64Array`<br><sub>N × N</sub> | Triangular factor from the Cholesky factorization |
+| ↳ `strideAF1` | `integer` | Stride of the first dimension of `AF` |
+| ↳ `strideAF2` | `integer` | Stride of the second dimension of `AF` |
+| ↳ `offsetAF` | `NonNegativeInteger` | Starting index for `AF` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2*N</sub> | **out** · Workspace array of length at least `2*ncols` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

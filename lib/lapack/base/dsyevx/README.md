@@ -32,29 +32,29 @@ dsyevx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Float64Array` | in/out | `N × N` |  | on entry, the symmetric matrix A. On exit, the lower triangle (if `uplo === 'lower'`) or the upper triangle (if `uplo === 'upper'`) of A, including the diagonal, is destroyed. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `vl` | `number` | in |  |  | if `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | if `range === 'value'`, the upper bound of the interval to be searched for eigenvalues. |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | if `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | if `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `abstol` | `number` | in |  |  | the absolute error tolerance for the eigenvalues. |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | on normal exit, the first M elements contain the selected eigenvalues in ascending order. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ LWKMIN` |  | caller-provided workspace of at least `LWKMIN` elements (1 when `N <= 1`, else `8*N`); if `null`, a workspace of the reference's optimal size (LWKOPT, with the DSYTRD block size from `ilaenv`) is allocated |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 5 * N` |  | caller-provided workspace of at least `5 * N` elements |
-| `IFAIL` | `Int32Array` | out | `N` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, the first M elements of IFAIL are zero (0-based). |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride length for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
+| `range` | `"all" \| "value" \| "index"` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the symmetric matrix A. On exit, the lower triangle (if `uplo === 'lower'`) or the upper triangle (if `uplo === 'upper'`) of A, including the diagonal, is destroyed. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `vl` | `number` | If `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
+| `vu` | `number` | If `range === 'value'`, the upper bound of the interval to be searched for eigenvalues.<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | If `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | If `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | The absolute error tolerance for the eigenvalues. |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · On normal exit, the first M elements contain the selected eigenvalues in ascending order. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ LWKMIN</sub> | **out** · Caller-provided workspace of at least `LWKMIN` elements (1 when `N <= 1`, else `8*N`); if `null`, a workspace of the reference's optimal size (LWKOPT, with the DSYTRD block size from `ilaenv`) is allocated |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Caller-provided workspace of at least `5 * N` elements |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, the first M elements of IFAIL are zero (0-based). |
+| ↳ `strideIFAIL` | `integer` | Stride length for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -157,38 +157,38 @@ It is returned via the out object: out.M.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | 'no-vectors' or 'compute-vectors' |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | 'all', 'value', or 'index' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `vl` | `number` | in |  |  | lower bound of eigenvalue interval (RANGE='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of eigenvalue interval (RANGE='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | index of smallest eigenvalue to compute (1-based, RANGE='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | index of largest eigenvalue to compute (1-based, RANGE='index') |
-| `abstol` | `number` | in |  |  | absolute tolerance for eigenvalues |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the total number of eigenvalues found |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N) |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output eigenvector matrix (N x N) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dimension of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dimension of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `WORK` | `Float64Array` | out | `≥ LWKMIN` |  | workspace (length >= `LWKMIN`: 1 when `N <= 1`, else `8*N`; optimum `max( 8*N, ( NB + 3 )*N )` with the DSYTRD/DORMTR block size `NB`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ 5 * N` |  | integer workspace (length >= `5*N`, the reference's declared extent; unreferenced when `N <= 1`) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
-| `IFAIL` | `Int32Array` | out | `N` |  | output: indices of non-converged eigenvectors (length N) |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for IFAIL |
-| ↳ `offsetIFAIL` | `NonNegativeInteger` | in |  |  | starting index for IFAIL |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | 'no-vectors' or 'compute-vectors' |
+| `range` | `"all" \| "value" \| "index"` | 'all', 'value', or 'index' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `vl` | `number` | Lower bound of eigenvalue interval (RANGE='value') |
+| `vu` | `number` | Upper bound of eigenvalue interval (RANGE='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | Index of smallest eigenvalue to compute (1-based, RANGE='index')<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | Index of largest eigenvalue to compute (1-based, RANGE='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute tolerance for eigenvalues |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the total number of eigenvalues found |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N) |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output eigenvector matrix (N x N) |
+| ↳ `strideZ1` | `integer` | Stride of first dimension of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dimension of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ LWKMIN</sub> | **out** · Workspace (length >= `LWKMIN`: 1 when `N <= 1`, else `8*N`; optimum `max( 8*N, ( NB + 3 )*N )` with the DSYTRD/DORMTR block size `NB`) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace (length >= `5*N`, the reference's declared extent; unreferenced when `N <= 1`) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · Output: indices of non-converged eigenvectors (length N) |
+| ↳ `strideIFAIL` | `integer` | Stride for IFAIL |
+| ↳ `offsetIFAIL` | `NonNegativeInteger` | Starting index for IFAIL |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -41,35 +41,35 @@ Computes eigenvalues and, optionally, the left and/or right eigenvectors of a re
 
 When `work` is `null`, this wrapper allocates the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: dgehrd `N*NB + 4160`, dorghr `(N-1)*NB`, dtrevc3 `N + 2*N*NB` with eigenvectors, dhseqr's LWKOPT, and `N*N + 6*N` for dtrsna). When `iwork` is `null`, this wrapper auto-allocates an integer workspace of size `max(1, 2*(N-1))`. Prefer passing caller-owned buffers for batched use.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix (column-major, LDA x N) |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues (length N) |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues (length N) |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` | leading dimension of VL |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` | leading dimension of VR |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are integer values determined when A was balanced |
-| `SCALE` | `Float64Array` | out | `N` |  | output: balancing/scaling details (length N) |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| `abnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix (the maximum of the sum of absolute values of elements of any column) |
-| `RCONDE` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for eigenvalues (length N) |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride length for `RCONDE` |
-| `RCONDV` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for right eigenvectors (length N) |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride length for `RCONDV` |
-| `work` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | =null] - workspace of at least the reference's minimum (`2*N` without eigenvectors, `3*N` with them, and `N*N + 6*N` when `sense` is `'right-vectors'` or `'both'`, or not `'none'` without eigenvectors), or `null` to allocate the optimum |
-| `iwork` | `(Int32Array\|null)` | out | `≥ 2 * N - 2` |  | =null] - caller-provided integer workspace (length at least `max(0, 2*N-2)`, the reference's declared extent `2*N-2`), or `null` to auto-allocate |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'`<br>Rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix (column-major, LDA x N) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues (length N) |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues (length N) |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of VL<br>Rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of VR<br>Rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are integer values determined when A was balanced |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: balancing/scaling details (length N) |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| `abnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix (the maximum of the sum of absolute values of elements of any column) |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for eigenvalues (length N) |
+| ↳ `strideRCONDE` | `integer` | Stride length for `RCONDE` |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for right eigenvectors (length N) |
+| ↳ `strideRCONDV` | `integer` | Stride length for `RCONDV` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least the reference's minimum (`2*N` without eigenvectors, `3*N` with them, and `N*N + 6*N` when `sense` is `'right-vectors'` or `'both'`, or not `'none'` without eigenvectors), or `null` to allocate the optimum<br>Optional, default `null`. |
+| `iwork` | `Int32Array \| null`<br><sub>length ≥ 2 * N - 2</sub> | **out** · Caller-provided integer workspace (length at least `max(0, 2*N-2)`, the reference's declared extent `2*N-2`), or `null` to auto-allocate<br>Optional, default `null`. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -165,49 +165,49 @@ Computes eigenvalues and, optionally, the left and/or right eigenvectors of a re
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first-dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second-dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset for A |
-| `WR` | `Float64Array` | out | `N` |  | output: real parts of eigenvalues |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | offset for WR |
-| `WI` | `Float64Array` | out | `N` |  | output: imaginary parts of eigenvalues |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | offset for WI |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors |
-| ↳ `strideVL1` | `integer` | in |  |  | first-dimension stride of VL |
-| ↳ `strideVL2` | `integer` | in |  |  | second-dimension stride of VL |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors |
-| ↳ `strideVR1` | `integer` | in |  |  | first-dimension stride of VR |
-| ↳ `strideVR2` | `integer` | in |  |  | second-dimension stride of VR |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR |
-| `ilo` | `Int32Array` | out |  |  | output (length-1 array): `ilo` |
-| `ihi` | `Int32Array` | out |  |  | output (length-1 array): iLO and IHI are integer values determined when A was balanced |
-| `SCALE` | `Float64Array` | out | `N` |  | output: balancing/scaling details |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride for SCALE |
-| ↳ `offsetSCALE` | `NonNegativeInteger` | in |  |  | offset for SCALE |
-| `abnrm` | `Float64Array` | out |  |  | output (length-1 array): the one-norm of the balanced matrix (the maximum of the sum of absolute values of elements of any column) |
-| `RCONDE` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for eigenvalues |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride for RCONDE |
-| ↳ `offsetRCONDE` | `NonNegativeInteger` | in |  |  | offset for RCONDE |
-| `RCONDV` | `Float64Array` | out | `N` |  | output: reciprocal condition numbers for right eigenvectors |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride for RCONDV |
-| ↳ `offsetRCONDV` | `NonNegativeInteger` | in |  |  | offset for RCONDV |
-| `work` | `Float64Array` | out | `≥ MINWRK` |  | workspace array: at least `2*N` elements without eigenvectors and `3*N` with them, and at least `N*N + 6*N` when `sense` is `'right-vectors'` or `'both'` (or not `'none'` without eigenvectors), as the reference requires; for good performance, the optimum MAXWRK the wrapper allocates for `null` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for work |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for work |
-| `iwork` | `Int32Array` | out | `≥ 2 * N - 2` |  | integer workspace array (length from `offsetIwork` at least `max(0, 2*N-2)`, the reference's declared extent `2*N-2`); referenced only when `sense` is `'right-vectors'` or `'both'` |
-| ↳ `strideIwork` | `integer` | in |  |  | stride for iwork |
-| ↳ `offsetIwork` | `NonNegativeInteger` | in |  |  | offset for iwork |
+| Parameter | Type | Description |
+|---|---|---|
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'`<br>Rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | First-dimension stride of A |
+| ↳ `strideA2` | `integer` | Second-dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset for A |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of eigenvalues |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| ↳ `offsetWR` | `NonNegativeInteger` | Offset for WR |
+| `WI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of eigenvalues |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| ↳ `offsetWI` | `NonNegativeInteger` | Offset for WI |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors |
+| ↳ `strideVL1` | `integer` | First-dimension stride of VL |
+| ↳ `strideVL2` | `integer` | Second-dimension stride of VL |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors |
+| ↳ `strideVR1` | `integer` | First-dimension stride of VR |
+| ↳ `strideVR2` | `integer` | Second-dimension stride of VR |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR |
+| `ilo` | `Int32Array` | **out** · Output (length-1 array): `ilo` |
+| `ihi` | `Int32Array` | **out** · Output (length-1 array): iLO and IHI are integer values determined when A was balanced |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: balancing/scaling details |
+| ↳ `strideSCALE` | `integer` | Stride for SCALE |
+| ↳ `offsetSCALE` | `NonNegativeInteger` | Offset for SCALE |
+| `abnrm` | `Float64Array` | **out** · Output (length-1 array): the one-norm of the balanced matrix (the maximum of the sum of absolute values of elements of any column) |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for eigenvalues |
+| ↳ `strideRCONDE` | `integer` | Stride for RCONDE |
+| ↳ `offsetRCONDE` | `NonNegativeInteger` | Offset for RCONDE |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Output: reciprocal condition numbers for right eigenvectors |
+| ↳ `strideRCONDV` | `integer` | Stride for RCONDV |
+| ↳ `offsetRCONDV` | `NonNegativeInteger` | Offset for RCONDV |
+| `work` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace array: at least `2*N` elements without eigenvectors and `3*N` with them, and at least `N*N + 6*N` when `sense` is `'right-vectors'` or `'both'` (or not `'none'` without eigenvectors), as the reference requires; for good performance, the optimum MAXWRK the wrapper allocates for `null` |
+| ↳ `strideWork` | `integer` | Stride for work |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for work |
+| `iwork` | `Int32Array`<br><sub>length ≥ 2 * N - 2</sub> | **out** · Integer workspace array (length from `offsetIwork` at least `max(0, 2*N-2)`, the reference's declared extent `2*N-2`); referenced only when `sense` is `'right-vectors'` or `'both'` |
+| ↳ `strideIwork` | `integer` | Stride for iwork |
+| ↳ `offsetIwork` | `NonNegativeInteger` | Offset for iwork |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

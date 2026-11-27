@@ -29,22 +29,22 @@ zhbtrd(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("none"\|"initialize"\|"update")` | in |  | one of `'none'`, `'update'`, `'initialize'` | `'none'`, `'initialize'`, or `'update'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super- (or sub-) diagonals |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | band matrix (LDAB x N) |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `d` | `Float64Array` | out | `N` |  | output array for diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | out | `N - 1` |  | output array for off-diagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | unitary matrix (LDQ x N) |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < max( 1, N ) && (vect === 'initialize' \|\| vect === 'update')` | leading dimension of `Q` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | workspace (length N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super- (or sub-) diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Band matrix (LDAB x N) |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Output array for off-diagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Unitary matrix (LDQ x N) |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < max(1, N) && (vect === 'initialize' \|\| vect === 'update')` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace (length N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -100,29 +100,29 @@ zhbtrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("none"\|"initialize"\|"update")` | in |  | one of `'none'`, `'update'`, `'initialize'` | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | the number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`. |
-| `AB` | `Complex128Array` | in/out | `kd + 1 × N` |  | input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `d` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `Q` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"none" \| "initialize" \| "update"` | Specifies the operation type<br>One of `'none'`, `'update'`, `'initialize'`. |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | The number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`.<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | **in/out** · Input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

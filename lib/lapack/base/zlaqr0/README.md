@@ -31,23 +31,23 @@ zlaqr0(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | whether the full Schur form T is required |
-| `wantz` | `boolean` | in |  |  | whether the Schur vectors Z are required |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ilo` | `integer` | in |  |  | lower index of the active submatrix (1-based) |
-| `ihi` | `NonNegativeInteger` | in |  |  | upper index of the active submatrix (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix; overwritten |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `w` | `Complex128Array` | out | `N` |  | output eigenvalues (length `N`) |
-| ↳ `strideW` | `integer` | in |  |  | `w` stride length |
-| `iloz` | `integer` | in |  |  | lower row index for accumulating Z (1-based) |
-| `ihiz` | `integer` | in |  |  | upper row index for accumulating Z (1-based) |
-| `Z` | `Complex128Array` | in/out | `ihiz × ihi` |  | Schur vectors; updated when `wantz` is true |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N )` |  | workspace of at least `1` element (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does), or `null` to allocate the reference's optimum (`max( 3*NSR/2, LWKOPT of ZLAQR3 for the window NWR+1 )`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | Whether the full Schur form T is required |
+| `wantz` | `boolean` | Whether the Schur vectors Z are required |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ilo` | `integer` | Lower index of the active submatrix (1-based) |
+| `ihi` | `NonNegativeInteger` | Upper index of the active submatrix (1-based) |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix; overwritten |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalues (length `N`) |
+| ↳ `strideW` | `integer` | `w` stride length |
+| `iloz` | `integer` | Lower row index for accumulating Z (1-based) |
+| `ihiz` | `integer` | Upper row index for accumulating Z (1-based) |
+| `Z` | `Complex128Array`<br><sub>ihiz × ihi</sub> | **in/out** · Schur vectors; updated when `wantz` is true |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of at least `1` element (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does), or `null` to allocate the reference's optimum (`max( 3*NSR/2, LWKOPT of ZLAQR3 for the window NWR+1 )`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -94,29 +94,29 @@ Complex multishift QR top-level driver.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
-| `wantz` | `boolean` | in |  |  | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `ilo` | `integer` | in |  |  | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
-| `ihi` | `NonNegativeInteger` | in |  |  | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
-| `H` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `w` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `ihiz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `Z` | `Complex128Array` | in/out | `ihiz × ihi` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N )` |  | workspace array of length at least `1` (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does); the reference's optimum (`max( 3*NSR/2, LWKOPT of ZLAQR3 for the window NWR+1 )`) gives the deflation window and its callees their full room |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
+| `wantz` | `boolean` | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `ilo` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
+| `ihi` | `NonNegativeInteger` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `ihiz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `Z` | `Complex128Array`<br><sub>ihiz × ihi</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array of length at least `1` (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does); the reference's optimum (`max( 3*NSR/2, LWKOPT of ZLAQR3 for the window NWR+1 )`) gives the deflation window and its callees their full room |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

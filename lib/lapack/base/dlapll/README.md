@@ -29,14 +29,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlapll( N, x, strideX, y, strideY, ssmin ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | length of the vectors |
-| `x` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | first vector (overwritten) |
-| ↳ `strideX` | `integer` | in |  |  | stride for x |
-| `y` | `Float64Array` | in/out | `1 + (N - 1) * incy` |  | second vector (overwritten) |
-| ↳ `strideY` | `integer` | in |  |  | stride for y |
-| `ssmin` | `Float64Array` | out |  |  | output: `ssmin[0]` receives the smallest singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Length of the vectors |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First vector (overwritten) |
+| ↳ `strideX` | `integer` | Stride for x |
+| `y` | `Float64Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second vector (overwritten) |
+| ↳ `strideY` | `integer` | Stride for y |
+| `ssmin` | `Float64Array` | **out** · Output: `ssmin[0]` receives the smallest singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -64,16 +64,16 @@ singular value of the resulting 2-by-2 upper triangular R factor.
 
 On exit, X and Y are overwritten.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | length of the vectors |
-| `x` | `Float64Array` | in/out | `1 + (N - 1) * incx` |  | first vector (overwritten) |
-| ↳ `strideX` | `integer` | in |  |  | stride for x |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x |
-| `y` | `Float64Array` | in/out | `1 + (N - 1) * incy` |  | second vector (overwritten) |
-| ↳ `strideY` | `integer` | in |  |  | stride for y |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for y |
-| `ssmin` | `Float64Array` | out |  |  | output: `ssmin[0]` receives the smallest singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Length of the vectors |
+| `x` | `Float64Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First vector (overwritten) |
+| ↳ `strideX` | `integer` | Stride for x |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x |
+| `y` | `Float64Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second vector (overwritten) |
+| ↳ `strideY` | `integer` | Stride for y |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for y |
+| `ssmin` | `Float64Array` | **out** · Output: `ssmin[0]` receives the smallest singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

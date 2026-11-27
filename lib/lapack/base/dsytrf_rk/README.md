@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsytrf_rk( order, uplo, N, A, LDA, e, strideE, IPIV, strideIPIV, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `e` | `Float64Array` | out | `N` |  | output vector containing the off-diagonal entries of `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride for `e` |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot index array |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 1` |  | caller-provided workspace (length at least `1`; a length of at least `N*NB`, with `NB` from `ilaenv` (64), enables the full blocked algorithm, and a shorter one a smaller block size or the unblocked algorithm); `null` allocates the optimal size `max(1,N*NB)` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `e` | `Float64Array`<br><sub>length N</sub> | **out** · Output vector containing the off-diagonal entries of `D` |
+| ↳ `strideE` | `integer` | Stride for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot index array |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 1</sub> | **out** · Caller-provided workspace (length at least `1`; a length of at least `N*NB`, with `NB` from `ilaenv` (64), enables the full blocked algorithm, and a shorter one a smaller block size or the unblocked algorithm); `null` allocates the optimal size `max(1,N*NB)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -120,23 +120,23 @@ dsytrf_rk.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` |
-| `e` | `Float64Array` | out | `N` |  | output vector containing the off-diagonal entries of `D` |
-| ↳ `strideE` | `integer` | in |  |  | stride for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | index offset for `e` |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot index array, length `N` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for `IPIV` |
-| `WORK` | `Float64Array` | out | `≥ 1` |  | caller-owned workspace (length from `offsetWork` at least `1`; a length of at least `N*NB` (`NB = 64`, from `ilaenv`) enables the full blocked algorithm, and a shorter one a smaller block size or the unblocked algorithm) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` |
+| `e` | `Float64Array`<br><sub>length N</sub> | **out** · Output vector containing the off-diagonal entries of `D` |
+| ↳ `strideE` | `integer` | Stride for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Index offset for `e` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot index array, length `N` |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for `IPIV` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 1</sub> | **out** · Caller-owned workspace (length from `offsetWork` at least `1`; a length of at least `N*NB` (`NB = 64`, from `ilaenv`) enables the full blocked algorithm, and a shorter one a smaller block size or the unblocked algorithm) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

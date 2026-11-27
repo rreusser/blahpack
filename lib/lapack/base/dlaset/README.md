@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaset( order, uplo, M, N, alpha, beta, A, LDA ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | `'upper'` or `'lower'`, otherwise full matrix |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `alpha` | `number` | in |  |  | off-diagonal value |
-| `beta` | `number` | in |  |  | diagonal value |
-| `A` | `Float64Array` | out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `"upper" \| "lower" \| "all"` | `'upper'` or `'lower'`, otherwise full matrix |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `alpha` | `number` | Off-diagonal value |
+| `beta` | `number` | Diagonal value |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,17 +67,17 @@ dlaset.ndarray( uplo, M, N, alpha, beta, A, strideA1, strideA2, offsetA ) → Fl
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | `'upper'` or `'lower'`, otherwise full matrix |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `alpha` | `number` | in |  |  | off-diagonal value |
-| `beta` | `number` | in |  |  | diagonal value |
-| `A` | `Float64Array` | out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `"upper" \| "lower" \| "all"` | `'upper'` or `'lower'`, otherwise full matrix |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `alpha` | `number` | Off-diagonal value |
+| `beta` | `number` | Diagonal value |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

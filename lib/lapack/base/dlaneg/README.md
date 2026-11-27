@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlaneg( N, d, strideD, LLD, strideLLD, sigma, pivmin, r ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal of `D` in the factorization `T = L*D*L^T` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | `(N-1)` elements `L(i)*L(i)*D(i)` |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| `sigma` | `number` | in |  |  | shift amount in `T - sigma*I = L*D*L^T` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `r` | `integer` | in |  |  | twist index for the twisted factorization (1-based) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of `D` in the factorization `T = L*D*L^T` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | `(N-1)` elements `L(i)*L(i)*D(i)` |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| `sigma` | `number` | Shift amount in `T - sigma*I = L*D*L^T` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `r` | `integer` | Twist index for the twisted factorization (1-based) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -62,18 +62,18 @@ dlaneg.ndarray(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in | `N` |  | diagonal of `D` in the factorization `T = L*D*L^T` |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `LLD` | `Float64Array` | in | `N - 1` |  | `(N-1)` elements `L(i)*L(i)*D(i)` |
-| ↳ `strideLLD` | `integer` | in |  |  | stride length for `LLD` |
-| ↳ `offsetLLD` | `NonNegativeInteger` | in |  |  | starting index for `LLD` |
-| `sigma` | `number` | in |  |  | shift amount in `T - sigma*I = L*D*L^T` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `r` | `integer` | in |  |  | twist index for the twisted factorization (1-based) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of `D` in the factorization `T = L*D*L^T` |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `LLD` | `Float64Array`<br><sub>length N - 1</sub> | `(N-1)` elements `L(i)*L(i)*D(i)` |
+| ↳ `strideLLD` | `integer` | Stride length for `LLD` |
+| ↳ `offsetLLD` | `NonNegativeInteger` | Starting index for `LLD` |
+| `sigma` | `number` | Shift amount in `T - sigma*I = L*D*L^T` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `r` | `integer` | Twist index for the twisted factorization (1-based) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

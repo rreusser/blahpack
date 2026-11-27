@@ -33,30 +33,30 @@ dstevx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix. |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `max( 1, N - 1 )` |  | on entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `vl` | `number` | in |  |  | if `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | if `range === 'value'`, the upper bound of the interval to be searched for eigenvalues. |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | if `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | if `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0. |
-| `abstol` | `number` | in |  |  | the absolute error tolerance for the eigenvalues. |
-| `M` | `Int32Array` | out |  |  | the total number of eigenvalues found. 0 <= M <= N. |
-| `w` | `Float64Array` | out | `N` |  | the first M elements contain the selected eigenvalues in ascending order. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 5 * N` |  | caller-provided workspace of at least `5 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 5 * N` |  | caller-provided workspace of at least `5 * N` elements |
-| `IFAIL` | `Int32Array` | out | `N` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, the first M elements of IFAIL are zero (0-based). |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride length for `IFAIL` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
+| `range` | `"all" \| "value" \| "index"` | `'all'`: all eigenvalues will be found. `'value'`: all eigenvalues in the half-open interval (VL,VU] will be found. `'index'`: the IL-th through IU-th eigenvalues will be found. |
+| `N` | `NonNegativeInteger` | The order of the matrix.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the n diagonal elements of the tridiagonal matrix A. On exit, D may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length max(1, N - 1)</sub> | **in/out** · On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A in elements 1 to N-1 of E. On exit, E may be multiplied by a constant factor chosen to avoid over/underflow in computing the eigenvalues. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `vl` | `number` | If `range === 'value'`, the lower bound of the interval to be searched for eigenvalues. |
+| `vu` | `number` | If `range === 'value'`, the upper bound of the interval to be searched for eigenvalues.<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | If `range === 'index'`, the index of the smallest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | If `range === 'index'`, the index of the largest eigenvalue to be returned. 1 <= IL <= IU <= N, if N > 0.<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | The absolute error tolerance for the eigenvalues. |
+| `M` | `Int32Array` | **out** · The total number of eigenvalues found. 0 <= M <= N. |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · The first M elements contain the selected eigenvalues in ascending order. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, the first M columns of Z contain the orthonormal eigenvectors of the matrix A corresponding to the selected eigenvalues, with the i-th column of Z holding the eigenvector associated with W(i). |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Caller-provided workspace of at least `5 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 5 * N</sub> | **out** · Caller-provided workspace of at least `5 * N` elements |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, the first M elements of IFAIL are zero (0-based). |
+| ↳ `strideIFAIL` | `integer` | Stride length for `IFAIL` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -138,39 +138,39 @@ range of values or a range of indices for the desired eigenvalues.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | 'no-vectors' or 'compute-vectors' |
-| `range` | `("all"\|"value"\|"index")` | in |  | one of `'all'`, `'index'`, `'value'` | 'all', 'value', or 'index' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the tridiagonal matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N), may be modified |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `e` | `Float64Array` | in/out | `max( 1, N - 1 )` |  | subdiagonal elements (length N-1), may be modified |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | offset for e |
-| `vl` | `number` | in |  |  | lower bound of value interval (range='value') |
-| `vu` | `number` | in |  | rejects `range === 'value' && (N > 0 && vu <= vl)` | upper bound of value interval (range='value') |
-| `il` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max( 1, N ))` | 1-based index of smallest eigenvalue (range='index') |
-| `iu` | `integer` | in |  | rejects `range !== 'value' && range === 'index' && (iu < min( N, il ) \|\| iu > N)` | 1-based index of largest eigenvalue (range='index') |
-| `abstol` | `number` | in |  |  | absolute error tolerance for eigenvalues |
-| `M` | `Int32Array` | out |  |  | output: number of eigenvalues found (M[0]) |
-| `w` | `Float64Array` | out | `N` |  | output: selected eigenvalues in ascending order |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | offset for w |
-| `Z` | `Float64Array` | out | `N × (range === 'index' ? iu - il + 1 : N)` |  | output: eigenvectors (if jobz='compute-vectors') |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dimension of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dimension of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | offset for Z |
-| `WORK` | `Float64Array` | out | `≥ 5 * N` |  | workspace (length >= 5*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ 5 * N` |  | integer workspace (length >= 5*N) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
-| `IFAIL` | `Int32Array` | out | `N` |  | output: indices of non-converged eigenvectors |
-| ↳ `strideIFAIL` | `integer` | in |  |  | stride for IFAIL |
-| ↳ `offsetIFAIL` | `NonNegativeInteger` | in |  |  | offset for IFAIL |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | 'no-vectors' or 'compute-vectors' |
+| `range` | `"all" \| "value" \| "index"` | 'all', 'value', or 'index' |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N), may be modified |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `e` | `Float64Array`<br><sub>length max(1, N - 1)</sub> | **in/out** · Subdiagonal elements (length N-1), may be modified |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Offset for e |
+| `vl` | `number` | Lower bound of value interval (range='value') |
+| `vu` | `number` | Upper bound of value interval (range='value')<br>Rejects `range === 'value' && (N > 0 && vu <= vl)` |
+| `il` | `integer` | 1-based index of smallest eigenvalue (range='index')<br>Rejects `range !== 'value' && range === 'index' && (il < 1 \|\| il > max(1, N))` |
+| `iu` | `integer` | 1-based index of largest eigenvalue (range='index')<br>Rejects `range !== 'value' && range === 'index' && (iu < min(N, il) \|\| iu > N)` |
+| `abstol` | `number` | Absolute error tolerance for eigenvalues |
+| `M` | `Int32Array` | **out** · Output: number of eigenvalues found (M[0]) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output: selected eigenvalues in ascending order |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Offset for w |
+| `Z` | `Float64Array`<br><sub>N × (range === 'index' ? iu - il + 1 : N)</sub> | **out** · Output: eigenvectors (if jobz='compute-vectors') |
+| ↳ `strideZ1` | `integer` | Stride of first dimension of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dimension of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Offset for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ 5 * N</sub> | **out** · Workspace (length >= 5\*N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 5 * N</sub> | **out** · Integer workspace (length >= 5\*N) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
+| `IFAIL` | `Int32Array`<br><sub>length N</sub> | **out** · Output: indices of non-converged eigenvectors |
+| ↳ `strideIFAIL` | `integer` | Stride for IFAIL |
+| ↳ `offsetIFAIL` | `NonNegativeInteger` | Offset for IFAIL |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

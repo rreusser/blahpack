@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dstqrb( N, d, strideD, e, strideE, Z, strideZ, WORK ) → INFO: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements of the tridiagonal matrix (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | subdiagonal elements of the tridiagonal matrix (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `Z` | `Float64Array` | out | `N` |  | on exit, the last row of the orthonormal eigenvector matrix (length N) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N - 2` |  | workspace array (length >= 2*(N-1)) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements of the tridiagonal matrix (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Subdiagonal elements of the tridiagonal matrix (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `Z` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, the last row of the orthonormal eigenvector matrix (length N) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N - 2</sub> | **out** · Workspace array (length >= 2\*(N-1)) |
 
 **Returns** `INFO: integer`: 0 if successful, >0 if INFO eigenvalues did not converge
 
@@ -52,21 +52,21 @@ dstqrb.ndarray(
 ) → INFO: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements of the tridiagonal matrix (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | subdiagonal elements of the tridiagonal matrix (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `Z` | `Float64Array` | out | `N` |  | on exit, the last row of the orthonormal eigenvector matrix (length N) |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `WORK` | `Float64Array` | out | `≥ 2 * N - 2` |  | workspace array (length >= 2*(N-1)) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements of the tridiagonal matrix (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Subdiagonal elements of the tridiagonal matrix (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `Z` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, the last row of the orthonormal eigenvector matrix (length N) |
+| ↳ `strideZ` | `integer` | Stride length for `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N - 2</sub> | **out** · Workspace array (length >= 2\*(N-1)) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 **Returns** `INFO: integer`: 0 if successful, >0 if INFO eigenvalues did not converge
 

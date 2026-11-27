@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaev2( a, b, c, rt1, rt2, cs1, sn1 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128` | in |  |  | (1,1) element of the 2-by-2 Hermitian matrix |
-| `b` | `Complex128` | in |  |  | (1,2) element of the 2-by-2 Hermitian matrix |
-| `c` | `Complex128` | in |  |  | (2,2) element of the 2-by-2 Hermitian matrix |
-| `rt1` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of larger absolute value |
-| `rt2` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of smaller absolute value |
-| `cs1` | `Float64Array` | out |  |  | output (length-1 array): `cs1` |
-| `sn1` | `Complex128Array` | out |  |  | output (length-1 array): the vector (CS1, SN1) is a unit right eigenvector for RT1 |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128` | (1,1) element of the 2-by-2 Hermitian matrix |
+| `b` | `Complex128` | (1,2) element of the 2-by-2 Hermitian matrix |
+| `c` | `Complex128` | (2,2) element of the 2-by-2 Hermitian matrix |
+| `rt1` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of larger absolute value |
+| `rt2` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of smaller absolute value |
+| `cs1` | `Float64Array` | **out** · Output (length-1 array): `cs1` |
+| `sn1` | `Complex128Array` | **out** · Output (length-1 array): the vector (CS1, SN1) is a unit right eigenvector for RT1 |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -52,16 +52,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zlaev2.ndarray( a, b, c, rt1, rt2, cs1, sn1, offsetSn1 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128` | in |  |  | (1,1) element of the 2-by-2 Hermitian matrix |
-| `b` | `Complex128` | in |  |  | (1,2) element of the 2-by-2 Hermitian matrix |
-| `c` | `Complex128` | in |  |  | (2,2) element of the 2-by-2 Hermitian matrix |
-| `rt1` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of larger absolute value |
-| `rt2` | `Float64Array` | out |  |  | output (length-1 array): the eigenvalue of smaller absolute value |
-| `cs1` | `Float64Array` | out |  |  | output (length-1 array): `cs1` |
-| `sn1` | `Complex128Array` | out |  |  | output (length-1 array): the vector (CS1, SN1) is a unit right eigenvector for RT1 |
-| ↳ `offsetSn1` | `NonNegativeInteger` | in |  |  | starting index for `sn1` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128` | (1,1) element of the 2-by-2 Hermitian matrix |
+| `b` | `Complex128` | (1,2) element of the 2-by-2 Hermitian matrix |
+| `c` | `Complex128` | (2,2) element of the 2-by-2 Hermitian matrix |
+| `rt1` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of larger absolute value |
+| `rt2` | `Float64Array` | **out** · Output (length-1 array): the eigenvalue of smaller absolute value |
+| `cs1` | `Float64Array` | **out** · Output (length-1 array): `cs1` |
+| `sn1` | `Complex128Array` | **out** · Output (length-1 array): the vector (CS1, SN1) is a unit right eigenvector for RT1 |
+| ↳ `offsetSn1` | `NonNegativeInteger` | Starting index for `sn1` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

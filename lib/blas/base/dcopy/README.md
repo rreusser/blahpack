@@ -20,13 +20,13 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dcopy( N, x, strideX, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideY` | `integer` | `y` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,15 +45,15 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dcopy.ndarray( N, x, strideX, offsetX, y, strideY, offsetY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting `x` index |
-| `y` | `Float64Array` | out | `N` |  | output array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting `y` index |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting `x` index |
+| `y` | `Float64Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting `y` index |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

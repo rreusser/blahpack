@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zhseqr( order, job, compz, N, ilo, ihi, H, LDH, w, strideW, Z, LDZ, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'`: compute eigenvalues only; `'schur'`: compute eigenvalues and the Schur form T. |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`: no Schur vectors are computed; `'initialize'`: Z is initialized to the unit matrix and the matrix Z of Schur vectors of H is returned; `'update'`: Z must contain an unitary matrix Q on entry, and the product Q*Z is returned. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix H. |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `H` | `Complex128Array` | in/out | `N × N` |  | on entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and `job === 'schur'`, H contains the upper triangular matrix T from the Schur decomposition (the Schur form). |
-| ↳ `LDH` | `PositiveInteger` | in |  | requires `LDH ≥ max( 1, N )` | leading dimension of `H` |
-| `w` | `Complex128Array` | out | `N` |  | the computed eigenvalues. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | if `compz === 'none'`, Z is not referenced. |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < max( 1, N ))` | leading dimension of `Z` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, N )` |  | workspace of at least `max(1,N)` complex elements (the reference's minimum), or `null` to allocate the reference's optimum (`max( max(1,N), LWKOPT of ZLAQR0 )`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'`: compute eigenvalues only; `'schur'`: compute eigenvalues and the Schur form T. |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`: no Schur vectors are computed; `'initialize'`: Z is initialized to the unit matrix and the matrix Z of Schur vectors of H is returned; `'update'`: Z must contain an unitary matrix Q on entry, and the product Q\*Z is returned. |
+| `N` | `NonNegativeInteger` | The order of the matrix H.<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and `job === 'schur'`, H contains the upper triangular matrix T from the Schur decomposition (the Schur form). |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H`<br>Requires `LDH ≥ max(1, N)` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · The computed eigenvalues. |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · If `compz === 'none'`, Z is not referenced. |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| ((compz === 'initialize' \|\| compz === 'update') && ldz < max(1, N))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of at least `max(1,N)` complex elements (the reference's minimum), or `null` to allocate the reference's optimum (`max( max(1,N), LWKOPT of ZLAQR0 )`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,27 +118,27 @@ INFO > 0: zhseqr failed to compute all eigenvalues. Elements
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"schur")` | in |  | one of `'eigenvalues'`, `'schur'` | `'eigenvalues'` or `'schur'` |
-| `compz` | `("none"\|"initialize"\|"update")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'none'`, `'initialize'`, or `'update'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix H |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | first row/col of the active block (1-based) |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | last row/col of the active block (1-based) |
-| `H` | `Complex128Array` | in/out | `N × N` |  | upper Hessenberg matrix (N-by-N) |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` (complex elements) |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` (complex elements) |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` (complex elements) |
-| `w` | `Complex128Array` | out | `N` |  | output array for eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` (complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `w` (complex elements) |
-| `Z` | `Complex128Array` | in/out | `N × N` |  | Schur vectors matrix (N-by-N) |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, N )` |  | caller-provided workspace array of at least `max(1,N)` complex elements from `offsetWork` (the reference's minimum); the reference's optimum is `max( max(1,N), LWKOPT of ZLAQR0 )` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "schur"` | `'eigenvalues'` or `'schur'` |
+| `compz` | `"none" \| "initialize" \| "update"` | `'none'`, `'initialize'`, or `'update'` |
+| `N` | `NonNegativeInteger` | Order of the matrix H<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | First row/col of the active block (1-based)<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Last row/col of the active block (1-based)<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `H` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix (N-by-N) |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` (complex elements) |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` (complex elements) |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` (complex elements) |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues |
+| ↳ `strideW` | `integer` | Stride length for `w` (complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `w` (complex elements) |
+| `Z` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Schur vectors matrix (N-by-N) |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Caller-provided workspace array of at least `max(1,N)` complex elements from `offsetWork` (the reference's minimum); the reference's optimum is `max( max(1,N), LWKOPT of ZLAQR0 )` |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgtsv( order, N, nrhs, DL, strideDL, d, strideD, DU, strideDU, B, LDB ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Float64Array` | in/out | `N - 1` |  | on entry, DL must contain the (n-1) sub-diagonal elements of A. On exit, DL is overwritten by the (n-2) elements of the second super-diagonal of the upper triangular matrix U from the LU factorization of A, in DL(1), ..., DL(n-2). |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in/out | `N - 1` |  | on entry, DU must contain the (n-1) super-diagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first super-diagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the N by NRHS matrix of right hand side matrix B. On exit, if INFO = 0, the N by NRHS solution matrix X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DL must contain the (n-1) sub-diagonal elements of A. On exit, DL is overwritten by the (n-2) elements of the second super-diagonal of the upper triangular matrix U from the LU factorization of A, in DL(1), ..., DL(n-2). |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, D must contain the diagonal elements of A. On exit, D is overwritten by the n diagonal elements of U. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, DU must contain the (n-1) super-diagonal elements of A. On exit, DU is overwritten by the (n-1) elements of the first super-diagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the N by NRHS matrix of right hand side matrix B. On exit, if INFO = 0, the N by NRHS solution matrix X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -81,23 +81,23 @@ using Gaussian elimination with partial pivoting.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Float64Array` | in/out | `N - 1` |  | sub-diagonal elements (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `DU` | `Float64Array` | in/out | `N - 1` |  | super-diagonal elements (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | right hand side matrix (N x nrhs) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (length N-1) |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (length N-1) |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Right hand side matrix (N x nrhs) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

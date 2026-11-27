@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zung2l( order, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix Q. |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | the number of columns of the matrix Q. |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > N` | the number of elementary reflectors whose product defines the matrix Q. |
-| `A` | `Complex128Array` | in/out | `M × N` |  | on entry, the (n-k+i)-th column must contain the vector which defines the elementary reflector H(i), for i = 1,2,...,k, as returned by ZGEQLF in the last k columns of its array argument A. On exit, the m-by-n matrix Q. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `K` |  | tAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZGEQLF. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix Q.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix Q.<br>Rejects `N < 0 \|\| N > M` |
+| `K` | `NonNegativeInteger` | The number of elementary reflectors whose product defines the matrix Q.<br>Rejects `K < 0 \|\| K > N` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · On entry, the (n-k+i)-th column must contain the vector which defines the elementary reflector H(i), for i = 1,2,...,k, as returned by ZGEQLF in the last k columns of its array argument A. On exit, the m-by-n matrix Q. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | TAU(i) must contain the scalar factor of the elementary reflector H(i), as returned by ZGEQLF. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -85,21 +85,21 @@ returned by ZGEQLF in the last K columns of its array argument A.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of Q (M >= 0) |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns of Q (0 <= N <= M) |
-| `K` | `NonNegativeInteger` | in |  | rejects `K < 0 \|\| K > N` | number of elementary reflectors (0 <= K <= N) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix (M x N) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `TAU` | `Complex128Array` | in | `K` |  | scalar factors of reflectors (length K) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | workspace (length >= N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of Q (M >= 0)<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of Q (0 <= N <= M)<br>Rejects `N < 0 \|\| N > M` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors (0 <= K <= N)<br>Rejects `K < 0 \|\| K > N` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M x N) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Scalar factors of reflectors (length K) |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Workspace (length >= N) |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

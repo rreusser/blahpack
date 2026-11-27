@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlarz( order, side, M, N, l, v, strideV, tau, C, LDC, WORK ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `l` | `NonNegativeInteger` | in |  |  | the number of entries of the vector V containing the meaningful part of the Householder vectors. |
-| `v` | `Float64Array` | in | `L` |  | input array |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| `tau` | `number` | in |  |  | the value tau in the representation of H. |
-| `C` | `Float64Array` | in/out | `m × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `l` | `NonNegativeInteger` | The number of entries of the vector V containing the meaningful part of the Householder vectors. |
+| `v` | `Float64Array`<br><sub>length L</sub> | Input array |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| `tau` | `number` | The value tau in the representation of H. |
+| `C` | `Float64Array`<br><sub>m × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,23 +79,23 @@ dlarz.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `l` | `NonNegativeInteger` | in |  |  | the number of entries of the vector V containing the meaningful part of the Householder vectors. |
-| `v` | `Float64Array` | in | `L` |  | input array |
-| ↳ `strideV` | `integer` | in |  |  | stride length for `v` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `v` |
-| `tau` | `number` | in |  |  | the value tau in the representation of H. |
-| `C` | `Float64Array` | in/out | `m × N` |  | input matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies the operation type |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `l` | `NonNegativeInteger` | The number of entries of the vector V containing the meaningful part of the Householder vectors. |
+| `v` | `Float64Array`<br><sub>length L</sub> | Input array |
+| ↳ `strideV` | `integer` | Stride length for `v` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `v` |
+| `tau` | `number` | The value tau in the representation of H. |
+| `C` | `Float64Array`<br><sub>m × N</sub> | **in/out** · Input matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

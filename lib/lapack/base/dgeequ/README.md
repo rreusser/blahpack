@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgeequ( order, M, N, A, LDA, r, strideR, c, strideC, rowcnd, colcnd, amax ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrix A. |
-| `A` | `Float64Array` | in | `M × N` |  | the M-by-N matrix whose equilibration factors are to be computed. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `r` | `Float64Array` | out | `M` |  | if INFO = 0 or INFO > M, R contains the row scale factors for A. |
-| ↳ `strideR` | `integer` | in |  |  | stride length for `r` |
-| `c` | `Float64Array` | out | `N` |  | if INFO = 0, C contains the column scale factors for A. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `rowcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
-| `colcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | The M-by-N matrix whose equilibration factors are to be computed. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `r` | `Float64Array`<br><sub>length M</sub> | **out** · If INFO = 0 or INFO > M, R contains the row scale factors for A. |
+| ↳ `strideR` | `integer` | Stride length for `r` |
+| `c` | `Float64Array`<br><sub>length N</sub> | **out** · If INFO = 0, C contains the column scale factors for A. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `rowcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
+| `colcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,23 +91,23 @@ Returns an object with:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Float64Array` | in | `M × N` |  | input M-by-N matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `r` | `Float64Array` | out | `M` |  | output row scale factors, length M |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for r |
-| `c` | `Float64Array` | out | `N` |  | output column scale factors, length N |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for c |
-| `rowcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
-| `colcnd` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input M-by-N matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `r` | `Float64Array`<br><sub>length M</sub> | **out** · Output row scale factors, length M |
+| ↳ `strideR` | `integer` | Stride for r |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | **out** · Output column scale factors, length N |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for c |
+| `rowcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0 or INFO > M, ROWCND contains the ratio of the smallest R(i) to the largest R(i) |
+| `colcnd` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, COLCND contains the ratio of the smallest C(i) to the largest C(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

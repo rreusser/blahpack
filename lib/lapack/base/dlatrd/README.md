@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlatrd( order, uplo, N, nb, A, LDA, e, strideE, TAU, strideTAU, W, LDW ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of A is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `nb` | `NonNegativeInteger` | in |  |  | number of rows and columns to reduce |
-| `A` | `Float64Array` | in/out | `null × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `e` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `W` | `Float64Array` | out | `N × nb` |  | input matrix |
-| ↳ `LDW` | `PositiveInteger` | in |  |  | leading dimension of `W` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of A is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `nb` | `NonNegativeInteger` | Number of rows and columns to reduce |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `W` | `Float64Array`<br><sub>N × nb</sub> | **out** · Input matrix |
+| ↳ `LDW` | `PositiveInteger` | Leading dimension of `W` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,25 +91,25 @@ dlatrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of A is stored (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `nb` | `NonNegativeInteger` | in |  |  | number of rows and columns to reduce |
-| `A` | `Float64Array` | in/out | `null × N` |  | input matrix (N-by-N, symmetric) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `e` | `Float64Array` | out | `N - 1` |  | off-diagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | scalar factors of the elementary reflectors (length N-1) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `W` | `Float64Array` | out | `N × nb` |  | output matrix (N-by-NB) |
-| ↳ `strideW1` | `integer` | in |  |  | stride of the first dimension of `W` |
-| ↳ `strideW2` | `integer` | in |  |  | stride of the second dimension of `W` |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for `W` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of A is stored (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `nb` | `NonNegativeInteger` | Number of rows and columns to reduce |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input matrix (N-by-N, symmetric) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Off-diagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Scalar factors of the elementary reflectors (length N-1) |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `W` | `Float64Array`<br><sub>N × nb</sub> | **out** · Output matrix (N-by-NB) |
+| ↳ `strideW1` | `integer` | Stride of the first dimension of `W` |
+| ↳ `strideW2` | `integer` | Stride of the second dimension of `W` |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for `W` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

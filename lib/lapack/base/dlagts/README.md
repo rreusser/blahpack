@@ -30,23 +30,23 @@ dlagts(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `integer` | in |  | rejects `abs( job ) > 2 \|\| job === 0` | specifies the job to be performed by DLAGTS as follows: = 1: The equations (T - lambda*I)x = y are to be solved, but diagonal elements of U are not to be perturbed. = -1: The equations (T - lambda*I)x = y are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix T. |
-| `a` | `Float64Array` | in | `N` |  | on entry, A must contain the diagonal elements of U as returned from DLAGTF. |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `a` |
-| `b` | `Float64Array` | in | `N - 1` |  | on entry, B must contain the first super-diagonal elements of U as returned from DLAGTF. |
-| ↳ `strideB` | `integer` | in |  |  | stride length for `b` |
-| `c` | `Float64Array` | in | `N - 1` |  | on entry, C must contain the sub-diagonal elements of L as returned from DLAGTF. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `d` | `Float64Array` | in | `N - 2` |  | on entry, D must contain the second super-diagonal elements of U as returned from DLAGTF. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `IN` | `Int32Array` | in | `N` |  | on entry, IN must contain details of the matrix P as returned from DLAGTF (0-based). |
-| ↳ `strideIN` | `integer` | in |  |  | stride length for `IN` |
-| `y` | `Float64Array` | in/out | `N` |  | on entry, the right hand side vector y. On exit, Y is overwritten by the solution vector x. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| `tol` | `Float64Array` | in/out |  |  | input/output (length-1 array): with JOB < 0, TOL should be the minimum perturbation to be made to very small diagonal elements of U |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `integer` | Specifies the job to be performed by DLAGTS as follows: = 1: The equations (T - lambda\*I)x = y are to be solved, but diagonal elements of U are not to be perturbed. = -1: The equations (T - lambda\*I)x = y are to be solved and, if overflow would otherwise occur, the diagonal elements of U are to be perturbed.<br>Rejects `abs(job) > 2 \|\| job === 0` |
+| `N` | `NonNegativeInteger` | The order of the matrix T.<br>Requires `N ≥ 0` |
+| `a` | `Float64Array`<br><sub>length N</sub> | On entry, A must contain the diagonal elements of U as returned from DLAGTF. |
+| ↳ `strideA` | `integer` | Stride length for `a` |
+| `b` | `Float64Array`<br><sub>length N - 1</sub> | On entry, B must contain the first super-diagonal elements of U as returned from DLAGTF. |
+| ↳ `strideB` | `integer` | Stride length for `b` |
+| `c` | `Float64Array`<br><sub>length N - 1</sub> | On entry, C must contain the sub-diagonal elements of L as returned from DLAGTF. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `d` | `Float64Array`<br><sub>length N - 2</sub> | On entry, D must contain the second super-diagonal elements of U as returned from DLAGTF. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `IN` | `Int32Array`<br><sub>length N</sub> | On entry, IN must contain details of the matrix P as returned from DLAGTF (0-based). |
+| ↳ `strideIN` | `integer` | Stride length for `IN` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the right hand side vector y. On exit, Y is overwritten by the solution vector x. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| `tol` | `Float64Array` | **in/out** · Input/output (length-1 array): with JOB < 0, TOL should be the minimum perturbation to be made to very small diagonal elements of U |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -98,29 +98,29 @@ dlagts.ndarray(
 Solves the system (T - lambda_I)_x = y or (T - lambda_I)__T_x = y using.
 the LU factorization computed by dlagtf.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `integer` | in |  | rejects `abs( job ) > 2 \|\| job === 0` | 1: solve (T-lambda*I)x=y, no perturbation; |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `a` | `Float64Array` | in | `N` |  | diagonal of U from dlagtf, length N |
-| ↳ `strideA` | `integer` | in |  |  | stride for a |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset for a |
-| `b` | `Float64Array` | in | `N - 1` |  | first super-diagonal of U from dlagtf, length N-1 |
-| ↳ `strideB` | `integer` | in |  |  | stride for b |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset for b |
-| `c` | `Float64Array` | in | `N - 1` |  | sub-diagonal of L from dlagtf, length N-1 |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | offset for c |
-| `d` | `Float64Array` | in | `N - 2` |  | second super-diagonal of U from dlagtf, length N-2 |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `IN` | `Int32Array` | in | `N` |  | pivot info from dlagtf, length N |
-| ↳ `strideIN` | `integer` | in |  |  | stride for IN |
-| ↳ `offsetIN` | `NonNegativeInteger` | in |  |  | offset for IN |
-| `y` | `Float64Array` | in/out | `N` |  | right-hand side (overwritten with solution), length N |
-| ↳ `strideY` | `integer` | in |  |  | stride for y |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | offset for y |
-| `tol` | `Float64Array` | in/out |  |  | input/output (length-1 array): with JOB < 0, TOL should be the minimum perturbation to be made to very small diagonal elements of U |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `integer` | 1: solve (T-lambda\*I)x=y, no perturbation;<br>Rejects `abs(job) > 2 \|\| job === 0` |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `a` | `Float64Array`<br><sub>length N</sub> | Diagonal of U from dlagtf, length N |
+| ↳ `strideA` | `integer` | Stride for a |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset for a |
+| `b` | `Float64Array`<br><sub>length N - 1</sub> | First super-diagonal of U from dlagtf, length N-1 |
+| ↳ `strideB` | `integer` | Stride for b |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset for b |
+| `c` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of L from dlagtf, length N-1 |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Offset for c |
+| `d` | `Float64Array`<br><sub>length N - 2</sub> | Second super-diagonal of U from dlagtf, length N-2 |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `IN` | `Int32Array`<br><sub>length N</sub> | Pivot info from dlagtf, length N |
+| ↳ `strideIN` | `integer` | Stride for IN |
+| ↳ `offsetIN` | `NonNegativeInteger` | Offset for IN |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Right-hand side (overwritten with solution), length N |
+| ↳ `strideY` | `integer` | Stride for y |
+| ↳ `offsetY` | `NonNegativeInteger` | Offset for y |
+| `tol` | `Float64Array` | **in/out** · Input/output (length-1 array): with JOB < 0, TOL should be the minimum perturbation to be made to very small diagonal elements of U |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

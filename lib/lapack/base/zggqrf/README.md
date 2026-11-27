@@ -28,21 +28,21 @@ zggqrf(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of rows of the matrices A and B. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of columns of the matrix A. |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | the number of columns of the matrix B. |
-| `A` | `Complex128Array` | in/out | `N × M` |  | on entry, the N-by-M matrix A. On exit, the elements on and above the diagonal of the array contain the min(N,M)-by-M upper trapezoidal matrix R (R is upper triangular if N >= M); the elements below the diagonal, with the array TAUA, represent the unitary matrix Q as a product of min(N,M) elementary reflectors (see Further Details). |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, N )`; row-major requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `TAUA` | `Complex128Array` | out | `min( N, M )` |  | the scalar factors of the elementary reflectors which represent the unitary matrix Q (see Further Details). |
-| ↳ `strideTAUA` | `integer` | in |  |  | stride length for `TAUA` |
-| `B` | `Complex128Array` | in/out | `N × P` |  | on entry, the N-by-P matrix B. On exit, if N <= P, the upper triangle of the subarray B(1:N,P-N+1:P) contains the N-by-N upper triangular matrix T; if N > P, the elements on and above the (N-P)-th subdiagonal contain the N-by-P upper trapezoidal matrix T; the remaining elements, with the array TAUB, represent the unitary matrix Z as a product of elementary reflectors (see Further Details). |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, P )` | leading dimension of `B` |
-| `TAUB` | `Complex128Array` | out | `min( N, P )` |  | the scalar factors of the elementary reflectors which represent the unitary matrix Z (see Further Details). |
-| ↳ `strideTAUB` | `integer` | in |  |  | stride length for `TAUB` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( max( max( 1, N ), M ), P )` |  | workspace of length at least `max(1,N,M,P)` (complex elements); for optimal performance at least `max( max(N,M,P)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `max(N,M,P)*NB` with the zunmqr optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | The number of rows of the matrices A and B.<br>Requires `N ≥ 0` |
+| `M` | `NonNegativeInteger` | The number of columns of the matrix A.<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | The number of columns of the matrix B.<br>Requires `p ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · On entry, the N-by-M matrix A. On exit, the elements on and above the diagonal of the array contain the min(N,M)-by-M upper trapezoidal matrix R (R is upper triangular if N >= M); the elements below the diagonal, with the array TAUA, represent the unitary matrix Q as a product of min(N,M) elementary reflectors (see Further Details). |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, N)`<br>Row-major requires `LDA ≥ max(1, M)` |
+| `TAUA` | `Complex128Array`<br><sub>length min(N, M)</sub> | **out** · The scalar factors of the elementary reflectors which represent the unitary matrix Q (see Further Details). |
+| ↳ `strideTAUA` | `integer` | Stride length for `TAUA` |
+| `B` | `Complex128Array`<br><sub>N × P</sub> | **in/out** · On entry, the N-by-P matrix B. On exit, if N <= P, the upper triangle of the subarray B(1:N,P-N+1:P) contains the N-by-N upper triangular matrix T; if N > P, the elements on and above the (N-P)-th subdiagonal contain the N-by-P upper trapezoidal matrix T; the remaining elements, with the array TAUB, represent the unitary matrix Z as a product of elementary reflectors (see Further Details). |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, P)` |
+| `TAUB` | `Complex128Array`<br><sub>length min(N, P)</sub> | **out** · The scalar factors of the elementary reflectors which represent the unitary matrix Z (see Further Details). |
+| ↳ `strideTAUB` | `integer` | Stride length for `TAUB` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(max(max(1, N), M), P)</sub> | **out** · Workspace of length at least `max(1,N,M,P)` (complex elements); for optimal performance at least `max( max(N,M,P)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `max(N,M,P)*NB` with the zunmqr optimum's T part, which enables the blocked paths; or `null` to allocate the optimal size |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,28 +88,28 @@ zggqrf.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows of A and B |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of columns of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of columns of B |
-| `A` | `Complex128Array` | in/out | `N × M` |  | N-by-M matrix (overwritten with R and reflectors) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `TAUA` | `Complex128Array` | out | `min( N, M )` |  | output: scalar factors of reflectors for Q |
-| ↳ `strideTAUA` | `integer` | in |  |  | stride for `TAUA` |
-| ↳ `offsetTAUA` | `NonNegativeInteger` | in |  |  | offset for `TAUA` |
-| `B` | `Complex128Array` | in/out | `N × P` |  | N-by-P matrix (overwritten with T and reflectors) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `TAUB` | `Complex128Array` | out | `min( N, P )` |  | output: scalar factors of reflectors for Z |
-| ↳ `strideTAUB` | `integer` | in |  |  | stride for `TAUB` |
-| ↳ `offsetTAUB` | `NonNegativeInteger` | in |  |  | offset for `TAUB` |
-| `WORK` | `Complex128Array` | out | `≥ max( max( max( 1, N ), M ), P )` |  | workspace of length at least `max(1,N,M,P)` (complex elements); for optimal performance at least `max( max(N,M,P)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `max(N,M,P)*NB` with the zunmqr optimum's T part, which enables the blocked paths |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows of A and B<br>Requires `N ≥ 0` |
+| `M` | `NonNegativeInteger` | Number of columns of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of columns of B<br>Requires `p ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × M</sub> | **in/out** · N-by-M matrix (overwritten with R and reflectors) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `TAUA` | `Complex128Array`<br><sub>length min(N, M)</sub> | **out** · Output: scalar factors of reflectors for Q |
+| ↳ `strideTAUA` | `integer` | Stride for `TAUA` |
+| ↳ `offsetTAUA` | `NonNegativeInteger` | Offset for `TAUA` |
+| `B` | `Complex128Array`<br><sub>N × P</sub> | **in/out** · N-by-P matrix (overwritten with T and reflectors) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `TAUB` | `Complex128Array`<br><sub>length min(N, P)</sub> | **out** · Output: scalar factors of reflectors for Z |
+| ↳ `strideTAUB` | `integer` | Stride for `TAUB` |
+| ↳ `offsetTAUB` | `NonNegativeInteger` | Offset for `TAUB` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(max(max(1, N), M), P)</sub> | **out** · Workspace of length at least `max(1,N,M,P)` (complex elements); for optimal performance at least `max( max(N,M,P)*NB, P*NB + TSIZE )` (`NB = 32` from `ilaenv`, `TSIZE = 4160`), the reference's `max(N,M,P)*NB` with the zunmqr optimum's T part, which enables the blocked paths |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

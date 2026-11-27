@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 drotm( N, x, strideX, y, strideY, param, strideParam ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in/out | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | in/out | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| `param` | `Float64Array` | in | `5` |  | parameters for the modified Givens transformation |
-| ↳ `strideParam` | `integer` | in |  |  | stride length for `param` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| `param` | `Float64Array`<br><sub>length 5</sub> | Parameters for the modified Givens transformation |
+| ↳ `strideParam` | `integer` | Stride length for `param` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -53,18 +53,18 @@ drotm.ndarray(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in/out | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `param` | `Float64Array` | in | `5` |  | parameters for the modified Givens transformation |
-| ↳ `strideParam` | `integer` | in |  |  | `param` stride length |
-| ↳ `offsetParam` | `NonNegativeInteger` | in |  |  | starting index for `param` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `param` | `Float64Array`<br><sub>length 5</sub> | Parameters for the modified Givens transformation |
+| ↳ `strideParam` | `integer` | `param` stride length |
+| ↳ `offsetParam` | `NonNegativeInteger` | Starting index for `param` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -27,17 +27,17 @@ Performs a series of row interchanges on a matrix `A` using pivot indices stored
 -   The pivot index for row `k` is stored at `IPIV[ o + k*strideIPIV ]`, where `o` is `0` for a positive stride and `k2*|strideIPIV|` for a negative stride.
 -   If `inck < 0`, the pivots are applied in reverse order (from `k2` down to `k1`); otherwise, they are applied in order (from `k1` up to `k2`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Float64Array` | in/out | `null × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `k1` | `NonNegativeInteger` | in |  |  | index of first row to interchange |
-| `k2` | `NonNegativeInteger` | in |  |  | index of last row to interchange |
-| `inck` | `integer` | in |  |  | direction in which to apply pivots (-1 to apply pivots in reverse order; otherwise, apply in provided order) |
-| `IPIV` | `Int32Array` | in | `k1 + (k2 - k1) * abs( incx )` |  | vector of pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `k1` | `NonNegativeInteger` | Index of first row to interchange |
+| `k2` | `NonNegativeInteger` | Index of last row to interchange |
+| `inck` | `integer` | Direction in which to apply pivots (-1 to apply pivots in reverse order; otherwise, apply in provided order) |
+| `IPIV` | `Int32Array`<br><sub>length k1 + (k2 - k1) * abs(incx)</sub> | Vector of pivot indices |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,19 +77,19 @@ Performs a series of row interchanges on a matrix `A` using pivot indices stored
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Float64Array` | in/out | `null × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` |
-| `k1` | `NonNegativeInteger` | in |  |  | index of first row to interchange |
-| `k2` | `NonNegativeInteger` | in |  |  | index of last row to interchange |
-| `inck` | `integer` | in |  |  | direction in which to apply pivots (-1 to apply pivots in reverse order; otherwise, apply in provided order) |
-| `IPIV` | `Int32Array` | in | `k1 + (k2 - k1) * abs( incx )` |  | vector of pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` |
+| `k1` | `NonNegativeInteger` | Index of first row to interchange |
+| `k2` | `NonNegativeInteger` | Index of last row to interchange |
+| `inck` | `integer` | Direction in which to apply pivots (-1 to apply pivots in reverse order; otherwise, apply in provided order) |
+| `IPIV` | `Int32Array`<br><sub>length k1 + (k2 - k1) * abs(incx)</sub> | Vector of pivot indices |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

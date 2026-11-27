@@ -28,18 +28,18 @@ dlasdt(
 ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of diagonal elements of the bidiagonal matrix |
-| `lvl` | `Int32Array` | out |  |  | single-element array; on exit, the number of levels on the computation tree |
-| `nd` | `Int32Array` | out |  |  | single-element array; on exit, the number of nodes on the tree |
-| `INODE` | `Int32Array` | out | `N` |  | output array for centers of subproblems (0-based) |
-| ↳ `strideINODE` | `integer` | in |  |  | stride length for `INODE` |
-| `NDIML` | `Int32Array` | out | `N` |  | output array for row dimensions of left children |
-| ↳ `strideNDIML` | `integer` | in |  |  | stride length for `NDIML` |
-| `NDIMR` | `Int32Array` | out | `N` |  | output array for row dimensions of right children |
-| ↳ `strideNDIMR` | `integer` | in |  |  | stride length for `NDIMR` |
-| `msub` | `integer` | in |  |  | maximum row dimension each subproblem at the bottom of the tree can be of |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of diagonal elements of the bidiagonal matrix |
+| `lvl` | `Int32Array` | **out** · Single-element array; on exit, the number of levels on the computation tree |
+| `nd` | `Int32Array` | **out** · Single-element array; on exit, the number of nodes on the tree |
+| `INODE` | `Int32Array`<br><sub>length N</sub> | **out** · Output array for centers of subproblems (0-based) |
+| ↳ `strideINODE` | `integer` | Stride length for `INODE` |
+| `NDIML` | `Int32Array`<br><sub>length N</sub> | **out** · Output array for row dimensions of left children |
+| ↳ `strideNDIML` | `integer` | Stride length for `NDIML` |
+| `NDIMR` | `Int32Array`<br><sub>length N</sub> | **out** · Output array for row dimensions of right children |
+| ↳ `strideNDIMR` | `integer` | Stride length for `NDIMR` |
+| `msub` | `integer` | Maximum row dimension each subproblem at the bottom of the tree can be of |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -74,21 +74,21 @@ dlasdt.ndarray(
 
 Create a tree of subproblems for bidiagonal divide and conquer.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `lvl` | `Int32Array` | out |  |  | single-element array; on exit, the number of levels on the computation tree |
-| `nd` | `Int32Array` | out |  |  | single-element array; on exit, the number of nodes on the tree |
-| `INODE` | `Int32Array` | out | `N` |  | input array |
-| ↳ `strideINODE` | `integer` | in |  |  | stride length for `INODE` |
-| ↳ `offsetINODE` | `NonNegativeInteger` | in |  |  | starting index for `INODE` |
-| `NDIML` | `Int32Array` | out | `N` |  | input array |
-| ↳ `strideNDIML` | `integer` | in |  |  | stride length for `NDIML` |
-| ↳ `offsetNDIML` | `NonNegativeInteger` | in |  |  | starting index for `NDIML` |
-| `NDIMR` | `Int32Array` | out | `N` |  | output array |
-| ↳ `strideNDIMR` | `integer` | in |  |  | stride length for `NDIMR` |
-| ↳ `offsetNDIMR` | `NonNegativeInteger` | in |  |  | starting index for `NDIMR` |
-| `msub` | `integer` | in |  |  | on entry, the maximum row dimension each subproblem at the bottom of the tree can be of. |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns |
+| `lvl` | `Int32Array` | **out** · Single-element array; on exit, the number of levels on the computation tree |
+| `nd` | `Int32Array` | **out** · Single-element array; on exit, the number of nodes on the tree |
+| `INODE` | `Int32Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideINODE` | `integer` | Stride length for `INODE` |
+| ↳ `offsetINODE` | `NonNegativeInteger` | Starting index for `INODE` |
+| `NDIML` | `Int32Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideNDIML` | `integer` | Stride length for `NDIML` |
+| ↳ `offsetNDIML` | `NonNegativeInteger` | Starting index for `NDIML` |
+| `NDIMR` | `Int32Array`<br><sub>length N</sub> | **out** · Output array |
+| ↳ `strideNDIMR` | `integer` | Stride length for `NDIMR` |
+| ↳ `offsetNDIMR` | `NonNegativeInteger` | Starting index for `NDIMR` |
+| `msub` | `integer` | On entry, the maximum row dimension each subproblem at the bottom of the tree can be of. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

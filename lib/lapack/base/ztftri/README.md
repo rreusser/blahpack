@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztftri( transr, uplo, diag, N, A, strideA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the storage format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input/output array in RFP format |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies the storage format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input/output array in RFP format |
+| ↳ `strideA` | `integer` | Stride length for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -71,15 +71,15 @@ ztftri.ndarray( transr, uplo, diag, N, A, strideA, offsetA ) → integer
 
 Computes the inverse of A complex triangular matrix in Rectangular Full Packed format.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the storage format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | input/output array in RFP format |
-| ↳ `strideA` | `integer` | in |  |  | strideA length for `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies the storage format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Input/output array in RFP format |
+| ↳ `strideA` | `integer` | StrideA length for `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

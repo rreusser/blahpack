@@ -35,30 +35,30 @@ dtgsna(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | specifies the operation type |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `VL` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `(job === 'eigenvalues' \|\| job === 'both') && ldvl < N` | leading dimension of `VL` |
-| `VR` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `(job === 'eigenvalues' \|\| job === 'both') && ldvr < N` | leading dimension of `VR` |
-| `s` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `DIF` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of elements in the arrays S and DIF. |
-| `M` | `Int32Array` | out |  |  | number of rows |
-| `WORK` | `(Float64Array\|null)` | out | `≥ LWMIN` |  | input array |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N + 6` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | Specifies the operation type<br>One of `'both'`, `'eigenvalues'`, `'eigenvectors'`. |
+| `howmny` | `"all" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `(job === 'eigenvalues' \|\| job === 'both') && ldvl < N` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `(job === 'eigenvalues' \|\| job === 'both') && ldvr < N` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `DIF` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| `mm` | `NonNegativeInteger` | The number of elements in the arrays S and DIF. |
+| `M` | `Int32Array` | **out** · Number of rows |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ LWMIN</sub> | **out** · Input array |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N + 6</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -127,44 +127,44 @@ dtgsna.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | specifies the operation type |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `VL` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `s` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `DIF` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideDIF` | `integer` | in |  |  | stride length for `DIF` |
-| ↳ `offsetDIF` | `NonNegativeInteger` | in |  |  | starting index for `DIF` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of elements in the arrays S and DIF. |
-| `M` | `Int32Array` | out |  |  | number of rows |
-| `WORK` | `Float64Array` | out | `≥ LWMIN` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ N + 6` |  | output array |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | Specifies the operation type<br>One of `'both'`, `'eigenvalues'`, `'eigenvectors'`. |
+| `howmny` | `"all" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `DIF` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideDIF` | `integer` | Stride length for `DIF` |
+| ↳ `offsetDIF` | `NonNegativeInteger` | Starting index for `DIF` |
+| `mm` | `NonNegativeInteger` | The number of elements in the arrays S and DIF. |
+| `M` | `Int32Array` | **out** · Number of rows |
+| `WORK` | `Float64Array`<br><sub>length ≥ LWMIN</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N + 6</sub> | **out** · Output array |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

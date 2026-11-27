@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgetrf( order, M, N, A, LDA, IPIV, strideIPIV ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of matrix A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of matrix A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of matrix A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -64,17 +64,17 @@ zgetrf.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of matrix A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of matrix A |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output complex matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (complex elements) |
-| `IPIV` | `Int32Array` | out | `min( M, N )` |  | pivot index output array, length min(M,N) (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for IPIV |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of matrix A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output complex matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length min(M, N)</sub> | **out** · Pivot index output array, length min(M,N) (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for IPIV |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

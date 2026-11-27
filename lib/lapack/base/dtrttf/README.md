@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtrttf( order, transr, uplo, N, A, LDA, ARF, strideARF ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies whether `ARF` is in normal or transposed format (`'no-transpose'` or `'transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix in full format |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `ARF` | `Float64Array` | out | `NT` |  | output array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `transr` | `"no-transpose" \| "transpose"` | Specifies whether `ARF` is in normal or transposed format (`'no-transpose'` or `'transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix in full format |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `ARF` | `Float64Array`<br><sub>length NT</sub> | **out** · Output array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,18 +75,18 @@ Copies a triangular matrix from standard full format (TR) to Rectangular Full Pa
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies whether `ARF` is in normal or transposed format |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Float64Array` | in | `N × N` |  | input matrix in full format |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `ARF` | `Float64Array` | out | `NT` |  | output array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| ↳ `offsetARF` | `NonNegativeInteger` | in |  |  | starting index for `ARF` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "transpose"` | Specifies whether `ARF` is in normal or transposed format<br>One of `'no-transpose'`, `'transpose'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | Input matrix in full format |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `ARF` | `Float64Array`<br><sub>length NT</sub> | **out** · Output array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| ↳ `offsetARF` | `NonNegativeInteger` | Starting index for `ARF` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

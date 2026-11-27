@@ -47,31 +47,31 @@ batched use.
 When `BWORK` is `null`, this wrapper auto-allocates a logical workspace
 of size `N` elements. Only used when `sort='sort'`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvsl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute left Schur vectors, `'no-vectors'` to not |
-| `jobvsr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute right Schur vectors, `'no-vectors'` to not |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'sort'` to order eigenvalues, `'none'` to not |
-| `selctg` | `Function` | in |  |  | selection function `(alphar, alphai, beta) => boolean` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten by Schur form S on exit |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten by triangular form T on exit |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `sdim` | `Int32Array` | out |  |  | output (length-1 array): if SORT = `'N'`, SDIM = 0 |
-| `ALPHAR` | `Float64Array` | out | `N` |  | output: real parts of alpha (length N) |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | output: imaginary parts of alpha (length N) |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | output: beta values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `VSL` | `Float64Array` | out | `N × N` |  | output: left Schur vectors (N x N) |
-| ↳ `LDVSL` | `PositiveInteger` | in |  | rejects `ldvsl < 1 \|\| ((jobvsl === 'compute-vectors') && ldvsl < N)` | leading dimension of VSL |
-| `VSR` | `Float64Array` | out | `N × N` |  | output: right Schur vectors (N x N) |
-| ↳ `LDVSR` | `PositiveInteger` | in |  | rejects `ldvsr < 1 \|\| ((jobvsr === 'compute-vectors') && ldvsr < N)` | leading dimension of VSR |
-| `WORK` | `(Float64Array\|null)` | out | `≥ MINWRK` |  | caller-provided workspace of length at least max(8*N, 6*N+16, 1), or null to auto-allocate |
-| `BWORK` | `(Uint8Array\|null)` | out | `≥ N` |  | caller-provided logical workspace of length at least N, or null to auto-allocate |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvsl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute left Schur vectors, `'no-vectors'` to not |
+| `jobvsr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute right Schur vectors, `'no-vectors'` to not |
+| `sort` | `"none" \| "sort"` | `'sort'` to order eigenvalues, `'none'` to not |
+| `selctg` | `Function` | Selection function `(alphar, alphai, beta) => boolean` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten by Schur form S on exit |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten by triangular form T on exit |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `sdim` | `Int32Array` | **out** · Output (length-1 array): if SORT = `'N'`, SDIM = 0 |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of alpha (length N) |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of alpha (length N) |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output: beta values (length N) |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `VSL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left Schur vectors (N x N) |
+| ↳ `LDVSL` | `PositiveInteger` | Leading dimension of VSL<br>Rejects `ldvsl < 1 \|\| ((jobvsl === 'compute-vectors') && ldvsl < N)` |
+| `VSR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right Schur vectors (N x N) |
+| ↳ `LDVSR` | `PositiveInteger` | Leading dimension of VSR<br>Rejects `ldvsr < 1 \|\| ((jobvsr === 'compute-vectors') && ldvsr < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Caller-provided workspace of length at least max(8\*N, 6\*N+16, 1), or null to auto-allocate |
+| `BWORK` | `Uint8Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided logical workspace of length at least N, or null to auto-allocate |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -147,45 +147,45 @@ N-by-N real nonsymmetric matrices (A,B).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvsl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute left Schur vectors, `'no-vectors'` to not |
-| `jobvsr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute right Schur vectors, `'no-vectors'` to not |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'sort'` to order eigenvalues, `'none'` to not |
-| `selctg` | `Function` | in |  |  | selection function `(alphar, alphai, beta) => boolean` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten by Schur form S on exit |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten by triangular form T on exit |
-| ↳ `strideB1` | `integer` | in |  |  | first dimension stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second dimension stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `sdim` | `Int32Array` | out |  |  | output (length-1 array): if SORT = `'N'`, SDIM = 0 |
-| `ALPHAR` | `Float64Array` | out | `N` |  | output: real parts of alpha (length N) |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride for ALPHAR |
-| ↳ `offsetALPHAR` | `NonNegativeInteger` | in |  |  | offset for ALPHAR |
-| `ALPHAI` | `Float64Array` | out | `N` |  | output: imaginary parts of alpha (length N) |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride for ALPHAI |
-| ↳ `offsetALPHAI` | `NonNegativeInteger` | in |  |  | offset for ALPHAI |
-| `BETA` | `Float64Array` | out | `N` |  | output: beta values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | offset for BETA |
-| `VSL` | `Float64Array` | out | `N × N` |  | output: left Schur vectors (N x N) |
-| ↳ `strideVSL1` | `integer` | in |  |  | first dimension stride of VSL |
-| ↳ `strideVSL2` | `integer` | in |  |  | second dimension stride of VSL |
-| ↳ `offsetVSL` | `NonNegativeInteger` | in |  |  | starting index for VSL |
-| `VSR` | `Float64Array` | out | `N × N` |  | output: right Schur vectors (N x N) |
-| ↳ `strideVSR1` | `integer` | in |  |  | first dimension stride of VSR |
-| ↳ `strideVSR2` | `integer` | in |  |  | second dimension stride of VSR |
-| ↳ `offsetVSR` | `NonNegativeInteger` | in |  |  | starting index for VSR |
-| `WORK` | `Float64Array` | out | `≥ MINWRK` |  | caller-provided workspace; must have at least max(8*N, 6*N+16, 1) elements from offsetWork |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `BWORK` | `Uint8Array` | out | `≥ N` |  | caller-provided logical workspace of length at least N from offsetBwork (used when sort='sort') |
-| ↳ `strideBwork` | `integer` | in |  |  | stride for BWORK |
-| ↳ `offsetBwork` | `NonNegativeInteger` | in |  |  | starting index for BWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvsl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute left Schur vectors, `'no-vectors'` to not |
+| `jobvsr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute right Schur vectors, `'no-vectors'` to not |
+| `sort` | `"none" \| "sort"` | `'sort'` to order eigenvalues, `'none'` to not |
+| `selctg` | `Function` | Selection function `(alphar, alphai, beta) => boolean` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten by Schur form S on exit |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten by triangular form T on exit |
+| ↳ `strideB1` | `integer` | First dimension stride of B |
+| ↳ `strideB2` | `integer` | Second dimension stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `sdim` | `Int32Array` | **out** · Output (length-1 array): if SORT = `'N'`, SDIM = 0 |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of alpha (length N) |
+| ↳ `strideALPHAR` | `integer` | Stride for ALPHAR |
+| ↳ `offsetALPHAR` | `NonNegativeInteger` | Offset for ALPHAR |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of alpha (length N) |
+| ↳ `strideALPHAI` | `integer` | Stride for ALPHAI |
+| ↳ `offsetALPHAI` | `NonNegativeInteger` | Offset for ALPHAI |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output: beta values (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Offset for BETA |
+| `VSL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left Schur vectors (N x N) |
+| ↳ `strideVSL1` | `integer` | First dimension stride of VSL |
+| ↳ `strideVSL2` | `integer` | Second dimension stride of VSL |
+| ↳ `offsetVSL` | `NonNegativeInteger` | Starting index for VSL |
+| `VSR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right Schur vectors (N x N) |
+| ↳ `strideVSR1` | `integer` | First dimension stride of VSR |
+| ↳ `strideVSR2` | `integer` | Second dimension stride of VSR |
+| ↳ `offsetVSR` | `NonNegativeInteger` | Starting index for VSR |
+| `WORK` | `Float64Array`<br><sub>length ≥ MINWRK</sub> | **out** · Caller-provided workspace; must have at least max(8\*N, 6\*N+16, 1) elements from offsetWork |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `BWORK` | `Uint8Array`<br><sub>length ≥ N</sub> | **out** · Caller-provided logical workspace of length at least N from offsetBwork (used when sort='sort') |
+| ↳ `strideBwork` | `integer` | Stride for BWORK |
+| ↳ `offsetBwork` | `NonNegativeInteger` | Starting index for BWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

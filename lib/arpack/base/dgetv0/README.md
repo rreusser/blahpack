@@ -33,25 +33,25 @@ dgetv0(
 ) → Int32Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `itry` | `integer` | in |  |  | restart attempt counter (>= 1) |
-| `initv` | `boolean` | in |  |  | if `true`, `resid` already holds an initial vector; if `false`, it is randomized |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `j` | `NonNegativeInteger` | in |  |  | index of the residual vector to be generated |
-| `V` | `Float64Array` | in/out | `null × J` |  | Lanczos/Arnoldi basis (N-by-j, column-major) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| `rnorm` | `Float64Array` | in/out |  |  | B-norm of the generated residual (length-1; out) |
-| `ipntr` | `Int32Array` | out | `3` |  | pointers into `workd` for the operator (length >= 2; 0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| `workd` | `(Float64Array\|null)` | in/out | `≥ 2 * N` |  | reverse-communication workspace (length >= 2*N) |
-| `ierr` | `Int32Array` | out |  |  | output (length-1 array): `ierr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `itry` | `integer` | Restart attempt counter (>= 1) |
+| `initv` | `boolean` | If `true`, `resid` already holds an initial vector; if `false`, it is randomized |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `j` | `NonNegativeInteger` | Index of the residual vector to be generated |
+| `V` | `Float64Array`<br><sub>? × J</sub> | **in/out** · Lanczos/Arnoldi basis (N-by-j, column-major) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| `rnorm` | `Float64Array` | **in/out** · B-norm of the generated residual (length-1; out) |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Pointers into `workd` for the operator (length >= 2; 0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| `workd` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **in/out** · Reverse-communication workspace (length >= 2\*N) |
+| `ierr` | `Int32Array` | **out** · Output (length-1 array): `ierr` |
 
 **Returns** `Int32Array`: `ipntr`
 
@@ -84,30 +84,30 @@ dgetv0.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `state` | `Object` | in/out |  |  | persistent reverse-communication state (pass `{}` on first use) |
-| `ido` | `Int32Array` | in/out |  |  | reverse-communication flag (length-1; in/out) |
-| `bmat` | `("standard"\|"generalized")` | in |  |  | `'standard'` or `'generalized'` eigenproblem |
-| `itry` | `integer` | in |  |  | restart attempt counter (>= 1) |
-| `initv` | `boolean` | in |  |  | if `true`, `resid` already holds an initial vector; if `false`, it is randomized |
-| `N` | `NonNegativeInteger` | in |  |  | order of the problem |
-| `j` | `NonNegativeInteger` | in |  |  | index of the residual vector to be generated |
-| `V` | `Float64Array` | in/out | `null × J` |  | Lanczos/Arnoldi basis (N-by-j) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first (row) dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second (column) dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `resid` | `Float64Array` | in/out | `N` |  | residual vector (length N; in/out) |
-| ↳ `strideResid` | `integer` | in |  |  | stride length for `resid` |
-| ↳ `offsetResid` | `NonNegativeInteger` | in |  |  | starting index for `resid` |
-| `rnorm` | `Float64Array` | in/out |  |  | B-norm of the generated residual (length-1; out) |
-| `ipntr` | `Int32Array` | out | `3` |  | pointers into `workd` for the operator (length >= 2; 0-based; out) |
-| ↳ `strideIpntr` | `integer` | in |  |  | stride length for `ipntr` |
-| ↳ `offsetIpntr` | `NonNegativeInteger` | in |  |  | starting index for `ipntr` |
-| `workd` | `Float64Array` | in/out | `≥ 2 * N` |  | reverse-communication workspace (length >= 2*N) |
-| ↳ `strideWorkd` | `integer` | in |  |  | stride length for `workd` |
-| ↳ `offsetWorkd` | `NonNegativeInteger` | in |  |  | starting index for `workd` |
-| `ierr` | `Int32Array` | out |  |  | output (length-1 array): `ierr` |
+| Parameter | Type | Description |
+|---|---|---|
+| `state` | `Object` | **in/out** · Persistent reverse-communication state (pass `{}` on first use) |
+| `ido` | `Int32Array` | **in/out** · Reverse-communication flag (length-1; in/out) |
+| `bmat` | `"standard" \| "generalized"` | `'standard'` or `'generalized'` eigenproblem |
+| `itry` | `integer` | Restart attempt counter (>= 1) |
+| `initv` | `boolean` | If `true`, `resid` already holds an initial vector; if `false`, it is randomized |
+| `N` | `NonNegativeInteger` | Order of the problem |
+| `j` | `NonNegativeInteger` | Index of the residual vector to be generated |
+| `V` | `Float64Array`<br><sub>? × J</sub> | **in/out** · Lanczos/Arnoldi basis (N-by-j) |
+| ↳ `strideV1` | `integer` | Stride of the first (row) dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second (column) dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `resid` | `Float64Array`<br><sub>length N</sub> | **in/out** · Residual vector (length N; in/out) |
+| ↳ `strideResid` | `integer` | Stride length for `resid` |
+| ↳ `offsetResid` | `NonNegativeInteger` | Starting index for `resid` |
+| `rnorm` | `Float64Array` | **in/out** · B-norm of the generated residual (length-1; out) |
+| `ipntr` | `Int32Array`<br><sub>length 3</sub> | **out** · Pointers into `workd` for the operator (length >= 2; 0-based; out) |
+| ↳ `strideIpntr` | `integer` | Stride length for `ipntr` |
+| ↳ `offsetIpntr` | `NonNegativeInteger` | Starting index for `ipntr` |
+| `workd` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **in/out** · Reverse-communication workspace (length >= 2\*N) |
+| ↳ `strideWorkd` | `integer` | Stride length for `workd` |
+| ↳ `offsetWorkd` | `NonNegativeInteger` | Starting index for `workd` |
+| `ierr` | `Int32Array` | **out** · Output (length-1 array): `ierr` |
 
 **Returns** `Int32Array`: `ipntr`
 

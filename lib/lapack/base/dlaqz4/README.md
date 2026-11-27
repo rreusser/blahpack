@@ -38,36 +38,36 @@ dlaqz4(
 
 Executes a single multishift QZ sweep on the matrix pencil `(A, B)`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `ilschur` | `boolean` | in |  |  | if true, update the full Schur form |
-| `ilq` | `boolean` | in |  |  | if true, update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | if true, update the matrix `Z` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrices |
-| `ilo` | `integer` | in |  |  | (0-based) first index of the active Hessenberg region |
-| `ihi` | `integer` | in |  |  | (0-based) last index of the active Hessenberg region |
-| `nshifts` | `integer` | in |  |  | desired number of shifts |
-| `nblock_desired` | `NonNegativeInteger` | in |  | rejects `nblock_desired < nshifts + 1` | desired size of the computational windows |
-| `SR` | `Float64Array` | in |  |  | real parts of the shifts |
-| ↳ `strideSR` | `integer` | in |  |  | stride length for `SR` |
-| `SI` | `Float64Array` | in |  |  | imaginary parts of the shifts |
-| ↳ `strideSI` | `integer` | in |  |  | stride length for `SI` |
-| `SS` | `Float64Array` | in |  |  | scales of the shifts |
-| ↳ `strideSS` | `integer` | in |  |  | stride length for `SS` |
-| `A` | `Float64Array` | in/out | `N × N` |  | matrix `A` |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | matrix `B` |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `Q` | `Float64Array` | in/out | `null × N` |  | matrix `Q` |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `Z` | `Float64Array` | in/out | `null × N` |  | matrix `Z` |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `QC` | `Float64Array` | in/out | `null × nblock_desired` |  | workspace matrix |
-| ↳ `LDQC` | `PositiveInteger` | in |  |  | leading dimension of `QC` |
-| `ZC` | `Float64Array` | in/out | `null × nblock_desired` |  | workspace matrix |
-| ↳ `LDZC` | `PositiveInteger` | in |  |  | leading dimension of `ZC` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | workspace of size at least `N * nblockDesired` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `ilschur` | `boolean` | If true, update the full Schur form |
+| `ilq` | `boolean` | If true, update the matrix `Q` |
+| `ilz` | `boolean` | If true, update the matrix `Z` |
+| `N` | `NonNegativeInteger` | Order of the matrices |
+| `ilo` | `integer` | (0-based) first index of the active Hessenberg region |
+| `ihi` | `integer` | (0-based) last index of the active Hessenberg region |
+| `nshifts` | `integer` | Desired number of shifts |
+| `nblock_desired` | `NonNegativeInteger` | Desired size of the computational windows<br>Rejects `nblock_desired < nshifts + 1` |
+| `SR` | `Float64Array` | Real parts of the shifts |
+| ↳ `strideSR` | `integer` | Stride length for `SR` |
+| `SI` | `Float64Array` | Imaginary parts of the shifts |
+| ↳ `strideSI` | `integer` | Stride length for `SI` |
+| `SS` | `Float64Array` | Scales of the shifts |
+| ↳ `strideSS` | `integer` | Stride length for `SS` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Matrix `A` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Matrix `B` |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `Q` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `Q` |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `Z` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `Z` |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `QC` | `Float64Array`<br><sub>? × nblock_desired</sub> | **in/out** · Workspace matrix |
+| ↳ `LDQC` | `PositiveInteger` | Leading dimension of `QC` |
+| `ZC` | `Float64Array`<br><sub>? × nblock_desired</sub> | **in/out** · Workspace matrix |
+| ↳ `LDZC` | `PositiveInteger` | Leading dimension of `ZC` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of size at least `N * nblockDesired` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -122,52 +122,52 @@ Executes a single multishift QZ sweep on the matrix pencil `(A, B)`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ilschur` | `boolean` | in |  |  | if true, update the full Schur form |
-| `ilq` | `boolean` | in |  |  | if true, update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | if true, update the matrix `Z` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrices |
-| `ilo` | `integer` | in |  |  | (0-based) first index of the active Hessenberg region |
-| `ihi` | `integer` | in |  |  | (0-based) last index of the active Hessenberg region |
-| `nshifts` | `integer` | in |  |  | desired number of shifts |
-| `nblock_desired` | `NonNegativeInteger` | in |  | rejects `nblock_desired < nshifts + 1` | desired size of the computational windows |
-| `SR` | `Float64Array` | in |  |  | real parts of the shifts |
-| ↳ `strideSR` | `integer` | in |  |  | stride for `SR` |
-| ↳ `offsetSR` | `NonNegativeInteger` | in |  |  | starting index for `SR` |
-| `SI` | `Float64Array` | in |  |  | imaginary parts of the shifts |
-| ↳ `strideSI` | `integer` | in |  |  | stride for `SI` |
-| ↳ `offsetSI` | `NonNegativeInteger` | in |  |  | starting index for `SI` |
-| `SS` | `Float64Array` | in |  |  | scales of the shifts |
-| ↳ `strideSS` | `integer` | in |  |  | stride for `SS` |
-| ↳ `offsetSS` | `NonNegativeInteger` | in |  |  | starting index for `SS` |
-| `A` | `Float64Array` | in/out | `N × N` |  | matrix `A` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in/out | `N × N` |  | matrix `B` |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Q` | `Float64Array` | in/out | `null × N` |  | matrix `Q` |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` |
-| `Z` | `Float64Array` | in/out | `null × N` |  | matrix `Z` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `QC` | `Float64Array` | in/out | `null × nblock_desired` |  | workspace matrix |
-| ↳ `strideQC1` | `integer` | in |  |  | stride of the first dimension of `QC` |
-| ↳ `strideQC2` | `integer` | in |  |  | stride of the second dimension of `QC` |
-| ↳ `offsetQC` | `NonNegativeInteger` | in |  |  | starting index for `QC` |
-| `ZC` | `Float64Array` | in/out | `null × nblock_desired` |  | workspace matrix |
-| ↳ `strideZC1` | `integer` | in |  |  | stride of the first dimension of `ZC` |
-| ↳ `strideZC2` | `integer` | in |  |  | stride of the second dimension of `ZC` |
-| ↳ `offsetZC` | `NonNegativeInteger` | in |  |  | starting index for `ZC` |
-| `WORK` | `Float64Array` | out | `≥ max( 1, N )` |  | workspace of size at least `N * nblockDesired` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ilschur` | `boolean` | If true, update the full Schur form |
+| `ilq` | `boolean` | If true, update the matrix `Q` |
+| `ilz` | `boolean` | If true, update the matrix `Z` |
+| `N` | `NonNegativeInteger` | Order of the matrices |
+| `ilo` | `integer` | (0-based) first index of the active Hessenberg region |
+| `ihi` | `integer` | (0-based) last index of the active Hessenberg region |
+| `nshifts` | `integer` | Desired number of shifts |
+| `nblock_desired` | `NonNegativeInteger` | Desired size of the computational windows<br>Rejects `nblock_desired < nshifts + 1` |
+| `SR` | `Float64Array` | Real parts of the shifts |
+| ↳ `strideSR` | `integer` | Stride for `SR` |
+| ↳ `offsetSR` | `NonNegativeInteger` | Starting index for `SR` |
+| `SI` | `Float64Array` | Imaginary parts of the shifts |
+| ↳ `strideSI` | `integer` | Stride for `SI` |
+| ↳ `offsetSI` | `NonNegativeInteger` | Starting index for `SI` |
+| `SS` | `Float64Array` | Scales of the shifts |
+| ↳ `strideSS` | `integer` | Stride for `SS` |
+| ↳ `offsetSS` | `NonNegativeInteger` | Starting index for `SS` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Matrix `A` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Matrix `B` |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Q` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `Q` |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` |
+| `Z` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Matrix `Z` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `QC` | `Float64Array`<br><sub>? × nblock_desired</sub> | **in/out** · Workspace matrix |
+| ↳ `strideQC1` | `integer` | Stride of the first dimension of `QC` |
+| ↳ `strideQC2` | `integer` | Stride of the second dimension of `QC` |
+| ↳ `offsetQC` | `NonNegativeInteger` | Starting index for `QC` |
+| `ZC` | `Float64Array`<br><sub>? × nblock_desired</sub> | **in/out** · Workspace matrix |
+| ↳ `strideZC1` | `integer` | Stride of the first dimension of `ZC` |
+| ↳ `strideZC2` | `integer` | Stride of the second dimension of `ZC` |
+| ↳ `offsetZC` | `NonNegativeInteger` | Starting index for `ZC` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of size at least `N * nblockDesired` |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

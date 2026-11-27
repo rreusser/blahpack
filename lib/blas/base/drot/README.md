@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 drot( N, x, strideX, y, strideY, c, s ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `y` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| `c` | `number` | in |  |  | cosine of the angle of rotation |
-| `s` | `number` | in |  |  | sine of the angle of rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| `c` | `number` | Cosine of the angle of rotation |
+| `s` | `number` | Sine of the angle of rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -47,17 +47,17 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 drot.ndarray( N, x, strideX, offsetX, y, strideY, offsetY, c, s ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of indexed elements |
-| `x` | `Float64Array` | in/out | `N` |  | first input array |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `y` | `Float64Array` | in/out | `N` |  | second input array |
-| ↳ `strideY` | `integer` | in |  |  | `y` stride length |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
-| `c` | `number` | in |  |  | cosine of the angle of rotation |
-| `s` | `number` | in |  |  | sine of the angle of rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of indexed elements |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · First input array |
+| ↳ `strideX` | `integer` | `x` stride length |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Second input array |
+| ↳ `strideY` | `integer` | `y` stride length |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
+| `c` | `number` | Cosine of the angle of rotation |
+| `s` | `number` | Sine of the angle of rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

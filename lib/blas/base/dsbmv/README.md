@@ -20,20 +20,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsbmv( order, uplo, N, K, alpha, A, LDA, x, strideX, beta, y, strideY ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the band matrix A is being supplied as follows: `uplo === 'upper'` The upper triangular part of A is being supplied. `uplo === 'lower'` The lower triangular part of A is being supplied. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | the number of super-diagonals of the matrix A. |
-| `alpha` | `number` | in |  |  | the scalar alpha. |
-| `A` | `Float64Array` | in | `K + 1 × N` |  | before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the symmetric matrix, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ K + 1`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Float64Array` | in | `N` |  | before entry, the incremented array X must contain the vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `number` | in |  |  | the scalar beta. |
-| `y` | `Float64Array` | in/out | `N` |  | before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the band matrix A is being supplied as follows: `uplo === 'upper'` The upper triangular part of A is being supplied. `uplo === 'lower'` The lower triangular part of A is being supplied. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | The number of super-diagonals of the matrix A.<br>Requires `K ≥ 0` |
+| `alpha` | `number` | The scalar alpha. |
+| `A` | `Float64Array`<br><sub>(K + 1) × N</sub> | Before entry with `uplo === 'upper'`, the leading ( k + 1 ) by n part of the array A must contain the upper triangular band part of the symmetric matrix, supplied column by column, with the leading diagonal of the matrix in row ( k + 1 ) of the array, the first super-diagonal starting at position 2 in row k, and so on. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ K + 1`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Float64Array`<br><sub>length N</sub> | Before entry, the incremented array X must contain the vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `number` | The scalar beta. |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Before entry, the incremented array Y must contain the vector y. On exit, Y is overwritten by the updated vector y. |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -119,23 +119,23 @@ full matrix is at band position `A_band[i-j, j]`.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored: `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of super-diagonals (or sub-diagonals) |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Float64Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `x` | `Float64Array` | in | `N` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored: `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of super-diagonals (or sub-diagonals)<br>Requires `K ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Float64Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `x` | `Float64Array`<br><sub>length N</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

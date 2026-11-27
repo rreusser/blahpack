@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztbcon( order, norm, uplo, diag, N, kd, AB, LDAB, RCOND, WORK, RWORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | norm type: 'one-norm' or 'inf-norm' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'unit' or 'non-unit' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of super/sub-diagonals |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | triangular band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `RCOND` | `Float64Array` | out |  |  | output array of length 1 |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace of length 2*N |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace of length N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | Norm type: 'one-norm' or 'inf-norm' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `diag` | `DiagonalType` | 'unit' or 'non-unit' |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of super/sub-diagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Triangular band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `RCOND` | `Float64Array` | **out** · Output array of length 1 |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of length 2\*N |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace of length N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -86,24 +86,24 @@ ztbcon.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | the number of superdiagonals or subdiagonals of the triangular band matrix A. |
-| `AB` | `Complex128Array` | in | `kd + 1 × N` |  | input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `RCOND` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) * norm(inv(A))). |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Specifies the operation type<br>One of `'inf-norm'`, `'one-norm'`. |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `diag` | `DiagonalType` | Specifies the operation type<br>One of `'non-unit'`, `'unit'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | The number of superdiagonals or subdiagonals of the triangular band matrix A.<br>Requires `kd ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(kd + 1) × N</sub> | Input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `RCOND` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(norm(A) \* norm(inv(A))). |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

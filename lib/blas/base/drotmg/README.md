@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 drotmg( dd1, dd2, dx1, dy1, param, strideParam ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `dd1` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dd1` |
-| `dd2` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dd2` |
-| `dx1` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dx1` |
-| `dy1` | `number` | in |  |  | scalar value `dy1` |
-| `param` | `Float64Array` | out | `5` |  | five-element output array for the rotation parameters |
-| ↳ `strideParam` | `integer` | in |  |  | stride length for `param` |
+| Parameter | Type | Description |
+|---|---|---|
+| `dd1` | `Float64Array` | **in/out** · Input/output (length-1 array): `dd1` |
+| `dd2` | `Float64Array` | **in/out** · Input/output (length-1 array): `dd2` |
+| `dx1` | `Float64Array` | **in/out** · Input/output (length-1 array): `dx1` |
+| `dy1` | `number` | Scalar value `dy1` |
+| `param` | `Float64Array`<br><sub>length 5</sub> | **out** · Five-element output array for the rotation parameters |
+| ↳ `strideParam` | `integer` | Stride length for `param` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -64,15 +64,15 @@ DFLAG=-1:     DFLAG=0:      DFLAG=1:      DFLAG=-2:
 Locations 1-4 of `DPARAM` contain `DH11`, `DH21`, `DH12`, and `DH22`
 respectively. Values implied by the value of `DPARAM[0]` are not stored.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `dd1` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dd1` |
-| `dd2` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dd2` |
-| `dx1` | `Float64Array` | in/out |  |  | input/output (length-1 array): `dx1` |
-| `dy1` | `number` | in |  |  | scalar value `dy1` |
-| `param` | `Float64Array` | out | `5` |  | five-element output array for the rotation parameters |
-| ↳ `strideParam` | `integer` | in |  |  | stride length for `param` |
-| ↳ `offsetParam` | `NonNegativeInteger` | in |  |  | starting index for `param` |
+| Parameter | Type | Description |
+|---|---|---|
+| `dd1` | `Float64Array` | **in/out** · Input/output (length-1 array): `dd1` |
+| `dd2` | `Float64Array` | **in/out** · Input/output (length-1 array): `dd2` |
+| `dx1` | `Float64Array` | **in/out** · Input/output (length-1 array): `dx1` |
+| `dy1` | `number` | Scalar value `dy1` |
+| `param` | `Float64Array`<br><sub>length 5</sub> | **out** · Five-element output array for the rotation parameters |
+| ↳ `strideParam` | `integer` | Stride length for `param` |
+| ↳ `offsetParam` | `NonNegativeInteger` | Starting index for `param` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

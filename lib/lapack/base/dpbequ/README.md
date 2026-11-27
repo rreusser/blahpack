@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dpbequ( order, uplo, N, kd, AB, LDAB, s, strideS, scond, amax ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals or subdiagonals |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | input band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `s` | `Float64Array` | out | `N` |  | output scale factors |
-| ↳ `strideS` | `integer` | in |  |  | stride for `s` |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals or subdiagonals<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Input band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · Output scale factors |
+| ↳ `strideS` | `integer` | Stride for `s` |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -78,20 +78,20 @@ dpbequ.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (if upper) or subdiagonals (if lower) |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | input band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `s` | `Float64Array` | out | `N` |  | output scale factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `scond` | `Float64Array` | out |  |  | output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
-| `amax` | `Float64Array` | out |  |  | output (length-1 array): absolute value of largest matrix element |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`upper` or `lower`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (if upper) or subdiagonals (if lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Input band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `s` | `Float64Array`<br><sub>length N</sub> | **out** · Output scale factors, length N |
+| ↳ `strideS` | `integer` | Stride for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `scond` | `Float64Array` | **out** · Output (length-1 array): if INFO = 0, S contains the ratio of the smallest S(i) to the largest S(i) |
+| `amax` | `Float64Array` | **out** · Output (length-1 array): absolute value of largest matrix element |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

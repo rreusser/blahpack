@@ -38,34 +38,34 @@ zlaqr2(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | whether the full Schur form `T` is required |
-| `wantz` | `boolean` | in |  |  | whether the matrix of Schur vectors `Z` is required |
-| `N` | `NonNegativeInteger` | in |  |  | order of `H` and `Z` |
-| `ktop` | `integer` | in |  |  | first index in the active block of `H` |
-| `kbot` | `NonNegativeInteger` | in |  |  | last index in the active block of `H` |
-| `nw` | `NonNegativeInteger` | in |  |  | deflation window size |
-| `H` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `iloz` | `integer` | in |  |  | first row of `Z` to which transformations are applied |
-| `ihiz` | `integer` | in |  |  | last row of `Z` to which transformations are applied |
-| `Z` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `ns` | `Int32Array` | out |  |  | input/output (length-1 array): number of unconverged eigenvalues |
-| `nd` | `Int32Array` | out |  |  | input/output (length-1 array): number of deflated eigenvalues |
-| `SH` | `Complex128Array` | out | `kbot` |  | approximate eigenvalues |
-| ↳ `strideSH` | `integer` | in |  |  | stride length for `SH` |
-| `V` | `Complex128Array` | out | `null × nw` |  | workspace matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `nh` | `integer` | in |  |  | number of columns of `T` and `WV` |
-| `T` | `Complex128Array` | out | `null × nw` |  | workspace matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `nv` | `integer` | in |  |  | number of rows of `WV` |
-| `WV` | `Complex128Array` | out | `null × nw` |  | workspace matrix |
-| ↳ `LDWV` | `PositiveInteger` | in |  |  | leading dimension of `WV` |
-| `WORK` | `(Complex128Array\|null)` | out |  |  | workspace of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`), or `null` to allocate the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | Whether the full Schur form `T` is required |
+| `wantz` | `boolean` | Whether the matrix of Schur vectors `Z` is required |
+| `N` | `NonNegativeInteger` | Order of `H` and `Z` |
+| `ktop` | `integer` | First index in the active block of `H` |
+| `kbot` | `NonNegativeInteger` | Last index in the active block of `H` |
+| `nw` | `NonNegativeInteger` | Deflation window size |
+| `H` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `iloz` | `integer` | First row of `Z` to which transformations are applied |
+| `ihiz` | `integer` | Last row of `Z` to which transformations are applied |
+| `Z` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `ns` | `Int32Array` | **out** · Input/output (length-1 array): number of unconverged eigenvalues |
+| `nd` | `Int32Array` | **out** · Input/output (length-1 array): number of deflated eigenvalues |
+| `SH` | `Complex128Array`<br><sub>length kbot</sub> | **out** · Approximate eigenvalues |
+| ↳ `strideSH` | `integer` | Stride length for `SH` |
+| `V` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Workspace matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `nh` | `integer` | Number of columns of `T` and `WV` |
+| `T` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Workspace matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `nv` | `integer` | Number of rows of `WV` |
+| `WV` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Workspace matrix |
+| ↳ `LDWV` | `PositiveInteger` | Leading dimension of `WV` |
+| `WORK` | `Complex128Array \| null` | **out** · Workspace of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`), or `null` to allocate the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -129,46 +129,46 @@ Complex aggressive early deflation (non-recursive).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | if `true`, then the Hessenberg matrix H is fully updated so that the triangular Schur factor may be computed (in cooperation with the calling subroutine). |
-| `wantz` | `boolean` | in |  |  | if `true`, then the unitary matrix Z is updated so so that the unitary Schur factor may be computed (in cooperation with the calling subroutine). |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `ktop` | `integer` | in |  |  | it is assumed that either KTOP = 1 or H(KTOP,KTOP-1)=0. |
-| `kbot` | `NonNegativeInteger` | in |  |  | it is assumed without a check that either KBOT = N or H(KBOT+1,KBOT)=0. |
-| `nw` | `NonNegativeInteger` | in |  |  | deflation window size. 1 <= NW <= (KBOT-KTOP+1). |
-| `H` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `ihiz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `Z` | `Complex128Array` | in/out | `null × N` |  | input matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` |
-| `ns` | `Int32Array` | out |  |  | input/output (length-1 array): ns |
-| `nd` | `Int32Array` | out |  |  | input/output (length-1 array): nd |
-| `SH` | `Complex128Array` | out | `kbot` |  | input array |
-| ↳ `strideSH` | `integer` | in |  |  | stride length for `SH` |
-| ↳ `offsetSH` | `NonNegativeInteger` | in |  |  | starting index for `SH` |
-| `V` | `Complex128Array` | out | `null × nw` |  | input matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `nh` | `integer` | in |  |  | nhp |
-| `T` | `Complex128Array` | out | `null × nw` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `nv` | `integer` | in |  |  | nvp |
-| `WV` | `Complex128Array` | out | `null × nw` |  | input matrix |
-| ↳ `strideWV1` | `integer` | in |  |  | stride of the first dimension of `WV` |
-| ↳ `strideWV2` | `integer` | in |  |  | stride of the second dimension of `WV` |
-| ↳ `offsetWV` | `NonNegativeInteger` | in |  |  | starting index for `WV` |
-| `WORK` | `Complex128Array` | out |  |  | workspace array of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`); the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) keeps ZGEHRD/ZUNMHR blocked |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | If `true`, then the Hessenberg matrix H is fully updated so that the triangular Schur factor may be computed (in cooperation with the calling subroutine). |
+| `wantz` | `boolean` | If `true`, then the unitary matrix Z is updated so so that the unitary Schur factor may be computed (in cooperation with the calling subroutine). |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `ktop` | `integer` | It is assumed that either KTOP = 1 or H(KTOP,KTOP-1)=0. |
+| `kbot` | `NonNegativeInteger` | It is assumed without a check that either KBOT = N or H(KBOT+1,KBOT)=0. |
+| `nw` | `NonNegativeInteger` | Deflation window size. 1 <= NW <= (KBOT-KTOP+1). |
+| `H` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `ihiz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `Z` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input matrix |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` |
+| `ns` | `Int32Array` | **out** · Input/output (length-1 array): ns |
+| `nd` | `Int32Array` | **out** · Input/output (length-1 array): nd |
+| `SH` | `Complex128Array`<br><sub>length kbot</sub> | **out** · Input array |
+| ↳ `strideSH` | `integer` | Stride length for `SH` |
+| ↳ `offsetSH` | `NonNegativeInteger` | Starting index for `SH` |
+| `V` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Input matrix |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `nh` | `integer` | Nhp |
+| `T` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `nv` | `integer` | Nvp |
+| `WV` | `Complex128Array`<br><sub>? × nw</sub> | **out** · Input matrix |
+| ↳ `strideWV1` | `integer` | Stride of the first dimension of `WV` |
+| ↳ `strideWV2` | `integer` | Stride of the second dimension of `WV` |
+| ↳ `offsetWV` | `NonNegativeInteger` | Starting index for `WV` |
+| `WORK` | `Complex128Array` | **out** · Workspace array of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`); the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) keeps ZGEHRD/ZUNMHR blocked |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

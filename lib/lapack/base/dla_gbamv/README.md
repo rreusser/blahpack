@@ -31,22 +31,22 @@ dla_gbamv(
 
 Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a general band matrix to calculate error bounds.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `trans` | `TransposeOperation` | in |  |  | specifies whether `A` should be transposed (`'no-transpose'` or `'transpose'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > M - 1` | number of sub-diagonals |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | number of super-diagonals |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `AB` | `Float64Array` | in | `kl + ku + 1 × N` |  | banded input matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `x` | `Float64Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `trans` | `TransposeOperation` | Specifies whether `A` should be transposed (`'no-transpose'` or `'transpose'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals<br>Rejects `kl < 0 \|\| kl > M - 1` |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `alpha` | `number` | Scalar constant |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | Banded input matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `x` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -106,25 +106,25 @@ Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a gen
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  |  | specifies whether `A` should be transposed (`'no-transpose'` or `'transpose'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `kl` | `NonNegativeInteger` | in |  | rejects `kl < 0 \|\| kl > M - 1` | number of sub-diagonals |
-| `ku` | `NonNegativeInteger` | in |  | rejects `ku < 0 \|\| ku > N - 1` | number of super-diagonals |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `AB` | `Float64Array` | in | `kl + ku + 1 × N` |  | banded input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `x` | `Float64Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies whether `A` should be transposed (`'no-transpose'` or `'transpose'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals<br>Rejects `kl < 0 \|\| kl > M - 1` |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals<br>Rejects `ku < 0 \|\| ku > N - 1` |
+| `alpha` | `number` | Scalar constant |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | Banded input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `x` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

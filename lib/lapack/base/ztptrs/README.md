@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztptrs( order, uplo, trans, diag, N, nrhs, AP, B, LDB ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation (`'no-transpose'` or `'conjugate-transpose'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix A |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `trans` | `TransposeOperation` | Specifies the operation (`'no-transpose'` or `'conjugate-transpose'`) |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix A |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,20 +88,20 @@ an N-by-NRHS matrix. A check is made to verify that A is nonsingular.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation (`'no-transpose'` or `'conjugate-transpose'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix A, dimension `N*(N+1)/2` (complex-element strides) |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `B` | `Complex128Array` | in/out | `N × nrhs` |  | right-hand side matrix, overwritten with solution on exit |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `trans` | `TransposeOperation` | Specifies the operation (`'no-transpose'` or `'conjugate-transpose'`) |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix A, dimension `N*(N+1)/2` (complex-element strides) |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Right-hand side matrix, overwritten with solution on exit |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

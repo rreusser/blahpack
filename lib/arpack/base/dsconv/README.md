@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsconv( N, ritz, strideRITZ, bounds, strideBOUNDS, tol, nconv ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of Ritz values to check for convergence |
-| `ritz` | `Float64Array` | in | `N` |  | Ritz values to be checked for convergence |
-| ↳ `strideRITZ` | `integer` | in |  |  | stride length for `ritz` |
-| `bounds` | `Float64Array` | in | `N` |  | Ritz estimates associated with the Ritz values in `ritz` |
-| ↳ `strideBOUNDS` | `integer` | in |  |  | stride length for `bounds` |
-| `tol` | `number` | in |  |  | desired relative accuracy for a Ritz value to be considered "converged" |
-| `nconv` | `Int32Array` | out |  |  | output (length-1 array): `nconv` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of Ritz values to check for convergence |
+| `ritz` | `Float64Array`<br><sub>length N</sub> | Ritz values to be checked for convergence |
+| ↳ `strideRITZ` | `integer` | Stride length for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length N</sub> | Ritz estimates associated with the Ritz values in `ritz` |
+| ↳ `strideBOUNDS` | `integer` | Stride length for `bounds` |
+| `tol` | `number` | Desired relative accuracy for a Ritz value to be considered "converged" |
+| `nconv` | `Int32Array` | **out** · Output (length-1 array): `nconv` |
 
 **Returns** `void`
 
@@ -50,17 +50,17 @@ dsconv.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of Ritz values to check for convergence |
-| `ritz` | `Float64Array` | in | `N` |  | Ritz values to be checked for convergence |
-| ↳ `strideRITZ` | `integer` | in |  |  | stride length for `ritz` |
-| ↳ `offsetRITZ` | `NonNegativeInteger` | in |  |  | starting index for `ritz` |
-| `bounds` | `Float64Array` | in | `N` |  | Ritz estimates associated with the Ritz values in `ritz` |
-| ↳ `strideBOUNDS` | `integer` | in |  |  | stride length for `bounds` |
-| ↳ `offsetBOUNDS` | `NonNegativeInteger` | in |  |  | starting index for `bounds` |
-| `tol` | `number` | in |  |  | desired relative accuracy for a Ritz value to be considered "converged" |
-| `nconv` | `Int32Array` | out |  |  | output (length-1 array): `nconv` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of Ritz values to check for convergence |
+| `ritz` | `Float64Array`<br><sub>length N</sub> | Ritz values to be checked for convergence |
+| ↳ `strideRITZ` | `integer` | Stride length for `ritz` |
+| ↳ `offsetRITZ` | `NonNegativeInteger` | Starting index for `ritz` |
+| `bounds` | `Float64Array`<br><sub>length N</sub> | Ritz estimates associated with the Ritz values in `ritz` |
+| ↳ `strideBOUNDS` | `integer` | Stride length for `bounds` |
+| ↳ `offsetBOUNDS` | `NonNegativeInteger` | Starting index for `bounds` |
+| `tol` | `number` | Desired relative accuracy for a Ritz value to be considered "converged" |
+| `nconv` | `Int32Array` | **out** · Output (length-1 array): `nconv` |
 
 **Returns** `void`
 

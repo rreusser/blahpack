@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zspmv( order, uplo, N, alpha, AP, x, strideX, beta, y, strideY ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier for `A*x` |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix |
-| `x` | `Complex128Array` | in | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` (in complex elements) |
-| `beta` | `Complex128` | in |  |  | complex scalar multiplier for `y` |
-| `y` | `Complex128Array` | in/out | `N` |  | complex input/output vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier for `A*x` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed symmetric matrix |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Complex input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` (in complex elements) |
+| `beta` | `Complex128` | Complex scalar multiplier for `y` |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Complex input/output vector |
+| ↳ `strideY` | `integer` | Stride length for `y` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -85,21 +85,21 @@ zspmv.ndarray(
 
 Perform the symmetric packed matrix-vector operation y := alpha_A_x + beta*y where A is a complex symmetric matrix stored in packed format.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `alpha` | `Complex128` | in |  |  | scalar constant |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `x` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `beta` | `Complex128` | in |  |  | scalar constant |
-| `y` | `Complex128Array` | in/out | `N` |  | output array |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Scalar constant |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `beta` | `Complex128` | Scalar constant |
+| `y` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Output array |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

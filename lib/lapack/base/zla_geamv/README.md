@@ -22,20 +22,20 @@ zla_geamv( order, trans, M, N, alpha, A, LDA, x, strideX, beta, y, strideY ) →
 
 Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a general complex matrix to calculate error bounds.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Complex128Array` | in | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input/output real vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `trans` | `TransposeOperation` | Specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input/output real vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -91,23 +91,23 @@ Computes `y := alpha*|A|*|x| + beta*|y|` (or the transposed variant) using a gen
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `A` |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Complex128Array` | in | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `x` | `Complex128Array` | in | `( trans === 'no-transpose' ) ? N : M` |  | input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` (in complex elements) |
-| `beta` | `number` | in |  |  | scalar constant |
-| `y` | `Float64Array` | in/out | `( trans === 'no-transpose' ) ? M : N` |  | input/output real vector |
-| ↳ `strideY` | `integer` | in |  |  | stride length for `y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `y` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Requires `N ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `x` | `Complex128Array`<br><sub>length (trans === 'no-transpose') ? N : M</sub> | Input vector |
+| ↳ `strideX` | `integer` | Stride length for `x` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` (in complex elements) |
+| `beta` | `number` | Scalar constant |
+| `y` | `Float64Array`<br><sub>length (trans === 'no-transpose') ? M : N</sub> | **in/out** · Input/output real vector |
+| ↳ `strideY` | `integer` | Stride length for `y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `y` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

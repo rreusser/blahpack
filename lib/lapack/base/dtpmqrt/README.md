@@ -30,25 +30,25 @@ dtpmqrt(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > K` | order of the trapezoidal part of V (`0 <= L <= K`) |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to construct T |
-| `V` | `Float64Array` | in | `LDVQ × K` |  | pentagonal reflector matrix produced by `dtpqrt` |
-| ↳ `LDV` | `PositiveInteger` | in |  | requires `LDV ≥ LDVQ` | leading dimension of V |
-| `T` | `Float64Array` | in | `nb × K` |  | block triangular factor produced by `dtpqrt` |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ nb`; row-major requires `LDT ≥ max( 1, K )` | leading dimension of T (>= nb) |
-| `A` | `Float64Array` | in/out | `LDAQ × (side === 'left' ? N : K)` |  | upper (left) or left (right) block of C, modified in-place |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ LDAQ` | leading dimension of A |
-| `B` | `Float64Array` | in/out | `M × N` |  | lower (left) or right (right) block of C, modified in-place |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of B (>= max(1,M)) |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace buffer (>= N*nb if `side='left'` or M*nb if `side='right'`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `l` | `NonNegativeInteger` | Order of the trapezoidal part of V (`0 <= L <= K`)<br>Rejects `L < 0 \|\| L > K` |
+| `nb` | `integer` | Block size used to construct T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Float64Array`<br><sub>LDVQ × K</sub> | Pentagonal reflector matrix produced by `dtpqrt` |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of V<br>Requires `LDV ≥ LDVQ` |
+| `T` | `Float64Array`<br><sub>nb × K</sub> | Block triangular factor produced by `dtpqrt` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of T (>= nb)<br>Column-major requires `LDT ≥ nb`<br>Row-major requires `LDT ≥ max(1, K)` |
+| `A` | `Float64Array`<br><sub>LDAQ × (side === 'left' ? N : K)</sub> | **in/out** · Upper (left) or left (right) block of C, modified in-place |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ LDAQ` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Lower (left) or right (right) block of C, modified in-place |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (>= max(1,M))<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace buffer (>= N\*nb if `side='left'` or M\*nb if `side='right'`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,34 +113,34 @@ dtpmqrt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > K` | order of the trapezoidal part of V (`0 <= L <= K`) |
-| `nb` | `integer` | in |  | rejects `nb < 1 \|\| (nb > K && K > 0)` | block size used to construct T |
-| `V` | `Float64Array` | in | `LDVQ × K` |  | pentagonal reflector matrix produced by `dtpqrt` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `T` | `Float64Array` | in | `nb × K` |  | block triangular factor produced by `dtpqrt` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `A` | `Float64Array` | in/out | `LDAQ × (side === 'left' ? N : K)` |  | upper (left) or left (right) block of C, modified in-place |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `M × N` |  | lower (left) or right (right) block of C, modified in-place |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `WORK` | `Float64Array` | out |  |  | workspace buffer (caller-allocated, `nb*N` doubles for `side='left'` or `M*nb` for `side='right'`) |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `l` | `NonNegativeInteger` | Order of the trapezoidal part of V (`0 <= L <= K`)<br>Rejects `L < 0 \|\| L > K` |
+| `nb` | `integer` | Block size used to construct T<br>Rejects `nb < 1 \|\| (nb > K && K > 0)` |
+| `V` | `Float64Array`<br><sub>LDVQ × K</sub> | Pentagonal reflector matrix produced by `dtpqrt` |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `T` | `Float64Array`<br><sub>nb × K</sub> | Block triangular factor produced by `dtpqrt` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `A` | `Float64Array`<br><sub>LDAQ × (side === 'left' ? N : K)</sub> | **in/out** · Upper (left) or left (right) block of C, modified in-place |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Lower (left) or right (right) block of C, modified in-place |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `WORK` | `Float64Array` | **out** · Workspace buffer (caller-allocated, `nb*N` doubles for `side='left'` or `M*nb` for `side='right'`) |
+| ↳ `strideWork` | `integer` | Element stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

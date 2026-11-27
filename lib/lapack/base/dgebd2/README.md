@@ -29,22 +29,22 @@ dgebd2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `TAUQ` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAUQ` | `integer` | in |  |  | `TAUQ` stride length |
-| `TAUP` | `Float64Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAUP` | `integer` | in |  |  | `TAUP` stride length |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( M, N )` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `TAUQ` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAUQ` | `integer` | `TAUQ` stride length |
+| `TAUP` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAUP` | `integer` | `TAUP` stride length |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(M, N)</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -105,29 +105,29 @@ dgebd2.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `d` | `Float64Array` | out | `min( M, N )` |  | output array of diagonal elements of B, length min(M,N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | out | `min( M, N ) - 1` |  | output array of off-diagonal elements of B, length min(M,N)-1 |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `TAUQ` | `Float64Array` | out | `min( M, N )` |  | output array of scalar factors for Q, length min(M,N) |
-| ↳ `strideTAUQ` | `integer` | in |  |  | stride for TAUQ |
-| ↳ `offsetTAUQ` | `NonNegativeInteger` | in |  |  | starting index for TAUQ |
-| `TAUP` | `Float64Array` | out | `min( M, N )` |  | output array of scalar factors for P, length min(M,N) |
-| ↳ `strideTAUP` | `integer` | in |  |  | stride for TAUP |
-| ↳ `offsetTAUP` | `NonNegativeInteger` | in |  |  | starting index for TAUP |
-| `WORK` | `Float64Array` | out | `≥ max( M, N )` |  | workspace array (length >= max(M,N)) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `d` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of diagonal elements of B, length min(M,N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length min(M, N) - 1</sub> | **out** · Output array of off-diagonal elements of B, length min(M,N)-1 |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `TAUQ` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of scalar factors for Q, length min(M,N) |
+| ↳ `strideTAUQ` | `integer` | Stride for TAUQ |
+| ↳ `offsetTAUQ` | `NonNegativeInteger` | Starting index for TAUQ |
+| `TAUP` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output array of scalar factors for P, length min(M,N) |
+| ↳ `strideTAUP` | `integer` | Stride for TAUP |
+| ↳ `offsetTAUP` | `NonNegativeInteger` | Starting index for TAUP |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(M, N)</sub> | **out** · Workspace array (length >= max(M,N)) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

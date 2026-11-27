@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlaqsp( order, uplo, N, AP, S, strideS, scond, amax, equed ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part of `A` is packed ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix, length N*(N+1)/2 |
-| `S` | `Float64Array` | in | `N` |  | scaling factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride for S |
-| `scond` | `number` | in |  |  | ratio of smallest to largest scaling factor |
-| `amax` | `number` | in |  |  | absolute value of largest matrix element |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part of `A` is packed ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix, length N\*(N+1)/2 |
+| `S` | `Float64Array`<br><sub>length N</sub> | Scaling factors, length N |
+| ↳ `strideS` | `integer` | Stride for S |
+| `scond` | `number` | Ratio of smallest to largest scaling factor |
+| `amax` | `number` | Absolute value of largest matrix element |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,19 +75,19 @@ zlaqsp.ndarray(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  |  | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `AP` | `Complex128Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | packed symmetric matrix, length N*(N+1)/2 |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `S` | `Float64Array` | in | `N` |  | scaling factors, length N |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `S` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `S` |
-| `scond` | `number` | in |  |  | ratio of smallest to largest scaling factor |
-| `amax` | `number` | in |  |  | absolute value of largest matrix element |
-| `equed` | `Array.<string>` | out |  |  | specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) * A * diag(S). |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Packed symmetric matrix, length N\*(N+1)/2 |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `S` | `Float64Array`<br><sub>length N</sub> | Scaling factors, length N |
+| ↳ `strideS` | `integer` | Stride length for `S` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `S` |
+| `scond` | `number` | Ratio of smallest to largest scaling factor |
+| `amax` | `number` | Absolute value of largest matrix element |
+| `equed` | `Array.<string>` | **out** · Specifies whether or not equilibration was done. `'none'`: No equilibration. `'yes'`: Equilibration was done, i.e., A has been replaced by diag(S) \* A \* diag(S). |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

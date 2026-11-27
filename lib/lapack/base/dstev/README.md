@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dstev( order, jobz, N, d, strideD, e, strideE, Z, LDZ, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix. |
-| `d` | `Float64Array` | in/out | `N` |  | on entry, the n diagonal elements of the tridiagonal matrix A. On exit, if INFO = 0, the eigenvalues in ascending order. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | on entry, the (n-1) subdiagonal elements of the tridiagonal matrix A, stored in elements 1 to N-1 of E. On exit, the contents of E are destroyed. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `Z` | `Float64Array` | out | `N × N` |  | if `jobz === 'compute-vectors'`, then if INFO = 0, Z contains the orthonormal eigenvectors of the matrix A, with the i-th column of Z holding the eigenvector associated with D(i). |
-| ↳ `LDZ` | `PositiveInteger` | in |  | rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, 2 * N - 2 )` |  | caller-provided workspace of at least `max( 1, 2 * N - 2 )` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Compute eigenvalues only; `'compute-vectors'`: Compute eigenvalues and eigenvectors. |
+| `N` | `NonNegativeInteger` | The order of the matrix.<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the n diagonal elements of the tridiagonal matrix A. On exit, if INFO = 0, the eigenvalues in ascending order. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A, stored in elements 1 to N-1 of E. On exit, the contents of E are destroyed. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · If `jobz === 'compute-vectors'`, then if INFO = 0, Z contains the orthonormal eigenvectors of the matrix A, with the i-th column of Z holding the eigenvector associated with D(i). |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z`<br>Rejects `ldz < 1 \|\| (jobz === 'compute-vectors' && ldz < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 2 * N - 2)</sub> | **out** · Caller-provided workspace of at least `max( 1, 2 * N - 2 )` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -87,23 +87,23 @@ Algorithm:
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N); on exit, eigenvalues in ascending order |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in/out | `N - 1` |  | off-diagonal elements (length N-1); destroyed on exit |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `Z` | `Float64Array` | out | `N × N` |  | output matrix for eigenvectors (N x N) if jobz=`'compute-vectors'`; not referenced if jobz=`'no-vectors'` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 2 * N - 2 )` |  | workspace array (length max(1, 2*N-2)) if jobz=`'compute-vectors'`; not referenced if jobz=`'no-vectors'` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N); on exit, eigenvalues in ascending order |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Off-diagonal elements (length N-1); destroyed on exit |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `Z` | `Float64Array`<br><sub>N × N</sub> | **out** · Output matrix for eigenvectors (N x N) if jobz=`'compute-vectors'`; not referenced if jobz=`'no-vectors'` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of Z |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 2 * N - 2)</sub> | **out** · Workspace array (length max(1, 2\*N-2)) if jobz=`'compute-vectors'`; not referenced if jobz=`'no-vectors'` |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

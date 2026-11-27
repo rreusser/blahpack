@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ztrttf( order, transr, uplo, N, A, LDA, ARF, strideARF ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether the RFP format is in normal or conjugate-transpose mode (`'no-transpose'` or `'conjugate-transpose'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in | `N × N` |  | input triangular matrix in standard full format |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `ARF` | `Complex128Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether the RFP format is in normal or conjugate-transpose mode (`'no-transpose'` or `'conjugate-transpose'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input triangular matrix in standard full format |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,18 +73,18 @@ ztrttf.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies whether the RFP format is in normal or conjugate-transpose mode |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in | `N × N` |  | input triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `ARF` | `Complex128Array` | out | `trunc( N * (N + 1) / 2 )` |  | output array in RFP format |
-| ↳ `strideARF` | `integer` | in |  |  | stride length for `ARF` |
-| ↳ `offsetARF` | `NonNegativeInteger` | in |  |  | starting index for `ARF` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies whether the RFP format is in normal or conjugate-transpose mode<br>One of `'conjugate-transpose'`, `'no-transpose'`. |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Input triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `ARF` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **out** · Output array in RFP format |
+| ↳ `strideARF` | `integer` | Stride length for `ARF` |
+| ↳ `offsetARF` | `NonNegativeInteger` | Starting index for `ARF` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

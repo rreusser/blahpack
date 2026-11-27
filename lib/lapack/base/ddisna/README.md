@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ddisna( job, M, N, d, strideD, SEP, strideSEP ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"left-vectors"\|"right-vectors")` | in |  | one of `'eigenvalues'`, `'left-vectors'`, `'right-vectors'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `( job === 'eigenvalues' ) ? M : min( M, N )` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `SEP` | `Float64Array` | out | `( job === 'eigenvalues' ) ? M : min( M, N )` |  | output array |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "left-vectors" \| "right-vectors"` | Specifies the operation type<br>One of `'eigenvalues'`, `'left-vectors'`, `'right-vectors'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length (job === 'eigenvalues') ? M : min(M, N)</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `SEP` | `Float64Array`<br><sub>length (job === 'eigenvalues') ? M : min(M, N)</sub> | **out** · Output array |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -60,17 +60,17 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 ddisna.ndarray( job, M, N, d, strideD, offsetD, SEP, strideSEP, offsetSEP ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"left-vectors"\|"right-vectors")` | in |  | one of `'eigenvalues'`, `'left-vectors'`, `'right-vectors'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `d` | `Float64Array` | in | `( job === 'eigenvalues' ) ? M : min( M, N )` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `SEP` | `Float64Array` | out | `( job === 'eigenvalues' ) ? M : min( M, N )` |  | output array |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
-| ↳ `offsetSEP` | `NonNegativeInteger` | in |  |  | starting index for `SEP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "left-vectors" \| "right-vectors"` | Specifies the operation type<br>One of `'eigenvalues'`, `'left-vectors'`, `'right-vectors'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `d` | `Float64Array`<br><sub>length (job === 'eigenvalues') ? M : min(M, N)</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `SEP` | `Float64Array`<br><sub>length (job === 'eigenvalues') ? M : min(M, N)</sub> | **out** · Output array |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
+| ↳ `offsetSEP` | `NonNegativeInteger` | Starting index for `SEP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

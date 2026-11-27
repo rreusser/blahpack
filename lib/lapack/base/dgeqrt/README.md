@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgeqrt( order, M, N, nb, A, LDA, T, LDT, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of the matrix `A` |
-| `nb` | `NonNegativeInteger` | in |  | rejects `nb < 1 \|\| (nb > min( M, N ) && min( M, N ) > 0)` | block size |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `T` | `Float64Array` | out | `nb × min( M, N )` |  | output matrix (`nb`-by-`min(M,N)`) |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ nb`; row-major requires `LDT ≥ max( 1, min( M, N ) )` | leading dimension of `T` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ nb * N` |  | workspace array (length `>= nb*N`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Requires `N ≥ 0` |
+| `nb` | `NonNegativeInteger` | Block size<br>Rejects `nb < 1 \|\| (nb > min(M, N) && min(M, N) > 0)` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `T` | `Float64Array`<br><sub>nb × min(M, N)</sub> | **out** · Output matrix (`nb`-by-`min(M,N)`) |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Column-major requires `LDT ≥ nb`<br>Row-major requires `LDT ≥ max(1, min(M, N))` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ nb * N</sub> | **out** · Workspace array (length `>= nb*N`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,22 +73,22 @@ dgeqrt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix `A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of the matrix `A` |
-| `nb` | `NonNegativeInteger` | in |  | rejects `nb < 1 \|\| (nb > min( M, N ) && min( M, N ) > 0)` | block size |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Float64Array` | out | `nb × min( M, N )` |  | output matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `WORK` | `Float64Array` | out | `≥ nb * N` |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of the matrix `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix `A`<br>Requires `N ≥ 0` |
+| `nb` | `NonNegativeInteger` | Block size<br>Rejects `nb < 1 \|\| (nb > min(M, N) && min(M, N) > 0)` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Float64Array`<br><sub>nb × min(M, N)</sub> | **out** · Output matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `WORK` | `Float64Array`<br><sub>length ≥ nb * N</sub> | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

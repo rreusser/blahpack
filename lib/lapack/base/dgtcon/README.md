@@ -32,24 +32,24 @@ dgtcon(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) elements of the first superdiagonal of U. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DU2` | `Float64Array` | in | `N - 2` |  | the (n-2) elements of the second superdiagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | if `norm === 'one-norm'`, the 1-norm of the original matrix A. |
-| `rcond` | `Float64Array` | out |  |  | the reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM * AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | caller-provided workspace of at least `2 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | Specifies whether the 1-norm condition number or the infinity-norm condition number is required: `'one-norm'`: 1-norm; `'inf-norm'`: Infinity-norm. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) elements of the first superdiagonal of U. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | The (n-2) elements of the second superdiagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `anorm` | `number` | If `norm === 'one-norm'`, the 1-norm of the original matrix A.<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · The reciprocal of the condition number of the matrix A, computed as RCOND = 1/(ANORM \* AINVNM), where AINVNM is an estimate of the 1-norm of inv(A) computed in this routine. |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-provided workspace of at least `2 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -104,33 +104,33 @@ factorization computed by dgttrf.
 An estimate is obtained for norm(inv(A)), and the reciprocal of the
 condition number is computed as RCOND = 1 / (ANORM * norm(inv(A))).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `DL` | `Float64Array` | in | `N - 1` |  | multipliers from dgttrf (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for DL |
-| `d` | `Float64Array` | in | `N` |  | diagonal of U from dgttrf (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `DU` | `Float64Array` | in | `N - 1` |  | first superdiagonal of U from dgttrf (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for DU |
-| `DU2` | `Float64Array` | in | `N - 2` |  | second superdiagonal of U from dgttrf (length N-2) |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for DU2 |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for DU2 |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dgttrf (0-based, length N) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm or infinity-norm of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | workspace array of length at least 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Multipliers from dgttrf (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for DL |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of U from dgttrf (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | First superdiagonal of U from dgttrf (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for DU |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | Second superdiagonal of U from dgttrf (length N-2) |
+| ↳ `strideDU2` | `integer` | Stride for DU2 |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for DU2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dgttrf (0-based, length N) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `anorm` | `number` | The 1-norm or infinity-norm of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length at least 2\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length at least N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

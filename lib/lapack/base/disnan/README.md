@@ -20,9 +20,9 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 disnan( din ) → boolean
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `din` | `number` | in |  |  | value to test |
+| Parameter | Type | Description |
+|---|---|---|
+| `din` | `number` | Value to test |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -41,9 +41,9 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 disnan.ndarray( din ) → boolean
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `din` | `number` | in |  |  | value to test |
+| Parameter | Type | Description |
+|---|---|---|
+| `din` | `number` | Value to test |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

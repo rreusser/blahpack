@@ -37,19 +37,19 @@ zgesc2(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | LU-factored N-by-N matrix from zgetc2 |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `RHS` | `Complex128Array` | in/out |  |  | right-hand side vector (overwritten with solution) |
-| ↳ `strideRHS` | `integer` | in |  |  | stride for RHS |
-| `IPIV` | `Int32Array` | in | `N` |  | row pivot indices from zgetc2, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `JPIV` | `Int32Array` | in | `N` |  | column pivot indices from zgetc2, 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
-| `scale` | `Float64Array` | out |  |  | output: `scale[0]` receives the scaling factor |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | LU-factored N-by-N matrix from zgetc2 |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `RHS` | `Complex128Array` | **in/out** · Right-hand side vector (overwritten with solution) |
+| ↳ `strideRHS` | `integer` | Stride for RHS |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Row pivot indices from zgetc2, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | Column pivot indices from zgetc2, 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
+| `scale` | `Float64Array` | **out** · Output: `scale[0]` receives the scaling factor |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -92,23 +92,23 @@ IPIV and JPIV are 0-based in this implementation.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | LU-factored N-by-N matrix from zgetc2 |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `RHS` | `Complex128Array` | in/out |  |  | right-hand side vector (overwritten with solution) |
-| ↳ `strideRHS` | `integer` | in |  |  | stride for RHS (in complex elements) |
-| ↳ `offsetRHS` | `NonNegativeInteger` | in |  |  | starting index for RHS (in complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | row pivot indices from zgetc2, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `JPIV` | `Int32Array` | in | `N` |  | column pivot indices from zgetc2, 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
-| ↳ `offsetJPIV` | `NonNegativeInteger` | in |  |  | starting index for JPIV |
-| `scale` | `Float64Array` | out |  |  | output: `scale[0]` receives the scaling factor |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | LU-factored N-by-N matrix from zgetc2 |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `RHS` | `Complex128Array` | **in/out** · Right-hand side vector (overwritten with solution) |
+| ↳ `strideRHS` | `integer` | Stride for RHS (in complex elements) |
+| ↳ `offsetRHS` | `NonNegativeInteger` | Starting index for RHS (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Row pivot indices from zgetc2, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | Column pivot indices from zgetc2, 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
+| ↳ `offsetJPIV` | `NonNegativeInteger` | Starting index for JPIV |
+| `scale` | `Float64Array` | **out** · Output: `scale[0]` receives the scaling factor |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

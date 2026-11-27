@@ -39,36 +39,36 @@ dlaqr3(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | if `true`, then the Hessenberg matrix H is fully updated so that the quasi-triangular Schur factor may be computed (in cooperation with the calling subroutine). |
-| `wantz` | `boolean` | in |  |  | if `true`, then the orthogonal matrix Z is updated so so that the orthogonal Schur factor may be computed (in cooperation with the calling subroutine). |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix H and (if WANTZ is `true`) the order of the orthogonal matrix Z. |
-| `ktop` | `integer` | in |  |  | it is assumed that either KTOP = 1 or H(KTOP,KTOP-1)=0. |
-| `kbot` | `NonNegativeInteger` | in |  |  | it is assumed without a check that either KBOT = N or H(KBOT+1,KBOT)=0. |
-| `nw` | `NonNegativeInteger` | in |  |  | deflation window size. 1 <= NW <= (KBOT-KTOP+1). |
-| `H` | `Float64Array` | in/out | `null × N` |  | on input the initial N-by-N section of H stores the Hessenberg matrix undergoing aggressive early deflation. |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `ihiz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
-| `Z` | `Float64Array` | in/out | `null × N` |  | iF WANTZ is `true`, then on output, the orthogonal similarity transformation mentioned above has been accumulated into Z(ILOZ:IHIZ,ILOZ:IHIZ) from the right. |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `ns` | `Int32Array` | out |  |  | output (length-1 array): the number of unconverged (ie approximate) eigenvalues returned in SR and SI that may be used as shifts by the calling subroutine |
-| `nd` | `Int32Array` | out |  |  | output (length-1 array): the number of converged eigenvalues uncovered by this subroutine |
-| `SR` | `Float64Array` | out | `kbot` |  | on output, the real and imaginary parts of approximate eigenvalues that may be used for shifts are stored in SR(KBOT-ND-NS+1) through SR(KBOT-ND) and SI(KBOT-ND-NS+1) through SI(KBOT-ND), respectively. |
-| ↳ `strideSR` | `integer` | in |  |  | stride length for `SR` |
-| `SI` | `Float64Array` | out | `kbot` |  | on output, the real and imaginary parts of approximate eigenvalues that may be used for shifts are stored in SR(KBOT-ND-NS+1) through SR(KBOT-ND) and SI(KBOT-ND-NS+1) through SI(KBOT-ND), respectively. |
-| ↳ `strideSI` | `integer` | in |  |  | stride length for `SI` |
-| `V` | `Float64Array` | out | `null × nw` |  | an NW-by-NW work array. |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `nh` | `integer` | in |  |  | the number of columns of T. |
-| `T` | `Float64Array` | out | `null × nw` |  | the leading dimension of T just as declared in the calling subroutine. |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `nv` | `integer` | in |  |  | the number of rows of work array WV available for workspace. |
-| `WV` | `Float64Array` | out | `null × nw` |  | the leading dimension of W just as declared in the calling subroutine. |
-| ↳ `LDWV` | `PositiveInteger` | in |  |  | leading dimension of `WV` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`), or `null` to allocate the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | If `true`, then the Hessenberg matrix H is fully updated so that the quasi-triangular Schur factor may be computed (in cooperation with the calling subroutine). |
+| `wantz` | `boolean` | If `true`, then the orthogonal matrix Z is updated so so that the orthogonal Schur factor may be computed (in cooperation with the calling subroutine). |
+| `N` | `NonNegativeInteger` | The order of the matrix H and (if WANTZ is `true`) the order of the orthogonal matrix Z. |
+| `ktop` | `integer` | It is assumed that either KTOP = 1 or H(KTOP,KTOP-1)=0. |
+| `kbot` | `NonNegativeInteger` | It is assumed without a check that either KBOT = N or H(KBOT+1,KBOT)=0. |
+| `nw` | `NonNegativeInteger` | Deflation window size. 1 <= NW <= (KBOT-KTOP+1). |
+| `H` | `Float64Array`<br><sub>? × N</sub> | **in/out** · On input the initial N-by-N section of H stores the Hessenberg matrix undergoing aggressive early deflation. |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `ihiz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= IHIZ <= N. |
+| `Z` | `Float64Array`<br><sub>? × N</sub> | **in/out** · IF WANTZ is `true`, then on output, the orthogonal similarity transformation mentioned above has been accumulated into Z(ILOZ:IHIZ,ILOZ:IHIZ) from the right. |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `ns` | `Int32Array` | **out** · Output (length-1 array): the number of unconverged (ie approximate) eigenvalues returned in SR and SI that may be used as shifts by the calling subroutine |
+| `nd` | `Int32Array` | **out** · Output (length-1 array): the number of converged eigenvalues uncovered by this subroutine |
+| `SR` | `Float64Array`<br><sub>length kbot</sub> | **out** · On output, the real and imaginary parts of approximate eigenvalues that may be used for shifts are stored in SR(KBOT-ND-NS+1) through SR(KBOT-ND) and SI(KBOT-ND-NS+1) through SI(KBOT-ND), respectively. |
+| ↳ `strideSR` | `integer` | Stride length for `SR` |
+| `SI` | `Float64Array`<br><sub>length kbot</sub> | **out** · On output, the real and imaginary parts of approximate eigenvalues that may be used for shifts are stored in SR(KBOT-ND-NS+1) through SR(KBOT-ND) and SI(KBOT-ND-NS+1) through SI(KBOT-ND), respectively. |
+| ↳ `strideSI` | `integer` | Stride length for `SI` |
+| `V` | `Float64Array`<br><sub>? × nw</sub> | **out** · An NW-by-NW work array. |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `nh` | `integer` | The number of columns of T. |
+| `T` | `Float64Array`<br><sub>? × nw</sub> | **out** · The leading dimension of T just as declared in the calling subroutine. |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `nv` | `integer` | The number of rows of work array WV available for workspace. |
+| `WV` | `Float64Array`<br><sub>? × nw</sub> | **out** · The leading dimension of W just as declared in the calling subroutine. |
+| ↳ `LDWV` | `PositiveInteger` | Leading dimension of `WV` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace of length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`), or `null` to allocate the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -140,49 +140,49 @@ Note: KTOP and KBOT are 1-based (Fortran convention).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | if true, fully update H for Schur form |
-| `wantz` | `boolean` | in |  |  | if true, accumulate transformations in Z |
-| `N` | `NonNegativeInteger` | in |  |  | order of matrix H |
-| `ktop` | `integer` | in |  |  | top of the active block (1-based) |
-| `kbot` | `NonNegativeInteger` | in |  |  | bottom of the active block (1-based) |
-| `nw` | `NonNegativeInteger` | in |  |  | deflation window size |
-| `H` | `Float64Array` | in/out | `null × N` |  | upper Hessenberg matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of first dim of H |
-| ↳ `strideH2` | `integer` | in |  |  | stride of second dim of H |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for H |
-| `iloz` | `integer` | in |  |  | first row of Z to update (1-based) |
-| `ihiz` | `integer` | in |  |  | last row of Z to update (1-based) |
-| `Z` | `Float64Array` | in/out | `null × N` |  | orthogonal matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dim of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dim of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `ns` | `Int32Array` | out |  |  | output (length-1 array): the number of unconverged (ie approximate) eigenvalues returned in SR and SI that may be used as shifts by the calling subroutine |
-| `nd` | `Int32Array` | out |  |  | output (length-1 array): the number of converged eigenvalues uncovered by this subroutine |
-| `SR` | `Float64Array` | out | `kbot` |  | real parts of eigenvalues/shifts (output) |
-| ↳ `strideSR` | `integer` | in |  |  | stride for SR |
-| ↳ `offsetSR` | `NonNegativeInteger` | in |  |  | starting index for SR |
-| `SI` | `Float64Array` | out | `kbot` |  | imaginary parts of eigenvalues/shifts (output) |
-| ↳ `strideSI` | `integer` | in |  |  | stride for SI |
-| ↳ `offsetSI` | `NonNegativeInteger` | in |  |  | starting index for SI |
-| `V` | `Float64Array` | out | `null × nw` |  | NW-by-NW workspace matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of first dim of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of second dim of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `nh` | `integer` | in |  |  | number of columns available in T |
-| `T` | `Float64Array` | out | `null × nw` |  | workspace matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of first dim of T |
-| ↳ `strideT2` | `integer` | in |  |  | stride of second dim of T |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T |
-| `nv` | `integer` | in |  |  | number of rows available in WV |
-| `WV` | `Float64Array` | out | `null × nw` |  | workspace matrix |
-| ↳ `strideWV1` | `integer` | in |  |  | stride of first dim of WV |
-| ↳ `strideWV2` | `integer` | in |  |  | stride of second dim of WV |
-| ↳ `offsetWV` | `NonNegativeInteger` | in |  |  | starting index for WV |
-| `WORK` | `Float64Array` | out |  |  | workspace array; length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`); the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`, which covers DLAQR4's for the window) keeps DGEHRD/DORMHR blocked |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | If true, fully update H for Schur form |
+| `wantz` | `boolean` | If true, accumulate transformations in Z |
+| `N` | `NonNegativeInteger` | Order of matrix H |
+| `ktop` | `integer` | Top of the active block (1-based) |
+| `kbot` | `NonNegativeInteger` | Bottom of the active block (1-based) |
+| `nw` | `NonNegativeInteger` | Deflation window size |
+| `H` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Upper Hessenberg matrix |
+| ↳ `strideH1` | `integer` | Stride of first dim of H |
+| ↳ `strideH2` | `integer` | Stride of second dim of H |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for H |
+| `iloz` | `integer` | First row of Z to update (1-based) |
+| `ihiz` | `integer` | Last row of Z to update (1-based) |
+| `Z` | `Float64Array`<br><sub>? × N</sub> | **in/out** · Orthogonal matrix |
+| ↳ `strideZ1` | `integer` | Stride of first dim of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dim of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `ns` | `Int32Array` | **out** · Output (length-1 array): the number of unconverged (ie approximate) eigenvalues returned in SR and SI that may be used as shifts by the calling subroutine |
+| `nd` | `Int32Array` | **out** · Output (length-1 array): the number of converged eigenvalues uncovered by this subroutine |
+| `SR` | `Float64Array`<br><sub>length kbot</sub> | **out** · Real parts of eigenvalues/shifts (output) |
+| ↳ `strideSR` | `integer` | Stride for SR |
+| ↳ `offsetSR` | `NonNegativeInteger` | Starting index for SR |
+| `SI` | `Float64Array`<br><sub>length kbot</sub> | **out** · Imaginary parts of eigenvalues/shifts (output) |
+| ↳ `strideSI` | `integer` | Stride for SI |
+| ↳ `offsetSI` | `NonNegativeInteger` | Starting index for SI |
+| `V` | `Float64Array`<br><sub>? × nw</sub> | **out** · NW-by-NW workspace matrix |
+| ↳ `strideV1` | `integer` | Stride of first dim of V |
+| ↳ `strideV2` | `integer` | Stride of second dim of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `nh` | `integer` | Number of columns available in T |
+| `T` | `Float64Array`<br><sub>? × nw</sub> | **out** · Workspace matrix |
+| ↳ `strideT1` | `integer` | Stride of first dim of T |
+| ↳ `strideT2` | `integer` | Stride of second dim of T |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T |
+| `nv` | `integer` | Number of rows available in WV |
+| `WV` | `Float64Array`<br><sub>? × nw</sub> | **out** · Workspace matrix |
+| ↳ `strideWV1` | `integer` | Stride of first dim of WV |
+| ↳ `strideWV2` | `integer` | Stride of second dim of WV |
+| ↳ `offsetWV` | `NonNegativeInteger` | Starting index for WV |
+| `WORK` | `Float64Array` | **out** · Workspace array; length at least `2*JW` (`JW = min(nw, kbot-ktop+1)`, the reference's `2*NW`); the reference's optimum (`JW + JW*32 + 4160` for `JW > 2`, which covers DLAQR4's for the window) keeps DGEHRD/DORMHR blocked |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsbgst( order, vect, uplo, N, ka, kb, AB, LDAB, BB, LDBB, X, LDX, WORK ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | 'none' or 'update' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super/subdiagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super/subdiagonals of B (ka >= kb >= 0) |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ ka + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of AB (>= ka+1) |
-| `BB` | `Float64Array` | in | `kb + 1 × N` |  | split Cholesky factor from DPBSTF |
-| ↳ `LDBB` | `PositiveInteger` | in |  | column-major requires `LDBB ≥ kb + 1`; row-major requires `LDBB ≥ max( 1, N )` | leading dimension of BB (>= kb+1) |
-| `X` | `Float64Array` | out | `N × N` |  | transformation matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  | rejects `ldx < 1 \|\| (vect === 'update' && ldx < max( 1, N ))` | leading dimension of X |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | workspace of dimension 2*N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"none" \| "update"` | 'none' or 'update' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super/subdiagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super/subdiagonals of B (ka >= kb >= 0)<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of AB (>= ka+1)<br>Column-major requires `LDAB ≥ ka + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | Split Cholesky factor from DPBSTF |
+| ↳ `LDBB` | `PositiveInteger` | Leading dimension of BB (>= kb+1)<br>Column-major requires `LDBB ≥ kb + 1`<br>Row-major requires `LDBB ≥ max(1, N)` |
+| `X` | `Float64Array`<br><sub>N × N</sub> | **out** · Transformation matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of X<br>Rejects `ldx < 1 \|\| (vect === 'update' && ldx < max(1, N))` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace of dimension 2\*N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -92,28 +92,28 @@ dsbgst.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | the number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`. |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | the number of superdiagonals of the matrix B if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`. |
-| `AB` | `Float64Array` | in/out | `ka + 1 × N` |  | input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `BB` | `Float64Array` | in | `kb + 1 × N` |  | input matrix |
-| ↳ `strideBB1` | `integer` | in |  |  | stride of the first dimension of `BB` |
-| ↳ `strideBB2` | `integer` | in |  |  | stride of the second dimension of `BB` |
-| ↳ `offsetBB` | `NonNegativeInteger` | in |  |  | starting index for `BB` |
-| `X` | `Float64Array` | out | `N × N` |  | input matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"none" \| "update"` | Specifies the operation type<br>One of `'none'`, `'update'`. |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | The number of superdiagonals of the matrix A if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`.<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | The number of superdiagonals of the matrix B if `uplo === 'upper'`, or the number of subdiagonals if `uplo === 'lower'`.<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Float64Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `BB` | `Float64Array`<br><sub>(kb + 1) × N</sub> | Input matrix |
+| ↳ `strideBB1` | `integer` | Stride of the first dimension of `BB` |
+| ↳ `strideBB2` | `integer` | Stride of the second dimension of `BB` |
+| ↳ `offsetBB` | `NonNegativeInteger` | Starting index for `BB` |
+| `X` | `Float64Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

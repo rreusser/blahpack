@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dzsum1( N, x, strideX ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | the number of elements in the vector CX. |
-| `x` | `Complex128Array` | in | `N` |  | CX |
-| ↳ `strideX` | `integer` | in |  |  | strideCX |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | The number of elements in the vector CX. |
+| `x` | `Complex128Array`<br><sub>length N</sub> | CX |
+| ↳ `strideX` | `integer` | StrideCX |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -50,12 +50,12 @@ double precision result.
 Based on DZASUM from Level 1 BLAS. The change is to use the 'genuine'
 absolute value (cabs) rather than dcabs1.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of complex elements |
-| `x` | `Complex128Array` | in | `N` |  | complex input vector |
-| ↳ `strideX` | `integer` | in |  |  | stride for `CX` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `CX` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of complex elements |
+| `x` | `Complex128Array`<br><sub>length N</sub> | Complex input vector |
+| ↳ `strideX` | `integer` | Stride for `CX` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `CX` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

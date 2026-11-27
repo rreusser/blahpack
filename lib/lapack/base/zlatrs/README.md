@@ -28,21 +28,21 @@ zlatrs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'no'` (CNORM is computed) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in | `N × N` |  | triangular matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `x` | `Complex128Array` | in/out | `N` |  | right-hand side; overwritten by the solution |
-| ↳ `strideX` | `integer` | in |  |  | `x` stride length |
-| `scale` | `Float64Array` | out |  |  | output array (single element) receiving the scaling factor |
-| `CNORM` | `Float64Array` | in/out | `N` |  | workspace/column norms (length `N`) |
-| ↳ `strideCNORM` | `integer` | in |  |  | `CNORM` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'no'` (CNORM is computed)<br>One of `'no'`, `'yes'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Triangular matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Right-hand side; overwritten by the solution |
+| ↳ `strideX` | `integer` | `x` stride length |
+| `scale` | `Float64Array` | **out** · Output array (single element) receiving the scaling factor |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · Workspace/column norms (length `N`) |
+| ↳ `strideCNORM` | `integer` | `CNORM` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -119,24 +119,24 @@ and s is a real scaling factor chosen to prevent overflow.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | `'unit'` or `'non-unit'` |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in | `N × N` |  | N-by-N triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `x` | `Complex128Array` | in/out | `N` |  | in/out right-hand side vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x (complex elements) |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column norm array of length N |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride for CNORM |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for CNORM |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `diag` | `DiagonalType` | `'unit'` or `'non-unit'` |
+| `normin` | `"no" \| "yes"` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | N-by-N triangular matrix |
+| ↳ `strideA1` | `integer` | First dimension stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second dimension stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `x` | `Complex128Array`<br><sub>length N</sub> | **in/out** · In/out right-hand side vector of length N |
+| ↳ `strideX` | `integer` | Stride for x (complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x (complex elements) |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column norm array of length N |
+| ↳ `strideCNORM` | `integer` | Stride for CNORM |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for CNORM |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

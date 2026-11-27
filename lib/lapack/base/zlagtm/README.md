@@ -31,24 +31,24 @@ zlagtm(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the tridiagonal matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right hand sides (columns of X and B) |
-| `alpha` | `number` | in |  |  | real scalar multiplier (must be 0.0, 1.0, or -1.0) |
-| `DL` | `Complex128Array` | in | `N - 1` |  | sub-diagonal of A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL (in complex elements) |
-| `d` | `Complex128Array` | in | `N` |  | diagonal of A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d (in complex elements) |
-| `DU` | `Complex128Array` | in | `N - 1` |  | super-diagonal of A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU (in complex elements) |
-| `X` | `Complex128Array` | in | `max( N, 1 ) × nrhs` |  | input matrix (N x NRHS) |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `beta` | `number` | in |  |  | real scalar multiplier for B (0.0, 1.0, or -1.0) |
-| `B` | `Complex128Array` | in/out | `max( N, 1 ) × nrhs` |  | input/output matrix (N x NRHS) |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | Specifies the operation: `'no-transpose'`, `'transpose'`, or `'conjugate-transpose'` |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix A |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of X and B) |
+| `alpha` | `number` | Real scalar multiplier (must be 0.0, 1.0, or -1.0) |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | Sub-diagonal of A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL (in complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | Diagonal of A (length N) |
+| ↳ `strideD` | `integer` | Stride for d (in complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | Super-diagonal of A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU (in complex elements) |
+| `X` | `Complex128Array`<br><sub>max(N, 1) × nrhs</sub> | Input matrix (N x NRHS) |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `beta` | `number` | Real scalar multiplier for B (0.0, 1.0, or -1.0) |
+| `B` | `Complex128Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · Input/output matrix (N x NRHS) |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -100,30 +100,30 @@ Perform a matrix-vector product of the form C := alpha_A_B + beta*C where A is a
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `nrhs` | `NonNegativeInteger` | in |  |  | the number of right hand sides, i.e., the number of columns of the matrices X and B. |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `DL` | `Complex128Array` | in | `N - 1` |  | input array |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` |
-| `d` | `Complex128Array` | in | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `DU` | `Complex128Array` | in | `N - 1` |  | input array |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` |
-| `X` | `Complex128Array` | in | `max( N, 1 ) × nrhs` |  | input matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `B` | `Complex128Array` | in/out | `max( N, 1 ) × nrhs` |  | output matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | Specifies the operation type |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices X and B. |
+| `alpha` | `number` | Scalar constant |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` |
+| `d` | `Complex128Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | Input array |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` |
+| `X` | `Complex128Array`<br><sub>max(N, 1) × nrhs</sub> | Input matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `beta` | `number` | Scalar constant |
+| `B` | `Complex128Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · Output matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

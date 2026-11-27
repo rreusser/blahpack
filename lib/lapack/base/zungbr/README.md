@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zungbr( order, vect, M, N, K, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix Q or P^H |
-| `N` | `NonNegativeInteger` | in |  | rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min( M, K )))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min( N, K )))` | number of columns of the matrix Q or P^H |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Complex128Array` | in | `( vect === 'apply-P' ) ? min( N, K ) : min( M, K )` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, min( M, N ) )` |  | workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^H |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix Q or P^H<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix Q or P^H<br>Rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min(M, K)))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min(N, K)))` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `TAU` | `Complex128Array`<br><sub>length (vect === 'apply-P') ? min(N, K) : min(M, K)</sub> | Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, min(M, N))</sub> | **out** · Workspace of length at least `max(1,min(M,N))`; for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`), which enables the blocked path; if `null`, a workspace of the optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -77,22 +77,22 @@ zungbr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of the matrix Q or P^H |
-| `N` | `NonNegativeInteger` | in |  | rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min( M, K )))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min( N, K )))` | number of columns of the matrix Q or P^H |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix |
-| `A` | `Complex128Array` | in/out | `M × N` |  | matrix containing reflectors from ZGEBRD |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `TAU` | `Complex128Array` | in | `( vect === 'apply-P' ) ? min( N, K ) : min( M, K )` |  | scalar factors of reflectors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, min( M, N ) )` |  | workspace of length at least `max(1,min(M,N))` (complex elements); for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`, the zungqr/zunglq block size), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to generate Q, `'apply-P'` to generate P^H |
+| `M` | `NonNegativeInteger` | Number of rows of the matrix Q or P^H<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of the matrix Q or P^H<br>Rejects `(N < 0 \|\| (vect === 'apply-Q' && (N > M \|\| N < min(M, K)))) \|\| (vect !== 'apply-Q' && (M > N \|\| M < min(N, K)))` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix<br>Requires `K ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Matrix containing reflectors from ZGEBRD |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `TAU` | `Complex128Array`<br><sub>length (vect === 'apply-P') ? min(N, K) : min(M, K)</sub> | Scalar factors of reflectors |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, min(M, N))</sub> | **out** · Workspace of length at least `max(1,min(M,N))` (complex elements); for optimum performance it should hold `min(M,N)*NB` elements (`NB = 32`, the zungqr/zunglq block size), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

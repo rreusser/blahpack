@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlantb( order, norm, uplo, diag, N, K, AB, LDAB, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | norm type |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the matrix is upper or lower triangular |
-| `diag` | `DiagonalType` | in |  |  | specifies whether the diagonal is unit |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `K` | `NonNegativeInteger` | in |  |  | number of super-diagonals (upper) or sub-diagonals (lower) |
-| `AB` | `Float64Array` | in | `K + 1 × N` |  | band matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Norm type |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `diag` | `DiagonalType` | Specifies whether the diagonal is unit |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `K` | `NonNegativeInteger` | Number of super-diagonals (upper) or sub-diagonals (lower) |
+| `AB` | `Float64Array`<br><sub>(K + 1) × N</sub> | Band matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,20 +79,20 @@ Returns the norm of a real triangular band matrix.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies the operation type |
-| `diag` | `DiagonalType` | in |  |  | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `AB` | `Float64Array` | in | `K + 1 × N` |  | input matrix |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `WORK` | `Float64Array` | out |  |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the operation type |
+| `uplo` | `MatrixTriangle` | Specifies the operation type |
+| `diag` | `DiagonalType` | Specifies the operation type |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `AB` | `Float64Array`<br><sub>(K + 1) × N</sub> | Input matrix |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `WORK` | `Float64Array` | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

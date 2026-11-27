@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgeqp3( order, M, N, A, LDA, JPVT, strideJPVT, TAU, strideTAU, WORK, RWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' 0 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `JPVT` | `Int32Array` | in/out | `N` |  | input array |
-| ↳ `strideJPVT` | `integer` | in |  |  | `JPVT` stride length |
-| `TAU` | `Complex128Array` | out | `min( M, N )` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ IWS` |  | complex workspace of length at least `N+1` (for optimal performance at least `(N+1)*NB`, NB = 32, which enables the blocked path), or `null` to allocate the optimum |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | caller-owned real workspace, 0 `null` to auto-allocate at the minimum required size (`max(1, 2*N)`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' 0 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideJPVT` | `integer` | `JPVT` stride length |
+| `TAU` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ IWS</sub> | **out** · Complex workspace of length at least `N+1` (for optimal performance at least `(N+1)*NB`, NB = 32, which enables the blocked path), or `null` to allocate the optimum |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-owned real workspace, 0 `null` to auto-allocate at the minimum required size (`max(1, 2*N)`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -75,26 +75,26 @@ Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R usin
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dim stride of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | second dim stride of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation (1-based on exit) |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Complex128Array` | out | `min( M, N )` |  | output reflector scalars |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU (complex elements) |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ IWS` |  | complex workspace of length at least `N+1` from `offsetWork`; for optimal performance at least `(N+1)*NB` (NB = 32), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 2 * N` |  | caller-owned real workspace of at least `max(1, 2*N)` elements from `offsetRWork` (never allocated here) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | First dim stride of A (complex elements) |
+| ↳ `strideA2` | `integer` | Second dim stride of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation (1-based on exit) |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Complex128Array`<br><sub>length min(M, N)</sub> | **out** · Output reflector scalars |
+| ↳ `strideTAU` | `integer` | Stride for TAU (complex elements) |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ IWS</sub> | **out** · Complex workspace of length at least `N+1` from `offsetWork`; for optimal performance at least `(N+1)*NB` (NB = 32), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-owned real workspace of at least `max(1, 2*N)` elements from `offsetRWork` (never allocated here) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

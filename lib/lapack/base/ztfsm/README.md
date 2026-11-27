@@ -27,21 +27,21 @@ ztfsm(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the RFP storage format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies whether op(A) appears on the left or right (`'left'` or `'right'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether A is upper or lower triangular (`'upper'` or `'lower'`) |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the operation applied to A (`'no-transpose'` or `'conjugate-transpose'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether A is unit triangular (`'unit'` or `'non-unit'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier |
-| `A` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | RFP array |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
-| `B` | `Complex128Array` | in/out | `M × N` |  | M-by-N complex matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies the RFP storage format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `side` | `OperationSide` | Specifies whether op(A) appears on the left or right (`'left'` or `'right'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether A is upper or lower triangular (`'upper'` or `'lower'`) |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | Specifies the operation applied to A (`'no-transpose'` or `'conjugate-transpose'`) |
+| `diag` | `DiagonalType` | Specifies whether A is unit triangular (`'unit'` or `'non-unit'`) |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | RFP array |
+| ↳ `strideA` | `integer` | Stride length for `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N complex matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -124,23 +124,23 @@ ztfsm.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `transr` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the RFP storage format (`'no-transpose'` or `'conjugate-transpose'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies whether op(A) appears on the left or right (`'left'` or `'right'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether A is upper or lower triangular (`'upper'` or `'lower'`) |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | specifies the operation applied to A (`'no-transpose'` or `'conjugate-transpose'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether A is unit triangular (`'unit'` or `'non-unit'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier |
-| `A` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | RFP array |
-| ↳ `strideA` | `integer` | in |  |  | stride length for `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in/out | `M × N` |  | M-by-N complex matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `transr` | `"no-transpose" \| "conjugate-transpose"` | Specifies the RFP storage format (`'no-transpose'` or `'conjugate-transpose'`) |
+| `side` | `OperationSide` | Specifies whether op(A) appears on the left or right (`'left'` or `'right'`) |
+| `uplo` | `MatrixTriangle` | Specifies whether A is upper or lower triangular (`'upper'` or `'lower'`) |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | Specifies the operation applied to A (`'no-transpose'` or `'conjugate-transpose'`) |
+| `diag` | `DiagonalType` | Specifies whether A is unit triangular (`'unit'` or `'non-unit'`) |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier |
+| `A` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | RFP array |
+| ↳ `strideA` | `integer` | Stride length for `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N complex matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

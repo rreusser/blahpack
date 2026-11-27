@@ -20,9 +20,9 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dcabs1( z ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `z` | `Complex128` | in |  |  | complex number |
+| Parameter | Type | Description |
+|---|---|---|
+| `z` | `Complex128` | Complex number |
 
 **Returns** `number`: result
 
@@ -34,9 +34,9 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dcabs1.ndarray( z ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `z` | `Complex128` | in |  |  | complex number |
+| Parameter | Type | Description |
+|---|---|---|
+| `z` | `Complex128` | Complex number |
 
 **Returns** `number`: \|Re(z)\| + \|Im(z)\|
 

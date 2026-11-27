@@ -38,34 +38,34 @@ zggsvd3(
 
 Computes the generalized singular value decomposition (GSVD) of an M-by-N complex matrix A and a P-by-N complex matrix B.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobu` | `("compute-U"\|"none")` | in |  | one of `'none'`, `'compute-U'` | `'compute-U'` or `'none'` |
-| `jobv` | `("compute-V"\|"none")` | in |  | one of `'none'`, `'compute-V'` | `'compute-V'` or `'none'` |
-| `jobq` | `("compute-Q"\|"none")` | in |  | one of `'none'`, `'compute-Q'` | `'compute-Q'` or `'none'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `K` | `Int32Array` | out |  |  | output array; K[0] receives first subblock dimension |
-| `l` | `Int32Array` | out |  |  | output array; l[0] receives second subblock dimension |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix A |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `P × N` |  | P-by-N matrix B |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, P )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `ALPHA` | `Float64Array` | out | `N` |  | output array for alpha values |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| `BETA` | `Float64Array` | out | `N` |  | output array for beta values |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `U` | `Complex128Array` | out | `M × M` |  | M-by-M unitary matrix |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| (jobu === 'compute-U' && ldu < M)` | leading dimension of `U` |
-| `V` | `Complex128Array` | out | `P × P` |  | P-by-P unitary matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `ldv < 1 \|\| (jobv === 'compute-V' && ldv < P)` | leading dimension of `V` |
-| `Q` | `Complex128Array` | out | `N × N` |  | N-by-N unitary matrix |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (jobq === 'compute-Q' && ldq < N)` | leading dimension of `Q` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 1` |  | complex workspace of length at least `N + W` (WORK(1:N) holds TAU and `zggsvp3` gets the rest), where W is `zggsvp3`'s minimum: `max(1, N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `M + P > 0`, else 1; 0 when `N = 0`; for optimum performance the reference's LWKOPT, `max(2*N, N + LWKOPT(ZGGSVP3))` with `LWKOPT(ZGGSVP3) = max((N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `zgeqp3`'s blocked path; if `null`, LWKOPT elements are allocated |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | real workspace (length at least 2*N) |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | integer workspace (length N) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobu` | `"compute-U" \| "none"` | `'compute-U'` or `'none'` |
+| `jobv` | `"compute-V" \| "none"` | `'compute-V'` or `'none'` |
+| `jobq` | `"compute-Q" \| "none"` | `'compute-Q'` or `'none'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `K` | `Int32Array` | **out** · Output array; K[0] receives first subblock dimension |
+| `l` | `Int32Array` | **out** · Output array; l[0] receives second subblock dimension |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, P)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for alpha values |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for beta values |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `U` | `Complex128Array`<br><sub>M × M</sub> | **out** · M-by-M unitary matrix |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Rejects `ldu < 1 \|\| (jobu === 'compute-U' && ldu < M)` |
+| `V` | `Complex128Array`<br><sub>P × P</sub> | **out** · P-by-P unitary matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Rejects `ldv < 1 \|\| (jobv === 'compute-V' && ldv < P)` |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **out** · N-by-N unitary matrix |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (jobq === 'compute-Q' && ldq < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 1</sub> | **out** · Complex workspace of length at least `N + W` (WORK(1:N) holds TAU and `zggsvp3` gets the rest), where W is `zggsvp3`'s minimum: `max(1, N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `M + P > 0`, else 1; 0 when `N = 0`; for optimum performance the reference's LWKOPT, `max(2*N, N + LWKOPT(ZGGSVP3))` with `LWKOPT(ZGGSVP3) = max((N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `zgeqp3`'s blocked path; if `null`, LWKOPT elements are allocated |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Real workspace (length at least 2\*N) |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Integer workspace (length N) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -186,51 +186,51 @@ Computes the generalized singular value decomposition (GSVD) of an M-by-N comple
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("compute-U"\|"none")` | in |  | one of `'none'`, `'compute-U'` | `'compute-U'` or `'none'` |
-| `jobv` | `("compute-V"\|"none")` | in |  | one of `'none'`, `'compute-V'` | `'compute-V'` or `'none'` |
-| `jobq` | `("compute-Q"\|"none")` | in |  | one of `'none'`, `'compute-Q'` | `'compute-Q'` or `'none'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `K` | `Int32Array` | out |  |  | output: K[0] receives first dimension of subblocks |
-| `l` | `Int32Array` | out |  |  | output: l[0] receives second dimension of subblocks |
-| `A` | `Complex128Array` | in/out | `M × N` |  | M-by-N matrix A (overwritten with triangular R) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `P × N` |  | P-by-N matrix B (overwritten) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `ALPHA` | `Float64Array` | out | `N` |  | output array for alpha values (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA |
-| `BETA` | `Float64Array` | out | `N` |  | output array for beta values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA |
-| `U` | `Complex128Array` | out | `M × M` |  | M-by-M unitary matrix U |
-| ↳ `strideU1` | `integer` | in |  |  | stride of first dimension of U |
-| ↳ `strideU2` | `integer` | in |  |  | stride of second dimension of U |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U |
-| `V` | `Complex128Array` | out | `P × P` |  | P-by-P unitary matrix V |
-| ↳ `strideV1` | `integer` | in |  |  | stride of first dimension of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of second dimension of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `Q` | `Complex128Array` | out | `N × N` |  | N-by-N unitary matrix Q |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `WORK` | `Complex128Array` | out | `≥ 1` |  | complex workspace of length at least `N + W` (WORK(1:N) holds TAU and `zggsvp3` gets the rest), where W is `zggsvp3`'s minimum: `max(1, N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `M + P > 0`, else 1; 0 when `N = 0`; for optimum performance the reference's LWKOPT, `max(2*N, N + LWKOPT(ZGGSVP3))` with `LWKOPT(ZGGSVP3) = max((N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `zgeqp3`'s blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `RWORK` | `Float64Array` | out | `≥ 2 * N` |  | real workspace of length at least 2*N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"compute-U" \| "none"` | `'compute-U'` or `'none'` |
+| `jobv` | `"compute-V" \| "none"` | `'compute-V'` or `'none'` |
+| `jobq` | `"compute-Q" \| "none"` | `'compute-Q'` or `'none'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `K` | `Int32Array` | **out** · Output: K[0] receives first dimension of subblocks |
+| `l` | `Int32Array` | **out** · Output: l[0] receives second dimension of subblocks |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A (overwritten with triangular R) |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B (overwritten) |
+| ↳ `strideB1` | `integer` | Stride of first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for alpha values (length N) |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for beta values (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA |
+| `U` | `Complex128Array`<br><sub>M × M</sub> | **out** · M-by-M unitary matrix U |
+| ↳ `strideU1` | `integer` | Stride of first dimension of U |
+| ↳ `strideU2` | `integer` | Stride of second dimension of U |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U |
+| `V` | `Complex128Array`<br><sub>P × P</sub> | **out** · P-by-P unitary matrix V |
+| ↳ `strideV1` | `integer` | Stride of first dimension of V |
+| ↳ `strideV2` | `integer` | Stride of second dimension of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `Q` | `Complex128Array`<br><sub>N × N</sub> | **out** · N-by-N unitary matrix Q |
+| ↳ `strideQ1` | `integer` | Stride of first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 1</sub> | **out** · Complex workspace of length at least `N + W` (WORK(1:N) holds TAU and `zggsvp3` gets the rest), where W is `zggsvp3`'s minimum: `max(1, N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `M + P > 0`, else 1; 0 when `N = 0`; for optimum performance the reference's LWKOPT, `max(2*N, N + LWKOPT(ZGGSVP3))` with `LWKOPT(ZGGSVP3) = max((N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `zgeqp3`'s blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Real workspace of length at least 2\*N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace of length N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

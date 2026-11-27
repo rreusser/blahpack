@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 ieeeck( ispec, zero, one ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | `0` checks infinity arithmetic only; any other value also checks NaN arithmetic |
-| `zero` | `number` | in |  |  | the value `0.0` |
-| `one` | `number` | in |  |  | the value `1.0` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | `0` checks infinity arithmetic only; any other value also checks NaN arithmetic |
+| `zero` | `number` | The value `0.0` |
+| `one` | `number` | The value `1.0` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -55,11 +55,11 @@ ieeeck.ndarray( ispec, zero, one ) → integer
 
 Checks whether infinity and NaN arithmetic is safe, using alternative indexing semantics (the routine takes no arrays).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ispec` | `integer` | in |  |  | `0` checks infinity arithmetic only; any other value also checks NaN arithmetic |
-| `zero` | `number` | in |  |  | the value `0.0` |
-| `one` | `number` | in |  |  | the value `1.0` |
+| Parameter | Type | Description |
+|---|---|---|
+| `ispec` | `integer` | `0` checks infinity arithmetic only; any other value also checks NaN arithmetic |
+| `zero` | `number` | The value `0.0` |
+| `one` | `number` | The value `1.0` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

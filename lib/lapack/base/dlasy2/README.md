@@ -30,24 +30,24 @@ dlasy2(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ltranl` | `boolean` | in |  |  | the op(TL): = `false`, op(TL) = TL, = `true`, op(TL) = TL**T. |
-| `ltranr` | `boolean` | in |  |  | the op(TR): = `false`, op(TR) = TR, = `true`, op(TR) = TR**T. |
-| `isgn` | `integer` | in |  |  | the sign of the equation as described before. |
-| `n1` | `NonNegativeInteger` | in |  |  | the order of matrix TL. |
-| `n2` | `NonNegativeInteger` | in |  |  | the order of matrix TR. |
-| `TL` | `Float64Array` | in | `n1 × 2` |  | on entry, TL contains an N1 by N1 matrix. |
-| ↳ `LDTL` | `PositiveInteger` | in |  |  | leading dimension of `TL` |
-| `TR` | `Float64Array` | in | `n2 × 2` |  | on entry, TR contains an N2 by N2 matrix. |
-| ↳ `LDTR` | `PositiveInteger` | in |  |  | leading dimension of `TR` |
-| `B` | `Float64Array` | in | `n1 × 2` |  | on entry, the N1 by N2 matrix B contains the right-hand side of the equation. |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `scale` | `Float64Array` | out |  |  | on exit, SCALE contains the scale factor. |
-| `X` | `Float64Array` | out | `n1 × 2` |  | on exit, X contains the N1 by N2 solution. |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `xnorm` | `Float64Array` | out |  |  | on exit, XNORM is the infinity-norm of the solution. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ltranl` | `boolean` | The op(TL): = `false`, op(TL) = TL, = `true`, op(TL) = TL\*\*T. |
+| `ltranr` | `boolean` | The op(TR): = `false`, op(TR) = TR, = `true`, op(TR) = TR\*\*T. |
+| `isgn` | `integer` | The sign of the equation as described before. |
+| `n1` | `NonNegativeInteger` | The order of matrix TL. |
+| `n2` | `NonNegativeInteger` | The order of matrix TR. |
+| `TL` | `Float64Array`<br><sub>n1 × 2</sub> | On entry, TL contains an N1 by N1 matrix. |
+| ↳ `LDTL` | `PositiveInteger` | Leading dimension of `TL` |
+| `TR` | `Float64Array`<br><sub>n2 × 2</sub> | On entry, TR contains an N2 by N2 matrix. |
+| ↳ `LDTR` | `PositiveInteger` | Leading dimension of `TR` |
+| `B` | `Float64Array`<br><sub>n1 × 2</sub> | On entry, the N1 by N2 matrix B contains the right-hand side of the equation. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `scale` | `Float64Array` | **out** · On exit, SCALE contains the scale factor. |
+| `X` | `Float64Array`<br><sub>n1 × 2</sub> | **out** · On exit, X contains the N1 by N2 solution. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `xnorm` | `Float64Array` | **out** · On exit, XNORM is the infinity-norm of the solution. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,31 +113,31 @@ where TL is N1-by-N1, TR is N2-by-N2, B is N1-by-N2, and 1 <= N1,N2 <= 2.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ltranl` | `boolean` | in |  |  | if true, use transpose of TL |
-| `ltranr` | `boolean` | in |  |  | if true, use transpose of TR |
-| `isgn` | `integer` | in |  |  | +1 or -1 |
-| `n1` | `NonNegativeInteger` | in |  |  | order of TL (1 or 2) |
-| `n2` | `NonNegativeInteger` | in |  |  | order of TR (1 or 2) |
-| `TL` | `Float64Array` | in | `n1 × 2` |  | N1-by-N1 matrix |
-| ↳ `strideTL1` | `integer` | in |  |  | stride of the first dimension of `TL` |
-| ↳ `strideTL2` | `integer` | in |  |  | stride of the second dimension of `TL` |
-| ↳ `offsetTL` | `NonNegativeInteger` | in |  |  | starting index for `TL` |
-| `TR` | `Float64Array` | in | `n2 × 2` |  | N2-by-N2 matrix |
-| ↳ `strideTR1` | `integer` | in |  |  | stride of the first dimension of `TR` |
-| ↳ `strideTR2` | `integer` | in |  |  | stride of the second dimension of `TR` |
-| ↳ `offsetTR` | `NonNegativeInteger` | in |  |  | starting index for `TR` |
-| `B` | `Float64Array` | in | `n1 × 2` |  | N1-by-N2 right-hand side |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scaling factor |
-| `X` | `Float64Array` | out | `n1 × 2` |  | output N1-by-N2 solution matrix |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` |
-| `xnorm` | `Float64Array` | out |  |  | output: xnorm[0] is the infinity-norm of X |
+| Parameter | Type | Description |
+|---|---|---|
+| `ltranl` | `boolean` | If true, use transpose of TL |
+| `ltranr` | `boolean` | If true, use transpose of TR |
+| `isgn` | `integer` | +1 or -1 |
+| `n1` | `NonNegativeInteger` | Order of TL (1 or 2) |
+| `n2` | `NonNegativeInteger` | Order of TR (1 or 2) |
+| `TL` | `Float64Array`<br><sub>n1 × 2</sub> | N1-by-N1 matrix |
+| ↳ `strideTL1` | `integer` | Stride of the first dimension of `TL` |
+| ↳ `strideTL2` | `integer` | Stride of the second dimension of `TL` |
+| ↳ `offsetTL` | `NonNegativeInteger` | Starting index for `TL` |
+| `TR` | `Float64Array`<br><sub>n2 × 2</sub> | N2-by-N2 matrix |
+| ↳ `strideTR1` | `integer` | Stride of the first dimension of `TR` |
+| ↳ `strideTR2` | `integer` | Stride of the second dimension of `TR` |
+| ↳ `offsetTR` | `NonNegativeInteger` | Starting index for `TR` |
+| `B` | `Float64Array`<br><sub>n1 × 2</sub> | N1-by-N2 right-hand side |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scaling factor |
+| `X` | `Float64Array`<br><sub>n1 × 2</sub> | **out** · Output N1-by-N2 solution matrix |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` |
+| `xnorm` | `Float64Array` | **out** · Output: xnorm[0] is the infinity-norm of X |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

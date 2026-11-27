@@ -38,38 +38,38 @@ dgtrfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system of equations: `'no-transpose'`: A * X = B (No transpose) `'transpose'`: A**T * X = B (Transpose) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) subdiagonal elements of A. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the diagonal elements of A. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) superdiagonal elements of A. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `DLF` | `Float64Array` | in | `N - 1` |  | the (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
-| ↳ `strideDLF` | `integer` | in |  |  | stride length for `DLF` |
-| `DF` | `Float64Array` | in | `N` |  | the n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
-| ↳ `strideDF` | `integer` | in |  |  | stride length for `DF` |
-| `DUF` | `Float64Array` | in | `N - 1` |  | the (n-1) elements of the first superdiagonal of U. |
-| ↳ `strideDUF` | `integer` | in |  |  | stride length for `DUF` |
-| `DU2` | `Float64Array` | in | `N - 2` |  | the (n-2) elements of the second superdiagonal of U. |
-| ↳ `strideDU2` | `integer` | in |  |  | stride length for `DU2` |
-| `IPIV` | `Int32Array` | in | `N` |  | the pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Float64Array` | in | `N × nrhs` |  | the right hand side matrix B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the solution matrix X, as computed by DGTTRS. On exit, the improved solution matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 3 * N` |  | caller-provided workspace of at least `3 * N` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | Specifies the form of the system of equations: `'no-transpose'`: A \* X = B (No transpose) `'transpose'`: A\*\*T \* X = B (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) subdiagonal elements of A. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The diagonal elements of A. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) superdiagonal elements of A. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `DLF` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) multipliers that define the matrix L from the LU factorization of A as computed by DGTTRF. |
+| ↳ `strideDLF` | `integer` | Stride length for `DLF` |
+| `DF` | `Float64Array`<br><sub>length N</sub> | The n diagonal elements of the upper triangular matrix U from the LU factorization of A. |
+| ↳ `strideDF` | `integer` | Stride length for `DF` |
+| `DUF` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) elements of the first superdiagonal of U. |
+| ↳ `strideDUF` | `integer` | Stride length for `DUF` |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | The (n-2) elements of the second superdiagonal of U. |
+| ↳ `strideDU2` | `integer` | Stride length for `DU2` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | The pivot indices; for 1 <= i <= n, row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | The right hand side matrix B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the solution matrix X, as computed by DGTTRS. On exit, the improved solution matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 3 * N</sub> | **out** · Caller-provided workspace of at least `3 * N` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -141,55 +141,55 @@ and backward error estimates for the solution.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right hand sides |
-| `DL` | `Float64Array` | in | `N - 1` |  | sub-diagonal of original A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | offset for DL |
-| `d` | `Float64Array` | in | `N` |  | diagonal of original A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | offset for d |
-| `DU` | `Float64Array` | in | `N - 1` |  | super-diagonal of original A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | offset for DU |
-| `DLF` | `Float64Array` | in | `N - 1` |  | factored sub-diagonal from dgttrf |
-| ↳ `strideDLF` | `integer` | in |  |  | stride for DLF |
-| ↳ `offsetDLF` | `NonNegativeInteger` | in |  |  | offset for DLF |
-| `DF` | `Float64Array` | in | `N` |  | factored diagonal from dgttrf |
-| ↳ `strideDF` | `integer` | in |  |  | stride for DF |
-| ↳ `offsetDF` | `NonNegativeInteger` | in |  |  | offset for DF |
-| `DUF` | `Float64Array` | in | `N - 1` |  | factored super-diagonal from dgttrf |
-| ↳ `strideDUF` | `integer` | in |  |  | stride for DUF |
-| ↳ `offsetDUF` | `NonNegativeInteger` | in |  |  | offset for DUF |
-| `DU2` | `Float64Array` | in | `N - 2` |  | second superdiagonal from dgttrf |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for DU2 |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | offset for DU2 |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from dgttrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset for IPIV |
-| `B` | `Float64Array` | in | `N × nrhs` |  | right hand side matrix (N x NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | row stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | column stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | offset for B |
-| `X` | `Float64Array` | in/out | `N × nrhs` |  | solution matrix (N x NRHS), refined on output |
-| ↳ `strideX1` | `integer` | in |  |  | row stride of X |
-| ↳ `strideX2` | `integer` | in |  |  | column stride of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | offset for X |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output: forward error bound for each RHS |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output: backward error for each RHS |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | offset for BERR |
-| `WORK` | `Float64Array` | out | `≥ 3 * N` |  | workspace of length at least 3*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace of length at least N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | offset for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | 'no-transpose' or 'transpose'<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides<br>Requires `nrhs ≥ 0` |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of original A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL |
+| ↳ `offsetDL` | `NonNegativeInteger` | Offset for DL |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of original A (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Offset for d |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | Super-diagonal of original A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU |
+| ↳ `offsetDU` | `NonNegativeInteger` | Offset for DU |
+| `DLF` | `Float64Array`<br><sub>length N - 1</sub> | Factored sub-diagonal from dgttrf |
+| ↳ `strideDLF` | `integer` | Stride for DLF |
+| ↳ `offsetDLF` | `NonNegativeInteger` | Offset for DLF |
+| `DF` | `Float64Array`<br><sub>length N</sub> | Factored diagonal from dgttrf |
+| ↳ `strideDF` | `integer` | Stride for DF |
+| ↳ `offsetDF` | `NonNegativeInteger` | Offset for DF |
+| `DUF` | `Float64Array`<br><sub>length N - 1</sub> | Factored super-diagonal from dgttrf |
+| ↳ `strideDUF` | `integer` | Stride for DUF |
+| ↳ `offsetDUF` | `NonNegativeInteger` | Offset for DUF |
+| `DU2` | `Float64Array`<br><sub>length N - 2</sub> | Second superdiagonal from dgttrf |
+| ↳ `strideDU2` | `integer` | Stride for DU2 |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Offset for DU2 |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from dgttrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset for IPIV |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | Right hand side matrix (N x NRHS) |
+| ↳ `strideB1` | `integer` | Row stride of B |
+| ↳ `strideB2` | `integer` | Column stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Offset for B |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Solution matrix (N x NRHS), refined on output |
+| ↳ `strideX1` | `integer` | Row stride of X |
+| ↳ `strideX2` | `integer` | Column stride of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Offset for X |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: forward error bound for each RHS |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output: backward error for each RHS |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Offset for BERR |
+| `WORK` | `Float64Array`<br><sub>length ≥ 3 * N</sub> | **out** · Workspace of length at least 3\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace of length at least N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Offset for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

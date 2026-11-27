@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlantp( order, norm, uplo, diag, N, AP, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part is packed ('upper' or 'lower') |
-| `diag` | `DiagonalType` | in |  |  | specifies whether the diagonal is unit ('unit' or 'non-unit') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix, length >= N*(N+1)/2 |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array, length >= N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part is packed ('upper' or 'lower') |
+| `diag` | `DiagonalType` | Specifies whether the diagonal is unit ('unit' or 'non-unit') |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix, length >= N\*(N+1)/2 |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array, length >= N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,18 +70,18 @@ dlantp.ndarray(
 ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | specifies the norm: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
-| `diag` | `DiagonalType` | in |  |  | specifies whether the diagonal is unit (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix, length >= `N*(N+1)/2` |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `WORK` | `Float64Array` | out |  |  | workspace array, length >= `N` |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Specifies the norm: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle is stored (`'upper'` or `'lower'`) |
+| `diag` | `DiagonalType` | Specifies whether the diagonal is unit (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix, length >= `N*(N+1)/2` |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `WORK` | `Float64Array` | **out** · Workspace array, length >= `N` |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

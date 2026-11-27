@@ -39,27 +39,27 @@ When `work` is `null`, this LAPACKE-style wrapper allocates the optimal
 workspace, `max( 8*N, 7*N + N*NB + TSIZE )` elements, as a convenience.
 Prefer passing a caller-owned buffer for batched use.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute left eigenvectors, `'no-vectors'` to not |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute right eigenvectors, `'no-vectors'` to not |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten on exit |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten on exit |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of B |
-| `ALPHAR` | `Float64Array` | out | `N` |  | output: real parts of alpha (length N) |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride length for `ALPHAR` |
-| `ALPHAI` | `Float64Array` | out | `N` |  | output: imaginary parts of alpha (length N) |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride length for `ALPHAI` |
-| `BETA` | `Float64Array` | out | `N` |  | output: beta values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors (N x N) |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` | leading dimension of VL |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors (N x N) |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` | leading dimension of VR |
-| `work` | `(Float64Array\|null)` | out | `≥ max( 1, 8 * N )` |  | =null] - workspace of length at least `max(1,8*N)`; for optimal performance at least `max( 8*N, 7*N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N*(7+NB)` with the dormqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute left eigenvectors, `'no-vectors'` to not |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute right eigenvectors, `'no-vectors'` to not |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten on exit |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten on exit |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B<br>Requires `LDB ≥ max(1, N)` |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of alpha (length N) |
+| ↳ `strideALPHAR` | `integer` | Stride length for `ALPHAR` |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of alpha (length N) |
+| ↳ `strideALPHAI` | `integer` | Stride length for `ALPHAI` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output: beta values (length N) |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors (N x N) |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of VL<br>Rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors (N x N) |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of VR<br>Rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` |
+| `work` | `Float64Array \| null`<br><sub>length ≥ max(1, 8 * N)</sub> | **out** · Workspace of length at least `max(1,8*N)`; for optimal performance at least `max( 8*N, 7*N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N*(7+NB)` with the dormqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size<br>Optional, default `null`. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -123,39 +123,39 @@ generalized eigenvectors for a pair of N-by-N real nonsymmetric matrices (A,B).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute left eigenvectors, `'no-vectors'` to not |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` to compute right eigenvectors, `'no-vectors'` to not |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix A (N x N), overwritten on exit |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `N × N` |  | input matrix B (N x N), overwritten on exit |
-| ↳ `strideB1` | `integer` | in |  |  | first dimension stride of B |
-| ↳ `strideB2` | `integer` | in |  |  | second dimension stride of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `ALPHAR` | `Float64Array` | out | `N` |  | output: real parts of alpha (length N) |
-| ↳ `strideALPHAR` | `integer` | in |  |  | stride for ALPHAR |
-| ↳ `offsetALPHAR` | `NonNegativeInteger` | in |  |  | offset for ALPHAR |
-| `ALPHAI` | `Float64Array` | out | `N` |  | output: imaginary parts of alpha (length N) |
-| ↳ `strideALPHAI` | `integer` | in |  |  | stride for ALPHAI |
-| ↳ `offsetALPHAI` | `NonNegativeInteger` | in |  |  | offset for ALPHAI |
-| `BETA` | `Float64Array` | out | `N` |  | output: beta values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | offset for BETA |
-| `VL` | `Float64Array` | out | `N × N` |  | output: left eigenvectors (N x N) |
-| ↳ `strideVL1` | `integer` | in |  |  | first dimension stride of VL |
-| ↳ `strideVL2` | `integer` | in |  |  | second dimension stride of VL |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL |
-| `VR` | `Float64Array` | out | `N × N` |  | output: right eigenvectors (N x N) |
-| ↳ `strideVR1` | `integer` | in |  |  | first dimension stride of VR |
-| ↳ `strideVR2` | `integer` | in |  |  | second dimension stride of VR |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 8 * N )` |  | workspace of length at least `max(1,8*N)`; for optimal performance at least `max( 8*N, 7*N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N*(7+NB)` with the dormqr optimum's T part, which enables the blocked QR steps |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute left eigenvectors, `'no-vectors'` to not |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` to compute right eigenvectors, `'no-vectors'` to not |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix A (N x N), overwritten on exit |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix B (N x N), overwritten on exit |
+| ↳ `strideB1` | `integer` | First dimension stride of B |
+| ↳ `strideB2` | `integer` | Second dimension stride of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `ALPHAR` | `Float64Array`<br><sub>length N</sub> | **out** · Output: real parts of alpha (length N) |
+| ↳ `strideALPHAR` | `integer` | Stride for ALPHAR |
+| ↳ `offsetALPHAR` | `NonNegativeInteger` | Offset for ALPHAR |
+| `ALPHAI` | `Float64Array`<br><sub>length N</sub> | **out** · Output: imaginary parts of alpha (length N) |
+| ↳ `strideALPHAI` | `integer` | Stride for ALPHAI |
+| ↳ `offsetALPHAI` | `NonNegativeInteger` | Offset for ALPHAI |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output: beta values (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Offset for BETA |
+| `VL` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: left eigenvectors (N x N) |
+| ↳ `strideVL1` | `integer` | First dimension stride of VL |
+| ↳ `strideVL2` | `integer` | Second dimension stride of VL |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL |
+| `VR` | `Float64Array`<br><sub>N × N</sub> | **out** · Output: right eigenvectors (N x N) |
+| ↳ `strideVR1` | `integer` | First dimension stride of VR |
+| ↳ `strideVR2` | `integer` | Second dimension stride of VR |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 8 * N)</sub> | **out** · Workspace of length at least `max(1,8*N)`; for optimal performance at least `max( 8*N, 7*N + N*NB + TSIZE )` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N*(7+NB)` with the dormqr optimum's T part, which enables the blocked QR steps |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

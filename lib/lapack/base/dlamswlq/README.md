@@ -31,23 +31,23 @@ dlamswlq(
 
 Overwrites a real `M`-by-`N` matrix `C` with `op(Q)*C` or `C*op(Q)`, where `Q` is a real orthogonal matrix produced by a blocked Short-Wide LQ (SWLQ) factorization (`dlaswlq`).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < K` | number of rows of `C` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `C` |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `mb` | `integer` | in |  | rejects `K < mb \|\| mb < 1` | inner block size of the compact-WY representation |
-| `nb` | `integer` | in |  |  | column block size used in the SWLQ factorization |
-| `A` | `Float64Array` | in | `K × (side === 'left' ? M : N)` |  | reflector vectors from `dlaswlq` |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, K )`; row-major requires `LDA ≥ max( 1, side === 'left' ? M : N )` | leading dimension of `A` |
-| `T` | `Float64Array` | in | `mb × null` |  | block triangular factors from `dlaswlq` |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, mb )` | leading dimension of `T` (>= `mb`) |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, side === 'left' ? N * mb : M * mb )` |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of `C`<br>Rejects `M < K` |
+| `N` | `NonNegativeInteger` | Number of columns of `C`<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `mb` | `integer` | Inner block size of the compact-WY representation<br>Rejects `K < mb \|\| mb < 1` |
+| `nb` | `integer` | Column block size used in the SWLQ factorization |
+| `A` | `Float64Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Reflector vectors from `dlaswlq` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, K)`<br>Row-major requires `LDA ≥ max(1, side === 'left' ? M : N)` |
+| `T` | `Float64Array`<br><sub>mb × ?</sub> | Block triangular factors from `dlaswlq` |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` (>= `mb`)<br>Requires `LDT ≥ max(1, mb)` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, side === 'left' ? N * mb : M * mb)</sub> | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -111,30 +111,30 @@ Overwrites a real `M`-by-`N` matrix `C` with `op(Q)*C` or `C*op(Q)`, where `Q` i
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for Q, `'transpose'` for Q^T |
-| `M` | `NonNegativeInteger` | in |  | rejects `M < K` | number of rows of `C` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of `C` |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `mb` | `integer` | in |  | rejects `K < mb \|\| mb < 1` | inner block size of the compact-WY representation (`1 <= mb <= K`) |
-| `nb` | `integer` | in |  |  | column block size used in the SWLQ factorization |
-| `A` | `Float64Array` | in | `K × (side === 'left' ? M : N)` |  | reflector vectors from `dlaswlq` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `T` | `Float64Array` | in | `mb × null` |  | block triangular factors from `dlaswlq` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `≥ max( 1, side === 'left' ? N * mb : M * mb )` |  | workspace array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for Q, `'transpose'` for Q^T |
+| `M` | `NonNegativeInteger` | Number of rows of `C`<br>Rejects `M < K` |
+| `N` | `NonNegativeInteger` | Number of columns of `C`<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `mb` | `integer` | Inner block size of the compact-WY representation (`1 <= mb <= K`)<br>Rejects `K < mb \|\| mb < 1` |
+| `nb` | `integer` | Column block size used in the SWLQ factorization |
+| `A` | `Float64Array`<br><sub>K × (side === 'left' ? M : N)</sub> | Reflector vectors from `dlaswlq` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `T` | `Float64Array`<br><sub>mb × ?</sub> | Block triangular factors from `dlaswlq` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, side === 'left' ? N * mb : M * mb)</sub> | **out** · Workspace array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

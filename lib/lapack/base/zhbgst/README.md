@@ -29,22 +29,22 @@ zhbgst(
 ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `vect` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | 'none' or 'update' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super/subdiagonals of A |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super/subdiagonals of B (ka >= kb >= 0) |
-| `AB` | `Complex128Array` | in/out | `ka + 1 × N` |  | band matrix A in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ ka + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of AB (>= ka+1) |
-| `BB` | `Complex128Array` | in | `kb + 1 × N` |  | split Cholesky factor from ZPBSTF |
-| ↳ `LDBB` | `PositiveInteger` | in |  | column-major requires `LDBB ≥ kb + 1`; row-major requires `LDBB ≥ max( 1, N )` | leading dimension of BB (>= kb+1) |
-| `X` | `Complex128Array` | out | `N × N` |  | transformation matrix |
-| ↳ `LDX` | `PositiveInteger` | in |  | rejects `ldx < 1 \|\| (vect === 'update' && ldx < max( 1, N ))` | leading dimension of X |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | complex workspace of dimension N |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace of dimension N |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `vect` | `"none" \| "update"` | 'none' or 'update' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super/subdiagonals of A<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super/subdiagonals of B (ka >= kb >= 0)<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Complex128Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of AB (>= ka+1)<br>Column-major requires `LDAB ≥ ka + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `BB` | `Complex128Array`<br><sub>(kb + 1) × N</sub> | Split Cholesky factor from ZPBSTF |
+| ↳ `LDBB` | `PositiveInteger` | Leading dimension of BB (>= kb+1)<br>Column-major requires `LDBB ≥ kb + 1`<br>Row-major requires `LDBB ≥ max(1, N)` |
+| `X` | `Complex128Array`<br><sub>N × N</sub> | **out** · Transformation matrix |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of X<br>Rejects `ldx < 1 \|\| (vect === 'update' && ldx < max(1, N))` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Complex workspace of dimension N |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace of dimension N |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -103,31 +103,31 @@ zhbgst.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("none"\|"update")` | in |  | one of `'none'`, `'update'` | 'none' to not form X, 'update' to form X |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrices A and B |
-| `ka` | `NonNegativeInteger` | in |  | requires `ka ≥ 0` | number of super/subdiagonals of A (ka >= 0) |
-| `kb` | `NonNegativeInteger` | in |  | rejects `kb < 0 \|\| kb > ka` | number of super/subdiagonals of B (ka >= kb >= 0) |
-| `AB` | `Complex128Array` | in/out | `ka + 1 × N` |  | band matrix A |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of AB |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of AB |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB |
-| `BB` | `Complex128Array` | in | `kb + 1 × N` |  | split Cholesky factor from ZPBSTF |
-| ↳ `strideBB1` | `integer` | in |  |  | stride of the first dimension of BB |
-| ↳ `strideBB2` | `integer` | in |  |  | stride of the second dimension of BB |
-| ↳ `offsetBB` | `NonNegativeInteger` | in |  |  | starting index for BB |
-| `X` | `Complex128Array` | out | `N × N` |  | transformation matrix (if vect='update') |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | complex workspace of dimension N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace of dimension N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"none" \| "update"` | 'none' to not form X, 'update' to form X |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `N` | `NonNegativeInteger` | Order of the matrices A and B<br>Requires `N ≥ 0` |
+| `ka` | `NonNegativeInteger` | Number of super/subdiagonals of A (ka >= 0)<br>Requires `ka ≥ 0` |
+| `kb` | `NonNegativeInteger` | Number of super/subdiagonals of B (ka >= kb >= 0)<br>Rejects `kb < 0 \|\| kb > ka` |
+| `AB` | `Complex128Array`<br><sub>(ka + 1) × N</sub> | **in/out** · Band matrix A |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of AB |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of AB |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB |
+| `BB` | `Complex128Array`<br><sub>(kb + 1) × N</sub> | Split Cholesky factor from ZPBSTF |
+| ↳ `strideBB1` | `integer` | Stride of the first dimension of BB |
+| ↳ `strideBB2` | `integer` | Stride of the second dimension of BB |
+| ↳ `offsetBB` | `NonNegativeInteger` | Starting index for BB |
+| `X` | `Complex128Array`<br><sub>N × N</sub> | **out** · Transformation matrix (if vect='update') |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Complex workspace of dimension N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace of dimension N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

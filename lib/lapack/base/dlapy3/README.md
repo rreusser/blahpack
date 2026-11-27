@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlapy3( x, y, z ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `number` | in |  |  | first value |
-| `y` | `number` | in |  |  | second value |
-| `z` | `number` | in |  |  | third value |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `number` | First value |
+| `y` | `number` | Second value |
+| `z` | `number` | Third value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -43,11 +43,11 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlapy3.ndarray( x, y, z ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `number` | in |  |  | first value |
-| `y` | `number` | in |  |  | second value |
-| `z` | `number` | in |  |  | third value |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `number` | First value |
+| `y` | `number` | Second value |
+| `z` | `number` | Third value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

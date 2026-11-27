@@ -31,27 +31,27 @@ zlaqz1(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `ilq` | `boolean` | in |  |  | whether to update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | whether to update the matrix `Z` |
-| `k` | `integer` | in |  |  | 0-based bulge position |
-| `istartm` | `integer` | in |  |  | 0-based start index for column updates |
-| `istopm` | `integer` | in |  |  | 0-based end index for column updates |
-| `ihi` | `integer` | in |  |  | 0-based upper index of the active submatrix |
-| `A` | `Complex128Array` | in/out | `null × N` |  | input/output matrix `A` |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `null × N` |  | input/output matrix `B` |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `nq` | `NonNegativeInteger` | in |  |  | order of the matrix `Q` |
-| `qstart` | `integer` | in |  |  | 0-based start index of the matrix `Q` |
-| `Q` | `Complex128Array` | in/out | `null × nq` |  | input/output matrix `Q` |
-| ↳ `LDQ` | `PositiveInteger` | in |  |  | leading dimension of `Q` |
-| `nz` | `NonNegativeInteger` | in |  |  | order of the matrix `Z` |
-| `zstart` | `integer` | in |  |  | 0-based start index of the matrix `Z` |
-| `Z` | `Complex128Array` | in/out | `null × nz` |  | input/output matrix `Z` |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `ilq` | `boolean` | Whether to update the matrix `Q` |
+| `ilz` | `boolean` | Whether to update the matrix `Z` |
+| `k` | `integer` | 0-based bulge position |
+| `istartm` | `integer` | 0-based start index for column updates |
+| `istopm` | `integer` | 0-based end index for column updates |
+| `ihi` | `integer` | 0-based upper index of the active submatrix |
+| `A` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input/output matrix `A` |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input/output matrix `B` |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `nq` | `NonNegativeInteger` | Order of the matrix `Q` |
+| `qstart` | `integer` | 0-based start index of the matrix `Q` |
+| `Q` | `Complex128Array`<br><sub>? × nq</sub> | **in/out** · Input/output matrix `Q` |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q` |
+| `nz` | `NonNegativeInteger` | Order of the matrix `Z` |
+| `zstart` | `integer` | 0-based start index of the matrix `Z` |
+| `Z` | `Complex128Array`<br><sub>? × nz</sub> | **in/out** · Input/output matrix `Z` |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -100,34 +100,34 @@ zlaqz1.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ilq` | `boolean` | in |  |  | whether to update the matrix `Q` |
-| `ilz` | `boolean` | in |  |  | whether to update the matrix `Z` |
-| `k` | `integer` | in |  |  | 0-based bulge position |
-| `istartm` | `integer` | in |  |  | 0-based start index for column updates |
-| `istopm` | `integer` | in |  |  | 0-based end index for column updates |
-| `ihi` | `integer` | in |  |  | 0-based upper index of the active submatrix |
-| `A` | `Complex128Array` | in/out | `null × N` |  | input/output matrix `A` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` (in complex elements) |
-| `B` | `Complex128Array` | in/out | `null × N` |  | input/output matrix `B` |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
-| `nq` | `NonNegativeInteger` | in |  |  | order of the matrix `Q` |
-| `qstart` | `integer` | in |  |  | 0-based start index of the matrix `Q` |
-| `Q` | `Complex128Array` | in/out | `null × nq` |  | input/output matrix `Q` |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of `Q` (in complex elements) |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of `Q` (in complex elements) |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for `Q` (in complex elements) |
-| `nz` | `NonNegativeInteger` | in |  |  | order of the matrix `Z` |
-| `zstart` | `integer` | in |  |  | 0-based start index of the matrix `Z` |
-| `Z` | `Complex128Array` | in/out | `null × nz` |  | input/output matrix `Z` |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of the first dimension of `Z` (in complex elements) |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of the second dimension of `Z` (in complex elements) |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `Z` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `ilq` | `boolean` | Whether to update the matrix `Q` |
+| `ilz` | `boolean` | Whether to update the matrix `Z` |
+| `k` | `integer` | 0-based bulge position |
+| `istartm` | `integer` | 0-based start index for column updates |
+| `istopm` | `integer` | 0-based end index for column updates |
+| `ihi` | `integer` | 0-based upper index of the active submatrix |
+| `A` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input/output matrix `A` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>? × N</sub> | **in/out** · Input/output matrix `B` |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
+| `nq` | `NonNegativeInteger` | Order of the matrix `Q` |
+| `qstart` | `integer` | 0-based start index of the matrix `Q` |
+| `Q` | `Complex128Array`<br><sub>? × nq</sub> | **in/out** · Input/output matrix `Q` |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of `Q` (in complex elements) |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of `Q` (in complex elements) |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for `Q` (in complex elements) |
+| `nz` | `NonNegativeInteger` | Order of the matrix `Z` |
+| `zstart` | `integer` | 0-based start index of the matrix `Z` |
+| `Z` | `Complex128Array`<br><sub>? × nz</sub> | **in/out** · Input/output matrix `Z` |
+| ↳ `strideZ1` | `integer` | Stride of the first dimension of `Z` (in complex elements) |
+| ↳ `strideZ2` | `integer` | Stride of the second dimension of `Z` (in complex elements) |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `Z` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

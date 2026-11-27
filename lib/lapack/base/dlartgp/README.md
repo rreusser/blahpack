@@ -22,13 +22,13 @@ dlartgp( f, g, cs, sn, r ) → void
 
 Generates a plane rotation with non-negative diagonal.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | first component of the vector to be rotated |
-| `g` | `number` | in |  |  | second component of the vector to be rotated |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the rotation |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): the sine of the rotation |
-| `r` | `Float64Array` | out |  |  | output (length-1 array): the nonzero component of the rotated vector |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | First component of the vector to be rotated |
+| `g` | `number` | Second component of the vector to be rotated |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): the cosine of the rotation |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): the sine of the rotation |
+| `r` | `Float64Array` | **out** · Output (length-1 array): the nonzero component of the rotated vector |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -55,13 +55,13 @@ dlartgp.ndarray( f, g, cs, sn, r ) → void
 
 Generates a plane rotation with non-negative diagonal.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | first component of the vector to be rotated |
-| `g` | `number` | in |  |  | second component of the vector to be rotated |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the rotation |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): the sine of the rotation |
-| `r` | `Float64Array` | out |  |  | output (length-1 array): the nonzero component of the rotated vector |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | First component of the vector to be rotated |
+| `g` | `number` | Second component of the vector to be rotated |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): the cosine of the rotation |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): the sine of the rotation |
+| `r` | `Float64Array` | **out** · Output (length-1 array): the nonzero component of the rotated vector |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

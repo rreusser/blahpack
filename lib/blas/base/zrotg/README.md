@@ -28,12 +28,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zrotg( a, b, c, s ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128Array` | in/out |  |  | on entry, complex scalar `a`; on exit, overwritten with `r` |
-| `b` | `Complex128Array` | in |  |  | complex scalar `b` (input only) |
-| `c` | `Float64Array` | out |  |  | on exit, the real cosine of the rotation |
-| `s` | `Complex128Array` | out |  |  | on exit, the complex sine of the rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128Array` | **in/out** · On entry, complex scalar `a`; on exit, overwritten with `r` |
+| `b` | `Complex128Array` | Complex scalar `b` (input only) |
+| `c` | `Float64Array` | **out** · On exit, the real cosine of the rotation |
+| `s` | `Complex128Array` | **out** · On exit, the complex sine of the rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -55,16 +55,16 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 zrotg.ndarray( a, offsetA, b, offsetB, c, offsetC, s, offsetS ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Complex128Array` | in/out |  |  | on entry, complex scalar `a`; on exit, overwritten with `r` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `a` (in complex elements) |
-| `b` | `Complex128Array` | in |  |  | complex scalar `b` (input only) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for `b` (in complex elements) |
-| `c` | `Float64Array` | out |  |  | on exit, the real cosine of the rotation |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for `c` |
-| `s` | `Complex128Array` | out |  |  | on exit, the complex sine of the rotation |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | index offset for `s` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Complex128Array` | **in/out** · On entry, complex scalar `a`; on exit, overwritten with `r` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `a` (in complex elements) |
+| `b` | `Complex128Array` | Complex scalar `b` (input only) |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for `b` (in complex elements) |
+| `c` | `Float64Array` | **out** · On exit, the real cosine of the rotation |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for `c` |
+| `s` | `Complex128Array` | **out** · On exit, the complex sine of the rotation |
+| ↳ `offsetS` | `NonNegativeInteger` | Index offset for `s` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

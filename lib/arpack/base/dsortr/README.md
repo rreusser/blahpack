@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsortr( which, apply, N, x1, strideX1, x2, strideX2 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `which` | `("LM"\|"SM"\|"LA"\|"SA")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
-| `apply` | `boolean` | in |  |  | whether to apply the sorting permutation to `x2` |
-| `N` | `NonNegativeInteger` | in |  |  | number of elements to sort |
-| `x1` | `Float64Array` | in/out | `0:N-1` |  | array whose values determine (and receive) the sort |
-| ↳ `strideX1` | `integer` | in |  |  | stride length for `x1` |
-| `x2` | `Float64Array` | in/out | `0:N-1` |  | companion array permuted alongside `x1` when `apply` is `true` |
-| ↳ `strideX2` | `integer` | in |  |  | stride length for `x2` |
+| Parameter | Type | Description |
+|---|---|---|
+| `which` | `"LM" \| "SM" \| "LA" \| "SA"` | Ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
+| `apply` | `boolean` | Whether to apply the sorting permutation to `x2` |
+| `N` | `NonNegativeInteger` | Number of elements to sort |
+| `x1` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Array whose values determine (and receive) the sort |
+| ↳ `strideX1` | `integer` | Stride length for `x1` |
+| `x2` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Companion array permuted alongside `x1` when `apply` is `true` |
+| ↳ `strideX2` | `integer` | Stride length for `x2` |
 
 **Returns** `Float64Array`
 
@@ -51,17 +51,17 @@ dsortr.ndarray(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `which` | `("LM"\|"SM"\|"LA"\|"SA")` | in |  |  | ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
-| `apply` | `boolean` | in |  |  | whether to apply the sorting permutation to `x2` |
-| `N` | `NonNegativeInteger` | in |  |  | number of elements to sort |
-| `x1` | `Float64Array` | in/out | `0:N-1` |  | array whose values determine (and receive) the sort |
-| ↳ `strideX1` | `integer` | in |  |  | stride length for `x1` |
-| ↳ `offsetX1` | `NonNegativeInteger` | in |  |  | starting index for `x1` |
-| `x2` | `Float64Array` | in/out | `0:N-1` |  | companion array permuted alongside `x1` when `apply` is `true` |
-| ↳ `strideX2` | `integer` | in |  |  | stride length for `x2` |
-| ↳ `offsetX2` | `NonNegativeInteger` | in |  |  | starting index for `x2` |
+| Parameter | Type | Description |
+|---|---|---|
+| `which` | `"LM" \| "SM" \| "LA" \| "SA"` | Ordering: `'LM'`, `'SM'`, `'LA'`, or `'SA'` |
+| `apply` | `boolean` | Whether to apply the sorting permutation to `x2` |
+| `N` | `NonNegativeInteger` | Number of elements to sort |
+| `x1` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Array whose values determine (and receive) the sort |
+| ↳ `strideX1` | `integer` | Stride length for `x1` |
+| ↳ `offsetX1` | `NonNegativeInteger` | Starting index for `x1` |
+| `x2` | `Float64Array`<br><sub>length 0:N-1</sub> | **in/out** · Companion array permuted alongside `x1` when `apply` is `true` |
+| ↳ `strideX2` | `integer` | Stride length for `x2` |
+| ↳ `offsetX2` | `NonNegativeInteger` | Starting index for `x2` |
 
 **Returns** `Float64Array`
 

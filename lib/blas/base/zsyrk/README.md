@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsyrk( order, uplo, trans, N, K, alpha, A, LDA, beta, C, LDC ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the upper or lower triangular part of the array C is to be referenced as follows: `uplo === 'upper'` Only the upper triangular part of C is to be referenced. `uplo === 'lower'` Only the lower triangular part of C is to be referenced. |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | the operation to be performed as follows: `trans === 'no-transpose'` C := alpha*A*A**T + beta*C. `trans === 'transpose'` C := alpha*A**T*A + beta*C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix C. |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | on entry with `trans === 'no-transpose'`, K specifies the number of columns of the matrix A, and on entry with `trans === 'transpose'`, K specifies the number of rows of the matrix A. |
-| `alpha` | `Complex128` | in |  |  | the scalar alpha. |
-| `A` | `Complex128Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | k when `trans === 'no-transpose'`, and is n otherwise. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? N : K )`; row-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? K : N )` | leading dimension of `A` |
-| `beta` | `Complex128` | in |  |  | the scalar beta. |
-| `C` | `Complex128Array` | in/out | `N × N` |  | before entry with `uplo === 'upper'`, the leading n by n upper triangular part of the array C must contain the upper triangular part of the symmetric matrix and the strictly lower triangular part of C is not referenced. On exit, the upper triangular part of the array C is overwritten by the upper triangular part of the updated matrix. |
-| ↳ `LDC` | `PositiveInteger` | in |  | requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | Whether the upper or lower triangular part of the array C is to be referenced as follows: `uplo === 'upper'` Only the upper triangular part of C is to be referenced. `uplo === 'lower'` Only the lower triangular part of C is to be referenced. |
+| `trans` | `"no-transpose" \| "transpose"` | The operation to be performed as follows: `trans === 'no-transpose'` C := alpha\*A\*A\*\*T + beta\*C. `trans === 'transpose'` C := alpha\*A\*\*T\*A + beta\*C. |
+| `N` | `NonNegativeInteger` | The order of the matrix C.<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | On entry with `trans === 'no-transpose'`, K specifies the number of columns of the matrix A, and on entry with `trans === 'transpose'`, K specifies the number of rows of the matrix A.<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | The scalar alpha. |
+| `A` | `Complex128Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | K when `trans === 'no-transpose'`, and is n otherwise. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, trans === 'no-transpose' ? N : K)`<br>Row-major requires `LDA ≥ max(1, trans === 'no-transpose' ? K : N)` |
+| `beta` | `Complex128` | The scalar beta. |
+| `C` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Before entry with `uplo === 'upper'`, the leading n by n upper triangular part of the array C must contain the upper triangular part of the symmetric matrix and the strictly lower triangular part of C is not referenced. On exit, the upper triangular part of the array C is overwritten by the upper triangular part of the updated matrix. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Requires `LDC ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,22 +102,22 @@ Only the upper or lower triangular part of C is updated.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` for upper triangle, `'lower'` for lower triangle |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` for `A*A**T`, `'transpose'` for `A**T*A` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns of A (if trans is `'no-transpose'`) or rows (if trans is `'transpose'`) |
-| `alpha` | `Complex128` | in |  |  | complex scalar multiplier |
-| `A` | `Complex128Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | complex input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A (in complex elements) |
-| `beta` | `Complex128` | in |  |  | complex scalar multiplier |
-| `C` | `Complex128Array` | in/out | `N × N` |  | input/output symmetric matrix (only upper or lower triangle accessed) |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for C (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` for upper triangle, `'lower'` for lower triangle |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` for `A*A**T`, `'transpose'` for `A**T*A` |
+| `N` | `NonNegativeInteger` | Order of matrix C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns of A (if trans is `'no-transpose'`) or rows (if trans is `'transpose'`)<br>Requires `K ≥ 0` |
+| `alpha` | `Complex128` | Complex scalar multiplier |
+| `A` | `Complex128Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Complex input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A (in complex elements) |
+| `beta` | `Complex128` | Complex scalar multiplier |
+| `C` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix (only upper or lower triangle accessed) |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for C (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

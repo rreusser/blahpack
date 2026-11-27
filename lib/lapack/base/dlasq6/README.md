@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasq6( i0, n0, z, strideZ, pp, dmin, dmin1, dmin2, dn, dnm1, dnm2 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `integer` | in |  |  | last index (1-based) |
-| `z` | `Float64Array` | in | `4*N` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
-| `pp` | `integer` | in |  |  | ping-pong flag (0 or 1) |
-| `dmin` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d |
-| `dmin1` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d, excluding D( N0 ) |
-| `dmin2` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d, excluding D( N0 ) and D( N0-1 ) |
-| `dn` | `Float64Array` | out |  |  | output (length-1 array): d(N0), the last value of d |
-| `dnm1` | `Float64Array` | out |  |  | output (length-1 array): d(N0-1) |
-| `dnm2` | `Float64Array` | out |  |  | output (length-1 array): d(N0-2) |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `integer` | Last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4*N</sub> | Input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
+| `pp` | `integer` | Ping-pong flag (0 or 1) |
+| `dmin` | `Float64Array` | **out** · Output (length-1 array): minimum value of d |
+| `dmin1` | `Float64Array` | **out** · Output (length-1 array): minimum value of d, excluding D( N0 ) |
+| `dmin2` | `Float64Array` | **out** · Output (length-1 array): minimum value of d, excluding D( N0 ) and D( N0-1 ) |
+| `dn` | `Float64Array` | **out** · Output (length-1 array): d(N0), the last value of d |
+| `dnm1` | `Float64Array` | **out** · Output (length-1 array): d(N0-1) |
+| `dnm2` | `Float64Array` | **out** · Output (length-1 array): d(N0-2) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,20 +70,20 @@ dlasq6.ndarray(
 ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `i0` | `integer` | in |  |  | first index (1-based) |
-| `n0` | `integer` | in |  |  | last index (1-based) |
-| `z` | `Float64Array` | in | `4*N` |  | input/output array |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
-| `pp` | `integer` | in |  |  | ping-pong flag (0 or 1) |
-| `dmin` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d |
-| `dmin1` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d, excluding D( N0 ) |
-| `dmin2` | `Float64Array` | out |  |  | output (length-1 array): minimum value of d, excluding D( N0 ) and D( N0-1 ) |
-| `dn` | `Float64Array` | out |  |  | output (length-1 array): d(N0), the last value of d |
-| `dnm1` | `Float64Array` | out |  |  | output (length-1 array): d(N0-1) |
-| `dnm2` | `Float64Array` | out |  |  | output (length-1 array): d(N0-2) |
+| Parameter | Type | Description |
+|---|---|---|
+| `i0` | `integer` | First index (1-based) |
+| `n0` | `integer` | Last index (1-based) |
+| `z` | `Float64Array`<br><sub>length 4*N</sub> | Input/output array |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
+| `pp` | `integer` | Ping-pong flag (0 or 1) |
+| `dmin` | `Float64Array` | **out** · Output (length-1 array): minimum value of d |
+| `dmin1` | `Float64Array` | **out** · Output (length-1 array): minimum value of d, excluding D( N0 ) |
+| `dmin2` | `Float64Array` | **out** · Output (length-1 array): minimum value of d, excluding D( N0 ) and D( N0-1 ) |
+| `dn` | `Float64Array` | **out** · Output (length-1 array): d(N0), the last value of d |
+| `dnm1` | `Float64Array` | **out** · Output (length-1 array): d(N0-1) |
+| `dnm2` | `Float64Array` | **out** · Output (length-1 array): d(N0-2) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

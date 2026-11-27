@@ -31,25 +31,25 @@ ztprfs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system of equations |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix A |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix B |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Complex128Array` | in | `N × nrhs` |  | solution matrix X |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward errors |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for `BERR` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | complex workspace array |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | real workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `trans` | `TransposeOperation` | Specifies the form of the system of equations<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular<br>One of `'non-unit'`, `'unit'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix A |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix B |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | Solution matrix X |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds |
+| ↳ `strideFERR` | `integer` | Stride for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward errors |
+| ↳ `strideBERR` | `integer` | Stride for `BERR` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace array |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Real workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -112,36 +112,36 @@ ztprfs.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system (`'no-transpose'` or `'conjugate-transpose'`) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `AP` | `Complex128Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix A, length N*(N+1)/2 |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` (in complex elements) |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` (in complex elements) |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix B, shape [N, nrhs] |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
-| `X` | `Complex128Array` | in | `N × nrhs` |  | solution matrix X, shape [N, nrhs] |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of `X` (in complex elements) |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of `X` (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `X` (in complex elements) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | output array of length nrhs for forward error bounds |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | starting index for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | output array of length nrhs for backward errors |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | starting index for `BERR` |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | complex workspace array of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace array of length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular (`'upper'` or `'lower'`) |
+| `trans` | `TransposeOperation` | Specifies the form of the system (`'no-transpose'` or `'conjugate-transpose'`) |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit triangular (`'unit'` or `'non-unit'`) |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `AP` | `Complex128Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix A, length N\*(N+1)/2 |
+| ↳ `strideAP` | `integer` | Stride length for `AP` (in complex elements) |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` (in complex elements) |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix B, shape [N, nrhs] |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
+| `X` | `Complex128Array`<br><sub>N × nrhs</sub> | Solution matrix X, shape [N, nrhs] |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of `X` (in complex elements) |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of `X` (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `X` (in complex elements) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output array of length nrhs for forward error bounds |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Starting index for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Output array of length nrhs for backward errors |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Starting index for `BERR` |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Complex workspace array of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace array of length N |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

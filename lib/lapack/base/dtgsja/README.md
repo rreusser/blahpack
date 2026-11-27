@@ -35,35 +35,35 @@ dtgsja(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobu` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'compute-vectors'`: U must contain an orthogonal matrix U1 on entry, and the product U1*U is returned; `'initialize'`: U is initialized to the unit matrix, and the orthogonal matrix U is returned; `'none'`: U is not computed. |
-| `jobv` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'compute-vectors'`: V must contain an orthogonal matrix V1 on entry, and the product V1*V is returned; `'initialize'`: V is initialized to the unit matrix, and the orthogonal matrix V is returned; `'none'`: V is not computed. |
-| `jobq` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'compute-vectors'`: Q must contain an orthogonal matrix Q1 on entry, and the product Q1*Q is returned; `'initialize'`: Q is initialized to the unit matrix, and the orthogonal matrix Q is returned; `'none'`: Q is not computed. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix A. |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | the number of rows of the matrix B. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrices A and B. |
-| `K` | `integer` | in |  |  | k and L specify the subblocks in the input matrices A and B: A23 = A(K+1:MIN(K+L,M),N-L+1:N) and B13 = B(1:L,N-L+1:N) of A and B, whose GSVD is going to be computed by DTGSJA. |
-| `l` | `integer` | in |  |  | k and L specify the subblocks in the input matrices A and B: A23 = A(K+1:MIN(K+L,M),N-L+1:N) and B13 = B(1:L,N-L+1:N) of A and B, whose GSVD is going to be computed by DTGSJA. |
-| `A` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N matrix A. On exit, A(N-K+1:N,1:MIN(K+L,M) ) contains the triangular matrix R or part of R. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `P × N` |  | on entry, the P-by-N matrix B. On exit, if necessary, B(M-K+1:L,N+M-K-L+1:N) contains a part of R. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, P )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `tola` | `number` | in |  |  | tOLA and TOLB are the convergence criteria for the Jacobi- Kogbetliantz iteration procedure. |
-| `tolb` | `number` | in |  |  | tOLA and TOLB are the convergence criteria for the Jacobi- Kogbetliantz iteration procedure. |
-| `ALPHA` | `Float64Array` | out | `N` |  | on exit, ALPHA and BETA contain the generalized singular value pairs of A and B. |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride length for `ALPHA` |
-| `BETA` | `Float64Array` | out | `N` |  | on exit, ALPHA and BETA contain the generalized singular value pairs of A and B. |
-| ↳ `strideBETA` | `integer` | in |  |  | stride length for `BETA` |
-| `U` | `Float64Array` | in/out | `M × M` |  | on entry, if `jobu === 'compute-vectors'`, U must contain a matrix U1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobu === 'initialize'`, U contains the orthogonal matrix U; if `jobu === 'compute-vectors'`, U contains the product U1*U. |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| ((jobu === 'initialize' \|\| jobu === 'update') && ldu < M)` | leading dimension of `U` |
-| `V` | `Float64Array` | in/out | `P × P` |  | on entry, if `jobv === 'compute-vectors'`, V must contain a matrix V1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobv === 'initialize'`, V contains the orthogonal matrix V; if `jobv === 'compute-vectors'`, V contains the product V1*V. |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `ldv < 1 \|\| ((jobv === 'initialize' \|\| jobv === 'update') && ldv < P)` | leading dimension of `V` |
-| `Q` | `Float64Array` | in/out | `N × N` |  | on entry, if `jobq === 'compute-vectors'`, Q must contain a matrix Q1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobq === 'initialize'`, Q contains the orthogonal matrix Q; if `jobq === 'compute-vectors'`, Q contains the product Q1*Q. |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| ((jobq === 'initialize' \|\| jobq === 'update') && ldq < N)` | leading dimension of `Q` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | caller-provided workspace of at least `2 * N` elements |
-| `ncycle` | `Int32Array` | out |  |  | the number of cycles required for convergence. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobu` | `"update" \| "initialize" \| "none"` | `'compute-vectors'`: U must contain an orthogonal matrix U1 on entry, and the product U1\*U is returned; `'initialize'`: U is initialized to the unit matrix, and the orthogonal matrix U is returned; `'none'`: U is not computed.<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `jobv` | `"update" \| "initialize" \| "none"` | `'compute-vectors'`: V must contain an orthogonal matrix V1 on entry, and the product V1\*V is returned; `'initialize'`: V is initialized to the unit matrix, and the orthogonal matrix V is returned; `'none'`: V is not computed.<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `jobq` | `"update" \| "initialize" \| "none"` | `'compute-vectors'`: Q must contain an orthogonal matrix Q1 on entry, and the product Q1\*Q is returned; `'initialize'`: Q is initialized to the unit matrix, and the orthogonal matrix Q is returned; `'none'`: Q is not computed.<br>One of `'initialize'`, `'none'`, `'update'`. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A.<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | The number of rows of the matrix B.<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrices A and B.<br>Requires `N ≥ 0` |
+| `K` | `integer` | K and L specify the subblocks in the input matrices A and B: A23 = A(K+1:MIN(K+L,M),N-L+1:N) and B13 = B(1:L,N-L+1:N) of A and B, whose GSVD is going to be computed by DTGSJA. |
+| `l` | `integer` | K and L specify the subblocks in the input matrices A and B: A23 = A(K+1:MIN(K+L,M),N-L+1:N) and B13 = B(1:L,N-L+1:N) of A and B, whose GSVD is going to be computed by DTGSJA. |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix A. On exit, A(N-K+1:N,1:MIN(K+L,M) ) contains the triangular matrix R or part of R. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · On entry, the P-by-N matrix B. On exit, if necessary, B(M-K+1:L,N+M-K-L+1:N) contains a part of R. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, P)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `tola` | `number` | TOLA and TOLB are the convergence criteria for the Jacobi- Kogbetliantz iteration procedure. |
+| `tolb` | `number` | TOLA and TOLB are the convergence criteria for the Jacobi- Kogbetliantz iteration procedure. |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, ALPHA and BETA contain the generalized singular value pairs of A and B. |
+| ↳ `strideALPHA` | `integer` | Stride length for `ALPHA` |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, ALPHA and BETA contain the generalized singular value pairs of A and B. |
+| ↳ `strideBETA` | `integer` | Stride length for `BETA` |
+| `U` | `Float64Array`<br><sub>M × M</sub> | **in/out** · On entry, if `jobu === 'compute-vectors'`, U must contain a matrix U1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobu === 'initialize'`, U contains the orthogonal matrix U; if `jobu === 'compute-vectors'`, U contains the product U1\*U. |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Rejects `ldu < 1 \|\| ((jobu === 'initialize' \|\| jobu === 'update') && ldu < M)` |
+| `V` | `Float64Array`<br><sub>P × P</sub> | **in/out** · On entry, if `jobv === 'compute-vectors'`, V must contain a matrix V1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobv === 'initialize'`, V contains the orthogonal matrix V; if `jobv === 'compute-vectors'`, V contains the product V1\*V. |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Rejects `ldv < 1 \|\| ((jobv === 'initialize' \|\| jobv === 'update') && ldv < P)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, if `jobq === 'compute-vectors'`, Q must contain a matrix Q1 (usually the orthogonal matrix returned by DGGSVP). On exit, if `jobq === 'initialize'`, Q contains the orthogonal matrix Q; if `jobq === 'compute-vectors'`, Q contains the product Q1\*Q. |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| ((jobq === 'initialize' \|\| jobq === 'update') && ldq < N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Caller-provided workspace of at least `2 * N` elements |
+| `ncycle` | `Int32Array` | **out** · The number of cycles required for convergence. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -197,48 +197,48 @@ orthogonal matrices.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `jobv` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `jobq` | `("update"\|"initialize"\|"none")` | in |  | one of `'initialize'`, `'none'`, `'update'` | `'update'`, `'initialize'`, or `'none'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `K` | `integer` | in |  |  | dimension of the first block |
-| `l` | `integer` | in |  |  | dimension of the second block |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix A (overwritten) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `P × N` |  | P-by-N matrix B (overwritten) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `tola` | `number` | in |  |  | convergence tolerance for A |
-| `tolb` | `number` | in |  |  | convergence tolerance for B |
-| `ALPHA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA |
-| `BETA` | `Float64Array` | out | `N` |  | output array for generalized singular values (length N) |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA |
-| `U` | `Float64Array` | in/out | `M × M` |  | M-by-M orthogonal matrix U |
-| ↳ `strideU1` | `integer` | in |  |  | stride of first dimension of U |
-| ↳ `strideU2` | `integer` | in |  |  | stride of second dimension of U |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U |
-| `V` | `Float64Array` | in/out | `P × P` |  | P-by-P orthogonal matrix V |
-| ↳ `strideV1` | `integer` | in |  |  | stride of first dimension of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of second dimension of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `Q` | `Float64Array` | in/out | `N × N` |  | N-by-N orthogonal matrix Q |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `WORK` | `Float64Array` | out | `≥ 2 * N` |  | workspace array of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `ncycle` | `Int32Array` | out |  |  | output: ncycle[0] receives the number of cycles |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `jobv` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `jobq` | `"update" \| "initialize" \| "none"` | `'update'`, `'initialize'`, or `'none'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `K` | `integer` | Dimension of the first block |
+| `l` | `integer` | Dimension of the second block |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A (overwritten) |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B (overwritten) |
+| ↳ `strideB1` | `integer` | Stride of first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `tola` | `number` | Convergence tolerance for A |
+| `tolb` | `number` | Convergence tolerance for B |
+| `ALPHA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA |
+| `BETA` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for generalized singular values (length N) |
+| ↳ `strideBETA` | `integer` | Stride for BETA |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA |
+| `U` | `Float64Array`<br><sub>M × M</sub> | **in/out** · M-by-M orthogonal matrix U |
+| ↳ `strideU1` | `integer` | Stride of first dimension of U |
+| ↳ `strideU2` | `integer` | Stride of second dimension of U |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U |
+| `V` | `Float64Array`<br><sub>P × P</sub> | **in/out** · P-by-P orthogonal matrix V |
+| ↳ `strideV1` | `integer` | Stride of first dimension of V |
+| ↳ `strideV2` | `integer` | Stride of second dimension of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **in/out** · N-by-N orthogonal matrix Q |
+| ↳ `strideQ1` | `integer` | Stride of first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `WORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `ncycle` | `Int32Array` | **out** · Output: ncycle[0] receives the number of cycles |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

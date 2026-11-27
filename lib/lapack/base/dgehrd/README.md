@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgehrd( order, N, ilo, ihi, A, LDA, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | lower index of the balanced matrix |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | upper index of the balanced matrix |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | workspace array, or `null` to allocate the optimum; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | Lower index of the balanced matrix<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | Upper index of the balanced matrix<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array, or `null` to allocate the optimum; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,21 +69,21 @@ dgehrd.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `ilo` | `integer` | in |  | rejects `ilo < 1 \|\| ilo > max( 1, N )` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `ihi` | `integer` | in |  | rejects `ihi < min( ilo, N ) \|\| ihi > N` | it is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N. |
-| `A` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `TAU` | `Float64Array` | out | `N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `WORK` | `Float64Array` | out | `≥ max( 1, N )` |  | workspace array; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `ilo` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ilo < 1 \|\| ilo > max(1, N)` |
+| `ihi` | `integer` | It is assumed that A is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N.<br>Rejects `ihi < min(ilo, N) \|\| ihi > N` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `TAU` | `Float64Array`<br><sub>length N - 1</sub> | **out** · Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace array; length at least `max( 1, N )`. For optimum performance it should hold `N*NB + TSIZE` elements (TSIZE = 4160), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

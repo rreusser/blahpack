@@ -37,37 +37,37 @@ dgbsvx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `fact` | `("not-factored"\|"equilibrate"\|"factored")` | in |  | one of `'equilibrate'`, `'factored'`, `'not-factored'` | specifies whether or not the factored form of the matrix A is supplied on entry, and if not, whether the matrix A should be equilibrated before it is factored. `'factored'`: On entry, AFB and IPIV contain the factored form of A. If `equed !== 'none'`, the matrix A has been equilibrated with scaling factors given by R and C. AB, AFB, and IPIV are not modified. `'not-factored'`: The matrix A will be copied to AFB and factored. `'equilibrate'`: The matrix A will be equilibrated if necessary, then copied to AFB and factored. |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the form of the system of equations. `'no-transpose'`: A * X = B (No transpose) `'transpose'`: A**T * X = B (Transpose) |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of linear equations, i.e., the order of the matrix A. |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | the number of subdiagonals within the band of A. |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | the number of superdiagonals within the band of A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrices B and X. |
-| `AB` | `Float64Array` | in/out | `kl + ku + 1 × N` |  | on entry, the matrix A in band storage, in rows 1 to KL+KU+1. On exit, if `equed !== 'none'`, A is scaled as follows: `equed === 'row'`: A := diag(R) * A `equed === 'column'`: A := A * diag(C) `equed === 'both'`: A := diag(R) * A * diag(C). |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `AFB` | `Float64Array` | in/out | `2 * kl + ku + 1 × N` |  | if `fact === 'factored'`, then AFB is an input argument and on entry contains details of the LU factorization of the band matrix A, as computed by DGBTRF. |
-| ↳ `LDAFB` | `PositiveInteger` | in |  | column-major requires `LDAFB ≥ 2 * kl + ku + 1`; row-major requires `LDAFB ≥ max( 1, N )` | leading dimension of `AFB` |
-| `IPIV` | `Int32Array` | in/out | `N` |  | if `fact === 'factored'`, then IPIV is an input argument and on entry contains the pivot indices from the factorization A = L*U as computed by DGBTRF; row i of the matrix was interchanged with row IPIV(i) (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `equed` | `Array.<string>` | in/out |  | rejects `fact === 'factored' && !(((equed === 'row' \|\| equed === 'both') \|\| (equed === 'column' \|\| equed === 'both')) \|\| equed === 'none')` | specifies the form of equilibration that was done. `'none'`: No equilibration (always true if `fact === 'not-factored'`). `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) * A * diag(C). EQUED is an input argument if `fact === 'factored'`; otherwise, it is an output argument. |
-| `r` | `Float64Array` | in/out | `N` |  | the row scale factors for A. |
-| ↳ `strideR` | `integer` | in |  |  | stride length for `r` |
-| `c` | `Float64Array` | in/out | `N` |  | the column scale factors for A. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the right hand side matrix B. On exit, if `equed === 'none'`, B is not modified; if `trans === 'no-transpose'` and `equed === 'row'` or `equed === 'both'`, B is overwritten by diag(R)*B; if `trans === 'transpose'` and `equed === 'column'` or `equed === 'both'`, B is overwritten by diag(C)*B. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `X` | `Float64Array` | out | `N × nrhs` |  | if INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X to the original system of equations. |
-| ↳ `LDX` | `PositiveInteger` | in |  | column-major requires `LDX ≥ max( 1, N )`; row-major requires `LDX ≥ max( 1, nrhs )` | leading dimension of `X` |
-| `rcond` | `Float64Array` | out |  |  | output (length-1 array): the estimate of the reciprocal condition number of the matrix A after equilibration (if done) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | the estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
-| ↳ `strideFERR` | `integer` | in |  |  | stride length for `FERR` |
-| `BERR` | `Float64Array` | out | `nrhs` |  | the componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
-| ↳ `strideBERR` | `integer` | in |  |  | stride length for `BERR` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, 3 * N )` |  | caller-provided workspace of at least `max( 1, 3 * N )` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `fact` | `"not-factored" \| "equilibrate" \| "factored"` | Specifies whether or not the factored form of the matrix A is supplied on entry, and if not, whether the matrix A should be equilibrated before it is factored. `'factored'`: On entry, AFB and IPIV contain the factored form of A. If `equed !== 'none'`, the matrix A has been equilibrated with scaling factors given by R and C. AB, AFB, and IPIV are not modified. `'not-factored'`: The matrix A will be copied to AFB and factored. `'equilibrate'`: The matrix A will be equilibrated if necessary, then copied to AFB and factored. |
+| `trans` | `TransposeOperation` | Specifies the form of the system of equations. `'no-transpose'`: A \* X = B (No transpose) `'transpose'`: A\*\*T \* X = B (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | The number of linear equations, i.e., the order of the matrix A.<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | The number of subdiagonals within the band of A.<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | The number of superdiagonals within the band of A.<br>Requires `ku ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices B and X.<br>Requires `nrhs ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · On entry, the matrix A in band storage, in rows 1 to KL+KU+1. On exit, if `equed !== 'none'`, A is scaled as follows: `equed === 'row'`: A := diag(R) \* A `equed === 'column'`: A := A \* diag(C) `equed === 'both'`: A := diag(R) \* A \* diag(C). |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `AFB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | **in/out** · If `fact === 'factored'`, then AFB is an input argument and on entry contains details of the LU factorization of the band matrix A, as computed by DGBTRF. |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of `AFB`<br>Column-major requires `LDAFB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAFB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · If `fact === 'factored'`, then IPIV is an input argument and on entry contains the pivot indices from the factorization A = L\*U as computed by DGBTRF; row i of the matrix was interchanged with row IPIV(i) (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `equed` | `Array.<string>` | **in/out** · Specifies the form of equilibration that was done. `'none'`: No equilibration (always true if `fact === 'not-factored'`). `'row'`: Row equilibration, i.e., A has been premultiplied by diag(R). `'column'`: Column equilibration, i.e., A has been postmultiplied by diag(C). `'both'`: Both row and column equilibration, i.e., A has been replaced by diag(R) \* A \* diag(C). EQUED is an input argument if `fact === 'factored'`; otherwise, it is an output argument.<br>Rejects `fact === 'factored' && !(((equed === 'row' \|\| equed === 'both') \|\| (equed === 'column' \|\| equed === 'both')) \|\| equed === 'none')` |
+| `r` | `Float64Array`<br><sub>length N</sub> | **in/out** · The row scale factors for A. |
+| ↳ `strideR` | `integer` | Stride length for `r` |
+| `c` | `Float64Array`<br><sub>length N</sub> | **in/out** · The column scale factors for A. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the right hand side matrix B. On exit, if `equed === 'none'`, B is not modified; if `trans === 'no-transpose'` and `equed === 'row'` or `equed === 'both'`, B is overwritten by diag(R)\*B; if `trans === 'transpose'` and `equed === 'column'` or `equed === 'both'`, B is overwritten by diag(C)\*B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X to the original system of equations. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X`<br>Column-major requires `LDX ≥ max(1, N)`<br>Row-major requires `LDX ≥ max(1, nrhs)` |
+| `rcond` | `Float64Array` | **out** · Output (length-1 array): the estimate of the reciprocal condition number of the matrix A after equilibration (if done) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The estimated forward error bound for each solution vector X(j) (the j-th column of the solution matrix X). |
+| ↳ `strideFERR` | `integer` | Stride length for `FERR` |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · The componentwise relative backward error of each solution vector X(j) (i.e., the smallest relative change in any element of A or B that makes X(j) an exact solution). |
+| ↳ `strideBERR` | `integer` | Stride length for `BERR` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 3 * N)</sub> | **out** · Caller-provided workspace of at least `max( 1, 3 * N )` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -168,53 +168,53 @@ Solves a real system of linear equations `A * X = B` where A is a general band m
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `fact` | `("not-factored"\|"equilibrate"\|"factored")` | in |  | one of `'equilibrate'`, `'factored'`, `'not-factored'` | 'not-factored', 'equilibrate', or 'factored' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `AB` | `Float64Array` | in/out | `kl + ku + 1 × N` |  | band matrix in band storage ((KL+KU+1) x N) |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of first dimension of AB |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of second dimension of AB |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | index offset for AB |
-| `AFB` | `Float64Array` | in/out | `2 * kl + ku + 1 × N` |  | factored band matrix ((2*KL+KU+1) x N, output) |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of first dimension of AFB |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of second dimension of AFB |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | index offset for AFB |
-| `IPIV` | `Int32Array` | in/out | `N` |  | pivot indices (0-based, output) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for IPIV |
-| `equed` | `Array.<string>` | in/out |  | rejects `fact === 'factored' && !(((equed === 'row' \|\| equed === 'both') \|\| (equed === 'column' \|\| equed === 'both')) \|\| equed === 'none')` | equilibration type (input if FACT='factored') |
-| `r` | `Float64Array` | in/out | `N` |  | row scale factors |
-| ↳ `strideR` | `integer` | in |  |  | stride for r |
-| ↳ `offsetR` | `NonNegativeInteger` | in |  |  | index offset for r |
-| `c` | `Float64Array` | in/out | `N` |  | column scale factors |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | index offset for c |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | N-by-NRHS right-hand side (may be scaled on exit) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B |
-| `X` | `Float64Array` | out | `N × nrhs` |  | N-by-NRHS solution matrix (output) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of first dimension of X |
-| ↳ `strideX2` | `integer` | in |  |  | stride of second dimension of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | index offset for X |
-| `rcond` | `Float64Array` | out |  |  | output (length-1 array): the estimate of the reciprocal condition number of the matrix A after equilibration (if done) |
-| `FERR` | `Float64Array` | out | `nrhs` |  | forward error bounds (output, length nrhs) |
-| ↳ `strideFERR` | `integer` | in |  |  | stride for FERR |
-| ↳ `offsetFERR` | `NonNegativeInteger` | in |  |  | index offset for FERR |
-| `BERR` | `Float64Array` | out | `nrhs` |  | backward error bounds (output, length nrhs) |
-| ↳ `strideBERR` | `integer` | in |  |  | stride for BERR |
-| ↳ `offsetBERR` | `NonNegativeInteger` | in |  |  | index offset for BERR |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 3 * N )` |  | real workspace (length >= 3*N) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for WORK |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | integer workspace (length >= N) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | index offset for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `fact` | `"not-factored" \| "equilibrate" \| "factored"` | 'not-factored', 'equilibrate', or 'factored' |
+| `trans` | `TransposeOperation` | 'no-transpose' or 'transpose'<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kl + ku + 1) × N</sub> | **in/out** · Band matrix in band storage ((KL+KU+1) x N) |
+| ↳ `strideAB1` | `integer` | Stride of first dimension of AB |
+| ↳ `strideAB2` | `integer` | Stride of second dimension of AB |
+| ↳ `offsetAB` | `NonNegativeInteger` | Index offset for AB |
+| `AFB` | `Float64Array`<br><sub>(2 * kl + ku + 1) × N</sub> | **in/out** · Factored band matrix ((2\*KL+KU+1) x N, output) |
+| ↳ `strideAFB1` | `integer` | Stride of first dimension of AFB |
+| ↳ `strideAFB2` | `integer` | Stride of second dimension of AFB |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Index offset for AFB |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **in/out** · Pivot indices (0-based, output) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for IPIV |
+| `equed` | `Array.<string>` | **in/out** · Equilibration type (input if FACT='factored')<br>Rejects `fact === 'factored' && !(((equed === 'row' \|\| equed === 'both') \|\| (equed === 'column' \|\| equed === 'both')) \|\| equed === 'none')` |
+| `r` | `Float64Array`<br><sub>length N</sub> | **in/out** · Row scale factors |
+| ↳ `strideR` | `integer` | Stride for r |
+| ↳ `offsetR` | `NonNegativeInteger` | Index offset for r |
+| `c` | `Float64Array`<br><sub>length N</sub> | **in/out** · Column scale factors |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Index offset for c |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · N-by-NRHS right-hand side (may be scaled on exit) |
+| ↳ `strideB1` | `integer` | Stride of first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B |
+| `X` | `Float64Array`<br><sub>N × nrhs</sub> | **out** · N-by-NRHS solution matrix (output) |
+| ↳ `strideX1` | `integer` | Stride of first dimension of X |
+| ↳ `strideX2` | `integer` | Stride of second dimension of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Index offset for X |
+| `rcond` | `Float64Array` | **out** · Output (length-1 array): the estimate of the reciprocal condition number of the matrix A after equilibration (if done) |
+| `FERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Forward error bounds (output, length nrhs) |
+| ↳ `strideFERR` | `integer` | Stride for FERR |
+| ↳ `offsetFERR` | `NonNegativeInteger` | Index offset for FERR |
+| `BERR` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Backward error bounds (output, length nrhs) |
+| ↳ `strideBERR` | `integer` | Stride for BERR |
+| ↳ `offsetBERR` | `NonNegativeInteger` | Index offset for BERR |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 3 * N)</sub> | **out** · Real workspace (length >= 3\*N) |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Integer workspace (length >= N) |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Index offset for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

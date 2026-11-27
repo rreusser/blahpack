@@ -32,23 +32,23 @@ zgees(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvs` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'`: Schur vectors are not computed; `'compute-vectors'`: Schur vectors are computed. |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | specifies whether or not to order the eigenvalues on the diagonal of the Schur form. `'none'`: Eigenvalues are not ordered: `'sort'`: Eigenvalues are ordered (see SELECT). |
-| `select` | `Function` | in |  |  | sELECT must be declared EXTERNAL in the calling subroutine. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `A` | `Complex128Array` | in/out | `N × N` |  | on entry, the N-by-N matrix A. On exit, A has been overwritten by its Schur form T. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `sdim` | `Int32Array` | out |  |  | if `sort === 'none'`, SDIM = 0. |
-| `W` | `Complex128Array` | out | `N` |  | w contains the computed eigenvalues, in the same order that they appear on the diagonal of the output Schur form T. |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `W` |
-| `VS` | `Complex128Array` | out | `N × N` |  | if `jobvs === 'compute-vectors'`, VS contains the unitary matrix Z of Schur vectors. |
-| ↳ `LDVS` | `PositiveInteger` | in |  | rejects `ldvs < 1 \|\| (jobvs === 'compute-vectors' && ldvs < N)` | leading dimension of `VS` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | workspace of at least `max(1,2*N)` complex elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB` with Schur vectors, and zhseqr's LWKOPT) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
-| `BWORK` | `(Uint8Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvs` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'`: Schur vectors are not computed; `'compute-vectors'`: Schur vectors are computed. |
+| `sort` | `"none" \| "sort"` | Specifies whether or not to order the eigenvalues on the diagonal of the Schur form. `'none'`: Eigenvalues are not ordered: `'sort'`: Eigenvalues are ordered (see SELECT). |
+| `select` | `Function` | SELECT must be declared EXTERNAL in the calling subroutine. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · On entry, the N-by-N matrix A. On exit, A has been overwritten by its Schur form T. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `sdim` | `Int32Array` | **out** · If `sort === 'none'`, SDIM = 0. |
+| `W` | `Complex128Array`<br><sub>length N</sub> | **out** · W contains the computed eigenvalues, in the same order that they appear on the diagonal of the output Schur form T. |
+| ↳ `strideW` | `integer` | Stride length for `W` |
+| `VS` | `Complex128Array`<br><sub>N × N</sub> | **out** · If `jobvs === 'compute-vectors'`, VS contains the unitary matrix Z of Schur vectors. |
+| ↳ `LDVS` | `PositiveInteger` | Leading dimension of `VS`<br>Rejects `ldvs < 1 \|\| (jobvs === 'compute-vectors' && ldvs < N)` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,2*N)` complex elements, or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB` with Schur vectors, and zhseqr's LWKOPT) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
+| `BWORK` | `Uint8Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,33 +118,33 @@ A complex matrix is in Schur form if it is upper triangular.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvs` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'none'` or `'compute-vectors'` |
-| `sort` | `("none"\|"sort")` | in |  | one of `'none'`, `'sort'` | `'none'` or `'sort'` |
-| `select` | `Function` | in |  |  | function(W) returning boolean, where W is Complex128; used when sort=`'sort'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | N-by-N matrix, overwritten with Schur form T on exit |
-| ↳ `strideA1` | `integer` | in |  |  | stride of first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `sdim` | `Int32Array` | out |  |  | output: sdim[0] = number of eigenvalues for which SELECT is true |
-| `W` | `Complex128Array` | out | `N` |  | output: eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride for W (complex elements) |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for W (complex elements) |
-| `VS` | `Complex128Array` | out | `N × N` |  | output: N-by-N matrix of Schur vectors (if jobvs=`'compute-vectors'`) |
-| ↳ `strideVS1` | `integer` | in |  |  | stride of first dimension of VS (complex elements) |
-| ↳ `strideVS2` | `integer` | in |  |  | stride of second dimension of VS (complex elements) |
-| ↳ `offsetVS` | `NonNegativeInteger` | in |  |  | starting index for VS (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | workspace of at least `max(1,2*N)` complex elements (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | real workspace of length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
-| `BWORK` | `Uint8Array` | out | `≥ N` |  | boolean workspace of length N (used when sort=`'sort'`) |
-| ↳ `strideBWork` | `integer` | in |  |  | stride for BWORK |
-| ↳ `offsetBWork` | `NonNegativeInteger` | in |  |  | starting index for BWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvs` | `"no-vectors" \| "compute-vectors"` | `'none'` or `'compute-vectors'`<br>One of `'no-vectors'`, `'compute-vectors'`. |
+| `sort` | `"none" \| "sort"` | `'none'` or `'sort'` |
+| `select` | `Function` | Function(W) returning boolean, where W is Complex128; used when sort=`'sort'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · N-by-N matrix, overwritten with Schur form T on exit |
+| ↳ `strideA1` | `integer` | Stride of first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `sdim` | `Int32Array` | **out** · Output: sdim[0] = number of eigenvalues for which SELECT is true |
+| `W` | `Complex128Array`<br><sub>length N</sub> | **out** · Output: eigenvalues |
+| ↳ `strideW` | `integer` | Stride for W (complex elements) |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for W (complex elements) |
+| `VS` | `Complex128Array`<br><sub>N × N</sub> | **out** · Output: N-by-N matrix of Schur vectors (if jobvs=`'compute-vectors'`) |
+| ↳ `strideVS1` | `integer` | Stride of first dimension of VS (complex elements) |
+| ↳ `strideVS2` | `integer` | Stride of second dimension of VS (complex elements) |
+| ↳ `offsetVS` | `NonNegativeInteger` | Starting index for VS (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,2*N)` complex elements (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Real workspace of length N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
+| `BWORK` | `Uint8Array`<br><sub>length ≥ N</sub> | **out** · Boolean workspace of length N (used when sort=`'sort'`) |
+| ↳ `strideBWork` | `integer` | Stride for BWORK |
+| ↳ `offsetBWork` | `NonNegativeInteger` | Starting index for BWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

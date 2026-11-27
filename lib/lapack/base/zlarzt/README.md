@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarzt( order, direct, storev, N, K, V, LDV, TAU, strideTAU, T, LDT ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `direct` | `("backward")` | in |  | one of `'backward'` | direction of reflector application (`'backward'`) |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | storage of reflector vectors (`'rowwise'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Complex128Array` | in/out | `N × K` |  | matrix of reflector vectors |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `TAU` | `Complex128Array` | in | `K` |  | array of scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `T` | `Complex128Array` | out | `K × K` |  | output triangular matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `direct` | `("backward")` | Direction of reflector application (`'backward'`) |
+| `storev` | `("rowwise")` | Storage of reflector vectors (`'rowwise'`) |
+| `N` | `NonNegativeInteger` | Order of the block reflector |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Complex128Array`<br><sub>N × K</sub> | **in/out** · Matrix of reflector vectors |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Array of scalar factors |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | **out** · Output triangular matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -80,23 +80,23 @@ zlarzt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `direct` | `("backward")` | in |  | one of `'backward'` | direction of reflector application (`'backward'`) |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | storage of reflector vectors (`'rowwise'`) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `V` | `Complex128Array` | in/out | `N × K` |  | matrix of reflector vectors |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `TAU` | `Complex128Array` | in | `K` |  | array of scalar factors |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `T` | `Complex128Array` | out | `K × K` |  | output triangular matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
+| Parameter | Type | Description |
+|---|---|---|
+| `direct` | `("backward")` | Direction of reflector application (`'backward'`) |
+| `storev` | `("rowwise")` | Storage of reflector vectors (`'rowwise'`) |
+| `N` | `NonNegativeInteger` | Order of the block reflector |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `V` | `Complex128Array`<br><sub>N × K</sub> | **in/out** · Matrix of reflector vectors |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `TAU` | `Complex128Array`<br><sub>length K</sub> | Array of scalar factors |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | **out** · Output triangular matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

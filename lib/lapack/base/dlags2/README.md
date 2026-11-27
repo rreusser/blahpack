@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlags2( upper, a1, a2, a3, b1, b2, b3, csu, snu, csv, snv, csq, snq ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `upper` | `boolean` | in |  |  | = `true`: the input matrices A and B are upper triangular. = `false`: the input matrices A and B are lower triangular. |
-| `a1` | `number` | in |  |  | on entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
-| `a2` | `number` | in |  |  | on entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
-| `a3` | `number` | in |  |  | on entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
-| `b1` | `number` | in |  |  | on entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
-| `b2` | `number` | in |  |  | on entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
-| `b3` | `number` | in |  |  | on entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
-| `csu` | `Float64Array` | out |  |  | output (length-1 array): `csu` |
-| `snu` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix U |
-| `csv` | `Float64Array` | out |  |  | output (length-1 array): `csv` |
-| `snv` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix V |
-| `csq` | `Float64Array` | out |  |  | output (length-1 array): `csq` |
-| `snq` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix Q |
+| Parameter | Type | Description |
+|---|---|---|
+| `upper` | `boolean` | = `true`: the input matrices A and B are upper triangular. = `false`: the input matrices A and B are lower triangular. |
+| `a1` | `number` | On entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
+| `a2` | `number` | On entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
+| `a3` | `number` | On entry, A1, A2 and A3 are elements of the input 2-by-2 upper (lower) triangular matrix A. |
+| `b1` | `number` | On entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
+| `b2` | `number` | On entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
+| `b3` | `number` | On entry, B1, B2 and B3 are elements of the input 2-by-2 upper (lower) triangular matrix B. |
+| `csu` | `Float64Array` | **out** · Output (length-1 array): `csu` |
+| `snu` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix U |
+| `csv` | `Float64Array` | **out** · Output (length-1 array): `csv` |
+| `snv` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix V |
+| `csq` | `Float64Array` | **out** · Output (length-1 array): `csq` |
+| `snq` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix Q |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,21 +82,21 @@ and
   V^T _ B _ Q = V^T _ ( B1 0  ) _ Q = ( x  x  )
                       ( B2 B3 )       ( 0  x  )
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `upper` | `boolean` | in |  |  | whether the input matrices are upper triangular |
-| `a1` | `number` | in |  |  | (1,1) element of A |
-| `a2` | `number` | in |  |  | off-diagonal element of A |
-| `a3` | `number` | in |  |  | (2,2) element of A |
-| `b1` | `number` | in |  |  | (1,1) element of B |
-| `b2` | `number` | in |  |  | off-diagonal element of B |
-| `b3` | `number` | in |  |  | (2,2) element of B |
-| `csu` | `Float64Array` | out |  |  | output (length-1 array): `csu` |
-| `snu` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix U |
-| `csv` | `Float64Array` | out |  |  | output (length-1 array): `csv` |
-| `snv` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix V |
-| `csq` | `Float64Array` | out |  |  | output (length-1 array): `csq` |
-| `snq` | `Float64Array` | out |  |  | output (length-1 array): the desired orthogonal matrix Q |
+| Parameter | Type | Description |
+|---|---|---|
+| `upper` | `boolean` | Whether the input matrices are upper triangular |
+| `a1` | `number` | (1,1) element of A |
+| `a2` | `number` | Off-diagonal element of A |
+| `a3` | `number` | (2,2) element of A |
+| `b1` | `number` | (1,1) element of B |
+| `b2` | `number` | Off-diagonal element of B |
+| `b3` | `number` | (2,2) element of B |
+| `csu` | `Float64Array` | **out** · Output (length-1 array): `csu` |
+| `snu` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix U |
+| `csv` | `Float64Array` | **out** · Output (length-1 array): `csv` |
+| `snv` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix V |
+| `csq` | `Float64Array` | **out** · Output (length-1 array): `csq` |
+| `snq` | `Float64Array` | **out** · Output (length-1 array): the desired orthogonal matrix Q |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

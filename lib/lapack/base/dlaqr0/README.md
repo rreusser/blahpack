@@ -32,25 +32,25 @@ dlaqr0(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
-| `wantz` | `boolean` | in |  |  | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix H. |
-| `ilo` | `integer` | in |  |  | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
-| `ihi` | `NonNegativeInteger` | in |  |  | it is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
-| `H` | `Float64Array` | in/out | `N × N` |  | on entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and WANTT is `true`, then H contains the upper quasi-triangular matrix T from the Schur decomposition (the Schur form); 2-by-2 diagonal blocks (corresponding to complex conjugate pairs of eigenvalues) are returned in standard form, with H(i,i) = H(i+1,i+1) and H(i+1,i)*H(i,i+1) < 0. |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `WR` | `Float64Array` | out | `ihi` |  | the real and imaginary parts, respectively, of the computed eigenvalues of H(ILO:IHI,ILO:IHI) are stored in WR(ILO:IHI) and WI(ILO:IHI). |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | out | `ihi` |  | the real and imaginary parts, respectively, of the computed eigenvalues of H(ILO:IHI,ILO:IHI) are stored in WR(ILO:IHI) and WI(ILO:IHI). |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `iloz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `ihiz` | `integer` | in |  |  | specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
-| `Z` | `Float64Array` | in/out | `ihiz × ihi` |  | if WANTZ is `false`, then Z is not referenced. |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | workspace of at least `1` element (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does), or `null` to allocate the reference's optimum (`max( 3*NSR/2, LWKOPT of DLAQR3 for the window NWR+1 )`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | = `true` : the full Schur form T is required; = `false`: only eigenvalues are required. |
+| `wantz` | `boolean` | = `true` : the matrix of Schur vectors Z is required; = `false`: Schur vectors are not required. |
+| `N` | `NonNegativeInteger` | The order of the matrix H. |
+| `ilo` | `integer` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
+| `ihi` | `NonNegativeInteger` | It is assumed that H is already upper triangular in rows and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, H(ILO,ILO-1) is zero. |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the upper Hessenberg matrix H. On exit, if INFO = 0 and WANTT is `true`, then H contains the upper quasi-triangular matrix T from the Schur decomposition (the Schur form); 2-by-2 diagonal blocks (corresponding to complex conjugate pairs of eigenvalues) are returned in standard form, with H(i,i) = H(i+1,i+1) and H(i+1,i)\*H(i,i+1) < 0. |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `WR` | `Float64Array`<br><sub>length ihi</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues of H(ILO:IHI,ILO:IHI) are stored in WR(ILO:IHI) and WI(ILO:IHI). |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length ihi</sub> | **out** · The real and imaginary parts, respectively, of the computed eigenvalues of H(ILO:IHI,ILO:IHI) are stored in WR(ILO:IHI) and WI(ILO:IHI). |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `iloz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `ihiz` | `integer` | Specify the rows of Z to which transformations must be applied if WANTZ is `true`. 1 <= ILOZ <= ILO. |
+| `Z` | `Float64Array`<br><sub>ihiz × ihi</sub> | **in/out** · If WANTZ is `false`, then Z is not referenced. |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace of at least `1` element (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does), or `null` to allocate the reference's optimum (`max( 3*NSR/2, LWKOPT of DLAQR3 for the window NWR+1 )`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -107,32 +107,32 @@ Note: ILO, IHI, ILOZ, IHIZ are 1-based (Fortran convention).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | if true, compute full Schur form |
-| `wantz` | `boolean` | in |  |  | if true, compute Schur vectors |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ilo` | `integer` | in |  |  | first row/col of the active block (1-based) |
-| `ihi` | `NonNegativeInteger` | in |  |  | last row/col of the active block (1-based) |
-| `H` | `Float64Array` | in/out | `N × N` |  | upper Hessenberg matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of first dim of H |
-| ↳ `strideH2` | `integer` | in |  |  | stride of second dim of H |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for H |
-| `WR` | `Float64Array` | out | `ihi` |  | real parts of eigenvalues (output) |
-| ↳ `strideWR` | `integer` | in |  |  | stride for WR |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for WR |
-| `WI` | `Float64Array` | out | `ihi` |  | imaginary parts of eigenvalues (output) |
-| ↳ `strideWI` | `integer` | in |  |  | stride for WI |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for WI |
-| `iloz` | `integer` | in |  |  | first row of Z to update (1-based) |
-| `ihiz` | `integer` | in |  |  | last row of Z to update (1-based) |
-| `Z` | `Float64Array` | in/out | `ihiz × ihi` |  | orthogonal matrix |
-| ↳ `strideZ1` | `integer` | in |  |  | stride of first dim of Z |
-| ↳ `strideZ2` | `integer` | in |  |  | stride of second dim of Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for Z |
-| `WORK` | `Float64Array` | out | `≥ max( 1, N )` |  | workspace; length at least `1` (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does); the reference's optimum (`max( 3*NSR/2, LWKOPT of DLAQR3 for the window NWR+1 )`) gives the deflation window and its callees their full room |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | If true, compute full Schur form |
+| `wantz` | `boolean` | If true, compute Schur vectors |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ilo` | `integer` | First row/col of the active block (1-based) |
+| `ihi` | `NonNegativeInteger` | Last row/col of the active block (1-based) |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix |
+| ↳ `strideH1` | `integer` | Stride of first dim of H |
+| ↳ `strideH2` | `integer` | Stride of second dim of H |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for H |
+| `WR` | `Float64Array`<br><sub>length ihi</sub> | **out** · Real parts of eigenvalues (output) |
+| ↳ `strideWR` | `integer` | Stride for WR |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for WR |
+| `WI` | `Float64Array`<br><sub>length ihi</sub> | **out** · Imaginary parts of eigenvalues (output) |
+| ↳ `strideWI` | `integer` | Stride for WI |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for WI |
+| `iloz` | `integer` | First row of Z to update (1-based) |
+| `ihiz` | `integer` | Last row of Z to update (1-based) |
+| `Z` | `Float64Array`<br><sub>ihiz × ihi</sub> | **in/out** · Orthogonal matrix |
+| ↳ `strideZ1` | `integer` | Stride of first dim of Z |
+| ↳ `strideZ2` | `integer` | Stride of second dim of Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for Z |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace; length at least `1` (the reference's effective minimum: it documents `max(1,N)` but neither checks nor needs it, as it caps the deflation window at `LWORK/2` and the shift count at `2*LWORK/3`; with only a few elements it may not converge and returns `info > 0`, as the reference does); the reference's optimum (`max( 3*NSR/2, LWKOPT of DLAQR3 for the window NWR+1 )`) gives the deflation window and its callees their full room |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -36,33 +36,33 @@ zgeevx(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | specifies the operation type |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | specifies the operation type |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | specifies the operation type |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` | specifies the operation type |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `w` | `Complex128Array` | out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | stride length for `w` |
-| `VL` | `Complex128Array` | out | `N × N` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | out | `N × N` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` | leading dimension of `VR` |
-| `ilo` | `Int32Array` | out |  |  | input/output (length-1 array): ilo |
-| `ihi` | `Int32Array` | out |  |  | input/output (length-1 array): ihi |
-| `SCALE` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride length for `SCALE` |
-| `abnrm` | `Float64Array` | out |  |  | input/output (length-1 array): abnrm |
-| `RCONDE` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride length for `RCONDE` |
-| `RCONDV` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride length for `RCONDV` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ MINWRK` |  | workspace of at least `max(1,2*N)` complex elements (`N*N + 2*N` when SENSE is `'right-vectors'` or `'both'`), or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB`, ztrevc3 `N + 2*N*NB` with eigenvectors, and zhseqr's LWKOPT) |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 2 * N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | Specifies the operation type<br>One of `'both'`, `'none'`, `'permute'`, `'scale'`. |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | Specifies the operation type<br>One of `'no-vectors'`, `'compute-vectors'`. |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | Specifies the operation type<br>One of `'no-vectors'`, `'compute-vectors'`. |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | Specifies the operation type<br>Rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideW` | `integer` | Stride length for `w` |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| (jobvl === 'compute-vectors' && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| (jobvr === 'compute-vectors' && ldvr < N)` |
+| `ilo` | `Int32Array` | **out** · Input/output (length-1 array): ilo |
+| `ihi` | `Int32Array` | **out** · Input/output (length-1 array): ihi |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideSCALE` | `integer` | Stride length for `SCALE` |
+| `abnrm` | `Float64Array` | **out** · Input/output (length-1 array): abnrm |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideRCONDE` | `integer` | Stride length for `RCONDE` |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideRCONDV` | `integer` | Stride length for `RCONDV` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ MINWRK</sub> | **out** · Workspace of at least `max(1,2*N)` complex elements (`N*N + 2*N` when SENSE is `'right-vectors'` or `'both'`), or `null` to allocate the reference's optimum (MAXWRK, with the callees' optima, NB from `ilaenv`: zgehrd `N*NB + 4160`, zunghr `(N-1)*NB`, ztrevc3 `N + 2*N*NB` with eigenvectors, and zhseqr's LWKOPT) |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -155,46 +155,46 @@ Computes eigenvalues and, optionally, eigenvectors with optional balancing and r
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `balanc` | `("none"\|"permute"\|"scale"\|"both")` | in |  | one of `'both'`, `'none'`, `'permute'`, `'scale'` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'compute-vectors'` or `'no-vectors'` |
-| `sense` | `("none"\|"eigenvalues"\|"right-vectors"\|"both")` | in |  | rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dim stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dim stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `w` | `Complex128Array` | out | `N` |  | eigenvalues |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `VL` | `Complex128Array` | out | `N × N` |  | left eigenvectors |
-| ↳ `strideVL1` | `integer` | in |  |  | first dim stride of VL |
-| ↳ `strideVL2` | `integer` | in |  |  | second dim stride of VL |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for VL |
-| `VR` | `Complex128Array` | out | `N × N` |  | right eigenvectors |
-| ↳ `strideVR1` | `integer` | in |  |  | first dim stride of VR |
-| ↳ `strideVR2` | `integer` | in |  |  | second dim stride of VR |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for VR |
-| `ilo` | `Int32Array` | out |  |  | input/output (length-1 array): ignored on input; returned in result |
-| `ihi` | `Int32Array` | out |  |  | input/output (length-1 array): ignored on input; returned in result |
-| `SCALE` | `Float64Array` | out | `N` |  | output scaling factors |
-| ↳ `strideSCALE` | `integer` | in |  |  | stride for SCALE |
-| ↳ `offsetSCALE` | `NonNegativeInteger` | in |  |  | starting index for SCALE |
-| `abnrm` | `Float64Array` | out |  |  | input/output (length-1 array): ignored on input; returned in result |
-| `RCONDE` | `Float64Array` | out | `N` |  | reciprocal condition numbers for eigenvalues |
-| ↳ `strideRCONDE` | `integer` | in |  |  | stride for RCONDE |
-| ↳ `offsetRCONDE` | `NonNegativeInteger` | in |  |  | starting index for RCONDE |
-| `RCONDV` | `Float64Array` | out | `N` |  | reciprocal condition numbers for eigenvectors |
-| ↳ `strideRCONDV` | `integer` | in |  |  | stride for RCONDV |
-| ↳ `offsetRCONDV` | `NonNegativeInteger` | in |  |  | starting index for RCONDV |
-| `WORK` | `Complex128Array` | out | `≥ MINWRK` |  | complex workspace of at least `max(1,2*N)` elements, and `N*N + 2*N` when SENSE is `'right-vectors'` or `'both'` (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `RWORK` | `Float64Array` | out | `≥ 2 * N` |  | real workspace |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `balanc` | `"none" \| "permute" \| "scale" \| "both"` | `'none'`, `'permute'`, `'scale'`, or `'both'` |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'compute-vectors'` or `'no-vectors'` |
+| `sense` | `"none" \| "eigenvalues" \| "right-vectors" \| "both"` | `'none'`, `'eigenvalues'`, `'right-vectors'`, or `'both'`<br>Rejects `!(((sense === 'none' \|\| sense === 'eigenvalues') \|\| sense === 'both') \|\| sense === 'right-vectors') \|\| ((sense === 'eigenvalues' \|\| sense === 'both') && !(jobvl === 'compute-vectors' && jobvr === 'compute-vectors'))` |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | First dim stride of A |
+| ↳ `strideA2` | `integer` | Second dim stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `w` | `Complex128Array`<br><sub>length N</sub> | **out** · Eigenvalues |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Left eigenvectors |
+| ↳ `strideVL1` | `integer` | First dim stride of VL |
+| ↳ `strideVL2` | `integer` | Second dim stride of VL |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for VL |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Right eigenvectors |
+| ↳ `strideVR1` | `integer` | First dim stride of VR |
+| ↳ `strideVR2` | `integer` | Second dim stride of VR |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for VR |
+| `ilo` | `Int32Array` | **out** · Input/output (length-1 array): ignored on input; returned in result |
+| `ihi` | `Int32Array` | **out** · Input/output (length-1 array): ignored on input; returned in result |
+| `SCALE` | `Float64Array`<br><sub>length N</sub> | **out** · Output scaling factors |
+| ↳ `strideSCALE` | `integer` | Stride for SCALE |
+| ↳ `offsetSCALE` | `NonNegativeInteger` | Starting index for SCALE |
+| `abnrm` | `Float64Array` | **out** · Input/output (length-1 array): ignored on input; returned in result |
+| `RCONDE` | `Float64Array`<br><sub>length N</sub> | **out** · Reciprocal condition numbers for eigenvalues |
+| ↳ `strideRCONDE` | `integer` | Stride for RCONDE |
+| ↳ `offsetRCONDE` | `NonNegativeInteger` | Starting index for RCONDE |
+| `RCONDV` | `Float64Array`<br><sub>length N</sub> | **out** · Reciprocal condition numbers for eigenvectors |
+| ↳ `strideRCONDV` | `integer` | Stride for RCONDV |
+| ↳ `offsetRCONDV` | `NonNegativeInteger` | Starting index for RCONDV |
+| `WORK` | `Complex128Array`<br><sub>length ≥ MINWRK</sub> | **out** · Complex workspace of at least `max(1,2*N)` elements, and `N*N + 2*N` when SENSE is `'right-vectors'` or `'both'` (the reference's minimum); for good performance, the optimum MAXWRK the wrapper allocates for `null` |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 2 * N</sub> | **out** · Real workspace |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

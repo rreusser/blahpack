@@ -32,25 +32,25 @@ dtgevc(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `S` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDS` | `PositiveInteger` | in |  | requires `LDS ≥ max( 1, N )` | leading dimension of `S` |
-| `P` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDP` | `PositiveInteger` | in |  | requires `LDP ≥ max( 1, N )` | leading dimension of `P` |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  |  | leading dimension of `VL` |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  |  | leading dimension of `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 6 * N` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'backtransform'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `S` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDS` | `PositiveInteger` | Leading dimension of `S`<br>Requires `LDS ≥ max(1, N)` |
+| `P` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDP` | `PositiveInteger` | Leading dimension of `P`<br>Requires `LDP ≥ max(1, N)` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 6 * N</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -125,35 +125,35 @@ dtgevc.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `S` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideS1` | `integer` | in |  |  | stride of the first dimension of `S` |
-| ↳ `strideS2` | `integer` | in |  |  | stride of the second dimension of `S` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `S` |
-| `P` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideP1` | `integer` | in |  |  | stride of the first dimension of `P` |
-| ↳ `strideP2` | `integer` | in |  |  | stride of the second dimension of `P` |
-| ↳ `offsetP` | `NonNegativeInteger` | in |  |  | starting index for `P` |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `Float64Array` | out | `≥ 6 * N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'backtransform'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `S` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideS1` | `integer` | Stride of the first dimension of `S` |
+| ↳ `strideS2` | `integer` | Stride of the second dimension of `S` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `S` |
+| `P` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideP1` | `integer` | Stride of the first dimension of `P` |
+| ↳ `strideP2` | `integer` | Stride of the second dimension of `P` |
+| ↳ `offsetP` | `NonNegativeInteger` | Starting index for `P` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Float64Array`<br><sub>length ≥ 6 * N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

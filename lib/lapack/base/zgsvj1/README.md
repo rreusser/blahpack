@@ -32,27 +32,27 @@ zgsvj1(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `jobv` | `("compute-v"\|"apply-v"\|"no-v")` | in |  | one of `'apply-v'`, `'no-v'`, `'compute-v'` | one of `'compute-v'`, `'apply-v'`, or `'no-v'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns of `A` |
-| `n1` | `NonNegativeInteger` | in |  | requires `n1 ≥ 0` | block partition (first `n1` columns rotated against the remaining `N-n1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ M`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `d` | `Complex128Array` | in/out | `N` |  | diagonal scale array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `sva` | `Float64Array` | in/out | `N` |  | column-norm vector |
-| ↳ `strideSVA` | `integer` | in |  |  | stride length for `sva` |
-| `mv` | `integer` | in |  | rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` | rows of `V` when `jobv === 'apply-v'` |
-| `V` | `Complex128Array` | in/out | `N × N` |  | matrix used/updated when `jobv` is not `'no-v'` |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `(jobv === 'compute-v' && ldv < N) \|\| (jobv === 'apply-v' && ldv < mv)` | leading dimension of `V` |
-| `eps` | `number` | in |  |  | machine epsilon |
-| `sfmin` | `number` | in |  |  | safe minimum |
-| `tol` | `number` | in |  | rejects `tol <= eps` | convergence tolerance |
-| `nsweep` | `NonNegativeInteger` | in |  | requires `nsweep ≥ 0` | number of sweeps |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ M` |  | workspace of at least `M` complex elements (the reference's LWORK >= M); if `null`, `max( 1, M )` are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `jobv` | `"compute-v" \| "apply-v" \| "no-v"` | One of `'compute-v'`, `'apply-v'`, or `'no-v'` |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Rejects `N < 0 \|\| N > M` |
+| `n1` | `NonNegativeInteger` | Block partition (first `n1` columns rotated against the remaining `N-n1`)<br>Requires `n1 ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ M`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Diagonal scale array |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `sva` | `Float64Array`<br><sub>length N</sub> | **in/out** · Column-norm vector |
+| ↳ `strideSVA` | `integer` | Stride length for `sva` |
+| `mv` | `integer` | Rows of `V` when `jobv === 'apply-v'`<br>Rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` |
+| `V` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Matrix used/updated when `jobv` is not `'no-v'` |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Rejects `(jobv === 'compute-v' && ldv < N) \|\| (jobv === 'apply-v' && ldv < mv)` |
+| `eps` | `number` | Machine epsilon |
+| `sfmin` | `number` | Safe minimum |
+| `tol` | `number` | Convergence tolerance<br>Rejects `tol <= eps` |
+| `nsweep` | `NonNegativeInteger` | Number of sweeps<br>Requires `nsweep ≥ 0` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ M</sub> | **out** · Workspace of at least `M` complex elements (the reference's LWORK >= M); if `null`, `max( 1, M )` are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -127,34 +127,34 @@ zgsvj1.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobv` | `("compute-v"\|"apply-v"\|"no-v")` | in |  | one of `'apply-v'`, `'no-v'`, `'compute-v'` | one of `'compute-v'`, `'apply-v'`, or `'no-v'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of `A` |
-| `N` | `NonNegativeInteger` | in |  | rejects `N < 0 \|\| N > M` | number of columns of `A` |
-| `n1` | `NonNegativeInteger` | in |  | requires `n1 ≥ 0` | block partition (first `n1` columns rotated against the remaining `N-n1`) |
-| `A` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index into `A` (in complex elements) |
-| `d` | `Complex128Array` | in/out | `N` |  | diagonal scale array |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` (in complex elements) |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index into `d` (in complex elements) |
-| `sva` | `Float64Array` | in/out | `N` |  | column-norm vector |
-| ↳ `strideSVA` | `integer` | in |  |  | stride length for `sva` |
-| ↳ `offsetSVA` | `NonNegativeInteger` | in |  |  | starting index into `sva` |
-| `mv` | `integer` | in |  | rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` | rows of `V` when `jobv === 'apply-v'` |
-| `V` | `Complex128Array` | in/out | `N × N` |  | matrix used/updated when `jobv` is not `'no-v'` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` (in complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index into `V` (in complex elements) |
-| `eps` | `number` | in |  |  | machine epsilon |
-| `sfmin` | `number` | in |  |  | safe minimum |
-| `tol` | `number` | in |  | rejects `tol <= eps` | convergence tolerance |
-| `nsweep` | `NonNegativeInteger` | in |  | requires `nsweep ≥ 0` | number of sweeps |
-| `work` | `Complex128Array` | out | `≥ M` |  | workspace of at least `M` complex elements (the reference's LWORK >= M) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `work` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index into `work` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobv` | `"compute-v" \| "apply-v" \| "no-v"` | One of `'compute-v'`, `'apply-v'`, or `'no-v'` |
+| `M` | `NonNegativeInteger` | Number of rows of `A`<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of `A`<br>Rejects `N < 0 \|\| N > M` |
+| `n1` | `NonNegativeInteger` | Block partition (first `n1` columns rotated against the remaining `N-n1`)<br>Requires `n1 ≥ 0` |
+| `A` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index into `A` (in complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Diagonal scale array |
+| ↳ `strideD` | `integer` | Stride length for `d` (in complex elements) |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index into `d` (in complex elements) |
+| `sva` | `Float64Array`<br><sub>length N</sub> | **in/out** · Column-norm vector |
+| ↳ `strideSVA` | `integer` | Stride length for `sva` |
+| ↳ `offsetSVA` | `NonNegativeInteger` | Starting index into `sva` |
+| `mv` | `integer` | Rows of `V` when `jobv === 'apply-v'`<br>Rejects `(jobv === 'compute-v' \|\| jobv === 'apply-v') && mv < 0` |
+| `V` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Matrix used/updated when `jobv` is not `'no-v'` |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` (in complex elements) |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index into `V` (in complex elements) |
+| `eps` | `number` | Machine epsilon |
+| `sfmin` | `number` | Safe minimum |
+| `tol` | `number` | Convergence tolerance<br>Rejects `tol <= eps` |
+| `nsweep` | `NonNegativeInteger` | Number of sweeps<br>Requires `nsweep ≥ 0` |
+| `work` | `Complex128Array`<br><sub>length ≥ M</sub> | **out** · Workspace of at least `M` complex elements (the reference's LWORK >= M) |
+| ↳ `strideWork` | `integer` | Stride length for `work` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index into `work` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

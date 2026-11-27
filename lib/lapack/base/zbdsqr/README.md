@@ -30,25 +30,25 @@ zbdsqr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' 0 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: B is upper bidiagonal; `'lower'`: B is lower bidiagonal. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix B. |
-| `ncvt` | `NonNegativeInteger` | in |  | requires `ncvt ≥ 0` | the number of columns of the matrix VT. |
-| `nru` | `NonNegativeInteger` | in |  | requires `nru ≥ 0` | the number of rows of the matrix U. |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | the number of columns of the matrix C. |
-| `d` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `e` | `Float64Array` | in/out | `N - 1` |  | input array |
-| ↳ `strideE` | `integer` | in |  |  | `e` stride length |
-| `VT` | `Complex128Array` | in/out | `N × ncvt` |  | input matrix |
-| ↳ `LDVT` | `PositiveInteger` | in |  | rejects `(ncvt === 0 && ldvt < 1) \|\| (ncvt > 0 && ldvt < max( 1, N ))` | leading dimension of `VT` |
-| `U` | `Complex128Array` | in/out | `nru × N` |  | input matrix |
-| ↳ `LDU` | `PositiveInteger` | in |  | column-major requires `LDU ≥ max( 1, nru )`; row-major requires `LDU ≥ max( 1, N )` | leading dimension of `U` |
-| `C` | `Complex128Array` | in/out | `N × ncc` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | rejects `(ncc === 0 && ldc < 1) \|\| (ncc > 0 && ldc < max( 1, N ))` | leading dimension of `C` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 4 * N` |  | input array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' 0 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: B is upper bidiagonal; `'lower'`: B is lower bidiagonal. |
+| `N` | `NonNegativeInteger` | The order of the matrix B.<br>Requires `N ≥ 0` |
+| `ncvt` | `NonNegativeInteger` | The number of columns of the matrix VT.<br>Requires `ncvt ≥ 0` |
+| `nru` | `NonNegativeInteger` | The number of rows of the matrix U.<br>Requires `nru ≥ 0` |
+| `ncc` | `NonNegativeInteger` | The number of columns of the matrix C.<br>Requires `ncc ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Input array |
+| ↳ `strideE` | `integer` | `e` stride length |
+| `VT` | `Complex128Array`<br><sub>N × ncvt</sub> | **in/out** · Input matrix |
+| ↳ `LDVT` | `PositiveInteger` | Leading dimension of `VT`<br>Rejects `(ncvt === 0 && ldvt < 1) \|\| (ncvt > 0 && ldvt < max(1, N))` |
+| `U` | `Complex128Array`<br><sub>nru × N</sub> | **in/out** · Input matrix |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Column-major requires `LDU ≥ max(1, nru)`<br>Row-major requires `LDU ≥ max(1, N)` |
+| `C` | `Complex128Array`<br><sub>N × ncc</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Rejects `(ncc === 0 && ldc < 1) \|\| (ncc > 0 && ldc < max(1, N))` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 4 * N</sub> | **out** · Input array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -69,7 +69,7 @@ zbdsqr(
 
 </details>
 
-**Returns** `integer`: \|a\| * sign(b)
+**Returns** `integer`: \|a\| \* sign(b)
 
 **Throws**
 
@@ -107,34 +107,34 @@ Computes the singular values and, optionally, the right and/or left.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` for upper bidiagonal, `'lower'` for lower bidiagonal |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the bidiagonal matrix |
-| `ncvt` | `NonNegativeInteger` | in |  | requires `ncvt ≥ 0` | number of columns in VT |
-| `nru` | `NonNegativeInteger` | in |  | requires `nru ≥ 0` | number of rows in U |
-| `ncc` | `NonNegativeInteger` | in |  | requires `ncc ≥ 0` | number of columns in C |
-| `d` | `Float64Array` | in/out | `N` |  | diagonal elements (length N), real |
-| ↳ `strideD` | `integer` | in |  |  | stride for `d` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` |
-| `e` | `Float64Array` | in/out | `N - 1` |  | off-diagonal elements (length N-1), real |
-| ↳ `strideE` | `integer` | in |  |  | stride for `e` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `e` |
-| `VT` | `Complex128Array` | in/out | `N × ncvt` |  | right singular vectors |
-| ↳ `strideVT1` | `integer` | in |  |  | stride of first dimension of VT (complex elements) |
-| ↳ `strideVT2` | `integer` | in |  |  | stride of second dimension of VT (complex elements) |
-| ↳ `offsetVT` | `NonNegativeInteger` | in |  |  | starting index for VT (complex elements) |
-| `U` | `Complex128Array` | in/out | `nru × N` |  | left singular vectors |
-| ↳ `strideU1` | `integer` | in |  |  | stride of first dimension of U (complex elements) |
-| ↳ `strideU2` | `integer` | in |  |  | stride of second dimension of U (complex elements) |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U (complex elements) |
-| `C` | `Complex128Array` | in/out | `N × ncc` |  | matrix C |
-| ↳ `strideC1` | `integer` | in |  |  | stride of first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 4 * N` |  | real workspace array |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` for upper bidiagonal, `'lower'` for lower bidiagonal |
+| `N` | `NonNegativeInteger` | Order of the bidiagonal matrix<br>Requires `N ≥ 0` |
+| `ncvt` | `NonNegativeInteger` | Number of columns in VT<br>Requires `ncvt ≥ 0` |
+| `nru` | `NonNegativeInteger` | Number of rows in U<br>Requires `nru ≥ 0` |
+| `ncc` | `NonNegativeInteger` | Number of columns in C<br>Requires `ncc ≥ 0` |
+| `d` | `Float64Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N), real |
+| ↳ `strideD` | `integer` | Stride for `d` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` |
+| `e` | `Float64Array`<br><sub>length N - 1</sub> | **in/out** · Off-diagonal elements (length N-1), real |
+| ↳ `strideE` | `integer` | Stride for `e` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `e` |
+| `VT` | `Complex128Array`<br><sub>N × ncvt</sub> | **in/out** · Right singular vectors |
+| ↳ `strideVT1` | `integer` | Stride of first dimension of VT (complex elements) |
+| ↳ `strideVT2` | `integer` | Stride of second dimension of VT (complex elements) |
+| ↳ `offsetVT` | `NonNegativeInteger` | Starting index for VT (complex elements) |
+| `U` | `Complex128Array`<br><sub>nru × N</sub> | **in/out** · Left singular vectors |
+| ↳ `strideU1` | `integer` | Stride of first dimension of U (complex elements) |
+| ↳ `strideU2` | `integer` | Stride of second dimension of U (complex elements) |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U (complex elements) |
+| `C` | `Complex128Array`<br><sub>N × ncc</sub> | **in/out** · Matrix C |
+| ↳ `strideC1` | `integer` | Stride of first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 4 * N</sub> | **out** · Real workspace array |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

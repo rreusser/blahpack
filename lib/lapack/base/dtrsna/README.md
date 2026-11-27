@@ -34,29 +34,29 @@ dtrsna(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | specifies the operation type |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `T` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `VL` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `s` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| `SEP` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of elements in the arrays S (if `job === 'eigenvalues'` or `job === 'both'`) and/or SEP (if `job === 'eigenvectors'` or `job === 'both'`). |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the number of elements of the arrays S and/or SEP actually used to store the estimated condition numbers |
-| `WORK` | `(Float64Array\|null)` | out | `N × (N < 2 ? N : N + 6)` |  | input matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ 2 * (N - 1)` |  | output array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | Specifies the operation type<br>One of `'both'`, `'eigenvalues'`, `'eigenvectors'`. |
+| `howmny` | `"all" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((job === 'eigenvalues' \|\| job === 'both') && ldvr < N)` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| `SEP` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
+| `mm` | `NonNegativeInteger` | The number of elements in the arrays S (if `job === 'eigenvalues'` or `job === 'both'`) and/or SEP (if `job === 'eigenvectors'` or `job === 'both'`). |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the number of elements of the arrays S and/or SEP actually used to store the estimated condition numbers |
+| `WORK` | `Float64Array \| null`<br><sub>N × (N &lt; 2 ? N : N + 6)</sub> | **out** · Input matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ 2 * (N - 1)</sub> | **out** · Output array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -121,41 +121,41 @@ dtrsna.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `job` | `("eigenvalues"\|"eigenvectors"\|"both")` | in |  | one of `'both'`, `'eigenvalues'`, `'eigenvectors'` | specifies the operation type |
-| `howmny` | `("all"\|"selected")` | in |  | one of `'all'`, `'selected'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `T` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `VL` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Float64Array` | in | `N × mm` |  | input matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `s` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideS` | `integer` | in |  |  | stride length for `s` |
-| ↳ `offsetS` | `NonNegativeInteger` | in |  |  | starting index for `s` |
-| `SEP` | `Float64Array` | out | `mm` |  | input array |
-| ↳ `strideSEP` | `integer` | in |  |  | stride length for `SEP` |
-| ↳ `offsetSEP` | `NonNegativeInteger` | in |  |  | starting index for `SEP` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of elements in the arrays S (if `job === 'eigenvalues'` or `job === 'both'`) and/or SEP (if `job === 'eigenvectors'` or `job === 'both'`). |
-| `m` | `Int32Array` | out |  |  | output (length-1 array): the number of elements of the arrays S and/or SEP actually used to store the estimated condition numbers |
-| `WORK` | `Float64Array` | out | `N × (N < 2 ? N : N + 6)` |  | input matrix |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IWORK` | `Int32Array` | out | `≥ 2 * (N - 1)` |  | integer workspace of at least `2*(N-1)` elements (the reference's declared extent) |
-| ↳ `strideIWork` | `integer` | in |  |  | stride length for `IWORK` |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for `IWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `job` | `"eigenvalues" \| "eigenvectors" \| "both"` | Specifies the operation type<br>One of `'both'`, `'eigenvalues'`, `'eigenvectors'`. |
+| `howmny` | `"all" \| "selected"` | Specifies the operation type<br>One of `'all'`, `'selected'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `T` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | Input matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `s` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideS` | `integer` | Stride length for `s` |
+| ↳ `offsetS` | `NonNegativeInteger` | Starting index for `s` |
+| `SEP` | `Float64Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideSEP` | `integer` | Stride length for `SEP` |
+| ↳ `offsetSEP` | `NonNegativeInteger` | Starting index for `SEP` |
+| `mm` | `NonNegativeInteger` | The number of elements in the arrays S (if `job === 'eigenvalues'` or `job === 'both'`) and/or SEP (if `job === 'eigenvectors'` or `job === 'both'`). |
+| `m` | `Int32Array` | **out** · Output (length-1 array): the number of elements of the arrays S and/or SEP actually used to store the estimated condition numbers |
+| `WORK` | `Float64Array`<br><sub>N × (N &lt; 2 ? N : N + 6)</sub> | **out** · Input matrix |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IWORK` | `Int32Array`<br><sub>length ≥ 2 * (N - 1)</sub> | **out** · Integer workspace of at least `2*(N-1)` elements (the reference's declared extent) |
+| ↳ `strideIWork` | `integer` | Stride length for `IWORK` |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for `IWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

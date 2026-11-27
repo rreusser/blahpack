@@ -20,15 +20,15 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlacon( N, V, strideV, X, strideX, EST, KASE ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `V` | `Complex128Array` | out | `N` |  | workspace vector of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride for V (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N` |  | input/output vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride for X (in complex elements) |
-| `EST` | `Float64Array` | in/out |  |  | in/out: EST[0] is the estimated 1-norm |
-| `KASE` | `Int32Array` | in/out |  |  | in/out: KASE[0] is the operation to perform |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `V` | `Complex128Array`<br><sub>length N</sub> | **out** · Workspace vector of length N |
+| ↳ `strideV` | `integer` | Stride for V (in complex elements) |
+| `X` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output vector of length N |
+| ↳ `strideX` | `integer` | Stride for X (in complex elements) |
+| `EST` | `Float64Array` | **in/out** · In/out: EST[0] is the estimated 1-norm |
+| `KASE` | `Int32Array` | **in/out** · In/out: KASE[0] is the operation to perform |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -72,17 +72,17 @@ This is a reverse communication interface routine. The caller must:
     compute `X = A**H * X` and call zlacon again; if `KASE[0]` = 0,
     the estimate is complete and `EST[0]` holds the result.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `V` | `Complex128Array` | out | `N` |  | workspace vector of length N |
-| ↳ `strideV` | `integer` | in |  |  | stride for V (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (in complex elements) |
-| `X` | `Complex128Array` | in/out | `N` |  | input/output vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride for X (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X (in complex elements) |
-| `EST` | `Float64Array` | in/out |  |  | in/out: EST[0] is the estimated 1-norm |
-| `KASE` | `Int32Array` | in/out |  |  | in/out: KASE[0] is the operation to perform |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `V` | `Complex128Array`<br><sub>length N</sub> | **out** · Workspace vector of length N |
+| ↳ `strideV` | `integer` | Stride for V (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (in complex elements) |
+| `X` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Input/output vector of length N |
+| ↳ `strideX` | `integer` | Stride for X (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X (in complex elements) |
+| `EST` | `Float64Array` | **in/out** · In/out: EST[0] is the estimated 1-norm |
+| `KASE` | `Int32Array` | **in/out** · In/out: KASE[0] is the operation to perform |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

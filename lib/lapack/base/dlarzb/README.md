@@ -37,25 +37,25 @@ dlarzb(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'transpose'` |
-| `direct` | `("backward")` | in |  | one of `'backward'` | direction (`'backward'`) |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | storage direction (`'rowwise'`) |
-| `M` | `integer` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `l` | `NonNegativeInteger` | in |  |  | number of columns of V |
-| `V` | `Float64Array` | in | `L × NV` |  | matrix of Householder vectors (K-by-L) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `T` | `Float64Array` | in | `K × K` |  | triangular factor (K-by-K) |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `C` | `Float64Array` | in/out | `m × N` |  | M-by-N matrix, overwritten on exit |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `N × K` |  | workspace |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'` |
+| `direct` | `("backward")` | Direction (`'backward'`) |
+| `storev` | `("rowwise")` | Storage direction (`'rowwise'`) |
+| `M` | `integer` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `K` | `NonNegativeInteger` | Order of the block reflector |
+| `l` | `NonNegativeInteger` | Number of columns of V |
+| `V` | `Float64Array`<br><sub>L × NV</sub> | Matrix of Householder vectors (K-by-L) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Triangular factor (K-by-K) |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `C` | `Float64Array`<br><sub>m × N</sub> | **in/out** · M-by-N matrix, overwritten on exit |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Float64Array \| null`<br><sub>N × K</sub> | **out** · Workspace |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -124,32 +124,32 @@ Only `direct = 'backward'` and `storev = 'rowwise'` are supported.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'transpose'` |
-| `direct` | `("backward")` | in |  | one of `'backward'` | direction (`'backward'`) |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | storage direction (`'rowwise'`) |
-| `M` | `integer` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  |  | order of the block reflector |
-| `l` | `NonNegativeInteger` | in |  |  | number of columns of V |
-| `V` | `Float64Array` | in | `L × NV` |  | matrix of Householder vectors (K-by-L, rowwise) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `T` | `Float64Array` | in | `K × K` |  | triangular factor of the block reflector (K-by-K, lower triangular) |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `C` | `Float64Array` | in/out | `m × N` |  | M-by-N matrix, overwritten on exit |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `N × K` |  | workspace |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'` |
+| `direct` | `("backward")` | Direction (`'backward'`) |
+| `storev` | `("rowwise")` | Storage direction (`'rowwise'`) |
+| `M` | `integer` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `K` | `NonNegativeInteger` | Order of the block reflector |
+| `l` | `NonNegativeInteger` | Number of columns of V |
+| `V` | `Float64Array`<br><sub>L × NV</sub> | Matrix of Householder vectors (K-by-L, rowwise) |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `T` | `Float64Array`<br><sub>K × K</sub> | Triangular factor of the block reflector (K-by-K, lower triangular) |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `C` | `Float64Array`<br><sub>m × N</sub> | **in/out** · M-by-N matrix, overwritten on exit |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>N × K</sub> | **out** · Workspace |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

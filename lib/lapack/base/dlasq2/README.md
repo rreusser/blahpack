@@ -20,11 +20,11 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasq2( N, z, strideZ ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows and columns |
-| `z` | `Float64Array` | in/out | `4 * N` |  | input array |
-| ↳ `strideZ` | `integer` | in |  |  | `z` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows and columns<br>Requires `N ≥ 0` |
+| `z` | `Float64Array`<br><sub>length 4 * N</sub> | **in/out** · Input array |
+| ↳ `strideZ` | `integer` | `z` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -48,12 +48,12 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlasq2.ndarray( N, z, strideZ, offsetZ ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of rows and columns |
-| `z` | `Float64Array` | in/out | `4 * N` |  | qd array of dimension 4*N |
-| ↳ `strideZ` | `integer` | in |  |  | stride length for `z` |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | starting index for `z` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of rows and columns<br>Requires `N ≥ 0` |
+| `z` | `Float64Array`<br><sub>length 4 * N</sub> | **in/out** · Qd array of dimension 4\*N |
+| ↳ `strideZ` | `integer` | Stride length for `z` |
+| ↳ `offsetZ` | `NonNegativeInteger` | Starting index for `z` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

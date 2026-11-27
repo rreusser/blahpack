@@ -20,9 +20,9 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlamch( cmach ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `cmach` | `MachineParameter` | in |  |  | specifies the machine parameter |
+| Parameter | Type | Description |
+|---|---|---|
+| `cmach` | `MachineParameter` | Specifies the machine parameter |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -45,9 +45,9 @@ Takes explicit strides and offsets for every array. Use it for views, sub-matric
 dlamch.ndarray( cmach ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `cmach` | `MachineParameter` | in |  |  | specifies the machine parameter |
+| Parameter | Type | Description |
+|---|---|---|
+| `cmach` | `MachineParameter` | Specifies the machine parameter |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

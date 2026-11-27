@@ -31,27 +31,27 @@ ztprfb(
 
 Applies a complex triangular-pentagonal block reflector to a matrix.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation type |
-| `direct` | `("forward"\|"backward")` | in |  |  | specifies the operation type |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `l` | `NonNegativeInteger` | in |  |  | the order of the trapezoidal part of V. |
-| `V` | `Complex128Array` | in | `M × K` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `T` | `Complex128Array` | in | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `A` | `Complex128Array` | in/out | `K × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `WORK` | `(Complex128Array\|null)` | out | `K × N` |  | output matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type |
+| `trans` | `TransposeOperation` | Specifies the operation type |
+| `direct` | `"forward" \| "backward"` | Specifies the operation type |
+| `storev` | `"columnwise" \| "rowwise"` | Specifies the operation type |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `l` | `NonNegativeInteger` | The order of the trapezoidal part of V. |
+| `V` | `Complex128Array`<br><sub>M × K</sub> | Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `A` | `Complex128Array`<br><sub>K × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `WORK` | `Complex128Array \| null`<br><sub>K × N</sub> | **out** · Output matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -120,36 +120,36 @@ Applies a complex triangular-pentagonal block reflector to a matrix.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation type |
-| `direct` | `("forward"\|"backward")` | in |  |  | specifies the operation type |
-| `storev` | `("columnwise"\|"rowwise")` | in |  |  | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `l` | `NonNegativeInteger` | in |  |  | the order of the trapezoidal part of V. |
-| `V` | `Complex128Array` | in | `M × K` |  | input matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `T` | `Complex128Array` | in | `K × K` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `A` | `Complex128Array` | in/out | `K × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `WORK` | `Complex128Array` | out | `K × N` |  | output matrix |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies the operation type |
+| `trans` | `TransposeOperation` | Specifies the operation type |
+| `direct` | `"forward" \| "backward"` | Specifies the operation type |
+| `storev` | `"columnwise" \| "rowwise"` | Specifies the operation type |
+| `M` | `NonNegativeInteger` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `l` | `NonNegativeInteger` | The order of the trapezoidal part of V. |
+| `V` | `Complex128Array`<br><sub>M × K</sub> | Input matrix |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `A` | `Complex128Array`<br><sub>K × N</sub> | **in/out** · Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `WORK` | `Complex128Array`<br><sub>K × N</sub> | **out** · Output matrix |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

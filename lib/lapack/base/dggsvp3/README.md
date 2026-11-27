@@ -35,33 +35,33 @@ dggsvp3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobu` | `("compute-U"\|"none")` | in |  | one of `'none'`, `'compute-U'` | `'compute-U'`: Orthogonal matrix U is computed; `'none'`: U is not computed. |
-| `jobv` | `("compute-V"\|"none")` | in |  | one of `'none'`, `'compute-V'` | `'compute-V'`: Orthogonal matrix V is computed; `'none'`: V is not computed. |
-| `jobq` | `("compute-Q"\|"none")` | in |  | one of `'none'`, `'compute-Q'` | `'compute-Q'`: Orthogonal matrix Q is computed; `'none'`: Q is not computed. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the number of rows of the matrix A. |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | the number of rows of the matrix B. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of columns of the matrices A and B. |
-| `A` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N matrix A. On exit, A contains the triangular (or trapezoidal) matrix described in the Purpose section. |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in/out | `P × N` |  | on entry, the P-by-N matrix B. On exit, B contains the triangular matrix described in the Purpose section. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, P )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `tola` | `number` | in |  |  | tOLA and TOLB are the thresholds to determine the effective numerical rank of matrix B and a subblock of A. |
-| `tolb` | `number` | in |  |  | tOLA and TOLB are the thresholds to determine the effective numerical rank of matrix B and a subblock of A. |
-| `K` | `Int32Array` | out |  |  | on exit, K and L specify the dimension of the subblocks described in Purpose section. |
-| `l` | `Int32Array` | out |  |  | on exit, K and L specify the dimension of the subblocks described in Purpose section. |
-| `U` | `Float64Array` | out | `M × M` |  | if `jobu === 'compute-U'`, U contains the orthogonal matrix U. |
-| ↳ `LDU` | `PositiveInteger` | in |  | rejects `ldu < 1 \|\| (jobu === 'compute-U' && ldu < M)` | leading dimension of `U` |
-| `V` | `Float64Array` | out | `P × P` |  | if `jobv === 'compute-V'`, V contains the orthogonal matrix V. |
-| ↳ `LDV` | `PositiveInteger` | in |  | rejects `ldv < 1 \|\| (jobv === 'compute-V' && ldv < P)` | leading dimension of `V` |
-| `Q` | `Float64Array` | out | `N × N` |  | if `jobq === 'compute-Q'`, Q contains the orthogonal matrix Q. |
-| ↳ `LDQ` | `PositiveInteger` | in |  | rejects `ldq < 1 \|\| (jobq === 'compute-Q' && ldq < N)` | leading dimension of `Q` |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ N` |  | caller-provided workspace of at least `N` elements |
-| `TAU` | `Float64Array` | out | `N` |  | on exit, if INFO = 0, WORK(1) returns the optimal LWORK. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 1` |  | workspace of length at least `max(1, 3*N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `N > 0` and `M + P > 0`, 1 when `M = P = 0`, 0 when `N = 0` (the reference checks only `LWORK >= 1`; `DGEQP3` rejects less than `3*N+1`, and the unblocked orthogonal-factor callees write up to M or P for data of full rank); for optimum performance the reference's LWKOPT, `max(2*N + (N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `dgeqp3`'s blocked path; if `null`, LWKOPT elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobu` | `"compute-U" \| "none"` | `'compute-U'`: Orthogonal matrix U is computed; `'none'`: U is not computed. |
+| `jobv` | `"compute-V" \| "none"` | `'compute-V'`: Orthogonal matrix V is computed; `'none'`: V is not computed. |
+| `jobq` | `"compute-Q" \| "none"` | `'compute-Q'`: Orthogonal matrix Q is computed; `'none'`: Q is not computed. |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A.<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | The number of rows of the matrix B.<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | The number of columns of the matrices A and B.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix A. On exit, A contains the triangular (or trapezoidal) matrix described in the Purpose section. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · On entry, the P-by-N matrix B. On exit, B contains the triangular matrix described in the Purpose section. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, P)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `tola` | `number` | TOLA and TOLB are the thresholds to determine the effective numerical rank of matrix B and a subblock of A. |
+| `tolb` | `number` | TOLA and TOLB are the thresholds to determine the effective numerical rank of matrix B and a subblock of A. |
+| `K` | `Int32Array` | **out** · On exit, K and L specify the dimension of the subblocks described in Purpose section. |
+| `l` | `Int32Array` | **out** · On exit, K and L specify the dimension of the subblocks described in Purpose section. |
+| `U` | `Float64Array`<br><sub>M × M</sub> | **out** · If `jobu === 'compute-U'`, U contains the orthogonal matrix U. |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U`<br>Rejects `ldu < 1 \|\| (jobu === 'compute-U' && ldu < M)` |
+| `V` | `Float64Array`<br><sub>P × P</sub> | **out** · If `jobv === 'compute-V'`, V contains the orthogonal matrix V. |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V`<br>Rejects `ldv < 1 \|\| (jobv === 'compute-V' && ldv < P)` |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **out** · If `jobq === 'compute-Q'`, Q contains the orthogonal matrix Q. |
+| ↳ `LDQ` | `PositiveInteger` | Leading dimension of `Q`<br>Rejects `ldq < 1 \|\| (jobq === 'compute-Q' && ldq < N)` |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-provided workspace of at least `N` elements |
+| `TAU` | `Float64Array`<br><sub>length N</sub> | **out** · On exit, if INFO = 0, WORK(1) returns the optimal LWORK. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 1</sub> | **out** · Workspace of length at least `max(1, 3*N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `N > 0` and `M + P > 0`, 1 when `M = P = 0`, 0 when `N = 0` (the reference checks only `LWORK >= 1`; `DGEQP3` rejects less than `3*N+1`, and the unblocked orthogonal-factor callees write up to M or P for data of full rank); for optimum performance the reference's LWKOPT, `max(2*N + (N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `dgeqp3`'s blocked path; if `null`, LWKOPT elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -164,47 +164,47 @@ Singular Value Decomposition (GSVD).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobu` | `("compute-U"\|"none")` | in |  | one of `'none'`, `'compute-U'` | `'compute-U'` or `'none'` |
-| `jobv` | `("compute-V"\|"none")` | in |  | one of `'none'`, `'compute-V'` | `'compute-V'` or `'none'` |
-| `jobq` | `("compute-Q"\|"none")` | in |  | one of `'none'`, `'compute-Q'` | `'compute-Q'` or `'none'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of A |
-| `p` | `NonNegativeInteger` | in |  | requires `p ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of A and B |
-| `A` | `Float64Array` | in/out | `M × N` |  | M-by-N matrix A (overwritten on exit) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in/out | `P × N` |  | P-by-N matrix B (overwritten on exit) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `tola` | `number` | in |  |  | tolerance for A |
-| `tolb` | `number` | in |  |  | tolerance for B |
-| `K` | `Int32Array` | out |  |  | output array; K[0] set to the numerical rank dimension |
-| `l` | `Int32Array` | out |  |  | output array; l[0] set to the numerical rank dimension |
-| `U` | `Float64Array` | out | `M × M` |  | M-by-M orthogonal matrix (if jobu=`'compute-U'`) |
-| ↳ `strideU1` | `integer` | in |  |  | stride of the first dimension of U |
-| ↳ `strideU2` | `integer` | in |  |  | stride of the second dimension of U |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | starting index for U |
-| `V` | `Float64Array` | out | `P × P` |  | P-by-P orthogonal matrix (if jobv=`'compute-V'`) |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V |
-| `Q` | `Float64Array` | out | `N × N` |  | N-by-N orthogonal matrix (if jobq=`'compute-Q'`) |
-| ↳ `strideQ1` | `integer` | in |  |  | stride of the first dimension of Q |
-| ↳ `strideQ2` | `integer` | in |  |  | stride of the second dimension of Q |
-| ↳ `offsetQ` | `NonNegativeInteger` | in |  |  | starting index for Q |
-| `IWORK` | `Int32Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
-| `TAU` | `Float64Array` | out | `N` |  | workspace array of length N |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `WORK` | `Float64Array` | out | `≥ 1` |  | workspace of length at least `max(1, 3*N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `N > 0` and `M + P > 0`, 1 when `M = P = 0`, 0 when `N = 0` (the reference checks only `LWORK >= 1`; `DGEQP3` rejects less than `3*N+1`, and the unblocked orthogonal-factor callees write up to M or P for data of full rank); for optimum performance the reference's LWKOPT, `max(2*N + (N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `dgeqp3`'s blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobu` | `"compute-U" \| "none"` | `'compute-U'` or `'none'` |
+| `jobv` | `"compute-V" \| "none"` | `'compute-V'` or `'none'` |
+| `jobq` | `"compute-Q" \| "none"` | `'compute-Q'` or `'none'` |
+| `M` | `NonNegativeInteger` | Number of rows of A<br>Requires `M ≥ 0` |
+| `p` | `NonNegativeInteger` | Number of rows of B<br>Requires `p ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of A and B<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N matrix A (overwritten on exit) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>P × N</sub> | **in/out** · P-by-N matrix B (overwritten on exit) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `tola` | `number` | Tolerance for A |
+| `tolb` | `number` | Tolerance for B |
+| `K` | `Int32Array` | **out** · Output array; K[0] set to the numerical rank dimension |
+| `l` | `Int32Array` | **out** · Output array; l[0] set to the numerical rank dimension |
+| `U` | `Float64Array`<br><sub>M × M</sub> | **out** · M-by-M orthogonal matrix (if jobu=`'compute-U'`) |
+| ↳ `strideU1` | `integer` | Stride of the first dimension of U |
+| ↳ `strideU2` | `integer` | Stride of the second dimension of U |
+| ↳ `offsetU` | `NonNegativeInteger` | Starting index for U |
+| `V` | `Float64Array`<br><sub>P × P</sub> | **out** · P-by-P orthogonal matrix (if jobv=`'compute-V'`) |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V |
+| `Q` | `Float64Array`<br><sub>N × N</sub> | **out** · N-by-N orthogonal matrix (if jobq=`'compute-Q'`) |
+| ↳ `strideQ1` | `integer` | Stride of the first dimension of Q |
+| ↳ `strideQ2` | `integer` | Stride of the second dimension of Q |
+| ↳ `offsetQ` | `NonNegativeInteger` | Starting index for Q |
+| `IWORK` | `Int32Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
+| `TAU` | `Float64Array`<br><sub>length N</sub> | **out** · Workspace array of length N |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `WORK` | `Float64Array`<br><sub>length ≥ 1</sub> | **out** · Workspace of length at least `max(1, 3*N+1, P if jobv = 'compute-V', M if jobu = 'compute-U' or (P > 0 and N > 1))` when `N > 0` and `M + P > 0`, 1 when `M = P = 0`, 0 when `N = 0` (the reference checks only `LWORK >= 1`; `DGEQP3` rejects less than `3*N+1`, and the unblocked orthogonal-factor callees write up to M or P for data of full rank); for optimum performance the reference's LWKOPT, `max(2*N + (N+1)*NB, M, min(N,P), P if jobv = 'compute-V', N if jobq = 'compute-Q')` (`NB = 32`), which enables `dgeqp3`'s blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

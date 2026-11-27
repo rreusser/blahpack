@@ -35,32 +35,32 @@ dhsein(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `eigsrc` | `("qr"\|"no-source")` | in |  | one of `'no-source'`, `'qr'` | specifies the operation type |
-| `initv` | `("no-init"\|"user")` | in |  | one of `'no-init'`, `'user'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in/out | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `H` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `LDH` | `PositiveInteger` | in |  | requires `LDH ≥ max( 1, N )` | leading dimension of `H` |
-| `WR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| `WI` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | input/output (length-1 array): number of rows |
-| `WORK` | `(Float64Array\|null)` | out | `≥ (N + 2) * N` |  | input array |
-| `IFAILL` | `Int32Array` | out | `mm` |  | input array |
-| ↳ `strideIFAILL` | `integer` | in |  |  | stride length for `IFAILL` |
-| `IFAILR` | `Int32Array` | out | `mm` |  | output array |
-| ↳ `strideIFAILR` | `integer` | in |  |  | stride length for `IFAILR` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `eigsrc` | `"qr" \| "no-source"` | Specifies the operation type<br>One of `'no-source'`, `'qr'`. |
+| `initv` | `"no-init" \| "user"` | Specifies the operation type<br>One of `'no-init'`, `'user'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H`<br>Requires `LDH ≥ max(1, N)` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Input/output (length-1 array): number of rows |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ (N + 2) * N</sub> | **out** · Input array |
+| `IFAILL` | `Int32Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideIFAILL` | `integer` | Stride length for `IFAILL` |
+| `IFAILR` | `Int32Array`<br><sub>length mm</sub> | **out** · Output array |
+| ↳ `strideIFAILR` | `integer` | Stride length for `IFAILR` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -133,44 +133,44 @@ dhsein.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | specifies the operation type |
-| `eigsrc` | `("qr"\|"no-source")` | in |  | one of `'no-source'`, `'qr'` | specifies the operation type |
-| `initv` | `("no-init"\|"user")` | in |  | one of `'no-init'`, `'user'` | specifies the operation type |
-| `SELECT` | `Uint8Array` | in/out | `N` |  | input array |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride length for `SELECT` |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | starting index for `SELECT` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `H` | `Float64Array` | in | `N × N` |  | input matrix |
-| ↳ `strideH1` | `integer` | in |  |  | stride of the first dimension of `H` |
-| ↳ `strideH2` | `integer` | in |  |  | stride of the second dimension of `H` |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | starting index for `H` |
-| `WR` | `Float64Array` | in/out | `N` |  | input array |
-| ↳ `strideWR` | `integer` | in |  |  | stride length for `WR` |
-| ↳ `offsetWR` | `NonNegativeInteger` | in |  |  | starting index for `WR` |
-| `WI` | `Float64Array` | in | `N` |  | input array |
-| ↳ `strideWI` | `integer` | in |  |  | stride length for `WI` |
-| ↳ `offsetWI` | `NonNegativeInteger` | in |  |  | starting index for `WI` |
-| `VL` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of `VL` |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of `VL` |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for `VL` |
-| `VR` | `Float64Array` | in/out | `N × mm` |  | input matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of `VR` |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of `VR` |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | the number of columns in the arrays VL and/or VR. |
-| `M` | `Int32Array` | out |  |  | input/output (length-1 array): number of rows |
-| `WORK` | `Float64Array` | out | `≥ (N + 2) * N` |  | input array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
-| `IFAILL` | `Int32Array` | out | `mm` |  | input array |
-| ↳ `strideIFAILL` | `integer` | in |  |  | stride length for `IFAILL` |
-| ↳ `offsetIFAILL` | `NonNegativeInteger` | in |  |  | starting index for `IFAILL` |
-| `IFAILR` | `Int32Array` | out | `mm` |  | output array |
-| ↳ `strideIFAILR` | `integer` | in |  |  | stride length for `IFAILR` |
-| ↳ `offsetIFAILR` | `NonNegativeInteger` | in |  |  | starting index for `IFAILR` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `"left" \| "right" \| "both"` | Specifies the operation type<br>One of `'both'`, `'left'`, `'right'`. |
+| `eigsrc` | `"qr" \| "no-source"` | Specifies the operation type<br>One of `'no-source'`, `'qr'`. |
+| `initv` | `"no-init" \| "user"` | Specifies the operation type<br>One of `'no-init'`, `'user'`. |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideSELECT` | `integer` | Stride length for `SELECT` |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Starting index for `SELECT` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `H` | `Float64Array`<br><sub>N × N</sub> | Input matrix |
+| ↳ `strideH1` | `integer` | Stride of the first dimension of `H` |
+| ↳ `strideH2` | `integer` | Stride of the second dimension of `H` |
+| ↳ `offsetH` | `NonNegativeInteger` | Starting index for `H` |
+| `WR` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input array |
+| ↳ `strideWR` | `integer` | Stride length for `WR` |
+| ↳ `offsetWR` | `NonNegativeInteger` | Starting index for `WR` |
+| `WI` | `Float64Array`<br><sub>length N</sub> | Input array |
+| ↳ `strideWI` | `integer` | Stride length for `WI` |
+| ↳ `offsetWI` | `NonNegativeInteger` | Starting index for `WI` |
+| `VL` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of `VL` |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of `VL` |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for `VL` |
+| `VR` | `Float64Array`<br><sub>N × mm</sub> | **in/out** · Input matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of `VR` |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of `VR` |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for `VR` |
+| `mm` | `NonNegativeInteger` | The number of columns in the arrays VL and/or VR. |
+| `M` | `Int32Array` | **out** · Input/output (length-1 array): number of rows |
+| `WORK` | `Float64Array`<br><sub>length ≥ (N + 2) * N</sub> | **out** · Input array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
+| `IFAILL` | `Int32Array`<br><sub>length mm</sub> | **out** · Input array |
+| ↳ `strideIFAILL` | `integer` | Stride length for `IFAILL` |
+| ↳ `offsetIFAILL` | `NonNegativeInteger` | Starting index for `IFAILL` |
+| `IFAILR` | `Int32Array`<br><sub>length mm</sub> | **out** · Output array |
+| ↳ `strideIFAILR` | `integer` | Stride length for `IFAILR` |
+| ↳ `offsetIFAILR` | `NonNegativeInteger` | Starting index for `IFAILR` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

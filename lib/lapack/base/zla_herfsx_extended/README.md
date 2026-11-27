@@ -43,46 +43,46 @@ zla_herfsx_extended(
 
 Improves the computed solution using extra-precise iterative refinement for Hermitian indefinite matrices.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `prec_type` | `integer` | in |  |  | requested residual precision (ignored; see base.js) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `A` | `Complex128Array` | in | `N × N` |  | original Hermitian matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `AF` | `Complex128Array` | in | `N × N` |  | factored form of `A` |
-| ↳ `LDAF` | `PositiveInteger` | in |  | requires `LDAF ≥ max( 1, N )` | leading dimension of `AF` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `colequ` | `boolean` | in |  |  | whether column equilibration was performed on `A` |
-| `c` | `Float64Array` | in | `N` |  | column scale factors |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `Y` | `Complex128Array` | in/out | `N × nrhs` |  | initial/improved solution |
-| ↳ `LDY` | `PositiveInteger` | in |  | column-major requires `LDY ≥ max( 1, N )`; row-major requires `LDY ≥ max( 1, nrhs )` | leading dimension of `Y` |
-| `BERR_OUT` | `Float64Array` | out | `nrhs` |  | componentwise backward error |
-| ↳ `strideBERR_OUT` | `integer` | in |  |  | stride length for `berrOut` |
-| `n_norms` | `integer` | in |  |  | number of error bound components |
-| `ERR_BNDS_NORM` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | normwise error bounds |
-| ↳ `LDERR_BNDS_NORM` | `PositiveInteger` | in |  |  | leading dimension of `errBndsNorm` |
-| `ERR_BNDS_COMP` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | componentwise error bounds |
-| ↳ `LDERR_BNDS_COMP` | `PositiveInteger` | in |  |  | leading dimension of `errBndsComp` |
-| `RES` | `Complex128Array` | in | `N` |  | workspace residual |
-| ↳ `strideRES` | `integer` | in |  |  | stride length for `RES` |
-| `AYB` | `Float64Array` | in | `N` |  | real workspace |
-| ↳ `strideAYB` | `integer` | in |  |  | stride length for `AYB` |
-| `DY` | `Complex128Array` | in | `N` |  | correction workspace |
-| ↳ `strideDY` | `integer` | in |  |  | stride length for `DY` |
-| `Y_TAIL` | `Complex128Array` | in | `N` |  | double-double tail of `Y` |
-| ↳ `strideY_TAIL` | `integer` | in |  |  | stride length for `yTail` |
-| `rcond` | `number` | in |  |  | reciprocal condition number |
-| `ithresh` | `integer` | in |  |  | maximum refinement iterations |
-| `rthresh` | `number` | in |  |  | convergence ratio threshold |
-| `dz_ub` | `number` | in |  |  | componentwise update upper bound |
-| `ignore_cwise` | `boolean` | in |  |  | whether to ignore componentwise convergence |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `prec_type` | `integer` | Requested residual precision (ignored; see base.js) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original Hermitian matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | Factored form of `A` |
+| ↳ `LDAF` | `PositiveInteger` | Leading dimension of `AF`<br>Requires `LDAF ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `colequ` | `boolean` | Whether column equilibration was performed on `A` |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scale factors |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `Y` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Initial/improved solution |
+| ↳ `LDY` | `PositiveInteger` | Leading dimension of `Y`<br>Column-major requires `LDY ≥ max(1, N)`<br>Row-major requires `LDY ≥ max(1, nrhs)` |
+| `BERR_OUT` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Componentwise backward error |
+| ↳ `strideBERR_OUT` | `integer` | Stride length for `berrOut` |
+| `n_norms` | `integer` | Number of error bound components |
+| `ERR_BNDS_NORM` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Normwise error bounds |
+| ↳ `LDERR_BNDS_NORM` | `PositiveInteger` | Leading dimension of `errBndsNorm` |
+| `ERR_BNDS_COMP` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Componentwise error bounds |
+| ↳ `LDERR_BNDS_COMP` | `PositiveInteger` | Leading dimension of `errBndsComp` |
+| `RES` | `Complex128Array`<br><sub>length N</sub> | Workspace residual |
+| ↳ `strideRES` | `integer` | Stride length for `RES` |
+| `AYB` | `Float64Array`<br><sub>length N</sub> | Real workspace |
+| ↳ `strideAYB` | `integer` | Stride length for `AYB` |
+| `DY` | `Complex128Array`<br><sub>length N</sub> | Correction workspace |
+| ↳ `strideDY` | `integer` | Stride length for `DY` |
+| `Y_TAIL` | `Complex128Array`<br><sub>length N</sub> | Double-double tail of `Y` |
+| ↳ `strideY_TAIL` | `integer` | Stride length for `yTail` |
+| `rcond` | `number` | Reciprocal condition number |
+| `ithresh` | `integer` | Maximum refinement iterations |
+| `rthresh` | `number` | Convergence ratio threshold |
+| `dz_ub` | `number` | Componentwise update upper bound |
+| `ignore_cwise` | `boolean` | Whether to ignore componentwise convergence |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -241,64 +241,64 @@ Improves the computed solution using extra-precise iterative refinement for Herm
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `prec_type` | `integer` | in |  |  | requested residual precision (currently ignored; see base.js) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand sides |
-| `A` | `Complex128Array` | in | `N × N` |  | original Hermitian matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `AF` | `Complex128Array` | in | `N × N` |  | factored form of `A` |
-| ↳ `strideAF1` | `integer` | in |  |  | stride of the first dimension of `AF` |
-| ↳ `strideAF2` | `integer` | in |  |  | stride of the second dimension of `AF` |
-| ↳ `offsetAF` | `NonNegativeInteger` | in |  |  | starting index for `AF` |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zhetrf` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `colequ` | `boolean` | in |  |  | whether column equilibration was performed on `A` |
-| `c` | `Float64Array` | in | `N` |  | column scale factors for `A` |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `c` |
-| `B` | `Complex128Array` | in | `N × nrhs` |  | right-hand side matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `Y` | `Complex128Array` | in/out | `N × nrhs` |  | initial/improved solution |
-| ↳ `strideY1` | `integer` | in |  |  | stride of the first dimension of `Y` |
-| ↳ `strideY2` | `integer` | in |  |  | stride of the second dimension of `Y` |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for `Y` |
-| `BERR_OUT` | `Float64Array` | out | `nrhs` |  | componentwise backward error |
-| ↳ `strideBERR_OUT` | `integer` | in |  |  | stride length for `berrOut` |
-| ↳ `offsetBERR_OUT` | `NonNegativeInteger` | in |  |  | starting index for `berrOut` |
-| `n_norms` | `integer` | in |  |  | number of error bound components |
-| `ERR_BNDS_NORM` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | normwise error bounds |
-| ↳ `strideERR_BNDS_NORM1` | `integer` | in |  |  | stride of the first dimension of `errBndsNorm` |
-| ↳ `strideERR_BNDS_NORM2` | `integer` | in |  |  | stride of the second dimension of `errBndsNorm` |
-| ↳ `offsetERR_BNDS_NORM` | `NonNegativeInteger` | in |  |  | starting index for `errBndsNorm` |
-| `ERR_BNDS_COMP` | `Float64Array` | in/out | `nrhs × N_ERR_BNDS` |  | componentwise error bounds |
-| ↳ `strideERR_BNDS_COMP1` | `integer` | in |  |  | stride of the first dimension of `errBndsComp` |
-| ↳ `strideERR_BNDS_COMP2` | `integer` | in |  |  | stride of the second dimension of `errBndsComp` |
-| ↳ `offsetERR_BNDS_COMP` | `NonNegativeInteger` | in |  |  | starting index for `errBndsComp` |
-| `RES` | `Complex128Array` | in | `N` |  | workspace residual |
-| ↳ `strideRES` | `integer` | in |  |  | stride length for `RES` |
-| ↳ `offsetRES` | `NonNegativeInteger` | in |  |  | starting index for `RES` |
-| `AYB` | `Float64Array` | in | `N` |  | real workspace |
-| ↳ `strideAYB` | `integer` | in |  |  | stride length for `AYB` |
-| ↳ `offsetAYB` | `NonNegativeInteger` | in |  |  | starting index for `AYB` |
-| `DY` | `Complex128Array` | in | `N` |  | complex correction workspace |
-| ↳ `strideDY` | `integer` | in |  |  | stride length for `DY` |
-| ↳ `offsetDY` | `NonNegativeInteger` | in |  |  | starting index for `DY` |
-| `Y_TAIL` | `Complex128Array` | in | `N` |  | double-double tail of `Y` |
-| ↳ `strideY_TAIL` | `integer` | in |  |  | stride length for `yTail` |
-| ↳ `offsetY_TAIL` | `NonNegativeInteger` | in |  |  | starting index for `yTail` |
-| `rcond` | `number` | in |  |  | reciprocal condition number |
-| `ithresh` | `integer` | in |  |  | maximum refinement iterations |
-| `rthresh` | `number` | in |  |  | convergence ratio threshold |
-| `dz_ub` | `number` | in |  |  | componentwise update upper bound |
-| `ignore_cwise` | `boolean` | in |  |  | whether to ignore componentwise convergence |
+| Parameter | Type | Description |
+|---|---|---|
+| `prec_type` | `integer` | Requested residual precision (currently ignored; see base.js) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand sides<br>Requires `nrhs ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | Original Hermitian matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `AF` | `Complex128Array`<br><sub>N × N</sub> | Factored form of `A` |
+| ↳ `strideAF1` | `integer` | Stride of the first dimension of `AF` |
+| ↳ `strideAF2` | `integer` | Stride of the second dimension of `AF` |
+| ↳ `offsetAF` | `NonNegativeInteger` | Starting index for `AF` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zhetrf` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `colequ` | `boolean` | Whether column equilibration was performed on `A` |
+| `c` | `Float64Array`<br><sub>length N</sub> | Column scale factors for `A` |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `c` |
+| `B` | `Complex128Array`<br><sub>N × nrhs</sub> | Right-hand side matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `Y` | `Complex128Array`<br><sub>N × nrhs</sub> | **in/out** · Initial/improved solution |
+| ↳ `strideY1` | `integer` | Stride of the first dimension of `Y` |
+| ↳ `strideY2` | `integer` | Stride of the second dimension of `Y` |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for `Y` |
+| `BERR_OUT` | `Float64Array`<br><sub>length nrhs</sub> | **out** · Componentwise backward error |
+| ↳ `strideBERR_OUT` | `integer` | Stride length for `berrOut` |
+| ↳ `offsetBERR_OUT` | `NonNegativeInteger` | Starting index for `berrOut` |
+| `n_norms` | `integer` | Number of error bound components |
+| `ERR_BNDS_NORM` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Normwise error bounds |
+| ↳ `strideERR_BNDS_NORM1` | `integer` | Stride of the first dimension of `errBndsNorm` |
+| ↳ `strideERR_BNDS_NORM2` | `integer` | Stride of the second dimension of `errBndsNorm` |
+| ↳ `offsetERR_BNDS_NORM` | `NonNegativeInteger` | Starting index for `errBndsNorm` |
+| `ERR_BNDS_COMP` | `Float64Array`<br><sub>nrhs × N_ERR_BNDS</sub> | **in/out** · Componentwise error bounds |
+| ↳ `strideERR_BNDS_COMP1` | `integer` | Stride of the first dimension of `errBndsComp` |
+| ↳ `strideERR_BNDS_COMP2` | `integer` | Stride of the second dimension of `errBndsComp` |
+| ↳ `offsetERR_BNDS_COMP` | `NonNegativeInteger` | Starting index for `errBndsComp` |
+| `RES` | `Complex128Array`<br><sub>length N</sub> | Workspace residual |
+| ↳ `strideRES` | `integer` | Stride length for `RES` |
+| ↳ `offsetRES` | `NonNegativeInteger` | Starting index for `RES` |
+| `AYB` | `Float64Array`<br><sub>length N</sub> | Real workspace |
+| ↳ `strideAYB` | `integer` | Stride length for `AYB` |
+| ↳ `offsetAYB` | `NonNegativeInteger` | Starting index for `AYB` |
+| `DY` | `Complex128Array`<br><sub>length N</sub> | Complex correction workspace |
+| ↳ `strideDY` | `integer` | Stride length for `DY` |
+| ↳ `offsetDY` | `NonNegativeInteger` | Starting index for `DY` |
+| `Y_TAIL` | `Complex128Array`<br><sub>length N</sub> | Double-double tail of `Y` |
+| ↳ `strideY_TAIL` | `integer` | Stride length for `yTail` |
+| ↳ `offsetY_TAIL` | `NonNegativeInteger` | Starting index for `yTail` |
+| `rcond` | `number` | Reciprocal condition number |
+| `ithresh` | `integer` | Maximum refinement iterations |
+| `rthresh` | `number` | Convergence ratio threshold |
+| `dz_ub` | `number` | Componentwise update upper bound |
+| `ignore_cwise` | `boolean` | Whether to ignore componentwise convergence |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

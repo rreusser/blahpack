@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zheev( order, jobz, uplo, N, A, LDA, w, strideW, WORK, RWORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' 0 'column-major') |
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` 0 `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `w` | `Float64Array` | out | `N` |  | input array |
-| ↳ `strideW` | `integer` | in |  |  | `w` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N - 1 )` |  | workspace (length >= `max( 1, 2*N-1 )`, the reference's minimum; `(NB+1)*N`, with NB from `ilaenv`, is optimal); if `null`, a workspace of optimal size is allocated |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace (length >= `max( 1, 3*N-2 )`, the reference's declared extent); if `null`, one of that length is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' 0 'column-major') |
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` 0 `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Input array |
+| ↳ `strideW` | `integer` | `w` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N - 1)</sub> | **out** · Workspace (length >= `max( 1, 2*N-1 )`, the reference's minimum; `(NB+1)*N`, with NB from `ilaenv`, is optimal); if `null`, a workspace of optimal size is allocated |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace (length >= `max( 1, 3*N-2 )`, the reference's declared extent); if `null`, one of that length is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -78,24 +78,24 @@ zheev.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobz` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output Hermitian matrix; on exit contains eigenvectors if jobz=`'compute-vectors'` |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `w` | `Float64Array` | out | `N` |  | output array for eigenvalues (length N), in ascending order |
-| ↳ `strideW` | `integer` | in |  |  | stride for w |
-| ↳ `offsetW` | `NonNegativeInteger` | in |  |  | starting index for w |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N - 1 )` |  | complex workspace array (length from `offsetWork` at least `max(1,2*N-1)`, the reference's minimum, when `N > 0`; `(NB+1)*N`, with `NB` the ZHETRD block size from `ilaenv`, is optimal) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ max( 1, 3 * N - 2 )` |  | real workspace array (length from `offsetRWork` at least `max(1,3*N-2)`, the reference's declared extent, when `N > 0`) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobz` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output Hermitian matrix; on exit contains eigenvectors if jobz=`'compute-vectors'` |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `w` | `Float64Array`<br><sub>length N</sub> | **out** · Output array for eigenvalues (length N), in ascending order |
+| ↳ `strideW` | `integer` | Stride for w |
+| ↳ `offsetW` | `NonNegativeInteger` | Starting index for w |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N - 1)</sub> | **out** · Complex workspace array (length from `offsetWork` at least `max(1,2*N-1)`, the reference's minimum, when `N > 0`; `(NB+1)*N`, with `NB` the ZHETRD block size from `ilaenv`, is optimal) |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ max(1, 3 * N - 2)</sub> | **out** · Real workspace array (length from `offsetRWork` at least `max(1,3*N-2)`, the reference's declared extent, when `N > 0`) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

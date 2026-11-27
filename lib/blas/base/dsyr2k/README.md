@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsyr2k( order, uplo, trans, N, K, alpha, A, LDA, B, LDB, beta, C, LDC ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns of A and B (if trans = 'no-transpose') or rows (if trans = 'transpose') |
-| `alpha` | `number` | in |  |  | scalar multiplier for A*B^T + B*A^T |
-| `A` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? N : K )`; row-major requires `LDA ≥ max( 1, trans === 'no-transpose' ? K : N )` | leading dimension of `A` |
-| `B` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, trans === 'no-transpose' ? N : K )`; row-major requires `LDB ≥ max( 1, trans === 'no-transpose' ? K : N )` | leading dimension of `B` |
-| `beta` | `number` | in |  |  | scalar multiplier for C |
-| `C` | `Float64Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'transpose'`<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of matrix C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns of A and B (if trans = 'no-transpose') or rows (if trans = 'transpose')<br>Requires `K ≥ 0` |
+| `alpha` | `number` | Scalar multiplier for A\*B^T + B\*A^T |
+| `A` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Column-major requires `LDA ≥ max(1, trans === 'no-transpose' ? N : K)`<br>Row-major requires `LDA ≥ max(1, trans === 'no-transpose' ? K : N)` |
+| `B` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, trans === 'no-transpose' ? N : K)`<br>Row-major requires `LDB ≥ max(1, trans === 'no-transpose' ? K : N)` |
+| `beta` | `number` | Scalar multiplier for C |
+| `C` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Requires `LDC ≥ max(1, N)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -118,26 +118,26 @@ Performs the symmetric rank-2k update C := alpha_A_B^T + alpha_B_A^T + beta_C or
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the upper or lower triangle of C is stored |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns of A and B (or rows if transposed) |
-| `alpha` | `number` | in |  |  | scalar constant |
-| `A` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | first input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in | `(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)` |  | second input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `beta` | `number` | in |  |  | scalar constant |
-| `C` | `Float64Array` | in/out | `N × N` |  | symmetric output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangle of C is stored |
+| `trans` | `TransposeOperation` | Specifies the operation<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `N` | `NonNegativeInteger` | Order of matrix C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns of A and B (or rows if transposed)<br>Requires `K ≥ 0` |
+| `alpha` | `number` | Scalar constant |
+| `A` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | First input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>(trans === 'no-transpose' ? N : K) × (trans === 'no-transpose' ? K : N)</sub> | Second input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `beta` | `number` | Scalar constant |
+| `C` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Symmetric output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

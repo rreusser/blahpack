@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dsysv( order, uplo, N, nrhs, A, LDA, IPIV, strideIPIV, B, LDB, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the number of linear equations, i.e., the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | the number of right hand sides, i.e., the number of columns of the matrix B. |
-| `A` | `Float64Array` | in/out | `N × N` |  | on entry, the symmetric matrix A. On exit, if INFO = 0, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U*D*U**T or A = L*D*L**T as computed by DSYTRF. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | details of the interchanges and the block structure of D, as determined by DSYTRF (0-based). |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | on entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, N )`; row-major requires `LDB ≥ max( 1, nrhs )` | leading dimension of `B` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ 1` |  | caller-provided workspace (length at least `1`; a length of at least `N*NB` (NB from ILAENV for dsytrf, 64) enables the full blocked factorization and the dsytrs2 solve, a length below `N` uses the dsytrs solve); `null` allocates the optimal size `max(1,N*NB)` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'`: Upper triangle of A is stored; `'lower'`: Lower triangle of A is stored. |
+| `N` | `NonNegativeInteger` | The number of linear equations, i.e., the order of the matrix A.<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrix B.<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · On entry, the symmetric matrix A. On exit, if INFO = 0, the block diagonal matrix D and the multipliers used to obtain the factor U or L from the factorization A = U\*D\*U\*\*T or A = L\*D\*L\*\*T as computed by DSYTRF. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Details of the interchanges and the block structure of D, as determined by DSYTRF (0-based). |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · On entry, the N-by-NRHS right hand side matrix B. On exit, if INFO = 0, the N-by-NRHS solution matrix X. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Column-major requires `LDB ≥ max(1, N)`<br>Row-major requires `LDB ≥ max(1, nrhs)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ 1</sub> | **out** · Caller-provided workspace (length at least `1`; a length of at least `N*NB` (NB from ILAENV for dsytrf, 64) enables the full blocked factorization and the dsytrs2 solve, a length below `N` uses the dsytrs solve); `null` allocates the optimal size `max(1,N*NB)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -99,25 +99,25 @@ Negative values indicate 2x2 pivots (using bitwise NOT encoding).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  | requires `nrhs ≥ 0` | number of right-hand side columns |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output N-by-N symmetric matrix; on exit, block diagonal matrix D and multipliers for the factorization |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for A |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot indices (0-based), length N |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for IPIV |
-| `B` | `Float64Array` | in/out | `N × nrhs` |  | input/output N-by-NRHS matrix; on exit, the solution X |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for B |
-| `WORK` | `Float64Array` | out | `≥ 1` |  | caller-owned workspace, handed whole to dsytrf (length from `offsetWork` at least `1`; a length of at least `N*NB` (NB from ILAENV for dsytrf, 64) enables the full blocked factorization and the dsytrs2 solve, a length below `N` uses the dsytrs solve) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of matrix A<br>Requires `N ≥ 0` |
+| `nrhs` | `NonNegativeInteger` | Number of right-hand side columns<br>Requires `nrhs ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output N-by-N symmetric matrix; on exit, block diagonal matrix D and multipliers for the factorization |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for A |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot indices (0-based), length N |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for IPIV |
+| `B` | `Float64Array`<br><sub>N × nrhs</sub> | **in/out** · Input/output N-by-NRHS matrix; on exit, the solution X |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for B |
+| `WORK` | `Float64Array`<br><sub>length ≥ 1</sub> | **out** · Caller-owned workspace, handed whole to dsytrf (length from `offsetWork` at least `1`; a length of at least `N*NB` (NB from ILAENV for dsytrf, 64) enables the full blocked factorization and the dsytrs2 solve, a length below `N` uses the dsytrs solve) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

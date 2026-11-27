@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlanhb( order, norm, uplo, N, K, AB, LDAB, WORK ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | norm type |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part is stored |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `K` | `NonNegativeInteger` | in |  |  | number of super-diagonals or sub-diagonals |
-| `AB` | `Complex128Array` | in | `K + 1 × N` |  | band matrix |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `WORK` | `(Float64Array\|null)` | out |  |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Norm type |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part is stored |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `K` | `NonNegativeInteger` | Number of super-diagonals or sub-diagonals |
+| `AB` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `WORK` | `Float64Array \| null` | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,19 +73,19 @@ Returns the norm of a complex Hermitian band matrix.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"max"\|"inf-norm"\|"frobenius")` | in |  |  | norm type: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
-| `uplo` | `MatrixTriangle` | in |  |  | specifies whether the upper or lower triangular part is stored: `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `K` | `NonNegativeInteger` | in |  |  | number of super-diagonals (upper) or sub-diagonals (lower) |
-| `AB` | `Complex128Array` | in | `K + 1 × N` |  | band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (in complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (in complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (in complex elements) |
-| `WORK` | `Float64Array` | out |  |  | workspace array (length >= N for `'one-norm'` or `'inf-norm'`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "max" \| "inf-norm" \| "frobenius"` | Norm type: `'max'`, `'one-norm'`, `'inf-norm'`, or `'frobenius'` |
+| `uplo` | `MatrixTriangle` | Specifies whether the upper or lower triangular part is stored: `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `K` | `NonNegativeInteger` | Number of super-diagonals (upper) or sub-diagonals (lower) |
+| `AB` | `Complex128Array`<br><sub>(K + 1) × N</sub> | Band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (in complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (in complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (in complex elements) |
+| `WORK` | `Float64Array` | **out** · Workspace array (length >= N for `'one-norm'` or `'inf-norm'`) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -20,12 +20,12 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 drotg( a, b, c, s ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Float64Array` | in/out |  |  | input/output (length-1 array): `a` |
-| `b` | `Float64Array` | in/out |  |  | input/output (length-1 array): `b` |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): `c` |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): `s` |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Float64Array` | **in/out** · Input/output (length-1 array): `a` |
+| `b` | `Float64Array` | **in/out** · Input/output (length-1 array): `b` |
+| `c` | `Float64Array` | **out** · Output (length-1 array): `c` |
+| `s` | `Float64Array` | **out** · Output (length-1 array): `s` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -58,12 +58,12 @@ The rotation is defined such that:
 
 where `c**2 + s**2 = 1`.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `a` | `Float64Array` | in/out |  |  | input/output (length-1 array): `a` |
-| `b` | `Float64Array` | in/out |  |  | input/output (length-1 array): `b` |
-| `c` | `Float64Array` | out |  |  | output (length-1 array): `c` |
-| `s` | `Float64Array` | out |  |  | output (length-1 array): `s` |
+| Parameter | Type | Description |
+|---|---|---|
+| `a` | `Float64Array` | **in/out** · Input/output (length-1 array): `a` |
+| `b` | `Float64Array` | **in/out** · Input/output (length-1 array): `b` |
+| `c` | `Float64Array` | **out** · Output (length-1 array): `c` |
+| `s` | `Float64Array` | **out** · Output (length-1 array): `s` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -30,18 +30,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dgeqp3( order, M, N, A, LDA, JPVT, strideJPVT, TAU, strideTAU, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix (M-by-N, column-major) |
-| ↳ `LDA` | `PositiveInteger` | in |  | column-major requires `LDA ≥ max( 1, M )`; row-major requires `LDA ≥ max( 1, N )` | leading dimension of A |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation (1-based on exit) |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| `TAU` | `Float64Array` | out | `min( M, N )` |  | output reflector scalars (length >= min(M,N)) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| `WORK` | `(Float64Array\|null)` | out | `≥ IWS` |  | workspace of length at least `3*N+1` (for optimal performance at least `2*N + (N+1)*NB`, NB = 32, which enables the blocked path), or `null` to allocate the optimum |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M-by-N, column-major) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Column-major requires `LDA ≥ max(1, M)`<br>Row-major requires `LDA ≥ max(1, N)` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation (1-based on exit) |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| `TAU` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output reflector scalars (length >= min(M,N)) |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ IWS</sub> | **out** · Workspace of length at least `3*N+1` (for optimal performance at least `2*N + (N+1)*NB`, NB = 32, which enables the blocked path), or `null` to allocate the optimum |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -83,23 +83,23 @@ Computes a QR factorization with column pivoting of a matrix A: A·P = Q·R usin
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input/output matrix (M-by-N) |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation (1-based on exit) |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Float64Array` | out | `min( M, N )` |  | output reflector scalars (length >= min(M,N)) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `WORK` | `Float64Array` | out | `≥ IWS` |  | workspace array of length at least `3*N+1`; for optimal performance at least `2*N + (N+1)*NB` (NB = 32), which enables the blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (must be 1) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix (M-by-N) |
+| ↳ `strideA1` | `integer` | First dimension stride of A |
+| ↳ `strideA2` | `integer` | Second dimension stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation (1-based on exit) |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Float64Array`<br><sub>length min(M, N)</sub> | **out** · Output reflector scalars (length >= min(M,N)) |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `WORK` | `Float64Array`<br><sub>length ≥ IWS</sub> | **out** · Workspace array of length at least `3*N+1`; for optimal performance at least `2*N + (N+1)*NB` (NB = 32), which enables the blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK (must be 1) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

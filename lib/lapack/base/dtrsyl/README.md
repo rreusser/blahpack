@@ -20,21 +20,21 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtrsyl( order, trana, tranb, isgn, M, N, A, LDA, B, LDB, C, LDC, scale ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trana` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the option op(A): `'no-transpose'`: op(A) = A (No transpose) `'transpose'`: op(A) = A**T (Transpose) |
-| `tranb` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the option op(B): `'no-transpose'`: op(B) = B (No transpose) `'transpose'`: op(B) = B**T (Transpose) |
-| `isgn` | `integer` | in |  | rejects `isgn !== 1 && isgn !== -1` | specifies the sign in the equation: = +1: solve op(A)*X + X*op(B) = scale*C = -1: solve op(A)*X - X*op(B) = scale*C. |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | the order of the matrix A, and the number of rows in the matrices X and C. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix B, and the number of columns in the matrices X and C. |
-| `A` | `Float64Array` | in | `M × M` |  | the upper quasi-triangular matrix A, in Schur canonical form. |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, M )` | leading dimension of `A` |
-| `B` | `Float64Array` | in | `N × N` |  | the upper quasi-triangular matrix B, in Schur canonical form. |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `C` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X. |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `scale` | `Float64Array` | out |  |  | the scale factor, scale, set <= 1 to avoid overflow in X. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trana` | `TransposeOperation` | Specifies the option op(A): `'no-transpose'`: op(A) = A (No transpose) `'transpose'`: op(A) = A\*\*T (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `tranb` | `TransposeOperation` | Specifies the option op(B): `'no-transpose'`: op(B) = B (No transpose) `'transpose'`: op(B) = B\*\*T (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `isgn` | `integer` | Specifies the sign in the equation: = +1: solve op(A)\*X + X\*op(B) = scale\*C = -1: solve op(A)\*X - X\*op(B) = scale\*C.<br>Rejects `isgn !== 1 && isgn !== -1` |
+| `M` | `NonNegativeInteger` | The order of the matrix A, and the number of rows in the matrices X and C.<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | The order of the matrix B, and the number of columns in the matrices X and C.<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | The upper quasi-triangular matrix A, in Schur canonical form. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, M)` |
+| `B` | `Float64Array`<br><sub>N × N</sub> | The upper quasi-triangular matrix B, in Schur canonical form. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N right hand side matrix C. On exit, C is overwritten by the solution matrix X. |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `scale` | `Float64Array` | **out** · The scale factor, scale, set <= 1 to avoid overflow in X. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -102,26 +102,26 @@ scale is an output scale factor set <= 1 to avoid overflow in X.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trana` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` of A |
-| `tranb` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` of B |
-| `isgn` | `integer` | in |  | rejects `isgn !== 1 && isgn !== -1` | +1 or -1 |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows in A and C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns in B and C |
-| `A` | `Float64Array` | in | `M × M` |  | M-by-M upper quasi-triangular matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `B` | `Float64Array` | in | `N × N` |  | N-by-N upper quasi-triangular matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
-| `C` | `Float64Array` | in/out | `M × N` |  | M-by-N right-hand side, overwritten with solution X |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `scale` | `Float64Array` | out |  |  | output: scale[0] is the scaling factor |
+| Parameter | Type | Description |
+|---|---|---|
+| `trana` | `TransposeOperation` | `'no-transpose'` or `'transpose'` of A<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `tranb` | `TransposeOperation` | `'no-transpose'` or `'transpose'` of B<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `isgn` | `integer` | +1 or -1<br>Rejects `isgn !== 1 && isgn !== -1` |
+| `M` | `NonNegativeInteger` | Number of rows in A and C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns in B and C<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | M-by-M upper quasi-triangular matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `B` | `Float64Array`<br><sub>N × N</sub> | N-by-N upper quasi-triangular matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · M-by-N right-hand side, overwritten with solution X |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `scale` | `Float64Array` | **out** · Output: scale[0] is the scaling factor |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

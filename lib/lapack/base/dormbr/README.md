@@ -28,22 +28,22 @@ dormbr(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to apply Q, `'apply-P'` to apply P^T |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix for DGEBRD |
-| `A` | `Float64Array` | in | `(side === 'left' ? M : N) × (min( side === 'left' ? M : N, K ))` |  | matrix containing reflectors from DGEBRD |
-| ↳ `LDA` | `PositiveInteger` | in |  | rejects `(vect === 'apply-Q' && lda < max( 1, side === 'left' ? M : N )) \|\| (vect !== 'apply-Q' && lda < max( 1, min( side === 'left' ? M : N, K ) ))` | leading dimension of `A` |
-| `TAU` | `Float64Array` | in | `min( side === 'left' ? M : N, K )` |  | scalar factors of reflectors (TAUQ or TAUP) |
-| ↳ `strideTAU` | `integer` | in |  |  | `TAU` stride length |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of `C` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr/dormlq optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to apply Q, `'apply-P'` to apply P^T |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` or `'transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix for DGEBRD<br>Requires `K ≥ 0` |
+| `A` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (min(side === 'left' ? M : N, K))</sub> | Matrix containing reflectors from DGEBRD |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Rejects `(vect === 'apply-Q' && lda < max(1, side === 'left' ? M : N)) \|\| (vect !== 'apply-Q' && lda < max(1, min(side === 'left' ? M : N, K)))` |
+| `TAU` | `Float64Array`<br><sub>length min(side === 'left' ? M : N, K)</sub> | Scalar factors of reflectors (TAUQ or TAUP) |
+| ↳ `strideTAU` | `integer` | `TAU` stride length |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C`<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr/dormlq optimum) enable the full blocked path; if `null`, `nw*NB + TSIZE` elements are allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -103,28 +103,28 @@ dormbr.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `vect` | `("apply-Q"\|"apply-P")` | in |  | one of `'apply-P'`, `'apply-Q'` | `'apply-Q'` to apply Q, `'apply-P'` to apply P^T |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` or `'right'` |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | `'no-transpose'` or `'transpose'` |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of columns/rows in original matrix for DGEBRD |
-| `A` | `Float64Array` | in | `(side === 'left' ? M : N) × (min( side === 'left' ? M : N, K ))` |  | matrix containing reflectors from DGEBRD |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `TAU` | `Float64Array` | in | `min( side === 'left' ? M : N, K )` |  | scalar factors of reflectors (TAUQ or TAUP) |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C |
-| `WORK` | `Float64Array` | out | `≥ side === 'left' ? max( 1, N ) : max( 1, M )` |  | workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr/dormlq optimum) enable the full blocked path |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `vect` | `"apply-Q" \| "apply-P"` | `'apply-Q'` to apply Q, `'apply-P'` to apply P^T |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `"no-transpose" \| "transpose"` | `'no-transpose'` or `'transpose'` |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of columns/rows in original matrix for DGEBRD<br>Requires `K ≥ 0` |
+| `A` | `Float64Array`<br><sub>(side === 'left' ? M : N) × (min(side === 'left' ? M : N, K))</sub> | Matrix containing reflectors from DGEBRD |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `TAU` | `Float64Array`<br><sub>length min(side === 'left' ? M : N, K)</sub> | Scalar factors of reflectors (TAUQ or TAUP) |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C |
+| `WORK` | `Float64Array`<br><sub>length ≥ side === 'left' ? max(1, N) : max(1, M)</sub> | **out** · Workspace of length at least `max(1,N)` if `side = 'left'` and `max(1,M)` if `side = 'right'` (`nw`); the reference's optimum is `nw*NB`, and `nw*NB + TSIZE` elements (`NB = 32`, `TSIZE = 65*64 = 4160`, the dormqr/dormlq optimum) enable the full blocked path |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

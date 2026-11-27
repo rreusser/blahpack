@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dtpsv( order, uplo, trans, diag, N, AP, x, strideX ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | whether the matrix is an upper or lower triangular matrix as follows: `uplo === 'upper'` A is an upper triangular matrix. `uplo === 'lower'` A is a lower triangular matrix. |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | the equations to be solved as follows: `trans === 'no-transpose'` A*x = b. `trans === 'transpose'` A**T*x = b. |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | whether or not A is unit triangular as follows: `diag === 'unit'` A is assumed to be unit triangular. `diag === 'non-unit'` A is not assumed to be unit triangular. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | before entry with `uplo === 'upper'`, the array AP must contain the upper triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. |
-| `x` | `Float64Array` | in/out | `N` |  | before entry, the incremented array X must contain the n element right-hand side vector b. On exit, X is overwritten with the solution vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Whether the matrix is an upper or lower triangular matrix as follows: `uplo === 'upper'` A is an upper triangular matrix. `uplo === 'lower'` A is a lower triangular matrix. |
+| `trans` | `TransposeOperation` | The equations to be solved as follows: `trans === 'no-transpose'` A\*x = b. `trans === 'transpose'` A\*\*T\*x = b.<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Whether or not A is unit triangular as follows: `diag === 'unit'` A is assumed to be unit triangular. `diag === 'non-unit'` A is not assumed to be unit triangular. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Before entry with `uplo === 'upper'`, the array AP must contain the upper triangular matrix packed sequentially, column by column, so that AP( 1 ) contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 ) and a( 2, 2 ) respectively, and so on. |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Before entry, the incremented array X must contain the n element right-hand side vector b. On exit, X is overwritten with the solution vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -95,18 +95,18 @@ Solves one of the systems of equations `A*x = b` or `A^T*x = b`.
 `b` and `x` are N element vectors and `A` is an N by N unit or non-unit,
 upper or lower triangular matrix, supplied in packed form.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix is upper or lower triangular |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation to be performed |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether the matrix is unit or non-unit triangular |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `AP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | packed triangular matrix |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `x` | `Float64Array` | in/out | `N` |  | input/output vector (b on entry, x on exit) |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix is upper or lower triangular |
+| `trans` | `TransposeOperation` | Specifies the operation to be performed<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether the matrix is unit or non-unit triangular |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Packed triangular matrix |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · Input/output vector (b on entry, x on exit) |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

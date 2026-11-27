@@ -38,36 +38,36 @@ dlaqr5(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `wantt` | `boolean` | in |  |  | whether the full Schur form is being computed |
-| `wantz` | `boolean` | in |  |  | whether the Schur vectors are being accumulated |
-| `kacc22` | `integer` | in |  |  | accumulation strategy (0, 1, or 2) |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix H |
-| `ktop` | `integer` | in |  |  | first row/column of the active block (1-based) |
-| `kbot` | `integer` | in |  |  | last row/column of the active block (1-based) |
-| `nshfts` | `NonNegativeInteger` | in |  |  | number of simultaneous shifts (even) |
-| `SR` | `Float64Array` | in/out | `nshfts` |  | real parts of the shifts (length `nshfts`) |
-| ↳ `strideSR` | `integer` | in |  |  | `SR` stride length |
-| `SI` | `Float64Array` | in/out | `nshfts` |  | imaginary parts of the shifts (length `nshfts`) |
-| ↳ `strideSI` | `integer` | in |  |  | `SI` stride length |
-| `H` | `Float64Array` | in/out | `N × N` |  | upper Hessenberg matrix; overwritten |
-| ↳ `LDH` | `PositiveInteger` | in |  |  | leading dimension of `H` |
-| `iloz` | `integer` | in |  |  | lower row index for accumulating Z (1-based) |
-| `ihiz` | `NonNegativeInteger` | in |  |  | upper row index for accumulating Z (1-based) |
-| `Z` | `Float64Array` | in/out | `N × ihiz` |  | Schur vectors; updated when `wantz` is true |
-| ↳ `LDZ` | `PositiveInteger` | in |  |  | leading dimension of `Z` |
-| `V` | `Float64Array` | out | `3 × trunc( nshfts / 2 )` |  | workspace of bulge data (`3 x nshfts/2`) |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `U` | `Float64Array` | out | `2 * nshfts × 2 * nshfts` |  | accumulator workspace (`(2*nshfts+1) x (2*nshfts+1)`) |
-| ↳ `LDU` | `PositiveInteger` | in |  |  | leading dimension of `U` |
-| `nv` | `integer` | in |  |  | number of rows of the horizontal workspace `WV` |
-| `WV` | `Float64Array` | out | `nv × 2 * nshfts` |  | vertical workspace |
-| ↳ `LDWV` | `PositiveInteger` | in |  |  | leading dimension of `WV` |
-| `nh` | `NonNegativeInteger` | in |  |  | number of columns of the horizontal workspace `WH` |
-| `WH` | `Float64Array` | out | `2 * nshfts × nh` |  | horizontal workspace |
-| ↳ `LDWH` | `PositiveInteger` | in |  |  | leading dimension of `WH` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `wantt` | `boolean` | Whether the full Schur form is being computed |
+| `wantz` | `boolean` | Whether the Schur vectors are being accumulated |
+| `kacc22` | `integer` | Accumulation strategy (0, 1, or 2) |
+| `N` | `NonNegativeInteger` | Order of the matrix H |
+| `ktop` | `integer` | First row/column of the active block (1-based) |
+| `kbot` | `integer` | Last row/column of the active block (1-based) |
+| `nshfts` | `NonNegativeInteger` | Number of simultaneous shifts (even) |
+| `SR` | `Float64Array`<br><sub>length nshfts</sub> | **in/out** · Real parts of the shifts (length `nshfts`) |
+| ↳ `strideSR` | `integer` | `SR` stride length |
+| `SI` | `Float64Array`<br><sub>length nshfts</sub> | **in/out** · Imaginary parts of the shifts (length `nshfts`) |
+| ↳ `strideSI` | `integer` | `SI` stride length |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Upper Hessenberg matrix; overwritten |
+| ↳ `LDH` | `PositiveInteger` | Leading dimension of `H` |
+| `iloz` | `integer` | Lower row index for accumulating Z (1-based) |
+| `ihiz` | `NonNegativeInteger` | Upper row index for accumulating Z (1-based) |
+| `Z` | `Float64Array`<br><sub>N × ihiz</sub> | **in/out** · Schur vectors; updated when `wantz` is true |
+| ↳ `LDZ` | `PositiveInteger` | Leading dimension of `Z` |
+| `V` | `Float64Array`<br><sub>3 × (trunc(nshfts / 2))</sub> | **out** · Workspace of bulge data (`3 x nshfts/2`) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `U` | `Float64Array`<br><sub>(2 * nshfts) × (2 * nshfts)</sub> | **out** · Accumulator workspace (`(2*nshfts+1) x (2*nshfts+1)`) |
+| ↳ `LDU` | `PositiveInteger` | Leading dimension of `U` |
+| `nv` | `integer` | Number of rows of the horizontal workspace `WV` |
+| `WV` | `Float64Array`<br><sub>nv × (2 * nshfts)</sub> | **out** · Vertical workspace |
+| ↳ `LDWV` | `PositiveInteger` | Leading dimension of `WV` |
+| `nh` | `NonNegativeInteger` | Number of columns of the horizontal workspace `WH` |
+| `WH` | `Float64Array`<br><sub>(2 * nshfts) × nh</sub> | **out** · Horizontal workspace |
+| ↳ `LDWH` | `PositiveInteger` | Leading dimension of `WH` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -133,49 +133,49 @@ matrix, chasing a chain of bulges from left to right. Called by dlaqr0.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `wantt` | `boolean` | in |  |  | whether the quasi-triangular Schur factor is being computed |
-| `wantz` | `boolean` | in |  |  | whether the orthogonal Schur factor is being computed |
-| `kacc22` | `integer` | in |  |  | computation mode (0, 1, or 2) for far-from-diagonal updates |
-| `N` | `NonNegativeInteger` | in |  |  | order of the Hessenberg matrix H |
-| `ktop` | `integer` | in |  |  | 0-based index of first row/col of active block |
-| `kbot` | `integer` | in |  |  | 0-based index of last row/col of active block |
-| `nshfts` | `NonNegativeInteger` | in |  |  | number of shifts (must be positive and even) |
-| `SR` | `Float64Array` | in/out | `nshfts` |  | real parts of shifts, length nshfts |
-| ↳ `strideSR` | `integer` | in |  |  | stride for SR |
-| ↳ `offsetSR` | `NonNegativeInteger` | in |  |  | offset for SR |
-| `SI` | `Float64Array` | in/out | `nshfts` |  | imaginary parts of shifts, length nshfts |
-| ↳ `strideSI` | `integer` | in |  |  | stride for SI |
-| ↳ `offsetSI` | `NonNegativeInteger` | in |  |  | offset for SI |
-| `H` | `Float64Array` | in/out | `N × N` |  | Hessenberg matrix (N-by-N), modified in-place |
-| ↳ `strideH1` | `integer` | in |  |  | row stride for H |
-| ↳ `strideH2` | `integer` | in |  |  | column stride for H |
-| ↳ `offsetH` | `NonNegativeInteger` | in |  |  | offset for H |
-| `iloz` | `integer` | in |  |  | 0-based first row of Z to update |
-| `ihiz` | `NonNegativeInteger` | in |  |  | 0-based last row of Z to update |
-| `Z` | `Float64Array` | in/out | `N × ihiz` |  | orthogonal matrix, updated if wantz |
-| ↳ `strideZ1` | `integer` | in |  |  | row stride for Z |
-| ↳ `strideZ2` | `integer` | in |  |  | column stride for Z |
-| ↳ `offsetZ` | `NonNegativeInteger` | in |  |  | offset for Z |
-| `V` | `Float64Array` | out | `3 × trunc( nshfts / 2 )` |  | scratch matrix for reflectors (3-by-nshfts/2) |
-| ↳ `strideV1` | `integer` | in |  |  | row stride for V |
-| ↳ `strideV2` | `integer` | in |  |  | column stride for V |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | offset for V |
-| `U` | `Float64Array` | out | `2 * nshfts × 2 * nshfts` |  | scratch matrix for accumulated reflections |
-| ↳ `strideU1` | `integer` | in |  |  | row stride for U |
-| ↳ `strideU2` | `integer` | in |  |  | column stride for U |
-| ↳ `offsetU` | `NonNegativeInteger` | in |  |  | offset for U |
-| `nv` | `integer` | in |  |  | number of rows available in WV |
-| `WV` | `Float64Array` | out | `nv × 2 * nshfts` |  | workspace matrix |
-| ↳ `strideWV1` | `integer` | in |  |  | row stride for WV |
-| ↳ `strideWV2` | `integer` | in |  |  | column stride for WV |
-| ↳ `offsetWV` | `NonNegativeInteger` | in |  |  | offset for WV |
-| `nh` | `NonNegativeInteger` | in |  |  | number of columns available in WH |
-| `WH` | `Float64Array` | out | `2 * nshfts × nh` |  | workspace matrix |
-| ↳ `strideWH1` | `integer` | in |  |  | row stride for WH |
-| ↳ `strideWH2` | `integer` | in |  |  | column stride for WH |
-| ↳ `offsetWH` | `NonNegativeInteger` | in |  |  | offset for WH |
+| Parameter | Type | Description |
+|---|---|---|
+| `wantt` | `boolean` | Whether the quasi-triangular Schur factor is being computed |
+| `wantz` | `boolean` | Whether the orthogonal Schur factor is being computed |
+| `kacc22` | `integer` | Computation mode (0, 1, or 2) for far-from-diagonal updates |
+| `N` | `NonNegativeInteger` | Order of the Hessenberg matrix H |
+| `ktop` | `integer` | 0-based index of first row/col of active block |
+| `kbot` | `integer` | 0-based index of last row/col of active block |
+| `nshfts` | `NonNegativeInteger` | Number of shifts (must be positive and even) |
+| `SR` | `Float64Array`<br><sub>length nshfts</sub> | **in/out** · Real parts of shifts, length nshfts |
+| ↳ `strideSR` | `integer` | Stride for SR |
+| ↳ `offsetSR` | `NonNegativeInteger` | Offset for SR |
+| `SI` | `Float64Array`<br><sub>length nshfts</sub> | **in/out** · Imaginary parts of shifts, length nshfts |
+| ↳ `strideSI` | `integer` | Stride for SI |
+| ↳ `offsetSI` | `NonNegativeInteger` | Offset for SI |
+| `H` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Hessenberg matrix (N-by-N), modified in-place |
+| ↳ `strideH1` | `integer` | Row stride for H |
+| ↳ `strideH2` | `integer` | Column stride for H |
+| ↳ `offsetH` | `NonNegativeInteger` | Offset for H |
+| `iloz` | `integer` | 0-based first row of Z to update |
+| `ihiz` | `NonNegativeInteger` | 0-based last row of Z to update |
+| `Z` | `Float64Array`<br><sub>N × ihiz</sub> | **in/out** · Orthogonal matrix, updated if wantz |
+| ↳ `strideZ1` | `integer` | Row stride for Z |
+| ↳ `strideZ2` | `integer` | Column stride for Z |
+| ↳ `offsetZ` | `NonNegativeInteger` | Offset for Z |
+| `V` | `Float64Array`<br><sub>3 × (trunc(nshfts / 2))</sub> | **out** · Scratch matrix for reflectors (3-by-nshfts/2) |
+| ↳ `strideV1` | `integer` | Row stride for V |
+| ↳ `strideV2` | `integer` | Column stride for V |
+| ↳ `offsetV` | `NonNegativeInteger` | Offset for V |
+| `U` | `Float64Array`<br><sub>(2 * nshfts) × (2 * nshfts)</sub> | **out** · Scratch matrix for accumulated reflections |
+| ↳ `strideU1` | `integer` | Row stride for U |
+| ↳ `strideU2` | `integer` | Column stride for U |
+| ↳ `offsetU` | `NonNegativeInteger` | Offset for U |
+| `nv` | `integer` | Number of rows available in WV |
+| `WV` | `Float64Array`<br><sub>nv × (2 * nshfts)</sub> | **out** · Workspace matrix |
+| ↳ `strideWV1` | `integer` | Row stride for WV |
+| ↳ `strideWV2` | `integer` | Column stride for WV |
+| ↳ `offsetWV` | `NonNegativeInteger` | Offset for WV |
+| `nh` | `NonNegativeInteger` | Number of columns available in WH |
+| `WH` | `Float64Array`<br><sub>(2 * nshfts) × nh</sub> | **out** · Workspace matrix |
+| ↳ `strideWH1` | `integer` | Row stride for WH |
+| ↳ `strideWH2` | `integer` | Column stride for WH |
+| ↳ `offsetWH` | `NonNegativeInteger` | Offset for WH |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

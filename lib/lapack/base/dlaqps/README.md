@@ -33,28 +33,28 @@ dlaqps(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `M` | `NonNegativeInteger` | in |  |  | the number of rows of the matrix A. |
-| `N` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix A. |
-| `offset` | `integer` | in |  |  | the number of rows of A that have been factorized in previous steps. |
-| `nb` | `NonNegativeInteger` | in |  |  | the number of columns to factorize. |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns actually factorized |
-| `A` | `Float64Array` | in/out | `M × N` |  | on entry, the M-by-N matrix A. On exit, block A(OFFSET+1:M,1:KB) is the triangular factor obtained and block A(1:OFFSET,1:N) has been accordingly pivoted, but no factorized. |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `JPVT` | `Int32Array` | in/out | `N` |  | jPVT(I) = K <==> Column K of the full matrix A has been permuted into position I in AP (0-based). |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride length for `JPVT` |
-| `TAU` | `Float64Array` | out | `kb` |  | the scalar factors of the elementary reflectors. |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `VN1` | `Float64Array` | in/out | `N` |  | the vector with the partial column norms. |
-| ↳ `strideVN1` | `integer` | in |  |  | stride length for `VN1` |
-| `VN2` | `Float64Array` | in/out | `N` |  | the vector with the exact column norms. |
-| ↳ `strideVN2` | `integer` | in |  |  | stride length for `VN2` |
-| `AUXV` | `Float64Array` | in/out | `nb` |  | auxiliary vector. |
-| ↳ `strideAUXV` | `integer` | in |  |  | stride length for `AUXV` |
-| `F` | `Float64Array` | in/out | `N × nb` |  | matrix F**T = L*Y**T*A. |
-| ↳ `LDF` | `PositiveInteger` | in |  |  | leading dimension of `F` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `M` | `NonNegativeInteger` | The number of rows of the matrix A. |
+| `N` | `NonNegativeInteger` | The number of columns of the matrix A. |
+| `offset` | `integer` | The number of rows of A that have been factorized in previous steps. |
+| `nb` | `NonNegativeInteger` | The number of columns to factorize. |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns actually factorized |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · On entry, the M-by-N matrix A. On exit, block A(OFFSET+1:M,1:KB) is the triangular factor obtained and block A(1:OFFSET,1:N) has been accordingly pivoted, but no factorized. |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · JPVT(I) = K <==> Column K of the full matrix A has been permuted into position I in AP (0-based). |
+| ↳ `strideJPVT` | `integer` | Stride length for `JPVT` |
+| `TAU` | `Float64Array`<br><sub>length kb</sub> | **out** · The scalar factors of the elementary reflectors. |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · The vector with the partial column norms. |
+| ↳ `strideVN1` | `integer` | Stride length for `VN1` |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · The vector with the exact column norms. |
+| ↳ `strideVN2` | `integer` | Stride length for `VN2` |
+| `AUXV` | `Float64Array`<br><sub>length nb</sub> | **in/out** · Auxiliary vector. |
+| ↳ `strideAUXV` | `integer` | Stride length for `AUXV` |
+| `F` | `Float64Array`<br><sub>N × nb</sub> | **in/out** · Matrix F\*\*T = L\*Y\*\*T\*A. |
+| ↳ `LDF` | `PositiveInteger` | Leading dimension of `F` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -112,36 +112,36 @@ factored, which is returned as kb.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | total rows of A |
-| `N` | `NonNegativeInteger` | in |  |  | columns of current submatrix |
-| `offset` | `integer` | in |  |  | rows already factored |
-| `nb` | `NonNegativeInteger` | in |  |  | desired block size |
-| `kb` | `Int32Array` | out |  |  | output (length-1 array): the number of columns actually factorized |
-| `A` | `Float64Array` | in/out | `M × N` |  | matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dim stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second dim stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
-| `JPVT` | `Int32Array` | in/out | `N` |  | column permutation |
-| ↳ `strideJPVT` | `integer` | in |  |  | stride for JPVT |
-| ↳ `offsetJPVT` | `NonNegativeInteger` | in |  |  | starting index for JPVT |
-| `TAU` | `Float64Array` | out | `kb` |  | reflector scalars |
-| ↳ `strideTAU` | `integer` | in |  |  | stride for TAU |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for TAU |
-| `VN1` | `Float64Array` | in/out | `N` |  | partial column norms |
-| ↳ `strideVN1` | `integer` | in |  |  | stride for VN1 |
-| ↳ `offsetVN1` | `NonNegativeInteger` | in |  |  | starting index for VN1 |
-| `VN2` | `Float64Array` | in/out | `N` |  | original column norms |
-| ↳ `strideVN2` | `integer` | in |  |  | stride for VN2 |
-| ↳ `offsetVN2` | `NonNegativeInteger` | in |  |  | starting index for VN2 |
-| `AUXV` | `Float64Array` | in/out | `nb` |  | auxiliary vector (length >= NB) |
-| ↳ `strideAUXV` | `integer` | in |  |  | stride for AUXV |
-| ↳ `offsetAUXV` | `NonNegativeInteger` | in |  |  | starting index for AUXV |
-| `F` | `Float64Array` | in/out | `N × nb` |  | panel update matrix (N-by-NB) |
-| ↳ `strideF1` | `integer` | in |  |  | first dim stride of F |
-| ↳ `strideF2` | `integer` | in |  |  | second dim stride of F |
-| ↳ `offsetF` | `NonNegativeInteger` | in |  |  | starting index for F |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total rows of A |
+| `N` | `NonNegativeInteger` | Columns of current submatrix |
+| `offset` | `integer` | Rows already factored |
+| `nb` | `NonNegativeInteger` | Desired block size |
+| `kb` | `Int32Array` | **out** · Output (length-1 array): the number of columns actually factorized |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Matrix |
+| ↳ `strideA1` | `integer` | First dim stride of A |
+| ↳ `strideA2` | `integer` | Second dim stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
+| `JPVT` | `Int32Array`<br><sub>length N</sub> | **in/out** · Column permutation |
+| ↳ `strideJPVT` | `integer` | Stride for JPVT |
+| ↳ `offsetJPVT` | `NonNegativeInteger` | Starting index for JPVT |
+| `TAU` | `Float64Array`<br><sub>length kb</sub> | **out** · Reflector scalars |
+| ↳ `strideTAU` | `integer` | Stride for TAU |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for TAU |
+| `VN1` | `Float64Array`<br><sub>length N</sub> | **in/out** · Partial column norms |
+| ↳ `strideVN1` | `integer` | Stride for VN1 |
+| ↳ `offsetVN1` | `NonNegativeInteger` | Starting index for VN1 |
+| `VN2` | `Float64Array`<br><sub>length N</sub> | **in/out** · Original column norms |
+| ↳ `strideVN2` | `integer` | Stride for VN2 |
+| ↳ `offsetVN2` | `NonNegativeInteger` | Starting index for VN2 |
+| `AUXV` | `Float64Array`<br><sub>length nb</sub> | **in/out** · Auxiliary vector (length >= NB) |
+| ↳ `strideAUXV` | `integer` | Stride for AUXV |
+| ↳ `offsetAUXV` | `NonNegativeInteger` | Starting index for AUXV |
+| `F` | `Float64Array`<br><sub>N × nb</sub> | **in/out** · Panel update matrix (N-by-NB) |
+| ↳ `strideF1` | `integer` | First dim stride of F |
+| ↳ `strideF2` | `integer` | Second dim stride of F |
+| ↳ `offsetF` | `NonNegativeInteger` | Starting index for F |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

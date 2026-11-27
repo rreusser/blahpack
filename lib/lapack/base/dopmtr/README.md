@@ -28,20 +28,20 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dopmtr( order, side, uplo, trans, M, N, AP, TAU, strideTAU, C, LDC, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | 'left' or 'right' |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of C |
-| `AP` | `Float64Array` | in | `( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )` |  | packed reflector storage from dsptrd |
-| `TAU` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | scalar factors from dsptrd |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| `C` | `Float64Array` | in/out | `M × N` |  | input/output M-by-N matrix (column-major) |
-| ↳ `LDC` | `PositiveInteger` | in |  | column-major requires `LDC ≥ max( 1, M )`; row-major requires `LDC ≥ max( 1, N )` | leading dimension of C |
-| `WORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace array |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | 'left' or 'right' |
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `trans` | `"no-transpose" \| "transpose"` | 'no-transpose' or 'transpose' |
+| `M` | `NonNegativeInteger` | Number of rows of C<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of C<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length (side === 'left') ? trunc(M * (M + 1) / 2) : trunc(N * (N + 1) / 2)</sub> | Packed reflector storage from dsptrd |
+| `TAU` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Scalar factors from dsptrd |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input/output M-by-N matrix (column-major) |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of C<br>Column-major requires `LDC ≥ max(1, M)`<br>Row-major requires `LDC ≥ max(1, N)` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace array |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -99,26 +99,26 @@ Overwrites a general matrix with a transformation from the orthogonal matrix Q r
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | specifies the operation type |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies the operation type |
-| `trans` | `("no-transpose"\|"transpose")` | in |  | one of `'no-transpose'`, `'transpose'` | specifies the operation type |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns |
-| `AP` | `Float64Array` | in | `( side === 'left' ) ? trunc( M * (M + 1) / 2 ) : trunc( N * (N + 1) / 2 )` |  | input array |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `TAU` | `Float64Array` | in | `( side === 'left' ) ? M - 1 : N - 1` |  | input array |
-| ↳ `strideTAU` | `integer` | in |  |  | stride length for `TAU` |
-| ↳ `offsetTAU` | `NonNegativeInteger` | in |  |  | starting index for `TAU` |
-| `C` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Float64Array` | out | `≥ N` |  | output array |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | Specifies the operation type<br>One of `'left'`, `'right'`. |
+| `uplo` | `MatrixTriangle` | Specifies the operation type<br>One of `'lower'`, `'upper'`. |
+| `trans` | `"no-transpose" \| "transpose"` | Specifies the operation type<br>One of `'no-transpose'`, `'transpose'`. |
+| `M` | `NonNegativeInteger` | Number of rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length (side === 'left') ? trunc(M * (M + 1) / 2) : trunc(N * (N + 1) / 2)</sub> | Input array |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `TAU` | `Float64Array`<br><sub>length (side === 'left') ? M - 1 : N - 1</sub> | Input array |
+| ↳ `strideTAU` | `integer` | Stride length for `TAU` |
+| ↳ `offsetTAU` | `NonNegativeInteger` | Starting index for `TAU` |
+| `C` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Output array |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

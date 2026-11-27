@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarcm( order, M, N, A, LDA, B, LDB, C, LDC, RWORK ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of `A` and `C` |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of `B` and `C` |
-| `A` | `Float64Array` | in | `M × M` |  | real `M`-by-`M` input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Complex128Array` | in | `M × N` |  | complex `M`-by-`N` input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
-| `C` | `Complex128Array` | out | `M × N` |  | complex `M`-by-`N` output matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ 2 * M * N` |  | real workspace of length at least `2*M*N` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Number of rows of `A` and `C` |
+| `N` | `NonNegativeInteger` | Number of columns of `B` and `C` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | Real `M`-by-`M` input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | Complex `M`-by-`N` input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **out** · Complex `M`-by-`N` output matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ 2 * M * N</sub> | **out** · Real workspace of length at least `2*M*N` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,25 +73,25 @@ zlarcm.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of `A` and `C` |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of `B` and `C` |
-| `A` | `Float64Array` | in | `M × M` |  | real `M`-by-`M` input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Complex128Array` | in | `M × N` |  | complex `M`-by-`N` input matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` (in complex elements) |
-| `C` | `Complex128Array` | out | `M × N` |  | complex `M`-by-`N` output matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` (in complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` (in complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` (in complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 2 * M * N` |  | real workspace of length at least `2*M*N` |
-| ↳ `strideRWork` | `integer` | in |  |  | stride length for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Number of rows of `A` and `C` |
+| `N` | `NonNegativeInteger` | Number of columns of `B` and `C` |
+| `A` | `Float64Array`<br><sub>M × M</sub> | Real `M`-by-`M` input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | Complex `M`-by-`N` input matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` (in complex elements) |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **out** · Complex `M`-by-`N` output matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` (in complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` (in complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` (in complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 2 * M * N</sub> | **out** · Real workspace of length at least `2*M*N` |
+| ↳ `strideRWork` | `integer` | Stride length for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

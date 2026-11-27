@@ -20,19 +20,19 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlag2( order, A, LDA, B, LDB, safmin, scale1, scale2, wr1, wr2, wi ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout |
-| `A` | `Float64Array` | in | `2 × 2` |  | input 2-by-2 matrix A |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of A |
-| `B` | `Float64Array` | in | `2 × 2` |  | input 2-by-2 upper triangular matrix B |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of B |
-| `safmin` | `number` | in |  |  | smallest positive number such that `1/safmin` does not overflow |
-| `scale1` | `Float64Array` | out |  |  | output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the first eigenvalue |
-| `scale2` | `Float64Array` | out |  |  | output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the second eigenvalue |
-| `wr1` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WR1 is SCALE1 times the eigenvalue closest to the (2,2) element of A B**(-1) |
-| `wr2` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WR2 is SCALE2 times the other eigenvalue |
-| `wi` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WI is zero |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout<br>One of `'row-major'`, `'column-major'`. |
+| `A` | `Float64Array`<br><sub>2 × 2</sub> | Input 2-by-2 matrix A |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A |
+| `B` | `Float64Array`<br><sub>2 × 2</sub> | Input 2-by-2 upper triangular matrix B |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B |
+| `safmin` | `number` | Smallest positive number such that `1/safmin` does not overflow |
+| `scale1` | `Float64Array` | **out** · Output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the first eigenvalue |
+| `scale2` | `Float64Array` | **out** · Output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the second eigenvalue |
+| `wr1` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WR1 is SCALE1 times the eigenvalue closest to the (2,2) element of A B\*\*(-1) |
+| `wr2` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WR2 is SCALE2 times the other eigenvalue |
+| `wi` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WI is zero |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,22 +79,22 @@ where `s` is a non-negative scaling factor chosen so that `w`, `w B`, and
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `A` | `Float64Array` | in | `2 × 2` |  | input 2-by-2 matrix A |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for `A` |
-| `B` | `Float64Array` | in | `2 × 2` |  | input 2-by-2 upper triangular matrix B |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for `B` |
-| `safmin` | `number` | in |  |  | smallest positive number such that `1/safmin` does not overflow |
-| `scale1` | `Float64Array` | out |  |  | output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the first eigenvalue |
-| `scale2` | `Float64Array` | out |  |  | output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the second eigenvalue |
-| `wr1` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WR1 is SCALE1 times the eigenvalue closest to the (2,2) element of A B**(-1) |
-| `wr2` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WR2 is SCALE2 times the other eigenvalue |
-| `wi` | `Float64Array` | out |  |  | output (length-1 array): if the eigenvalue is real, then WI is zero |
+| Parameter | Type | Description |
+|---|---|---|
+| `A` | `Float64Array`<br><sub>2 × 2</sub> | Input 2-by-2 matrix A |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for `A` |
+| `B` | `Float64Array`<br><sub>2 × 2</sub> | Input 2-by-2 upper triangular matrix B |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for `B` |
+| `safmin` | `number` | Smallest positive number such that `1/safmin` does not overflow |
+| `scale1` | `Float64Array` | **out** · Output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the first eigenvalue |
+| `scale2` | `Float64Array` | **out** · Output (length-1 array): a scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the second eigenvalue |
+| `wr1` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WR1 is SCALE1 times the eigenvalue closest to the (2,2) element of A B\*\*(-1) |
+| `wr2` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WR2 is SCALE2 times the other eigenvalue |
+| `wi` | `Float64Array` | **out** · Output (length-1 array): if the eigenvalue is real, then WI is zero |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

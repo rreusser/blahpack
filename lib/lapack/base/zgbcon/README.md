@@ -30,21 +30,21 @@ zgbcon(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | `'one-norm'` or `'inf-norm'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of sub-diagonals of A |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of super-diagonals of A |
-| `AB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | banded LU factor (from `zgbtrf`) |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ 2 * kl + ku + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` (>= `2*kl+ku+1`) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from `zgbtrf` |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm (or infinity-norm) of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | output array (single element) receiving the reciprocal condition number |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 2 * N` |  | workspace (>= `2*N` complex elements); auto-allocated when `null` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ N` |  | workspace (>= `N` reals); auto-allocated when `null` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `norm` | `"one-norm" \| "inf-norm"` | `'one-norm'` or `'inf-norm'` |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of sub-diagonals of A<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of super-diagonals of A<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | Banded LU factor (from `zgbtrf`) |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` (>= `2*kl+ku+1`)<br>Column-major requires `LDAB ≥ 2 * kl + ku + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from `zgbtrf` |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `anorm` | `number` | The 1-norm (or infinity-norm) of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Output array (single element) receiving the reciprocal condition number |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace (>= `2*N` complex elements); auto-allocated when `null` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ N</sub> | **out** · Workspace (>= `N` reals); auto-allocated when `null` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -96,27 +96,27 @@ Estimates the reciprocal of the condition number of a complex general band matri
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `norm` | `("one-norm"\|"inf-norm")` | in |  | one of `'inf-norm'`, `'one-norm'` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `kl` | `NonNegativeInteger` | in |  | requires `kl ≥ 0` | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  | requires `ku ≥ 0` | number of superdiagonals |
-| `AB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | LU factorization from zgbtrf, (2*KL+KU+1) by N |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` (complex elements) |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` (complex elements) |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` (complex elements) |
-| `IPIV` | `Int32Array` | in | `N` |  | pivot indices from zgbtrf (0-based) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
-| `anorm` | `number` | in |  | rejects `anorm < 0` | the 1-norm or infinity-norm of the original matrix |
-| `rcond` | `Float64Array` | out |  |  | out: rcond[0] is the reciprocal condition number |
-| `WORK` | `Complex128Array` | out | `≥ 2 * N` |  | workspace array of length 2*N |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ N` |  | workspace array of length N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for `RWORK` |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for `RWORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `norm` | `"one-norm" \| "inf-norm"` | 'one-norm' for 1-norm, 'inf-norm' for infinity-norm |
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals<br>Requires `kl ≥ 0` |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals<br>Requires `ku ≥ 0` |
+| `AB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factorization from zgbtrf, (2\*KL+KU+1) by N |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` (complex elements) |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` (complex elements) |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | Pivot indices from zgbtrf (0-based) |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
+| `anorm` | `number` | The 1-norm or infinity-norm of the original matrix<br>Rejects `anorm < 0` |
+| `rcond` | `Float64Array` | **out** · Out: rcond[0] is the reciprocal condition number |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 2 * N</sub> | **out** · Workspace array of length 2\*N |
+| ↳ `strideWork` | `integer` | Stride for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ N</sub> | **out** · Workspace array of length N |
+| ↳ `strideRWork` | `integer` | Stride for `RWORK` |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for `RWORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

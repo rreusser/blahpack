@@ -32,24 +32,24 @@ ztrevc3(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | `'right'`, `'left'`, or `'both'` |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | `'all'`, `'backtransform'`, or `'selected'` |
-| `SELECT` | `Uint8Array` | in | `N` |  | selection array (used when `howmny` is `'selected'`) |
-| ↳ `strideSELECT` | `integer` | in |  |  | `SELECT` stride length |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix T |
-| `T` | `Complex128Array` | in/out | `N × N` |  | upper triangular matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  | requires `LDT ≥ max( 1, N )` | leading dimension of `T` |
-| `VL` | `Complex128Array` | in/out | `N × mm` |  | left eigenvectors (output when `side` includes left) |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | in/out | `N × mm` |  | right eigenvectors (output when `side` includes right) |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` | leading dimension of `VR` |
-| `mm` | `NonNegativeInteger` | in |  |  | number of columns available in `VL`/`VR` |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N )` |  | workspace (>= `max(1,2*N)` complex elements; when back-transforming, at least `N + 2*N*8` enables the blocked back-transformation); `null` allocates the optimal size `max( 1, N + 2*N*NB )`, with NB from `ilaenv` |
-| `RWORK` | `(Float64Array\|null)` | out | `≥ max( 1, N )` |  | workspace (>= `N` reals); auto-allocated when `null` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `"left" \| "right" \| "both"` | `'right'`, `'left'`, or `'both'` |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | `'all'`, `'backtransform'`, or `'selected'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Selection array (used when `howmny` is `'selected'`) |
+| ↳ `strideSELECT` | `integer` | `SELECT` stride length |
+| `N` | `NonNegativeInteger` | Order of the matrix T<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper triangular matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T`<br>Requires `LDT ≥ max(1, N)` |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Left eigenvectors (output when `side` includes left) |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((side === 'left' \|\| side === 'both') && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Right eigenvectors (output when `side` includes right) |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((side === 'right' \|\| side === 'both') && ldvr < N)` |
+| `mm` | `NonNegativeInteger` | Number of columns available in `VL`/`VR` |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Workspace (>= `max(1,2*N)` complex elements; when back-transforming, at least `N + 2*N*8` enables the blocked back-transformation); `null` allocates the optimal size `max( 1, N + 2*N*NB )`, with NB from `ilaenv` |
+| `RWORK` | `Float64Array \| null`<br><sub>length ≥ max(1, N)</sub> | **out** · Workspace (>= `N` reals); auto-allocated when `null` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -132,34 +132,34 @@ done one vector at a time otherwise. ZLATRS does the triangular solves.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `("left"\|"right"\|"both")` | in |  | one of `'both'`, `'left'`, `'right'` | `'right'`, `'left'`, or `'both'` |
-| `howmny` | `("all"\|"backtransform"\|"selected")` | in |  | one of `'all'`, `'backtransform'`, `'selected'` | `'all'`, `'backtransform'`, or `'selected'` |
-| `SELECT` | `Uint8Array` | in | `N` |  | boolean selection array (used only if howmny=`'selected'`) |
-| ↳ `strideSELECT` | `integer` | in |  |  | stride for SELECT |
-| ↳ `offsetSELECT` | `NonNegativeInteger` | in |  |  | offset for SELECT |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrix T |
-| `T` | `Complex128Array` | in/out | `N × N` |  | upper triangular Schur matrix (N x N), modified then restored |
-| ↳ `strideT1` | `integer` | in |  |  | first dimension stride of T (complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | second dimension stride of T (complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | offset for T (complex elements) |
-| `VL` | `Complex128Array` | in/out | `N × mm` |  | left eigenvector matrix (N x MM) |
-| ↳ `strideVL1` | `integer` | in |  |  | first dimension stride of VL (complex elements) |
-| ↳ `strideVL2` | `integer` | in |  |  | second dimension stride of VL (complex elements) |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | offset for VL (complex elements) |
-| `VR` | `Complex128Array` | in/out | `N × mm` |  | right eigenvector matrix (N x MM) |
-| ↳ `strideVR1` | `integer` | in |  |  | first dimension stride of VR (complex elements) |
-| ↳ `strideVR2` | `integer` | in |  |  | second dimension stride of VR (complex elements) |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | offset for VR (complex elements) |
-| `mm` | `NonNegativeInteger` | in |  |  | number of columns available in VL/VR |
-| `M` | `Int32Array` | out |  |  | output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N )` |  | workspace; length from `offsetWork` at least `max(1,2*N)`; when back-transforming, a length of at least `N + 2*N*8` enables the blocked back-transformation, and `N + 2*N*NB` (NB from `ilaenv`) is optimal |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | offset for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ max( 1, N )` |  | real workspace array of length >= N |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | offset for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `"left" \| "right" \| "both"` | `'right'`, `'left'`, or `'both'` |
+| `howmny` | `"all" \| "backtransform" \| "selected"` | `'all'`, `'backtransform'`, or `'selected'` |
+| `SELECT` | `Uint8Array`<br><sub>length N</sub> | Boolean selection array (used only if howmny=`'selected'`) |
+| ↳ `strideSELECT` | `integer` | Stride for SELECT |
+| ↳ `offsetSELECT` | `NonNegativeInteger` | Offset for SELECT |
+| `N` | `NonNegativeInteger` | Order of matrix T<br>Requires `N ≥ 0` |
+| `T` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Upper triangular Schur matrix (N x N), modified then restored |
+| ↳ `strideT1` | `integer` | First dimension stride of T (complex elements) |
+| ↳ `strideT2` | `integer` | Second dimension stride of T (complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Offset for T (complex elements) |
+| `VL` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Left eigenvector matrix (N x MM) |
+| ↳ `strideVL1` | `integer` | First dimension stride of VL (complex elements) |
+| ↳ `strideVL2` | `integer` | Second dimension stride of VL (complex elements) |
+| ↳ `offsetVL` | `NonNegativeInteger` | Offset for VL (complex elements) |
+| `VR` | `Complex128Array`<br><sub>N × mm</sub> | **in/out** · Right eigenvector matrix (N x MM) |
+| ↳ `strideVR1` | `integer` | First dimension stride of VR (complex elements) |
+| ↳ `strideVR2` | `integer` | Second dimension stride of VR (complex elements) |
+| ↳ `offsetVR` | `NonNegativeInteger` | Offset for VR (complex elements) |
+| `mm` | `NonNegativeInteger` | Number of columns available in VL/VR |
+| `M` | `Int32Array` | **out** · Output (length-1 array): the number of columns in the arrays VL and/or VR actually used to store the eigenvectors |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Workspace; length from `offsetWork` at least `max(1,2*N)`; when back-transforming, a length of at least `N + 2*N*8` enables the blocked back-transformation, and `N + 2*N*NB` (NB from `ilaenv`) is optimal |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Offset for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ max(1, N)</sub> | **out** · Real workspace array of length >= N |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Offset for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

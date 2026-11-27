@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlasv2( f, g, h, ssmin, ssmax, snr, csr, snl, csl ) → void
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | the (1,1) element |
-| `g` | `number` | in |  |  | the (1,2) element |
-| `h` | `number` | in |  |  | the (2,2) element |
-| `ssmin` | `Float64Array` | out |  |  | output (length-1 array): abs(SSMIN) is the smaller singular value |
-| `ssmax` | `Float64Array` | out |  |  | output (length-1 array): abs(SSMAX) is the larger singular value |
-| `snr` | `Float64Array` | out |  |  | output (length-1 array): `snr` |
-| `csr` | `Float64Array` | out |  |  | output (length-1 array): the vector (CSR, SNR) is a unit right singular vector for the singular value abs(SSMAX) |
-| `snl` | `Float64Array` | out |  |  | output (length-1 array): `snl` |
-| `csl` | `Float64Array` | out |  |  | output (length-1 array): the vector (CSL, SNL) is a unit left singular vector for the singular value abs(SSMAX) |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | The (1,1) element |
+| `g` | `number` | The (1,2) element |
+| `h` | `number` | The (2,2) element |
+| `ssmin` | `Float64Array` | **out** · Output (length-1 array): abs(SSMIN) is the smaller singular value |
+| `ssmax` | `Float64Array` | **out** · Output (length-1 array): abs(SSMAX) is the larger singular value |
+| `snr` | `Float64Array` | **out** · Output (length-1 array): `snr` |
+| `csr` | `Float64Array` | **out** · Output (length-1 array): the vector (CSR, SNR) is a unit right singular vector for the singular value abs(SSMAX) |
+| `snl` | `Float64Array` | **out** · Output (length-1 array): `snl` |
+| `csl` | `Float64Array` | **out** · Output (length-1 array): the vector (CSL, SNL) is a unit left singular vector for the singular value abs(SSMAX) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -57,17 +57,17 @@ dlasv2.ndarray( f, g, h, ssmin, ssmax, snr, csr, snl, csl ) → void
 
 Computes the singular value decomposition of a 2-by-2 triangular matrix, using alternative indexing semantics.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `f` | `number` | in |  |  | the (1,1) element |
-| `g` | `number` | in |  |  | the (1,2) element |
-| `h` | `number` | in |  |  | the (2,2) element |
-| `ssmin` | `Float64Array` | out |  |  | output (length-1 array): abs(SSMIN) is the smaller singular value |
-| `ssmax` | `Float64Array` | out |  |  | output (length-1 array): abs(SSMAX) is the larger singular value |
-| `snr` | `Float64Array` | out |  |  | output (length-1 array): `snr` |
-| `csr` | `Float64Array` | out |  |  | output (length-1 array): the vector (CSR, SNR) is a unit right singular vector for the singular value abs(SSMAX) |
-| `snl` | `Float64Array` | out |  |  | output (length-1 array): `snl` |
-| `csl` | `Float64Array` | out |  |  | output (length-1 array): the vector (CSL, SNL) is a unit left singular vector for the singular value abs(SSMAX) |
+| Parameter | Type | Description |
+|---|---|---|
+| `f` | `number` | The (1,1) element |
+| `g` | `number` | The (1,2) element |
+| `h` | `number` | The (2,2) element |
+| `ssmin` | `Float64Array` | **out** · Output (length-1 array): abs(SSMIN) is the smaller singular value |
+| `ssmax` | `Float64Array` | **out** · Output (length-1 array): abs(SSMAX) is the larger singular value |
+| `snr` | `Float64Array` | **out** · Output (length-1 array): `snr` |
+| `csr` | `Float64Array` | **out** · Output (length-1 array): the vector (CSR, SNR) is a unit right singular vector for the singular value abs(SSMAX) |
+| `snl` | `Float64Array` | **out** · Output (length-1 array): `snl` |
+| `csl` | `Float64Array` | **out** · Output (length-1 array): the vector (CSL, SNL) is a unit left singular vector for the singular value abs(SSMAX) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

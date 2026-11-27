@@ -31,24 +31,24 @@ dlagtm(
 ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation applied to A. `'no-transpose'`: No transpose, B := alpha * A * X + beta * B `'transpose'`: Transpose, B := alpha * A'* X + beta * B |
-| `N` | `NonNegativeInteger` | in |  |  | the order of the matrix A. |
-| `nrhs` | `NonNegativeInteger` | in |  |  | the number of right hand sides, i.e., the number of columns of the matrices X and B. |
-| `alpha` | `number` | in |  |  | the scalar alpha. |
-| `DL` | `Float64Array` | in | `N - 1` |  | the (n-1) sub-diagonal elements of T. |
-| ↳ `strideDL` | `integer` | in |  |  | stride length for `DL` |
-| `d` | `Float64Array` | in | `N` |  | the diagonal elements of T. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `DU` | `Float64Array` | in | `N - 1` |  | the (n-1) super-diagonal elements of T. |
-| ↳ `strideDU` | `integer` | in |  |  | stride length for `DU` |
-| `X` | `Float64Array` | in | `max( N, 1 ) × nrhs` |  | the N by NRHS matrix X. |
-| ↳ `LDX` | `PositiveInteger` | in |  |  | leading dimension of `X` |
-| `beta` | `number` | in |  |  | the scalar beta. |
-| `B` | `Float64Array` | in/out | `max( N, 1 ) × nrhs` |  | on entry, the N by NRHS matrix B. On exit, B is overwritten by the matrix expression B := alpha * A * X + beta * B. |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `trans` | `TransposeOperation` | Specifies the operation applied to A. `'no-transpose'`: No transpose, B := alpha \* A \* X + beta \* B `'transpose'`: Transpose, B := alpha \* A'\* X + beta \* B |
+| `N` | `NonNegativeInteger` | The order of the matrix A. |
+| `nrhs` | `NonNegativeInteger` | The number of right hand sides, i.e., the number of columns of the matrices X and B. |
+| `alpha` | `number` | The scalar alpha. |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) sub-diagonal elements of T. |
+| ↳ `strideDL` | `integer` | Stride length for `DL` |
+| `d` | `Float64Array`<br><sub>length N</sub> | The diagonal elements of T. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | The (n-1) super-diagonal elements of T. |
+| ↳ `strideDU` | `integer` | Stride length for `DU` |
+| `X` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | The N by NRHS matrix X. |
+| ↳ `LDX` | `PositiveInteger` | Leading dimension of `X` |
+| `beta` | `number` | The scalar beta. |
+| `B` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · On entry, the N by NRHS matrix B. On exit, B is overwritten by the matrix expression B := alpha \* A \* X + beta \* B. |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -110,30 +110,30 @@ after the beta scaling.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `trans` | `TransposeOperation` | in |  |  | 'no-transpose' or 'transpose' |
-| `N` | `NonNegativeInteger` | in |  |  | order of the tridiagonal matrix A |
-| `nrhs` | `NonNegativeInteger` | in |  |  | number of right hand sides (columns of X and B) |
-| `alpha` | `number` | in |  |  | scalar multiplier (must be 1.0 or -1.0) |
-| `DL` | `Float64Array` | in | `N - 1` |  | sub-diagonal of A (length N-1) |
-| ↳ `strideDL` | `integer` | in |  |  | stride for DL |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for DL |
-| `d` | `Float64Array` | in | `N` |  | diagonal of A (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `DU` | `Float64Array` | in | `N - 1` |  | super-diagonal of A (length N-1) |
-| ↳ `strideDU` | `integer` | in |  |  | stride for DU |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for DU |
-| `X` | `Float64Array` | in | `max( N, 1 ) × nrhs` |  | input matrix (N x NRHS) |
-| ↳ `strideX1` | `integer` | in |  |  | stride of the first dimension of X |
-| ↳ `strideX2` | `integer` | in |  |  | stride of the second dimension of X |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for X |
-| `beta` | `number` | in |  |  | scalar multiplier for B (0, 1, or -1) |
-| `B` | `Float64Array` | in/out | `max( N, 1 ) × nrhs` |  | input/output matrix (N x NRHS) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B |
+| Parameter | Type | Description |
+|---|---|---|
+| `trans` | `TransposeOperation` | 'no-transpose' or 'transpose' |
+| `N` | `NonNegativeInteger` | Order of the tridiagonal matrix A |
+| `nrhs` | `NonNegativeInteger` | Number of right hand sides (columns of X and B) |
+| `alpha` | `number` | Scalar multiplier (must be 1.0 or -1.0) |
+| `DL` | `Float64Array`<br><sub>length N - 1</sub> | Sub-diagonal of A (length N-1) |
+| ↳ `strideDL` | `integer` | Stride for DL |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for DL |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal of A (length N) |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `DU` | `Float64Array`<br><sub>length N - 1</sub> | Super-diagonal of A (length N-1) |
+| ↳ `strideDU` | `integer` | Stride for DU |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for DU |
+| `X` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | Input matrix (N x NRHS) |
+| ↳ `strideX1` | `integer` | Stride of the first dimension of X |
+| ↳ `strideX2` | `integer` | Stride of the second dimension of X |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for X |
+| `beta` | `number` | Scalar multiplier for B (0, 1, or -1) |
+| `B` | `Float64Array`<br><sub>max(N, 1) × nrhs</sub> | **in/out** · Input/output matrix (N x NRHS) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

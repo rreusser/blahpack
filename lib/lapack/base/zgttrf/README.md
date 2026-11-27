@@ -27,19 +27,19 @@ zgttrf(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix A |
-| `DL` | `Complex128Array` | in/out | `N - 1` |  | sub-diagonal elements (length `N-1`); overwritten by the multipliers L |
-| ↳ `strideDL` | `integer` | in |  |  | `DL` stride length |
-| `d` | `Complex128Array` | in/out | `N` |  | diagonal elements (length `N`); overwritten by the diagonal of U |
-| ↳ `strideD` | `integer` | in |  |  | `d` stride length |
-| `DU` | `Complex128Array` | in/out | `N - 1` |  | super-diagonal elements (length `N-1`); overwritten by the first super-diagonal of U |
-| ↳ `strideDU` | `integer` | in |  |  | `DU` stride length |
-| `DU2` | `Complex128Array` | out | `N - 2` |  | second super-diagonal of U (length `N-2`); output |
-| ↳ `strideDU2` | `integer` | in |  |  | `DU2` stride length |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot indices (length `N`); output |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix A<br>Requires `N ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (length `N-1`); overwritten by the multipliers L |
+| ↳ `strideDL` | `integer` | `DL` stride length |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length `N`); overwritten by the diagonal of U |
+| ↳ `strideD` | `integer` | `d` stride length |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (length `N-1`); overwritten by the first super-diagonal of U |
+| ↳ `strideDU` | `integer` | `DU` stride length |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | **out** · Second super-diagonal of U (length `N-2`); output |
+| ↳ `strideDU2` | `integer` | `DU2` stride length |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot indices (length `N`); output |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -93,24 +93,24 @@ with nonzeros in only the main diagonal and first two superdiagonals.
 -   INFO is returned: 0 = success, k > 0 means U(k,k) is exactly zero (1-based).
 -   All complex array parameters use complex-element strides/offsets.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `DL` | `Complex128Array` | in/out | `N - 1` |  | sub-diagonal elements (length N-1), overwritten with multipliers |
-| ↳ `strideDL` | `integer` | in |  |  | stride for `DL` (complex elements) |
-| ↳ `offsetDL` | `NonNegativeInteger` | in |  |  | starting index for `DL` (complex elements) |
-| `d` | `Complex128Array` | in/out | `N` |  | diagonal elements (length N), overwritten with U diagonal |
-| ↳ `strideD` | `integer` | in |  |  | stride for `d` (complex elements) |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `d` (complex elements) |
-| `DU` | `Complex128Array` | in/out | `N - 1` |  | super-diagonal elements (length N-1), overwritten |
-| ↳ `strideDU` | `integer` | in |  |  | stride for `DU` (complex elements) |
-| ↳ `offsetDU` | `NonNegativeInteger` | in |  |  | starting index for `DU` (complex elements) |
-| `DU2` | `Complex128Array` | out | `N - 2` |  | second superdiagonal fill-in (length N-2), output |
-| ↳ `strideDU2` | `integer` | in |  |  | stride for `DU2` (complex elements) |
-| ↳ `offsetDU2` | `NonNegativeInteger` | in |  |  | starting index for `DU2` (complex elements) |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot indices (length N), output, 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for `IPIV` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `DL` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Sub-diagonal elements (length N-1), overwritten with multipliers |
+| ↳ `strideDL` | `integer` | Stride for `DL` (complex elements) |
+| ↳ `offsetDL` | `NonNegativeInteger` | Starting index for `DL` (complex elements) |
+| `d` | `Complex128Array`<br><sub>length N</sub> | **in/out** · Diagonal elements (length N), overwritten with U diagonal |
+| ↳ `strideD` | `integer` | Stride for `d` (complex elements) |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `d` (complex elements) |
+| `DU` | `Complex128Array`<br><sub>length N - 1</sub> | **in/out** · Super-diagonal elements (length N-1), overwritten |
+| ↳ `strideDU` | `integer` | Stride for `DU` (complex elements) |
+| ↳ `offsetDU` | `NonNegativeInteger` | Starting index for `DU` (complex elements) |
+| `DU2` | `Complex128Array`<br><sub>length N - 2</sub> | **out** · Second superdiagonal fill-in (length N-2), output |
+| ↳ `strideDU2` | `integer` | Stride for `DU2` (complex elements) |
+| ↳ `offsetDU2` | `NonNegativeInteger` | Starting index for `DU2` (complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot indices (length N), output, 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for `IPIV` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

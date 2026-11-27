@@ -34,29 +34,29 @@ zunbdb4(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | total number of rows |
-| `P` | `integer` | in |  | rejects `p < M - Q \|\| M - p < M - Q` | number of rows in `X11` |
-| `Q` | `NonNegativeInteger` | in |  | rejects `Q < M - Q \|\| Q > M` | number of columns |
-| `X11` | `Complex128Array` | in/out | `p × Q` |  | top block (`P`-by-`Q`) |
-| ↳ `LDX11` | `PositiveInteger` | in |  | column-major requires `LDX11 ≥ max( 1, p )`; row-major requires `LDX11 ≥ max( 1, Q )` | leading dimension of `X11` |
-| `X21` | `Complex128Array` | in/out | `M - p × Q` |  | bottom block (`(M-P)`-by-`Q`) |
-| ↳ `LDX21` | `PositiveInteger` | in |  | column-major requires `LDX21 ≥ max( 1, M - p )`; row-major requires `LDX21 ≥ max( 1, Q )` | leading dimension of `X21` |
-| `THETA` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTHETA` | `integer` | in |  |  | stride length for `THETA` |
-| `PHI` | `Float64Array` | out | `Q - 1` |  | output array (length at least `Q-1`) |
-| ↳ `stridePHI` | `integer` | in |  |  | stride length for `PHI` |
-| `TAUP1` | `Complex128Array` | out | `M - Q` |  | output array (length at least `M-Q`) |
-| ↳ `strideTAUP1` | `integer` | in |  |  | stride length for `TAUP1` (in complex elements) |
-| `TAUP2` | `Complex128Array` | out | `M - Q` |  | output array (length at least `M-Q`) |
-| ↳ `strideTAUP2` | `integer` | in |  |  | stride length for `TAUP2` (in complex elements) |
-| `TAUQ1` | `Complex128Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUQ1` | `integer` | in |  |  | stride length for `TAUQ1` (in complex elements) |
-| `PHANTOM` | `Complex128Array` | out | `M` |  | workspace and output (length at least `M`) |
-| ↳ `stridePHANTOM` | `integer` | in |  |  | stride length for `PHANTOM` (in complex elements) |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ LWORKMIN` |  | workspace (length at least `max(P, M-P, Q+1)` complex elements, the reference minimum and optimum `LWORK`) |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `M` | `NonNegativeInteger` | Total number of rows<br>Requires `M ≥ 0` |
+| `P` | `integer` | Number of rows in `X11`<br>Rejects `p < M - Q \|\| M - p < M - Q` |
+| `Q` | `NonNegativeInteger` | Number of columns<br>Rejects `Q < M - Q \|\| Q > M` |
+| `X11` | `Complex128Array`<br><sub>p × Q</sub> | **in/out** · Top block (`P`-by-`Q`) |
+| ↳ `LDX11` | `PositiveInteger` | Leading dimension of `X11`<br>Column-major requires `LDX11 ≥ max(1, p)`<br>Row-major requires `LDX11 ≥ max(1, Q)` |
+| `X21` | `Complex128Array`<br><sub>(M - p) × Q</sub> | **in/out** · Bottom block (`(M-P)`-by-`Q`) |
+| ↳ `LDX21` | `PositiveInteger` | Leading dimension of `X21`<br>Column-major requires `LDX21 ≥ max(1, M - p)`<br>Row-major requires `LDX21 ≥ max(1, Q)` |
+| `THETA` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTHETA` | `integer` | Stride length for `THETA` |
+| `PHI` | `Float64Array`<br><sub>length Q - 1</sub> | **out** · Output array (length at least `Q-1`) |
+| ↳ `stridePHI` | `integer` | Stride length for `PHI` |
+| `TAUP1` | `Complex128Array`<br><sub>length M - Q</sub> | **out** · Output array (length at least `M-Q`) |
+| ↳ `strideTAUP1` | `integer` | Stride length for `TAUP1` (in complex elements) |
+| `TAUP2` | `Complex128Array`<br><sub>length M - Q</sub> | **out** · Output array (length at least `M-Q`) |
+| ↳ `strideTAUP2` | `integer` | Stride length for `TAUP2` (in complex elements) |
+| `TAUQ1` | `Complex128Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUQ1` | `integer` | Stride length for `TAUQ1` (in complex elements) |
+| `PHANTOM` | `Complex128Array`<br><sub>length M</sub> | **out** · Workspace and output (length at least `M`) |
+| ↳ `stridePHANTOM` | `integer` | Stride length for `PHANTOM` (in complex elements) |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ LWORKMIN</sub> | **out** · Workspace (length at least `max(P, M-P, Q+1)` complex elements, the reference minimum and optimum `LWORK`) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -116,40 +116,40 @@ zunbdb4.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | total number of rows |
-| `P` | `integer` | in |  | rejects `p < M - Q \|\| M - p < M - Q` | number of rows in `X11` |
-| `Q` | `NonNegativeInteger` | in |  | rejects `Q < M - Q \|\| Q > M` | number of columns |
-| `X11` | `Complex128Array` | in/out | `p × Q` |  | top block (`P`-by-`Q`) |
-| ↳ `strideX111` | `integer` | in |  |  | stride of the first dimension of `X11` (in complex elements) |
-| ↳ `strideX112` | `integer` | in |  |  | stride of the second dimension of `X11` (in complex elements) |
-| ↳ `offsetX11` | `NonNegativeInteger` | in |  |  | starting index for `X11` (in complex elements) |
-| `X21` | `Complex128Array` | in/out | `M - p × Q` |  | bottom block (`(M-P)`-by-`Q`) |
-| ↳ `strideX211` | `integer` | in |  |  | stride of the first dimension of `X21` (in complex elements) |
-| ↳ `strideX212` | `integer` | in |  |  | stride of the second dimension of `X21` (in complex elements) |
-| ↳ `offsetX21` | `NonNegativeInteger` | in |  |  | starting index for `X21` (in complex elements) |
-| `THETA` | `Float64Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTHETA` | `integer` | in |  |  | stride length for `THETA` |
-| ↳ `offsetTHETA` | `NonNegativeInteger` | in |  |  | starting index for `THETA` |
-| `PHI` | `Float64Array` | out | `Q - 1` |  | output array (length at least `Q-1`) |
-| ↳ `stridePHI` | `integer` | in |  |  | stride length for `PHI` |
-| ↳ `offsetPHI` | `NonNegativeInteger` | in |  |  | starting index for `PHI` |
-| `TAUP1` | `Complex128Array` | out | `M - Q` |  | output array (length at least `M-Q`) |
-| ↳ `strideTAUP1` | `integer` | in |  |  | stride length for `TAUP1` (in complex elements) |
-| ↳ `offsetTAUP1` | `NonNegativeInteger` | in |  |  | starting index for `TAUP1` (in complex elements) |
-| `TAUP2` | `Complex128Array` | out | `M - Q` |  | output array (length at least `M-Q`) |
-| ↳ `strideTAUP2` | `integer` | in |  |  | stride length for `TAUP2` (in complex elements) |
-| ↳ `offsetTAUP2` | `NonNegativeInteger` | in |  |  | starting index for `TAUP2` (in complex elements) |
-| `TAUQ1` | `Complex128Array` | out | `Q` |  | output array (length at least `Q`) |
-| ↳ `strideTAUQ1` | `integer` | in |  |  | stride length for `TAUQ1` (in complex elements) |
-| ↳ `offsetTAUQ1` | `NonNegativeInteger` | in |  |  | starting index for `TAUQ1` (in complex elements) |
-| `PHANTOM` | `Complex128Array` | out | `M` |  | workspace and output (length at least `M`) |
-| ↳ `stridePHANTOM` | `integer` | in |  |  | stride length for `PHANTOM` (in complex elements) |
-| ↳ `offsetPHANTOM` | `NonNegativeInteger` | in |  |  | starting index for `PHANTOM` (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ LWORKMIN` |  | workspace (length at least `max(P, M-P, Q+1)` complex elements, the reference minimum and optimum `LWORK`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `M` | `NonNegativeInteger` | Total number of rows<br>Requires `M ≥ 0` |
+| `P` | `integer` | Number of rows in `X11`<br>Rejects `p < M - Q \|\| M - p < M - Q` |
+| `Q` | `NonNegativeInteger` | Number of columns<br>Rejects `Q < M - Q \|\| Q > M` |
+| `X11` | `Complex128Array`<br><sub>p × Q</sub> | **in/out** · Top block (`P`-by-`Q`) |
+| ↳ `strideX111` | `integer` | Stride of the first dimension of `X11` (in complex elements) |
+| ↳ `strideX112` | `integer` | Stride of the second dimension of `X11` (in complex elements) |
+| ↳ `offsetX11` | `NonNegativeInteger` | Starting index for `X11` (in complex elements) |
+| `X21` | `Complex128Array`<br><sub>(M - p) × Q</sub> | **in/out** · Bottom block (`(M-P)`-by-`Q`) |
+| ↳ `strideX211` | `integer` | Stride of the first dimension of `X21` (in complex elements) |
+| ↳ `strideX212` | `integer` | Stride of the second dimension of `X21` (in complex elements) |
+| ↳ `offsetX21` | `NonNegativeInteger` | Starting index for `X21` (in complex elements) |
+| `THETA` | `Float64Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTHETA` | `integer` | Stride length for `THETA` |
+| ↳ `offsetTHETA` | `NonNegativeInteger` | Starting index for `THETA` |
+| `PHI` | `Float64Array`<br><sub>length Q - 1</sub> | **out** · Output array (length at least `Q-1`) |
+| ↳ `stridePHI` | `integer` | Stride length for `PHI` |
+| ↳ `offsetPHI` | `NonNegativeInteger` | Starting index for `PHI` |
+| `TAUP1` | `Complex128Array`<br><sub>length M - Q</sub> | **out** · Output array (length at least `M-Q`) |
+| ↳ `strideTAUP1` | `integer` | Stride length for `TAUP1` (in complex elements) |
+| ↳ `offsetTAUP1` | `NonNegativeInteger` | Starting index for `TAUP1` (in complex elements) |
+| `TAUP2` | `Complex128Array`<br><sub>length M - Q</sub> | **out** · Output array (length at least `M-Q`) |
+| ↳ `strideTAUP2` | `integer` | Stride length for `TAUP2` (in complex elements) |
+| ↳ `offsetTAUP2` | `NonNegativeInteger` | Starting index for `TAUP2` (in complex elements) |
+| `TAUQ1` | `Complex128Array`<br><sub>length Q</sub> | **out** · Output array (length at least `Q`) |
+| ↳ `strideTAUQ1` | `integer` | Stride length for `TAUQ1` (in complex elements) |
+| ↳ `offsetTAUQ1` | `NonNegativeInteger` | Starting index for `TAUQ1` (in complex elements) |
+| `PHANTOM` | `Complex128Array`<br><sub>length M</sub> | **out** · Workspace and output (length at least `M`) |
+| ↳ `stridePHANTOM` | `integer` | Stride length for `PHANTOM` (in complex elements) |
+| ↳ `offsetPHANTOM` | `NonNegativeInteger` | Starting index for `PHANTOM` (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ LWORKMIN</sub> | **out** · Workspace (length at least `max(P, M-P, Q+1)` complex elements, the reference minimum and optimum `LWORK`) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

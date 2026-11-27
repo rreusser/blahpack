@@ -29,25 +29,25 @@ zlarzb(
 ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | specifies the operation type |
-| `trans` | `TransposeOperation` | in |  |  | specifies the operation type |
-| `direct` | `("backward")` | in |  | one of `'backward'` | specifies the operation type |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | specifies the operation type |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `l` | `NonNegativeInteger` | in |  |  | the number of columns of the matrix V containing the meaningful part of the Householder reflectors. |
-| `V` | `Complex128Array` | in | `L × NV` |  | input matrix |
-| ↳ `LDV` | `PositiveInteger` | in |  |  | leading dimension of `V` |
-| `T` | `Complex128Array` | in | `K × K` |  | input matrix |
-| ↳ `LDT` | `PositiveInteger` | in |  |  | leading dimension of `T` |
-| `C` | `Complex128Array` | in/out | `m × N` |  | input matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `N × K` |  | output matrix |
-| ↳ `LDWORK` | `PositiveInteger` | in |  |  | leading dimension of `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | Specifies the operation type |
+| `trans` | `TransposeOperation` | Specifies the operation type |
+| `direct` | `("backward")` | Specifies the operation type<br>One of `'backward'`. |
+| `storev` | `("rowwise")` | Specifies the operation type<br>One of `'rowwise'`. |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of superdiagonals |
+| `l` | `NonNegativeInteger` | The number of columns of the matrix V containing the meaningful part of the Householder reflectors. |
+| `V` | `Complex128Array`<br><sub>L × NV</sub> | Input matrix |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of `V` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of `T` |
+| `C` | `Complex128Array`<br><sub>m × N</sub> | **in/out** · Input matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Complex128Array \| null`<br><sub>N × K</sub> | **out** · Output matrix |
+| ↳ `LDWORK` | `PositiveInteger` | Leading dimension of `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -112,32 +112,32 @@ zlarzb.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `trans` | `TransposeOperation` | in |  |  | `'no-transpose'` or `'conjugate-transpose'` |
-| `direct` | `("backward")` | in |  | one of `'backward'` | `'backward'` (only supported value) |
-| `storev` | `("rowwise")` | in |  | one of `'rowwise'` | `'rowwise'` (only supported value) |
-| `M` | `integer` | in |  |  | number of rows |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns |
-| `K` | `NonNegativeInteger` | in |  |  | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  |  | number of columns of `V` with meaningful Householder entries |
-| `V` | `Complex128Array` | in | `L × NV` |  | input matrix |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of `V` |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of `V` |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for `V` |
-| `T` | `Complex128Array` | in | `K × K` |  | input matrix |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of `T` |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of `T` |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for `T` |
-| `C` | `Complex128Array` | in/out | `m × N` |  | input matrix, overwritten |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of `C` |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of `C` |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for `C` |
-| `WORK` | `Complex128Array` | out | `N × K` |  | workspace |
-| ↳ `strideWork1` | `integer` | in |  |  | stride of the first dimension of `WORK` |
-| ↳ `strideWork2` | `integer` | in |  |  | stride of the second dimension of `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `trans` | `TransposeOperation` | `'no-transpose'` or `'conjugate-transpose'` |
+| `direct` | `("backward")` | `'backward'` (only supported value) |
+| `storev` | `("rowwise")` | `'rowwise'` (only supported value) |
+| `M` | `integer` | Number of rows |
+| `N` | `NonNegativeInteger` | Number of columns |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors |
+| `l` | `NonNegativeInteger` | Number of columns of `V` with meaningful Householder entries |
+| `V` | `Complex128Array`<br><sub>L × NV</sub> | Input matrix |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of `V` |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of `V` |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for `V` |
+| `T` | `Complex128Array`<br><sub>K × K</sub> | Input matrix |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of `T` |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of `T` |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for `T` |
+| `C` | `Complex128Array`<br><sub>m × N</sub> | **in/out** · Input matrix, overwritten |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of `C` |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of `C` |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for `C` |
+| `WORK` | `Complex128Array`<br><sub>N × K</sub> | **out** · Workspace |
+| ↳ `strideWork1` | `integer` | Stride of the first dimension of `WORK` |
+| ↳ `strideWork2` | `integer` | Stride of the second dimension of `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -29,14 +29,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlapll( N, x, strideX, y, strideY, ssmin ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | length of the vectors |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | first complex vector (overwritten) |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | second complex vector (overwritten) |
-| ↳ `strideY` | `integer` | in |  |  | stride for y (in complex elements) |
-| `ssmin` | `Float64Array` | out |  |  | output: `ssmin[0]` receives the smallest singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Length of the vectors |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First complex vector (overwritten) |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second complex vector (overwritten) |
+| ↳ `strideY` | `integer` | Stride for y (in complex elements) |
+| `ssmin` | `Float64Array` | **out** · Output: `ssmin[0]` receives the smallest singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -64,16 +64,16 @@ singular value of the resulting 2-by-2 upper triangular R factor.
 
 On exit, X and Y are overwritten.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | length of the vectors |
-| `x` | `Complex128Array` | in/out | `1 + (N - 1) * incx` |  | first complex vector (overwritten) |
-| ↳ `strideX` | `integer` | in |  |  | stride for x (in complex elements) |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for x (in complex elements) |
-| `y` | `Complex128Array` | in/out | `1 + (N - 1) * incy` |  | second complex vector (overwritten) |
-| ↳ `strideY` | `integer` | in |  |  | stride for y (in complex elements) |
-| ↳ `offsetY` | `NonNegativeInteger` | in |  |  | starting index for y (in complex elements) |
-| `ssmin` | `Float64Array` | out |  |  | output: `ssmin[0]` receives the smallest singular value |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Length of the vectors |
+| `x` | `Complex128Array`<br><sub>length 1 + (N - 1) * incx</sub> | **in/out** · First complex vector (overwritten) |
+| ↳ `strideX` | `integer` | Stride for x (in complex elements) |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for x (in complex elements) |
+| `y` | `Complex128Array`<br><sub>length 1 + (N - 1) * incy</sub> | **in/out** · Second complex vector (overwritten) |
+| ↳ `strideY` | `integer` | Stride for y (in complex elements) |
+| ↳ `offsetY` | `NonNegativeInteger` | Starting index for y (in complex elements) |
+| `ssmin` | `Float64Array` | **out** · Output: `ssmin[0]` receives the smallest singular value |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

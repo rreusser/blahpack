@@ -22,13 +22,13 @@ dlartgs( x, y, sigma, cs, sn ) → void
 
 Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `number` | in |  |  | the `(1,1)` entry of an upper bidiagonal matrix |
-| `y` | `number` | in |  |  | the `(1,2)` entry of an upper bidiagonal matrix |
-| `sigma` | `number` | in |  |  | shift |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the rotation |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): the sine of the rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `number` | The `(1,1)` entry of an upper bidiagonal matrix |
+| `y` | `number` | The `(1,2)` entry of an upper bidiagonal matrix |
+| `sigma` | `number` | Shift |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): the cosine of the rotation |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): the sine of the rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -53,13 +53,13 @@ dlartgs.ndarray( x, y, sigma, cs, sn ) → void
 
 Generates a plane rotation designed to introduce a bulge in implicit QR iteration for the bidiagonal SVD problem.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `x` | `number` | in |  |  | the `(1,1)` entry of an upper bidiagonal matrix |
-| `y` | `number` | in |  |  | the `(1,2)` entry of an upper bidiagonal matrix |
-| `sigma` | `number` | in |  |  | shift |
-| `cs` | `Float64Array` | out |  |  | output (length-1 array): the cosine of the rotation |
-| `sn` | `Float64Array` | out |  |  | output (length-1 array): the sine of the rotation |
+| Parameter | Type | Description |
+|---|---|---|
+| `x` | `number` | The `(1,1)` entry of an upper bidiagonal matrix |
+| `y` | `number` | The `(1,2)` entry of an upper bidiagonal matrix |
+| `sigma` | `number` | Shift |
+| `cs` | `Float64Array` | **out** · Output (length-1 array): the cosine of the rotation |
+| `sn` | `Float64Array` | **out** · Output (length-1 array): the sine of the rotation |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

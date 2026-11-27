@@ -45,26 +45,26 @@ zggev(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `B` | `Complex128Array` | in/out | `N × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  | requires `LDB ≥ max( 1, N )` | leading dimension of `B` |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output eigenvalue numerators |
-| ↳ `strideALPHA` | `integer` | in |  |  | `ALPHA` stride length |
-| `BETA` | `Complex128Array` | out | `N` |  | output eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | `BETA` stride length |
-| `VL` | `Complex128Array` | out | `N × N` |  | left eigenvector matrix |
-| ↳ `LDVL` | `PositiveInteger` | in |  | rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` | leading dimension of `VL` |
-| `VR` | `Complex128Array` | out | `N × N` |  | right eigenvector matrix |
-| ↳ `LDVR` | `PositiveInteger` | in |  | rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` | leading dimension of `VR` |
-| `work` | `(Complex128Array\|null)` | out | `≥ max( 1, 2 * N )` |  | =null] - complex workspace of length at least `max(1,2*N)`; for optimal performance at least `N + N*NB + TSIZE` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size |
-| `rwork` | `(Float64Array\|null)` | out | `≥ 8 * N` |  | =null] - caller-provided real workspace (length >= max(1,8*N)), or `null` to auto-allocate |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B`<br>Requires `LDB ≥ max(1, N)` |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue numerators |
+| ↳ `strideALPHA` | `integer` | `ALPHA` stride length |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | `BETA` stride length |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Left eigenvector matrix |
+| ↳ `LDVL` | `PositiveInteger` | Leading dimension of `VL`<br>Rejects `ldvl < 1 \|\| ((jobvl === 'compute-vectors') && ldvl < N)` |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Right eigenvector matrix |
+| ↳ `LDVR` | `PositiveInteger` | Leading dimension of `VR`<br>Rejects `ldvr < 1 \|\| ((jobvr === 'compute-vectors') && ldvr < N)` |
+| `work` | `Complex128Array \| null`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Complex workspace of length at least `max(1,2*N)`; for optimal performance at least `N + N*NB + TSIZE` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps; or `null` to allocate the optimal size<br>Optional, default `null`. |
+| `rwork` | `Float64Array \| null`<br><sub>length ≥ 8 * N</sub> | **out** · Caller-provided real workspace (length >= max(1,8\*N)), or `null` to auto-allocate<br>Optional, default `null`. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -126,39 +126,39 @@ right generalized eigenvectors of a complex matrix pair (A, B).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobvl` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `jobvr` | `("no-vectors"\|"compute-vectors")` | in |  | one of `'no-vectors'`, `'compute-vectors'` | `'no-vectors'` or `'compute-vectors'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `A` | `Complex128Array` | in/out | `N × N` |  | first complex matrix (modified in-place) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (complex elements) |
-| `B` | `Complex128Array` | in/out | `N × N` |  | second complex matrix (modified in-place) |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (complex elements) |
-| `ALPHA` | `Complex128Array` | out | `N` |  | output eigenvalue numerators |
-| ↳ `strideALPHA` | `integer` | in |  |  | stride for ALPHA (complex elements) |
-| ↳ `offsetALPHA` | `NonNegativeInteger` | in |  |  | starting index for ALPHA (complex elements) |
-| `BETA` | `Complex128Array` | out | `N` |  | output eigenvalue denominators |
-| ↳ `strideBETA` | `integer` | in |  |  | stride for BETA (complex elements) |
-| ↳ `offsetBETA` | `NonNegativeInteger` | in |  |  | starting index for BETA (complex elements) |
-| `VL` | `Complex128Array` | out | `N × N` |  | left eigenvector matrix |
-| ↳ `strideVL1` | `integer` | in |  |  | stride of the first dimension of VL (complex elements) |
-| ↳ `strideVL2` | `integer` | in |  |  | stride of the second dimension of VL (complex elements) |
-| ↳ `offsetVL` | `NonNegativeInteger` | in |  |  | starting index for VL (complex elements) |
-| `VR` | `Complex128Array` | out | `N × N` |  | right eigenvector matrix |
-| ↳ `strideVR1` | `integer` | in |  |  | stride of the first dimension of VR (complex elements) |
-| ↳ `strideVR2` | `integer` | in |  |  | stride of the second dimension of VR (complex elements) |
-| ↳ `offsetVR` | `NonNegativeInteger` | in |  |  | starting index for VR (complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ max( 1, 2 * N )` |  | complex workspace of length at least `max(1,2*N)`; for optimal performance at least `N + N*NB + TSIZE` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (complex elements) |
-| `RWORK` | `Float64Array` | out | `≥ 8 * N` |  | caller-provided real workspace (length >= max(1,8*N)) |
-| ↳ `strideRWork` | `integer` | in |  |  | stride for RWORK |
-| ↳ `offsetRWork` | `NonNegativeInteger` | in |  |  | starting index for RWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobvl` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `jobvr` | `"no-vectors" \| "compute-vectors"` | `'no-vectors'` or `'compute-vectors'` |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · First complex matrix (modified in-place) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (complex elements) |
+| `B` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Second complex matrix (modified in-place) |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (complex elements) |
+| `ALPHA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue numerators |
+| ↳ `strideALPHA` | `integer` | Stride for ALPHA (complex elements) |
+| ↳ `offsetALPHA` | `NonNegativeInteger` | Starting index for ALPHA (complex elements) |
+| `BETA` | `Complex128Array`<br><sub>length N</sub> | **out** · Output eigenvalue denominators |
+| ↳ `strideBETA` | `integer` | Stride for BETA (complex elements) |
+| ↳ `offsetBETA` | `NonNegativeInteger` | Starting index for BETA (complex elements) |
+| `VL` | `Complex128Array`<br><sub>N × N</sub> | **out** · Left eigenvector matrix |
+| ↳ `strideVL1` | `integer` | Stride of the first dimension of VL (complex elements) |
+| ↳ `strideVL2` | `integer` | Stride of the second dimension of VL (complex elements) |
+| ↳ `offsetVL` | `NonNegativeInteger` | Starting index for VL (complex elements) |
+| `VR` | `Complex128Array`<br><sub>N × N</sub> | **out** · Right eigenvector matrix |
+| ↳ `strideVR1` | `integer` | Stride of the first dimension of VR (complex elements) |
+| ↳ `strideVR2` | `integer` | Stride of the second dimension of VR (complex elements) |
+| ↳ `offsetVR` | `NonNegativeInteger` | Starting index for VR (complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Complex workspace of length at least `max(1,2*N)`; for optimal performance at least `N + N*NB + TSIZE` (`NB` from `ilaenv`, `TSIZE = 4160`), the reference's `N + N*NB` with the zunmqr optimum's T part, which enables the blocked QR steps |
+| ↳ `strideWork` | `integer` | Stride for WORK (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (complex elements) |
+| `RWORK` | `Float64Array`<br><sub>length ≥ 8 * N</sub> | **out** · Caller-provided real workspace (length >= max(1,8\*N)) |
+| ↳ `strideRWork` | `integer` | Stride for RWORK |
+| ↳ `offsetRWork` | `NonNegativeInteger` | Starting index for RWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

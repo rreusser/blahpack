@@ -30,20 +30,20 @@ dlarrc(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobt` | `("tridiagonal"\|"ldl")` | in |  |  | specifies the matrix type: `'tridiagonal'` for matrix T, `'ldl'` for matrix `L * D * L^T` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `vl` | `number` | in |  |  | lower bound for the eigenvalues |
-| `vu` | `number` | in |  |  | upper bound for the eigenvalues |
-| `D` | `Float64Array` | in | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| `E` | `Float64Array` | in | `N` |  | off-diagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `eigcnt` | `Int32Array` | out |  |  | output (length-1 array): the number of eigenvalues of the symmetric tridiagonal matrix T that are in the interval (VL,VU] |
-| `lcnt` | `Int32Array` | out |  |  | output (length-1 array): `lcnt` |
-| `rcnt` | `Int32Array` | out |  |  | output (length-1 array): the left and right negcounts of the interval |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobt` | `"tridiagonal" \| "ldl"` | Specifies the matrix type: `'tridiagonal'` for matrix T, `'ldl'` for matrix `L * D * L^T` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `vl` | `number` | Lower bound for the eigenvalues |
+| `vu` | `number` | Upper bound for the eigenvalues |
+| `D` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| `E` | `Float64Array`<br><sub>length N</sub> | Off-diagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `E` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `eigcnt` | `Int32Array` | **out** · Output (length-1 array): the number of eigenvalues of the symmetric tridiagonal matrix T that are in the interval (VL,VU] |
+| `lcnt` | `Int32Array` | **out** · Output (length-1 array): `lcnt` |
+| `rcnt` | `Int32Array` | **out** · Output (length-1 array): the left and right negcounts of the interval |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -88,22 +88,22 @@ dlarrc.ndarray(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `jobt` | `("tridiagonal"\|"ldl")` | in |  |  | specifies the matrix type: `'tridiagonal'` for matrix T, `'ldl'` for matrix `L * D * L^T` |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `vl` | `number` | in |  |  | lower bound for the eigenvalues |
-| `vu` | `number` | in |  |  | upper bound for the eigenvalues |
-| `D` | `Float64Array` | in | `N` |  | diagonal elements (length N) |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `D` |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for `D` |
-| `E` | `Float64Array` | in | `N` |  | off-diagonal elements (length N-1) |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `E` |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for `E` |
-| `pivmin` | `number` | in |  |  | minimum pivot in the Sturm sequence |
-| `eigcnt` | `Int32Array` | out |  |  | output (length-1 array): the number of eigenvalues of the symmetric tridiagonal matrix T that are in the interval (VL,VU] |
-| `lcnt` | `Int32Array` | out |  |  | output (length-1 array): `lcnt` |
-| `rcnt` | `Int32Array` | out |  |  | output (length-1 array): the left and right negcounts of the interval |
+| Parameter | Type | Description |
+|---|---|---|
+| `jobt` | `"tridiagonal" \| "ldl"` | Specifies the matrix type: `'tridiagonal'` for matrix T, `'ldl'` for matrix `L * D * L^T` |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `vl` | `number` | Lower bound for the eigenvalues |
+| `vu` | `number` | Upper bound for the eigenvalues |
+| `D` | `Float64Array`<br><sub>length N</sub> | Diagonal elements (length N) |
+| ↳ `strideD` | `integer` | Stride length for `D` |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for `D` |
+| `E` | `Float64Array`<br><sub>length N</sub> | Off-diagonal elements (length N-1) |
+| ↳ `strideE` | `integer` | Stride length for `E` |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for `E` |
+| `pivmin` | `number` | Minimum pivot in the Sturm sequence |
+| `eigcnt` | `Int32Array` | **out** · Output (length-1 array): the number of eigenvalues of the symmetric tridiagonal matrix T that are in the interval (VL,VU] |
+| `lcnt` | `Int32Array` | **out** · Output (length-1 array): `lcnt` |
+| `rcnt` | `Int32Array` | **out** · Output (length-1 array): the left and right negcounts of the interval |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

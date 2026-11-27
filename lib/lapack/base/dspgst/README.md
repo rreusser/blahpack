@@ -20,14 +20,14 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dspgst( order, itype, uplo, N, AP, BP ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | symmetric matrix A in packed storage |
-| `BP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | triangular factor from Cholesky factorization of B in packed storage |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Symmetric matrix A in packed storage |
+| `BP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Triangular factor from Cholesky factorization of B in packed storage |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -73,17 +73,17 @@ dspgst.ndarray(
 
 Reduces a real symmetric-definite generalized eigenproblem to standard form using packed storage.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `itype` | `integer` | in |  | rejects `itype < 1 \|\| itype > 3` | problem type (1, 2, or 3) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether upper or lower triangle is stored ('upper' or 'lower') |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of matrices A and B |
-| `AP` | `Float64Array` | in/out | `trunc( N * (N + 1) / 2 )` |  | symmetric matrix A in packed storage |
-| ↳ `strideAP` | `integer` | in |  |  | stride length for `AP` |
-| ↳ `offsetAP` | `NonNegativeInteger` | in |  |  | starting index for `AP` |
-| `BP` | `Float64Array` | in | `trunc( N * (N + 1) / 2 )` |  | triangular factor from Cholesky factorization of B in packed storage |
-| ↳ `strideBP` | `integer` | in |  |  | stride length for `BP` |
-| ↳ `offsetBP` | `NonNegativeInteger` | in |  |  | starting index for `BP` |
+| Parameter | Type | Description |
+|---|---|---|
+| `itype` | `integer` | Problem type (1, 2, or 3)<br>Rejects `itype < 1 \|\| itype > 3` |
+| `uplo` | `MatrixTriangle` | Specifies whether upper or lower triangle is stored ('upper' or 'lower') |
+| `N` | `NonNegativeInteger` | Order of matrices A and B<br>Requires `N ≥ 0` |
+| `AP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | **in/out** · Symmetric matrix A in packed storage |
+| ↳ `strideAP` | `integer` | Stride length for `AP` |
+| ↳ `offsetAP` | `NonNegativeInteger` | Starting index for `AP` |
+| `BP` | `Float64Array`<br><sub>length trunc(N * (N + 1) / 2)</sub> | Triangular factor from Cholesky factorization of B in packed storage |
+| ↳ `strideBP` | `integer` | Stride length for `BP` |
+| ↳ `offsetBP` | `NonNegativeInteger` | Starting index for `BP` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

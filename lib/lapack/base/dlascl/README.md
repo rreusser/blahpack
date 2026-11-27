@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlascl( order, type, kl, ku, cfrom, cto, M, N, A, LDA ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `type` | `("general"\|"lower"\|"upper"\|"upper-hessenberg"\|"lower-band"\|"upper-band"\|"band")` | in |  | one of `'lower-band'`, `'general'`, `'upper-hessenberg'`, `'lower'`, `'upper-band'`, `'upper'`, `'band'` | `'general'`, `'lower'`, `'upper'`, `'upper-hessenberg'`, `'lower-band'`, `'upper-band'`, or `'band'` |
-| `kl` | `integer` | in |  | rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) >= 4 && (kl < 0 \|\| kl > max( M - 1, 0 ))` | lower bandwidth (for banded types) |
-| `ku` | `integer` | in |  |  | upper bandwidth (for banded types) |
-| `cfrom` | `number` | in |  |  | scale denominator (must be nonzero) |
-| `cto` | `number` | in |  |  | scale numerator |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | rows |
-| `N` | `NonNegativeInteger` | in |  |  | columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) <= 3 && lda < max( 1, M )` | leading dimension of `A` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `type` | `"general" \| "lower" \| "upper" \| "upper-hessenberg" \| "lower-band" \| "upper-band" \| "band"` | `'general'`, `'lower'`, `'upper'`, `'upper-hessenberg'`, `'lower-band'`, `'upper-band'`, or `'band'` |
+| `kl` | `integer` | Lower bandwidth (for banded types)<br>Rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) >= 4 && (kl < 0 \|\| kl > max(M - 1, 0))` |
+| `ku` | `integer` | Upper bandwidth (for banded types) |
+| `cfrom` | `number` | Scale denominator (must be nonzero) |
+| `cto` | `number` | Scale numerator |
+| `M` | `NonNegativeInteger` | Rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Columns |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) <= 3 && lda < max(1, M)` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -82,19 +82,19 @@ Multiplies a real M-by-N matrix by the real scalar CTO/CFROM, doing the multipli
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `type` | `("general"\|"lower"\|"upper"\|"upper-hessenberg"\|"lower-band"\|"upper-band"\|"band")` | in |  | one of `'lower-band'`, `'general'`, `'upper-hessenberg'`, `'lower'`, `'upper-band'`, `'upper'`, `'band'` | one of `'general'`, `'lower'`, `'upper'`, `'upper-hessenberg'`, `'lower-band'`, `'upper-band'`, or `'band'` |
-| `kl` | `integer` | in |  | rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) >= 4 && (kl < 0 \|\| kl > max( M - 1, 0 ))` | lower bandwidth (for banded types) |
-| `ku` | `integer` | in |  |  | upper bandwidth (for banded types) |
-| `cfrom` | `number` | in |  |  | scale denominator (must be nonzero) |
-| `cto` | `number` | in |  |  | scale numerator |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | rows |
-| `N` | `NonNegativeInteger` | in |  |  | columns |
-| `A` | `Float64Array` | in/out | `M × N` |  | matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first dimension stride |
-| ↳ `strideA2` | `integer` | in |  |  | second dimension stride |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A |
+| Parameter | Type | Description |
+|---|---|---|
+| `type` | `"general" \| "lower" \| "upper" \| "upper-hessenberg" \| "lower-band" \| "upper-band" \| "band"` | One of `'general'`, `'lower'`, `'upper'`, `'upper-hessenberg'`, `'lower-band'`, `'upper-band'`, or `'band'` |
+| `kl` | `integer` | Lower bandwidth (for banded types)<br>Rejects `(type === 'general' ? 0 : (type === 'lower' ? 1 : (type === 'upper' ? 2 : (type === 'upper-hessenberg' ? 3 : (type === 'lower-band' ? 4 : (type === 'upper-band' ? 5 : 6)))))) >= 4 && (kl < 0 \|\| kl > max(M - 1, 0))` |
+| `ku` | `integer` | Upper bandwidth (for banded types) |
+| `cfrom` | `number` | Scale denominator (must be nonzero) |
+| `cto` | `number` | Scale numerator |
+| `M` | `NonNegativeInteger` | Rows<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Columns |
+| `A` | `Float64Array`<br><sub>M × N</sub> | **in/out** · Matrix |
+| ↳ `strideA1` | `integer` | First dimension stride |
+| ↳ `strideA2` | `integer` | Second dimension stride |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

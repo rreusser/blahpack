@@ -30,25 +30,25 @@ ztpmlqt(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > K` | order of the trapezoidal part of V (`0 <= L <= K`) |
-| `mb` | `integer` | in |  | rejects `mb < 1 \|\| (mb > K && K > 0)` | block size used to construct T |
-| `V` | `Complex128Array` | in | `K × K` |  | pentagonal reflector matrix produced by `ztplqt` (K-by-M when `side='left'`, K-by-N when `side='right'`) |
-| ↳ `LDV` | `PositiveInteger` | in |  | requires `LDV ≥ K` | leading dimension of V (>= K for column-major) |
-| `T` | `Complex128Array` | in | `mb × K` |  | block triangular factor produced by `ztplqt` (mb-by-K) |
-| ↳ `LDT` | `PositiveInteger` | in |  | column-major requires `LDT ≥ mb`; row-major requires `LDT ≥ max( 1, K )` | leading dimension of T (>= mb for column-major) |
-| `A` | `Complex128Array` | in/out | `LDAQ × (side === 'left' ? N : K)` |  | upper (left) or left (right) block of C, modified in-place |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ LDAQ` | leading dimension of A |
-| `B` | `Complex128Array` | in/out | `M × N` |  | lower (left) or right (right) block of C, modified in-place |
-| ↳ `LDB` | `PositiveInteger` | in |  | column-major requires `LDB ≥ max( 1, M )`; row-major requires `LDB ≥ max( 1, N )` | leading dimension of B (>= max(1,M)) |
-| `WORK` | `(Complex128Array\|null)` | out |  |  | workspace buffer of size at least `mb*N` for `side='left'` or `mb*M` for `side='right'`; if `null` or omitted, an internal buffer of the required size is allocated as a LAPACKE-style convenience |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `l` | `NonNegativeInteger` | Order of the trapezoidal part of V (`0 <= L <= K`)<br>Rejects `L < 0 \|\| L > K` |
+| `mb` | `integer` | Block size used to construct T<br>Rejects `mb < 1 \|\| (mb > K && K > 0)` |
+| `V` | `Complex128Array`<br><sub>K × K</sub> | Pentagonal reflector matrix produced by `ztplqt` (K-by-M when `side='left'`, K-by-N when `side='right'`) |
+| ↳ `LDV` | `PositiveInteger` | Leading dimension of V (>= K for column-major)<br>Requires `LDV ≥ K` |
+| `T` | `Complex128Array`<br><sub>mb × K</sub> | Block triangular factor produced by `ztplqt` (mb-by-K) |
+| ↳ `LDT` | `PositiveInteger` | Leading dimension of T (>= mb for column-major)<br>Column-major requires `LDT ≥ mb`<br>Row-major requires `LDT ≥ max(1, K)` |
+| `A` | `Complex128Array`<br><sub>LDAQ × (side === 'left' ? N : K)</sub> | **in/out** · Upper (left) or left (right) block of C, modified in-place |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A<br>Requires `LDA ≥ LDAQ` |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Lower (left) or right (right) block of C, modified in-place |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of B (>= max(1,M))<br>Column-major requires `LDB ≥ max(1, M)`<br>Row-major requires `LDB ≥ max(1, N)` |
+| `WORK` | `Complex128Array \| null` | **out** · Workspace buffer of size at least `mb*N` for `side='left'` or `mb*M` for `side='right'`; if `null` or omitted, an internal buffer of the required size is allocated as a LAPACKE-style convenience |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -113,34 +113,34 @@ ztpmlqt.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  | one of `'left'`, `'right'` | `'left'` to apply Q from the left, `'right'` from the right |
-| `trans` | `("no-transpose"\|"conjugate-transpose")` | in |  | one of `'conjugate-transpose'`, `'no-transpose'` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
-| `M` | `NonNegativeInteger` | in |  | requires `M ≥ 0` | number of rows of B |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | number of columns of B |
-| `K` | `NonNegativeInteger` | in |  | requires `K ≥ 0` | number of elementary reflectors |
-| `l` | `NonNegativeInteger` | in |  | rejects `L < 0 \|\| L > K` | order of the trapezoidal part of V (`0 <= L <= K`) |
-| `mb` | `integer` | in |  | rejects `mb < 1 \|\| (mb > K && K > 0)` | block size used to construct T |
-| `V` | `Complex128Array` | in | `K × K` |  | pentagonal reflector matrix produced by `ztplqt` |
-| ↳ `strideV1` | `integer` | in |  |  | stride of the first dimension of V (in complex elements) |
-| ↳ `strideV2` | `integer` | in |  |  | stride of the second dimension of V (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for V (in complex elements) |
-| `T` | `Complex128Array` | in | `mb × K` |  | block triangular factor produced by `ztplqt` |
-| ↳ `strideT1` | `integer` | in |  |  | stride of the first dimension of T (in complex elements) |
-| ↳ `strideT2` | `integer` | in |  |  | stride of the second dimension of T (in complex elements) |
-| ↳ `offsetT` | `NonNegativeInteger` | in |  |  | starting index for T (in complex elements) |
-| `A` | `Complex128Array` | in/out | `LDAQ × (side === 'left' ? N : K)` |  | upper (left) or left (right) block of C, modified in-place |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `B` | `Complex128Array` | in/out | `M × N` |  | lower (left) or right (right) block of C, modified in-place |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of B (in complex elements) |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of B (in complex elements) |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | starting index for B (in complex elements) |
-| `WORK` | `Complex128Array` | out |  |  | workspace buffer |
-| ↳ `strideWork` | `integer` | in |  |  | element stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` to apply Q from the left, `'right'` from the right |
+| `trans` | `"no-transpose" \| "conjugate-transpose"` | `'no-transpose'` for Q, `'conjugate-transpose'` for Q^H |
+| `M` | `NonNegativeInteger` | Number of rows of B<br>Requires `M ≥ 0` |
+| `N` | `NonNegativeInteger` | Number of columns of B<br>Requires `N ≥ 0` |
+| `K` | `NonNegativeInteger` | Number of elementary reflectors<br>Requires `K ≥ 0` |
+| `l` | `NonNegativeInteger` | Order of the trapezoidal part of V (`0 <= L <= K`)<br>Rejects `L < 0 \|\| L > K` |
+| `mb` | `integer` | Block size used to construct T<br>Rejects `mb < 1 \|\| (mb > K && K > 0)` |
+| `V` | `Complex128Array`<br><sub>K × K</sub> | Pentagonal reflector matrix produced by `ztplqt` |
+| ↳ `strideV1` | `integer` | Stride of the first dimension of V (in complex elements) |
+| ↳ `strideV2` | `integer` | Stride of the second dimension of V (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for V (in complex elements) |
+| `T` | `Complex128Array`<br><sub>mb × K</sub> | Block triangular factor produced by `ztplqt` |
+| ↳ `strideT1` | `integer` | Stride of the first dimension of T (in complex elements) |
+| ↳ `strideT2` | `integer` | Stride of the second dimension of T (in complex elements) |
+| ↳ `offsetT` | `NonNegativeInteger` | Starting index for T (in complex elements) |
+| `A` | `Complex128Array`<br><sub>LDAQ × (side === 'left' ? N : K)</sub> | **in/out** · Upper (left) or left (right) block of C, modified in-place |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `B` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · Lower (left) or right (right) block of C, modified in-place |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of B (in complex elements) |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of B (in complex elements) |
+| ↳ `offsetB` | `NonNegativeInteger` | Starting index for B (in complex elements) |
+| `WORK` | `Complex128Array` | **out** · Workspace buffer |
+| ↳ `strideWork` | `integer` | Element stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

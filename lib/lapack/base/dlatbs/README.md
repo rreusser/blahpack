@@ -28,22 +28,22 @@ dlatbs(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | specifies whether the matrix A is upper or lower triangular. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | specifies the operation applied to A. `'no-transpose'`: Solve A * x = s*b (No transpose) `'transpose'`: Solve A**T* x = s*b (Transpose) |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | specifies whether or not the matrix A is unit triangular. `'non-unit'`: Non-unit triangular `'unit'`: Unit triangular. |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | specifies whether CNORM has been set or not. `'yes'`: CNORM contains the column norms on entry `'no'`: CNORM is not set on entry. On exit, the norms will be computed and stored in CNORM. |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | the order of the matrix A. |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | the number of subdiagonals or superdiagonals in the triangular matrix A. |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | the upper or lower triangular band matrix A, stored in the first KD+1 rows of the array. |
-| ↳ `LDAB` | `PositiveInteger` | in |  | column-major requires `LDAB ≥ kd + 1`; row-major requires `LDAB ≥ max( 1, N )` | leading dimension of `AB` |
-| `x` | `Float64Array` | in/out | `N` |  | on entry, the right hand side b of the triangular system. On exit, X is overwritten by the solution vector x. |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| `scale` | `Float64Array` | out |  |  | the scaling factor s for the triangular system A * x = s*b or A**T* x = s*b. |
-| `CNORM` | `Float64Array` | in/out | `N` |  | if `normin === 'yes'`, CNORM is an input argument and CNORM(j) contains the norm of the off-diagonal part of the j-th column of A. |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | Specifies whether the matrix A is upper or lower triangular. `'upper'`: Upper triangular `'lower'`: Lower triangular. |
+| `trans` | `TransposeOperation` | Specifies the operation applied to A. `'no-transpose'`: Solve A \* x = s\*b (No transpose) `'transpose'`: Solve A\*\*T\* x = s\*b (Transpose)<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | Specifies whether or not the matrix A is unit triangular. `'non-unit'`: Non-unit triangular `'unit'`: Unit triangular. |
+| `normin` | `"no" \| "yes"` | Specifies whether CNORM has been set or not. `'yes'`: CNORM contains the column norms on entry `'no'`: CNORM is not set on entry. On exit, the norms will be computed and stored in CNORM. |
+| `N` | `NonNegativeInteger` | The order of the matrix A.<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | The number of subdiagonals or superdiagonals in the triangular matrix A.<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | The upper or lower triangular band matrix A, stored in the first KD+1 rows of the array. |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB`<br>Column-major requires `LDAB ≥ kd + 1`<br>Row-major requires `LDAB ≥ max(1, N)` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · On entry, the right hand side b of the triangular system. On exit, X is overwritten by the solution vector x. |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| `scale` | `Float64Array` | **out** · The scaling factor s for the triangular system A \* x = s\*b or A\*\*T\* x = s\*b. |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · If `normin === 'yes'`, CNORM is an input argument and CNORM(j) contains the norm of the off-diagonal part of the j-th column of A. |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -123,25 +123,25 @@ prevent overflow.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | 'upper' or 'lower' |
-| `trans` | `TransposeOperation` | in |  | one of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'` | 'no-transpose' or 'transpose' |
-| `diag` | `DiagonalType` | in |  | one of `'non-unit'`, `'unit'` | 'non-unit' or 'unit' |
-| `normin` | `("no"\|"yes")` | in |  | one of `'no'`, `'yes'` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `kd` | `NonNegativeInteger` | in |  | requires `kd ≥ 0` | number of superdiagonals (upper) or subdiagonals (lower) |
-| `AB` | `Float64Array` | in | `kd + 1 × N` |  | band matrix in banded storage, (KD+1) by N |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `x` | `Float64Array` | in/out | `N` |  | in/out right-hand side vector of length N |
-| ↳ `strideX` | `integer` | in |  |  | stride length for `x` |
-| ↳ `offsetX` | `NonNegativeInteger` | in |  |  | starting index for `x` |
-| `scale` | `Float64Array` | out |  |  | out: scale[0] is the scale factor s |
-| `CNORM` | `Float64Array` | in/out | `N` |  | in/out column norm array of length N |
-| ↳ `strideCNORM` | `integer` | in |  |  | stride length for `CNORM` |
-| ↳ `offsetCNORM` | `NonNegativeInteger` | in |  |  | starting index for `CNORM` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | 'upper' or 'lower' |
+| `trans` | `TransposeOperation` | 'no-transpose' or 'transpose'<br>One of `'conjugate-transpose'`, `'no-transpose'`, `'transpose'`. |
+| `diag` | `DiagonalType` | 'non-unit' or 'unit' |
+| `normin` | `"no" \| "yes"` | `'yes'` if CNORM contains column norms on input, `'no'` to compute them |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `kd` | `NonNegativeInteger` | Number of superdiagonals (upper) or subdiagonals (lower)<br>Requires `kd ≥ 0` |
+| `AB` | `Float64Array`<br><sub>(kd + 1) × N</sub> | Band matrix in banded storage, (KD+1) by N |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `x` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out right-hand side vector of length N |
+| ↳ `strideX` | `integer` | Stride length for `x` |
+| ↳ `offsetX` | `NonNegativeInteger` | Starting index for `x` |
+| `scale` | `Float64Array` | **out** · Out: scale[0] is the scale factor s |
+| `CNORM` | `Float64Array`<br><sub>length N</sub> | **in/out** · In/out column norm array of length N |
+| ↳ `strideCNORM` | `integer` | Stride length for `CNORM` |
+| ↳ `offsetCNORM` | `NonNegativeInteger` | Starting index for `CNORM` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

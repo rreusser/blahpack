@@ -20,17 +20,17 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zla_gbrpvgrw( order, N, kl, ku, ncols, AB, LDAB, AFB, LDAFB ) → number
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | number of linear equations |
-| `kl` | `NonNegativeInteger` | in |  |  | number of subdiagonals |
-| `ku` | `NonNegativeInteger` | in |  |  | number of superdiagonals |
-| `ncols` | `NonNegativeInteger` | in |  |  | number of columns to process |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | original band matrix in band storage |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `AFB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | LU factored band matrix |
-| ↳ `LDAFB` | `PositiveInteger` | in |  |  | leading dimension of `AFB` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Number of linear equations |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals |
+| `ncols` | `NonNegativeInteger` | Number of columns to process |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Original band matrix in band storage |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `AFB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factored band matrix |
+| ↳ `LDAFB` | `PositiveInteger` | Leading dimension of `AFB` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -68,20 +68,20 @@ zla_gbrpvgrw.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | number of linear equations (order of the matrix) |
-| `kl` | `NonNegativeInteger` | in |  |  | number of subdiagonals within the band of A |
-| `ku` | `NonNegativeInteger` | in |  |  | number of superdiagonals within the band of A |
-| `ncols` | `NonNegativeInteger` | in |  |  | number of columns to process |
-| `AB` | `Complex128Array` | in | `kl + ku + 1 × N` |  | original band matrix in band storage |
-| ↳ `strideAB1` | `integer` | in |  |  | stride of the first dimension of `AB` |
-| ↳ `strideAB2` | `integer` | in |  |  | stride of the second dimension of `AB` |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for `AB` |
-| `AFB` | `Complex128Array` | in | `2 * kl + ku + 1 × N` |  | LU factored band matrix from zgbtrf |
-| ↳ `strideAFB1` | `integer` | in |  |  | stride of the first dimension of `AFB` |
-| ↳ `strideAFB2` | `integer` | in |  |  | stride of the second dimension of `AFB` |
-| ↳ `offsetAFB` | `NonNegativeInteger` | in |  |  | starting index for `AFB` |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Number of linear equations (order of the matrix) |
+| `kl` | `NonNegativeInteger` | Number of subdiagonals within the band of A |
+| `ku` | `NonNegativeInteger` | Number of superdiagonals within the band of A |
+| `ncols` | `NonNegativeInteger` | Number of columns to process |
+| `AB` | `Complex128Array`<br><sub>(kl + ku + 1) × N</sub> | Original band matrix in band storage |
+| ↳ `strideAB1` | `integer` | Stride of the first dimension of `AB` |
+| ↳ `strideAB2` | `integer` | Stride of the second dimension of `AB` |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for `AB` |
+| `AFB` | `Complex128Array`<br><sub>(2 * kl + ku + 1) × N</sub> | LU factored band matrix from zgbtrf |
+| ↳ `strideAFB1` | `integer` | Stride of the first dimension of `AFB` |
+| ↳ `strideAFB2` | `integer` | Stride of the second dimension of `AFB` |
+| ↳ `offsetAFB` | `NonNegativeInteger` | Starting index for `AFB` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

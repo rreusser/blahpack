@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 dlacpy( order, uplo, M, N, A, LDA, B, LDB ) → Float64Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | specifies whether to copy the upper triangle, lower triangle, or all of `A` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows in `A` |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Float64Array` | in | `M × N` |  | input matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of `A` |
-| `B` | `Float64Array` | out | `M × N` |  | input matrix |
-| ↳ `LDB` | `PositiveInteger` | in |  |  | leading dimension of `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `"upper" \| "lower" \| "all"` | Specifies whether to copy the upper triangle, lower triangle, or all of `A` |
+| `M` | `NonNegativeInteger` | Number of rows in `A` |
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **out** · Input matrix |
+| ↳ `LDB` | `PositiveInteger` | Leading dimension of `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -67,19 +67,19 @@ dlacpy.ndarray(
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `("upper"\|"lower"\|"all")` | in |  |  | specifies whether to copy the upper triangle, lower triangle, or all of `A` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows in `A` |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns in `A` |
-| `A` | `Float64Array` | in | `M × N` |  | input matrix |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` |
-| `B` | `Float64Array` | out | `M × N` |  | output matrix |
-| ↳ `strideB1` | `integer` | in |  |  | stride of the first dimension of `B` |
-| ↳ `strideB2` | `integer` | in |  |  | stride of the second dimension of `B` |
-| ↳ `offsetB` | `NonNegativeInteger` | in |  |  | index offset for `B` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `"upper" \| "lower" \| "all"` | Specifies whether to copy the upper triangle, lower triangle, or all of `A` |
+| `M` | `NonNegativeInteger` | Number of rows in `A` |
+| `N` | `NonNegativeInteger` | Number of columns in `A` |
+| `A` | `Float64Array`<br><sub>M × N</sub> | Input matrix |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` |
+| `B` | `Float64Array`<br><sub>M × N</sub> | **out** · Output matrix |
+| ↳ `strideB1` | `integer` | Stride of the first dimension of `B` |
+| ↳ `strideB2` | `integer` | Stride of the second dimension of `B` |
+| ↳ `offsetB` | `NonNegativeInteger` | Index offset for `B` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

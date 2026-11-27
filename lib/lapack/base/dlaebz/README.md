@@ -35,35 +35,35 @@ dlaebz(
 ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `ijob` | `integer` | in |  |  | specifies what is to be done: = 1: Compute NAB for the initial intervals. = 2: Perform bisection iteration to find eigenvalues of T. = 3: Perform bisection iteration to invert N(w), i.e., to find a point which has a specified number of eigenvalues of T to its left. |
-| `nitmax` | `integer` | in |  |  | the maximum number of "levels" of bisection to be performed, i.e., an interval of width W will not be made smaller than 2^(-NITMAX) * W. |
-| `N` | `NonNegativeInteger` | in |  |  | the dimension n of the tridiagonal matrix T. |
-| `mmax` | `NonNegativeInteger` | in |  |  | the maximum number of intervals. |
-| `minp` | `NonNegativeInteger` | in |  |  | the initial number of intervals. |
-| `nbmin` | `integer` | in |  |  | the smallest number of intervals that should be processed using a vector loop. |
-| `abstol` | `number` | in |  |  | the minimum (absolute) width of an interval. |
-| `reltol` | `number` | in |  |  | the minimum relative width of an interval. |
-| `pivmin` | `number` | in |  |  | the minimum absolute value of a "pivot" in the Sturm sequence loop. |
-| `d` | `Float64Array` | in | `N` |  | the diagonal elements of the tridiagonal matrix T. |
-| ↳ `strideD` | `integer` | in |  |  | stride length for `d` |
-| `e` | `Float64Array` | in | `N` |  | the offdiagonal elements of the tridiagonal matrix T in positions 1 through N-1. |
-| ↳ `strideE` | `integer` | in |  |  | stride length for `e` |
-| `E2` | `Float64Array` | in | `N` |  | the squares of the offdiagonal elements of the tridiagonal matrix T. |
-| ↳ `strideE2` | `integer` | in |  |  | stride length for `E2` |
-| `NVAL` | `Int32Array` | in/out | `minp` |  | if IJOB=1 or 2, not referenced (0-based). |
-| ↳ `strideNVAL` | `integer` | in |  |  | stride length for `NVAL` |
-| `AB` | `Float64Array` | in/out | `mmax × 2` |  | the endpoints of the intervals. |
-| ↳ `LDAB` | `PositiveInteger` | in |  |  | leading dimension of `AB` |
-| `c` | `Float64Array` | in/out | `mmax` |  | if IJOB=1, ignored. |
-| ↳ `strideC` | `integer` | in |  |  | stride length for `c` |
-| `mout` | `Int32Array` | out |  |  | if IJOB=1, the number of eigenvalues in the intervals. |
-| `NAB` | `Int32Array` | in/out | `mmax × 2` |  | if IJOB=1, then on output NAB(i,j) will be set to N(AB(i,j)). |
-| ↳ `LDNAB` | `PositiveInteger` | in |  |  | leading dimension of `NAB` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ mmax` |  | caller-provided workspace of at least `mmax` elements |
-| `IWORK` | `(Int32Array\|null)` | out | `≥ mmax` |  | caller-provided workspace of at least `mmax` elements |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `ijob` | `integer` | Specifies what is to be done: = 1: Compute NAB for the initial intervals. = 2: Perform bisection iteration to find eigenvalues of T. = 3: Perform bisection iteration to invert N(w), i.e., to find a point which has a specified number of eigenvalues of T to its left. |
+| `nitmax` | `integer` | The maximum number of "levels" of bisection to be performed, i.e., an interval of width W will not be made smaller than 2^(-NITMAX) \* W. |
+| `N` | `NonNegativeInteger` | The dimension n of the tridiagonal matrix T. |
+| `mmax` | `NonNegativeInteger` | The maximum number of intervals. |
+| `minp` | `NonNegativeInteger` | The initial number of intervals. |
+| `nbmin` | `integer` | The smallest number of intervals that should be processed using a vector loop. |
+| `abstol` | `number` | The minimum (absolute) width of an interval. |
+| `reltol` | `number` | The minimum relative width of an interval. |
+| `pivmin` | `number` | The minimum absolute value of a "pivot" in the Sturm sequence loop. |
+| `d` | `Float64Array`<br><sub>length N</sub> | The diagonal elements of the tridiagonal matrix T. |
+| ↳ `strideD` | `integer` | Stride length for `d` |
+| `e` | `Float64Array`<br><sub>length N</sub> | The offdiagonal elements of the tridiagonal matrix T in positions 1 through N-1. |
+| ↳ `strideE` | `integer` | Stride length for `e` |
+| `E2` | `Float64Array`<br><sub>length N</sub> | The squares of the offdiagonal elements of the tridiagonal matrix T. |
+| ↳ `strideE2` | `integer` | Stride length for `E2` |
+| `NVAL` | `Int32Array`<br><sub>length minp</sub> | **in/out** · If IJOB=1 or 2, not referenced (0-based). |
+| ↳ `strideNVAL` | `integer` | Stride length for `NVAL` |
+| `AB` | `Float64Array`<br><sub>mmax × 2</sub> | **in/out** · The endpoints of the intervals. |
+| ↳ `LDAB` | `PositiveInteger` | Leading dimension of `AB` |
+| `c` | `Float64Array`<br><sub>length mmax</sub> | **in/out** · If IJOB=1, ignored. |
+| ↳ `strideC` | `integer` | Stride length for `c` |
+| `mout` | `Int32Array` | **out** · If IJOB=1, the number of eigenvalues in the intervals. |
+| `NAB` | `Int32Array`<br><sub>mmax × 2</sub> | **in/out** · If IJOB=1, then on output NAB(i,j) will be set to N(AB(i,j)). |
+| ↳ `LDNAB` | `PositiveInteger` | Leading dimension of `NAB` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ mmax</sub> | **out** · Caller-provided workspace of at least `mmax` elements |
+| `IWORK` | `Int32Array \| null`<br><sub>length ≥ mmax</sub> | **out** · Caller-provided workspace of at least `mmax` elements |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -153,47 +153,47 @@ IJOB=3: Perform bisection iteration to invert N(w).
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `ijob` | `integer` | in |  |  | specifies what is to be done (1, 2, or 3) |
-| `nitmax` | `integer` | in |  |  | maximum number of bisection levels |
-| `N` | `NonNegativeInteger` | in |  |  | dimension of the tridiagonal matrix |
-| `mmax` | `NonNegativeInteger` | in |  |  | maximum number of intervals |
-| `minp` | `NonNegativeInteger` | in |  |  | initial number of intervals |
-| `nbmin` | `integer` | in |  |  | smallest number of intervals for vector loop |
-| `abstol` | `number` | in |  |  | minimum absolute width of an interval |
-| `reltol` | `number` | in |  |  | minimum relative width of an interval |
-| `pivmin` | `number` | in |  |  | minimum absolute value of a pivot |
-| `d` | `Float64Array` | in | `N` |  | diagonal elements, length N |
-| ↳ `strideD` | `integer` | in |  |  | stride for d |
-| ↳ `offsetD` | `NonNegativeInteger` | in |  |  | starting index for d |
-| `e` | `Float64Array` | in | `N` |  | off-diagonal elements, length N |
-| ↳ `strideE` | `integer` | in |  |  | stride for e |
-| ↳ `offsetE` | `NonNegativeInteger` | in |  |  | starting index for e |
-| `E2` | `Float64Array` | in | `N` |  | squares of off-diagonal elements, length N |
-| ↳ `strideE2` | `integer` | in |  |  | stride for E2 |
-| ↳ `offsetE2` | `NonNegativeInteger` | in |  |  | starting index for E2 |
-| `NVAL` | `Int32Array` | in/out | `minp` |  | desired eigenvalue counts (IJOB=3 only) |
-| ↳ `strideNVAL` | `integer` | in |  |  | stride for NVAL |
-| ↳ `offsetNVAL` | `NonNegativeInteger` | in |  |  | starting index for NVAL |
-| `AB` | `Float64Array` | in/out | `mmax × 2` |  | interval endpoints, shape [MMAX, 2] |
-| ↳ `strideAB1` | `integer` | in |  |  | first dimension stride for AB |
-| ↳ `strideAB2` | `integer` | in |  |  | second dimension stride for AB |
-| ↳ `offsetAB` | `NonNegativeInteger` | in |  |  | starting index for AB |
-| `c` | `Float64Array` | in/out | `mmax` |  | search points / midpoints |
-| ↳ `strideC` | `integer` | in |  |  | stride for c |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for c |
-| `mout` | `Int32Array` | out |  |  | output: number of eigenvalues/intervals (mout[0]) |
-| `NAB` | `Int32Array` | in/out | `mmax × 2` |  | eigenvalue counts at interval endpoints, shape [MMAX, 2] |
-| ↳ `strideNAB1` | `integer` | in |  |  | first dimension stride for NAB |
-| ↳ `strideNAB2` | `integer` | in |  |  | second dimension stride for NAB |
-| ↳ `offsetNAB` | `NonNegativeInteger` | in |  |  | starting index for NAB |
-| `WORK` | `Float64Array` | out | `≥ mmax` |  | workspace, length MMAX |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK |
-| `IWORK` | `Int32Array` | out | `≥ mmax` |  | workspace, length MMAX |
-| ↳ `strideIWork` | `integer` | in |  |  | stride for IWORK |
-| ↳ `offsetIWork` | `NonNegativeInteger` | in |  |  | starting index for IWORK |
+| Parameter | Type | Description |
+|---|---|---|
+| `ijob` | `integer` | Specifies what is to be done (1, 2, or 3) |
+| `nitmax` | `integer` | Maximum number of bisection levels |
+| `N` | `NonNegativeInteger` | Dimension of the tridiagonal matrix |
+| `mmax` | `NonNegativeInteger` | Maximum number of intervals |
+| `minp` | `NonNegativeInteger` | Initial number of intervals |
+| `nbmin` | `integer` | Smallest number of intervals for vector loop |
+| `abstol` | `number` | Minimum absolute width of an interval |
+| `reltol` | `number` | Minimum relative width of an interval |
+| `pivmin` | `number` | Minimum absolute value of a pivot |
+| `d` | `Float64Array`<br><sub>length N</sub> | Diagonal elements, length N |
+| ↳ `strideD` | `integer` | Stride for d |
+| ↳ `offsetD` | `NonNegativeInteger` | Starting index for d |
+| `e` | `Float64Array`<br><sub>length N</sub> | Off-diagonal elements, length N |
+| ↳ `strideE` | `integer` | Stride for e |
+| ↳ `offsetE` | `NonNegativeInteger` | Starting index for e |
+| `E2` | `Float64Array`<br><sub>length N</sub> | Squares of off-diagonal elements, length N |
+| ↳ `strideE2` | `integer` | Stride for E2 |
+| ↳ `offsetE2` | `NonNegativeInteger` | Starting index for E2 |
+| `NVAL` | `Int32Array`<br><sub>length minp</sub> | **in/out** · Desired eigenvalue counts (IJOB=3 only) |
+| ↳ `strideNVAL` | `integer` | Stride for NVAL |
+| ↳ `offsetNVAL` | `NonNegativeInteger` | Starting index for NVAL |
+| `AB` | `Float64Array`<br><sub>mmax × 2</sub> | **in/out** · Interval endpoints, shape [MMAX, 2] |
+| ↳ `strideAB1` | `integer` | First dimension stride for AB |
+| ↳ `strideAB2` | `integer` | Second dimension stride for AB |
+| ↳ `offsetAB` | `NonNegativeInteger` | Starting index for AB |
+| `c` | `Float64Array`<br><sub>length mmax</sub> | **in/out** · Search points / midpoints |
+| ↳ `strideC` | `integer` | Stride for c |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for c |
+| `mout` | `Int32Array` | **out** · Output: number of eigenvalues/intervals (mout[0]) |
+| `NAB` | `Int32Array`<br><sub>mmax × 2</sub> | **in/out** · Eigenvalue counts at interval endpoints, shape [MMAX, 2] |
+| ↳ `strideNAB1` | `integer` | First dimension stride for NAB |
+| ↳ `strideNAB2` | `integer` | Second dimension stride for NAB |
+| ↳ `offsetNAB` | `NonNegativeInteger` | Starting index for NAB |
+| `WORK` | `Float64Array`<br><sub>length ≥ mmax</sub> | **out** · Workspace, length MMAX |
+| ↳ `strideWork` | `integer` | Stride for WORK |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK |
+| `IWORK` | `Int32Array`<br><sub>length ≥ mmax</sub> | **out** · Workspace, length MMAX |
+| ↳ `strideIWork` | `integer` | Stride for IWORK |
+| ↳ `offsetIWork` | `NonNegativeInteger` | Starting index for IWORK |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

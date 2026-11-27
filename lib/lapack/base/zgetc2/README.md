@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zgetc2( order, N, A, LDA, IPIV, strideIPIV, JPIV, strideJPIV ) → info: integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | N-by-N complex matrix (overwritten with L and U) |
-| ↳ `LDA` | `PositiveInteger` | in |  |  | leading dimension of A |
-| `IPIV` | `Int32Array` | out | `N` |  | row pivot indices (length N) |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| `JPIV` | `Int32Array` | out | `N` |  | column pivot indices (length N) |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · N-by-N complex matrix (overwritten with L and U) |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of A |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Row pivot indices (length N) |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Column pivot indices (length N) |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -70,19 +70,19 @@ IPIV and JPIV are 0-based in this implementation.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `N` | `NonNegativeInteger` | in |  |  | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | N-by-N complex matrix (overwritten with L and U) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of A (in complex elements) |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of A (in complex elements) |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | starting index for A (in complex elements) |
-| `IPIV` | `Int32Array` | out | `N` |  | row pivot indices (length N), 0-based |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | starting index for IPIV |
-| `JPIV` | `Int32Array` | out | `N` |  | column pivot indices (length N), 0-based |
-| ↳ `strideJPIV` | `integer` | in |  |  | stride for JPIV |
-| ↳ `offsetJPIV` | `NonNegativeInteger` | in |  |  | starting index for JPIV |
+| Parameter | Type | Description |
+|---|---|---|
+| `N` | `NonNegativeInteger` | Order of the matrix |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · N-by-N complex matrix (overwritten with L and U) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of A (in complex elements) |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of A (in complex elements) |
+| ↳ `offsetA` | `NonNegativeInteger` | Starting index for A (in complex elements) |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Row pivot indices (length N), 0-based |
+| ↳ `strideIPIV` | `integer` | Stride for IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Starting index for IPIV |
+| `JPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Column pivot indices (length N), 0-based |
+| ↳ `strideJPIV` | `integer` | Stride for JPIV |
+| ↳ `offsetJPIV` | `NonNegativeInteger` | Starting index for JPIV |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -22,16 +22,16 @@ dsytrf_aa( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 
 Computes the factorization of a real symmetric matrix `A` using Aasen's algorithm (blocked).
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout (`'row-major'` or `'column-major'`) |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot index output array, length `N` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride length for `IPIV` |
-| `WORK` | `(Float64Array\|null)` | out | `≥ max( 1, 2 * N )` |  | caller-provided workspace (length at least `max(1,2*N)`, the reference's minimum; a length of at least `N*(1+NB)` with `NB` from `ilaenv` (64) enables the full block size, and a shorter one a smaller block size); `null` allocates the optimal size `max(1,N*(1+NB))` |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout (`'row-major'` or `'column-major'`) |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot index output array, length `N` |
+| ↳ `strideIPIV` | `integer` | Stride length for `IPIV` |
+| `WORK` | `Float64Array \| null`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-provided workspace (length at least `max(1,2*N)`, the reference's minimum; a length of at least `N*(1+NB)` with `NB` from `ilaenv` (64) enables the full block size, and a shorter one a smaller block size); `null` allocates the optimal size `max(1,N*(1+NB))` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -79,20 +79,20 @@ where `T` is symmetric tridiagonal.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix `A` |
-| `A` | `Float64Array` | in/out | `N × N` |  | input/output symmetric matrix (column-major) |
-| ↳ `strideA1` | `integer` | in |  |  | stride of the first dimension of `A` |
-| ↳ `strideA2` | `integer` | in |  |  | stride of the second dimension of `A` |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | index offset for `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | pivot index output array, length `N` |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride for `IPIV` |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | index offset for `IPIV` |
-| `WORK` | `Float64Array` | out | `≥ max( 1, 2 * N )` |  | caller-owned workspace (length from `offsetWork` at least `max(1,2*N)`, the reference's minimum, when `N > 0`; a length of at least `N*(1+NB)` with `NB = 64` (from `ilaenv`) enables the full block size, and a shorter one a block size of `floor((length-N)/N)`) |
-| ↳ `strideWork` | `integer` | in |  |  | stride for `WORK` |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | index offset for `WORK` |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` |
+| `N` | `NonNegativeInteger` | Order of the matrix `A`<br>Requires `N ≥ 0` |
+| `A` | `Float64Array`<br><sub>N × N</sub> | **in/out** · Input/output symmetric matrix (column-major) |
+| ↳ `strideA1` | `integer` | Stride of the first dimension of `A` |
+| ↳ `strideA2` | `integer` | Stride of the second dimension of `A` |
+| ↳ `offsetA` | `NonNegativeInteger` | Index offset for `A` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Pivot index output array, length `N` |
+| ↳ `strideIPIV` | `integer` | Stride for `IPIV` |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Index offset for `IPIV` |
+| `WORK` | `Float64Array`<br><sub>length ≥ max(1, 2 * N)</sub> | **out** · Caller-owned workspace (length from `offsetWork` at least `max(1,2*N)`, the reference's minimum, when `N > 0`; a length of at least `N*(1+NB)` with `NB = 64` (from `ilaenv`) enables the full block size, and a shorter one a block size of `floor((length-N)/N)`) |
+| ↳ `strideWork` | `integer` | Stride for `WORK` |
+| ↳ `offsetWork` | `NonNegativeInteger` | Index offset for `WORK` |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

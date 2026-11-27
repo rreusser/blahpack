@@ -20,18 +20,18 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zlarfx( order, side, M, N, v, strideV, tau, C, LDC, WORK ) → Complex128Array
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Complex128Array` | in | `( side === 'left' ) ? M : N` |  | the vector v in the reflector |
-| ↳ `strideV` | `integer` | in |  |  | stride for v (in complex elements) |
-| `tau` | `Complex128` | in |  |  | the complex scalar tau |
-| `C` | `Complex128Array` | in/out | `M × N` |  | the M-by-N matrix |
-| ↳ `LDC` | `PositiveInteger` | in |  |  | leading dimension of `C` |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ N` |  | caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'`. If `null`, a workspace is allocated internally. |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Complex128Array`<br><sub>length (side === 'left') ? M : N</sub> | The vector v in the reflector |
+| ↳ `strideV` | `integer` | Stride for v (in complex elements) |
+| `tau` | `Complex128` | The complex scalar tau |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · The M-by-N matrix |
+| ↳ `LDC` | `PositiveInteger` | Leading dimension of `C` |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ N</sub> | **out** · Caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'`. If `null`, a workspace is allocated internally. |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -86,22 +86,22 @@ This version uses inline code if H has order <= 10.
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `side` | `OperationSide` | in |  |  | `'left'` or `'right'` |
-| `M` | `NonNegativeInteger` | in |  |  | number of rows of C |
-| `N` | `NonNegativeInteger` | in |  |  | number of columns of C |
-| `v` | `Complex128Array` | in | `( side === 'left' ) ? M : N` |  | the vector v in the reflector |
-| ↳ `strideV` | `integer` | in |  |  | stride for v (in complex elements) |
-| ↳ `offsetV` | `NonNegativeInteger` | in |  |  | starting index for v (in complex elements) |
-| `tau` | `Complex128` | in |  |  | the complex scalar tau |
-| `C` | `Complex128Array` | in/out | `M × N` |  | the M-by-N matrix |
-| ↳ `strideC1` | `integer` | in |  |  | stride of the first dimension of C (complex elements) |
-| ↳ `strideC2` | `integer` | in |  |  | stride of the second dimension of C (complex elements) |
-| ↳ `offsetC` | `NonNegativeInteger` | in |  |  | starting index for C (in complex elements) |
-| `WORK` | `Complex128Array` | out | `≥ N` |  | caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'` |
-| ↳ `strideWork` | `integer` | in |  |  | stride for WORK (in complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for WORK (in complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `side` | `OperationSide` | `'left'` or `'right'` |
+| `M` | `NonNegativeInteger` | Number of rows of C |
+| `N` | `NonNegativeInteger` | Number of columns of C |
+| `v` | `Complex128Array`<br><sub>length (side === 'left') ? M : N</sub> | The vector v in the reflector |
+| ↳ `strideV` | `integer` | Stride for v (in complex elements) |
+| ↳ `offsetV` | `NonNegativeInteger` | Starting index for v (in complex elements) |
+| `tau` | `Complex128` | The complex scalar tau |
+| `C` | `Complex128Array`<br><sub>M × N</sub> | **in/out** · The M-by-N matrix |
+| ↳ `strideC1` | `integer` | Stride of the first dimension of C (complex elements) |
+| ↳ `strideC2` | `integer` | Stride of the second dimension of C (complex elements) |
+| ↳ `offsetC` | `NonNegativeInteger` | Starting index for C (in complex elements) |
+| `WORK` | `Complex128Array`<br><sub>length ≥ N</sub> | **out** · Caller-owned workspace, referenced only by the general-order path (H order > 10); length N if side=`'left'`, length M if side=`'right'` |
+| ↳ `strideWork` | `integer` | Stride for WORK (in complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for WORK (in complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

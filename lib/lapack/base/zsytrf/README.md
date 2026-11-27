@@ -20,16 +20,16 @@ Takes a storage layout (`order`) and leading dimensions, like CBLAS/LAPACKE.
 zsytrf( order, uplo, N, A, LDA, IPIV, strideIPIV, WORK ) → integer
 ```
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `order` | `Layout` | in |  | one of `'row-major'`, `'column-major'` | storage layout ('row-major' or 'column-major') |
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` indicating upper or lower triangular storage |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `LDA` | `PositiveInteger` | in |  | requires `LDA ≥ max( 1, N )` | leading dimension of `A` |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | `IPIV` stride length |
-| `WORK` | `(Complex128Array\|null)` | out | `≥ 1` |  | workspace (length >= 1; N*NB, with `NB` from `ilaenv` (64), enables the full blocked algorithm); if `null`, a workspace of optimal size is allocated |
+| Parameter | Type | Description |
+|---|---|---|
+| `order` | `Layout` | Storage layout ('row-major' or 'column-major') |
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` indicating upper or lower triangular storage |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `LDA` | `PositiveInteger` | Leading dimension of `A`<br>Requires `LDA ≥ max(1, N)` |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot indices |
+| ↳ `strideIPIV` | `integer` | `IPIV` stride length |
+| `WORK` | `Complex128Array \| null`<br><sub>length ≥ 1</sub> | **out** · Workspace (length >= 1; N\*NB, with `NB` from `ilaenv` (64), enables the full blocked algorithm); if `null`, a workspace of optimal size is allocated |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>
@@ -74,20 +74,20 @@ Compute the factorization of a complex symmetric matrix using Bunch-Kaufman diag
 
 Matrix shapes are logical (rows × columns). The reference's leading dimension (`LDA`, …) is replaced by the two strides and the offset.
 
-| param | type | intent | shape | constraints | description |
-|---|---|---|---|---|---|
-| `uplo` | `MatrixTriangle` | in |  | one of `'lower'`, `'upper'` | `'upper'` or `'lower'` indicating upper or lower triangular storage |
-| `N` | `NonNegativeInteger` | in |  | requires `N ≥ 0` | order of the matrix |
-| `A` | `Complex128Array` | in/out | `N × N` |  | input/output matrix |
-| ↳ `strideA1` | `integer` | in |  |  | first stride of A |
-| ↳ `strideA2` | `integer` | in |  |  | second stride of A |
-| ↳ `offsetA` | `NonNegativeInteger` | in |  |  | offset into A |
-| `IPIV` | `Int32Array` | out | `N` |  | output pivot indices |
-| ↳ `strideIPIV` | `integer` | in |  |  | stride of IPIV |
-| ↳ `offsetIPIV` | `NonNegativeInteger` | in |  |  | offset into IPIV |
-| `WORK` | `Complex128Array` | out | `≥ 1` |  | workspace; length >= 1 (N*NB, with `NB = 64` from `ilaenv`, enables the full blocked algorithm) |
-| ↳ `strideWork` | `integer` | in |  |  | stride length for `WORK` (complex elements) |
-| ↳ `offsetWork` | `NonNegativeInteger` | in |  |  | starting index for `WORK` (complex elements) |
+| Parameter | Type | Description |
+|---|---|---|
+| `uplo` | `MatrixTriangle` | `'upper'` or `'lower'` indicating upper or lower triangular storage |
+| `N` | `NonNegativeInteger` | Order of the matrix<br>Requires `N ≥ 0` |
+| `A` | `Complex128Array`<br><sub>N × N</sub> | **in/out** · Input/output matrix |
+| ↳ `strideA1` | `integer` | First stride of A |
+| ↳ `strideA2` | `integer` | Second stride of A |
+| ↳ `offsetA` | `NonNegativeInteger` | Offset into A |
+| `IPIV` | `Int32Array`<br><sub>length N</sub> | **out** · Output pivot indices |
+| ↳ `strideIPIV` | `integer` | Stride of IPIV |
+| ↳ `offsetIPIV` | `NonNegativeInteger` | Offset into IPIV |
+| `WORK` | `Complex128Array`<br><sub>length ≥ 1</sub> | **out** · Workspace; length >= 1 (N\*NB, with `NB = 64` from `ilaenv`, enables the full blocked algorithm) |
+| ↳ `strideWork` | `integer` | Stride length for `WORK` (complex elements) |
+| ↳ `offsetWork` | `NonNegativeInteger` | Starting index for `WORK` (complex elements) |
 
 <details>
 <summary>Reference notes for each argument (the reference implementation's own documentation; 1-based indices)</summary>

@@ -9,7 +9,7 @@
 //           arXiv:2001.09439v1, 2020
 
 import { laplace, pointInPolygon } from '../../examples/laplace/laplace.js';
-import { aaa } from '../../aaa-pure.js';
+import { aaa } from '../../examples/aaa-pure.js';
 import { writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';

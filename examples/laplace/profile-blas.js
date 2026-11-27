@@ -5,17 +5,12 @@
 //   - What matrix sizes M, N, K are typical
 //   - What alpha/beta values appear (opportunities for specialization)
 
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const real = require('@stdlib/complex/float64/real');
-const imag = require('@stdlib/complex/float64/imag');
+import real from '@stdlib/complex/float64/real/lib/index.js';
+import imag from '@stdlib/complex/float64/imag/lib/index.js';
+import instrument from '../../bench/instrument.js';
 
-// Monkey-patch zgemv
-const zgemvPath = '../../lib/blas/base/zgemv/lib/base.js';
-const zgemmPath = '../../lib/blas/base/zgemm/lib/base.js';
-
-const origZgemv = require(zgemvPath);
-const origZgemm = require(zgemmPath);
+// Install BEFORE loading anything that imports the library.
+instrument.install();
 
 const zgemvStats = { calls: 0, byTrans: {}, sizes: [], alphaPatterns: {}, betaPatterns: {} };
 const zgemmStats = { calls: 0, byTransA: {}, byTransB: {}, sizes: [], alphaPatterns: {}, betaPatterns: {} };
@@ -28,7 +23,7 @@ function scalarKey(z) {
   return 'other';
 }
 
-function patchedZgemv(trans, M, N, alpha, A, sa1, sa2, oA, x, sx, ox, beta, y, sy, oy) {
+instrument.observe('zgemv', (trans, M, N, alpha, A, sa1, sa2, oA, x, sx, ox, beta) => {
   zgemvStats.calls++;
   zgemvStats.byTrans[trans] = (zgemvStats.byTrans[trans] || 0) + 1;
   zgemvStats.sizes.push([M, N]);
@@ -36,10 +31,9 @@ function patchedZgemv(trans, M, N, alpha, A, sa1, sa2, oA, x, sx, ox, beta, y, s
   const bk = scalarKey(beta);
   zgemvStats.alphaPatterns[ak] = (zgemvStats.alphaPatterns[ak] || 0) + 1;
   zgemvStats.betaPatterns[bk] = (zgemvStats.betaPatterns[bk] || 0) + 1;
-  return origZgemv(trans, M, N, alpha, A, sa1, sa2, oA, x, sx, ox, beta, y, sy, oy);
-}
+});
 
-function patchedZgemm(ta, tb, M, N, K, alpha, A, sa1, sa2, oA, B, sb1, sb2, oB, beta, C, sc1, sc2, oC) {
+instrument.observe('zgemm', (ta, tb, M, N, K, alpha, A, sa1, sa2, oA, B, sb1, sb2, oB, beta) => {
   zgemmStats.calls++;
   zgemmStats.byTransA[ta] = (zgemmStats.byTransA[ta] || 0) + 1;
   zgemmStats.byTransB[tb] = (zgemmStats.byTransB[tb] || 0) + 1;
@@ -48,15 +42,10 @@ function patchedZgemm(ta, tb, M, N, K, alpha, A, sa1, sa2, oA, B, sb1, sb2, oB, 
   const bk = scalarKey(beta);
   zgemmStats.alphaPatterns[ak] = (zgemmStats.alphaPatterns[ak] || 0) + 1;
   zgemmStats.betaPatterns[bk] = (zgemmStats.betaPatterns[bk] || 0) + 1;
-  return origZgemm(ta, tb, M, N, K, alpha, A, sa1, sa2, oA, B, sb1, sb2, oB, beta, C, sc1, sc2, oC);
-}
-
-// Patch the module cache
-require.cache[require.resolve(zgemvPath)].exports = patchedZgemv;
-require.cache[require.resolve(zgemmPath)].exports = patchedZgemm;
+});
 
 // Now run the actual workload
-const { laplace, pointInPolygon } = await import('./laplace.js');
+const { laplace } = await import('./laplace.js');
 
 function linspace(a, b, step) {
   const arr = [];

@@ -22,7 +22,7 @@ jobs:
         run: npm run test:unit
       - name: Corpus-check driver tests (bin/lib)
         run: npm run test:tools
-      - name: Notebook solver tests (AAA, Laplace, Stokes)
+      - name: Notebook and example solver tests (AAA, Laplace, Stokes)
         run: npm run test:notebooks
 
   # Lint: every project rule (lint/, one directory per rule) over every module,

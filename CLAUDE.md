@@ -31,6 +31,7 @@ bin/                           # Pipeline scripts
   lint.sh                      #   Lint gate: one ESLint run over lib/ (sources + tests) and test/harness/
   lint-fix.sh                  #   Full fix pipeline (codemods + eslint + test verify)
   build-dist.mjs               #   Browser/CDN build into dist/ (vendors stdlib); run by prepack
+  codemod-flatten.mjs          #   Layout codemod: lib/<pkg>/<routine>; --check is a CI gate (rerun it on old branches)
   codemod-tests.js             #   Test file mechanical fixes
   codemod-index.js             #   Index.js mechanical fixes
 lint/                          # THE rule library: one dir per rule (rule, README, fixtures, test)
@@ -42,8 +43,9 @@ data/                          # Reference Fortran source + parsed-Fortran cache
   BLAS-3.12.0/
   lapack-3.12.0/
 lib/                           # Output: stdlib-js conformant modules
-  blas/<routine>/         #   e.g. lib/blas/ddot/
-  lapack/<routine>/       #   e.g. lib/lapack/dpotf2/
+  blas/<routine>/              #   e.g. lib/blas/ddot/
+  lapack/<routine>/            #   e.g. lib/lapack/dpotf2/
+  arpack/<routine>/            #   e.g. lib/arpack/dsaupd/ (lib/<pkg>/ holds only modules)
 test/                          # Fortran tests and fixtures
   fortran/                     #   Test programs (test_<routine>.f90)
   fortran/deps_<routine>.txt   #   LAPACK link dependencies
@@ -58,6 +60,7 @@ docs/                          # Reference documentation
   performance-patterns.md      #   Optimization patterns with code examples
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
   ndarray-layer.md             #   Proposal: ndarray-object API layer + piecemeal CDN distribution
+  arpack-provenance.md         #   Where lib/arpack/ comes from (arpack-ng 3.9.1) and its license
 bench/                         # Performance benchmarks
 ```
 

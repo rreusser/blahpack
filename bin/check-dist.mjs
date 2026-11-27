@@ -5,7 +5,7 @@
 *
 *   1. structure   one file per `./<pkg>/<routine>` export in package.json,
 *                  plus `_stdlib.js` and `THIRD_PARTY_LICENSES.txt`, nothing else;
-*   2. vendoring   every routine file imports only `../../_stdlib.js`, the
+*   2. vendoring   every routine file imports only `_stdlib.js` (by its path relative to the file), the
 *                  runtime imports nothing, and no file calls `require(`;
 *   3. browser     headless Chromium loads every routine from a local server
 *                  with no request to any other host; each default export and
@@ -103,7 +103,7 @@ for ( const f of found.filter( ( x ) => want.has( x ) ) ) {
 	for ( const m of src.matchAll( IMPORT ) ) {
 		const spec = m[ 1 ];
 		if ( spec === void 0 ) fail( `${f}: dynamic import()` );
-		else if ( f === RUNTIME || spec !== `../../${RUNTIME}` ) fail( `${f}: imports ${spec}` );
+		else if ( f === RUNTIME || spec !== path.posix.relative( path.posix.dirname( f ), RUNTIME ).replace( /^(?!\.)/, './' ) ) fail( `${f}: imports ${spec}` );
 	}
 	if ( /\brequire\s*\(/.test( src ) ) fail( `${f}: calls require()` );
 }

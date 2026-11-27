@@ -65,7 +65,7 @@ names. The package is unpublished, so no step keeps compatibility aliases.
 | --- | --- | --- |
 | 1 | Fold `main.js` into `index.js` in every module; update F1/F3, conformance, lint and the scaffold (done: `bin/codemod-fold-main.mjs`) | ticket 0124 |
 | 2 | Export ARPACK (done; conformance now covers it too, ticket 0043) | ticket 0123 |
-| 3 | Flatten `lib/<pkg>/<routine>` to `lib/<pkg>/<routine>` with a rerunnable codemod, landed when no open branch touches `lib/` | ticket 0125 |
+| 3 | Drop the `base` level from every module path, so modules live at `lib/<pkg>/<routine>` (done: `bin/codemod-flatten.mjs`, rerunnable; CI runs its `--check`) | ticket 0125 |
 | 4 | Rename the offset form: `ndarray.js` to `strided.js`, `.ndarray` to `.strided` | ticket 0126 |
 | 5 | Generate the opt-in ndarray-object form from `spec/*.json` at `<pkg>/<routine>/ndarray`: pilot on zggev, zggbal, dgesv, dgeev and dstevx, then roll out in waves | ticket 0111 |
 | 6 | Publish this package and verify the `npm:` import in Observable, including the best-guess CDN layout | ticket 0112 |

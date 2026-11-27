@@ -22,7 +22,7 @@
 * @module bin/reference-facts
 */
 
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const ROOT = resolve( import.meta.dirname, '..' );
@@ -55,7 +55,7 @@ function modules() {
 	const out = new Map();
 	for ( const pkg of readdirSync( join( ROOT, 'lib' ) ) ) {
 		const base = join( ROOT, 'lib', pkg );
-		if ( !existsSync( base ) ) {
+		if ( !statSync( base ).isDirectory() ) {
 			continue;
 		}
 		for ( const r of readdirSync( base ) ) {

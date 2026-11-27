@@ -35,7 +35,7 @@ function moduleRoutines() {
 	var out = {};
 	fs.readdirSync( path.join( ROOT, 'lib' ) ).forEach( function each( pkg ) {
 		var dir = path.join( ROOT, 'lib', pkg );
-		if ( !fs.existsSync( dir ) ) {
+		if ( !fs.statSync( dir ).isDirectory() ) {
 			return;
 		}
 		fs.readdirSync( dir ).forEach( function eachR( r ) {

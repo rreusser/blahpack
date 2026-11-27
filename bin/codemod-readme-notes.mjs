@@ -18,7 +18,7 @@
 * @module bin/codemod-readme-notes
 */
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const ROOT = resolve( import.meta.dirname, '..' );
@@ -75,7 +75,7 @@ let moved = 0;
 let skipped = 0;
 for ( const pkg of readdirSync( join( ROOT, 'lib' ) ) ) {
 	const base = join( ROOT, 'lib', pkg );
-	if ( !existsSync( base ) ) {
+	if ( !statSync( base ).isDirectory() ) {
 		continue;
 	}
 	for ( const r of readdirSync( base ).sort() ) {

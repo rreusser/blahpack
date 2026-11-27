@@ -147,12 +147,18 @@ const counts = { relative: 0, segments: 0, text: 0, tooling: 0, names: 0, files:
 for ( const f of tracked() ) {
 	const oldAbs = path.join( ROOT, f );
 	const newAbs = mapPath( oldAbs );
-	// Fixtures under test/harness/fixtures/ are verbatim copies of module
-	// files, so their relative paths are written for a module's lib/: resolve
-	// them there (any module will do; only the depth and the target matter).
+	const oldDir = path.dirname( oldAbs );
+	const newDir = path.dirname( newAbs );
+	// Some files under test/harness/fixtures/ are verbatim copies of module
+	// files, whose relative paths are written for a module's lib/; others were
+	// adjusted to reach the real module from where they sit. Decide per path,
+	// while the old tree still exists: a path that resolves to a file from the
+	// fixture's own directory is real, one that resolves only from a module's
+	// lib/ is a copy's (any module will do; only the depth matters).
 	const copy = mods.length > 0 && f.startsWith( 'test/harness/fixtures/' );
-	const oldDir = copy ? path.join( ROOT, 'lib', 'lapack', 'base', 'fixture', 'lib' ) : path.dirname( oldAbs );
-	const newDir = copy ? path.join( ROOT, 'lib', 'lapack', 'fixture', 'lib' ) : path.dirname( newAbs );
+	const VOLD = path.join( ROOT, 'lib', 'lapack', 'base', 'fixture', 'lib' );
+	const VNEW = path.join( ROOT, 'lib', 'lapack', 'fixture', 'lib' );
+	const dirsFor = ( spec ) => ( copy && !fs.existsSync( path.resolve( oldDir, spec ) ) && fs.existsSync( path.resolve( VOLD, spec ) ) ) ? [ VOLD, VNEW ] : [ oldDir, newDir ];
 	const src = fs.readFileSync( oldAbs, 'utf8' );
 	let out = src;
 
@@ -173,11 +179,12 @@ for ( const f of tracked() ) {
 	// 1b. Relative path literals and Markdown links. Keep a path as written
 	// while it still names the same (moved) target.
 	const fix = ( spec ) => {
-		const target = mapPath( path.resolve( oldDir, spec ) );
-		if ( path.resolve( newDir, spec ) === target ) {
+		const [ from, to ] = dirsFor( spec );
+		const target = mapPath( path.resolve( from, spec ) );
+		if ( path.resolve( to, spec ) === target ) {
 			return spec;
 		}
-		return rel( newDir, target, spec.endsWith( '/' ) );
+		return rel( to, target, spec.endsWith( '/' ) );
 	};
 	out = out.replace( /(['"`])(\.\.?\/[^'"`\s$]*)\1/g, ( m, q, spec ) => {
 		const next = fix( spec );

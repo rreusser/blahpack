@@ -19,7 +19,7 @@ import stride2offset from '@stdlib/strided/base/stride2offset/lib/index.js';
 import format from '@stdlib/string/format/lib/index.js';
 import isOperationSide from '@stdlib/blas/base/assert/is-operation-side/lib/index.js';
 import max from '@stdlib/math/base/special/fast/max/lib/index.js';
-import ilaenv from '../../../../../lib/lapack/ilaenv/lib/base.js';
+import ilaenv from '../../../../../../lib/lapack/ilaenv/lib/base.js';
 import base from './base.js';
 
 

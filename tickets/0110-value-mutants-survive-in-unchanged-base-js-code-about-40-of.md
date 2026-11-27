@@ -30,3 +30,36 @@ Survey of 2026-11-27, whole-module mode, 55 modules: the 25 that PR #58 touched,
 node bin/value-mutants.mjs --summary zgsvj0 dlatbs dgeqlf zhesvx
 node bin/value-mutants.mjs dgeqlf          # lists each survivor with its site
 ```
+
+## Evidence 2026-11-27 (pilot wave: 8 modules, 3 agents)
+
+| Module | Mutants | Survived before | Killed by new tests | Proven equivalent | Left |
+|---|---|---|---|---|---|
+| dgsvj0 | 524 | 206 | 66 | 75 | 65 |
+| zgsvj0 | 493 | 219 | 68 | 80 | 71 |
+| dlatbs | 216 | 143 | 111 | 29 | 3 |
+| dlarrf | 112 | 58 | 46 | 12 | 0 |
+| dlarrd | 209 | 87 | 47 | 25 | 20 |
+| zlahef | 379 | 154 | 110 | 35 | 0 |
+| dtgexc | 104 | 61 | 50 | 5 | 6 |
+| dgeevx | 133 | 94 | 74 | 14 | 6 |
+
+- **Real defects found (each fixed, with a regression test that fails on the old code, and a LEARNINGS entry):**
+  - d/z gsvj0, and by extension d/z gsvj1: at N = 0 they wrote SVA(0), outside the array.
+  - dlarrd: it went on after DLAEBZ failed to converge, where the reference returns INFO = IINFO. An existing test asserted the wrong output.
+  - d/z geevx: an invented N = 1 shortcut returned RCONDV = 1 instead of |A(1,1)|. Existing tests asserted the wrong output.
+- **Found and ticketed:** 0118 (DLARRD's reference writes IBLOCK(0)), 0119 (garbled dgeevx/dgeev fixtures), 0120 (dgehrd differs by about 1e-9 on a graded matrix), 0121 (fixtures that don't regenerate).
+- **What is left, by class:**
+  - **Rounding-level differences** (the largest class). The JS ddot groups terms in blocks of 5 and dnrm2 has a four-accumulator fast path, while the reference adds left to right, so no bit-exact oracle exists for M ≥ 4.
+  - Exact float-equality thresholds.
+  - Convergence bookkeeping that cannot change the result.
+  - Error paths no input reaches.
+  - Deletions of `sumsq = 1`, which only differ after NaN, and the JSONL fixtures cannot hold NaN.
+- **Cost:** about 1.24M agent tokens for 8 modules, about 155k per module, and roughly 245 to 530 new Fortran reference cases per large module.
+- **What would make the rest cheap (tooling):**
+  - Compare reference fixtures bit for bit (`Object.is`): the pilot's modules all match gfortran -O2 exactly.
+  - A test-only reference-order summation mode for ddot and dnrm2.
+  - A fixture format that can hold NaN and Inf.
+  - A padding helper that runs every fixture case with LD > N, offset and strided vectors, and sentinels.
+  - Exact-threshold input generators (0, ±1, dyadic values, SMLNUM, BIGNUM, eps).
+  - A mutant-explorer script that fuzzes one mutant against the original and emits the first input that tells them apart as a Fortran case.

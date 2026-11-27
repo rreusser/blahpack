@@ -1,5 +1,5 @@
-// Fixture for bin/lib/value-mutants.test.mjs: zlahef's base.js as it was before
-// PR #58 (commit 39d98455d~1), with the upper row max one element short
+// Fixture for bin/lib/value-mutants.test.mjs: zlahef's current base.js with the
+// PR #58 bug put back (commit 39d98455d~1): the upper row max one element short
 // (`izamax( k - imax - 1, … )`; ticket 0108). It is served in memory
 // at the real module's URL, so its relative imports resolve from there.
 
@@ -475,12 +475,8 @@ function zlahef( uplo, N, nb, kb, A, strideA1, strideA2, offsetA, IPIV, strideIP
 					tt = 1.0 / ( tRe - 1.0 );
 
 					// D21 = T / D21
-					d21Re = ( tt * d21Re ) / ( d21Re * d21Re + d21Im * d21Im );
-					d21Im = ( -tt * wv[ oW + (( k + 1 ) * sw1) + (k * sw2) + 1 ] ) / ( wv[ oW + (( k + 1 ) * sw1) + (k * sw2) ] * wv[ oW + (( k + 1 ) * sw1) + (k * sw2) ] + wv[ oW + (( k + 1 ) * sw1) + (k * sw2) + 1 ] * wv[ oW + (( k + 1 ) * sw1) + (k * sw2) + 1 ] );
-
-					// Re-read original d21 for the division
-					tRe = wv[ oW + (( k + 1 ) * sw1) + (k * sw2) ];
-					tIm = wv[ oW + (( k + 1 ) * sw1) + (k * sw2) + 1 ];
+					tRe = d21Re;
+					tIm = d21Im;
 					d21Re = ( tt * tRe ) / ( tRe * tRe + tIm * tIm );
 					d21Im = ( -tt * tIm ) / ( tRe * tRe + tIm * tIm );
 

@@ -285,4 +285,134 @@ program test_dgeevx
   call print_matrix('a_input', ACOPY, N, N, NMAX)
   call end_test()
 
+  ! ================================================
+  ! Tests 12+ (ticket 0110): a battery over BALANC, JOBVL/JOBVR, SENSE and
+  ! the scaling branches (|A| tiny / huge), comparing every output, and the
+  ! workspace query's MAXWRK where dtrevc3's optimum dominates.
+  ! ================================================
+  call battery()
+
+contains
+
+  subroutine battery()
+    character :: bal(4), jl(4), jr(4), sn(4)
+    integer :: ib, ij, is, it, ns(3), in, isc
+    double precision :: scs(3)
+    character(len=64) :: nm
+    bal = (/ 'N', 'P', 'S', 'B' /)
+    jl = (/ 'V', 'V', 'N', 'N' /)
+    jr = (/ 'V', 'N', 'V', 'N' /)
+    sn = (/ 'N', 'E', 'V', 'B' /)
+    ns = (/ 1, 5, 8 /)
+    scs = (/ 1.0d0, 1.0d-150, 1.0d150 /)
+    do in = 1, 3
+      do it = 1, 3
+        do isc = 1, 3
+          do ib = 1, 4
+            do ij = 1, 4
+              do is = 1, 4
+                if ((sn(is) == 'E' .or. sn(is) == 'B') .and. ij /= 1) cycle
+                if (in == 1 .and. it /= 1) cycle
+                if (isc /= 1 .and. (ib == 2 .or. ib == 3)) cycle
+                ! The unscaled graded 8x8: DGEHRD's Hessenberg form differs from the
+                ! JS one by ~1e-9 relative, so its eigenvectors' signs and RCONDV
+                ! differ (dgehrd, not dgeevx; see ticket 0110's evidence).
+                if (in == 3 .and. it == 2 .and. isc == 1) cycle
+                write(nm, '(A,I0,A,I0,A,I0,5A)') 'bat_n', ns(in), '_t', it, '_s', isc, '_', bal(ib), jl(ij), jr(ij), sn(is)
+                call bat_case(trim(nm), ns(in), it, scs(isc), bal(ib), jl(ij), jr(ij), sn(is))
+              end do
+            end do
+          end do
+        end do
+      end do
+    end do
+    ! Only the last column nonzero, |A| ~ 1e-300 / 1e300 (the max norm and the
+    ! one-norm come from the last column), and the zero matrix (no scaling).
+    call bat_case('lastcol_tiny_BVVB', 4, 4, 1.0d-300, 'B', 'V', 'V', 'B')
+    call bat_case('lastcol_huge_BVVB', 4, 4, 1.0d300, 'B', 'V', 'V', 'B')
+    call bat_case('lastcol_tiny_NVVB', 4, 4, 1.0d-300, 'N', 'V', 'V', 'B')
+    call bat_case('lastcol_huge_NVVB', 4, 4, 1.0d300, 'N', 'V', 'V', 'B')
+    call bat_case('zero_BVVB', 4, 5, 1.0d0, 'B', 'V', 'V', 'B')
+    call bat_case('rowone_PVVN', 5, 6, 1.0d0, 'P', 'V', 'V', 'N')
+    call bat_case('rowone_BVVB', 5, 6, 1.0d0, 'B', 'V', 'V', 'B')
+    call query_case('query_n50_VVN', 50, 'V', 'V', 'N')
+    call query_case('query_n50_VNN', 50, 'V', 'N', 'N')
+    call query_case('query_n50_NVN', 50, 'N', 'V', 'N')
+  end subroutine
+
+  ! typ 1: LCG entries in [-0.5, 0.5) (seed 1); 2: graded, A(i,j)*4**(i-j);
+  ! 3: LCG with A(i,1) = 0 for i > 1 and A(n,j) = 0 for j < n (permutable);
+  ! 4: only the last column nonzero; 5: zero; 6: A(1,j) = 0 for j > 1 (row 1
+  ! isolated, so DGEBAL permutes it to the bottom).
+  subroutine gen(n, typ, sc, M)
+    integer, intent(in) :: n, typ
+    double precision, intent(in) :: sc
+    double precision, intent(out) :: M(n,n)
+    integer :: ii, jj
+    double precision :: xx
+    xx = 1.0d0
+    do jj = 1, n
+      do ii = 1, n
+        xx = mod(xx*16807.0d0, 2147483647.0d0)
+        M(ii,jj) = xx/2147483647.0d0 - 0.5d0
+        if (typ == 2) M(ii,jj) = M(ii,jj) * 4.0d0**(ii-jj)
+        if (typ == 3 .and. ((jj == 1 .and. ii > 1) .or. (ii == n .and. jj < n))) M(ii,jj) = 0.0d0
+        if ((typ == 4 .and. jj < n) .or. typ == 5) M(ii,jj) = 0.0d0
+        if (typ == 6 .and. ii == 1 .and. jj > 1) M(ii,jj) = 0.0d0
+        M(ii,jj) = M(ii,jj) * sc
+      end do
+    end do
+  end subroutine
+
+  subroutine bat_case(name, n, typ, sc, ba, vl_, vr_, se)
+    character(len=*), intent(in) :: name
+    integer, intent(in) :: n, typ
+    double precision, intent(in) :: sc
+    character, intent(in) :: ba, vl_, vr_, se
+    double precision :: M(n,n), L(n,n), R(n,n), w1(n), w2(n), s1(n), e1(n), v1(n), ab
+    double precision :: wk(20*n*n + 200)
+    integer :: iw(4*n), i1, i2, inf
+    call gen(n, typ, sc, M)
+    L = -7.0d0; R = -7.0d0; e1 = -7.0d0; v1 = -7.0d0
+    call DGEEVX(ba, vl_, vr_, se, n, M, n, w1, w2, L, n, R, n, i1, i2, s1, ab, e1, v1, wk, 20*n*n + 200, iw, inf)
+    call begin_test(name)
+    call print_int('n', n)
+    call print_int('typ', typ)
+    call print_scalar('sc', sc)
+    call print_char('balanc', ba)
+    call print_char('jobvl', vl_)
+    call print_char('jobvr', vr_)
+    call print_char('sense', se)
+    call print_int('info', inf)
+    call print_int('ilo', i1)
+    call print_int('ihi', i2)
+    call print_scalar('abnrm', ab)
+    call print_array('wr', w1, n)
+    call print_array('wi', w2, n)
+    call print_array('scale', s1, n)
+    call print_array('vl', L, n*n)
+    call print_array('vr', R, n*n)
+    call print_array('rconde', e1, n)
+    call print_array('rcondv', v1, n)
+    call end_test()
+  end subroutine
+
+  subroutine query_case(name, n, vl_, vr_, se)
+    character(len=*), intent(in) :: name
+    integer, intent(in) :: n
+    character, intent(in) :: vl_, vr_, se
+    double precision :: M(n,n), L(n,n), R(n,n), w1(n), w2(n), s1(n), e1(n), v1(n), ab, wk(1)
+    integer :: iw(4*n), i1, i2, inf
+    M = 0.0d0
+    call DGEEVX('B', vl_, vr_, se, n, M, n, w1, w2, L, n, R, n, i1, i2, s1, ab, e1, v1, wk, -1, iw, inf)
+    call begin_test(name)
+    call print_int('n', n)
+    call print_char('jobvl', vl_)
+    call print_char('jobvr', vr_)
+    call print_char('sense', se)
+    call print_int('info', inf)
+    call print_int('maxwrk', int(wk(1)))
+    call end_test()
+  end subroutine
+
 end program

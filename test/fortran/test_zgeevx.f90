@@ -219,4 +219,20 @@ program test_zgeevx
   call print_array('rcondv', RCONDV, N)
   call end_test()
 
+  ! Test 10: N=1, sense='B' (both), both eigenvectors, no balancing (ticket 0110:
+  ! the reference has no N=1 shortcut; RCONDV is |A(1,1)|, not 1)
+  N = 1
+  A(1,1) = dcmplx(3.0d0, 2.0d0)
+  call ZGEEVX('N', 'V', 'V', 'B', N, A, NMAX, W, VL, NMAX, VR, NMAX, &
+              ILO, IHI, SCALE, ABNRM, RCONDE, RCONDV, WORK, LWORK, RWORK, INFO)
+  call begin_test('n1_sense_b')
+  call print_int('info', INFO)
+  call print_int('ilo', ILO)
+  call print_int('ihi', IHI)
+  call print_scalar('abnrm', ABNRM)
+  call print_array('w', W_r, 2*N)
+  call print_array('rconde', RCONDE, N)
+  call print_array('rcondv', RCONDV, N)
+  call end_test()
+
 end program

@@ -56,6 +56,7 @@ docs/                          # Reference documentation
   goto-patterns.md             #   Fortran GOTO → JS restructuring
   performance-patterns.md      #   Optimization patterns with code examples
   optimization-policy.md       #   What may change when optimizing; faithfulness & provenance rules
+  ndarray-layer.md             #   Proposal: ndarray-object API layer + piecemeal CDN distribution
 bench/                         # Performance benchmarks
 ```
 

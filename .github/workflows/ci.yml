@@ -45,7 +45,7 @@ jobs:
         run: npm run test:lint-rules
       - name: "No module path keeps the retired base level (ticket 0125; fix: node bin/codemod-flatten.mjs --all)"
         run: node bin/codemod-flatten.mjs --check
-      - name: "Nothing still calls the offset form ndarray (ticket 0126; fix: node bin/codemod-strided.mjs --all)"
+      - name: "Every offset-form name says strided (ticket 0126; fix: node bin/codemod-strided.mjs --all)"
         run: node bin/codemod-strided.mjs --check
       - name: No escape hatches (no continue-on-error, baselines, skips, disabled rules)
         run: npm run lint:escape-hatches

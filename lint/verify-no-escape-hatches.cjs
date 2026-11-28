@@ -61,6 +61,51 @@ files.filter( function isWorkflow( f ) {
 	]);
 });
 
+// 1b. Every CI job has a time limit of at most an hour. A job with none runs
+// to GitHub's 6-hour default, so a runaway check (a corpus-wide mutation run
+// on a PR that touches every module) burns hours before anyone sees it fail.
+var MAX_JOB_MINUTES = 60;
+files.filter( function isWorkflow( f ) {
+	return /\.github[\/]workflows[\/].+\.ya?ml$/.test( f );
+}).forEach( function each( f ) {
+	var rel = path.relative( ROOT, f );
+	var lines = fs.readFileSync( f, 'utf8' ).split( '\n' );
+	var inJobs = false;
+	var job = null;
+	function close() {
+		if ( job && !job.minutes ) {
+			report( rel, job.line, 'CI job "' + job.name + '" has no timeout-minutes (GitHub defaults to 360)' );
+		} else if ( job && job.minutes > MAX_JOB_MINUTES ) {
+			report( rel, job.line, 'CI job "' + job.name + '" allows ' + job.minutes + ' minutes (max ' + MAX_JOB_MINUTES + ')' );
+		}
+		job = null;
+	}
+	lines.forEach( function eachLine( text, i ) {
+		var m;
+		if ( /^jobs:\s*$/.test( text ) ) {
+			inJobs = true;
+			return;
+		}
+		if ( !inJobs ) {
+			return;
+		}
+		if ( /^\S/.test( text ) ) {
+			close();
+			inJobs = false;
+			return;
+		}
+		if ( ( m = /^ {2}([\w-]+):\s*$/.exec( text ) ) ) {
+			close();
+			job = { 'name': m[ 1 ], 'line': i + 1, 'minutes': 0 };
+			return;
+		}
+		if ( job && ( m = /^ {4}timeout-minutes:\s*(\d+)\s*$/.exec( text ) ) ) {
+			job.minutes = Number( m[ 1 ] );
+		}
+	});
+	close();
+});
+
 // 2. package.json scripts: no swallowed failures.
 (function checkScripts() {
 	var pkg = JSON.parse( fs.readFileSync( path.join( ROOT, 'package.json' ), 'utf8' ) );

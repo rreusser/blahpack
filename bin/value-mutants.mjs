@@ -469,7 +469,7 @@ function renamesSince( mb, cwd ) {
 // Lines of `rel` (new side) changed since commit `mb`, as [ first, last ]
 // ranges; null when the file is new since `mb` (all of it is changed). A file
 // that was renamed since `mb` is compared with its old path, so a move (the
-// lib/<pkg>/base/ flatten, ticket 0125) changes only the lines it edited. A
+// layout flatten, ticket 0125) changes only the lines it edited. A
 // pure deletion marks the lines on both sides of the gap.
 function changedLines( mb, rel, cwd ) {
 	let paths = [ rel ];

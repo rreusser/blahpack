@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgesv/lib/dgesv.js
+// target: lib/lapack/dgesv/lib/dgesv.js
 // expect: placeholder
 /**
 * Solves a linear system.

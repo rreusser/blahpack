@@ -35,7 +35,7 @@ function typedExport( src ) {
 function files() {
 	var out = [];
 	[ 'blas', 'lapack', 'arpack' ].forEach( function each( pkg ) {
-		var dir = path.join( ROOT, 'lib', pkg, 'base' );
+		var dir = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( dir ) ) {
 			return;
 		}

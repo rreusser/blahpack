@@ -563,7 +563,7 @@ def gen_package_json(routine, package, description, sig):
     ] + type_kw
 
     pkg = {
-        "name": f"@stdlib/{package}/base/{routine}",
+        "name": f"@rreusser/blahpack/{package}/{routine}",
         "version": "0.0.0",
         "description": description,
         "license": "Apache-2.0",
@@ -770,7 +770,7 @@ def _build_dummy_blas_args(blas_args, blas_arg_meta, override=None):
 
 def gen_readme(routine, package, description, sig):
     """Generate README.md — stdlib-style scaffold with both APIs documented."""
-    mod_path = f'@stdlib/{package}/base/{routine}'
+    mod_path = f'@rreusser/blahpack/{package}/{routine}'
     ndarray_args = ', '.join(sig['js_args'])
     blas_args, blas_arg_meta, array_ld_map = build_blas_args(sig)
     blas_args_str = ', '.join(blas_args)
@@ -1014,7 +1014,7 @@ def gen_repl_txt(routine, sig, description):
 
 def gen_types_dts(routine, package, sig, description):
     """Generate docs/types/index.d.ts — stdlib-style with both signatures."""
-    mod_path = f'@stdlib/{package}/base/{routine}'
+    mod_path = f'@rreusser/blahpack/{package}/{routine}'
     blas_args, blas_arg_meta, array_ld_map = build_blas_args(sig)
 
     ts_type_map = {
@@ -1169,7 +1169,7 @@ def gen_examples_js(routine, package, sig):
     """Generate examples/index.js — working example. Picks Complex128Array
     for z/c-prefix routines (random utils don't support complex dtype yet),
     otherwise uses discreteUniform. The call itself is a TODO placeholder."""
-    mod_path = f'@stdlib/{package}/base/{routine}'
+    mod_path = f'@rreusser/blahpack/{package}/{routine}'
     arrays_info = sig.get('arrays', {})
     has_2d = any(info['dim'] == 2 for info in arrays_info.values())
     is_complex = routine.startswith(('z', 'c'))
@@ -1265,7 +1265,7 @@ def gen_benchmark_stub(routine, package, kind):
     """
     return f"""{LICENSE_HEADER}// MAIN //
 
-throw new Error( '{BENCHMARK_STUB_MARKER}: run `node bin/gen-benchmark.mjs lib/{package}/base/{routine} --kind={kind} --write` once lib/base.js is implemented' );
+throw new Error( '{BENCHMARK_STUB_MARKER}: run `node bin/gen-benchmark.mjs lib/{package}/{routine} --kind={kind} --write` once lib/base.js is implemented' );
 """
 
 
@@ -1468,7 +1468,7 @@ def main():
     description = args.description or f'TODO: Add description for {args.routine.upper()}.'
 
     # Build output directory
-    out_dir = os.path.join(root_dir, 'lib', args.package, 'base', args.routine)
+    out_dir = os.path.join(root_dir, 'lib', args.package, args.routine)
 
     # Generate all files
     files = {

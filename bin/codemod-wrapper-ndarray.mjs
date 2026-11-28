@@ -55,7 +55,7 @@ function exportedParams( file ) {
 function modules( only ) {
 	const out = [];
 	PKGS.forEach( ( pkg ) => {
-		const dir = path.join( ROOT, 'lib', pkg, 'base' );
+		const dir = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( dir ) ) {
 			return;
 		}

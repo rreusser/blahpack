@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlasyf/lib/dlasyf.js
+// target: lib/lapack/dlasyf/lib/dlasyf.js
 // expect: layout
 // W is N by nb: one bound for both layouts is too strict in row-major (needs only nb).
 /* eslint-disable max-len, max-params */

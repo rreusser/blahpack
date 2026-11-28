@@ -158,7 +158,7 @@ test( 'tsconfig.callers.json checks every benchmark and example, with noImplicit
 	var cfg = JSON.parse( fs.readFileSync( path.join( ROOT, 'tsconfig.callers.json' ), 'utf8' ) );
 	assert.strictEqual( cfg.extends, './tsconfig.json' );
 	assert.strictEqual( cfg.compilerOptions.noImplicitAny, true, 'noImplicitAny' );
-	[ 'lib/*/base/*/benchmark/*.js', 'lib/*/base/*/examples/*.js', 'lib/*/base/*/lib/*.js' ].forEach( function each( g ) {
+	[ 'lib/*/*/benchmark/*.js', 'lib/*/*/examples/*.js', 'lib/*/*/lib/*.js' ].forEach( function each( g ) {
 		assert.ok( cfg.include.indexOf( g ) >= 0, 'include has ' + g );
 	});
 	Object.keys( JSON.parse( fs.readFileSync( path.join( ROOT, 'tsconfig.json' ), 'utf8' ) ).compilerOptions.paths ).forEach( function each( k ) {

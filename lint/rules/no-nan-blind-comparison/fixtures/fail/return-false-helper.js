@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlaqr5/test/test.ndarray.js
+// target: lib/lapack/dlaqr5/test/test.ndarray.js
 // expect: blindIf
 // `false` means "not upper triangular": a NaN entry reads as zero.
 function isUpperTriangular( H, N, tol ) {

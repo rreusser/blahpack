@@ -26,7 +26,7 @@ review; [GENERATE] means the file should be generated from a template.
 
 ## index.js
 
-- [ ] [MANUAL] `@module` should reference `@stdlib/<pkg>/base/<routine>`
+- [ ] [MANUAL] `@module` should reference `@stdlib/<pkg>/<routine>`
 - [ ] [MANUAL] `@example` blocks should show both layout API and `.ndarray()` with
       correct arguments and expected output comments
 

@@ -12,7 +12,7 @@
 
 // VARIABLES //
 
-// Cache-blocking parameters (matching lib/blas/base/dgemm):
+// Cache-blocking parameters (matching lib/blas/dgemm):
 var NC = 64;
 var KC = 256;
 

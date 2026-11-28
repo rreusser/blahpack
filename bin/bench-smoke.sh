@@ -4,7 +4,7 @@
 # for any reason other than the timeout (124).
 #
 # Usage:
-#   bin/bench-smoke.sh                  # all lib/*/base/*/benchmark/*.js
+#   bin/bench-smoke.sh                  # all lib/*/*/benchmark/*.js
 #   bin/bench-smoke.sh <list-file>      # only files listed (one per line)
 #   bin/bench-smoke.sh --changed        # modules changed vs origin/main
 #                                       #   (bin/changed-modules.mjs; --base <ref>)
@@ -17,7 +17,7 @@ if [ "$1" = "--changed" ]; then
 	shift
 	dirs=$(node bin/changed-modules.mjs "$@") || exit 2
 	for d in $dirs; do ls "$d"/benchmark/*.js 2>/dev/null; done
-elif [ -n "$1" ]; then cat "$1"; else ls lib/*/base/*/benchmark/*.js; fi > "$OUT/files.txt"
+elif [ -n "$1" ]; then cat "$1"; else ls lib/*/*/benchmark/*.js; fi > "$OUT/files.txt"
 run() {
 	f=$1; key=$(echo "$f" | tr '/' '_')
 	timeout "${SMOKE_TIMEOUT:-3}" node "$f" > "$OUT/logs/$key" 2>&1; rc=$?

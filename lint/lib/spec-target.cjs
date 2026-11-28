@@ -3,23 +3,24 @@
 // Which spec and which form a linted file is, and the function it exports.
 // Shared by the spec-* rules (lint/rules/spec-*).
 //
-//   lib/<pkg>/base/<routine>/lib/base.js       → form 'base'
-//   lib/<pkg>/base/<routine>/lib/ndarray.js    → form 'ndarray'
-//   lib/<pkg>/base/<routine>/lib/<routine>.js  → form 'strided'
+//   lib/<pkg>/<routine>/lib/base.js       → form 'base'
+//   lib/<pkg>/<routine>/lib/ndarray.js    → form 'ndarray'
+//   lib/<pkg>/<routine>/lib/<routine>.js  → form 'strided'
 
 var path = require( 'path' );
 var specLib = require( './spec.cjs' );
+var moduleOf = require( './module-path.cjs' ).moduleOf;
 
 function target( filename ) {
-	var parts = String( filename ).split( path.sep );
-	var n = parts.length;
+	var mod = moduleOf( filename );
 	var routine;
 	var file;
-	if ( n < 5 || parts[ n - 2 ] !== 'lib' || parts[ n - 4 ] !== 'base' || parts.indexOf( 'lib' ) === n - 2 ) {
+	// A file directly in the module's lib/: lib/<pkg>/<routine>/lib/<file>.
+	if ( !mod || mod.rest.length !== 2 || mod.rest[ 0 ] !== 'lib' ) {
 		return null;
 	}
-	routine = parts[ n - 3 ];
-	file = parts[ n - 1 ];
+	routine = mod.routine;
+	file = mod.rest[ 1 ];
 	if ( file === 'base.js' ) {
 		return { 'routine': routine, 'form': 'base' };
 	}

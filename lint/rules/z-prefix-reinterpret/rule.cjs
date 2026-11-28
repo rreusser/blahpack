@@ -5,6 +5,7 @@
 // reinterpreted as Float64Array views for element access.
 
 var path = require( 'path' );
+var moduleOf = require( '../../lib/module-path.cjs' ).moduleOf;
 
 // Variable names that suggest complex array parameters
 var RE_COMPLEX_INDEX = /(Av|Bv|Cv|Hv|Zv|Qv|Tv|Uv|Xv|VTv|VLv|VRv)\[/;
@@ -26,11 +27,11 @@ var rule = {
 			return {};
 		}
 		var parts = filename.split( path.sep );
-		var baseIdx = parts.indexOf( 'base' );
-		if ( baseIdx === -1 || baseIdx + 1 >= parts.length ) {
+		var mod = moduleOf( filename );
+		if ( !mod ) {
 			return {};
 		}
-		var routine = parts[ baseIdx + 1 ];
+		var routine = mod.routine;
 		if ( routine.charAt( 0 ) !== 'z' ) {
 			return {};
 		}

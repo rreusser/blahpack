@@ -3,9 +3,9 @@
 /**
 * Checks the browser build in `dist/` (bin/build-dist.mjs; ticket 0112):
 *
-*   1. structure   one file per `./<pkg>/base/<routine>` export in package.json,
+*   1. structure   one file per `./<pkg>/<routine>` export in package.json,
 *                  plus `_stdlib.js` and `THIRD_PARTY_LICENSES.txt`, nothing else;
-*   2. vendoring   every routine file imports only `../../_stdlib.js`, the
+*   2. vendoring   every routine file imports only `_stdlib.js` (by its path relative to the file), the
 *                  runtime imports nothing, and no file calls `require(`;
 *   3. browser     headless Chromium loads every routine from a local server
 *                  with no request to any other host; each default export and
@@ -42,14 +42,14 @@ const BUDGET = {
 // names, once in Node from lib/ and once in Chromium from dist/.
 const CASES = [
 	{
-		routines: [ 'blas/base/ddot' ],
+		routines: [ 'blas/ddot' ],
 		body: `( ddot ) => {
 			const x = new Float64Array( [ 1, 2, 3, 4 ] );
 			return [ ddot( 4, x, 1, x, 1 ), ddot.ndarray( 2, x, 2, 1, x, 2, 1 ) ];
 		}`
 	},
 	{
-		routines: [ 'lapack/base/dgesv' ],
+		routines: [ 'lapack/dgesv' ],
 		body: `( dgesv ) => {
 			const A = new Float64Array( [ 4, 1, 2, 3, 5, 1, 1, 2, 6 ] );
 			const B = new Float64Array( [ 1, 2, 3, 4, 5, 6 ] );
@@ -59,7 +59,7 @@ const CASES = [
 		}`
 	},
 	{
-		routines: [ 'lapack/base/dsyev', 'lapack/base/dgesvd' ],
+		routines: [ 'lapack/dsyev', 'lapack/dgesvd' ],
 		body: `( dsyev, dgesvd ) => {
 			const N = 5;
 			const S = new Float64Array( N * N );
@@ -80,7 +80,7 @@ const kb = ( n ) => `${( n / 1024 ).toFixed( 1 )} KB`;
 
 // 1. Structure.
 const pkg = JSON.parse( fs.readFileSync( path.join( ROOT, 'package.json' ), 'utf8' ) );
-const routines = Object.keys( pkg.exports ).map( ( k ) => ( /^\.\/(\w+\/base\/\w+)$/.exec( k ) || [] )[ 1 ] ).filter( Boolean );
+const routines = Object.keys( pkg.exports ).map( ( k ) => ( /^\.\/(\w+\/\w+)$/.exec( k ) || [] )[ 1 ] ).filter( Boolean );
 if ( !fs.existsSync( DIR ) ) {
 	console.error( `${path.relative( ROOT, DIR )}/ does not exist: run npm run build:dist first` );
 	process.exit( 1 );
@@ -103,7 +103,7 @@ for ( const f of found.filter( ( x ) => want.has( x ) ) ) {
 	for ( const m of src.matchAll( IMPORT ) ) {
 		const spec = m[ 1 ];
 		if ( spec === void 0 ) fail( `${f}: dynamic import()` );
-		else if ( f === RUNTIME || spec !== `../../${RUNTIME}` ) fail( `${f}: imports ${spec}` );
+		else if ( f === RUNTIME || spec !== path.posix.relative( path.posix.dirname( f ), RUNTIME ).replace( /^(?!\.)/, './' ) ) fail( `${f}: imports ${spec}` );
 	}
 	if ( /\brequire\s*\(/.test( src ) ) fail( `${f}: calls require()` );
 }

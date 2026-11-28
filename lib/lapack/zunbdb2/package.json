@@ -1,0 +1,36 @@
+{
+  "name": "@rreusser/blahpack/lapack/zunbdb2",
+  "version": "1.0.0",
+  "description": "Simultaneously bidiagonalizes the blocks of a tall and skinny complex matrix [X11; X21] with orthonormal columns (P <= min(M-P, Q, M-Q))",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "level 3",
+    "zunbdb2",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "complex128",
+    "complex",
+    "complex128array"
+  ]
+}

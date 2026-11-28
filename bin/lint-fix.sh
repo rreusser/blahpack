@@ -2,8 +2,8 @@
 # Full lint-fix pipeline: codemods + eslint --fix + test verification.
 #
 # Usage:
-#   bin/lint-fix.sh lib/blas/base/daxpy     # Fix one module
-#   bin/lint-fix.sh lib/blas/base/d*        # Fix multiple modules
+#   bin/lint-fix.sh lib/blas/daxpy     # Fix one module
+#   bin/lint-fix.sh lib/blas/d*        # Fix multiple modules
 #   bin/lint-fix.sh                          # Fix all BLAS + LAPACK modules
 
 set -uo pipefail
@@ -26,7 +26,7 @@ NC='\033[0m'
 # Collect module paths
 MODULES=()
 if [ $# -eq 0 ]; then
-    for d in lib/blas/base/*/test/test.js lib/lapack/base/*/test/test.js; do
+    for d in lib/blas/*/test/test.js lib/lapack/*/test/test.js; do
         [ -f "$d" ] && MODULES+=("$(dirname "$(dirname "$d")")")
     done
 else

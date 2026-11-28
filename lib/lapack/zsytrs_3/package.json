@@ -1,0 +1,36 @@
+{
+  "name": "@rreusser/blahpack/lapack/zsytrs_3",
+  "version": "1.0.0",
+  "description": "Solve A*X = B for symmetric (non-Hermitian) complex A using factorization computed by ZSYTRF_RK",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "level 3",
+    "zsytrs_3",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "complex128",
+    "complex",
+    "complex128array"
+  ]
+}

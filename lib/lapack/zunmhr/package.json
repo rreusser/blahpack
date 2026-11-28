@@ -1,0 +1,35 @@
+{
+  "name": "@rreusser/blahpack/lapack/zunmhr",
+  "version": "1.0.0",
+  "description": "Overwrites the general complex M-by-N matrix C with SIDE = 'L' SIDE = 'R' TRANS = 'N': Q·C C·Q TRANS = 'C': Qᴴ·C C·Qᴴ",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "zunmhr",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "complex128",
+    "complex",
+    "complex128array"
+  ]
+}

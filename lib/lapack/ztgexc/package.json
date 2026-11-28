@@ -1,0 +1,36 @@
+{
+  "name": "@rreusser/blahpack/lapack/ztgexc",
+  "version": "1.0.0",
+  "description": "Reorders the generalized Schur decomposition of a complex matrix pair (A,B), using an unitary equivalence transformation (A, B) := Q·(A, B)·Zᴴ, so that the diagonal block of (A, B) with row index IFST is moved to row ILST",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "level 3",
+    "ztgexc",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "complex128",
+    "complex",
+    "complex128array"
+  ]
+}

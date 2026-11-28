@@ -444,19 +444,44 @@ async function analyze( routine, scope ) {
 
 // --- diff scope ----------------------------------------------------------------
 
-function git( args ) {
-	return spawnSync( 'git', args, { 'cwd': ROOT, 'encoding': 'utf8' } );
+function git( args, cwd ) {
+	return spawnSync( 'git', args, { 'cwd': cwd || ROOT, 'encoding': 'utf8', 'maxBuffer': 1 << 28 } );
+}
+
+// Paths renamed since commit `mb`, new path -> old path (git's rename
+// detection), cached per repository and commit.
+const RENAMES = new Map();
+function renamesSince( mb, cwd ) {
+	const key = ( cwd || ROOT ) + '\0' + mb;
+	if ( !RENAMES.has( key ) ) {
+		const map = new Map();
+		for ( const line of git( [ 'diff', '-M', '-l100000', '--name-status', '--diff-filter=R', mb ], cwd ).stdout.split( '\n' ) ) {
+			const f = line.split( '\t' );
+			if ( f.length === 3 && /^R/.test( f[ 0 ] ) ) {
+				map.set( f[ 2 ], f[ 1 ] );
+			}
+		}
+		RENAMES.set( key, map );
+	}
+	return RENAMES.get( key );
 }
 
 // Lines of `rel` (new side) changed since commit `mb`, as [ first, last ]
-// ranges; null when the file is new since `mb` (all of it is changed). A pure
-// deletion marks the lines on both sides of the gap.
-function changedLines( mb, rel ) {
-	if ( git( [ 'cat-file', '-e', mb + ':' + rel ] ).status !== 0 ) {
-		return null;
+// ranges; null when the file is new since `mb` (all of it is changed). A file
+// that was renamed since `mb` is compared with its old path, so a move (the
+// layout flatten, ticket 0125) changes only the lines it edited. A
+// pure deletion marks the lines on both sides of the gap.
+function changedLines( mb, rel, cwd ) {
+	let paths = [ rel ];
+	if ( git( [ 'cat-file', '-e', mb + ':' + rel ], cwd ).status !== 0 ) {
+		const old = renamesSince( mb, cwd ).get( rel );
+		if ( !old ) {
+			return null;
+		}
+		paths = [ old, rel ];
 	}
 	const out = [];
-	for ( const m of git( [ 'diff', '-U0', mb, '--', rel ] ).stdout.matchAll( /^@@ -\S+ \+(\d+)(?:,(\d+))? @@/gm ) ) {
+	for ( const m of git( [ 'diff', '-M', '-l100000', '-U0', mb, '--', ...paths ], cwd ).stdout.matchAll( /^@@ -\S+ \+(\d+)(?:,(\d+))? @@/gm ) ) {
 		const start = Number( m[ 1 ] );
 		const count = ( m[ 2 ] === void 0 ) ? 1 : Number( m[ 2 ] );
 		out.push( ( count === 0 ) ? [ start, start + 1 ] : [ start, start + count - 1 ] );

@@ -33,7 +33,7 @@ intelligence that lets us harden the tooling and the modules.
        already certify only TIGHT col-major dense B/X for exactly this reason.
   Additionally, even POSITIVE non-unit packed stride (2,3) can flip `izamax` pivot
   TIES → a different (still correct) Bunch-Kaufman path → not bit-exact.
-- **Repro**: `lib/lapack/base/zspsvx/test/test.validate.js`, `sc=complex`,
+- **Repro**: `lib/lapack/zspsvx/test/test.validate.js`, `sc=complex`,
   `logical.symmetric` (complex-symmetric A=Aᵀ, NO conj), N=9, nrhs=2, seed
   `0xBEEF`. Factor NaN: `uplo='upper'`, `schemes.packed.layouts()[4]`
   (`{stride:-1,lead:4,tail:1}`) → `rcond=NaN`, `info=0`; `zsptrf` scan shows valid
@@ -79,7 +79,7 @@ intelligence that lets us harden the tooling and the modules.
   on/below-diagonal L (and V) of the factored A. This is the LQ dual of the dgeqrt
   QR case, where the trailing update instead scales with trailing COLUMNS `N-i-ib`
   and `mb*N` is always safe because dgeqrt requires M≥N.
-- **Repro**: `lib/lapack/base/dgelqt/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dgelqt/test/test.validate.js` Step 4c
   `assertWorkspaceSufficient`, `schemes.dense`, real trait, seed `0xB10C+M*7+N`.
   Case `M=40, N=20, mb=8` (K=20, M>N): advertised minimum probes to WORK length
   **160** (= mb*N); running at exactly 160 with a POISONED buffer yields a
@@ -118,14 +118,14 @@ intelligence that lets us harden the tooling and the modules.
   FALSE for **dpftri** (real RFP Cholesky inverse). The numeric reconstruct property
   A0·inv(A0)=I passes everywhere (routine is correct → L2), but the bit-exact layout
   fuzz fails.
-- **Repro**: `lib/lapack/base/dpftri/test/test.validate.js`, `transr='transpose'`,
+- **Repro**: `lib/lapack/dpftri/test/test.validate.js`, `transr='transpose'`,
   `uplo='upper'`, `n=12`, seed `0xF00D`; RFP buffer `stride=2` vs `stride=1` differ at
   packed component 78: `0.14882374233484508` vs `0.1488237423348451` (1 ULP). Probe
   confirmed: **offset-only** changes (stride fixed at +1, vary lead/tail/base) are
   bit-exact (0 differing components); ANY stride change — including `stride=-1`,
   2, 3 — flips exactly 1 ULP.
 - **Root cause**: NOT a bug in dpftri. dpftri delegates to `dlauum` + `dsyrk` + `dtrmm`
-  (`lib/lapack/base/dpftri/lib/base.js:81-133`); `dlauum` is the RFP analog of the
+  (`lib/lapack/dpftri/lib/base.js:81-133`); `dlauum` is the RFP analog of the
   dense **dpotri/dlauum** family already documented in `schemes.js` (`pureAddrLayouts`)
   as legitimately reordering when a unit-stride (`incx==1`) BLAS fast path is taken.
   Changing the RFP stride changes the strides handed to those inner kernels, which
@@ -168,7 +168,7 @@ intelligence that lets us harden the tooling and the modules.
   SAME `max(1,N,M,P)` and so under-allocate identically; `dggrqf.js` alone used
   `max(1,M,P,N)*DEFAULT_NB` (NB=64) which happens to over-cover, but was aligned to
   the exact formula for provable safety.
-- **Repro**: `lib/lapack/base/{dggqrf,zggqrf,dggrqf,zggrqf}/test/test.validate.js`
+- **Repro**: `lib/lapack/{dggqrf,zggqrf,dggrqf,zggrqf}/test/test.validate.js`
   Step 4c (`assertWorkspaceSufficient`), N=M=P=64 (all three sub-mins = 64 > NB=32 →
   blocked). Seed `factor`'s `0x51 + N*1e4 + M*100 + P` (ggqrf) / `0x71 + M*1e4 + P*100
   + N` (ggrqf). The advertised minimum probes to WORK length **64**; a poisoned buffer
@@ -208,7 +208,7 @@ intelligence that lets us harden the tooling and the modules.
   formation read NaN). The QR twin `dggqrf`/`zggqrf` guards on `N===0` ONLY (the sole
   case where ALL three sub-ops are trivial), so they were CORRECT — the RQ wrappers
   simply added `M===0`/`p===0` cases the reference does not skip.
-- **Repro**: `lib/lapack/base/dggrqf/test/test.validate.js` (and `zggrqf`) Steps 2-3,
+- **Repro**: `lib/lapack/dggrqf/test/test.validate.js` (and `zggrqf`) Steps 2-3,
   triple `M=0, P=2, N=3` (A is 0×3 empty ⇒ Q=I_3; B is 2×3, its QR must still run),
   seed `0x71 + 0*1e4 + 2*100 + 3`. `assertOrthonormal` on Z fails with
   `non-finite value at index 0` (TAUB never written → poisoned NaN read back).
@@ -246,7 +246,7 @@ intelligence that lets us harden the tooling and the modules.
   break masked only because every EXISTING caller/test happened to use the LEGACY
   no-rcond positional layout, where the missing-param double-shift (test omits
   rcond → ndarray declares it → base omits it) accidentally re-aligned.
-- **Repro**: `lib/lapack/base/dposvx/test/test.validate.js` (residual/rcond/FERR-BERR
+- **Repro**: `lib/lapack/dposvx/test/test.validate.js` (residual/rcond/FERR-BERR
   checks) — calling `ndarray(...,X,1,N,0, rcond, FERR,1,0, BERR,1,0, WORK,1,0,
   IWORK,1,0)` with an SPD 3×3 well-conditioned system throws inside `dlansy` before
   producing any output. Minimal: `not-factored`/`upper`, N=3, nrhs=1, any SPD A.
@@ -295,7 +295,7 @@ intelligence that lets us harden the tooling and the modules.
   `dgehrd`, `dorgbr`/`zungbr`, and `dormqr` entries; note the sibling `dormqr`,
   `zunmqr`, `zunmlq` wrappers ALREADY carried the correct blocked guard, so this was
   a `dormbr`/`zunmbr` wrapper omission, not a base-kernel bug.
-- **Repro**: `lib/lapack/base/{dormbr,zunmbr}/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/{dormbr,zunmbr}/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), any of vect∈{apply-Q,apply-P} × side∈{left,right}
   with m0=n0=40, freeN=50 (K = 40 > NB=32 → blocked), factor seed `0xB000+m0*100+n0`.
   The wrapper's advertised minimum probes to WORK length **50** (side=left, =max(1,N))
@@ -342,7 +342,7 @@ intelligence that lets us harden the tooling and the modules.
   QR/RQ sibling families where only one scalar variant lagged, here BOTH the real
   `dorgbr` and complex `zungbr` wrappers copied the unblocked `max(1,min(M,N))`
   formula (same as the `dorglq`/`zunglq` and `dorgrq`/`zungrq` pairs).
-- **Repro**: `lib/lapack/base/dorgbr/test/test.validate.js` (and `zungbr`) Step 4c
+- **Repro**: `lib/lapack/dorgbr/test/test.validate.js` (and `zungbr`) Step 4c
   (`assertWorkspaceSufficient`), `schemes.dense`. Four blocked cases, each forcing
   its delegate onto the blocked path (effective K > NB=32): `vect='Q'` M0=80,N0=64
   → `dorgqr(80,64,64)`; `vect='Q'` M0=64,N0=80 → `dorgqr(63,63,63)`; `vect='P'`
@@ -352,7 +352,7 @@ intelligence that lets us harden the tooling and the modules.
   the blocked former at exactly 64 with a poisoned buffer yields a non-finite value
   at flattened component **2560** (col 40, the first block seam past the advertised
   workspace; it actually needs `N*NB = 64*32 = 2048`).
-- **Root cause**: `lib/lapack/base/{dorgbr,zungbr}/lib/ndarray.js` copied the
+- **Root cause**: `lib/lapack/{dorgbr,zungbr}/lib/ndarray.js` copied the
   reference LAPACK unblocked LWORK lower bound (`max(1,min(M,N))`) as a hard guard,
   but our JS hardcodes NB and does NOT adapt the block size down when WORK is small
   (the reference shrinks NB to fit LWORK; we do not). So the reference's minimum is
@@ -404,7 +404,7 @@ intelligence that lets us harden the tooling and the modules.
   wrapper lagged an already-correct complex sibling), here BOTH the real `dormhr`
   and complex `zunmhr` guards were bare `max(1,·)` — the apply-Q wrappers one level
   up from the QR appliers never got the blocked branch their own delegate carries.
-- **Repro**: `lib/lapack/base/dormhr/test/test.validate.js` (and `zunmhr`) Step 4c
+- **Repro**: `lib/lapack/dormhr/test/test.validate.js` (and `zunmhr`) Step 4c
   (`assertWorkspaceSufficient`), `side='left'`, M=48, N=40, ilo=1, ihi=48 (nq=M=48,
   nh=47 > NB=32 → blocked), seed `seedFor(48,40,'left')`. The wrapper's advertised
   minimum probes to WORK length **40** (= max(1,N)); running the blocked apply at
@@ -412,7 +412,7 @@ intelligence that lets us harden the tooling and the modules.
   component 1 (dormhr) / 2 (zunmhr) — it actually needs `40*32 + 33*32 = 2336`.
   side='right' M=40 N=48 (nq=N=48) is the symmetric M-side case. The unblocked
   fallback (`dorm2r`/`zunm2r`, nh ≤ NB) genuinely needs only nw and is unaffected.
-- **Root cause**: `lib/lapack/base/{dormhr,zunmhr}/lib/ndarray.js` copied the
+- **Root cause**: `lib/lapack/{dormhr,zunmhr}/lib/ndarray.js` copied the
   reference LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as their
   guard, but our JS hardcodes NB and does NOT adapt the block size down when WORK
   is small (the reference shrinks NB to fit LWORK; we do not). So the reference's
@@ -539,7 +539,7 @@ intelligence that lets us harden the tooling and the modules.
   so only the real `dgehrd` wrapper was wrong — the exact real-lags-complex
   asymmetry seen in the `dormqr`/`zunmqr`, `dgerqf`/`zgerqf`, `dormql`, `dormrq`
   entries below.
-- **Repro**: `lib/lapack/base/dgehrd/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dgehrd/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), N=64, ilo=1, ihi=64 (NH=64 > NB=32 → blocked; the
   block loop runs at i=1 since `ihi-1-NX = 64-1-32 = 31 >= 1`), seed `0xB10C + 64`.
   The wrapper's advertised minimum probes to WORK length **64** (= max(1,N));
@@ -548,7 +548,7 @@ intelligence that lets us harden the tooling and the modules.
   needs `64*32 + 65*32 = 4128`. The unblocked `dgehd2` remainder (N ≤ NB, or the
   sub-threshold N=33 where the block loop body never executes) genuinely needs only
   N and is unaffected.
-- **Root cause**: `lib/lapack/base/dgehrd/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dgehrd/lib/ndarray.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`) as its guard, but our JS hardcodes
   NB and does NOT adapt the block size down when WORK is small (the reference
   shrinks NB to fit LWORK; we do not). So the reference's minimum is not a safe
@@ -586,13 +586,13 @@ intelligence that lets us harden the tooling and the modules.
   call; dlarft/dlarfb then write/read the T region past the buffer (silently
   dropped by the typed array, read back as `undefined`) → **NaN in the output C**.
   No throw — a silent non-finite result.
-- **Repro**: `lib/lapack/base/dormql/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dormql/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), `side='left'`, M=80, N=50, K=40 (K>NB → blocked),
   seed `seedFor(80,50,40,'left')`. The wrapper's advertised minimum probes to WORK
   length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
   poisoned buffer yields `C[0,0] = NaN` (it actually needs `50*32 + 33*32 = 2656`).
   The unblocked `dorm2l` is unaffected (it genuinely needs only nw).
-- **Root cause**: `lib/lapack/base/dormql/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormql/lib/ndarray.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). The COMPLEX sibling `zunmql`
@@ -635,13 +635,13 @@ intelligence that lets us harden the tooling and the modules.
   (`need = (ldwork*NB)+((NB+1)*NB)` under `if(K>0)`), so only the real `dormrq`
   wrapper was wrong — the exact real-lags-complex asymmetry seen in the
   `dgerqf`/`zgerqf` and `dormqr`/`zunmqr` entries.
-- **Repro**: `lib/lapack/base/dormrq/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dormrq/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), `side='left'`, M=80, N=50, K=40 (K>NB → blocked),
   seed `seedFor(80,50,40,'left')`. The wrapper's advertised minimum probes to WORK
   length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
   poisoned buffer yields `C[0,0] = NaN` (it actually needs `50*32 + 33*32 = 2656`).
   The unblocked fallback `dormr2` (K<=NB) is unaffected (genuinely needs only nw).
-- **Root cause**: `lib/lapack/base/dormrq/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormrq/lib/ndarray.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). So the reference's minimum is not
@@ -678,7 +678,7 @@ intelligence that lets us harden the tooling and the modules.
   `undefined`/lost writes → NaN in Q. As with the `dorglq`/`zunglq` LQ sibling
   (2026-07-17 entry below), BOTH the real and complex wrappers copied the unblocked
   `max(1,M)` formula (this pair was explicitly on that entry's audit list).
-- **Repro**: `lib/lapack/base/dorgrq/test/test.validate.js` (and `zungrq`) Step 4c
+- **Repro**: `lib/lapack/dorgrq/test/test.validate.js` (and `zungrq`) Step 4c
   `assertWorkspaceSufficient`, `schemes.dense`, `M=N=80`, `K=80 > NB=32` (blocked),
   seed `0x100 + M*100 + N`. The wrapper's advertised minimum probes to WORK length
   **80** (= max(1,M)); running the blocked former at exactly 80 with a POISONED
@@ -722,12 +722,12 @@ intelligence that lets us harden the tooling and the modules.
   T region past the buffer (silently dropped by the typed array) and dlarfb reads
   it back as `undefined` → **NaN in the factored A**. No throw — a silent
   non-finite result.
-- **Repro**: `lib/lapack/base/dgerqf/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dgerqf/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), M=N=80 (K=80 > NB → blocked). The wrapper's
   advertised minimum probes to WORK length **80** (= max(1,M)); running the
   blocked factorization at exactly 80 with a poisoned buffer yields `A[0,0] = NaN`
   (it actually needs `80*32 + 32*32 = 3584`).
-- **Root cause**: `lib/lapack/base/dgerqf/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dgerqf/lib/ndarray.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,M)`) as its guard, but our JS
   hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). The COMPLEX sibling `zgerqf`
@@ -763,7 +763,7 @@ intelligence that lets us harden the tooling and the modules.
   call; dlarft/dlarfb then write past the buffer (silently dropped by the typed
   array) and read the T region back as `undefined` → **NaN in the output C**. No
   throw, no error — a silent wrong (non-finite) result.
-- **Repro**: `lib/lapack/base/dormqr/test/test.validate.js` Step 4c
+- **Repro**: `lib/lapack/dormqr/test/test.validate.js` Step 4c
   (`assertWorkspaceSufficient`), `side='left'`, M=80, N=50, K=40 (K>NB → blocked),
   seed `seedFor(80,50,40,'left')`. The wrapper's advertised minimum probes to
   WORK length **50** (= max(1,N)); running the blocked apply at exactly 50 with a
@@ -771,7 +771,7 @@ intelligence that lets us harden the tooling and the modules.
   unblocked `dorm2r` is unaffected (it genuinely needs only nw). The COMPLEX
   sibling `zunmqr` already had the CORRECT guard (`nb>=K ? nw : nw*nb+(nb+1)*nb`),
   so only the real `dormqr` wrapper was wrong.
-- **Root cause**: `lib/lapack/base/dormqr/lib/ndarray.js` copied the reference
+- **Root cause**: `lib/lapack/dormqr/lib/ndarray.js` copied the reference
   LAPACK unblocked LWORK lower bound (`max(1,N)`/`max(1,M)`) as its guard, but our
   JS hardcodes NB and does NOT adapt the block size down when WORK is small (the
   reference shrinks NB to fit LWORK; we do not). So the reference's minimum is not
@@ -956,7 +956,7 @@ Keep entries short. Newest first.
   diagonal, then the careful solve mis-indexed too). In `ztpcon` the alternating
   dlacn2 RHS drives more calls onto the careful/CNORM path, so stride 2 already
   diverges there.
-- **Root cause** (`lib/lapack/base/zlatps/lib/base.js`): `ip` is carried as a
+- **Root cause** (`lib/lapack/zlatps/lib/base.js`): `ip` is carried as a
   **Float64 pointer** initialized `ip = ( offsetAP + packedLinearIndex ) * 2` (lines
   ~260, 267, 316, 367, 416, 551, 674) and walked by `ip ± jlen*sap` where
   `sap = strideAP*2`. The WALK includes the stride, but the BASE omits it: the
@@ -971,7 +971,7 @@ Keep entries short. Newest first.
   `ip -= (j+1)`) and EVERY access scales — `offsetAP + (ip*sa)`,
   `offsetAP + ((ip-j)*sa)`, `offsetAP + ((ip+1)*sa)` (dlatps lines 129/136/181/265/
   286/295/399/401/405/409).
-- **Fix (APPLIED)**: rewrote the addressing in `lib/lapack/base/zlatps/lib/base.js`
+- **Fix (APPLIED)**: rewrote the addressing in `lib/lapack/zlatps/lib/base.js`
   to the `dlatps` index-then-scale pattern. The five diagonal `ip` base inits
   `( offsetAP + (jfirst*(jfirst+1)/2 + jfirst) ) * 2` now scale the packed linear
   index by `strideAP`: `( offsetAP + ((jfirst*(jfirst+1)/2 + jfirst) * strideAP) )
@@ -1027,7 +1027,7 @@ Keep entries short. Newest first.
   to ~1e-15 (dense pipeline is validated), so the DENSE factor is correct and the
   PACKED (`zhptrf` upper) factor is wrong.
 - **Root cause (FOUND & FIXED 2026-07-17)**: an OFF-BY-ONE on the running packed
-  index `KX` in the upper-triangle interchange (`lib/lapack/base/zhptrf/lib/base.js`
+  index `KX` in the upper-triangle interchange (`lib/lapack/zhptrf/lib/base.js`
   "swap and conjugate rows kp+1..kk-1" loop). Reference ZHPTRF initializes
   `KX = KPC + KP - 1` and, after swapping the conjugated inner elements, conjugates
   the interchanged column element `AP(KX+KK-1)`. The JS had instead set
@@ -1057,7 +1057,7 @@ Keep entries short. Newest first.
 - **zhptri itself is CORRECT**: fed a VALID factor+IPIV it reconstructs
   `A0·inv=I` to ~1e-13 for BOTH uplo across n=1..64. During the bug it temporarily
   sourced its factor from the dense `zhetrf` re-packed; now that `zhptrf` is fixed,
-  `lib/lapack/base/zhptri/test/test.validate.js` sources the factor from the natural
+  `lib/lapack/zhptri/test/test.validate.js` sources the factor from the natural
   packed `zhptrf` again (the full zhptrf→zhptri pipeline is validated end-to-end for
   BOTH uplo at L3). `zhptrf` and `zhptrs` are now their own L3 validate suites
   (`test.validate.js`) with factor+solve residual + IPIV structural + layout fuzz.
@@ -1097,7 +1097,7 @@ Keep entries short. Newest first.
   arithmetic. `ztpsv` (the fast-path packed solve `zlatps` delegates to) and
   `zdotc`/`zaxpy` are each independently offset-invariant when tested directly —
   the reorder lives in `zlatps`'s own conjugate-transpose loop
-  (`lib/lapack/base/zlatps/lib/base.js`, the `else // Solve A^H*x=b` branch ~L672+
+  (`lib/lapack/zlatps/lib/base.js`, the `else // Solve A^H*x=b` branch ~L672+
   and its `computeTransposeSum`), where the diagonal `av[ip]` / `(ip/2)+1` reads
   and the `uscal≠1` vs `uscal==1` (zdotc fast-path vs manual-scaled-loop) branch
   selection appear to straddle differently once a prior ~1 ULP shift propagates.
@@ -1374,7 +1374,7 @@ Keep entries short. Newest first.
   on the default (tight col-major) layout but FAILS layout-invariance. The band
   super-row scaled by `ZDSCAL`/updated by `ZHER` walks the wrong direction in
   memory for any layout whose geometric diagonal stride is negative.
-- **Repro**: `node --test lib/lapack/base/zpbtf2/test/test.validate.js`
+- **Repro**: `node --test lib/lapack/zpbtf2/test/test.validate.js`
   (complex, `schemes.banded`, seed `0xF00D`, n=12, k=3, `uplo='upper'`). Layout
   variant 2 (`{order:'row', lead:4}`, i.e. row-major → strideAB1=12, strideAB2=1)
   differs from variant 0 (tight col-major) at component 48. Property sweep alone
@@ -1412,15 +1412,15 @@ Keep entries short. Newest first.
   column-major and row-major variants and asserts all seven produce identical
   bits, which is false for a routine that delegates to the optimized inner
   kernels.
-- **Repro**: `node --test lib/lapack/base/dpotf2/test/test.validate.js` before
+- **Repro**: `node --test lib/lapack/dpotf2/test/test.validate.js` before
   the family split (seed `0xF00D`, N=12, `uplo='upper'`, real). Variant 2
   (row-major) differs from variant 0 (col-major) at component 74:
   `0.11965696503904552` vs `0.1196569650390455` (~1 ULP). Reconstruction
   property passes at all layouts.
 - **Root cause** (NOT in `dpotf2`): `dpotf2` computes the trailing panel with
-  `dgemv('transpose'/'no-transpose', ...)` (`lib/lapack/base/dpotf2/lib/base.js`
+  `dgemv('transpose'/'no-transpose', ...)` (`lib/lapack/dpotf2/lib/base.js`
   lines 65, 83) and the diagonal with `ddot`. The optimized `dgemv`
-  (`lib/blas/base/dgemv/lib/base.js`) selects between a **dot form** and an
+  (`lib/blas/dgemv/lib/base.js`) selects between a **dot form** and an
   **axpy form** based on `Math.abs(sb2) <= Math.abs(sb1)` — i.e. on whether the
   operand is col- or row-major. The two forms reorder the summation (documented
   in that file's header: "Both forms reorder the summation relative to the
@@ -1433,7 +1433,7 @@ Keep entries short. Newest first.
   leading-dim padding, and stride-sign fuzzing all remain, so addressing bugs
   still surface). Cross-order **correctness** is certified instead by sweeping
   the reconstruction property over ALL layouts (backward-error tolerance). This
-  mirrors `lib/lapack/base/dgels/test/test.validate.js`.
+  mirrors `lib/lapack/dgels/test/test.validate.js`.
 - **Generalization**: applies to EVERY routine whose validation drives the
   optimized `dgemv`/`dger`/`ddot`/`dgemm` and whose output is read back for
   bit-exact layout invariance. `dpotrf`/`dpotrf2` escape this only because they
@@ -1450,12 +1450,12 @@ Keep entries short. Newest first.
   reconstruction sweep at the tight col-major layout but FAILS layout-invariance:
   the factor differs across storage layouts whenever the band-array row stride
   exceeds its column stride (row-major) or a stride is negative.
-- **Repro**: `node --test lib/lapack/base/dpbtf2/test/test.validate.js` — layout
+- **Repro**: `node --test lib/lapack/dpbtf2/test/test.validate.js` — layout
   test, seed `0xF00D`, `uplo='upper'`, `n=12`, `k=3`. `schemes.banded.layouts()`
   variant 2 (ROW-major: `{order:'row', sgn1:1, sgn2:1}`) differs from variant 0
   (tight col-major) at flattened component 24: `-0.4736…` vs `-1.0336…`. Same
   class hits variants 4/5/6 (negative strides).
-- **Root cause** (`lib/lapack/base/dpbtf2/lib/base.js`): the diagonal band step —
+- **Root cause** (`lib/lapack/dpbtf2/lib/base.js`): the diagonal band step —
   moving from `AB(r,c)` to `AB(r-1,c+1)`, flat delta `sa2 - sa1` — was computed as
   `kld = Math.max( 1, sa2 - sa1 )`. This is a faithful port of the Fortran
   `KLD = MAX(1, LDAB-1)`, which is only correct for the reference's tight
@@ -1485,7 +1485,7 @@ Keep entries short. Newest first.
   reference BLAS — but a **harness/methodology** trap: `vectorLayouts()` mixes
   stride-1, general positive strides, AND negative strides, and asserts all six
   produce identical bits. That assumption is false for these two routines.
-- **Repro**: `node --test lib/blas/base/dasum/test/test.validate.js` (seed
+- **Repro**: `node --test lib/blas/dasum/test/test.validate.js` (seed
   `0xF00D`, N=17, real). `dasum` variant 2 (`{stride:2,lead:1}`) differs from
   variant 0 (`{stride:1}`) by 1 ULP: `14.40194947625754` vs `...542`. `dzasum`
   (same seed/N, complex) variant 4 (`{stride:-1,lead:4}`) returns `0` vs
@@ -1529,12 +1529,12 @@ Keep entries short. Newest first.
   the packed matrix `AP` is passed with a negative `strideAP`. The layout-
   invariance fuzz never returns; `node --test` reports the file as a pending
   Promise after the 100s watchdog.
-- **Repro**: `node --test lib/blas/base/dtpsv/test/test.validate.js`. Minimal:
+- **Repro**: `node --test lib/blas/dtpsv/test/test.validate.js`. Minimal:
   real scalar, `uplo='upper'`, `trans='no-transpose'`, `diag='non-unit'`, N=9,
   packed layout `{ stride:-1 }` (from `schemes.packed.layouts()` index 4), seed
   `0xF33E`. First hanging call is upper/no-transpose/non-unit with `strideAP=-1`.
   All four algorithm branches are affected under a negative `strideAP`.
-- **Root cause**: `lib/blas/base/dtpsv/lib/base.js` drove its inner substitution
+- **Root cause**: `lib/blas/dtpsv/lib/base.js` drove its inner substitution
   loops by POINTER COMPARISON against a computed bound, e.g. upper no-transpose:
   `for ( ; ip >= kk - ( j * strideAP ); ip -= strideAP )`. These bounds silently
   assume `strideAP > 0`. With `strideAP = -1`, `ip -= strideAP` INCREASES `ip`
@@ -1585,13 +1585,13 @@ Keep entries short. Newest first.
   'conjugate-transpose'`. For a real routine conjugation is a no-op, so `'c'`
   must behave EXACTLY like `'t'` (transpose); instead A was applied
   un-transposed.
-- **Repro**: `node --test lib/blas/base/dtrmm/test/test.validate.js` →
+- **Repro**: `node --test lib/blas/dtrmm/test/test.validate.js` →
   `dtrmm left upper conjugate-transpose non-unit M=2 N=2: relative error 7.064e-1
   exceeds tolerance 4.441e-14`. Real scalar, dense scheme, `side='left'`,
   `uplo='upper'`, `transa='conjugate-transpose'`, `diag='non-unit'`, M=N=2,
   harness seed `0x100 + M*10 + N = 0x100 + 22`. Reproduces for every
   `side`/`uplo`/`diag` combination with `transa='conjugate-transpose'`.
-- **Root cause**: `lib/blas/base/dtrmm/lib/base.js` line 134 folded the transpose
+- **Root cause**: `lib/blas/dtrmm/lib/base.js` line 134 folded the transpose
   into effective strides with `if ( transa === 'transpose' )`. The literal
   string test misses `'conjugate-transpose'`, so that flag fell through the
   branch and A was treated as non-transposed. The reference BLAS decides via
@@ -1616,14 +1616,14 @@ Keep entries short. Newest first.
 - **What**: `zgels` layout-invariance check failed — output not bit-exact within
   the row-major storage family. Root-caused down the call chain
   `zgels → zgelqf → zgelq2 → zlarfg → dznrm2`.
-- **Repro**: `node --test lib/lapack/base/zgels/test/test.validate.js` →
+- **Repro**: `node --test lib/lapack/zgels/test/test.validate.js` →
   `zgels layout invariance row-major no-transpose 33x40 [variant 1 vs 0]: differ
   at component 0: -0.29653930753419944 vs -0.296539307534199`. Complex scalar,
   dense scheme, `trans='no-transpose'`, M=33 N=40 nrhs=2, harness seed
   `0x6000 + M*17 + N`. Variant 0 = tight row-major (element stride 1), variant 1 =
   gapped row-major (element stride 2). Divergence first appears at `A(12,12)`:
   iteration i=12 calls `dznrm2` with N=27 (**odd**) — the trigger.
-- **Root cause**: `lib/blas/base/dznrm2/lib/base.js` had a `strideX === 1` fast
+- **Root cause**: `lib/blas/dznrm2/lib/base.js` had a `strideX === 1` fast
   path whose **tail loop** (leftover complex element when N is odd) added *both*
   re² and im² to accumulator `s0` (`for (;i<2*N;i++) s0 += v0*v0`), while the
   strided path's tail adds re²→`s0`, im²→`s1`. Same math, different running-sum
@@ -1681,7 +1681,7 @@ Keep entries short. Newest first.
   at `N×NRHS`, so `LDB >= N` is correct — NOT the bug class. Real `dgels`/`dgelss`
   LDB fixed (Stephan Schiffels, cherry-picked). `dgelss` blocked workspace spot-
   checked finite.
-- **CONFIRMED BUG — zgels** (`lib/lapack/base/zgels/`), three defects:
+- **CONFIRMED BUG — zgels** (`lib/lapack/zgels/`), three defects:
   1. `lib/base.js:109` WORK=null auto-alloc `MN + max(MN,nrhs)*32` **under-allocates
      the blocked path** (min(M,N) > 32): all-NaN solution. Repro: `zgels('no-
      transpose',40,33,2,A,1,40,0,B,1,40,0,null,1,0,-1)` with Complex128Array A/B →
@@ -1696,7 +1696,7 @@ Keep entries short. Newest first.
   3. `lib/zgels.js:72` `LDB < max( 1, M )` → must be `max( 1, max(M,N) )`
      (column-major; no `order` param). Repro: `ldb=3` for `M=3,N=5` is accepted and
      the 5-row solution overflows → NaN.
-- **CONFIRMED BUG — zgelss** (`lib/lapack/base/zgelss/lib/zgelss.js:81`):
+- **CONFIRMED BUG — zgelss** (`lib/lapack/zgelss/lib/zgelss.js:81`):
   `LDB < max( 1, M )` → `max( 1, max(M,N) )` (same output-growth class). Workspace
   path is a query stub (`minWork=1`); its blocked sufficiency needs the same check.
 - **Bug class**: `storage-mapping` (LDB) + `convention` (workspace under-alloc,
@@ -2061,7 +2061,7 @@ Keep entries short. Newest first.
   threw "Cannot create property 'NaN' on number '-1'" inside ztgsyl at N = 100.
 - **Repro (before fix)**: `ztgsna( 'both', 'all', SELECT, 1, 0, 40, A, 1, 40, 0, B, 1, 40, 0, VL, 1, 40, 0, VR, 1, 40, 0, s, 1, 0, DIF, 1, 0, 40, 0, WORK, 1, 0, IWORK, 1, 0 )`
   with an upper-triangular complex pair (see the N = 40 test in
-  `lib/lapack/base/ztgsna/test/test.ndarray.js`). Complex scalar, dense column-major.
+  `lib/lapack/ztgsna/test/test.ndarray.js`). Complex scalar, dense column-major.
 - **Root cause**: ztgsna/base.js called ztgsyl with `…, WORK, 1, offset, -1, IWORK, …` —
   a leftover `lwork` argument from before the caller-owns-WORK migration. Every
   argument after it shifted: ztgsyl's `IWORK` received `-1`. Only ztgsyl's
@@ -2078,7 +2078,7 @@ Keep entries short. Newest first.
 
 ## 2026-11-18 — `tsc --checkJs` sweep: stale call signatures, dead WORK sizing, wrong option/LD validation
 
-- **Trigger**: ran the TypeScript checker over every `lib/*/base/*/lib/*.js` using the
+- **Trigger**: ran the TypeScript checker over every `lib/*/*/lib/*.js` using the
   existing JSDoc (`npm run typecheck`, config in `tsconfig.json` +
   `types/jsdoc-aliases.d.ts`). 222 errors → 0. Not a harness find, but recorded here
   because several are silent-wrong-answer bugs and each is a reusable bug class.
@@ -2247,7 +2247,7 @@ Keep entries short. Newest first.
 
 ## 2026-11-18 — `*latrs`/`*latps`/`*latbs` (all six scaled triangular solvers) routed overflowing no-transpose non-unit solves to the unscaled fast path → NaN with `scale = 1`; root cause of the old zlatps offset entry (tickets/0019)
 
-- **What**: the new `zlatps` harness validation (`lib/lapack/base/zlatps/test/test.validate.js`)
+- **What**: the new `zlatps` harness validation (`lib/lapack/zlatps/test/test.validate.js`)
   added a `stress` family (off-diagonals × 1e40) so that the careful,
   rescaling path is actually exercised; earlier fixtures and properties only
   ever reached the `ztpsv` fast path. For `trans='no-transpose'`,
@@ -2308,7 +2308,7 @@ Keep entries short. Newest first.
 - **Effect**: a looser test than the reference, so `info = 0` could come back a
   sweep early with less-orthogonalized columns. Easy to trigger: many 4×4
   inputs with `n1 = 1` give `info = 0` where the reference gives `nsweep - 1`.
-- **Repro**: regression test in `lib/lapack/base/zgsvj1/test/test.ndarray.js`
+- **Repro**: regression test in `lib/lapack/zgsvj1/test/test.ndarray.js`
   (M=N=4, n1=1, tol=1e-2): after one sweep, the first pair of sweep 2 has
   |cos| = 2.75·tol, which lies in [√N·tol, N·tol), so the reference keeps going
   and `nsweep = 2` must return `info = 1`. Fails on the old code with `info = 0`.
@@ -2342,7 +2342,7 @@ Keep entries short. Newest first.
   1e300 norm triggers scaling, the scaled `e[0]²` underflows, and the QR search
   breaks at `lend + 1`. Old output `[-1e300, 0, 1e300]`, fixed (reference
   semantics) `[-1e300, 1e-20, 1e300]`. Regression test in
-  `lib/lapack/base/dsterf/test/test.ndarray.js`.
+  `lib/lapack/dsterf/test/test.ndarray.js`.
 - **Fix (APPLIED)**: removed the fix-up. Also removed two empty
   `if ( m === … ) { /* comments */ }` blocks after the other search loops, whose
   comments repeated the same confusion.
@@ -2448,7 +2448,7 @@ Keep entries short. Newest first.
   - `dorbdb3`, `zunbdb3` (1 each): `X21` rotated with `X11`'s stride
     `strideX112`. **The reference has the same typo** (`X21(I,I), LDX11`); see
     those modules' `DIFFERENCES.md`.
-- **Repro**: `lib/lapack/base/<routine>/test/test.layout.js`, via
+- **Repro**: `lib/lapack/<routine>/test/test.layout.js`, via
   `test/harness/spec-layout.js`. Each one fails on the code before this fix
   and passes after. On the old code:
   - `dsterf` row-major returned `info = 4` (no convergence) instead of 0;
@@ -2487,7 +2487,7 @@ Keep entries short. Newest first.
 
 ## 2026-11-20 — `dcabs1` returned NaN for every documented input (found by the benchmark generator)
 
-- **Found by**: `bin/gen-benchmark.mjs lib/blas/base/dcabs1`. The probe passed
+- **Found by**: `bin/gen-benchmark.mjs lib/blas/dcabs1`. The probe passed
   the documented `{Complex128}` and got `NaN result`. No seed is needed; every
   input fails: `dcabs1( new Complex128( 3, -4 ) )` returned `NaN`.
   Scalar complex, no storage scheme, no flags.
@@ -3073,8 +3073,8 @@ Keep entries short. Newest first.
 ## 2026-11-27 — zlahef's upper row-max skipped row K; found once zhetrf's guard message became readable (ticket 0108)
 
 - **Found by**: the wrapper replay's `min-work` variant on zhetrf. It had always skipped zhetrf, because the guard's message (`` `WORK` must have at least 1 element starting at offset %d ``) gave it no minimum. Once the 24 guards were made canonical, it reported `zhetrf min-work WORK=1 (of 490): ... argument 6[4] -5 vs 4`, and the same at WORK 140.
-- **Reproduce**: zhetrf, complex, dense, UPLO = 'U', N = 66, the seeded LCG Hermitian matrix of `test/fortran/test_zhetrf.f90` (seed 1, entries in [-0.5, 0.5)), WORK = 66×64 or 66×2. Tests `zhetrf: upper_66_blocked_nb64/nb2 ...` in `lib/lapack/base/zhetrf/test/test.ndarray.js` fail on the old zlahef. The recorded calls came from `test.validate.js`'s random Hermitian N = 70 at WORK 490 and 140 (NB = 7 and 2).
-- **Root cause**: in the upper branch, `lib/lapack/base/zlahef/lib/base.js:163` searched the row max with `izamax( k - imax - 1, ... )`. The reference's `IZAMAX( K-IMAX, W( IMAX+1, KW-1 ), 1 )` covers rows IMAX+1..K, i.e. `k - imax` elements 0-based. Row K was never compared, so a pivot decision could differ from the reference's. The reference gives the same pivots at every LWORK on these matrices. The old JS differed from it in 49 of 70 pivots at every NB ≥ 2, and nearly every random upper matrix with N > 64 triggers it. The factorization stayed valid (residual tests pass), but its pivots were not the reference's. dlasyf, zlasyf and every `_rook`/`_rk` sibling had it right; the copy two lines up (`zcopy( k - imax, ... )`) did too.
+- **Reproduce**: zhetrf, complex, dense, UPLO = 'U', N = 66, the seeded LCG Hermitian matrix of `test/fortran/test_zhetrf.f90` (seed 1, entries in [-0.5, 0.5)), WORK = 66×64 or 66×2. Tests `zhetrf: upper_66_blocked_nb64/nb2 ...` in `lib/lapack/zhetrf/test/test.ndarray.js` fail on the old zlahef. The recorded calls came from `test.validate.js`'s random Hermitian N = 70 at WORK 490 and 140 (NB = 7 and 2).
+- **Root cause**: in the upper branch, `lib/lapack/zlahef/lib/base.js:163` searched the row max with `izamax( k - imax - 1, ... )`. The reference's `IZAMAX( K-IMAX, W( IMAX+1, KW-1 ), 1 )` covers rows IMAX+1..K, i.e. `k - imax` elements 0-based. Row K was never compared, so a pivot decision could differ from the reference's. The reference gives the same pivots at every LWORK on these matrices. The old JS differed from it in 49 of 70 pivots at every NB ≥ 2, and nearly every random upper matrix with N > 64 triggers it. The factorization stayed valid (residual tests pass), but its pivots were not the reference's. dlasyf, zlasyf and every `_rook`/`_rk` sibling had it right; the copy two lines up (`zcopy( k - imax, ... )`) did too.
 - **Bug class**: 0-based off-by-one in a count, in a branch whose tests compared only with themselves.
 - **What allowed it**:
   - zlahef's only reference fixture is a lower case; its upper tests assert self-consistency.
@@ -3107,7 +3107,7 @@ Keep entries short. Newest first.
 
 - **Found by**: triaging `bin/value-mutants.mjs dgsvj0` survivors. `M < 0` -> `M <= 0` and `N < 0` -> `N <= 0` survived, so the N = 0 path was examined against the reference.
 - **Reproduce**: real and complex, dense, no harness scheme. `dgsvj0( 'no-v', 2, 0, A, 1, 2, 0, d, 1, 1, sva = [7,7,7], 1, 2, 0, V, 1, 1, 0, eps, sfmin, 1e-10, 3, work, 1, 0 )` returns 0 and leaves `sva = [7, NaN, 7]`: it wrote `sva[ offsetSVA - strideSVA ]`. zgsvj0 the same with Complex128Array A/d/V. Base with M = N = 0 does the same. Tests `dgsvj0: N = 0 (also with M = 0) returns 0 and writes nothing ...` (`test/test.js`) and `ndarray: N = 0 returns 0 and writes nothing ...` / `base: M = 0 and N = 0 returns 0` (zgsvj0 `test/test.ndarray.js`) fail on the old code.
-- **Root cause**: the reference has no N = 0 quick return; it computes KBL = MIN(8,N) = 0 and NBL = N/KBL, an integer division by zero, so N = 0 is outside what the reference defines (xGESVJ quick-returns before calling it). The JS computes `( 0 / 0 ) | 0 = 0` blocks, skips every loop, and then runs the end-of-sweep `SVA(N)` update with N = 0, i.e. at index `offsetSVA - strideSVA` (and reads column `offsetA - strideA2` and `d[ offsetD - strideD ]`). Fixed with `if ( N === 0 ) return 0;` after the argument checks (`lib/lapack/base/dgsvj0/lib/base.js:145`, `lib/lapack/base/zgsvj0/lib/base.js:102`).
+- **Root cause**: the reference has no N = 0 quick return; it computes KBL = MIN(8,N) = 0 and NBL = N/KBL, an integer division by zero, so N = 0 is outside what the reference defines (xGESVJ quick-returns before calling it). The JS computes `( 0 / 0 ) | 0 = 0` blocks, skips every loop, and then runs the end-of-sweep `SVA(N)` update with N = 0, i.e. at index `offsetSVA - strideSVA` (and reads column `offsetA - strideA2` and `d[ offsetD - strideD ]`). Fixed with `if ( N === 0 ) return 0;` after the argument checks (`lib/lapack/dgsvj0/lib/base.js:145`, `lib/lapack/zgsvj0/lib/base.js:102`).
 - **Bug class**: write outside the caller's array on an empty problem, where the reference itself is undefined (integer division by zero), so no fixture could exist.
 - **What allowed it**: every test sized `sva` exactly, so at offset 0 the write went to index -1 of the typed array and vanished; zgsvj0's existing N = 0 test asserted only `info`.
 - **Where else**: dgsvj1 and zgsvj1 have the same code and the same write (checked: `[7, NaN, 7]`); any translation of a reference routine that divides by MIN(NB, N) or similar with no N = 0 quick return. Look for `( N / kbl ) | 0` and end-of-loop updates indexed by `N - 1`.
@@ -3115,9 +3115,9 @@ Keep entries short. Newest first.
 
 ## 2026-11-27 — dlarrd went on after DLAEBZ failed to converge, where the reference returns INFO = IINFO; found while triaging value mutants (ticket 0110)
 
-- **Found by**: comparing `lib/lapack/base/dlarrd/lib/base.js` with `data/lapack-3.12.0/SRC/dlarrd.f` while triaging dlarrd's surviving value mutants (the survivors at the non-convergence branch `j > iout - 1 - iinfo`).
-- **Reproduce**: real, tridiagonal, no harness scheme, no seed: D = [ 1, 2, -1, 3, 1, 0.5, 4 ], E = [ 0, 0.5, 0.7, 0, 0, 1, 0 ], ISPLIT = [ 1, 4, 5, 7 ] (four blocks, two 1x1), RANGE = 'all', ORDER = 'entire', RELTOL = 0, PIVMIN = SAFMIN, GERS the block Gershgorin intervals. Reference (`given_r_reltol0` in `test/fixtures/dlarrd.jsonl`): INFO = 3, M = 1 (only the first 1x1 block). Old JS: INFO = 1, M = 7, with the 3x3 and 2x2 blocks' eigenvalues stored and their IBLOCK negated. Test `ndarray: reltol=0 cannot converge below one ulp: as in the reference, DLAEBZ's IINFO is returned ...` in `lib/lapack/base/dlarrd/test/test.ndarray.js` fails on the old code.
-- **Root cause**: after the bisection call (DLAEBZ, IJOB = 2) the reference has `IF( IINFO .NE. 0 ) THEN INFO = IINFO; RETURN`. The JS tested `iinfo < 0` (lib/lapack/base/dlarrd/lib/base.js:323), apparently borrowing DSTEBZ's handling, where a positive IINFO marks unconverged eigenvalues and the routine carries on. With that, the reference's dead branch (`J.GT.IOUT-IINFO`: NCNVRG, IB = -JBLK, INFO + 1) became live in JS.
+- **Found by**: comparing `lib/lapack/dlarrd/lib/base.js` with `data/lapack-3.12.0/SRC/dlarrd.f` while triaging dlarrd's surviving value mutants (the survivors at the non-convergence branch `j > iout - 1 - iinfo`).
+- **Reproduce**: real, tridiagonal, no harness scheme, no seed: D = [ 1, 2, -1, 3, 1, 0.5, 4 ], E = [ 0, 0.5, 0.7, 0, 0, 1, 0 ], ISPLIT = [ 1, 4, 5, 7 ] (four blocks, two 1x1), RANGE = 'all', ORDER = 'entire', RELTOL = 0, PIVMIN = SAFMIN, GERS the block Gershgorin intervals. Reference (`given_r_reltol0` in `test/fixtures/dlarrd.jsonl`): INFO = 3, M = 1 (only the first 1x1 block). Old JS: INFO = 1, M = 7, with the 3x3 and 2x2 blocks' eigenvalues stored and their IBLOCK negated. Test `ndarray: reltol=0 cannot converge below one ulp: as in the reference, DLAEBZ's IINFO is returned ...` in `lib/lapack/dlarrd/test/test.ndarray.js` fails on the old code.
+- **Root cause**: after the bisection call (DLAEBZ, IJOB = 2) the reference has `IF( IINFO .NE. 0 ) THEN INFO = IINFO; RETURN`. The JS tested `iinfo < 0` (lib/lapack/dlarrd/lib/base.js:323), apparently borrowing DSTEBZ's handling, where a positive IINFO marks unconverged eigenvalues and the routine carries on. With that, the reference's dead branch (`J.GT.IOUT-IINFO`: NCNVRG, IB = -JBLK, INFO + 1) became live in JS.
 - **Bug class**: error-return condition narrowed (`.NE. 0` translated as `< 0`), copying a sibling routine's convention instead of the reference's.
 - **What allowed it**: the test for this input was written against the JS output (it asserted INFO = 1 and negative IBLOCK entries), not against a Fortran fixture; no fixture had an unconverged bisection; DLARRE, the reference caller, treats any nonzero INFO as failure, so no caller-level test noticed.
 - **Where else**: routines that call DLAEBZ or DLARRB/DLARRK and check a returned info (dstebz, dlarre, dlarrv, dstemr), and any translation that has a near-twin in LAPACK (dlarrd/dstebz, dlarrk/dstebz): check each `IF( IINFO.NE.0 )` against its JS condition.
@@ -3125,12 +3125,12 @@ Keep entries short. Newest first.
 ## 2026-11-27 — dgeevx's N = 1 shortcut returned RCONDV = 1 where the reference returns `|A(1,1)|`, and wrote condition numbers SENSE did not ask for; found by value-mutants triage (ticket 0110)
 
 - **Found by**: triaging `node bin/value-mutants.mjs dgeevx` (94 of 143 mutants survived). Deleting `WI = ZERO`, `SCALE = ONE` or `RCONDV = ONE` in base.js's `if ( N === 1 )` block survived every test. The reference has no such block: for N = 1 it runs the general path, where DTRSNA's N = 1 case sets `SEP(1) = ABS(T(1,1))` and `S(1) = ONE`, each only when SENSE asks for it. A new Fortran battery in `test/fortran/test_dgeevx.f90` compared every output and failed on the old code.
-- **Reproduce**: real, dense, no harness scheme, N = 1, any BALANC, A = [-2.5], JOBVL = JOBVR = 'compute-vectors'. SENSE = 'both' gave RCONDV = 1; the reference gives 2.5. SENSE = 'right-vectors' also wrote RCONDE = 1, which the reference leaves unchanged. SENSE = 'eigenvalues' also wrote RCONDV = 1. With |A| scaled to 1e-150 or 1e150, RCONDV = 1 where the reference gives ~5e-151 / 5e149. Failing tests on the old code: `dgeevx: N = 1 runs the reference's path: ...` and the `bat_n1_*` battery cases in `lib/lapack/base/dgeevx/test/test.ndarray.js` (49 failures).
-- **Root cause**: `lib/lapack/base/dgeevx/lib/base.js` had a hand-written N = 1 early return (old lines 199–218) that is not in the reference. It hard-coded RCONDE = RCONDV = 1 whenever SENSE != 'none'. The fix deletes the block, so N = 1 takes the reference's path; the reference's minimum WORK (3 or 7) suffices there.
+- **Reproduce**: real, dense, no harness scheme, N = 1, any BALANC, A = [-2.5], JOBVL = JOBVR = 'compute-vectors'. SENSE = 'both' gave RCONDV = 1; the reference gives 2.5. SENSE = 'right-vectors' also wrote RCONDE = 1, which the reference leaves unchanged. SENSE = 'eigenvalues' also wrote RCONDV = 1. With |A| scaled to 1e-150 or 1e150, RCONDV = 1 where the reference gives ~5e-151 / 5e149. Failing tests on the old code: `dgeevx: N = 1 runs the reference's path: ...` and the `bat_n1_*` battery cases in `lib/lapack/dgeevx/test/test.ndarray.js` (49 failures).
+- **Root cause**: `lib/lapack/dgeevx/lib/base.js` had a hand-written N = 1 early return (old lines 199–218) that is not in the reference. It hard-coded RCONDE = RCONDV = 1 whenever SENSE != 'none'. The fix deletes the block, so N = 1 takes the reference's path; the reference's minimum WORK (3 or 7) suffices there.
 - **Bug class**: an invented special case that is not in the reference, giving a plausible constant (1) for an output whose reference value depends on the data.
 - **What allowed it**:
   - The N = 1 test asserted WR, WI, VL, VR and ilo/ihi, but never RCONDE or RCONDV.
   - None of the module's tests read its Fortran fixtures. `test_dgeevx.f90` prints VL, VR and A with `print_matrix( name, M, N, N, NMAX )`, i.e. LDA = N on an NMAX-leading array, so those fixture fields are garbled (a separate ticket covers this).
   - Coverage counted the block as covered.
-- **Where else**: `lib/lapack/base/zgeevx/lib/base.js:177` has the same N = 1 block. It also sets RCONDE = RCONDV = 1 (ZTRSNA's N = 1 case gives SEP(1) = ABS(T(1,1))), and it does not set ABNRM. More generally, look for any `if ( N === 1 )` early return in a driver whose reference has none, and compare each output it writes with the reference's general path at N = 1.
+- **Where else**: `lib/lapack/zgeevx/lib/base.js:177` has the same N = 1 block. It also sets RCONDE = RCONDV = 1 (ZTRSNA's N = 1 case gives SEP(1) = ABS(T(1,1))), and it does not set ABNRM. More generally, look for any `if ( N === 1 )` early return in a driver whose reference has none, and compare each output it writes with the reference's general path at N = 1.
 - **Fixed in the same PR**: zgeevx had the same invented N = 1 block (RCONDE = RCONDV = 1, and an existing test asserted it). The block is removed; a Fortran case `n1_sense_b` (RCONDV = |A(1,1)| = 3.6055…) replaces the test's assertions and fails on the old code.

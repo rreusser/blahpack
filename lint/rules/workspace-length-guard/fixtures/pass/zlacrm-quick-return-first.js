@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zlacrm/lib/ndarray.js
+// target: lib/lapack/zlacrm/lib/ndarray.js
 // A zero-dimension quick return before the workspace guard is the required order (W3).
 /* eslint-disable max-len, max-params */
 

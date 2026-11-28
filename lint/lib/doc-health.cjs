@@ -145,7 +145,7 @@ function lineLoc( comment, line ) {
 }
 
 // Module source files whose JSDoc is the public or internal contract.
-var SOURCE = /(^|\/)lib\/(blas|lapack|arpack)\/base\/[^/]+\/lib\/[^/]+\.js$/;
+var SOURCE = /(^|\/)lib\/(blas|lapack|arpack)\/[^/]+\/lib\/[^/]+\.js$/;
 
 module.exports = {
 	'parse': parse,

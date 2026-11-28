@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlaswp/lib/base.js
+// target: lib/lapack/dlaswp/lib/base.js
 // expect: placeholder
 /**
 * Performs a series of row interchanges.

@@ -1,4 +1,4 @@
-// target: lib/lapack/base/ztgevc/lib/base.js
+// target: lib/lapack/ztgevc/lib/base.js
 // expect: is used but its declared `offsetWork` is never read
 function ztgevc( N, WORK, strideWork, offsetWork ) {
 	let j;

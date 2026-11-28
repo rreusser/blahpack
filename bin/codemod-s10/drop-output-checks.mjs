@@ -22,7 +22,7 @@ function esc( s ) {
 export function dropOutputChecks( routine, dry ) {
 	const spec = specLib.load( routine );
 	const outs = spec.params.filter( ( p ) => p.role === 'scalar' && p.intent === 'out' ).map( ( p ) => p.name );
-	const dir = path.join( ROOT, 'lib', spec.package, 'base', routine );
+	const dir = path.join( ROOT, 'lib', spec.package, routine );
 	const changed = [];
 	for ( const f of [ routine + '.js', 'ndarray.js' ] ) {
 		const file = path.join( dir, 'lib', f );

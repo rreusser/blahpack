@@ -11,6 +11,7 @@ jobs:
   unit:
     name: Unit tests
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,6 +33,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,6 +43,8 @@ jobs:
       - run: npm ci
       - name: Lint rule fixture tests
         run: npm run test:lint-rules
+      - name: "No module path keeps the retired base level (ticket 0125; fix: node bin/codemod-flatten.mjs --all)"
+        run: node bin/codemod-flatten.mjs --check
       - name: No escape hatches (no continue-on-error, baselines, skips, disabled rules)
         run: npm run lint:escape-hatches
       - name: Run ESLint
@@ -62,6 +66,7 @@ jobs:
   mutants:
     name: Early-exit mutants (changed modules)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       # Full history: modules are selected by diff against the merge-base with
       # origin/main.
@@ -85,6 +90,7 @@ jobs:
   value-mutants:
     name: Value mutants (changed base.js lines)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       # Full history: lines are selected by diff against the merge-base with
       # origin/main.
@@ -106,6 +112,7 @@ jobs:
   workspace:
     name: Workspace allocation (changed modules)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -126,6 +133,7 @@ jobs:
   optimum:
     name: Workspace optimum
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -148,6 +156,7 @@ jobs:
   minimum:
     name: Workspace minimum
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -168,6 +177,7 @@ jobs:
   coverage:
     name: Coverage (changed modules)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -188,6 +198,7 @@ jobs:
   replay:
     name: Wrapper replay (changed modules)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -203,6 +214,7 @@ jobs:
   conformance:
     name: Conformance
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       # Full history: `tickets.js check` compares ticket ids with origin/main
       # and its merge-base (ticket 0050).
@@ -236,12 +248,13 @@ jobs:
       - name: Validate problem tickets and ticket coverage
         run: npm run tickets:check
 
-  # Benchmarks: every module benchmark (lib/*/base/*/benchmark/*.js) starts and
+  # Benchmarks: every module benchmark (lib/*/*/benchmark/*.js) starts and
   # runs. Each file gets `timeout 3`; a throw, a `not ok` (e.g. the NaN check),
   # or a nonzero exit other than the timeout fails. Hard gate (ticket 0027).
   benchmarks:
     name: Benchmark smoke
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -256,6 +269,7 @@ jobs:
   examples:
     name: Examples smoke
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -275,6 +289,7 @@ jobs:
   dist:
     name: Browser dist
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -293,6 +308,7 @@ jobs:
   package:
     name: Package
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgecon/lib/ndarray.js
+// target: lib/lapack/dgecon/lib/ndarray.js
 // expect: missing
 // Reading IWORK.length is not a guard unless it throws RangeError (W3).
 /* eslint-disable max-len, max-params */

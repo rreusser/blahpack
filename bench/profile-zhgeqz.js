@@ -13,9 +13,9 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
-import zggev from '../lib/lapack/base/zggev/lib/ndarray.js';
+import zggev from '../lib/lapack/zggev/lib/ndarray.js';
 
-var ZHGEQZ_SOURCE = fileURLToPath( new URL( '../lib/lapack/base/zhgeqz/lib/base.js', import.meta.url ) );
+var ZHGEQZ_SOURCE = fileURLToPath( new URL( '../lib/lapack/zhgeqz/lib/base.js', import.meta.url ) );
 
 // zggev's job flags, by the single-letter names this script reports.
 var JOB = { 'N': 'no-vectors', 'V': 'compute-vectors' };
@@ -167,7 +167,7 @@ function analyzeProfile( profile, totalMs ) {
 		funcName = node.callFrame.functionName || '(anonymous)';
 
 		shortUrl = '';
-		match = url.match( /\/lib\/(?:blas|lapack)\/base\/([^/]+)\// );
+		match = url.match( /\/lib\/(?:blas|lapack)\/([^/]+)\// );
 		if ( match ) {
 			shortUrl = match[ 1 ];
 		} else if ( url.includes( 'cmplx.js' ) ) {

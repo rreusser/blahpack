@@ -1315,7 +1315,7 @@ async function processOne( dir, kind, write ) {
 		if ( built ) {
 			const producers = {};
 			for ( const n of built.producers ) {
-				const pdir = [ 'lapack', 'blas' ].map( ( pk ) => resolve( 'lib', pk, 'base', n ) ).find( ( d ) => existsSync( join( d, 'lib', 'ndarray.js' ) ) );
+				const pdir = [ 'lapack', 'blas' ].map( ( pk ) => resolve( 'lib', pk, n ) ).find( ( d ) => existsSync( join( d, 'lib', 'ndarray.js' ) ) );
 				if ( !pdir ) {
 					return { 'ok': false, 'error': `recipe "${recipe.name}": no producer ${n}` };
 				}

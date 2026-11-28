@@ -21,6 +21,6 @@
 	},
 	"include": [
 		"types/jsdoc-aliases.d.ts",
-		"lib/*/base/*/lib/*.js"
+		"lib/*/*/lib/*.js"
 	]
 }

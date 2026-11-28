@@ -2,7 +2,7 @@
 """
 Audit stdlib-js conformance of translated BLAS/LAPACK modules.
 
-Checks each module in lib/blas/base/* and lib/lapack/base/* against
+Checks each module in lib/blas/* and lib/lapack/* against
 the stdlib-js conventions documented in CLAUDE.md.
 
 Usage:
@@ -127,7 +127,7 @@ def has_string_params(base_js_path):
 
 def audit_module(pkg, routine):
     """Audit a single module. Returns dict of check_name -> bool/None."""
-    base_dir = os.path.join(ROOT, 'lib', pkg, 'base', routine)
+    base_dir = os.path.join(ROOT, 'lib', pkg, routine)
     lib_dir = os.path.join(base_dir, 'lib')
 
     results = {}
@@ -250,10 +250,10 @@ def audit_module(pkg, routine):
 
 
 def discover_modules():
-    """Find all modules under lib/blas/base/* and lib/lapack/base/*."""
+    """Find all modules under lib/blas/* and lib/lapack/*."""
     modules = []
     for pkg in ['blas', 'lapack']:
-        base_path = os.path.join(ROOT, 'lib', pkg, 'base')
+        base_path = os.path.join(ROOT, 'lib', pkg)
         if not os.path.isdir(base_path):
             continue
         for entry in sorted(os.listdir(base_path)):
@@ -301,7 +301,7 @@ def main():
                    'learnings', 'license', 'eslint', 'example']
 
     # Compute column widths
-    module_names = [f'{pkg}/base/{routine}' for pkg, routine, _ in all_results]
+    module_names = [f'{pkg}/{routine}' for pkg, routine, _ in all_results]
     name_width = max(len(n) for n in module_names) if module_names else 20
     col_width = 9  # enough for 'learnings'
 

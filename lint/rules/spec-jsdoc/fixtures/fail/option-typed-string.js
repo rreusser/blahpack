@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgetrs/lib/ndarray.js
+// target: lib/lapack/dgetrs/lib/ndarray.js
 // expect: params
 // An option typed {string} instead of the literal union of its values (ticket 0022).
 /**

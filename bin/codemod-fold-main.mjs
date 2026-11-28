@@ -36,7 +36,7 @@ const only = new Set( argv.filter( ( a ) => !a.startsWith( '-' ) ) );
 function modules() {
 	const out = [];
 	for ( const pkg of [ 'blas', 'lapack', 'arpack' ] ) {
-		const dir = path.join( ROOT, 'lib', pkg, 'base' );
+		const dir = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( dir ) ) {
 			continue;
 		}
@@ -69,7 +69,7 @@ const INDEX_SHAPES = [
 if ( CHECK ) {
 	const left = modules().filter( ( m ) => fs.existsSync( path.join( m.lib, 'main.js' ) ) );
 	if ( left.length ) {
-		console.error( `${left.length} module(s) still have lib/main.js (fix: node bin/codemod-fold-main.mjs --all):\n  ` + left.slice( 0, 20 ).map( ( m ) => `${m.pkg}/base/${m.routine}` ).join( '\n  ' ) );
+		console.error( `${left.length} module(s) still have lib/main.js (fix: node bin/codemod-fold-main.mjs --all):\n  ` + left.slice( 0, 20 ).map( ( m ) => `${m.pkg}/${m.routine}` ).join( '\n  ' ) );
 		process.exit( 1 );
 	}
 	console.log( 'no lib/main.js remains' );
@@ -95,7 +95,7 @@ for ( const m of modules() ) {
 	const main = fs.readFileSync( mainPath, 'utf8' );
 	const index = fs.readFileSync( indexPath, 'utf8' );
 	const shape = MAIN_SHAPE.exec( code( main ) );
-	const at = `${m.pkg}/base/${m.routine}`;
+	const at = `${m.pkg}/${m.routine}`;
 	if ( !shape ) {
 		skipped.push( `${at}: main.js has an unexpected shape` );
 		continue;

@@ -4,7 +4,7 @@
 #
 # Usage:
 #   bin/audit.sh                           # audit everything
-#   bin/audit.sh lib/blas/base/zhpmv       # audit one module
+#   bin/audit.sh lib/blas/zhpmv       # audit one module
 
 set -uo pipefail
 
@@ -106,11 +106,11 @@ echo "Scaffolding remnants:"
 c=$(grep -rl "@param.*TODO\|{TODO}" lib --include='*.js' 2>/dev/null | wc -l)
 check "files with TODO @param" "$c"
 
-c=$(grep -rl "assert\.fail.*TODO\|assert\.fail.*Scaffold\|assert\.fail.*implement" lib/*/base/*/test/test.js 2>/dev/null | wc -l)
+c=$(grep -rl "assert\.fail.*TODO\|assert\.fail.*Scaffold\|assert\.fail.*implement" lib/*/*/test/test.js 2>/dev/null | wc -l)
 warn "test files with scaffold assert.fail" "$c"
 
 stubcount=0
-for dir in lib/blas/base/*/lib lib/lapack/base/*/lib; do
+for dir in lib/blas/*/lib lib/lapack/*/lib; do
   [ -d "$dir" ] || continue
   for f in "$dir"/*.js; do
     [ -f "$f" ] || continue
@@ -125,13 +125,13 @@ echo "String conventions:"
 c=$(grep -rn "@param.*'[A-Z]'" lib --include='*.js' 2>/dev/null | grep -cv '`' || true)
 check "single-char flags in @param JSDoc" "${c:-0}"
 
-c=$(grep -rl "conjugate-transpose" lib/blas/base/d*/lib/ lib/lapack/base/d*/lib/ 2>/dev/null | wc -l)
+c=$(grep -rl "conjugate-transpose" lib/blas/d*/lib/ lib/lapack/d*/lib/ 2>/dev/null | wc -l)
 check "d-prefix files with conjugate-transpose" "$c"
 
 echo ""
 echo "Complex128Array conventions:"
 zcount=0
-for f in lib/blas/base/z*/lib/base.js lib/lapack/base/z*/lib/base.js; do
+for f in lib/blas/z*/lib/base.js lib/lapack/z*/lib/base.js; do
   [ -f "$f" ] || continue
   if ! grep -q "reinterpret" "$f" 2>/dev/null; then
     # Check if it indexes Complex128Array params directly (not just real arrays)
@@ -146,7 +146,7 @@ check "z-prefix indexing Complex128Array without reinterpret" "$zcount"
 echo ""
 echo "Validation:"
 vcount=0
-for f in lib/*/base/*/lib/ndarray.js; do
+for f in lib/*/*/lib/ndarray.js; do
   [ -f "$f" ] || continue
   grep -q "throw new TypeError" "$f" 2>/dev/null && continue
   base="$(dirname "$f")/base.js"

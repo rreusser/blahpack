@@ -1,7 +1,7 @@
 # ARPACK translation plan (symmetric shift-invert path)
 
 Scope: translate the double-precision **symmetric** ARPACK drivers into
-`lib/arpack/base/`, faithful to arpack-ng 3.9.1 (vendored at
+`lib/arpack/`, faithful to arpack-ng 3.9.1 (vendored at
 `data/arpack-ng-3.9.1/`, BSD-3-Clause / Rice — see `LICENSE.txt`). Motivating
 consumer: the Möbius notebook's flexural-modes step (Fix A), which wants the
 lowest eigenpairs of a banded symmetric generalized pencil via shift-invert

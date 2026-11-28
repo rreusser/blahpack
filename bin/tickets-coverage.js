@@ -256,7 +256,7 @@ function artifactKind( rel, routine ) {
 function moduleArtifacts() {
 	const out = {};
 	[ 'arpack', 'blas', 'lapack' ].forEach( function each( pkg ) {
-		const base = path.join( ROOT, 'lib', pkg, 'base' );
+		const base = path.join( ROOT, 'lib', pkg );
 		if ( !fs.existsSync( base ) ) {
 			return;
 		}
@@ -268,7 +268,7 @@ function moduleArtifacts() {
 						walk( sub );
 					} else {
 						const k = artifactKind( sub, r );
-						out[ k ] = out[ k ] || ( 'lib/' + pkg + '/base/' + r + '/' + sub );
+						out[ k ] = out[ k ] || ( 'lib/' + pkg + '/' + r + '/' + sub );
 					}
 				});
 			};
@@ -389,7 +389,7 @@ const KNOWN = /\b(known (translation |numerical )?(issue|bug|problem|limitation|
 function moduleFiles() {
 	const out = [];
 	[ 'blas', 'arpack', 'lapack' ].forEach( function pkg( p ) {
-		const base = path.join( ROOT, 'lib', p, 'base' );
+		const base = path.join( ROOT, 'lib', p );
 		if ( !fs.existsSync( base ) ) {
 			return;
 		}
@@ -406,7 +406,7 @@ function moduleFiles() {
 					}
 				});
 			};
-			walk( 'lib/' + p + '/base/' + r );
+			walk( 'lib/' + p + '/' + r );
 		});
 	});
 	return out;

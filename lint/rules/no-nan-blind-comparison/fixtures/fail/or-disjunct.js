@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zgetrf/test/test.ndarray.js
+// target: lib/lapack/zgetrf/test/test.ndarray.js
 // expect: blindIf
 // Every disjunct of an `||` is false on NaN, so each blind comparison counts.
 function assertComplexClose( re, im, expRe, expIm, tol ) {

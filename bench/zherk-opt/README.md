@@ -7,7 +7,7 @@ beta*C` (trans=C), alpha/beta REAL, one triangle of C updated.
 
 **2x2 complex register tile over the stored triangle** (the settled complex
 level-3 geometry from `bench/zgemm-opt/GEOMETRY.md`), triangle-restricted like
-`bench/dsyrk-opt/`. Shipped to `lib/blas/base/zherk/lib/base.js`.
+`bench/dsyrk-opt/`. Shipped to `lib/blas/zherk/lib/base.js`.
 
 - Consistent **~1.3–2.1x**, up to ~6x for large row-major trans=N (bad baseline
   access pattern). **Geomean 1.79x.** Gate: 21600 cases, 0 failures.

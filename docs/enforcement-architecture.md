@@ -382,8 +382,8 @@ pattern the one-shot generators had baked in, and none of them stopped it
 from coming back.
 
 Known debris:
-- `lib/lapack/base/zlabrd/test/debug{,_mlt,_zgemv,_zgemv2}.js`
-- `lib/lapack/base/zsyconvf/test/sedHyMOqN` (a `sed -i` temp file)
+- `lib/lapack/zlabrd/test/debug{,_mlt,_zgemv,_zgemv2}.js`
+- `lib/lapack/zsyconvf/test/sedHyMOqN` (a `sed -i` temp file)
 - `data/extract_errors.txt` (no consumers)
 - `QUESTIONS.md` (6 lines, April)
 - an empty `pipeline/`

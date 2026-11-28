@@ -53,7 +53,7 @@ Two approaches depending on context:
 
 **1. Scalar ops** (outside hot loops): use stdlib via `lib/cmplx.js`:
 ```javascript
-import cmplx from '../../../../cmplx.js';  // from lib/<pkg>/base/<routine>/lib/
+import cmplx from '../../../../cmplx.js';  // from lib/<pkg>/<routine>/lib/
 const z = cmplx.mul( a, b );     // Complex128 * Complex128 → Complex128
 const q = cmplx.div( a, b );     // robust complex division (Baudin-Smith)
 const r = cmplx.abs( a );        // |a| (overflow-safe)

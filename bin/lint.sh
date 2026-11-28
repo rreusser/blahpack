@@ -9,10 +9,10 @@
 #
 # Usage:
 #   bin/lint.sh                                     # lint all modules
-#   bin/lint.sh lib/blas/base/daxpy/lib/base.js    # lint specific files
-#   bin/lint.sh lib/blas/base/daxpy/lib/           # lint a directory
-#   bin/lint.sh lib/blas/base/daxpy/test/          # lint a module's tests
-#   bin/lint.sh --fix lib/blas/base/daxpy/lib/     # auto-fix
+#   bin/lint.sh lib/blas/daxpy/lib/base.js    # lint specific files
+#   bin/lint.sh lib/blas/daxpy/lib/           # lint a directory
+#   bin/lint.sh lib/blas/daxpy/test/          # lint a module's tests
+#   bin/lint.sh --fix lib/blas/daxpy/lib/     # auto-fix
 
 BLAHPACK_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$BLAHPACK_DIR" || exit 2

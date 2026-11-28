@@ -3,7 +3,7 @@
 A layout wrapper whose routine takes a workspace calls `ndarray.js`, not
 `base.js` (CONVENTIONS D5d; ticket 0077).
 
-**Files:** `lib/<pkg>/base/<routine>/lib/<routine>.js`, when
+**Files:** `lib/<pkg>/<routine>/lib/<routine>.js`, when
 `spec/<routine>.json` has a param of role `workspace`.
 
 ## Rule

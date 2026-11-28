@@ -3,7 +3,7 @@
 `ndarray.js` checks the length of every workspace whose minimum the spec knows
 (CONVENTIONS W3; ticket 0107).
 
-**Files:** `lib/<pkg>/base/<routine>/lib/ndarray.js`, when `spec/<routine>.json`
+**Files:** `lib/<pkg>/<routine>/lib/ndarray.js`, when `spec/<routine>.json`
 has a param of role `workspace` whose `minLength.js` is not null.
 
 ## Rule

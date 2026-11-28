@@ -26,7 +26,7 @@ const specLib = require( path.join( ROOT, 'lint', 'lib', 'spec.cjs' ) );
 export const OVERRIDES = JSON.parse( fs.readFileSync( new URL( './overrides.json', import.meta.url ), 'utf8' ) );
 
 export function moduleDir( spec ) {
-	return path.join( ROOT, 'lib', spec.package, 'base', spec.routine );
+	return path.join( ROOT, 'lib', spec.package, spec.routine );
 }
 
 // S10 output scalars of a spec: role scalar, intent out/inout (INFO has role info).

@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlaqgb/lib/dlaqgb.js
+// target: lib/lapack/dlaqgb/lib/dlaqgb.js
 // expect: nobound
 // The spec gives AB no rows (the LAPACK doc names LDA under LDAB), so a column-major bound cannot be derived.
 /* eslint-disable max-len, max-params */

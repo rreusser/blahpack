@@ -1,4 +1,4 @@
-// target: lib/blas/base/dgbmv/lib/dgbmv.js
+// target: lib/blas/dgbmv/lib/dgbmv.js
 // expect: @license
 /**
 * @license Apache-2.0

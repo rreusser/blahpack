@@ -334,7 +334,7 @@ function signature( ctx, kind, file, fname ) {
 * @returns {Object} routine IR
 */
 export function extractRoutine( pkg, name ) {
-	const dir = join( 'lib', pkg, 'base', name );
+	const dir = join( 'lib', pkg, name );
 	const spec = JSON.parse( read( join( ROOT, 'spec', name + '.json' ) ) || 'null' );
 	const ctx = {
 		name,
@@ -406,7 +406,7 @@ export function extractRoutine( pkg, name ) {
 
 	// Call graph from base.js imports:
 	const baseSrc = read( join( ROOT, dir, 'lib', 'base.js' ) ) || '';
-	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/base\/)?(\w+)\/lib\/(?:base|ndarray|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
+	const uses = [ ...new Set( [ ...baseSrc.matchAll( /from\s+'[./]*(?:(?:blas|lapack|arpack)\/)?(\w+)\/lib\/(?:base|ndarray|main|index)\.js'/g ) ].map( ( m ) => m[ 1 ] ).filter( ( n ) => n !== name ) ) ].sort();
 
 	// The reference's routine-level documentation (Purpose, Further Details, ...), from
 	// data/fortran-routine-docs.json; omitted when it only restates the summary.
@@ -423,16 +423,16 @@ export function extractRoutine( pkg, name ) {
 	let exampleFile = read( join( ROOT, dir, 'examples', 'index.js' ) );
 	if ( exampleFile ) {
 		exampleFile = exampleFile.replace( /^\/\*\*[\s\S]*?@license[\s\S]*?\*\/\s*/, '' )
-			.replace( /(['"])\.\/\.\.\/lib(?:\/index\.js)?\1/g, '\'' + PACKAGE_JSON.name + '/' + pkg + '/base/' + name + '\'' )
+			.replace( /(['"])\.\/\.\.\/lib(?:\/index\.js)?\1/g, '\'' + PACKAGE_JSON.name + '/' + pkg + '/' + name + '\'' )
 			.trim();
 	}
 
-	const exportKey = './' + pkg + '/base/' + name;
+	const exportKey = './' + pkg + '/' + name;
 	return {
 		name,
 		'package': pkg,
 		'path': dir,
-		'importPath': PACKAGE_JSON.exports && PACKAGE_JSON.exports[ exportKey ] ? PACKAGE_JSON.name + '/' + pkg + '/base/' + name : null,
+		'importPath': PACKAGE_JSON.exports && PACKAGE_JSON.exports[ exportKey ] ? PACKAGE_JSON.name + '/' + pkg + '/' + name : null,
 		summary,
 		description,
 		'precision': precision( name ),
@@ -456,7 +456,7 @@ export function extractRoutine( pkg, name ) {
 }
 
 /**
-* Extracts the IR for every routine under `lib/<pkg>/base/`.
+* Extracts the IR for every routine under `lib/<pkg>/`.
 *
 * @param {Object} [opts] - options
 * @param {Array<string>} [opts.only] - restrict to these routine names
@@ -465,7 +465,7 @@ export function extractRoutine( pkg, name ) {
 export function extractAll( opts = {} ) {
 	const out = [];
 	for ( const pkg of [ 'blas', 'lapack', 'arpack' ] ) {
-		const base = join( ROOT, 'lib', pkg, 'base' );
+		const base = join( ROOT, 'lib', pkg );
 		if ( !existsSync( base ) ) {
 			continue;
 		}

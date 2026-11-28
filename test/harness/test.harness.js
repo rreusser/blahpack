@@ -16,12 +16,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe as describeCall, replayModule } from './replay.js';
 
-import dpotrf from '../../lib/lapack/base/dpotrf/lib/ndarray.js';
-import zpotrf from '../../lib/lapack/base/zpotrf/lib/ndarray.js';
-import dpbtrf from '../../lib/lapack/base/dpbtrf/lib/ndarray.js';
-import zpbtrf from '../../lib/lapack/base/zpbtrf/lib/ndarray.js';
-import dspmv from '../../lib/blas/base/dspmv/lib/ndarray.js';
-import zhpmv from '../../lib/blas/base/zhpmv/lib/ndarray.js';
+import dpotrf from '../../lib/lapack/dpotrf/lib/ndarray.js';
+import zpotrf from '../../lib/lapack/zpotrf/lib/ndarray.js';
+import dpbtrf from '../../lib/lapack/dpbtrf/lib/ndarray.js';
+import zpbtrf from '../../lib/lapack/zpbtrf/lib/ndarray.js';
+import dspmv from '../../lib/blas/dspmv/lib/ndarray.js';
+import zhpmv from '../../lib/blas/zhpmv/lib/ndarray.js';
 
 var LogicalMatrix = logical.LogicalMatrix;
 
@@ -295,7 +295,7 @@ test( 'replay short-work: a wrapper that skips ndarray.js\'s workspace check is 
 	assert.match( short( old )[ 0 ].detail, /accepted a workspace shorter than the minimum/ );
 
 	// The real wrapper (calls ndarray.js, D5d): RangeError, no finding.
-	const cur = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'base', 'dormql' ), { 'probe': false, 'recs': [ rec ] } );
+	const cur = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'dormql' ), { 'probe': false, 'recs': [ rec ] } );
 	assert.equal( cur.replayed, 1 );
 	assert.deepEqual( cur.mismatches, [] );
 });
@@ -319,7 +319,7 @@ test( 'replay null-work/min-work: a routine that does more work with more worksp
 	const v = ( x ) => ( { 'v': x } );
 	const rec = [ v( true ), v( true ), v( N ), v( 1 ), v( N ), { 't': H }, v( 1 ), v( N ), v( 0 ), { 't': new Float64Array( N ) }, v( 1 ), v( 0 ), { 't': new Float64Array( N ) }, v( 1 ), v( 0 ), v( 1 ), v( N ), { 't': Z }, v( 1 ), v( N ), v( 0 ), { 't': new Float64Array( 1 ) }, v( 1 ), v( 0 ) ];
 	const here = path.dirname( fileURLToPath( import.meta.url ) );
-	const r = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'base', 'dlaqr0' ), { 'probe': false, 'recs': [ rec ], 'budgetFloorMs': 50 } );
+	const r = await replayModule( path.join( here, '..', '..', 'lib', 'lapack', 'dlaqr0' ), { 'probe': false, 'recs': [ rec ], 'budgetFloorMs': 50 } );
 	assert.equal( r.replayed, 1 );
 	assert.deepEqual( r.rejected, [], JSON.stringify( r.rejected ) );
 });

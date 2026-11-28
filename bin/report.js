@@ -51,7 +51,7 @@ if ( db.meta.type_prefixes ) {
 // ---------------------------------------------------------------------------
 
 function scanModules( pkg ) {
-	var baseDir = path.join( ROOT, 'lib', pkg, 'base' );
+	var baseDir = path.join( ROOT, 'lib', pkg );
 	var out = {};
 	if ( !fs.existsSync( baseDir ) ) {
 		return out;
@@ -310,7 +310,7 @@ function variantCell( variant ) {
 	var href = '#' + id;
 	if ( impl && impl.hasImpl ) {
 		var pkg = impl.package || 'lapack';
-		href = 'https://github.com/rreusser/notes/tree/main/lib/' + pkg + '/base/' + id;
+		href = 'https://github.com/rreusser/notes/tree/main/lib/' + pkg + '/' + id;
 	}
 	return '<a id="' + id + '" href="' + href + '" class="' + cls + '" title="' + esc( tip ) + '">' + variant.type + vdot + '</a>';
 }

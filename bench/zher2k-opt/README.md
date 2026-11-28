@@ -7,7 +7,7 @@ the complex level-3 family: rank-2k has two product terms per cell.
 
 ## Result
 
-**Mode-dispatched.** Shipped to `lib/blas/base/zher2k/lib/base.js`.
+**Mode-dispatched.** Shipped to `lib/blas/zher2k/lib/base.js`.
 
 - **trans=C → 2x2 fused two-term complex register tile** (`ctrans`, the settled
   complex geometry from `bench/zgemm-opt/GEOMETRY.md`). The two terms are fused

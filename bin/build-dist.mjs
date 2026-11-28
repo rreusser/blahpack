@@ -7,10 +7,11 @@
 * Output:
 *   dist/_stdlib.js                     every stdlib module the library imports,
 *                                       converted from CommonJS and bundled once
-*   dist/<pkg>/base/<routine>.js        one file per `./<pkg>/base/<routine>`
+*   dist/<pkg>/<routine>.js        one file per `./<pkg>/<routine>`
 *                                       export in package.json: the routine and
 *                                       its in-library dependencies, minified;
-*                                       stdlib imports point at ../../_stdlib.js
+*                                       stdlib imports point at _stdlib.js by
+*                                       a path relative to the file
 *   dist/THIRD_PARTY_LICENSES.txt       licenses of the vendored stdlib packages
 *
 * A page that loads several routines downloads `_stdlib.js` once; dependencies
@@ -37,13 +38,13 @@ const BANNER = `/*! ${pkg.name} ${pkg.version} | ${pkg.license} | ${pkg.homepage
 // exports map can never disagree.
 const entries = {};
 for ( const [ sub, file ] of Object.entries( pkg.exports ) ) {
-	const m = /^\.\/(\w+\/base\/\w+)$/.exec( sub );
+	const m = /^\.\/(\w+\/\w+)$/.exec( sub );
 	if ( m ) {
 		entries[ m[ 1 ] ] = path.join( ROOT, file );
 	}
 }
 if ( Object.keys( entries ).length === 0 ) {
-	throw new Error( 'no `./<pkg>/base/<routine>` entries in package.json exports' );
+	throw new Error( 'no `./<pkg>/<routine>` entries in package.json exports' );
 }
 
 // Pass 1: the exact set of stdlib specifiers the routines import, read from
@@ -71,21 +72,32 @@ const runtime = await build( {
 } );
 
 // Pass 3: one file per routine; each stdlib import becomes an import of the
-// runtime. Entries all sit at dist/<pkg>/base/, so the relative path is fixed.
-const toRuntime = {
-	name: 'stdlib-to-runtime',
-	setup( b ) {
-		b.onResolve( { filter: /^@stdlib\// }, ( a ) => {
-			if ( !ids.has( a.path ) ) {
-				throw new Error( `stdlib import missing from the runtime: ${a.path} (imported by ${a.importer})` );
-			}
-			return { path: a.path, namespace: 'stdlib' };
-		} );
-		b.onLoad( { filter: /.*/, namespace: 'stdlib' }, ( a ) => ( { contents: `export { ${ids.get( a.path )} as default } from '../../${RUNTIME}';`, loader: 'js' } ) );
-		b.onResolve( { filter: new RegExp( `^\\.\\./\\.\\./${RUNTIME.replace( '.', '\\.' )}$` ) }, ( a ) => ( { path: a.path, external: true } ) );
-	}
-};
-await build( { ...COMMON, entryPoints: entries, outdir: OUT, plugins: [ toRuntime ], banner: { js: BANNER } } );
+// runtime by its path relative to the output file. Entries are built in
+// groups of equal depth (`<pkg>/<routine>`, later `<pkg>/<routine>/ndarray`),
+// one relative path per group.
+function toRuntime( spec ) {
+	return {
+		name: 'stdlib-to-runtime',
+		setup( b ) {
+			b.onResolve( { filter: /^@stdlib\// }, ( a ) => {
+				if ( !ids.has( a.path ) ) {
+					throw new Error( `stdlib import missing from the runtime: ${a.path} (imported by ${a.importer})` );
+				}
+				return { path: a.path, namespace: 'stdlib' };
+			} );
+			b.onLoad( { filter: /.*/, namespace: 'stdlib' }, ( a ) => ( { contents: `export { ${ids.get( a.path )} as default } from '${spec}';`, loader: 'js' } ) );
+			b.onResolve( { filter: /.*/ }, ( a ) => ( a.path === spec ? { path: a.path, external: true } : undefined ) );
+		}
+	};
+}
+const byDepth = new Map();
+for ( const [ name, file ] of Object.entries( entries ) ) {
+	const spec = path.posix.relative( path.posix.dirname( name ), RUNTIME ).replace( /^(?!\.)/, './' );
+	byDepth.set( spec, { ...byDepth.get( spec ), [ name ]: file } );
+}
+for ( const [ spec, group ] of byDepth ) {
+	await build( { ...COMMON, entryPoints: group, outdir: OUT, plugins: [ toRuntime( spec ) ], banner: { js: BANNER } } );
+}
 
 // Licenses of every stdlib package with code in the runtime.
 const vendored = new Map();

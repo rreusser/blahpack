@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsterf/lib/base.js
+// target: lib/lapack/dsterf/lib/base.js
 // expect: accessWithoutOffset
 function dsterf( N, d, strideD, offsetD, e, strideE, offsetE ) {
 	let i;

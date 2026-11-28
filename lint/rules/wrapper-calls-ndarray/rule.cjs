@@ -2,7 +2,7 @@
 
 // ESLint rule: wrapper-calls-ndarray
 //
-// A layout wrapper (lib/<pkg>/base/<routine>/lib/<routine>.js) whose routine
+// A layout wrapper (lib/<pkg>/<routine>/lib/<routine>.js) whose routine
 // takes a workspace (a spec param of role `workspace`) calls the default
 // export of `./ndarray.js`, not of `./base.js` (CONVENTIONS D5c; ticket 0077).
 //

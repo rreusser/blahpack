@@ -4,7 +4,7 @@
 
 import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
-import zgemv from '../../lib/blas/base/zgemv/lib/base.js';
+import zgemv from '../../lib/blas/zgemv/lib/base.js';
 
 const CONE = new Complex128(1.0, 0.0);
 const CMONE = new Complex128(-1.0, 0.0);

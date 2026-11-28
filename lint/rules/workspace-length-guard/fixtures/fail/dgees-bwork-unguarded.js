@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgees/lib/ndarray.js
+// target: lib/lapack/dgees/lib/ndarray.js
 // expect: BWORK has no length guard
 // BWORK( N ) is declared but unchecked: a short BWORK with sort = 'sort' drops its writes (ticket 0107).
 /* eslint-disable max-len, max-params */

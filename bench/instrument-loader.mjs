@@ -1,10 +1,10 @@
 /**
 * Module loader hook for bench/instrument.js: rewrites the default export of
-* every lib/{blas,lapack}/base/<routine>/lib/base.js so that it passes through
+* every lib/{blas,lapack}/<routine>/lib/base.js so that it passes through
 * the profiler's wrapper. Registered by `instrument.install()`.
 */
 
-const ROUTINE = /\/lib\/(?:blas|lapack)\/base\/([^/]+)\/lib\/base\.js$/;
+const ROUTINE = /\/lib\/(?:blas|lapack)\/([^/]+)\/lib\/base\.js$/;
 const EXPORT = /^export default ([A-Za-z_$][\w$]*);[ \t]*$/m;
 
 export async function load( url, context, nextLoad ) {

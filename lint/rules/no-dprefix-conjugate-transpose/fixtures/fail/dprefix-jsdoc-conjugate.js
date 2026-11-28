@@ -1,4 +1,4 @@
-// target: lib/blas/base/dtpmv/lib/dtpmv.js
+// target: lib/blas/dtpmv/lib/dtpmv.js
 // expect: documents "conjugate-transpose"
 /**
 * Computes `x := A*x` or `x := A**T*x`.

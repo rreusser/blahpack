@@ -27,7 +27,7 @@ config.rules[ RULE_ID ] = 'error';
 
 function lintFixture( file ) {
 	var code = fs.readFileSync( file, 'utf8' );
-	var virtual = path.join( ROOT, 'lib', 'lapack', 'base', 'ddot', 'lib', 'index.js' );
+	var virtual = path.join( ROOT, 'lib', 'lapack', 'ddot', 'lib', 'index.js' );
 	return linter.verify( code, config, { 'filename': virtual } ).filter( function filter( m ) {
 		return m.ruleId === RULE_ID;
 	});

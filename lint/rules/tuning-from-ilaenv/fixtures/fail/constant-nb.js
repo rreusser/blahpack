@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgeqrf/lib/base.js
+// target: lib/lapack/dgeqrf/lib/base.js
 // expect: is the reference's NB = ILAENV( 1, 'DGEQRF'
 import ilaenv from '../../ilaenv/lib/base.js';
 const DEFAULT_NB = 32;

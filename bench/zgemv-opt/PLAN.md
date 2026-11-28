@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zgemv` — complex general matrix-vector multiply
+`lib/blas/zgemv` — complex general matrix-vector multiply
 (`y = alpha*op(A)*x + beta*y`, op in {N, T, C}). Highest-leverage routine in
 the complex level-2 family: the conjugate-transpose path is hot in the
 complex eigensolver (`zggev`/`zhgeqz` — see `bench/profile-zhgeqz.js`), so a

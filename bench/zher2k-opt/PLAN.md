@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/zher2k` — Hermitian rank-2k update
+`lib/blas/zher2k` — Hermitian rank-2k update
 (`C = alpha*A*B^H + conj(alpha)*B*A^H + beta*C`, beta REAL, one triangle of C
 updated). Complex analog of `dsyr2k` (shipped 2.1–9.3x from 4x4 tiling,
 `bench/dsyr2k-opt/`).

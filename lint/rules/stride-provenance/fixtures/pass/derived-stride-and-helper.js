@@ -1,7 +1,7 @@
-// target: lib/lapack/base/dorbdb3/lib/base.js
+// target: lib/lapack/dorbdb3/lib/base.js
 // Strides derived from the array's own (`sx`), an index computed in a local
 // helper closure, and workspace forwarded with a literal unit stride (D5b).
-import drot from './../../../../blas/base/drot/lib/base.js';
+import drot from './../../../../blas/drot/lib/base.js';
 import dlarfgp from '../../dlarfgp/lib/base.js';
 function dorbdb3( M, P, Q, X11, strideX111, strideX112, offsetX11, X21, strideX211, strideX212, offsetX21, THETA, strideTHETA, offsetTHETA, PHI, stridePHI, offsetPHI, TAUP1, strideTAUP1, offsetTAUP1, TAUP2, strideTAUP2, offsetTAUP2, TAUQ1, strideTAUQ1, offsetTAUQ1, WORK, strideWork, offsetWork ) {
 	const sx = strideX212;

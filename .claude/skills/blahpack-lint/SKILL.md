@@ -15,8 +15,8 @@ there are no per-module exemptions (CONVENTIONS T5). `eslint.config.cjs` loads t
 
 ```bash
 bin/lint.sh                                   # whole corpus, one ESLint run (~5s)
-bin/lint.sh lib/blas/base/daxpy/lib/          # one module
-bin/lint.sh --fix lib/blas/base/daxpy/lib/    # apply rule autofixes
+bin/lint.sh lib/blas/daxpy/lib/          # one module
+bin/lint.sh --fix lib/blas/daxpy/lib/    # apply rule autofixes
 npm run test:lint-rules                       # every rule's pass/fail fixtures
 node lint/verify-corpus.cjs --list            # per-rule summary of every violation
 ```
@@ -47,7 +47,7 @@ lint/rules/<name>/
    `lint/lib/fortran-data.cjs` (the parsed-Fortran cache). Don't parse Fortran
    in a rule.
 2. Write fixtures. Each one declares, in line comments at the top:
-   - `// target: lib/<pkg>/base/<routine>/lib/<file>.js`: the path the rule
+   - `// target: lib/<pkg>/<routine>/lib/<file>.js`: the path the rule
      sees. Rules select files and derive the routine from this path.
    - `// expect: <messageId or message substring>`: fail fixtures only.
 

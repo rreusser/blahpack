@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dlag2s/lib/dlag2s.js
+// target: lib/lapack/dlag2s/lib/dlag2s.js
 // The layout comes from an enclosing `if ( order === … )` (its `else` is the other layout).
 /* eslint-disable max-len, max-params */
 

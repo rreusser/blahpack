@@ -1,4 +1,4 @@
-// target: lib/lapack/base/zlacrm/lib/ndarray.js
+// target: lib/lapack/zlacrm/lib/ndarray.js
 // expect: order
 // The quick return follows the RWORK guard: an empty problem would be asked for a workspace (W3).
 /* eslint-disable max-len, max-params */

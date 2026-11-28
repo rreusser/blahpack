@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routine
 
-`lib/blas/base/dznrm2` — Euclidean norm of a complex vector stored as
+`lib/blas/dznrm2` — Euclidean norm of a complex vector stored as
 interleaved re/im doubles. Structurally the same problem as `dnrm2`: the
 shipped kernel is Blue's three-accumulator scaled algorithm, dominated by
 per-element magnitude classification rather than arithmetic.
@@ -45,7 +45,7 @@ verbatim.
 
 1. Copy `bench/dnrm2-opt/` (`check.mjs`, `bench.mjs`, variants layout) and
    adapt inputs to interleaved complex.
-2. `variants/v0-reference.js` = current `lib/blas/base/dznrm2/lib/base.js`,
+2. `variants/v0-reference.js` = current `lib/blas/dznrm2/lib/base.js`,
    verbatim, as the oracle.
 3. `variants/v1-fastpath.js` = window-guarded plain sum with untouched
    fallback.

@@ -1,0 +1,36 @@
+{
+  "name": "@rreusser/blahpack/blas/zherk",
+  "version": "1.0.0",
+  "description": "Performs one of the Hermitian rank k operations C := α·A·Aᴴ + β·C, or C := α·Aᴴ·A + β·C",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "blas",
+    "level 3",
+    "zherk",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "complex128",
+    "complex",
+    "complex128array"
+  ]
+}

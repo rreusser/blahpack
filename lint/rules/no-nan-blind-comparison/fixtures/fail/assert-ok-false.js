@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgeqrf/test/test.ndarray.js
+// target: lib/lapack/dgeqrf/test/test.ndarray.js
 // expect: blindIf
 import assert from 'node:assert/strict';
 

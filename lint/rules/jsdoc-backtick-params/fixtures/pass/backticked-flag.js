@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dpotrf/lib/base.js
+// target: lib/lapack/dpotrf/lib/base.js
 /**
 * Factors a matrix.
 *

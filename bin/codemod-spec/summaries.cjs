@@ -88,7 +88,7 @@ function main() {
 	var n = 0;
 	var skipped = [];
 	[ 'blas', 'lapack', 'arpack' ].forEach( function each( pkg ) {
-		var base = path.join( ROOT, 'lib', pkg, 'base' );
+		var base = path.join( ROOT, 'lib', pkg );
 		fs.readdirSync( base ).forEach( function f( routine ) {
 			if ( only.length && only.indexOf( routine ) < 0 ) {
 				return;

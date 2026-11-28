@@ -1,0 +1,35 @@
+{
+  "name": "@rreusser/blahpack/lapack/dlansy",
+  "version": "1.0.0",
+  "description": "Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a real symmetric matrix",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "dlansy",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "float64",
+    "double",
+    "float64array"
+  ]
+}

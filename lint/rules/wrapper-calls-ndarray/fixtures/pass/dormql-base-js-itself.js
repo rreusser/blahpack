@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dormql/lib/base.js
+// target: lib/lapack/dormql/lib/base.js
 // The rule applies to the layout wrapper only; base.js and ndarray.js are other forms.
 /* eslint-disable max-len, max-params */
 

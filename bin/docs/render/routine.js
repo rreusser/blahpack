@@ -420,7 +420,7 @@ export function routineReadme( r, ctx ) {
 	if ( parts.intro ) {
 		out.push( ...section( 'intro', parts.intro ) );
 	}
-	const usage = [ '## Usage', '', '```js', 'import ' + r.name.replace( /_(\w)/g, ( _, c ) => c.toUpperCase() ) + ' from \'' + ( r.importPath || ( ctx.packageName + '/' + r.package + '/base/' + r.name ) ) + '\';', '```', '' ];
+	const usage = [ '## Usage', '', '```js', 'import ' + r.name.replace( /_(\w)/g, ( _, c ) => c.toUpperCase() ) + ' from \'' + ( r.importPath || ( ctx.packageName + '/' + r.package + '/' + r.name ) ) + '\';', '```', '' ];
 	for ( const sig of parts.signatures ) {
 		usage.push( sig, '' );
 	}

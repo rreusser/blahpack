@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsytrd/lib/ndarray.js
+// target: lib/lapack/dsytrd/lib/ndarray.js
 // expect: The WORK length guard must throw
 // The minimum is a literal in the text, not a `%d` argument, so the replay reads no minimum (ticket 0108).
 /* eslint-disable max-len, max-params */

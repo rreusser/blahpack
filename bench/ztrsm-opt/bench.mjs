@@ -10,7 +10,7 @@ import Complex128Array from '@stdlib/array/complex128/lib/index.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
 import v0 from './variants/v0-reference.js';
 import v1 from './variants/v1-blocked.js';
-import zgemm from '../../lib/blas/base/zgemm/lib/base.js';
+import zgemm from '../../lib/blas/zgemm/lib/base.js';
 
 const ONE = new Complex128( 1.0, 0.0 );
 const ZERO = new Complex128( 0.0, 0.0 );

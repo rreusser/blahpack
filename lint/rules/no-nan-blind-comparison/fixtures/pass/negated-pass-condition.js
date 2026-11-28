@@ -1,4 +1,4 @@
-// target: lib/blas/base/dger/test/test.ndarray.js
+// target: lib/blas/dger/test/test.ndarray.js
 // Fail unless the passing condition holds: NaN fails it.
 function assertArrayClose( actual, expected, tol, msg ) {
 	var relErr;

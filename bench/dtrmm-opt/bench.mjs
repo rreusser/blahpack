@@ -8,7 +8,7 @@
 // skipped all work).
 import v0 from './variants/v0-reference.js';
 import v1 from './variants/v1-tiled.js';
-import dgemm from '../../lib/blas/base/dgemm/lib/base.js';
+import dgemm from '../../lib/blas/dgemm/lib/base.js';
 
 function race( cases, trials = 13, targetMs = 30 ) {
 	for ( const c of cases ) {

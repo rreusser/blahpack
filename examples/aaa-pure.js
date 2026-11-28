@@ -11,14 +11,14 @@ import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.j
 
 import { prz, cleanup, feval, barycentricRoots } from './prz.js';
 import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
-import zgesvd from '../lib/lapack/base/zgesvd/lib/ndarray.js';
-import zlartg from '../lib/lapack/base/zlartg/lib/ndarray.js';
-import zrot from '../lib/lapack/base/zrot/lib/ndarray.js';
-import zgemv from '../lib/blas/base/zgemv/lib/ndarray.js';
-import zaxpy from '../lib/blas/base/zaxpy/lib/ndarray.js';
-import zcopy from '../lib/blas/base/zcopy/lib/ndarray.js';
-import zdscal from '../lib/blas/base/zdscal/lib/ndarray.js';
-import dznrm2 from '../lib/blas/base/dznrm2/lib/ndarray.js';
+import zgesvd from '../lib/lapack/zgesvd/lib/ndarray.js';
+import zlartg from '../lib/lapack/zlartg/lib/ndarray.js';
+import zrot from '../lib/lapack/zrot/lib/ndarray.js';
+import zgemv from '../lib/blas/zgemv/lib/ndarray.js';
+import zaxpy from '../lib/blas/zaxpy/lib/ndarray.js';
+import zcopy from '../lib/blas/zcopy/lib/ndarray.js';
+import zdscal from '../lib/blas/zdscal/lib/ndarray.js';
+import dznrm2 from '../lib/blas/dznrm2/lib/ndarray.js';
 
 export { prz, cleanup, feval, barycentricRoots };
 

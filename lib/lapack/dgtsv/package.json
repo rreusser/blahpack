@@ -1,0 +1,35 @@
+{
+  "name": "@rreusser/blahpack/lapack/dgtsv",
+  "version": "1.0.0",
+  "description": "Computes the solution to system of linear equations A·X = B for general tridiagonal matrices",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "dgtsv",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "float64",
+    "double",
+    "float64array"
+  ]
+}

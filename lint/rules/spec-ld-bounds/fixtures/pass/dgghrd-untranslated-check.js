@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgghrd/lib/dgghrd.js
+// target: lib/lapack/dgghrd/lib/dgghrd.js
 // The reference checks LDQ, but the spec could not translate it (`js: null`): the hand translation is not constrained.
 /* eslint-disable max-len, max-params */
 

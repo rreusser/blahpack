@@ -1,0 +1,35 @@
+{
+  "name": "@rreusser/blahpack/lapack/dzsum1",
+  "version": "1.0.0",
+  "description": "Forms the 1-norm of the complex vector using the true absolute value",
+  "license": "MIT",
+  "author": {
+    "name": "Ricky Reusser",
+    "url": "https://github.com/rreusser"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./docs/types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rreusser/blahpack.git"
+  },
+  "homepage": "https://github.com/rreusser/blahpack",
+  "bugs": {
+    "url": "https://github.com/rreusser/blahpack/issues"
+  },
+  "keywords": [
+    "mathematics",
+    "math",
+    "lapack",
+    "dzsum1",
+    "linear",
+    "algebra",
+    "subroutines",
+    "array",
+    "ndarray",
+    "float64",
+    "double",
+    "float64array"
+  ]
+}

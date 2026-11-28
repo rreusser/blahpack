@@ -1,6 +1,6 @@
 ---
 name: blahpack-review
-description: Review a module (or the full codebase) for convention violations, scaffolding remnants, and quality issues. The argument is the module path (e.g. `lib/blas/base/zhpmv`) or empty for full audit.
+description: Review a module (or the full codebase) for convention violations, scaffolding remnants, and quality issues. The argument is the module path (e.g. `lib/blas/zhpmv`) or empty for full audit.
 argument-hint: [module-path]
 ---
 

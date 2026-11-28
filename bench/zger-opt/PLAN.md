@@ -6,7 +6,7 @@ on; it is a starting point for investigation, not committed intent.
 
 ## Routines
 
-`lib/blas/base/zgeru` and `lib/blas/base/zgerc` — complex rank-1 updates
+`lib/blas/zgeru` and `lib/blas/zgerc` — complex rank-1 updates
 (`A += alpha*x*y^T` and `A += alpha*x*y^H`). Twins differing only by
 conjugation of `y`, so one study covers both. `zgerc` is used in the complex
 eigensolver path (`zggev`/`zhgeqz`), which gives this more weight than the

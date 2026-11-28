@@ -41,7 +41,7 @@ line and embeds the figures.
 All files are CommonJS (`package.json` here pins `"type":"commonjs"`; the repo
 root is an ES-module package). The variant files use the exact `base.js`
 signature, so a winner can be copied straight into
-`lib/blas/base/dgemm/lib/base.js`.
+`lib/blas/dgemm/lib/base.js`.
 
 ## Reproducing
 

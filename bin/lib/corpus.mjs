@@ -37,7 +37,7 @@ const WORKER_TIMEOUT = 30 * 60 * 1000;
 
 function moduleDir( r ) {
 	for ( const pkg of PKGS ) {
-		const d = path.join( ROOT, 'lib', pkg, 'base', r );
+		const d = path.join( ROOT, 'lib', pkg, r );
 		if ( fs.existsSync( d ) ) {
 			return d;
 		}
@@ -48,7 +48,7 @@ function moduleDir( r ) {
 function allRoutines() {
 	const out = [];
 	for ( const pkg of PKGS ) {
-		const d = path.join( ROOT, 'lib', pkg, 'base' );
+		const d = path.join( ROOT, 'lib', pkg );
 		if ( fs.existsSync( d ) ) {
 			fs.readdirSync( d ).forEach( ( r ) => out.push( r ) );
 		}
@@ -68,7 +68,7 @@ function changedRoutines( base ) {
 		.concat( run( [ 'ls-files', '--others', '--exclude-standard', 'lib/' ] ).stdout.split( '\n' ) );
 	const out = new Set();
 	files.forEach( ( f ) => {
-		const m = /^lib\/(?:blas|lapack|arpack)\/base\/([^/]+)\//.exec( f );
+		const m = /^lib\/(?:blas|lapack|arpack)\/([^/]+)\//.exec( f );
 		if ( m && moduleDir( m[ 1 ] ) ) {
 			out.add( m[ 1 ] );
 		}

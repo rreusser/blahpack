@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dorgbr/lib/dorgbr.js
+// target: lib/lapack/dorgbr/lib/dorgbr.js
 // expect: nary
 import smallest from '@stdlib/math/base/special/min/lib/index.js';
 

@@ -57,7 +57,7 @@ not pay.)
 
 Reuse the **2x2 complex register tile with a single general-stride +
 conj-sign-flag code path** (see `variants/gen-2x2.js` / the shipped
-`lib/blas/base/zgemm/lib/base.js`):
+`lib/blas/zgemm/lib/base.js`):
 
 - Conjugation folds into a hoisted `csa`/`csb = ±1` multiplier on the imaginary
   lane — never a per-element branch, never a separate mode kernel.

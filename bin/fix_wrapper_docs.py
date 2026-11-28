@@ -304,7 +304,7 @@ def main():
     routine_count = 0
 
     for pkg in ['blas', 'lapack']:
-        pkg_dir = os.path.join(ROOT, 'lib', pkg, 'base')
+        pkg_dir = os.path.join(ROOT, 'lib', pkg)
         if not os.path.isdir(pkg_dir):
             continue
         for routine in sorted(os.listdir(pkg_dir)):

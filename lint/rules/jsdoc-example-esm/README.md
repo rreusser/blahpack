@@ -14,7 +14,7 @@ Fix: `node bin/codemod-spec/example-esm.cjs`. It rewrites
 `var f = require( '@stdlib/array/float64' );` to
 `import Float64Array from '@stdlib/array/float64/lib/index.js';`, and a
 require of one of our routines to its public import path
-(`@rreusser/blahpack/<pkg>/base/<routine>`). Then
+(`@rreusser/blahpack/<pkg>/<routine>`). Then
 `node bin/codemod-spec/example-imports.cjs` makes each example import the
 routine it calls.
 

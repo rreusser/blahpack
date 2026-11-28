@@ -10,7 +10,7 @@ import Complex128 from '@stdlib/complex/float64/ctor/lib/index.js';
 import reinterpret from '@stdlib/strided/base/reinterpret-complex128/lib/index.js';
 import v0 from './variants/v0-reference.js';
 import v1 from './variants/v1-tiled.js';
-import zgemm from '../../lib/blas/base/zgemm/lib/base.js';
+import zgemm from '../../lib/blas/zgemm/lib/base.js';
 
 function race( cases, trials = 13, targetMs = 30 ) {
 	for ( const c of cases ) {

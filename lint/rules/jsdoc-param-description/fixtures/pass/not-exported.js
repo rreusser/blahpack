@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgesv/lib/base.js
+// target: lib/lapack/dgesv/lib/base.js
 // Only the exported function's JSDoc is the contract; private helpers may be terse.
 /**
 * Helper.

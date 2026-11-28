@@ -33,7 +33,7 @@ const IMPORTS = {
 
 function wrapperPath( r ) {
 	for ( const pkg of [ 'blas', 'lapack', 'arpack' ] ) {
-		const f = path.join( ROOT, 'lib', pkg, 'base', r, 'lib', r + '.js' );
+		const f = path.join( ROOT, 'lib', pkg, r, 'lib', r + '.js' );
 		if ( fs.existsSync( f ) ) {
 			return f;
 		}

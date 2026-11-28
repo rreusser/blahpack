@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dgetrs/lib/dgetrs.js
+// target: lib/lapack/dgetrs/lib/dgetrs.js
 // expect: check
 /**
 * @license MIT

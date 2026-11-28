@@ -16,6 +16,7 @@
 // A module missing any of these is a broken public API.
 
 var path = require( 'path' );
+var moduleOf = require( '../../lib/module-path.cjs' ).moduleOf;
 
 function isNdarrayAttach( node ) {
 	// setReadOnly( X, 'ndarray', Y )
@@ -48,9 +49,9 @@ var rule = {
 		if ( path.basename( filename ) !== 'index.js' ) {
 			return {};
 		}
-		// Only within a module tree (…/base/<routine>/lib/).
-		var parts = filename.split( path.sep );
-		if ( parts.lastIndexOf( 'base' ) === -1 || parts[ parts.length - 2 ] !== 'lib' ) {
+		// Only a module's own lib/index.js (lib/<pkg>/<routine>/lib/index.js).
+		var mod = moduleOf( filename );
+		if ( !mod || mod.rest.length !== 2 || mod.rest[ 0 ] !== 'lib' ) {
 			return {};
 		}
 		var hasDefaultExport = false;

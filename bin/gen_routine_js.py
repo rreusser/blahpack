@@ -462,8 +462,8 @@ def generate_passthrough(info, pkg, routine):
 
 def process_module(pkg, routine, dry_run=False):
     """Process a single module."""
-    base_path = BASE_DIR / 'lib' / pkg / 'base' / routine / 'lib' / 'base.js'
-    out_path = BASE_DIR / 'lib' / pkg / 'base' / routine / 'lib' / f'{routine}.js'
+    base_path = BASE_DIR / 'lib' / pkg / routine / 'lib' / 'base.js'
+    out_path = BASE_DIR / 'lib' / pkg / routine / 'lib' / f'{routine}.js'
 
     if not base_path.exists():
         return None, f"No base.js found at {base_path}"
@@ -489,11 +489,11 @@ def main():
         # Process all stub modules
         count = 0
         errors = []
-        for pattern in ['lib/blas/base/*/lib', 'lib/lapack/base/*/lib']:
+        for pattern in ['lib/blas/*/lib', 'lib/lapack/*/lib']:
             for d in sorted(glob.glob(str(BASE_DIR / pattern))):
                 d_rel = os.path.relpath(d, BASE_DIR)
                 parts = d_rel.split(os.sep)
-                # parts = ['lib', 'blas'|'lapack', 'base', '<routine>', 'lib']
+                # parts = ['lib', 'blas'|'lapack', '<routine>', 'lib']
                 pkg = parts[1]  # blas or lapack
                 routine = parts[3]
                 rjs = Path(d) / f'{routine}.js'
@@ -535,7 +535,7 @@ def main():
             print(f"Error: {err}", file=sys.stderr)
             sys.exit(1)
         else:
-            out_path = BASE_DIR / 'lib' / pkg / 'base' / routine / 'lib' / f'{routine}.js'
+            out_path = BASE_DIR / 'lib' / pkg / routine / 'lib' / f'{routine}.js'
             if dry_run:
                 with open(out_path) as f:
                     print(f.read())

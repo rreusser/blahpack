@@ -65,7 +65,7 @@ names. The package is unpublished, so no step keeps compatibility aliases.
 | --- | --- | --- |
 | 1 | Fold `main.js` into `index.js` in every module; update F1/F3, conformance, lint and the scaffold (done: `bin/codemod-fold-main.mjs`) | ticket 0124 |
 | 2 | Export ARPACK (done; conformance now covers it too, ticket 0043) | ticket 0123 |
-| 3 | Flatten `lib/<pkg>/base/<routine>` to `lib/<pkg>/<routine>` with a rerunnable codemod, landed when no open branch touches `lib/` | ticket 0125 |
+| 3 | Drop the `base` level from every module path, so modules live at `lib/<pkg>/<routine>` (done: `bin/codemod-flatten.mjs`, rerunnable; CI runs its `--check`) | ticket 0125 |
 | 4 | Rename the offset form: `ndarray.js` to `strided.js`, `.ndarray` to `.strided` | ticket 0126 |
 | 5 | Generate the opt-in ndarray-object form from `spec/*.json` at `<pkg>/<routine>/ndarray`: pilot on zggev, zggbal, dgesv, dgeev and dstevx, then roll out in waves | ticket 0111 |
 | 6 | Publish this package and verify the `npm:` import in Observable, including the best-guess CDN layout | ticket 0112 |
@@ -132,7 +132,7 @@ function zggbal( job, A, B, out = {} ) {
 	const ilo = new Int32Array( 1 );
 	const ihi = new Int32Array( 1 );
 	const WORK = new Float64Array( Math.max( 1, 6 * N ) ); // rule 7
-	const info = zggbalNdarray( job, N, // lib/lapack/base/zggbal/lib/ndarray.js
+	const info = zggbalNdarray( job, N, // lib/lapack/zggbal/lib/ndarray.js
 		A.data, A.strides[ 0 ], A.strides[ 1 ], A.offset,
 		B.data, B.strides[ 0 ], B.strides[ 1 ], B.offset,
 		ilo, ihi,
@@ -249,7 +249,7 @@ So the package ships a build, `dist/`, made by `npm run build:dist`
 | File | Contents |
 | --- | --- |
 | `dist/_stdlib.js` | Every stdlib module the library imports (47 specifiers from 13 packages), converted to ESM and bundled once: 21.5 KB gzipped |
-| `dist/<pkg>/base/<routine>.js` | One file per `./<pkg>/base/<routine>` export (902): the routine and its in-library dependencies, importing only `../../_stdlib.js` |
+| `dist/<pkg>/<routine>.js` | One file per `./<pkg>/<routine>` export (902): the routine and its in-library dependencies, importing only `../../_stdlib.js` |
 | `dist/THIRD_PARTY_LICENSES.txt` | The licenses and notices of the vendored stdlib packages (Apache-2.0) |
 
 A routine costs two requests, and `_stdlib.js` is cached across routines.
@@ -261,10 +261,10 @@ Once published, a notebook imports a routine with no bundler:
 
 ```js
 // Observable notebook
-dgesv = ( await import( 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/base/dgesv.js' ) ).default
+dgesv = ( await import( 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/dgesv.js' ) ).default
 
 // Observable Framework, or any ESM page
-import dgesv from 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/base/dgesv.js';
+import dgesv from 'https://cdn.jsdelivr.net/npm/@rreusser/blahpack@1/dist/lapack/dgesv.js';
 ```
 
 `npm run check:dist` (`bin/check-dist.mjs`, in CI) checks that:

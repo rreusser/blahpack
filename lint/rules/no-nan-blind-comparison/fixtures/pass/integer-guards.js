@@ -1,4 +1,4 @@
-// target: lib/lapack/base/dsytrf/test/test.validate.js
+// target: lib/lapack/dsytrf/test/test.validate.js
 // Comparisons of integers (sizes, pivots, block sizes, counters) are not
 // NaN-blind in any way that matters, and are not reported.
 function check( ipiv, k, N, NB, info, iters ) {

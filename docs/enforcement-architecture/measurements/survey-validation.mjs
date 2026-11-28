@@ -6,8 +6,8 @@ const ORD0=['First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth'
 const U=['','First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Ninth'];const T={20:'Twenty',30:'Thirty',40:'Forty'};const ORD=[...ORD0];for(let n=21;n<50;n++){const t=Math.floor(n/10)*10,u=n%10;ORD.push(u?T[t]+'-'+U[u].toLowerCase():(T[t].replace(/y$/,'ieth')));}
 const stats={}; const inc=(k,n=1)=>stats[k]=(stats[k]||0)+n; const ex={}; const addEx=(k,v)=>{(ex[k]=ex[k]||[]); if(ex[k].length<6) ex[k].push(v)};
 const msgShapes={};
-for (const pkg of ['blas','lapack']) for (const r of fs.readdirSync(path.join(ROOT,pkg,'base'))) {
-  const dir=path.join(ROOT,pkg,'base',r,'lib');
+for (const pkg of ['blas','lapack']) for (const r of fs.readdirSync(path.join(ROOT,pkg))) {
+  const dir=path.join(ROOT,pkg,r,'lib');
   for (const f of ['ndarray.js', r+'.js', 'base.js']) {
     const p=path.join(dir,f); if(!fs.existsSync(p)) {inc('missing:'+(f==='base.js'?'base':f==='ndarray.js'?'ndarray':'routine'));continue;}
     const kind=f==='base.js'?'base':f==='ndarray.js'?'ndarray':'routine';

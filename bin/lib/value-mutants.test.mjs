@@ -19,9 +19,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { ROOT } from './corpus.mjs';
-import { enumerate, runMutants } from '../value-mutants.mjs';
+import { enumerate, runMutants, changedLines } from '../value-mutants.mjs';
 
 const FIX = path.join( ROOT, 'test', 'harness', 'fixtures', 'value-mutants', 'zhetrf-pre58' );
 const ZLAHEF = path.join( ROOT, 'lib', 'lapack', 'zlahef', 'lib', 'base.js' );
@@ -135,4 +137,35 @@ test( 'runMutants: a mutant that hangs is killed by the timeout and reported as 
 	assert.equal( r.results[ 0 ].outcome, 'timeout' );
 	assert.equal( r.results[ 0 ].killed, true );
 	assert.ok( Date.now() - t0 < 20000 );
+});
+
+test( 'changedLines follows a rename: a moved file reports only the lines edited, not all of it (ticket 0125)', () => {
+	const dir = fs.mkdtempSync( path.join( os.tmpdir(), 'value-mutants-rename-' ) );
+	const sh = ( ...args ) => {
+		const r = spawnSync( 'git', args, { 'cwd': dir, 'encoding': 'utf8' } );
+		assert.equal( r.status, 0, r.stderr );
+		return r.stdout.trim();
+	};
+	try {
+		sh( 'init', '-q' );
+		sh( 'config', 'user.email', 'test@example.com' );
+		sh( 'config', 'user.name', 'test' );
+		const body = Array.from( { 'length': 20 }, ( _, i ) => `const v${i} = ${i};` );
+		fs.mkdirSync( path.join( dir, 'lib', 'blas', 'base', 'ddot', 'lib' ), { 'recursive': true } );
+		fs.writeFileSync( path.join( dir, 'lib', 'blas', 'base', 'ddot', 'lib', 'base.js' ), body.join( '\n' ) + '\n' );
+		sh( 'add', '-A' );
+		sh( 'commit', '-qm', 'old layout' );
+		const mb = sh( 'rev-parse', 'HEAD' );
+		fs.mkdirSync( path.join( dir, 'lib', 'blas', 'ddot' ), { 'recursive': true } );
+		sh( 'mv', 'lib/blas/base/ddot/lib', 'lib/blas/ddot/lib' );
+		body[ 2 ] = 'const v2 = 42;';
+		fs.writeFileSync( path.join( dir, 'lib', 'blas', 'ddot', 'lib', 'base.js' ), body.join( '\n' ) + '\n' );
+		fs.writeFileSync( path.join( dir, 'new.js' ), 'const a = 1;\n' );
+		sh( 'add', '-A' );
+		sh( 'commit', '-qm', 'flatten' );
+		assert.deepEqual( changedLines( mb, 'lib/blas/ddot/lib/base.js', dir ), [ [ 3, 3 ] ] );
+		assert.equal( changedLines( mb, 'new.js', dir ), null, 'a file new since mb is entirely changed' );
+	} finally {
+		fs.rmSync( dir, { 'recursive': true, 'force': true } );
+	}
 });
